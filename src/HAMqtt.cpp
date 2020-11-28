@@ -114,6 +114,11 @@ void HAMqtt::loop()
     }
 }
 
+bool HAMqtt::isConnected()
+{
+    return _mqtt->connected();
+}
+
 void HAMqtt::connectToServer()
 {
     if (_lastConnectionAttemptAt > 0 &&
