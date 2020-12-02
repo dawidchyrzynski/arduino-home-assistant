@@ -1,7 +1,7 @@
 #ifndef HADEVICE_H
 #define HADEVICE_H
 
-#include <Arduino.h>
+#include <stdint.h>
 
 class HADevice
 {
@@ -23,10 +23,8 @@ public:
     inline void setSoftwareVersion(const char* softwareVersion)
         { _softwareVersion = softwareVersion; }
 
-    inline void setViaDevice(const char* viaDevice)
-        { _viaDevice = viaDevice; }
-
-    String serialize() const;
+    uint16_t calculateSerializedLength() const;
+    uint16_t serialize(char* output) const;
 
 private:
     const char* _uniqueId;
@@ -34,7 +32,6 @@ private:
     const char* _model;
     const char* _name;
     const char* _softwareVersion;
-    const char* _viaDevice;
 };
 
 #endif

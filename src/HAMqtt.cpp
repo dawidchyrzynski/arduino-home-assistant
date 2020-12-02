@@ -1,53 +1,27 @@
 #include <IPAddress.h>
-#include <MQTT.h>
+#include <PubSubClient.h>
 
 #include "HAMqtt.h"
 #include "HADevice.h"
 #include "ArduinoHADefines.h"
+#include "device-types/BaseDeviceType.h"
 
 #define HAMQTT_INIT \
     _initialized(false), \
     _discoveryPrefix(DefaultDiscoveryPrefix), \
-    _mqtt(new MQTTClient()), \
+    _mqtt(new PubSubClient(netClient)), \
     _serverIp(new IPAddress()), \
     _serverPort(0), \
     _username(nullptr), \
     _password(nullptr), \
-    _connecting(false), \
-    _randomNumber(0), \
-    _lastConnectionAttemptAt(0)
-
-// Author: https://rheingoldheavy.com/better-arduino-random-values/
-uint32_t generateRandomSeed()
-{
-    uint8_t  seedBitValue  = 0;
-    uint8_t  seedByteValue = 0;
-    uint32_t seedWordValue = 0;
-
-    for (uint8_t wordShift = 0; wordShift < 4; wordShift++)
-    {
-        for (uint8_t byteShift = 0; byteShift < 8; byteShift++)
-        {
-            for (uint8_t bitSum = 0; bitSum <= 8; bitSum++)
-            {
-                seedBitValue = seedBitValue + (analogRead(A0) & 0x01);
-            }
-
-            delay(1);
-            seedByteValue = seedByteValue | ((seedBitValue & 0x01) << byteShift);
-            seedBitValue = 0;
-        }
-
-        seedWordValue = seedWordValue | (uint32_t)seedByteValue << (8 * wordShift);
-        seedByteValue = 0;
-    }
-
-    return (seedWordValue);
-}
+    _lastConnectionAttemptAt(0), \
+    _devicesTypesNb(0), \
+    _devicesTypes(nullptr)
 
 const char* HAMqtt::DefaultDiscoveryPrefix = "homeassistant";
 
-HAMqtt::HAMqtt(Client& netClient) :
+HAMqtt::HAMqtt(const char* clientId, Client& netClient) :
+    _clientId(clientId),
     _netClient(netClient),
     _hasDevice(false),
     HAMQTT_INIT
@@ -55,7 +29,8 @@ HAMqtt::HAMqtt(Client& netClient) :
 
 }
 
-HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
+HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
+    _clientId(clientId),
     _netClient(netClient),
     _device(device),
     _hasDevice(true),
@@ -71,7 +46,7 @@ bool HAMqtt::begin(
     const char* password
 )
 {
-#ifdef ARDUINOHA_DEBUG
+#if defined(ARDUINOHA_DEBUG)
     Serial.println(F("Initializing ArduinoHA"));
     Serial.print(F("Server address: "));
     Serial.print(serverIp);
@@ -81,23 +56,22 @@ bool HAMqtt::begin(
 #endif
 
     if (_initialized) {
-#ifdef ARDUINOHA_DEBUG
+#if defined(ARDUINOHA_DEBUG)
     Serial.println(F("ArduinoHA is already initialized"));
 #endif
 
         return false;
     }
 
-    _mqtt->begin(serverIp, serverPort, _netClient);
-
     *_serverIp = serverIp;
     _serverPort = serverPort;
     _username = username;
     _password = password;
-    _randomNumber = generateRandomSeed();
     _initialized = true;
 
-    connectToServer();
+    _mqtt->setServer(*_serverIp, _serverPort);
+    // _mqtt->setCallback(...);
+
     return true;
 }
 
@@ -107,9 +81,7 @@ void HAMqtt::loop()
         return;
     }
 
-    _mqtt->loop();
-
-    if (!_mqtt->connected()) {
+    if (!_mqtt->loop()) {
         connectToServer();
     }
 }
@@ -119,48 +91,104 @@ bool HAMqtt::isConnected()
     return _mqtt->connected();
 }
 
+void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
+{
+    BaseDeviceType** data = realloc(_devicesTypes, sizeof(BaseDeviceType*) * (_devicesTypesNb + 1));
+    if (data != nullptr) {
+        _devicesTypes = data;
+        _devicesTypes[_devicesTypesNb] = deviceType;
+        _devicesTypesNb++;
+    }
+}
+
+void HAMqtt::removeDeviceType(BaseDeviceType* deviceType)
+{
+    // to do
+}
+
+bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
+{
+    if (!isConnected()) {
+        return false;
+    }
+
+    #if defined(ARDUINOHA_DEBUG)
+        Serial.print(F("Publishing message with topic: "));
+        Serial.print(topic);
+        Serial.print(F(", payload length: "));
+        Serial.print(strlen(payload));
+        Serial.println();
+    #endif
+
+    _mqtt->beginPublish(topic, strlen(payload), retained);
+    _mqtt->write(payload, strlen(payload));
+    return _mqtt->endPublish();
+}
+
+bool HAMqtt::beginPublish(
+    const char* topic,
+    uint16_t payloadLength,
+    bool retained
+)
+{
+    #if defined(ARDUINOHA_DEBUG)
+        Serial.print(F("Publishing message with topic: "));
+        Serial.print(topic);
+        Serial.print(F(", payload length: "));
+        Serial.print(payloadLength);
+        Serial.println();
+    #endif
+
+    return _mqtt->beginPublish(topic, payloadLength, retained);
+}
+
+bool HAMqtt::writePayload(const char* data, uint16_t length)
+{
+    return (_mqtt->write(data, length) > 0);
+}
+
+bool HAMqtt::endPublish()
+{
+    return _mqtt->endPublish();
+}
+
 void HAMqtt::connectToServer()
 {
     if (_lastConnectionAttemptAt > 0 &&
-            abs(millis() - _lastConnectionAttemptAt) < ReconnectInterval) {
+            (millis() - _lastConnectionAttemptAt) < ReconnectInterval) {
         return;
     }
 
-    bool result;
-    String clientId = generateClientId();
+    _lastConnectionAttemptAt = millis();
 
-    #ifdef ARDUINOHA_DEBUG
-        Serial.print("Connecting to the MQTT broker... Client ID: ");
-        Serial.print(clientId);
+    #if defined(ARDUINOHA_DEBUG)
+        Serial.print(F("Connecting to the MQTT broker... Client ID: "));
+        Serial.print(_clientId);
         Serial.println();
     #endif
 
     if (_username == nullptr || _password == nullptr) {
-        result = _mqtt->connect(clientId.c_str());
+        _mqtt->connect(_clientId);
     } else {
-        result = _mqtt->connect(clientId.c_str(), _username, _password);
+        _mqtt->connect(_clientId, _username, _password);
     }
 
-    if (result) {
-#ifdef ARDUINOHA_DEBUG
+    if (isConnected()) {
+#if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Connected to the broker"));
 #endif
 
-        // to do: discovery
+        onConnected();
     } else {
-#ifdef ARDUINOHA_DEBUG
+#if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Failed to connect to the broker"));
 #endif
     }
-
-    _lastConnectionAttemptAt = millis();
 }
 
-String HAMqtt::generateClientId() const
+void HAMqtt::onConnected()
 {
-    if (_hasDevice) {
-        //return _device.getUniqueId();
+    for (uint8_t i = 0; i < _devicesTypesNb; i++) {
+        _devicesTypes[i]->onMqttConnected();
     }
-
-    return "aha-" + String(_randomNumber, DEC);
 }
