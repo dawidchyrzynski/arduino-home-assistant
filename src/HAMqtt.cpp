@@ -147,6 +147,14 @@ bool HAMqtt::writePayload(const char* data, uint16_t length)
     return (_mqtt->write(data, length) > 0);
 }
 
+bool HAMqtt::writePayload_P(const char* src)
+{
+    char data[strlen_P(src) + 1];
+    strcpy_P(data, src);
+
+    return _mqtt->write(data, strlen(data));
+}
+
 bool HAMqtt::endPublish()
 {
     return _mqtt->endPublish();

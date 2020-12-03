@@ -130,10 +130,12 @@ bool HATriggers::writeSerializedTrigger(
     const char* serializedDevice
 ) const
 {
+    static const char QuotationSign[] PROGMEM = {"\""};
+
     // automation type
     {
-        static const char Data[] = "{\"atype\":\"trigger\"";
-        mqtt()->writePayload(Data, strlen(Data));
+        static const char Data[] PROGMEM = {"{\"atype\":\"trigger\""};
+        mqtt()->writePayload_P(Data);
     }
 
     // topic
@@ -152,45 +154,42 @@ bool HATriggers::writeSerializedTrigger(
             EventTopic
         );
 
-        static const char DataBefore[] = ",\"t\":\"";
-        static const char DataAfter[] = "\"";
+        static const char DataBefore[] PROGMEM = {",\"t\":\""};
 
-        mqtt()->writePayload(DataBefore, strlen(DataBefore));
+        mqtt()->writePayload_P(DataBefore);
         mqtt()->writePayload(eventTopic, strlen(eventTopic));
-        mqtt()->writePayload(DataAfter, strlen(DataAfter));
+        mqtt()->writePayload_P(QuotationSign);
     }
 
     // type
     {
-        static const char DataBefore[] = ",\"type\":\"";
-        static const char DataAfter[] = "\"";
+        static const char DataBefore[] PROGMEM = {",\"type\":\""};
 
-        mqtt()->writePayload(DataBefore, strlen(DataBefore));
+        mqtt()->writePayload_P(DataBefore);
         mqtt()->writePayload(trigger->type, strlen(trigger->type));
-        mqtt()->writePayload(DataAfter, strlen(DataAfter));
+        mqtt()->writePayload_P(QuotationSign);
     }
 
     // subtype
     {
-        static const char DataBefore[] = ",\"stype\":\"";
-        static const char DataAfter[] = "\"";
+        static const char DataBefore[] PROGMEM = {",\"stype\":\""};
 
-        mqtt()->writePayload(DataBefore, strlen(DataBefore));
+        mqtt()->writePayload_P(DataBefore);
         mqtt()->writePayload(trigger->subtype, strlen(trigger->subtype));
-        mqtt()->writePayload(DataAfter, strlen(DataAfter));
+        mqtt()->writePayload_P(QuotationSign);
     }
 
     // device
     if (serializedDevice != nullptr) {
-        static const char Data[] = ",\"dev\":";
+        static const char Data[] PROGMEM = {",\"dev\":"};
 
-        mqtt()->writePayload(Data, strlen(Data));
+        mqtt()->writePayload_P(Data);
         mqtt()->writePayload(serializedDevice, strlen(serializedDevice));
     }
 
     {
-        static const char Data[] = "}";
-        mqtt()->writePayload(Data, strlen(Data));
+        static const char Data[] PROGMEM = {"}"};
+        mqtt()->writePayload_P(Data);
     }
 
     return true;

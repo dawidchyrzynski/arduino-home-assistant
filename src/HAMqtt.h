@@ -92,6 +92,7 @@ public:
 
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
     bool writePayload(const char* data, uint16_t length);
+    bool writePayload_P(const char* src);
     bool endPublish();
 
 private:
