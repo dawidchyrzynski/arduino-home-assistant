@@ -36,6 +36,8 @@ protected:
     ) const;
 
 private:
+    void publishConfig();
+
     uint16_t calculateSerializedLength(
         const HATrigger* trigger,
         const char* serializedDevice

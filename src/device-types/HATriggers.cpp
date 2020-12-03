@@ -1,6 +1,5 @@
 #ifndef NO_HA_TRIGGERS
 
-#include <Arduino.h>
 #include "HATriggers.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
@@ -29,29 +28,7 @@ HATriggers::~HATriggers()
 
 void HATriggers::onMqttConnected()
 {
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return; // device is required for triggers
-    }
-
-    uint16_t deviceLength = device->calculateSerializedLength();
-    char serializedDevice[deviceLength];
-    device->serialize(serializedDevice);
-
-    for (uint8_t i = 0; i < _triggersNb; i++) {
-        const HATrigger* trigger = &_triggers[i];
-        const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
-        const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
-
-        char topic[topicLength];
-        char data[dataLength];
-        generateTopic(topic, HAComponentName, trigger, ConfigTopic);
-
-        if (mqtt()->beginPublish(topic, dataLength, true)) {
-            writeSerializedTrigger(trigger, serializedDevice);
-            mqtt()->endPublish();
-        }
-    }
+    publishConfig();
 }
 
 bool HATriggers::add(const char* type, const char* subtype)
@@ -101,6 +78,32 @@ bool HATriggers::trigger(const char* type, const char* subtype)
 
     generateTopic(topic, HAComponentName, trigger, EventTopic);
     mqtt()->publish(topic, "");
+}
+
+void HATriggers::publishConfig()
+{
+    const HADevice* device = mqtt()->getDevice();
+    if (device == nullptr) {
+        return; // device is required for triggers
+    }
+
+    uint16_t deviceLength = device->calculateSerializedLength();
+    char serializedDevice[deviceLength];
+    device->serialize(serializedDevice);
+
+    for (uint8_t i = 0; i < _triggersNb; i++) {
+        const HATrigger* trigger = &_triggers[i];
+        const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
+        const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
+
+        char topic[topicLength];
+        generateTopic(topic, HAComponentName, trigger, ConfigTopic);
+
+        if (mqtt()->beginPublish(topic, dataLength, true)) {
+            writeSerializedTrigger(trigger, serializedDevice);
+            mqtt()->endPublish();
+        }
+    }
 }
 
 uint16_t HATriggers::calculateTopicLength(
@@ -188,7 +191,8 @@ bool HATriggers::writeSerializedTrigger(
             EventTopic
         );
         char eventTopic[topicSize];
-        generateTopic(eventTopic,
+        generateTopic(
+            eventTopic,
             HAComponentName,
             trigger,
             EventTopic
