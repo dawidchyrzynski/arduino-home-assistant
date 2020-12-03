@@ -1,13 +1,15 @@
+#ifndef NO_HA_TRIGGERS
+
 #include <Arduino.h>
 #include "HATriggers.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-const char* HATriggers::MqttNamespace = "device_automation";
+static const char* HAComponentName = "device_automation"; // todo: move to progmem
 
 HATriggers::HATriggers(HAMqtt& mqtt) :
-    BaseDeviceType(nullptr, mqtt),
+    BaseDeviceType(mqtt),
     _triggers(nullptr),
     _triggersNb(0)
 {
@@ -20,27 +22,30 @@ HATriggers::HATriggers(HAMqtt& mqtt) :
 
 HATriggers::~HATriggers()
 {
-    free(_triggers);
+    if (_triggers != nullptr) {
+        free(_triggers);
+    }
 }
 
 void HATriggers::onMqttConnected()
 {
     const HADevice* device = mqtt()->getDevice();
-    uint16_t deviceLength = (device == nullptr ? 0 : device->calculateSerializedLength());
-    char serializedDevice[deviceLength];
-
-    if (device != nullptr) {
-        device->serialize(serializedDevice);
+    if (device == nullptr) {
+        return; // device is required for triggers
     }
+
+    uint16_t deviceLength = device->calculateSerializedLength();
+    char serializedDevice[deviceLength];
+    device->serialize(serializedDevice);
 
     for (uint8_t i = 0; i < _triggersNb; i++) {
         const HATrigger* trigger = &_triggers[i];
-        const uint16_t& topicLength = calculateTopicLength(MqttNamespace, trigger->type, trigger->subtype, ConfigTopic);
+        const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
         const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
 
         char topic[topicLength];
         char data[dataLength];
-        generateTopic(topic, MqttNamespace, trigger->type, trigger->subtype, ConfigTopic);
+        generateTopic(topic, HAComponentName, trigger, ConfigTopic);
 
         if (mqtt()->beginPublish(topic, dataLength, true)) {
             writeSerializedTrigger(trigger, serializedDevice);
@@ -78,25 +83,63 @@ bool HATriggers::add(const char* type, const char* subtype)
 
 bool HATriggers::trigger(const char* type, const char* subtype)
 {
-    bool found = false;
+    HATrigger* trigger = nullptr;
     for (uint8_t i = 0; i < _triggersNb; i++) {
-        const HATrigger* trigger = &_triggers[i];
-        if (strcmp(trigger->type, type) == 0 &&
-            strcmp(trigger->subtype, subtype) == 0) {
-            found = true;
+        if (strcmp(_triggers[i].type, type) == 0 &&
+            strcmp(_triggers[i].subtype, subtype) == 0) {
+            trigger = &_triggers[i];
             break;
         }
     }
 
-    if (!found) {
+    if (trigger == nullptr) {
         return false;
     }
 
-    const uint16_t& size = calculateTopicLength(MqttNamespace, type, subtype, EventTopic);
+    const uint16_t& size = calculateTopicLength(HAComponentName, trigger, EventTopic);
     char topic[size];
 
-    generateTopic(topic, MqttNamespace, type, subtype, EventTopic);
+    generateTopic(topic, HAComponentName, trigger, EventTopic);
     mqtt()->publish(topic, "");
+}
+
+uint16_t HATriggers::calculateTopicLength(
+    const char* component,
+    HATrigger *trigger,
+    const char* suffix,
+    bool includeNullTerminator
+) const
+{
+    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 1; // + underscore
+    return BaseDeviceType::calculateTopicLength(
+        component,
+        nullptr,
+        suffix,
+        includeNullTerminator
+    ) + length;
+}
+
+uint16_t HATriggers::generateTopic(
+    char* output,
+    const char* component,
+    HATrigger *trigger,
+    const char* suffix
+) const
+{
+    static const char Underscore[] PROGMEM = {"_"};
+    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // slash + null terminator
+    char objectId[length];
+
+    strcpy(objectId, trigger->subtype);
+    strcat_P(objectId, Underscore);
+    strcat(objectId, trigger->type);
+
+    return BaseDeviceType::generateTopic(
+        output,
+        component,
+        objectId,
+        suffix
+    );
 }
 
 uint16_t HATriggers::calculateSerializedLength(
@@ -105,9 +148,8 @@ uint16_t HATriggers::calculateSerializedLength(
 ) const
 {
     const uint16_t& topicLength = calculateTopicLength(
-        MqttNamespace,
-        trigger->type,
-        trigger->subtype,
+        HAComponentName,
+        trigger,
         EventTopic,
         false
     );
@@ -141,16 +183,14 @@ bool HATriggers::writeSerializedTrigger(
     // topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            MqttNamespace,
-            trigger->type,
-            trigger->subtype,
+            HAComponentName,
+            trigger,
             EventTopic
         );
         char eventTopic[topicSize];
         generateTopic(eventTopic,
-            MqttNamespace,
-            trigger->type,
-            trigger->subtype,
+            HAComponentName,
+            trigger,
             EventTopic
         );
 
@@ -194,3 +234,5 @@ bool HATriggers::writeSerializedTrigger(
 
     return true;
 }
+
+#endif

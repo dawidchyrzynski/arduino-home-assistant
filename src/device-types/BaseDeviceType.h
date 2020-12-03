@@ -11,7 +11,7 @@ public:
     static const char* ConfigTopic;
     static const char* EventTopic;
 
-    BaseDeviceType(const char* uniqueId, HAMqtt& mqtt);
+    BaseDeviceType(HAMqtt& mqtt);
     virtual ~BaseDeviceType();
 
     virtual void onMqttConnected() = 0;
@@ -23,23 +23,20 @@ protected:
         { return &_mqtt; }
 
     virtual uint16_t calculateTopicLength(
-        const char* haNamespace,
-        const char* type,
-        const char* subtype,
+        const char* component,
+        const char* objectId,
         const char* suffix,
         bool includeNullTerminator = true
     ) const final;
 
     virtual uint16_t generateTopic(
         char* output,
-        const char* haNamespace,
-        const char* type,
-        const char* subtype,
+        const char* component,
+        const char* objectId,
         const char* suffix
     ) const final;
 
 private:
-    const char* _uniqueId;
     HAMqtt& _mqtt;
 };
 

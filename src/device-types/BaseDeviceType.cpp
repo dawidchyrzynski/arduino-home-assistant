@@ -2,11 +2,10 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-const char* BaseDeviceType::ConfigTopic = "config";
+const char* BaseDeviceType::ConfigTopic = "config"; // todo: move to progmem
 const char* BaseDeviceType::EventTopic = "event";
 
-BaseDeviceType::BaseDeviceType(const char* uniqueId, HAMqtt& mqtt) :
-    _uniqueId(uniqueId),
+BaseDeviceType::BaseDeviceType(HAMqtt& mqtt) :
     _mqtt(mqtt)
 {
     _mqtt.addDeviceType(this);
@@ -18,9 +17,8 @@ BaseDeviceType::~BaseDeviceType()
 }
 
 uint16_t BaseDeviceType::calculateTopicLength(
-    const char* haNamespace,
-    const char* type,
-    const char* subtype,
+    const char* component,
+    const char* objectId,
     const char* suffix,
     bool includeNullTerminator
 ) const
@@ -29,10 +27,14 @@ uint16_t BaseDeviceType::calculateTopicLength(
     const char* prefix = _mqtt.getDiscoveryPrefix();
     uint16_t size =
         strlen(prefix) + 1 + // with slash
-        strlen(haNamespace) + 1 + // with slash
-        strlen(type) + 1 + // with underscore
-        strlen(subtype) + 1 + // with slash
+        strlen(component) + 1 + // with slash
         strlen(suffix); // with null terminator
+
+    if (objectId != nullptr) {
+        size += strlen(objectId) + 1; // with slash
+    } else {
+        size += 1; // slash
+    }
 
     if (_mqtt.getDevice() != nullptr) {
         size += strlen(_mqtt.getDevice()->getUniqueId()) + 1; // with slash
@@ -47,20 +49,17 @@ uint16_t BaseDeviceType::calculateTopicLength(
 
 uint16_t BaseDeviceType::generateTopic(
     char* output,
-    const char* haNamespace,
-    const char* type,
-    const char* subtype,
+    const char* component,
+    const char* objectId,
     const char* suffix
 ) const
 {
-    // prevent from wasting RAM
     static const char Slash[] PROGMEM = {"/"};
-    static const char Underscore[] PROGMEM = {"_"};
 
     const char* prefix = _mqtt.getDiscoveryPrefix();
     strcpy(output, prefix);
     strcat_P(output, Slash);
-    strcat(output, haNamespace);
+    strcat(output, component);
     strcat_P(output, Slash);
 
     if (_mqtt.getDevice() != nullptr) {
@@ -68,9 +67,7 @@ uint16_t BaseDeviceType::generateTopic(
         strcat_P(output, Slash);
     }
 
-    strcat(output, subtype);
-    strcat_P(output, Underscore);
-    strcat(output, type);
+    strcat(output, objectId);
     strcat_P(output, Slash);
     strcat(output, suffix);
     return strlen(output) + 1; // size with null terminator

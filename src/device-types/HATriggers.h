@@ -1,7 +1,6 @@
 #ifndef HATRIGGERS_H
+#ifndef NO_HA_TRIGGERS
 #define HATRIGGERS_H
-
-#include <stdint.h>
 
 #include "BaseDeviceType.h"
 
@@ -13,8 +12,6 @@ struct HATrigger {
 class HATriggers : public BaseDeviceType
 {
 public:
-    static const char* MqttNamespace;
-
     HATriggers(HAMqtt& mqtt);
     virtual ~HATriggers();
 
@@ -22,6 +19,21 @@ public:
 
     bool add(const char* type, const char* subtype);
     bool trigger(const char* type, const char* subtype);
+
+protected:
+    uint16_t calculateTopicLength(
+        const char* component,
+        HATrigger *trigger,
+        const char* suffix,
+        bool includeNullTerminator = true
+    ) const;
+
+    uint16_t generateTopic(
+        char* output,
+        const char* component,
+        HATrigger *trigger,
+        const char* suffix
+    ) const;
 
 private:
     uint16_t calculateSerializedLength(
@@ -38,4 +50,5 @@ private:
     uint8_t _triggersNb;
 };
 
+#endif
 #endif
