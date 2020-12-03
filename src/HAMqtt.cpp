@@ -20,6 +20,11 @@
 
 const char* HAMqtt::DefaultDiscoveryPrefix = "homeassistant";
 
+void onMessageReceived(char* topic, char* message, uint32_t length)
+{
+    // todo: process message
+}
+
 HAMqtt::HAMqtt(const char* clientId, Client& netClient) :
     _clientId(clientId),
     _netClient(netClient),
@@ -70,7 +75,7 @@ bool HAMqtt::begin(
     _initialized = true;
 
     _mqtt->setServer(*_serverIp, _serverPort);
-    // _mqtt->setCallback(...);
+    _mqtt->setCallback(onMessageReceived);
 
     return true;
 }
@@ -158,6 +163,17 @@ bool HAMqtt::writePayload_P(const char* src)
 bool HAMqtt::endPublish()
 {
     return _mqtt->endPublish();
+}
+
+bool HAMqtt::subscribe(const char* topic)
+{
+    #if defined(ARDUINOHA_DEBUG)
+        Serial.print(F("Subscribing topic: "));
+        Serial.print(topic);
+        Serial.println();
+    #endif
+
+    return _mqtt->subscribe(topic);
 }
 
 void HAMqtt::connectToServer()

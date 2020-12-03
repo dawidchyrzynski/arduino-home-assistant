@@ -28,7 +28,12 @@ HASwitch::~HASwitch()
 
 void HASwitch::onMqttConnected()
 {
+    if (strlen(_name) == 0) {
+        return;
+    }
+
     publishConfig();
+    subscribeCommandTopic();
 }
 
 void HASwitch::setState(bool state)
@@ -74,10 +79,6 @@ void HASwitch::triggerCallback(bool state)
 
 void HASwitch::publishConfig()
 {
-    if (strlen(_name) == 0) {
-        return;
-    }
-
     const HADevice* device = mqtt()->getDevice();
     uint16_t deviceLength = (device == nullptr ? 0 : device->calculateSerializedLength());
     char serializedDevice[deviceLength];
@@ -118,6 +119,24 @@ void HASwitch::publishCurrentState()
     );
 
     mqtt()->publish(topic, (_currentState ? StateOn : StateOff));
+}
+
+void HASwitch::subscribeCommandTopic()
+{
+    const uint16_t& topicSize = calculateTopicLength(
+        HAComponentName,
+        _name,
+        CommandTopic
+    );
+    char topic[topicSize];
+    generateTopic(
+        topic,
+        HAComponentName,
+        _name,
+        CommandTopic
+    );
+
+    mqtt()->subscribe(topic);
 }
 
 uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const

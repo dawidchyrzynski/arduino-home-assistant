@@ -23,6 +23,7 @@ private:
     void triggerCallback(bool state);
     void publishConfig();
     void publishCurrentState();
+    void subscribeCommandTopic();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedTrigger(const char* serializedDevice) const;
 

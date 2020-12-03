@@ -94,6 +94,7 @@ public:
     bool writePayload(const char* data, uint16_t length);
     bool writePayload_P(const char* src);
     bool endPublish();
+    bool subscribe(const char* topic);
 
 private:
     /**
