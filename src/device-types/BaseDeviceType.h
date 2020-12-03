@@ -15,8 +15,11 @@ public:
     virtual ~BaseDeviceType();
 
     virtual void onMqttConnected() = 0;
-
-    // to do: onMqttMessage
+    virtual void onMqttMessage(
+        const char* topic,
+        const char* payload,
+        const uint16_t& length
+    ) { };
 
 protected:
     inline HAMqtt* mqtt() const

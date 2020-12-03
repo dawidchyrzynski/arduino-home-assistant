@@ -9,10 +9,19 @@
 class HASwitch : public BaseDeviceType
 {
 public:
-    HASwitch(const char* name, HAMqtt& mqtt);
+    HASwitch(
+        const char* name,
+        bool initialState,
+        HAMqtt& mqtt
+    );
     virtual ~HASwitch();
 
     virtual void onMqttConnected() override;
+    virtual void onMqttMessage(
+        const char* topic,
+        const char* payload,
+        const uint16_t& length
+    ) override;
 
     void setState(bool state);
     void turnOn();

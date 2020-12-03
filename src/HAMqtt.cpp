@@ -19,10 +19,15 @@
     _devicesTypes(nullptr)
 
 const char* HAMqtt::DefaultDiscoveryPrefix = "homeassistant";
+HAMqtt* instance = nullptr;
 
-void onMessageReceived(char* topic, char* message, uint32_t length)
+void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
 {
-    // todo: process message
+    if (instance == nullptr) {
+        return;
+    }
+
+    instance->processMessage(topic, payload, length);
 }
 
 HAMqtt::HAMqtt(const char* clientId, Client& netClient) :
@@ -31,7 +36,7 @@ HAMqtt::HAMqtt(const char* clientId, Client& netClient) :
     _hasDevice(false),
     HAMQTT_INIT
 {
-
+    instance = this;
 }
 
 HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
@@ -41,7 +46,7 @@ HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
     _hasDevice(true),
     HAMQTT_INIT
 {
-
+    instance = this;
 }
 
 bool HAMqtt::begin(
@@ -108,7 +113,7 @@ void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
 
 void HAMqtt::removeDeviceType(BaseDeviceType* deviceType)
 {
-    // to do
+    // todo: remove device from the list
 }
 
 bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
@@ -117,13 +122,13 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
         return false;
     }
 
-    #if defined(ARDUINOHA_DEBUG)
-        Serial.print(F("Publishing message with topic: "));
-        Serial.print(topic);
-        Serial.print(F(", payload length: "));
-        Serial.print(strlen(payload));
-        Serial.println();
-    #endif
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Publishing message with topic: "));
+    Serial.print(topic);
+    Serial.print(F(", payload length: "));
+    Serial.print(strlen(payload));
+    Serial.println();
+#endif
 
     _mqtt->beginPublish(topic, strlen(payload), retained);
     _mqtt->write(payload, strlen(payload));
@@ -136,13 +141,13 @@ bool HAMqtt::beginPublish(
     bool retained
 )
 {
-    #if defined(ARDUINOHA_DEBUG)
-        Serial.print(F("Publishing message with topic: "));
-        Serial.print(topic);
-        Serial.print(F(", payload length: "));
-        Serial.print(payloadLength);
-        Serial.println();
-    #endif
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Publishing message with topic: "));
+    Serial.print(topic);
+    Serial.print(F(", payload length: "));
+    Serial.print(payloadLength);
+    Serial.println();
+#endif
 
     return _mqtt->beginPublish(topic, payloadLength, retained);
 }
@@ -167,13 +172,28 @@ bool HAMqtt::endPublish()
 
 bool HAMqtt::subscribe(const char* topic)
 {
-    #if defined(ARDUINOHA_DEBUG)
-        Serial.print(F("Subscribing topic: "));
-        Serial.print(topic);
-        Serial.println();
-    #endif
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Subscribing topic: "));
+    Serial.print(topic);
+    Serial.println();
+#endif
 
     return _mqtt->subscribe(topic);
+}
+
+void HAMqtt::processMessage(char* topic, uint8_t* payload, uint16_t length)
+{
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Received message on topic: "));
+    Serial.print(topic);
+    Serial.print(F(", payload length: "));
+    Serial.print(length);
+    Serial.println();
+#endif
+
+    for (uint8_t i = 0; i < _devicesTypesNb; i++) {
+        _devicesTypes[i]->onMqttMessage(topic, payload, length);
+    }
 }
 
 void HAMqtt::connectToServer()
@@ -185,11 +205,11 @@ void HAMqtt::connectToServer()
 
     _lastConnectionAttemptAt = millis();
 
-    #if defined(ARDUINOHA_DEBUG)
-        Serial.print(F("Connecting to the MQTT broker... Client ID: "));
-        Serial.print(_clientId);
-        Serial.println();
-    #endif
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Connecting to the MQTT broker... Client ID: "));
+    Serial.print(_clientId);
+    Serial.println();
+#endif
 
     if (_username == nullptr || _password == nullptr) {
         _mqtt->connect(_clientId);

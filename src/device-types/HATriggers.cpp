@@ -159,12 +159,12 @@ uint16_t HATriggers::calculateSerializedLength(
     uint16_t size =
         2 + // opening and closing bracket (without null terminator)
         17 + // automation type
-        topicLength + 7 +
-        strlen(trigger->type) + 10 +
-        strlen(trigger->subtype) + 11;
+        topicLength + 7 + // 7 - length of the JSON data for this field
+        strlen(trigger->type) + 10 + // 10 - length of the JSON data for this field
+        strlen(trigger->subtype) + 11; // 11 - length of the JSON data for this field
 
     if (serializedDevice != nullptr) {
-        size += strlen(serializedDevice) + 7;
+        size += strlen(serializedDevice) + 7; // 7 - length of the JSON data for this field
     }
 
     return size;

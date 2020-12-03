@@ -4,6 +4,7 @@
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
+#include "../HAUtils.h"
 
 // todo: move all variables to progmem
 static const char* HAComponentName = "switch";
@@ -12,11 +13,11 @@ static const char* StateTopic = "state";
 static const char* StateOn = "ON";
 static const char* StateOff = "OFF";
 
-HASwitch::HASwitch(const char* name, HAMqtt& mqtt) :
+HASwitch::HASwitch(const char* name, bool initialState, HAMqtt& mqtt) :
     BaseDeviceType(mqtt),
     _name(name),
     _stateCallback(nullptr),
-    _currentState(false)
+    _currentState(initialState)
 {
 
 }
@@ -33,7 +34,31 @@ void HASwitch::onMqttConnected()
     }
 
     publishConfig();
+    publishCurrentState();
     subscribeCommandTopic();
+}
+
+void HASwitch::onMqttMessage(
+    const char* topic,
+    const char* payload,
+    const uint16_t& length
+)
+{
+    // todo: find a faster way of topic's verification
+
+    static const char Slash[] PROGMEM = {"/"};
+    uint8_t suffixLength = strlen(_name) + strlen(CommandTopic) + 3; // two slashes + null terminator
+    char suffix[suffixLength];
+
+    strcpy_P(suffix, Slash);
+    strcat(suffix, _name);
+    strcat_P(suffix, Slash);
+    strcat(suffix, CommandTopic);
+
+    if (HAUtils::endsWith(topic, suffix)) {
+        bool onState = (strncmp(payload, StateOn, length) == 0);
+        setState(onState);
+    }
 }
 
 void HASwitch::setState(bool state)
@@ -156,18 +181,19 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size =
         2 + // opening and closing bracket (without null terminator)
-        cmdTopicLength + 10 +
-        stateTopicLength + 12 +
-        strlen(_name) + 10;
+        cmdTopicLength + 10 + // 10 - length of the JSON data for this field
+        stateTopicLength + 12 + // 12 - length of the JSON data for this field
+        strlen(_name) + 10; // 10 - length of the JSON data for this field
 
     // unique ID
     if (serializedDevice == nullptr) {
-        size += strlen(_name) + 13;
+        size += strlen(_name) + 13; // 13 - length of the JSON data for this field
     } else {
-        size += strlen(mqtt()->getDevice()->getUniqueId()) + strlen(_name) + 14;
+        size += strlen(mqtt()->getDevice()->getUniqueId());
+        size += strlen(_name) + 14; // 14 - length of the JSON data for this field
 
         // device
-        size += strlen(serializedDevice) + 7;
+        size += strlen(serializedDevice) + 7; // 7 - length of the JSON data for this field
     }
 
     return size;

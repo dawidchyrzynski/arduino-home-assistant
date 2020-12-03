@@ -95,6 +95,7 @@ public:
     bool writePayload_P(const char* src);
     bool endPublish();
     bool subscribe(const char* topic);
+    void processMessage(char* topic, uint8_t* payload, uint16_t length);
 
 private:
     /**
