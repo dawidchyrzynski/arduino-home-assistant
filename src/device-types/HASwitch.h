@@ -23,6 +23,9 @@ public:
         const uint16_t& length
     ) override;
 
+    inline const char* getName() const
+        { return _name; }
+
     void setState(bool state);
     void turnOn();
     void turnOff();
