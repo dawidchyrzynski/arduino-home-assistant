@@ -6,6 +6,7 @@
 // You can easily reduce amount of required resources by removing unused components from the library.
 // Here is the list of available defines:
 
+// #define NO_HA_BINARY_SENSOR
 // #define NO_HA_TRIGGERS
 // #define NO_HA_TAG_SCANNER
 // #define NO_HA_SWITCH

@@ -67,6 +67,13 @@ public:
         { return setState(false); }
 
     /**
+     * Returns last known state of the switch.
+     * If setState method wasn't called the initial value will be returned.
+     */
+    inline bool getState() const
+        { return _currentState; }
+
+    /**
      * Registers callback that will be called each time the value of the switch changes.
      * Please note that it's not possible to register multiple callbacks for the same switch.
      *

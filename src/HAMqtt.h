@@ -12,7 +12,7 @@ class BaseDeviceType;
 class HAMqtt
 {
 public:
-    static const uint16_t ReconnectInterval = 3000; // ms
+    static const uint16_t ReconnectInterval = 5000; // ms
 
     HAMqtt(const char* clientId, Client& netClient, HADevice& device);
 
