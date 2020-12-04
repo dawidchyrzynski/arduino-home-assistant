@@ -1,13 +1,24 @@
 #include <Arduino.h>
 
 #include "HADevice.h"
+#include "HAUtils.h"
+
+#define HADEVICE_INIT \
+    _manufacturer(nullptr), \
+    _model(nullptr), \
+    _name(nullptr), \
+    _softwareVersion(nullptr)
 
 HADevice::HADevice(const char* uniqueId) :
     _uniqueId(uniqueId),
-    _manufacturer(nullptr),
-    _model(nullptr),
-    _name(nullptr),
-    _softwareVersion(nullptr)
+    HADEVICE_INIT
+{
+
+}
+
+HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
+    _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
+    HADEVICE_INIT
 {
 
 }

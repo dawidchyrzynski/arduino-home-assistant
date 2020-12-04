@@ -14,6 +14,7 @@ class HAMqtt
 public:
     static const uint16_t ReconnectInterval = 5000; // ms
 
+    HAMqtt(Client& netClient, HADevice& device);
     HAMqtt(const char* clientId, Client& netClient, HADevice& device);
 
     /**

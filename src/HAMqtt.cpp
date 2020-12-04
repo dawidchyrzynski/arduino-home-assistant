@@ -6,6 +6,21 @@
 #include "ArduinoHADefines.h"
 #include "device-types/BaseDeviceType.h"
 
+#define HAMQTT_INIT \
+    _netClient(netClient), \
+    _device(device), \
+    _hasDevice(true), \
+    _initialized(false), \
+    _discoveryPrefix(DefaultDiscoveryPrefix), \
+    _mqtt(new PubSubClient(netClient)), \
+    _serverIp(new IPAddress()), \
+    _serverPort(0), \
+    _username(nullptr), \
+    _password(nullptr), \
+    _lastConnectionAttemptAt(0), \
+    _devicesTypesNb(0), \
+    _devicesTypes(nullptr)
+
 static const char* DefaultDiscoveryPrefix = "homeassistant";
 HAMqtt* instance = nullptr;
 
@@ -18,21 +33,16 @@ void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
     instance->processMessage(topic, payload, length);
 }
 
+HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
+    _clientId(device.getUniqueId()),
+    HAMQTT_INIT
+{
+    instance = this;
+}
+
 HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
     _clientId(clientId),
-    _netClient(netClient),
-    _device(device),
-    _hasDevice(true),
-    _initialized(false),
-    _discoveryPrefix(DefaultDiscoveryPrefix),
-    _mqtt(new PubSubClient(netClient)),
-    _serverIp(new IPAddress()),
-    _serverPort(0),
-    _username(nullptr),
-    _password(nullptr),
-    _lastConnectionAttemptAt(0),
-    _devicesTypesNb(0),
-    _devicesTypes(nullptr)
+    HAMQTT_INIT
 {
     instance = this;
 }

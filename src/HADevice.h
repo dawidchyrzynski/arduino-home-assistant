@@ -7,6 +7,7 @@ class HADevice
 {
 public:
     HADevice(const char* uniqueId);
+    HADevice(const byte* uniqueId, const uint16_t& length);
 
     inline const char* getUniqueId() const
         { return _uniqueId; }
