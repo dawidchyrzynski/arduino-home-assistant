@@ -6,7 +6,7 @@
 #include "ArduinoHADefines.h"
 #include "device-types/BaseDeviceType.h"
 
-const char* HAMqtt::DefaultDiscoveryPrefix = "homeassistant";
+static const char DefaultDiscoveryPrefix[] PROGMEM = {"homeassistant"};
 HAMqtt* instance = nullptr;
 
 void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
@@ -24,7 +24,6 @@ HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
     _device(device),
     _hasDevice(true),
     _initialized(false),
-    _discoveryPrefix(DefaultDiscoveryPrefix),
     _mqtt(new PubSubClient(netClient)),
     _serverIp(new IPAddress()),
     _serverPort(0),
@@ -35,6 +34,7 @@ HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
     _devicesTypes(nullptr)
 {
     instance = this;
+    strcpy_P(_discoveryPrefix, DefaultDiscoveryPrefix);
 }
 
 bool HAMqtt::begin(

@@ -6,10 +6,12 @@
 
 ## Compatible Arduino Shields
 
-## Roadmap
+## Supported types
 
-- [ ] Add support for "Lights" device's type
-- [ ] Add support for "Sensor" device's type
-- [ ] Add support for "Tag scanner" device's type
-- [ ] Add support for "Lock" device's type
-- [ ] Add support for "Binary sensor" device's type
+- :heavy_check_mark: Binary sensors
+- :heavy_check_mark: Device triggers
+- :heavy_check_mark: Switches
+- :heavy_check_mark: Sensors
+- :heavy_check_mark: Tag scanners
+
+If you need support for non-listed device's type please open a new issue in the Github repository.
