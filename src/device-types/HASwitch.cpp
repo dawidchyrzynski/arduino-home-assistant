@@ -166,7 +166,7 @@ void HASwitch::publishCurrentState()
         return;
     }
 
-    mqtt()->publish(topic, (_currentState ? StateOn : StateOff));
+    mqtt()->publish(topic, (_currentState ? StateOn : StateOff), true);
 }
 
 void HASwitch::subscribeCommandTopic()
