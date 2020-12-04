@@ -25,6 +25,10 @@ uint16_t BaseDeviceType::calculateTopicLength(
 {
     // [discovery prefix]/[namespace]/[device id - optional]/subtype_type/[suffix]
     const char* prefix = _mqtt.getDiscoveryPrefix();
+    if (prefix == nullptr) {
+        return 0;
+    }
+
     uint16_t size =
         strlen(prefix) + 1 + // with slash
         strlen(component) + 1 + // with slash

@@ -91,7 +91,11 @@ bool HAMqtt::isConnected()
 
 void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
 {
-    BaseDeviceType** data = realloc(_devicesTypes, sizeof(BaseDeviceType*) * (_devicesTypesNb + 1));
+    BaseDeviceType** data = realloc(
+        _devicesTypes,
+        sizeof(BaseDeviceType*) * (_devicesTypesNb + 1)
+    );
+
     if (data != nullptr) {
         _devicesTypes = data;
         _devicesTypes[_devicesTypesNb] = deviceType;

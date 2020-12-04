@@ -37,6 +37,10 @@ bool HATagScanner::tagScanned(const char* tag)
         _name,
         EventTopic
     );
+    if (topicSize == 0) {
+        return false;
+    }
+
     char topic[topicSize];
     generateTopic(
         topic,
@@ -45,21 +49,43 @@ bool HATagScanner::tagScanned(const char* tag)
         EventTopic
     );
 
+    if (strlen(topic) == 0) {
+        return false;
+    }
+
     return mqtt()->publish(topic, tag);
 }
 
 void HATagScanner::publishConfig()
 {
     const HADevice* device = mqtt()->getDevice();
+    if (device == nullptr) {
+        return;
+    }
+
     const uint16_t& deviceLength = device->calculateSerializedLength();
+    if (deviceLength == 0) {
+        return;
+    }
+
     char serializedDevice[deviceLength];
-    device->serialize(serializedDevice);
+    if (device->serialize(serializedDevice) == 0) {
+        return;
+    }
 
     const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
+    if (topicLength == 0 || dataLength == 0) {
+        return;
+    }
+
     char topic[topicLength];
     generateTopic(topic, HAComponentName, _name, ConfigTopic);
+
+    if (strlen(topic) == 0) {
+        return;
+    }
 
     if (mqtt()->beginPublish(topic, dataLength, true)) {
         writeSerializedTrigger(serializedDevice);

@@ -8,10 +8,10 @@
 
 ## Supported types
 
-- :heavy_check_mark: Binary sensors
-- :heavy_check_mark: Device triggers
-- :heavy_check_mark: Switches
-- :heavy_check_mark: Sensors
-- :heavy_check_mark: Tag scanners
+- Binary sensors
+- Device triggers
+- Switches
+- Sensors
+- Tag scanners
 
 If you need support for non-listed device's type please open a new issue in the Github repository.

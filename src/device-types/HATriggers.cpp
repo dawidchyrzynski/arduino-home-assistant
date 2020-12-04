@@ -69,15 +69,24 @@ bool HATriggers::trigger(const char* type, const char* subtype)
         return false;
     }
 
-    const uint16_t& size = calculateTopicLength(
+    const uint16_t& topicSize = calculateTopicLength(
         HAComponentName,
         trigger,
         EventTopic
     );
-    char topic[size];
 
+    if (topicSize == 0) {
+        return false;
+    }
+
+    char topic[topicSize];
     generateTopic(topic, HAComponentName, trigger, EventTopic);
-    mqtt()->publish(topic, "");
+
+    if (strlen(topic) == 0) {
+        return false;
+    }
+
+    return mqtt()->publish(topic, "");
 }
 
 void HATriggers::publishConfig()
@@ -87,17 +96,35 @@ void HATriggers::publishConfig()
         return; // device is required for triggers
     }
 
-    uint16_t deviceLength = device->calculateSerializedLength();
+    const uint16_t& deviceLength = device->calculateSerializedLength();
+    if (deviceLength == 0) {
+        return;
+    }
+
     char serializedDevice[deviceLength];
-    device->serialize(serializedDevice);
+    if (device->serialize(serializedDevice) == 0) {
+        return;
+    }
 
     for (uint8_t i = 0; i < _triggersNb; i++) {
         const HATrigger* trigger = &_triggers[i];
+        if (trigger == nullptr) {
+            continue;
+        }
+
         const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
         const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
 
+        if (topicLength == 0 || dataLength == 0) {
+            continue;
+        }
+
         char topic[topicLength];
         generateTopic(topic, HAComponentName, trigger, ConfigTopic);
+
+        if (strlen(topic) == 0) {
+            continue;
+        }
 
         if (mqtt()->beginPublish(topic, dataLength, true)) {
             writeSerializedTrigger(trigger, serializedDevice);
@@ -150,12 +177,20 @@ uint16_t HATriggers::calculateSerializedLength(
     const char* serializedDevice
 ) const
 {
+    if (serializedDevice == nullptr) {
+        return 0;
+    }
+
     const uint16_t& topicLength = calculateTopicLength(
         HAComponentName,
         trigger,
         EventTopic,
         false
     );
+    if (topicLength == 0) {
+        return 0;
+    }
+
     uint16_t size =
         2 + // opening and closing bracket (without null terminator)
         17 + // automation type
@@ -175,6 +210,10 @@ bool HATriggers::writeSerializedTrigger(
     const char* serializedDevice
 ) const
 {
+    if (serializedDevice == nullptr) {
+        return false;
+    }
+
     static const char QuotationSign[] PROGMEM = {"\""};
 
     // automation type
@@ -190,6 +229,10 @@ bool HATriggers::writeSerializedTrigger(
             trigger,
             EventTopic
         );
+        if (topicSize == 0) {
+            return false;
+        }
+
         char eventTopic[topicSize];
         generateTopic(
             eventTopic,
@@ -197,6 +240,10 @@ bool HATriggers::writeSerializedTrigger(
             trigger,
             EventTopic
         );
+
+        if (strlen(eventTopic) == 0) {
+            return false;
+        }
 
         static const char DataBefore[] PROGMEM = {",\"t\":\""};
 
@@ -224,7 +271,7 @@ bool HATriggers::writeSerializedTrigger(
     }
 
     // device
-    if (serializedDevice != nullptr) {
+    {
         static const char Data[] PROGMEM = {",\"dev\":"};
 
         mqtt()->writePayload_P(Data);

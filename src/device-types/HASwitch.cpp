@@ -105,18 +105,33 @@ void HASwitch::triggerCallback(bool state)
 void HASwitch::publishConfig()
 {
     const HADevice* device = mqtt()->getDevice();
-    uint16_t deviceLength = (device == nullptr ? 0 : device->calculateSerializedLength());
-    char serializedDevice[deviceLength];
+    if (device == nullptr) {
+        return;
+    }
 
-    if (device != nullptr) {
-        device->serialize(serializedDevice);
+    const uint16_t& deviceLength = device->calculateSerializedLength();
+    if (deviceLength == 0) {
+        return;
+    }
+
+    char serializedDevice[deviceLength];
+    if (device->serialize(serializedDevice) == 0) {
+        return;
     }
 
     const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
+    if (topicLength == 0 || dataLength == 0) {
+        return;
+    }
+
     char topic[topicLength];
     generateTopic(topic, HAComponentName, _name, ConfigTopic);
+
+    if (strlen(topic) == 0) {
+        return;
+    }
 
     if (mqtt()->beginPublish(topic, dataLength, true)) {
         writeSerializedTrigger(serializedDevice);
@@ -135,6 +150,10 @@ void HASwitch::publishCurrentState()
         _name,
         StateTopic
     );
+    if (topicSize == 0) {
+        return;
+    }
+
     char topic[topicSize];
     generateTopic(
         topic,
@@ -142,6 +161,10 @@ void HASwitch::publishCurrentState()
         _name,
         StateTopic
     );
+
+    if (strlen(topic) == 0) {
+        return;
+    }
 
     mqtt()->publish(topic, (_currentState ? StateOn : StateOff));
 }
@@ -153,6 +176,10 @@ void HASwitch::subscribeCommandTopic()
         _name,
         CommandTopic
     );
+    if (topicSize == 0) {
+        return;
+    }
+
     char topic[topicSize];
     generateTopic(
         topic,
@@ -161,11 +188,19 @@ void HASwitch::subscribeCommandTopic()
         CommandTopic
     );
 
+    if (strlen(topic) == 0) {
+        return;
+    }
+
     mqtt()->subscribe(topic);
 }
 
 uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 {
+    if (serializedDevice == nullptr) {
+        return 0;
+    }
+
     const uint16_t& cmdTopicLength = calculateTopicLength(
         HAComponentName,
         _name,
@@ -178,6 +213,10 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
         StateTopic,
         false
     );
+
+    if (cmdTopicLength == 0 || stateTopicLength == 0) {
+        return 0;
+    }
 
     uint16_t size =
         2 + // opening and closing bracket (without null terminator)
@@ -210,6 +249,10 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
             _name,
             CommandTopic
         );
+        if (topicSize == 0) {
+            return false;
+        }
+
         char cmdTopic[topicSize];
         generateTopic(
             cmdTopic,
@@ -217,6 +260,10 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
             _name,
             CommandTopic
         );
+
+        if (strlen(cmdTopic) == 0) {
+            return false;
+        }
 
         static const char DataBefore[] PROGMEM = {"{\"cmd_t\":\""};
 
@@ -232,6 +279,10 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
             _name,
             StateTopic
         );
+        if (topicSize == 0) {
+            return false;
+        }
+
         char stateTopic[topicSize];
         generateTopic(
             stateTopic,
@@ -239,6 +290,10 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
             _name,
             StateTopic
         );
+
+        if (strlen(stateTopic) == 0) {
+            return false;
+        }
 
         static const char DataBefore[] PROGMEM = {",\"stat_t\":\""};
 
