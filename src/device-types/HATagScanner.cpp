@@ -6,7 +6,7 @@
 #include "../HADevice.h"
 #include "../HAUtils.h"
 
-// todo: move all variables to progmem
+// todo: move to progmem
 static const char* HAComponentName = "tag";
 
 HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
@@ -32,6 +32,10 @@ void HATagScanner::onMqttConnected()
 
 bool HATagScanner::tagScanned(const char* tag)
 {
+    if (tag == nullptr || strlen(tag) == 0) {
+        return false;
+    }
+
     const uint16_t& topicSize = calculateTopicLength(
         HAComponentName,
         _name,
@@ -97,6 +101,10 @@ uint16_t HATagScanner::calculateSerializedLength(
     const char* serializedDevice
 ) const
 {
+    if (serializedDevice == nullptr) {
+        return 0;
+    }
+
     const uint16_t& eventTopicLength = calculateTopicLength(
         HAComponentName,
         _name,
@@ -114,9 +122,13 @@ uint16_t HATagScanner::calculateSerializedLength(
 
 bool HATagScanner::writeSerializedTrigger(const char* serializedDevice) const
 {
+    if (serializedDevice == nullptr) {
+        return false;
+    }
+
     static const char QuotationSign[] PROGMEM = {"\""};
 
-    // command topic
+    // topic
     {
         const uint16_t& topicSize = calculateTopicLength(
             HAComponentName,
@@ -139,7 +151,7 @@ bool HATagScanner::writeSerializedTrigger(const char* serializedDevice) const
     }
 
     // device
-    if (serializedDevice != nullptr) {
+    {
         static const char Data[] PROGMEM = {",\"dev\":"};
 
         mqtt()->writePayload_P(Data);
