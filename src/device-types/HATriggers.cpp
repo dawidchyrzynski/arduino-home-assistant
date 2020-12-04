@@ -12,11 +12,7 @@ HATriggers::HATriggers(HAMqtt& mqtt) :
     _triggers(nullptr),
     _triggersNb(0)
 {
-#if defined(ARDUINOHA_DEBUG)
-    if (mqtt.getDevice() == nullptr) {
-        Serial.println(F("HATriggers requires HADevice to be defined."));
-    }
-#endif
+
 }
 
 HATriggers::~HATriggers()
@@ -34,7 +30,7 @@ void HATriggers::onMqttConnected()
 bool HATriggers::add(const char* type, const char* subtype)
 {
     if (mqtt()->getDevice() == nullptr) {
-        return false; // device is required for triggers
+        return false;
     }
 
     HATrigger* triggers = realloc(_triggers, sizeof(HATrigger) * (_triggersNb + 1));
@@ -73,7 +69,11 @@ bool HATriggers::trigger(const char* type, const char* subtype)
         return false;
     }
 
-    const uint16_t& size = calculateTopicLength(HAComponentName, trigger, EventTopic);
+    const uint16_t& size = calculateTopicLength(
+        HAComponentName,
+        trigger,
+        EventTopic
+    );
     char topic[size];
 
     generateTopic(topic, HAComponentName, trigger, EventTopic);

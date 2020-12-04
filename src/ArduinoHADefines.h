@@ -7,6 +7,7 @@
 // Here is the list of available defines:
 
 // #define NO_HA_TRIGGERS
+// #define NO_HA_TAG_SCANNER
 // #define NO_HA_SWITCH
 
 // In order to get them working just put proper #define before including the ArduinoHA.h header
