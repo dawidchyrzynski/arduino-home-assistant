@@ -1,3 +1,6 @@
+#ifndef ARDUINOHA_H
+#define ARDUINOHA_H
+
 #include "HADevice.h"
 #include "HAMqtt.h"
 #include "HAUtils.h"
@@ -7,3 +10,5 @@
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"
 #include "device-types/HATriggers.h"
+
+#endif
