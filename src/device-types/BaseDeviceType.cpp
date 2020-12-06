@@ -13,7 +13,7 @@ BaseDeviceType::BaseDeviceType(HAMqtt& mqtt) :
 
 BaseDeviceType::~BaseDeviceType()
 {
-    _mqtt.removeDeviceType(this);
+
 }
 
 uint16_t BaseDeviceType::calculateTopicLength(

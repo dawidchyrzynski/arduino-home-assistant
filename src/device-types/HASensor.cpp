@@ -1,5 +1,3 @@
-#ifndef NO_HA_SENSOR
-
 #include "HASensor.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
@@ -19,6 +17,7 @@ HASensor<T>::HASensor(
     BaseDeviceType(mqtt),
     _name(name),
     _class(nullptr),
+    _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
     _currentValue(initialValue)
 {
@@ -35,6 +34,7 @@ HASensor<T>::HASensor(
     BaseDeviceType(mqtt),
     _name(name),
     _class(deviceClass),
+    _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
     _currentValue(initialValue)
 {
@@ -64,6 +64,10 @@ bool HASensor<T>::setValue(T value)
     if (strlen(_name) == 0 ||
             _valueType == HAUtils::ValueTypeUnknown) {
         return false;
+    }
+
+    if (_currentValue == value) {
+        return true;
     }
 
     if (publishValue(value)) {
@@ -193,6 +197,11 @@ uint16_t HASensor<T>::calculateSerializedLength(
         size += strlen(_class) + 13; // 13 - length of the JSON data for this field
     }
 
+    // units of measurement
+    if (_units != nullptr) {
+        size += strlen(_units) + 18;
+    }
+
     // device
     size += strlen(serializedDevice) + 7; // 7 - length of the JSON data for this field
 
@@ -282,6 +291,15 @@ bool HASensor<T>::writeSerializedTrigger(const char* serializedDevice) const
         mqtt()->writePayload_P(QuotationSign);
     }
 
+    // units of measurement
+    if (_units != nullptr) {
+        static const char DataBefore[] PROGMEM = {",\"unit_of_meas\":\""};
+
+        mqtt()->writePayload_P(DataBefore);
+        mqtt()->writePayload(_units, strlen(_units));
+        mqtt()->writePayload_P(QuotationSign);
+    }
+
     {
         static const char Data[] PROGMEM = {"}"};
         mqtt()->writePayload_P(Data);
@@ -297,21 +315,40 @@ uint16_t HASensor<T>::calculateValueLength() const
         return 0;
     }
 
+    uint16_t size = 0;
+
     switch (_valueType) {
         case HAUtils::ValueTypeUint8:
+            size = 3; // from 0 to 255
+            break;
+
         case HAUtils::ValueTypeUint16:
+            size = 5; // from 0 to 65535
+            break;
+
         case HAUtils::ValueTypeUint32:
+            size = 10; // from 0 to 4294967295
+            break;
+
         case HAUtils::ValueTypeInt8:
+            size = 4; // from -128 to 127
+            break;
+
         case HAUtils::ValueTypeInt16:
+            size = 6; // from -32768 to 32767
+            break;
+
         case HAUtils::ValueTypeInt32:
-            return (HAUtils::getValueTypeLength(_valueType) * 3) + 1; // 3 digits per byte + null terminator
+            size = 11; // from -2147483648 to 2147483647
+            break;
 
         case HAUtils::ValueTypeDouble:
         case HAUtils::ValueTypeFloat:
-            return (HAUtils::getValueTypeLength(_valueType) * 3) + 4; // 3 digits per byte + dot separator + 2 precision digits + null terminator
+            // 3 digits per byte + dot separator + 2 precision digits
+            return (HAUtils::getValueTypeLength(_valueType) * 3) + 3;
     }
 
-    return 0;
+    return (size > 0 ? (size + 1) : 0);
 }
 
 template <typename T>
@@ -328,15 +365,14 @@ bool HASensor<T>::valueToStr(char* dst, T value) const
         case HAUtils::ValueTypeInt8:
         case HAUtils::ValueTypeInt16:
         case HAUtils::ValueTypeInt32:
-            sprintf(dst, "%d", value);
+            itoa(value, dst, 10);
             break;
 
         case HAUtils::ValueTypeDouble:
+        case HAUtils::ValueTypeFloat:
             dtostrf(value, 0, 2, dst);
             break;
     }
 
     return true;
 }
-
-#endif

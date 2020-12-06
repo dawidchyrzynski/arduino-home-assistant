@@ -113,11 +113,6 @@ void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
     }
 }
 
-void HAMqtt::removeDeviceType(BaseDeviceType* deviceType)
-{
-    // todo: remove device from the list
-}
-
 bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
 {
     if (!isConnected()) {

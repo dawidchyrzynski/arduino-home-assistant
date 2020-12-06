@@ -74,11 +74,6 @@ public:
     void addDeviceType(BaseDeviceType* deviceType);
 
     /**
-     * Removes device's type from the MQTT.
-     */
-    void removeDeviceType(BaseDeviceType* deviceType);
-
-    /**
      * Publishes MQTT message with given topic and payload.
      * Message won't be published if connection with MQTT broker is not established.
      * In this case method returns false.

@@ -61,6 +61,14 @@ public:
     inline T getValue() const
         { return _currentValue; }
 
+    /**
+     * Defines the units of measurement of the sensor, if any.
+     *
+     * @param units For example: °C, %
+     */
+    inline void setUnitOfMeasurement(const char* units)
+        { _units = units; }
+
 private:
     void publishConfig();
     bool publishValue(T value);
@@ -71,6 +79,7 @@ private:
 
     const char* _name;
     const char* _class;
+    const char* _units;
     HAUtils::ValueType _valueType;
     T _currentValue;
 };
