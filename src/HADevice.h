@@ -1,7 +1,7 @@
 #ifndef HADEVICE_H
 #define HADEVICE_H
 
-#include <stdint.h>
+#include <Arduino.h>
 
 class HADevice
 {
