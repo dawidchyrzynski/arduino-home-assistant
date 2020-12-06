@@ -1,5 +1,3 @@
-#ifndef NO_HA_BINARY_SENSOR
-
 #include "HABinarySensor.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
@@ -266,5 +264,3 @@ bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
 
     return true;
 }
-
-#endif

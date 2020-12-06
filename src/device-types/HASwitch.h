@@ -1,5 +1,4 @@
 #ifndef HASWITCH_H
-#ifndef NO_HA_SWITCH
 #define HASWITCH_H
 
 #include "BaseDeviceType.h"
@@ -94,5 +93,4 @@ private:
     bool _currentState;
 };
 
-#endif
 #endif

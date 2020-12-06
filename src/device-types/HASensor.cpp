@@ -320,7 +320,7 @@ bool HASensor<T>::valueToStr(char* dst, T value) const
     if (_valueType == HAUtils::ValueTypeUnknown) {
         return false;
     }
-Serial.println(value);
+
     switch (_valueType) {
         case HAUtils::ValueTypeUint8:
         case HAUtils::ValueTypeUint16:

@@ -25,7 +25,7 @@ public:
         { _softwareVersion = softwareVersion; }
 
     uint16_t calculateSerializedLength() const;
-    uint16_t serialize(char* output) const;
+    uint16_t serialize(char* dst) const;
 
 private:
     const char* _uniqueId;

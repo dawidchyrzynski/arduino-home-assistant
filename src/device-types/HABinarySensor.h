@@ -1,5 +1,4 @@
 #ifndef HABINARYSENSOR_H
-#ifndef NO_HA_BINARY_SENSOR
 #define HABINARYSENSOR_H
 
 #include "BaseDeviceType.h"
@@ -71,5 +70,4 @@ private:
     bool _currentState;
 };
 
-#endif
 #endif

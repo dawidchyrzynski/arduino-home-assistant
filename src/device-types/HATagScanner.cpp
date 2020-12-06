@@ -1,5 +1,3 @@
-#ifndef NO_HA_TAG_SCANNER
-
 #include "HATagScanner.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
@@ -165,5 +163,3 @@ bool HATagScanner::writeSerializedTrigger(const char* serializedDevice) const
 
     return true;
 }
-
-#endif

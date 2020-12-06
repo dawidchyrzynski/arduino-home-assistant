@@ -1,5 +1,4 @@
 #ifndef HATAGSCANNER_H
-#ifndef NO_HA_TAG_SCANNER
 #define HATAGSCANNER_H
 
 #include "BaseDeviceType.h"
@@ -36,5 +35,4 @@ private:
     const char* _name;
 };
 
-#endif
 #endif

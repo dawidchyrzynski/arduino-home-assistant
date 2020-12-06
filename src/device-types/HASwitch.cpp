@@ -1,5 +1,3 @@
-#ifndef NO_HA_SWITCH
-
 #include "HASwitch.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
@@ -337,5 +335,3 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
 
     return true;
 }
-
-#endif

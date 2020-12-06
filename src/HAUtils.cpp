@@ -25,11 +25,11 @@ void HAUtils::byteArrayToStr(
 )
 {
     const uint16_t& finalLength = (length * 2);
-    const char* map = "0123456789abcdef"; // todo: move to progmem
+    static const char map[] PROGMEM = {"0123456789abcdef"};
 
     for (uint8_t i = 0; i < length; i++) {
-        dst[i*2] = map[((char)src[i] & 0XF0) >> 4];
-        dst[i*2+1] = map[((char)src[i] & 0x0F)];
+        dst[i*2] = pgm_read_byte(&map[((char)src[i] & 0XF0) >> 4]);
+        dst[i*2+1] = pgm_read_byte(&map[((char)src[i] & 0x0F)]);
     }
 
     dst[finalLength] = '\0';
@@ -72,5 +72,8 @@ uint8_t HAUtils::getValueTypeLength(const ValueType& type)
 
         case ValueTypeFloat:
             return sizeof(float);
+
+        default:
+            return 0;
     }
 }

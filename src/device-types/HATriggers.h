@@ -1,5 +1,4 @@
 #ifndef HATRIGGERS_H
-#ifndef NO_HA_TRIGGERS
 #define HATRIGGERS_H
 
 #include "BaseDeviceType.h"
@@ -52,5 +51,4 @@ private:
     uint8_t _triggersNb;
 };
 
-#endif
 #endif

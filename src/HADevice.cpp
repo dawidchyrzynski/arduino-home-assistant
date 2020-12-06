@@ -48,54 +48,54 @@ uint16_t HADevice::calculateSerializedLength() const
     return size;
 }
 
-uint16_t HADevice::serialize(char* output) const
+uint16_t HADevice::serialize(char* dst) const
 {
     static const char QuotationSign[] PROGMEM = {"\""};
 
     {
         static const char DataBefore[] PROGMEM = {"{\"ids\":\""};
 
-        strcpy_P(output, DataBefore);
-        strcat(output, _uniqueId);
-        strcat_P(output, QuotationSign);
+        strcpy_P(dst, DataBefore);
+        strcat(dst, _uniqueId);
+        strcat_P(dst, QuotationSign);
     }
 
     if (_manufacturer != nullptr) {
         static const char DataBefore[] PROGMEM = {",\"mf\":\""};
 
-        strcat_P(output, DataBefore);
-        strcat(output, _manufacturer);
-        strcat_P(output, QuotationSign);
+        strcat_P(dst, DataBefore);
+        strcat(dst, _manufacturer);
+        strcat_P(dst, QuotationSign);
     }
 
     if (_model != nullptr) {
         static const char DataBefore[] PROGMEM = {",\"mdl\":\""};
 
-        strcat_P(output, DataBefore);
-        strcat(output, _model);
-        strcat_P(output, QuotationSign);
+        strcat_P(dst, DataBefore);
+        strcat(dst, _model);
+        strcat_P(dst, QuotationSign);
     }
 
     if (_name != nullptr) {
         static const char DataBefore[] PROGMEM = {",\"name\":\""};
 
-        strcat_P(output, DataBefore);
-        strcat(output, _name);
-        strcat_P(output, QuotationSign);
+        strcat_P(dst, DataBefore);
+        strcat(dst, _name);
+        strcat_P(dst, QuotationSign);
     }
 
     if (_softwareVersion != nullptr) {
         static const char DataBefore[] PROGMEM = {",\"sw\":\""};
 
-        strcat_P(output, DataBefore);
-        strcat(output, _softwareVersion);
-        strcat_P(output, QuotationSign);
+        strcat_P(dst, DataBefore);
+        strcat(dst, _softwareVersion);
+        strcat_P(dst, QuotationSign);
     }
 
     {
         static const char Data[] PROGMEM = {"}"};
-        strcat_P(output, Data);
+        strcat_P(dst, Data);
     }
 
-    return strlen(output) + 1; // size with null terminator
+    return strlen(dst) + 1; // size with null terminator
 }

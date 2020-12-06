@@ -1,5 +1,4 @@
 #ifndef HASENSOR_H
-#ifndef NO_HA_SENSOR
 #define HASENSOR_H
 
 #include "BaseDeviceType.h"
@@ -76,5 +75,4 @@ private:
     T _currentValue;
 };
 
-#endif
 #endif
