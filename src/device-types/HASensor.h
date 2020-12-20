@@ -1,5 +1,5 @@
-#ifndef HASENSOR_H
-#define HASENSOR_H
+#ifndef AHA_HASENSOR_H
+#define AHA_HASENSOR_H
 
 #include "BaseDeviceType.h"
 #include "../HAUtils.h"

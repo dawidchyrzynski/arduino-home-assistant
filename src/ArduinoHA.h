@@ -1,5 +1,5 @@
-#ifndef ARDUINOHA_H
-#define ARDUINOHA_H
+#ifndef AHA_ARDUINOHA_H
+#define AHA_ARDUINOHA_H
 
 #include "HADevice.h"
 #include "HAMqtt.h"

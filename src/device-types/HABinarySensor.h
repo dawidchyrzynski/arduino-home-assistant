@@ -1,5 +1,5 @@
-#ifndef HABINARYSENSOR_H
-#define HABINARYSENSOR_H
+#ifndef AHA_HABINARYSENSOR_H
+#define AHA_HABINARYSENSOR_H
 
 #include "BaseDeviceType.h"
 

@@ -1,5 +1,5 @@
-#ifndef HATRIGGERS_H
-#define HATRIGGERS_H
+#ifndef AHA_HATRIGGERS_H
+#define AHA_HATRIGGERS_H
 
 #include "BaseDeviceType.h"
 

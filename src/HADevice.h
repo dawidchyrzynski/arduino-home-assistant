@@ -1,5 +1,5 @@
-#ifndef HADEVICE_H
-#define HADEVICE_H
+#ifndef AHA_HADEVICE_H
+#define AHA_HADEVICE_H
 
 #include <Arduino.h>
 

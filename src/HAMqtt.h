@@ -1,5 +1,5 @@
-#ifndef HAMQTT_H
-#define HAMQTT_H
+#ifndef AHA_HAMQTT_H
+#define AHA_HAMQTT_H
 
 #include <Arduino.h>
 

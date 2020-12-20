@@ -1,5 +1,5 @@
-#ifndef HAUTILS_H
-#define HAUTILS_H
+#ifndef AHA_HAUTILS_H
+#define AHA_HAUTILS_H
 
 #include <Arduino.h>
 

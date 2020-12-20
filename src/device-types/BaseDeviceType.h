@@ -1,5 +1,5 @@
-#ifndef BASEDEVICETYPE_H
-#define BASEDEVICETYPE_H
+#ifndef AHA_BASEDEVICETYPE_H
+#define AHA_BASEDEVICETYPE_H
 
 #include <stdint.h>
 

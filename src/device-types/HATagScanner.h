@@ -1,5 +1,5 @@
-#ifndef HATAGSCANNER_H
-#define HATAGSCANNER_H
+#ifndef AHA_HATAGSCANNER_H
+#define AHA_HATAGSCANNER_H
 
 #include "BaseDeviceType.h"
 
