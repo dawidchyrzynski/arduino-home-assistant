@@ -22,7 +22,7 @@
     _devicesTypes(nullptr)
 
 static const char* DefaultDiscoveryPrefix = "homeassistant";
-HAMqtt* instance = nullptr;
+static HAMqtt* instance = nullptr;
 
 void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
 {
@@ -128,7 +128,7 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
 #endif
 
     _mqtt->beginPublish(topic, strlen(payload), retained);
-    _mqtt->write(payload, strlen(payload));
+    _mqtt->write((const uint8_t*)(payload), strlen(payload));
     return _mqtt->endPublish();
 }
 
@@ -151,7 +151,7 @@ bool HAMqtt::beginPublish(
 
 bool HAMqtt::writePayload(const char* data, uint16_t length)
 {
-    return (_mqtt->write(data, length) > 0);
+    return (_mqtt->write((const uint8_t*)(data), length) > 0);
 }
 
 bool HAMqtt::writePayload_P(const char* src)
@@ -159,7 +159,7 @@ bool HAMqtt::writePayload_P(const char* src)
     char data[strlen_P(src) + 1];
     strcpy_P(data, src);
 
-    return _mqtt->write(data, strlen(data));
+    return _mqtt->write((const uint8_t*)(data), strlen(data));
 }
 
 bool HAMqtt::endPublish()

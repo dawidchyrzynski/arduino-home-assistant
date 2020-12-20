@@ -31,7 +31,7 @@ bool HATriggers::add(const char* type, const char* subtype)
         return false;
     }
 
-    HATrigger* triggers = realloc(_triggers, sizeof(HATrigger) * (_triggersNb + 1));
+    HATrigger* triggers = (HATrigger*)realloc(_triggers, sizeof(HATrigger) * (_triggersNb + 1));
     if (triggers == nullptr) {
         return false;
     }
@@ -133,7 +133,7 @@ void HATriggers::publishConfig()
 
 uint16_t HATriggers::calculateTopicLength(
     const char* component,
-    HATrigger *trigger,
+    const HATrigger *trigger,
     const char* suffix,
     bool includeNullTerminator
 ) const
@@ -150,7 +150,7 @@ uint16_t HATriggers::calculateTopicLength(
 uint16_t HATriggers::generateTopic(
     char* output,
     const char* component,
-    HATrigger *trigger,
+    const HATrigger *trigger,
     const char* suffix
 ) const
 {

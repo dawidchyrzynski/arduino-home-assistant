@@ -88,7 +88,26 @@ public:
     bool writePayload(const char* data, uint16_t length);
     bool writePayload_P(const char* src);
     bool endPublish();
+
+    /**
+     * Subscribes to the given topic.
+     * Whenever a new message is received the onMqttMessage callback in all
+     * devices types is called.
+     *
+     * Please note that you need to subscribe topic each time the connection
+     * with the broker is acquired.
+     *
+     * @param topic Topic to subscribe
+     */
     bool subscribe(const char* topic);
+
+    /**
+     * Processes MQTT message received from the broker (subscription).
+     *
+     * @param topic Topic of the message.
+     * @param payload Content of the message.
+     * @param length Length of the message.
+     */
     void processMessage(char* topic, uint8_t* payload, uint16_t length);
 
 private:

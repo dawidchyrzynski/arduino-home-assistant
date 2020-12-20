@@ -22,7 +22,7 @@ public:
 protected:
     uint16_t calculateTopicLength(
         const char* component,
-        HATrigger *trigger,
+        const HATrigger *trigger,
         const char* suffix,
         bool includeNullTerminator = true
     ) const;
@@ -30,7 +30,7 @@ protected:
     uint16_t generateTopic(
         char* output,
         const char* component,
-        HATrigger *trigger,
+        const HATrigger *trigger,
         const char* suffix
     ) const;
 

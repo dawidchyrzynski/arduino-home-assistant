@@ -38,7 +38,7 @@ void HASwitch::onMqttConnected()
 
 void HASwitch::onMqttMessage(
     const char* topic,
-    const char* payload,
+    const uint8_t* payload,
     const uint16_t& length
 )
 {
@@ -56,7 +56,7 @@ void HASwitch::onMqttMessage(
     strcat(suffix, CommandTopic);
 
     if (HAUtils::endsWith(topic, suffix)) {
-        bool onState = (strncmp(payload, StateOn, length) == 0);
+        bool onState = (length == strlen(StateOn));
         setState(onState);
     }
 }

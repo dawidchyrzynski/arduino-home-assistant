@@ -33,7 +33,7 @@ public:
      */
     virtual void onMqttMessage(
         const char* topic,
-        const char* payload,
+        const uint8_t* payload,
         const uint16_t& length
     ) override;
 

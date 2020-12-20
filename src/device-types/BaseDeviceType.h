@@ -17,7 +17,7 @@ public:
     virtual void onMqttConnected() = 0;
     virtual void onMqttMessage(
         const char* topic,
-        const char* payload,
+        const uint8_t* payload,
         const uint16_t& length
     ) { };
 
