@@ -5,6 +5,11 @@ The library is designed to use as little resources (RAM/flash) as possible.
 Initially it was optimized to work on Arduino Uno with Ethernet Shield,
 but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
+## Features
+
+* MQTT discovery (device is added to the Home Assistant panel automatically)
+* Auto reconnect with MQTT broker
+
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
@@ -41,3 +46,11 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 The library doesn't support all features of the MQTT integration.
 If you need support for a new feature please open a new issue in the repository.
+
+# License
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0 as published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/gpl.html
