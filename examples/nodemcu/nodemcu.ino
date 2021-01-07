@@ -1,12 +1,13 @@
-#include <Ethernet.h>
+#include <ESP8266WiFi.h>
 #include <ArduinoHA.h>
 
-#define LED_PIN         9
+#define LED_PIN         D0
 #define BROKER_ADDR     IPAddress(192,168,0,17)
+#define WIFI_SSID       "MyNetwork"
+#define WIFI_PASSWORD   "MyPassword"
 
-byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
-
-EthernetClient client;
+byte mac[6];
+WiFiClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 HASwitch led("led", false, mqtt); // you can use custom name in place of "led"
@@ -17,14 +18,24 @@ void onSwitchStateChanged(bool state, HASwitch* s)
 }
 
 void setup() {
+    Serial.begin(9600);
+    Serial.println("Starting...");
+
+    WiFi.macAddress(mac);
     pinMode(LED_PIN, OUTPUT);
     digitalWrite(LED_PIN, LOW);
 
-    // you don't need to verify return status
-    Ethernet.begin(mac);
+    // connect to wifi
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    while (WiFi.status() != WL_CONNECTED) {
+        Serial.print(".");
+        delay(500); // waiting for the connection
+    }
+    Serial.println();
+    Serial.println("Connected to the network");
 
     // set device's details (optional)
-    device.setName("Arduino");
+    device.setName("NodeMCU");
     device.setSoftwareVersion("1.0.0");
 
     // handle switch state
@@ -34,6 +45,5 @@ void setup() {
 }
 
 void loop() {
-    Ethernet.maintain();
     mqtt.loop();
 }

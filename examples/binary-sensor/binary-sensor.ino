@@ -11,6 +11,9 @@ bool lastInputState = false;
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
+
+// "input" may be anything you want to be displayed in HA panel
+// "door" is device class (based on the class HA displays different icons in the panel)
 HABinarySensor sensor("input", "door", false, mqtt);
 
 void setup() {

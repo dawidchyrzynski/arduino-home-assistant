@@ -16,7 +16,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [LED switch](examples/led-switch/led-switch.ino)
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
-* [RFID tag reader](examples/rfid-tag-reader/rfid-tag-reader.ino)
 * [Sensor (temperature, humidity, etc.)](examples/sensor/sensor.ino)
 * [NodeMCU Wi-Fi](examples/nodemcu/nodemcu.ino)
 
