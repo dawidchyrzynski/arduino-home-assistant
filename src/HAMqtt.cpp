@@ -83,6 +83,15 @@ bool HAMqtt::begin(
     return true;
 }
 
+bool HAMqtt::begin(
+    const IPAddress& serverIp,
+    const char* username,
+    const char* password
+)
+{
+    return begin(serverIp, 1883, username, password);
+}
+
 void HAMqtt::loop()
 {
     if (!_initialized) {

@@ -54,6 +54,12 @@ public:
         const char* password = nullptr
     );
 
+    bool begin(
+        const IPAddress& serverIp,
+        const char* username,
+        const char* password
+    );
+
     /**
      * ArduinoHA's ticker.
      */
