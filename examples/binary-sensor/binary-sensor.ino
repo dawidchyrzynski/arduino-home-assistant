@@ -24,7 +24,6 @@ void setup() {
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
 
-    // please change IP address to yours
     mqtt.begin(BROKER_ADDR);
 }
 

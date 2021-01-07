@@ -32,7 +32,6 @@ void setup() {
     // handle switch state
     led.onStateChanged(onSwitchStateChanged);
 
-    // please change IP address to yours
     mqtt.begin(BROKER_ADDR, BROKER_USERNAME, BROKER_PASSWORD);
 }
 

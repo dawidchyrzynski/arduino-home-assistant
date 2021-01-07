@@ -35,7 +35,6 @@ void setup() {
     // you can set custom units for the sensor (optional)
     temp.setUnitOfMeasurement("°C");
 
-    // please change IP address to yours
     mqtt.begin(BROKER_ADDR);
 }
 
