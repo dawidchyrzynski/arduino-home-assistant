@@ -1,7 +1,8 @@
 #include <Ethernet.h>
 #include <ArduinoHA.h>
 
-#define INPUT_PIN 9
+#define INPUT_PIN       9
+#define BROKER_ADDR     IPAddress(192,168,0,17)
 
 byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 unsigned long lastReadAt = millis();
@@ -24,7 +25,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // please change IP address to yours
-    mqtt.begin(IPAddress(192,168,0,17));
+    mqtt.begin(BROKER_ADDR);
 }
 
 void loop() {

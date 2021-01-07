@@ -1,6 +1,8 @@
 #include <Ethernet.h>
 #include <ArduinoHA.h>
 
+#define BROKER_ADDR IPAddress(192,168,0,17)
+
 byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 unsigned long lastSentAt = millis();
 double lastValue = 0;
@@ -34,7 +36,7 @@ void setup() {
     temp.setUnitOfMeasurement("°C");
 
     // please change IP address to yours
-    mqtt.begin(IPAddress(192,168,0,17));
+    mqtt.begin(BROKER_ADDR);
 }
 
 void loop() {
