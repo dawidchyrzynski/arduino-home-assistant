@@ -5,7 +5,6 @@
 #include "../HAUtils.h"
 
 // todo: move all variables to progmem
-static const char* HAComponentName = "sensor";
 static const char* ValueTopic = "value";
 
 template <typename T>
@@ -14,8 +13,7 @@ HASensor<T>::HASensor(
     T initialValue,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt),
-    _name(name),
+    BaseDeviceType(mqtt, "sensor", name),
     _class(nullptr),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
@@ -100,7 +98,7 @@ void HASensor<T>::publishConfig()
         return;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
+    const uint16_t& topicLength = calculateTopicLength(_componentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
     if (topicLength == 0 || dataLength == 0) {
@@ -108,7 +106,7 @@ void HASensor<T>::publishConfig()
     }
 
     char topic[topicLength];
-    generateTopic(topic, HAComponentName, _name, ConfigTopic);
+    generateTopic(topic, _componentName, _name, ConfigTopic);
 
     if (strlen(topic) == 0) {
         return;
@@ -129,7 +127,7 @@ bool HASensor<T>::publishValue(T value)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         ValueTopic
     );
@@ -140,7 +138,7 @@ bool HASensor<T>::publishValue(T value)
     char topic[topicSize];
     generateTopic(
         topic,
-        HAComponentName,
+        _componentName,
         _name,
         ValueTopic
     );
@@ -173,7 +171,7 @@ uint16_t HASensor<T>::calculateSerializedLength(
     }
 
     const uint16_t& valueTopicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         ValueTopic,
         false
@@ -221,7 +219,7 @@ bool HASensor<T>::writeSerializedTrigger(const char* serializedDevice) const
     // state topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             _name,
             ValueTopic
         );
@@ -232,7 +230,7 @@ bool HASensor<T>::writeSerializedTrigger(const char* serializedDevice) const
         char stateTopic[topicSize];
         generateTopic(
             stateTopic,
-            HAComponentName,
+            _componentName,
             _name,
             ValueTopic
         );

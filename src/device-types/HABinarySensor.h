@@ -65,7 +65,6 @@ private:
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedTrigger(const char* serializedDevice) const;
 
-    const char* _name;
     const char* _class;
     bool _currentState;
 };

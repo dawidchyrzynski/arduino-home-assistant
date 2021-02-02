@@ -11,7 +11,7 @@ public:
     static const char* ConfigTopic;
     static const char* EventTopic;
 
-    BaseDeviceType(HAMqtt& mqtt);
+    BaseDeviceType(HAMqtt& mqtt, const char* componentName, const char* name);
     virtual ~BaseDeviceType();
 
 protected:
@@ -38,6 +38,9 @@ protected:
         const char* objectId,
         const char* suffix
     ) const final;
+
+    const char* const _componentName;
+    const char* const _name;
 
 private:
     enum Availability {

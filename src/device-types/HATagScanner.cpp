@@ -4,12 +4,8 @@
 #include "../HADevice.h"
 #include "../HAUtils.h"
 
-// todo: move to progmem
-static const char* HAComponentName = "tag";
-
 HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
-    BaseDeviceType(mqtt),
-    _name(name)
+    BaseDeviceType(mqtt, "tag", name)
 {
 
 }
@@ -35,7 +31,7 @@ bool HATagScanner::tagScanned(const char* tag)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         EventTopic
     );
@@ -46,7 +42,7 @@ bool HATagScanner::tagScanned(const char* tag)
     char topic[topicSize];
     generateTopic(
         topic,
-        HAComponentName,
+        _componentName,
         _name,
         EventTopic
     );
@@ -75,7 +71,7 @@ void HATagScanner::publishConfig()
         return;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
+    const uint16_t& topicLength = calculateTopicLength(_componentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
     if (topicLength == 0 || dataLength == 0) {
@@ -83,7 +79,7 @@ void HATagScanner::publishConfig()
     }
 
     char topic[topicLength];
-    generateTopic(topic, HAComponentName, _name, ConfigTopic);
+    generateTopic(topic, _componentName, _name, ConfigTopic);
 
     if (strlen(topic) == 0) {
         return;
@@ -104,7 +100,7 @@ uint16_t HATagScanner::calculateSerializedLength(
     }
 
     const uint16_t& eventTopicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         EventTopic,
         false
@@ -129,14 +125,14 @@ bool HATagScanner::writeSerializedTrigger(const char* serializedDevice) const
     // topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             _name,
             EventTopic
         );
         char topic[topicSize];
         generateTopic(
             topic,
-            HAComponentName,
+            _componentName,
             _name,
             EventTopic
         );

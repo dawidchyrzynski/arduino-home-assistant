@@ -5,15 +5,13 @@
 #include "../HAUtils.h"
 
 // todo: move all variables to progmem
-static const char* HAComponentName = "switch";
 static const char* CommandTopic = "cmd";
 static const char* StateTopic = "state";
 static const char* StateOn = "ON";
 static const char* StateOff = "OFF";
 
 HASwitch::HASwitch(const char* name, bool initialState, HAMqtt& mqtt) :
-    BaseDeviceType(mqtt),
-    _name(name),
+    BaseDeviceType(mqtt, "switch", _name),
     _stateCallback(nullptr),
     _currentState(initialState)
 {
@@ -111,7 +109,7 @@ void HASwitch::publishConfig()
         return;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
+    const uint16_t& topicLength = calculateTopicLength(_componentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
     if (topicLength == 0 || dataLength == 0) {
@@ -119,7 +117,7 @@ void HASwitch::publishConfig()
     }
 
     char topic[topicLength];
-    generateTopic(topic, HAComponentName, _name, ConfigTopic);
+    generateTopic(topic, _componentName, _name, ConfigTopic);
 
     if (strlen(topic) == 0) {
         return;
@@ -138,7 +136,7 @@ bool HASwitch::publishState(bool state)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic
     );
@@ -149,7 +147,7 @@ bool HASwitch::publishState(bool state)
     char topic[topicSize];
     generateTopic(
         topic,
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic
     );
@@ -164,7 +162,7 @@ bool HASwitch::publishState(bool state)
 void HASwitch::subscribeCommandTopic()
 {
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         CommandTopic
     );
@@ -175,7 +173,7 @@ void HASwitch::subscribeCommandTopic()
     char topic[topicSize];
     generateTopic(
         topic,
-        HAComponentName,
+        _componentName,
         _name,
         CommandTopic
     );
@@ -194,13 +192,13 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     }
 
     const uint16_t& cmdTopicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         CommandTopic,
         false
     );
     const uint16_t& stateTopicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic,
         false
@@ -237,7 +235,7 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
     // command topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             _name,
             CommandTopic
         );
@@ -248,7 +246,7 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
         char cmdTopic[topicSize];
         generateTopic(
             cmdTopic,
-            HAComponentName,
+            _componentName,
             _name,
             CommandTopic
         );
@@ -267,7 +265,7 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
     // state topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             _name,
             StateTopic
         );
@@ -278,7 +276,7 @@ bool HASwitch::writeSerializedTrigger(const char* serializedDevice) const
         char stateTopic[topicSize];
         generateTopic(
             stateTopic,
-            HAComponentName,
+            _componentName,
             _name,
             StateTopic
         );

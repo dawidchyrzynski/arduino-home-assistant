@@ -5,7 +5,6 @@
 #include "../HAUtils.h"
 
 // todo: move all variables to progmem
-static const char* HAComponentName = "binary_sensor";
 static const char* StateTopic = "state";
 static const char* StateOn = "ON";
 static const char* StateOff = "OFF";
@@ -15,8 +14,7 @@ HABinarySensor::HABinarySensor(
     bool initialState,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt),
-    _name(name),
+    BaseDeviceType(mqtt, "binary_sensor", name),
     _class(nullptr),
     _currentState(initialState)
 {
@@ -29,8 +27,7 @@ HABinarySensor::HABinarySensor(
     bool initialState,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt),
-    _name(name),
+    BaseDeviceType(mqtt, "binary_sensor", name),
     _class(deviceClass),
     _currentState(initialState)
 {
@@ -87,7 +84,7 @@ void HABinarySensor::publishConfig()
         return;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(HAComponentName, _name, ConfigTopic);
+    const uint16_t& topicLength = calculateTopicLength(_componentName, _name, ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
     if (topicLength == 0 || dataLength == 0) {
@@ -95,7 +92,7 @@ void HABinarySensor::publishConfig()
     }
 
     char topic[topicLength];
-    generateTopic(topic, HAComponentName, _name, ConfigTopic);
+    generateTopic(topic, _componentName, _name, ConfigTopic);
 
     if (strlen(topic) == 0) {
         return;
@@ -114,7 +111,7 @@ bool HABinarySensor::publishState(bool state)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic
     );
@@ -125,7 +122,7 @@ bool HABinarySensor::publishState(bool state)
     char topic[topicSize];
     generateTopic(
         topic,
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic
     );
@@ -146,7 +143,7 @@ uint16_t HABinarySensor::calculateSerializedLength(
     }
 
     const uint16_t& stateTopicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         _name,
         StateTopic,
         false
@@ -187,7 +184,7 @@ bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
     // state topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             _name,
             StateTopic
         );
@@ -198,7 +195,7 @@ bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
         char stateTopic[topicSize];
         generateTopic(
             stateTopic,
-            HAComponentName,
+            _componentName,
             _name,
             StateTopic
         );

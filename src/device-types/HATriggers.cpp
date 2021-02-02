@@ -3,10 +3,8 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-static const char* HAComponentName = "device_automation"; // todo: move to progmem
-
 HATriggers::HATriggers(HAMqtt& mqtt) :
-    BaseDeviceType(mqtt),
+    BaseDeviceType(mqtt, "device_automation", nullptr),
     _triggers(nullptr),
     _triggersNb(0)
 {
@@ -68,7 +66,7 @@ bool HATriggers::trigger(const char* type, const char* subtype)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         trigger,
         EventTopic
     );
@@ -78,7 +76,7 @@ bool HATriggers::trigger(const char* type, const char* subtype)
     }
 
     char topic[topicSize];
-    generateTopic(topic, HAComponentName, trigger, EventTopic);
+    generateTopic(topic, _componentName, trigger, EventTopic);
 
     if (strlen(topic) == 0) {
         return false;
@@ -110,7 +108,7 @@ void HATriggers::publishConfig()
             continue;
         }
 
-        const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
+        const uint16_t& topicLength = calculateTopicLength(_componentName, trigger, ConfigTopic);
         const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
 
         if (topicLength == 0 || dataLength == 0) {
@@ -118,7 +116,7 @@ void HATriggers::publishConfig()
         }
 
         char topic[topicLength];
-        generateTopic(topic, HAComponentName, trigger, ConfigTopic);
+        generateTopic(topic, _componentName, trigger, ConfigTopic);
 
         if (strlen(topic) == 0) {
             continue;
@@ -180,7 +178,7 @@ uint16_t HATriggers::calculateSerializedLength(
     }
 
     const uint16_t& topicLength = calculateTopicLength(
-        HAComponentName,
+        _componentName,
         trigger,
         EventTopic,
         false
@@ -223,7 +221,7 @@ bool HATriggers::writeSerializedTrigger(
     // topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            _componentName,
             trigger,
             EventTopic
         );
@@ -234,7 +232,7 @@ bool HATriggers::writeSerializedTrigger(
         char eventTopic[topicSize];
         generateTopic(
             eventTopic,
-            HAComponentName,
+            _componentName,
             trigger,
             EventTopic
         );

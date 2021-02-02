@@ -5,8 +5,14 @@
 const char* BaseDeviceType::ConfigTopic = "config"; // todo: move to progmem
 const char* BaseDeviceType::EventTopic = "event";
 
-BaseDeviceType::BaseDeviceType(HAMqtt& mqtt) :
+BaseDeviceType::BaseDeviceType(
+    HAMqtt& mqtt,
+    const char* componentName,
+    const char* name
+) :
     _mqtt(mqtt),
+    _componentName(componentName),
+    _name(name),
     _availability(AvailabilityDefault)
 {
     _mqtt.addDeviceType(this);
