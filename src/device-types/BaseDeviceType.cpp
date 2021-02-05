@@ -13,6 +13,7 @@ BaseDeviceType::BaseDeviceType(
     const char* componentName,
     const char* name
 ) :
+    DeviceTypeSerializer(this),
     _mqtt(mqtt),
     _componentName(componentName),
     _name(name),
@@ -67,65 +68,4 @@ void BaseDeviceType::publishAvailability()
     }
 
     mqtt()->publish(topic, (_availability == AvailabilityOnline ? Online : Offline), true);
-}
-
-uint16_t BaseDeviceType::calculateTopicLength(
-    const char* component,
-    const char* objectId,
-    const char* suffix,
-    bool includeNullTerminator
-) const
-{
-    // [discovery prefix]/[namespace]/[device id - optional]/subtype_type/[suffix]
-    const char* prefix = _mqtt.getDiscoveryPrefix();
-    if (prefix == nullptr) {
-        return 0;
-    }
-
-    uint16_t size =
-        strlen(prefix) + 1 + // with slash
-        strlen(component) + 1 + // with slash
-        strlen(suffix); // with null terminator
-
-    if (objectId != nullptr) {
-        size += strlen(objectId) + 1; // with slash
-    } else {
-        size += 1; // slash
-    }
-
-    if (_mqtt.getDevice() != nullptr) {
-        size += strlen(_mqtt.getDevice()->getUniqueId()) + 1; // with slash
-    }
-
-    if (includeNullTerminator) {
-        size += 1;
-    }
-
-    return size;
-}
-
-uint16_t BaseDeviceType::generateTopic(
-    char* output,
-    const char* component,
-    const char* objectId,
-    const char* suffix
-) const
-{
-    static const char Slash[] PROGMEM = {"/"};
-
-    const char* prefix = _mqtt.getDiscoveryPrefix();
-    strcpy(output, prefix);
-    strcat_P(output, Slash);
-    strcat(output, component);
-    strcat_P(output, Slash);
-
-    if (_mqtt.getDevice() != nullptr) {
-        strcat(output, _mqtt.getDevice()->getUniqueId());
-        strcat_P(output, Slash);
-    }
-
-    strcat(output, objectId);
-    strcat_P(output, Slash);
-    strcat(output, suffix);
-    return strlen(output) + 1; // size with null terminator
 }

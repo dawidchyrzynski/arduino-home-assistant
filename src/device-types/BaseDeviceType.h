@@ -3,9 +3,11 @@
 
 #include <stdint.h>
 
+#include "DeviceTypeSerializer.h"
+
 class HAMqtt;
 
-class BaseDeviceType
+class BaseDeviceType : protected DeviceTypeSerializer
 {
 public:
     static const char* ConfigTopic;
@@ -26,6 +28,12 @@ protected:
     inline HAMqtt* mqtt() const
         { return &_mqtt; }
 
+    inline const char* name() const
+        { return _name; }
+
+    inline const char* componentName() const
+        { return _componentName; }
+
     inline bool isAvailabilityConfigured() const
         { return (_availability != AvailabilityDefault); }
 
@@ -37,20 +45,6 @@ protected:
     ) { };
 
     virtual void publishAvailability();
-
-    virtual uint16_t calculateTopicLength(
-        const char* component,
-        const char* objectId,
-        const char* suffix,
-        bool includeNullTerminator = true
-    ) const final;
-
-    virtual uint16_t generateTopic(
-        char* output,
-        const char* component,
-        const char* objectId,
-        const char* suffix
-    ) const final;
 
     const char* const _componentName;
     const char* const _name;
@@ -66,6 +60,7 @@ private:
     Availability _availability;
 
     friend class HAMqtt;
+    friend class DeviceTypeSerializer;
 };
 
 #endif
