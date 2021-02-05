@@ -19,10 +19,10 @@ public:
     BaseDeviceType(HAMqtt& mqtt, const char* componentName, const char* name);
     virtual ~BaseDeviceType();
 
-    virtual void setAvailability(bool online);
-
-    virtual inline bool isOnline() const
+    inline bool isOnline() const
         { return (_availability == AvailabilityOnline); }
+
+    virtual void setAvailability(bool online);
 
 protected:
     inline HAMqtt* mqtt() const

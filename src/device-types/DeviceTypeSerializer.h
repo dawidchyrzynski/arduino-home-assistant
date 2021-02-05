@@ -21,12 +21,12 @@ protected:
      * @param suffix
      * @param includeNullTerminator
      */
-    virtual uint16_t calculateTopicLength(
+    uint16_t calculateTopicLength(
         const char* component,
         const char* objectId,
         const char* suffix,
         bool includeNullTerminator = true
-    ) const final;
+    ) const;
 
     /**
      * Generates topic and saves it to the given buffer.
@@ -39,18 +39,26 @@ protected:
      * @param suffix
      * @param includeNullTerminator
      */
-    virtual uint16_t generateTopic(
+    uint16_t generateTopic(
         char* output,
         const char* component,
         const char* objectId,
         const char* suffix
-    ) const final;
+    ) const;
 
-    virtual uint16_t calculateBaseJsonDataSize() final;
-    virtual uint16_t calculateNameFieldSize() final;
-    virtual uint16_t calculateUniqueIdFieldSize() final;
-    virtual uint16_t calculateAvailabilityFieldSize() final;
-    virtual uint16_t calculateDeviceFieldSize(const char* serializedDevice) final;
+    uint16_t calculateBaseJsonDataSize();
+    uint16_t calculateNameFieldSize();
+    uint16_t calculateUniqueIdFieldSize();
+    uint16_t calculateAvailabilityFieldSize();
+    uint16_t calculateDeviceFieldSize(const char* serializedDevice);
+
+    void mqttWriteBeginningJson();
+    void mqttWriteEndJson();
+    void mqttWriteConstCharField(const char* prefix, const char* value);
+    void mqttWriteNameField();
+    void mqttWriteUniqueIdField();
+    void mqttWriteAvailabilityField();
+    void mqttWriteDeviceField(const char* serializedDevice);
 
 private:
     BaseDeviceType* _type;

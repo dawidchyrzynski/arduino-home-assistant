@@ -6,6 +6,8 @@
 #include "../HADevice.h"
 
 static const char CharSlash[] PROGMEM = {"/"};
+static const char CharUnderscore[] PROGMEM = {"_"};
+static const char CharQuotation[] PROGMEM = {"\""};
 
 DeviceTypeSerializer::DeviceTypeSerializer(BaseDeviceType* type) :
     _type(type)
@@ -126,4 +128,86 @@ uint16_t DeviceTypeSerializer::calculateDeviceFieldSize(const char* serializedDe
 
     // Field format: "dev":[DEVICE],
     return strlen(serializedDevice) + 7; // 7 - length of the JSON decorators for this field
+}
+
+void DeviceTypeSerializer::mqttWriteBeginningJson()
+{
+    static const char Data[] PROGMEM = {"{"};
+    _type->mqtt()->writePayload_P(Data);
+}
+
+void DeviceTypeSerializer::mqttWriteEndJson()
+{
+    static const char Data[] PROGMEM = {"}"};
+    _type->mqtt()->writePayload_P(Data);
+}
+
+void DeviceTypeSerializer::mqttWriteConstCharField(const char* prefix, const char* value)
+{
+    _type->mqtt()->writePayload_P(prefix);
+    _type->mqtt()->writePayload(value, strlen(value));
+    _type->mqtt()->writePayload_P(CharQuotation);
+}
+
+void DeviceTypeSerializer::mqttWriteNameField()
+{
+    static const char Prefix[] PROGMEM = {",\"name\":\""};
+    mqttWriteConstCharField(Prefix, _type->name());
+}
+
+void DeviceTypeSerializer::mqttWriteUniqueIdField()
+{
+    static const char Prefix[] PROGMEM = {",\"uniq_id\":\""};
+
+    const HADevice* device = _type->mqtt()->getDevice();
+    if (device == nullptr) {
+        return;
+    }
+
+    uint8_t uniqueIdLength = strlen(_type->name()) + strlen(device->getUniqueId()) + 2; // underscore and null temrinator
+    char uniqueId[uniqueIdLength];
+    strcpy(uniqueId, _type->name());
+    strcat_P(uniqueId, CharUnderscore);
+    strcat(uniqueId, device->getUniqueId());
+
+    mqttWriteConstCharField(Prefix, uniqueId);
+}
+
+void DeviceTypeSerializer::mqttWriteAvailabilityField()
+{
+    if (!_type->isAvailabilityConfigured()) {
+        return;
+    }
+
+    const uint16_t& topicSize = calculateTopicLength(
+        _type->componentName(),
+        _type->name(),
+        BaseDeviceType::AvailabilityTopic
+    );
+    if (topicSize == 0) {
+        return;
+    }
+
+    char availabilityTopic[topicSize];
+    generateTopic(
+        availabilityTopic,
+        _type->componentName(),
+        _type->name(),
+        BaseDeviceType::AvailabilityTopic
+    );
+
+    if (strlen(availabilityTopic) == 0) {
+        return;
+    }
+
+    static const char Prefix[] PROGMEM = {",\"avty_t\":\""};
+    mqttWriteConstCharField(Prefix, availabilityTopic);
+}
+
+void DeviceTypeSerializer::mqttWriteDeviceField(const char* serializedDevice)
+{
+    static const char Data[] PROGMEM = {",\"dev\":"};
+
+    _type->mqtt()->writePayload_P(Data);
+    _type->mqtt()->writePayload(serializedDevice, strlen(serializedDevice));
 }
