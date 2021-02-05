@@ -8,6 +8,11 @@
 class HASwitch : public BaseDeviceType
 {
 public:
+    static const char* CommandTopic;
+    static const char* StateTopic;
+    static const char* StateOn;
+    static const char* StateOff;
+
     /**
      * Initializes switch.
      *

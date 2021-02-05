@@ -6,6 +6,10 @@
 class HABinarySensor : public BaseDeviceType
 {
 public:
+    static const char* StateTopic;
+    static const char* StateOn;
+    static const char* StateOff;
+
     /**
      * Initializes binary sensor.
      *

@@ -4,8 +4,8 @@
 #include "../HADevice.h"
 #include "../HAUtils.h"
 
-// todo: move all variables to progmem
-static const char* ValueTopic = "value";
+template <typename T>
+const char* HASensor<T>::ValueTopic = "value";
 
 template <typename T>
 HASensor<T>::HASensor(
@@ -54,6 +54,7 @@ void HASensor<T>::onMqttConnected()
 
     publishConfig();
     publishValue(_currentValue);
+    publishAvailability();
 }
 
 template <typename T>
@@ -190,6 +191,23 @@ uint16_t HASensor<T>::calculateSerializedLength(
     size += strlen(mqtt()->getDevice()->getUniqueId());
     size += strlen(_name) + 14; // 14 - length of the JSON data for this field
 
+    // availability topic
+    if (isAvailabilityConfigured()) {
+        const uint16_t& availabilityTopicLength = calculateTopicLength(
+            _componentName,
+            _name,
+            AvailabilityTopic,
+            false
+        );
+
+        if (availabilityTopicLength == 0) {
+            return 0;
+        }
+
+        // "avty_t":"TOPIC",
+        size += availabilityTopicLength + 12; // 12 - length of the JSON data for this field
+    }
+
     // device class
     if (_class != nullptr) {
         size += strlen(_class) + 13; // 13 - length of the JSON data for this field
@@ -243,6 +261,36 @@ bool HASensor<T>::writeSerializedTrigger(const char* serializedDevice) const
 
         mqtt()->writePayload_P(DataBefore);
         mqtt()->writePayload(stateTopic, strlen(stateTopic));
+        mqtt()->writePayload_P(QuotationSign);
+    }
+
+    // availability topic
+    if (isAvailabilityConfigured()) {
+        const uint16_t& topicSize = calculateTopicLength(
+            _componentName,
+            _name,
+            AvailabilityTopic
+        );
+        if (topicSize == 0) {
+            return false;
+        }
+
+        char availabilityTopic[topicSize];
+        generateTopic(
+            availabilityTopic,
+            _componentName,
+            _name,
+            AvailabilityTopic
+        );
+
+        if (strlen(availabilityTopic) == 0) {
+            return false;
+        }
+
+        static const char DataBefore[] PROGMEM = {",\"avty_t\":\""};
+
+        mqtt()->writePayload_P(DataBefore);
+        mqtt()->writePayload(availabilityTopic, strlen(availabilityTopic));
         mqtt()->writePayload_P(QuotationSign);
     }
 

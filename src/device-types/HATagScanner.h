@@ -20,6 +20,11 @@ public:
     virtual void onMqttConnected() override;
 
     /**
+     * Tag scanner doesn't support availability. Nothing to do here.
+     */
+    virtual void setAvailability(bool online) override { }
+
+    /**
      * Sends "tag scanned" event to the MQTT (Home Assistant).
      * Based on this event HA may perform user-defined automation.
      *

@@ -8,6 +8,8 @@ template <typename T>
 class HASensor : public BaseDeviceType
 {
 public:
+    static const char* ValueTopic;
+
     /**
      * Initializes binary sensor.
      *
