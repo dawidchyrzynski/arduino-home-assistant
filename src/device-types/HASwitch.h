@@ -8,11 +8,6 @@
 class HASwitch : public BaseDeviceType
 {
 public:
-    static const char* CommandTopic;
-    static const char* StateTopic;
-    static const char* StateOn;
-    static const char* StateOff;
-
     /**
      * Initializes switch.
      *
@@ -93,7 +88,6 @@ private:
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
 
-    const char* _name;
     void (*_stateCallback)(bool, HASwitch*);
     bool _currentState;
 };

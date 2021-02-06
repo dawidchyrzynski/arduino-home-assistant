@@ -8,8 +8,6 @@ template <typename T>
 class HASensor : public BaseDeviceType
 {
 public:
-    static const char* ValueTopic;
-
     /**
      * Initializes binary sensor.
      *
@@ -73,11 +71,10 @@ private:
     void publishConfig();
     bool publishValue(T value);
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedTrigger(const char* serializedDevice) const;
+    bool writeSerializedData(const char* serializedDevice) const;
     uint16_t calculateValueLength() const;
     bool valueToStr(char* dst, T value) const;
 
-    const char* _name;
     const char* _class;
     const char* _units;
     HAUtils::ValueType _valueType;

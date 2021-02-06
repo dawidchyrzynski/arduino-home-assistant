@@ -7,16 +7,14 @@
 
 class HAMqtt;
 
-class BaseDeviceType : protected DeviceTypeSerializer
+class BaseDeviceType
 {
 public:
-    static const char* ConfigTopic;
-    static const char* EventTopic;
-    static const char* AvailabilityTopic;
-    static const char* Online;
-    static const char* Offline;
-
-    BaseDeviceType(HAMqtt& mqtt, const char* componentName, const char* name);
+    BaseDeviceType(
+        HAMqtt& mqtt,
+        const char* componentName,
+        const char* name
+    );
     virtual ~BaseDeviceType();
 
     inline bool isOnline() const
@@ -60,7 +58,6 @@ private:
     Availability _availability;
 
     friend class HAMqtt;
-    friend class DeviceTypeSerializer;
 };
 
 #endif

@@ -2,18 +2,11 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-const char* BaseDeviceType::ConfigTopic = "config";
-const char* BaseDeviceType::EventTopic = "event";
-const char* BaseDeviceType::AvailabilityTopic = "avail";
-const char* BaseDeviceType::Online = "online";
-const char* BaseDeviceType::Offline = "offline";
-
 BaseDeviceType::BaseDeviceType(
     HAMqtt& mqtt,
     const char* componentName,
     const char* name
 ) :
-    DeviceTypeSerializer(this),
     _mqtt(mqtt),
     _componentName(componentName),
     _name(name),
@@ -46,26 +39,36 @@ void BaseDeviceType::publishAvailability()
         return;
     }
 
-    const uint16_t& topicSize = calculateTopicLength(
+    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
+        mqtt(),
         _componentName,
         _name,
-        AvailabilityTopic
+        DeviceTypeSerializer::AvailabilityTopic
     );
     if (topicSize == 0) {
         return false;
     }
 
     char topic[topicSize];
-    generateTopic(
+    DeviceTypeSerializer::generateTopic(
+        mqtt(),
         topic,
         _componentName,
         _name,
-        AvailabilityTopic
+        DeviceTypeSerializer::AvailabilityTopic
     );
 
     if (strlen(topic) == 0) {
         return false;
     }
 
-    mqtt()->publish(topic, (_availability == AvailabilityOnline ? Online : Offline), true);
+    mqtt()->publish(
+        topic,
+        (
+            _availability == AvailabilityOnline ?
+            DeviceTypeSerializer::Online :
+            DeviceTypeSerializer::Offline
+        ),
+        true
+    );
 }
