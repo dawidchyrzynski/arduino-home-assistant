@@ -34,7 +34,7 @@ uint16_t DeviceTypeSerializer::calculateTopicLength(
     uint16_t size =
         strlen(prefix) + 1 + // with slash
         strlen(component) + 1 + // with slash
-        strlen(suffix); // with null terminator
+        strlen(suffix);
 
     if (objectId != nullptr) {
         size += strlen(objectId) + 1; // with slash

@@ -62,9 +62,9 @@ bool HAMqtt::begin(
 #endif
 
     if (_device.getUniqueId() == nullptr) {
-        #if defined(ARDUINOHA_DEBUG)
-            Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
-        #endif
+#if defined(ARDUINOHA_DEBUG)
+        Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
+#endif
 
         return false;
     }
