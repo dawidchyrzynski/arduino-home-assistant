@@ -12,7 +12,7 @@ Availability feature is turned off by default. In order to turn it on for the sp
 sensor/switch you need to set initial state of the unit by calling `setAvailability` method.
 
 Example:
-```
+```cpp
 ...
 HABinarySensor sensor("input", "door", true, mqtt);
 
