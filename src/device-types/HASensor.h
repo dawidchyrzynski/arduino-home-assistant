@@ -37,8 +37,6 @@ public:
         HAMqtt& mqtt
     );
 
-    virtual ~HASensor();
-
     /**
      * Publishes configuration of the sensor to the MQTT.
      */
@@ -73,11 +71,10 @@ private:
     void publishConfig();
     bool publishValue(T value);
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedTrigger(const char* serializedDevice) const;
+    bool writeSerializedData(const char* serializedDevice) const;
     uint16_t calculateValueLength() const;
     bool valueToStr(char* dst, T value) const;
 
-    const char* _name;
     const char* _class;
     const char* _units;
     HAUtils::ValueType _valueType;

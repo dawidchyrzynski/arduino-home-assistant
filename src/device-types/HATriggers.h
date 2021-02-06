@@ -16,6 +16,11 @@ public:
 
     virtual void onMqttConnected() override;
 
+    /**
+     * Triggers dont't support availability. Nothing to do here.
+     */
+    virtual void setAvailability(bool online) override { }
+
     bool add(const char* type, const char* subtype);
     bool trigger(const char* type, const char* subtype);
 

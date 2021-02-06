@@ -3,10 +3,8 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-static const char* HAComponentName = "device_automation"; // todo: move to progmem
-
 HATriggers::HATriggers(HAMqtt& mqtt) :
-    BaseDeviceType(mqtt),
+    BaseDeviceType(mqtt, "device_automation", nullptr),
     _triggers(nullptr),
     _triggersNb(0)
 {
@@ -68,9 +66,9 @@ bool HATriggers::trigger(const char* type, const char* subtype)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAComponentName,
+        componentName(),
         trigger,
-        EventTopic
+        DeviceTypeSerializer::EventTopic
     );
 
     if (topicSize == 0) {
@@ -78,7 +76,12 @@ bool HATriggers::trigger(const char* type, const char* subtype)
     }
 
     char topic[topicSize];
-    generateTopic(topic, HAComponentName, trigger, EventTopic);
+    generateTopic(
+        topic,
+        componentName(),
+        trigger,
+        DeviceTypeSerializer::EventTopic
+    );
 
     if (strlen(topic) == 0) {
         return false;
@@ -110,15 +113,27 @@ void HATriggers::publishConfig()
             continue;
         }
 
-        const uint16_t& topicLength = calculateTopicLength(HAComponentName, trigger, ConfigTopic);
-        const uint16_t& dataLength = calculateSerializedLength(trigger, serializedDevice);
+        const uint16_t& topicLength = calculateTopicLength(
+            componentName(),
+            trigger,
+            DeviceTypeSerializer::ConfigTopic
+        );
+        const uint16_t& dataLength = calculateSerializedLength(
+            trigger,
+            serializedDevice
+        );
 
         if (topicLength == 0 || dataLength == 0) {
             continue;
         }
 
         char topic[topicLength];
-        generateTopic(topic, HAComponentName, trigger, ConfigTopic);
+        generateTopic(
+            topic,
+            componentName(),
+            trigger,
+            DeviceTypeSerializer::ConfigTopic
+        );
 
         if (strlen(topic) == 0) {
             continue;
@@ -139,7 +154,8 @@ uint16_t HATriggers::calculateTopicLength(
 ) const
 {
     uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 1; // + underscore
-    return BaseDeviceType::calculateTopicLength(
+    return DeviceTypeSerializer::calculateTopicLength(
+        mqtt(),
         component,
         nullptr,
         suffix,
@@ -162,7 +178,8 @@ uint16_t HATriggers::generateTopic(
     strcat_P(objectId, Underscore);
     strcat(objectId, trigger->type);
 
-    return BaseDeviceType::generateTopic(
+    return DeviceTypeSerializer::generateTopic(
+        mqtt(),
         output,
         component,
         objectId,
@@ -179,28 +196,45 @@ uint16_t HATriggers::calculateSerializedLength(
         return 0;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(
-        HAComponentName,
-        trigger,
-        EventTopic,
-        false
-    );
-    if (topicLength == 0) {
-        return 0;
+    uint16_t size = 0;
+    size += DeviceTypeSerializer::calculateBaseJsonDataSize();
+    size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
+
+    // automation type
+    {
+        // Format: "atype":"trigger"
+        size += 17;
     }
 
-    uint16_t size =
-        2 + // opening and closing bracket (without null terminator)
-        17 + // automation type
-        topicLength + 7 + // 7 - length of the JSON data for this field
-        strlen(trigger->type) + 10 + // 10 - length of the JSON data for this field
-        strlen(trigger->subtype) + 11; // 11 - length of the JSON data for this field
+    // topic
+    {
+        const uint16_t& topicSize = calculateTopicLength(
+            componentName(),
+            trigger,
+            DeviceTypeSerializer::EventTopic,
+            false
+        );
+        if (topicSize == 0) {
+            return 0;
+        }
 
-    if (serializedDevice != nullptr) {
-        size += strlen(serializedDevice) + 7; // 7 - length of the JSON data for this field
+        // Format: ,"t":"[TOPIC]"
+        size += topicSize + 7; // 7 - length of the JSON decorators for this field
     }
 
-    return size;
+    // type
+    {
+        // Format: ,"type":"[TYPE]"
+        size += strlen(trigger->type) + 10; // 10 - length of the JSON decorators for this field
+    }
+
+    // subtype
+    {
+        // Format: ,"stype":"[SUBTYPE]"
+        size += strlen(trigger->subtype) + 11; // 11 - length of the JSON decorators for this field;
+    }
+
+    return size; // exludes null terminator
 }
 
 bool HATriggers::writeSerializedTrigger(
@@ -212,74 +246,55 @@ bool HATriggers::writeSerializedTrigger(
         return false;
     }
 
-    static const char QuotationSign[] PROGMEM = {"\""};
+    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
 
     // automation type
     {
-        static const char Data[] PROGMEM = {"{\"atype\":\"trigger\""};
+        static const char Data[] PROGMEM = {"\"atype\":\"trigger\""};
         mqtt()->writePayload_P(Data);
     }
 
     // topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            HAComponentName,
+            componentName(),
             trigger,
-            EventTopic
+            DeviceTypeSerializer::EventTopic
         );
         if (topicSize == 0) {
             return false;
         }
 
-        char eventTopic[topicSize];
+        char topic[topicSize];
         generateTopic(
-            eventTopic,
-            HAComponentName,
+            topic,
+            componentName(),
             trigger,
-            EventTopic
+            DeviceTypeSerializer::EventTopic
         );
 
-        if (strlen(eventTopic) == 0) {
+        if (strlen(topic) == 0) {
             return false;
         }
 
-        static const char DataBefore[] PROGMEM = {",\"t\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(eventTopic, strlen(eventTopic));
-        mqtt()->writePayload_P(QuotationSign);
+        static const char Prefix[] PROGMEM = {",\"t\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
     }
 
     // type
     {
-        static const char DataBefore[] PROGMEM = {",\"type\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(trigger->type, strlen(trigger->type));
-        mqtt()->writePayload_P(QuotationSign);
+        static const char Prefix[] PROGMEM = {",\"type\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->type);
     }
 
     // subtype
     {
-        static const char DataBefore[] PROGMEM = {",\"stype\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(trigger->subtype, strlen(trigger->subtype));
-        mqtt()->writePayload_P(QuotationSign);
+        static const char Prefix[] PROGMEM = {",\"stype\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->subtype);
     }
 
-    // device
-    {
-        static const char Data[] PROGMEM = {",\"dev\":"};
-
-        mqtt()->writePayload_P(Data);
-        mqtt()->writePayload(serializedDevice, strlen(serializedDevice));
-    }
-
-    {
-        static const char Data[] PROGMEM = {"}"};
-        mqtt()->writePayload_P(Data);
-    }
+    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
 
     return true;
 }

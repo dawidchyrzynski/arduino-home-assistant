@@ -6,6 +6,7 @@
 
 byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 unsigned long lastReadAt = millis();
+unsigned long lastAvailabilityToggleAt = millis();
 bool lastInputState = false;
 
 EthernetClient client;
@@ -24,6 +25,12 @@ void setup() {
     // you don't need to verify return status
     Ethernet.begin(mac);
 
+    // turn on "availability" feature
+    sensor.setAvailability(false);
+
+    lastReadAt = millis();
+    lastAvailabilityToggleAt = millis();
+
     // set device's details (optional)
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
@@ -40,5 +47,10 @@ void loop() {
         sensor.setState(digitalRead(INPUT_PIN));
         lastInputState = sensor.getState();
         lastReadAt = millis();
+    }
+
+    if ((millis() - lastAvailabilityToggleAt) > 5000) {
+        sensor.setAvailability(!sensor.isOnline());
+        lastAvailabilityToggleAt = millis();
     }
 }

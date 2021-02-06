@@ -22,7 +22,9 @@ HAMqtt mqtt(client, device);
  * - double
  * - float
  */
-HASensor<double> temp("temp", 0, mqtt); // you can use custom name in place of "temp"
+// you can use custom name in place of "temp"
+// "0" is initial value of the sensor
+HASensor<double> temp("temp", 0, mqtt);
 
 void setup() {
     // you don't need to verify return status

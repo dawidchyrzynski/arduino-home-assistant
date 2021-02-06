@@ -12,12 +12,16 @@ public:
      * @param name Name of the scanner. Recommendes characters: [a-z0-9\-_]
      */
     HATagScanner(const char* name, HAMqtt& mqtt);
-    virtual ~HATagScanner();
 
     /**
      * Publishes configuration of the sensor to the MQTT.
      */
     virtual void onMqttConnected() override;
+
+    /**
+     * Tag scanner doesn't support availability. Nothing to do here.
+     */
+    virtual void setAvailability(bool online) override { }
 
     /**
      * Sends "tag scanned" event to the MQTT (Home Assistant).
@@ -30,9 +34,7 @@ public:
 private:
     void publishConfig();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedTrigger(const char* serializedDevice) const;
-
-    const char* _name;
+    bool writeSerializedData(const char* serializedDevice) const;
 };
 
 #endif

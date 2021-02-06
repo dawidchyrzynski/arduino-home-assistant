@@ -54,6 +54,16 @@ public:
         const char* password = nullptr
     );
 
+    /**
+     * Sets parameters of the connection to the MQTT broker on default port.
+     * The library will try to connect to the broker in first loop cycle.
+     * Please note that the library automatically reconnects to the broker if connection is lost.
+     *
+     * @param serverIp IP address of the MQTT broker.
+     * @param serverPort Port of the MQTT broker.
+     * @param username Username for authentication.
+     * @param password Password for authentication.
+     */
     bool begin(
         const IPAddress& serverIp,
         const char* username,
@@ -128,7 +138,6 @@ private:
      */
     void onConnected();
 
-    const char* _clientId;
     Client& _netClient;
     HADevice& _device;
     bool _hasDevice;

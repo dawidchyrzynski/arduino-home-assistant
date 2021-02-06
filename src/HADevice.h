@@ -6,6 +6,7 @@
 class HADevice
 {
 public:
+    HADevice();
     HADevice(const char* uniqueId);
     HADevice(const byte* uniqueId, const uint16_t& length);
 
@@ -24,6 +25,7 @@ public:
     inline void setSoftwareVersion(const char* softwareVersion)
         { _softwareVersion = softwareVersion; }
 
+    bool setUniqueId(const byte* uniqueId, const uint16_t& length);
     uint16_t calculateSerializedLength() const;
     uint16_t serialize(char* dst) const;
 
