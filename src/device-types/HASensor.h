@@ -39,8 +39,6 @@ public:
         HAMqtt& mqtt
     );
 
-    virtual ~HASensor();
-
     /**
      * Publishes configuration of the sensor to the MQTT.
      */

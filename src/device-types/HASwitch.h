@@ -25,7 +25,6 @@ public:
         bool initialState,
         HAMqtt& mqtt
     );
-    virtual ~HASwitch();
 
     /**
      * Publishes configuration of the sensor to the MQTT.
@@ -83,7 +82,8 @@ public:
      *
      * @param callback
      */
-    void onStateChanged(HASWITCH_CALLBACK);
+    inline void onStateChanged(HASWITCH_CALLBACK)
+        { _stateCallback = callback; }
 
 private:
     void triggerCallback(bool state);
@@ -91,7 +91,7 @@ private:
     bool publishState(bool state);
     void subscribeCommandTopic();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedTrigger(const char* serializedDevice) const;
+    bool writeSerializedData(const char* serializedDevice) const;
 
     const char* _name;
     void (*_stateCallback)(bool, HASwitch*);

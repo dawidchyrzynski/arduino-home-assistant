@@ -33,11 +33,6 @@ HABinarySensor::HABinarySensor(
 
 }
 
-HABinarySensor::~HABinarySensor()
-{
-
-}
-
 void HABinarySensor::onMqttConnected()
 {
     if (strlen(_name) == 0) {
@@ -84,7 +79,7 @@ void HABinarySensor::publishConfig()
         return;
     }
 
-    const uint16_t& topicLength = calculateTopicLength(_componentName, _name, ConfigTopic);
+    const uint16_t& topicLength = calculateTopicLength(componentName(), name(), ConfigTopic);
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
     if (topicLength == 0 || dataLength == 0) {
@@ -92,14 +87,14 @@ void HABinarySensor::publishConfig()
     }
 
     char topic[topicLength];
-    generateTopic(topic, _componentName, _name, ConfigTopic);
+    generateTopic(topic, componentName(), name(), ConfigTopic);
 
     if (strlen(topic) == 0) {
         return;
     }
 
     if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedTrigger(serializedDevice);
+        writeSerializedData(serializedDevice);
         mqtt()->endPublish();
     }
 }
@@ -111,8 +106,8 @@ bool HABinarySensor::publishState(bool state)
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        _componentName,
-        _name,
+        componentName(),
+        name(),
         StateTopic
     );
     if (topicSize == 0) {
@@ -122,8 +117,8 @@ bool HABinarySensor::publishState(bool state)
     char topic[topicSize];
     generateTopic(
         topic,
-        _componentName,
-        _name,
+        componentName(),
+        name(),
         StateTopic
     );
 
@@ -142,69 +137,51 @@ uint16_t HABinarySensor::calculateSerializedLength(
         return 0;
     }
 
-    const uint16_t& stateTopicLength = calculateTopicLength(
-        _componentName,
-        _name,
-        StateTopic,
-        false
-    );
+    uint16_t size = calculateBaseJsonDataSize();
+    size += calculateNameFieldSize();
+    size += calculateUniqueIdFieldSize();
+    size += calculateAvailabilityFieldSize();
+    size += calculateDeviceFieldSize(serializedDevice);
 
-    if (stateTopicLength == 0) {
-        return 0;
-    }
-
-    uint16_t size =
-        2 + // opening and closing bracket (without null terminator)
-        stateTopicLength + 11 + // 11 - length of the JSON data for this field
-        strlen(_name) + 10; // 10 - length of the JSON data for this field
-
-    // unique ID
-    size += strlen(mqtt()->getDevice()->getUniqueId());
-    size += strlen(_name) + 14; // 14 - length of the JSON data for this field
-
-    // availability topic
-    if (isAvailabilityConfigured()) {
-        const uint16_t& availabilityTopicLength = calculateTopicLength(
-            _componentName,
-            _name,
-            AvailabilityTopic,
+    // state topic
+    {
+        const uint16_t& topicLength = calculateTopicLength(
+            componentName(),
+            name(),
+            StateTopic,
             false
         );
 
-        if (availabilityTopicLength == 0) {
+        if (topicLength == 0) {
             return 0;
         }
 
-        // "avty_t":"TOPIC",
-        size += availabilityTopicLength + 12; // 12 - length of the JSON data for this field
+        // Field format: "stat_t":"[TOPIC]",
+        size += topicLength + 12; // 12 - length of the JSON decorators for this field
     }
 
     // device class
     if (_class != nullptr) {
-        // "dev_cla":"CLASS",
-        size += strlen(_class) + 13; // 13 - length of the JSON data for this field
+        // Field format: "dev_cla":"[CLASS]",
+        size += strlen(_class) + 13; // 13 - length of the JSON decorators for this field
     }
 
-    // device
-    // "dev":DEVICE,
-    size += strlen(serializedDevice) + 7; // 7 - length of the JSON data for this field
-
-    return size;
+    return size - 1; // skip extra comma from the last field
 }
 
-bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
+bool HABinarySensor::writeSerializedData(const char* serializedDevice) const
 {
     if (serializedDevice == nullptr) {
         return false;
     }
 
-    static const char QuotationSign[] PROGMEM = {"\""};
+    mqttWriteBeginningJson();
 
     // state topic
     {
         const uint16_t& topicSize = calculateTopicLength(
-            _componentName,
-            _name,
+            componentName(),
+            name(),
             StateTopic
         );
         if (topicSize == 0) {
@@ -214,8 +191,8 @@ bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
         char stateTopic[topicSize];
         generateTopic(
             stateTopic,
-            _componentName,
-            _name,
+            componentName(),
+            name(),
             StateTopic
         );
 
@@ -223,90 +200,21 @@ bool HABinarySensor::writeSerializedTrigger(const char* serializedDevice) const
             return false;
         }
 
-        static const char DataBefore[] PROGMEM = {"{\"stat_t\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(stateTopic, strlen(stateTopic));
-        mqtt()->writePayload_P(QuotationSign);
-    }
-
-    // availability topic
-    if (isAvailabilityConfigured()) {
-        const uint16_t& topicSize = calculateTopicLength(
-            _componentName,
-            _name,
-            AvailabilityTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char availabilityTopic[topicSize];
-        generateTopic(
-            availabilityTopic,
-            _componentName,
-            _name,
-            AvailabilityTopic
-        );
-
-        if (strlen(availabilityTopic) == 0) {
-            return false;
-        }
-
-        static const char DataBefore[] PROGMEM = {",\"avty_t\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(availabilityTopic, strlen(availabilityTopic));
-        mqtt()->writePayload_P(QuotationSign);
-    }
-
-    // name
-    {
-        static const char DataBefore[] PROGMEM = {",\"name\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(_name, strlen(_name));
-        mqtt()->writePayload_P(QuotationSign);
-    }
-
-    // unique ID
-    {
-        static const char Underscore[] PROGMEM = {"_"};
-        static const char DataBefore[] PROGMEM = {",\"uniq_id\":\""};
-
-        const HADevice* device = mqtt()->getDevice();
-        uint8_t uniqueIdLength = strlen(_name) + strlen(device->getUniqueId()) + 2; // underscore and null temrinator
-        char uniqueId[uniqueIdLength];
-        strcpy(uniqueId, _name);
-        strcat_P(uniqueId, Underscore);
-        strcat(uniqueId, device->getUniqueId());
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(uniqueId, strlen(uniqueId));
-        mqtt()->writePayload_P(QuotationSign);
-    }
-
-    // device
-    {
-        static const char Data[] PROGMEM = {",\"dev\":"};
-
-        mqtt()->writePayload_P(Data);
-        mqtt()->writePayload(serializedDevice, strlen(serializedDevice));
+        static const char Prefix[] PROGMEM = {"\"stat_t\":\""};
+        mqttWriteConstCharField(Prefix, stateTopic);
     }
 
     // device class
     if (_class != nullptr) {
-        static const char DataBefore[] PROGMEM = {",\"dev_cla\":\""};
-
-        mqtt()->writePayload_P(DataBefore);
-        mqtt()->writePayload(_class, strlen(_class));
-        mqtt()->writePayload_P(QuotationSign);
+        static const char Prefix[] PROGMEM = {",\"dev_cla\":\""};
+        mqttWriteConstCharField(Prefix, _class);
     }
 
-    {
-        static const char Data[] PROGMEM = {"}"};
-        mqtt()->writePayload_P(Data);
-    }
+    mqttWriteNameField();
+    mqttWriteUniqueIdField();
+    mqttWriteAvailabilityField();
+    mqttWriteDeviceField(serializedDevice);
+    mqttWriteEndJson();
 
     return true;
 }

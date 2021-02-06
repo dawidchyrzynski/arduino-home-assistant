@@ -39,8 +39,6 @@ public:
         HAMqtt& mqtt
     );
 
-    virtual ~HABinarySensor();
-
     /**
      * Publishes configuration of the sensor to the MQTT.
      */
@@ -67,7 +65,7 @@ private:
     void publishConfig();
     bool publishState(bool state);
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedTrigger(const char* serializedDevice) const;
+    bool writeSerializedData(const char* serializedDevice) const;
 
     const char* _class;
     bool _currentState;

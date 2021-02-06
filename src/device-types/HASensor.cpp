@@ -40,12 +40,6 @@ HASensor<T>::HASensor(
 }
 
 template <typename T>
-HASensor<T>::~HASensor()
-{
-
-}
-
-template <typename T>
 void HASensor<T>::onMqttConnected()
 {
     if (strlen(_name) == 0 || _valueType == HAUtils::ValueTypeUnknown) {

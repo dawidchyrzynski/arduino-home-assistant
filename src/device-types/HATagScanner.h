@@ -12,7 +12,6 @@ public:
      * @param name Name of the scanner. Recommendes characters: [a-z0-9\-_]
      */
     HATagScanner(const char* name, HAMqtt& mqtt);
-    virtual ~HATagScanner();
 
     /**
      * Publishes configuration of the sensor to the MQTT.

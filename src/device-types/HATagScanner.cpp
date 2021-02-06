@@ -10,11 +10,6 @@ HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
 
 }
 
-HATagScanner::~HATagScanner()
-{
-
-}
-
 void HATagScanner::onMqttConnected()
 {
     if (strlen(_name) == 0) {
