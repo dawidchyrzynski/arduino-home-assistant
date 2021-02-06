@@ -1,4 +1,3 @@
-#include <IPAddress.h>
 #include <PubSubClient.h>
 
 #include "HAMqtt.h"
@@ -24,13 +23,13 @@
 static const char* DefaultDiscoveryPrefix = "homeassistant";
 static HAMqtt* instance = nullptr;
 
-void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
+void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 {
-    if (instance == nullptr) {
+    if (instance == nullptr || length > UINT16_MAX) {
         return;
     }
 
-    instance->processMessage(topic, payload, length);
+    instance->processMessage(topic, payload, static_cast<uint16_t>(length));
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :

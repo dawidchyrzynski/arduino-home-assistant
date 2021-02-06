@@ -1,10 +1,9 @@
 #ifndef AHA_HAMQTT_H
 #define AHA_HAMQTT_H
 
-#include <Arduino.h>
+#include <Client.h>
+#include <IPAddress.h>
 
-class IPAddress;
-class Client;
 class PubSubClient;
 class HADevice;
 class BaseDeviceType;
