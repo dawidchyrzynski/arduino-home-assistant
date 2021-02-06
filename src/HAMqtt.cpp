@@ -34,14 +34,12 @@ void onMessageReceived(char* topic, uint8_t* payload, uint16_t length)
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
-    _clientId(device.getUniqueId()),
     HAMQTT_INIT
 {
     instance = this;
 }
 
 HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
-    _clientId(clientId),
     HAMQTT_INIT
 {
     instance = this;
@@ -62,6 +60,14 @@ bool HAMqtt::begin(
     Serial.print(serverPort);
     Serial.println();
 #endif
+
+    if (_device.getUniqueId() == nullptr) {
+        #if defined(ARDUINOHA_DEBUG)
+            Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
+        #endif
+
+        return false;
+    }
 
     if (_initialized) {
 #if defined(ARDUINOHA_DEBUG)
@@ -213,14 +219,14 @@ void HAMqtt::connectToServer()
 
 #if defined(ARDUINOHA_DEBUG)
     Serial.print(F("Connecting to the MQTT broker... Client ID: "));
-    Serial.print(_clientId);
+    Serial.print(_device.getUniqueId());
     Serial.println();
 #endif
 
     if (_username == nullptr || _password == nullptr) {
-        _mqtt->connect(_clientId);
+        _mqtt->connect(_device.getUniqueId());
     } else {
-        _mqtt->connect(_clientId, _username, _password);
+        _mqtt->connect(_device.getUniqueId(), _username, _password);
     }
 
     if (isConnected()) {

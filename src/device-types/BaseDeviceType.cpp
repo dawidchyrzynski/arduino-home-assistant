@@ -42,7 +42,7 @@ void BaseDeviceType::publishAvailability()
         DeviceTypeSerializer::AvailabilityTopic
     );
     if (topicSize == 0) {
-        return false;
+        return;
     }
 
     char topic[topicSize];
@@ -55,7 +55,7 @@ void BaseDeviceType::publishAvailability()
     );
 
     if (strlen(topic) == 0) {
-        return false;
+        return;
     }
 
     mqtt()->publish(

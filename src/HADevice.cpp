@@ -9,6 +9,13 @@
     _name(nullptr), \
     _softwareVersion(nullptr)
 
+HADevice::HADevice() :
+    _uniqueId(nullptr),
+    HADEVICE_INIT
+{
+
+}
+
 HADevice::HADevice(const char* uniqueId) :
     _uniqueId(uniqueId),
     HADEVICE_INIT
@@ -21,6 +28,16 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
     HADEVICE_INIT
 {
 
+}
+
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
+{
+    if (_uniqueId != nullptr) {
+        return false;
+    }
+
+    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
+    return true;
 }
 
 uint16_t HADevice::calculateSerializedLength() const

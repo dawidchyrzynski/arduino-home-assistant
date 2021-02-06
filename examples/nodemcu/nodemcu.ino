@@ -6,9 +6,8 @@
 #define WIFI_SSID       "MyNetwork"
 #define WIFI_PASSWORD   "MyPassword"
 
-byte mac[6];
 WiFiClient client;
-HADevice device(mac, sizeof(mac));
+HADevice device;
 HAMqtt mqtt(client, device);
 HASwitch led("led", false, mqtt); // you can use custom name in place of "led"
 
@@ -21,7 +20,11 @@ void setup() {
     Serial.begin(9600);
     Serial.println("Starting...");
 
+    // Unique ID must be set!
+    byte mac[WL_MAC_ADDR_LENGTH];
     WiFi.macAddress(mac);
+    device.setUniqueId(mac, sizeof(mac));
+
     pinMode(LED_PIN, OUTPUT);
     digitalWrite(LED_PIN, LOW);
 

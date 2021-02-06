@@ -138,7 +138,6 @@ private:
      */
     void onConnected();
 
-    const char* _clientId;
     Client& _netClient;
     HADevice& _device;
     bool _hasDevice;
