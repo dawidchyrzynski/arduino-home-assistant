@@ -22,10 +22,6 @@ BaseDeviceType::~BaseDeviceType()
 
 void BaseDeviceType::setAvailability(bool online)
 {
-    if (_availability == AvailabilityDefault) {
-        return;
-    }
-
     _availability = (online ? AvailabilityOnline : AvailabilityOffline);
     publishAvailability();
 }

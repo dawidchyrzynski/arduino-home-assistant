@@ -133,7 +133,7 @@ bool HASensor<T>::publishValue(T value)
         mqtt(),
         componentName(),
         name(),
-        DeviceTypeSerializer::ValueTopic
+        DeviceTypeSerializer::StateTopic
     );
     if (topicSize == 0) {
         return false;
@@ -145,7 +145,7 @@ bool HASensor<T>::publishValue(T value)
         topic,
         componentName(),
         name(),
-        DeviceTypeSerializer::ValueTopic
+        DeviceTypeSerializer::StateTopic
     );
 
     if (strlen(topic) == 0) {
@@ -199,7 +199,7 @@ uint16_t HASensor<T>::calculateSerializedLength(
             mqtt(),
             componentName(),
             name(),
-            DeviceTypeSerializer::ValueTopic,
+            DeviceTypeSerializer::StateTopic,
             false
         );
 
@@ -223,7 +223,7 @@ uint16_t HASensor<T>::calculateSerializedLength(
         size += strlen(_units) + 18; // 18 - length of the JSON decorators for this field
     }
 
-    return size;
+    return size; // exludes null terminator
 }
 
 template <typename T>

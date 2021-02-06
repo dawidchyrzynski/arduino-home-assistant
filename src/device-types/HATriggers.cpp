@@ -234,7 +234,7 @@ uint16_t HATriggers::calculateSerializedLength(
         size += strlen(trigger->subtype) + 11; // 11 - length of the JSON decorators for this field;
     }
 
-    return size;
+    return size; // exludes null terminator
 }
 
 bool HATriggers::writeSerializedTrigger(

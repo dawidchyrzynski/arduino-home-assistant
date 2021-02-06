@@ -125,7 +125,7 @@ uint16_t HATagScanner::calculateSerializedLength(
         size += topicSize + 6; // 6 - length of the JSON decorators for this field
     }
 
-    return size - 1; // skip extra comma from the last field
+    return size; // exludes null terminator
 }
 
 bool HATagScanner::writeSerializedData(const char* serializedDevice) const

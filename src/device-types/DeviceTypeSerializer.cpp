@@ -12,7 +12,6 @@ const char* DeviceTypeSerializer::ConfigTopic = "config";
 const char* DeviceTypeSerializer::EventTopic = "event";
 const char* DeviceTypeSerializer::AvailabilityTopic = "avail";
 const char* DeviceTypeSerializer::StateTopic = "state";
-const char* DeviceTypeSerializer::ValueTopic = "val";
 const char* DeviceTypeSerializer::CommandTopic = "cmd";
 const char* DeviceTypeSerializer::Online = "online";
 const char* DeviceTypeSerializer::Offline = "offline";
@@ -86,6 +85,10 @@ uint16_t DeviceTypeSerializer::calculateBaseJsonDataSize()
 
 uint16_t DeviceTypeSerializer::calculateNameFieldSize(const char* name)
 {
+    if (name == nullptr) {
+        return 0;
+    }
+
     // Field format: ,"name":"[NAME]"
     return strlen(name) + 10; // 10 - length of the JSON decorators for this field
 }
@@ -95,6 +98,10 @@ uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
     const char* name
 )
 {
+    if (device == nullptr || name == nullptr) {
+        return 0;
+    }
+
     // Field format: ,"uniq_id":"[DEVICE ID]_[NAME]"
     return (
         strlen(device->getUniqueId()) +
@@ -109,6 +116,10 @@ uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
     const char* name
 )
 {
+    if (mqtt == nullptr || componentName == nullptr || name == nullptr) {
+        return 0;
+    }
+
     const uint16_t& availabilityTopicLength = calculateTopicLength(
         mqtt,
         componentName,
@@ -139,12 +150,20 @@ uint16_t DeviceTypeSerializer::calculateDeviceFieldSize(
 
 void DeviceTypeSerializer::mqttWriteBeginningJson(HAMqtt* mqtt)
 {
+    if (mqtt == nullptr) {
+        return;
+    }
+
     static const char Data[] PROGMEM = {"{"};
     mqtt->writePayload_P(Data);
 }
 
 void DeviceTypeSerializer::mqttWriteEndJson(HAMqtt* mqtt)
 {
+    if (mqtt == nullptr) {
+        return;
+    }
+
     static const char Data[] PROGMEM = {"}"};
     mqtt->writePayload_P(Data);
 }
@@ -155,6 +174,10 @@ void DeviceTypeSerializer::mqttWriteConstCharField(
     const char* value
 )
 {
+    if (mqtt == nullptr || prefix == nullptr || value == nullptr) {
+        return;
+    }
+
     mqtt->writePayload_P(prefix);
     mqtt->writePayload(value, strlen(value));
     mqtt->writePayload_P(CharQuotation);
@@ -162,6 +185,10 @@ void DeviceTypeSerializer::mqttWriteConstCharField(
 
 void DeviceTypeSerializer::mqttWriteNameField(HAMqtt* mqtt, const char* name)
 {
+    if (mqtt == nullptr || name == nullptr) {
+        return;
+    }
+
     static const char Prefix[] PROGMEM = {",\"name\":\""};
     mqttWriteConstCharField(mqtt, Prefix, name);
 }
@@ -171,6 +198,10 @@ void DeviceTypeSerializer::mqttWriteUniqueIdField(
     const char* name
 )
 {
+    if (mqtt == nullptr || name == nullptr) {
+        return;
+    }
+
     static const char Prefix[] PROGMEM = {",\"uniq_id\":\""};
 
     uint8_t uniqueIdLength = strlen(name) + strlen(mqtt->getDevice()->getUniqueId()) + 2; // underscore and null temrinator
@@ -188,6 +219,10 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     const char* name
 )
 {
+    if (mqtt == nullptr || componentName == nullptr || name == nullptr) {
+        return;
+    }
+
     const uint16_t& topicSize = calculateTopicLength(
         mqtt,
         componentName,
@@ -220,6 +255,10 @@ void DeviceTypeSerializer::mqttWriteDeviceField(
     const char* serializedDevice
 )
 {
+    if (mqtt == nullptr || serializedDevice == nullptr) {
+        return;
+    }
+
     static const char Data[] PROGMEM = {",\"dev\":"};
 
     mqtt->writePayload_P(Data);

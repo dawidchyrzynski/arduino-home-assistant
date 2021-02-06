@@ -188,7 +188,7 @@ uint16_t HABinarySensor::calculateSerializedLength(
         }
 
         // Field format: "stat_t":"[TOPIC]"
-        size += topicLength + 11; // 12 - length of the JSON decorators for this field
+        size += topicLength + 11; // 11 - length of the JSON decorators for this field
     }
 
     // device class
@@ -197,7 +197,7 @@ uint16_t HABinarySensor::calculateSerializedLength(
         size += strlen(_class) + 13; // 13 - length of the JSON decorators for this field
     }
 
-    return size - 1; // skip extra comma from the last field
+    return size; // exludes null terminator
 }
 
 bool HABinarySensor::writeSerializedData(const char* serializedDevice) const

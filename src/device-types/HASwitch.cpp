@@ -255,7 +255,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
         size += topicLength + 12; // 12 - length of the JSON decorators for this field
     }
 
-    return size - 1; // skip extra comma from the last field
+    return size; // exludes null terminator
 }
 
 bool HASwitch::writeSerializedData(const char* serializedDevice) const

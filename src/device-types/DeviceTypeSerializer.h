@@ -13,7 +13,6 @@ public:
     static const char* EventTopic;
     static const char* AvailabilityTopic;
     static const char* StateTopic;
-    static const char* ValueTopic;
     static const char* CommandTopic;
     static const char* Online;
     static const char* Offline;
