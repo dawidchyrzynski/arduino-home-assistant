@@ -1,3 +1,7 @@
+#ifdef ARDUINO_ARCH_SAMD
+#include <avr/dtostrf.h>
+#endif
+
 #include "HASensor.h"
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
