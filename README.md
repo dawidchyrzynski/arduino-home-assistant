@@ -18,6 +18,8 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
 * [Sensor (temperature, humidity, etc.)](examples/sensor/sensor.ino)
 * [NodeMCU Wi-Fi](examples/nodemcu/nodemcu.ino)
+* [Arduino Nano 33 IoT Wi-Fi (SAMD)](examples/nano33iot/nano33iot.ino)
+* [Availability feature](examples/availability)
 
 ## Tested boards
 
@@ -28,6 +30,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * NodeMCU
 * ESP-01
 * Generic ESP8266/ESP8255
+* Arduino Nano 33 IoT (SAMD)
 
 ## Tested Arduino Shields
 

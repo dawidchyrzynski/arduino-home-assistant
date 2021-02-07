@@ -14,11 +14,11 @@ HAMqtt mqtt(client, device);
 /**
  * Supported data types:
  * - uint8_t
- * - uint16_t (unsigned int)
- * - uint32_t (unsigned long)
+ * - uint16_t
+ * - uint32_t
  * - int8_t
- * - int16_t (int)
- * - int32_t (long)
+ * - int16_t
+ * - int32_t
  * - double
  * - float
  */
