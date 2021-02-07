@@ -19,7 +19,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Sensor (temperature, humidity, etc.)](examples/sensor/sensor.ino)
 * [NodeMCU Wi-Fi](examples/nodemcu/nodemcu.ino)
 * [Arduino Nano 33 IoT Wi-Fi (SAMD)](examples/nano33iot/nano33iot.ino)
-* [Availability feature](examples/availability/availability.ino)
+* [Availability feature](examples/availability)
 
 ## Tested boards
 
