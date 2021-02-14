@@ -3,7 +3,7 @@
 
 #include "BaseDeviceType.h"
 
-#define HASWITCH_CALLBACK void (*callback)(bool, HASwitch*)
+#define HASWITCH_CALLBACK(name) void (*name)(bool, HASwitch*)
 
 class HASwitch : public BaseDeviceType
 {
@@ -77,7 +77,7 @@ public:
      *
      * @param callback
      */
-    inline void onStateChanged(HASWITCH_CALLBACK)
+    inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
 
 private:
@@ -87,7 +87,7 @@ private:
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
 
-    void (*_stateCallback)(bool, HASwitch*);
+    HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
 };
 
