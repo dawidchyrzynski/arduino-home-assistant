@@ -58,7 +58,6 @@ public:
         const char* name
     );
     static uint16_t calculateUniqueIdFieldSize(
-        const HADevice* device,
         const char* name
     );
     static uint16_t calculateAvailabilityFieldSize(

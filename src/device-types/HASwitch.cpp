@@ -2,7 +2,6 @@
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
 
 HASwitch::HASwitch(const char* name, bool initialState, HAMqtt& mqtt) :
     BaseDeviceType("switch", name),
@@ -34,23 +33,9 @@ void HASwitch::onMqttMessage(
     const uint16_t& length
 )
 {
-    if (strlen(name()) == 0) {
-        return;
-    }
-
-    static const char Slash[] PROGMEM = {"/"};
-    // name + cmd topic + two slashes + null terminator
-    uint8_t suffixLength = strlen(name()) + strlen(DeviceTypeSerializer::CommandTopic) + 3;
-    char suffix[suffixLength];
-
-    strcpy_P(suffix, Slash);
-    strcat(suffix, name());
-    strcat_P(suffix, Slash);
-    strcat(suffix, DeviceTypeSerializer::CommandTopic);
-
-    if (HAUtils::endsWith(topic, suffix)) {
-        bool onState = (length == strlen(DeviceTypeSerializer::StateOn));
-        setState(onState);
+    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+        bool state = (length == strlen(DeviceTypeSerializer::StateOn));
+        setState(state);
     }
 }
 
@@ -150,7 +135,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
     size += DeviceTypeSerializer::calculateNameFieldSize(name());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(device, name());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 

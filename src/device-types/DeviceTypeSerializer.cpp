@@ -97,10 +97,10 @@ uint16_t DeviceTypeSerializer::calculateNameFieldSize(const char* name)
 }
 
 uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
-    const HADevice* device,
     const char* name
 )
 {
+    HADevice* device = HAMqtt::instance()->getDevice();
     if (device == nullptr || name == nullptr) {
         return 0;
     }

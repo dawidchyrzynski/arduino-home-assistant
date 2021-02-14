@@ -41,6 +41,7 @@ protected:
     ) { };
 
     virtual void publishAvailability();
+    virtual bool isMyTopic(const char* topic, const char* expectedTopic);
 
     const char* const _componentName;
     const char* const _name;

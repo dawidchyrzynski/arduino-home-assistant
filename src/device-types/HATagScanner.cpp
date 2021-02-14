@@ -2,7 +2,6 @@
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
 
 HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
     BaseDeviceType("tag", name)

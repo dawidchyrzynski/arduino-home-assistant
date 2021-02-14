@@ -1,6 +1,7 @@
 #include "BaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
+#include "../HAUtils.h"
 
 BaseDeviceType::BaseDeviceType(
     const char* componentName,
@@ -68,4 +69,24 @@ void BaseDeviceType::publishAvailability()
         ),
         true
     );
+}
+
+bool BaseDeviceType::isMyTopic(const char* topic, const char* expectedTopic)
+{
+    if (strlen(name()) == 0) {
+        return false;
+    }
+
+    static const char Slash[] PROGMEM = {"/"};
+
+    // name + cmd topic + two slashes + null terminator
+    uint8_t suffixLength = strlen(name()) + strlen(expectedTopic) + 3;
+    char suffix[suffixLength];
+
+    strcpy_P(suffix, Slash);
+    strcat(suffix, name());
+    strcat_P(suffix, Slash);
+    strcat(suffix, expectedTopic);
+
+    return HAUtils::endsWith(topic, suffix);
 }
