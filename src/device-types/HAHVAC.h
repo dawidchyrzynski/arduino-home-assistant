@@ -78,7 +78,7 @@ private:
     bool publishAction(Action action);
     bool publishAuxHeatingState(bool state);
     bool publishAwayState(bool state);
-    bool publishMessage(const char* topic, const char* data);
+    void subscribeTopics();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
 

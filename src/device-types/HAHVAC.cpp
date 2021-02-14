@@ -2,7 +2,6 @@
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
 
 const char* HAHVAC::ActionTopic = "at";
 const char* HAHVAC::AuxCommandTopic = "act";
@@ -37,6 +36,7 @@ void HAHVAC::onMqttConnected()
     publishAction(_action);
     publishAuxHeatingState(_auxHeatingState);
     publishAwayState(_awayState);
+    subscribeTopics();
 }
 
 void HAHVAC::onMqttMessage(
@@ -45,9 +45,15 @@ void HAHVAC::onMqttMessage(
     const uint16_t& length
 )
 {
+    if (isMyTopic(topic, AuxCommandTopic)) {
+        bool state = (length == strlen(DeviceTypeSerializer::StateOn));
+        setAuxHeatingState(state);
+    } else if (isMyTopic(topic, AwayCommandTopic)) {
+        bool state = (length == strlen(DeviceTypeSerializer::StateOn));
+        setAwayState(state);
+    }
+
     // parse topics:
-    // aux_command_topic
-    // away_mode_command_topic
     // fan_mode_command_topic
     // mode_command_topic
     // temperature_command_topic
@@ -57,10 +63,6 @@ bool HAHVAC::setAction(Action action)
 {
     if (_action == action) {
         return true;
-    }
-
-    if (strlen(name()) == 0) {
-        return false;
     }
 
     if (publishAction(action)) {
@@ -73,8 +75,7 @@ bool HAHVAC::setAction(Action action)
 
 bool HAHVAC::setAuxHeatingState(bool state)
 {
-    if (!(_features & AuxHeatingFeature) ||
-            strlen(name()) == 0) {
+    if (!(_features & AuxHeatingFeature) == 0) {
         return false;
     }
 
@@ -97,8 +98,7 @@ bool HAHVAC::setAuxHeatingState(bool state)
 
 bool HAHVAC::setAwayState(bool state)
 {
-    if (!(_features & AwayModeFeature) ||
-            strlen(name()) == 0) {
+    if (!(_features & AwayModeFeature) == 0) {
         return;
     }
 
@@ -244,6 +244,27 @@ bool HAHVAC::publishAwayState(bool state)
     );
 }
 
+void HAHVAC::subscribeTopics()
+{
+    // aux heating
+    if (_features & AuxHeatingFeature) {
+        DeviceTypeSerializer::mqttSubscribeTopic(
+            this,
+            AuxCommandTopic
+        );
+    }
+
+    // away mode
+    if (_features & AwayModeFeature) {
+        DeviceTypeSerializer::mqttSubscribeTopic(
+            this,
+            AwayCommandTopic
+        );
+    }
+
+    // to do
+}
+
 uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 {
     if (serializedDevice == nullptr || _uniqueId == nullptr) {
@@ -257,7 +278,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(device, _uniqueId);
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(_uniqueId);
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
@@ -280,12 +301,76 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     // aux heating
     if (_features & AuxHeatingFeature) {
+        // command topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                AuxCommandTopic,
+                false
+            );
 
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"aux_cmd_t":"[TOPIC]"
+            size += topicLength + 15; // 15 - length of the JSON decorators for this field
+        }
+
+        // state topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                AuxStateTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"aux_stat_t":"[TOPIC]"
+            size += topicLength + 16; // 16 - length of the JSON decorators for this field
+        }
     }
 
     // away mode
     if (_features & AwayModeFeature) {
+        // command topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                AwayCommandTopic,
+                false
+            );
 
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"away_mode_cmd_t":"[TOPIC]"
+            size += topicLength + 21; // 21 - length of the JSON decorators for this field
+        }
+
+        // state topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                AwayStateTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"away_mode_stat_t":"[TOPIC]"
+            size += topicLength + 22; // 22 - length of the JSON decorators for this field
+        }
     }
 
     return size; // exludes null terminator
@@ -307,6 +392,52 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
             Prefix,
             ActionTopic
         );
+    }
+
+    // aux heating
+    if (_features & AuxHeatingFeature) {
+        // command topic
+        {
+            static const char Prefix[] PROGMEM = {",\"aux_cmd_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                AuxCommandTopic
+            );
+        }
+
+        // state topic
+        {
+            static const char Prefix[] PROGMEM = {",\"aux_stat_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                AuxStateTopic
+            );
+        }
+    }
+
+    // away mode
+    if (_features & AwayModeFeature) {
+        // command topic
+        {
+            static const char Prefix[] PROGMEM = {",\"away_mode_cmd_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                AwayCommandTopic
+            );
+        }
+
+        // state topic
+        {
+            static const char Prefix[] PROGMEM = {",\"away_mode_stat_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                AwayStateTopic
+            );
+        }
     }
 
     DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
