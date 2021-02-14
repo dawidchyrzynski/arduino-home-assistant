@@ -11,7 +11,6 @@ class BaseDeviceType
 {
 public:
     BaseDeviceType(
-        HAMqtt& mqtt,
         const char* componentName,
         const char* name
     );
@@ -23,8 +22,7 @@ public:
     virtual void setAvailability(bool online);
 
 protected:
-    inline HAMqtt* mqtt() const
-        { return &_mqtt; }
+    HAMqtt* mqtt() const;
 
     inline const char* name() const
         { return _name; }
@@ -54,7 +52,6 @@ private:
         AvailabilityOffline
     };
 
-    HAMqtt& _mqtt;
     Availability _availability;
 
     friend class HAMqtt;

@@ -14,7 +14,7 @@ HASensor<T>::HASensor(
     T initialValue,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt, "sensor", name),
+    BaseDeviceType("sensor", name),
     _class(nullptr),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
@@ -95,7 +95,6 @@ void HASensor<T>::publishConfig()
     }
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::ConfigTopic
@@ -108,7 +107,6 @@ void HASensor<T>::publishConfig()
 
     char topic[topicLength];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -134,7 +132,6 @@ bool HASensor<T>::publishValue(T value)
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::StateTopic
@@ -145,7 +142,6 @@ bool HASensor<T>::publishValue(T value)
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -192,7 +188,6 @@ uint16_t HASensor<T>::calculateSerializedLength(
 
     if (isAvailabilityConfigured()) {
         size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            mqtt(),
             componentName(),
             name()
         );
@@ -200,7 +195,6 @@ uint16_t HASensor<T>::calculateSerializedLength(
 
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::StateTopic,
@@ -238,12 +232,11 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // state topic
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::StateTopic
@@ -254,7 +247,6 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
 
         char topic[topicSize];
         DeviceTypeSerializer::generateTopic(
-            mqtt(),
             topic,
             componentName(),
             name(),
@@ -266,34 +258,33 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
         }
 
         static const char Prefix[] PROGMEM = {"\"stat_t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
     }
 
     // device class
     if (_class != nullptr) {
         static const char Prefix[] PROGMEM = {",\"dev_cla\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, _class);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _class);
     }
 
     // units of measurement
     if (_units != nullptr) {
         static const char Prefix[] PROGMEM = {",\"unit_of_meas\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, _units);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _units);
     }
 
-    DeviceTypeSerializer::mqttWriteNameField(mqtt(), name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(mqtt(), name());
+    DeviceTypeSerializer::mqttWriteNameField(name());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
 
     if (isAvailabilityConfigured()) {
         DeviceTypeSerializer::mqttWriteAvailabilityField(
-            mqtt(),
             componentName(),
             name()
         );
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }

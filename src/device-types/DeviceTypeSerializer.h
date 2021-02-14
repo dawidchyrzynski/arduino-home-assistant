@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-class HAMqtt;
 class HADevice;
+class BaseDeviceType;
 
 class DeviceTypeSerializer
 {
@@ -29,7 +29,6 @@ public:
      * @param includeNullTerminator
      */
     static uint16_t calculateTopicLength(
-        const HAMqtt* mqtt,
         const char* component,
         const char* objectId,
         const char* suffix,
@@ -48,7 +47,6 @@ public:
      * @param includeNullTerminator
      */
     static uint16_t generateTopic(
-        const HAMqtt* mqtt,
         char* output,
         const char* component,
         const char* objectId,
@@ -64,7 +62,6 @@ public:
         const char* name
     );
     static uint16_t calculateAvailabilityFieldSize(
-        const HAMqtt* mqtt,
         const char* componentName,
         const char* name
     );
@@ -72,25 +69,23 @@ public:
         const char* serializedDevice
     );
 
-    static void mqttWriteBeginningJson(HAMqtt* mqtt);
-    static void mqttWriteEndJson(HAMqtt* mqtt);
+    static void mqttWriteBeginningJson();
+    static void mqttWriteEndJson();
     static void mqttWriteConstCharField(
-        HAMqtt* mqtt,
         const char* prefix,
         const char* value
     );
-    static void mqttWriteNameField(HAMqtt* mqtt, const char* name);
+    static void mqttWriteNameField(
+        const char* name
+    );
     static void mqttWriteUniqueIdField(
-        HAMqtt* mqtt,
         const char* name
     );
     static void mqttWriteAvailabilityField(
-        HAMqtt* mqtt,
         const char* componentName,
         const char* name
     );
     static void mqttWriteDeviceField(
-        HAMqtt* mqtt,
         const char* serializedDevice
     );
     static bool mqttWriteTopicField(

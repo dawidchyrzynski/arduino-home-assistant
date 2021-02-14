@@ -5,7 +5,7 @@
 #include "../HAUtils.h"
 
 HASwitch::HASwitch(const char* name, bool initialState, HAMqtt& mqtt) :
-    BaseDeviceType(mqtt, "switch", name),
+    BaseDeviceType("switch", name),
     _stateCallback(nullptr),
     _currentState(initialState)
 {
@@ -91,7 +91,6 @@ void HASwitch::publishConfig()
     }
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::ConfigTopic
@@ -104,7 +103,6 @@ void HASwitch::publishConfig()
 
     char topic[topicLength];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -142,7 +140,6 @@ bool HASwitch::publishState(bool state)
 void HASwitch::subscribeCommandTopic()
 {
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::CommandTopic
@@ -153,7 +150,6 @@ void HASwitch::subscribeCommandTopic()
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -186,7 +182,6 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     if (isAvailabilityConfigured()) {
         size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            mqtt(),
             componentName(),
             name()
         );
@@ -195,7 +190,6 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     // cmd topic
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::CommandTopic,
@@ -213,7 +207,6 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     // state topic
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::StateTopic,
@@ -237,7 +230,7 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // command topic
     {
@@ -261,19 +254,18 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteNameField(mqtt(), name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(mqtt(), name());
+    DeviceTypeSerializer::mqttWriteNameField(name());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
 
     if (isAvailabilityConfigured()) {
         DeviceTypeSerializer::mqttWriteAvailabilityField(
-            mqtt(),
             componentName(),
             name()
         );
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }

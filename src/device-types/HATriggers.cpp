@@ -4,7 +4,7 @@
 #include "../HADevice.h"
 
 HATriggers::HATriggers(HAMqtt& mqtt) :
-    BaseDeviceType(mqtt, "device_automation", nullptr),
+    BaseDeviceType("device_automation", nullptr),
     _triggers(nullptr),
     _triggersNb(0)
 {
@@ -155,7 +155,6 @@ uint16_t HATriggers::calculateTopicLength(
 {
     uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 1; // + underscore
     return DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         component,
         nullptr,
         suffix,
@@ -179,7 +178,6 @@ uint16_t HATriggers::generateTopic(
     strcat(objectId, trigger->type);
 
     return DeviceTypeSerializer::generateTopic(
-        mqtt(),
         output,
         component,
         objectId,
@@ -246,7 +244,7 @@ bool HATriggers::writeSerializedTrigger(
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // automation type
     {
@@ -278,23 +276,23 @@ bool HATriggers::writeSerializedTrigger(
         }
 
         static const char Prefix[] PROGMEM = {",\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
     }
 
     // type
     {
         static const char Prefix[] PROGMEM = {",\"type\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->type);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, trigger->type);
     }
 
     // subtype
     {
         static const char Prefix[] PROGMEM = {",\"stype\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->subtype);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, trigger->subtype);
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }

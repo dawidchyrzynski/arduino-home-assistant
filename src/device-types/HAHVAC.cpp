@@ -14,7 +14,7 @@ HAHVAC::HAHVAC(
     const char* uniqueId,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt, "climate", uniqueId),
+    BaseDeviceType("climate", uniqueId),
     _uniqueId(uniqueId),
     _features(0),
     _temperatureUnit(SystemUnit),
@@ -137,7 +137,6 @@ void HAHVAC::publishConfig()
     }
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::ConfigTopic
@@ -150,7 +149,6 @@ void HAHVAC::publishConfig()
 
     char topic[topicLength];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -267,7 +265,6 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     if (isAvailabilityConfigured()) {
         size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            mqtt(),
             componentName(),
             name()
         );
@@ -276,7 +273,6 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     // action topic
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             ActionTopic,
@@ -310,7 +306,7 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // action topic
     {
@@ -323,16 +319,15 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteUniqueIdField(mqtt(), _uniqueId);
+    DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
 
     if (isAvailabilityConfigured()) {
         DeviceTypeSerializer::mqttWriteAvailabilityField(
-            mqtt(),
             componentName(),
             name()
         );
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 }

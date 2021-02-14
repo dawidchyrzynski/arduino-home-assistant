@@ -5,7 +5,7 @@
 #include "../HAUtils.h"
 
 HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
-    BaseDeviceType(mqtt, "tag", name)
+    BaseDeviceType("tag", name)
 {
 
 }
@@ -26,7 +26,6 @@ bool HATagScanner::tagScanned(const char* tag)
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::EventTopic
@@ -37,7 +36,6 @@ bool HATagScanner::tagScanned(const char* tag)
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -69,7 +67,6 @@ void HATagScanner::publishConfig()
     }
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::ConfigTopic
@@ -82,7 +79,6 @@ void HATagScanner::publishConfig()
 
     char topic[topicLength];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -114,7 +110,6 @@ uint16_t HATagScanner::calculateSerializedLength(
     // event topic
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::EventTopic,
@@ -134,19 +129,17 @@ bool HATagScanner::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // topic
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::EventTopic
         );
         char topic[topicSize];
         DeviceTypeSerializer::generateTopic(
-            mqtt(),
             topic,
             componentName(),
             name(),
@@ -154,11 +147,11 @@ bool HATagScanner::writeSerializedData(const char* serializedDevice) const
         );
 
         static const char Prefix[] PROGMEM = {"\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }

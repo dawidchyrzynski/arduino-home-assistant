@@ -19,14 +19,13 @@ const char* DeviceTypeSerializer::StateOn = "ON";
 const char* DeviceTypeSerializer::StateOff = "OFF";
 
 uint16_t DeviceTypeSerializer::calculateTopicLength(
-    const HAMqtt* mqtt,
     const char* component,
     const char* objectId,
     const char* suffix,
     bool includeNullTerminator
 )
 {
-    const char* prefix = mqtt->getDiscoveryPrefix();
+    const char* prefix = HAMqtt::instance()->getDiscoveryPrefix();
     if (prefix == nullptr) {
         return 0;
     }
@@ -42,8 +41,8 @@ uint16_t DeviceTypeSerializer::calculateTopicLength(
         size += 1; // slash
     }
 
-    if (mqtt->getDevice() != nullptr) {
-        size += strlen(mqtt->getDevice()->getUniqueId()) + 1; // with slash
+    if (HAMqtt::instance()->getDevice() != nullptr) {
+        size += strlen(HAMqtt::instance()->getDevice()->getUniqueId()) + 1; // with slash
     }
 
     if (includeNullTerminator) {
@@ -54,21 +53,24 @@ uint16_t DeviceTypeSerializer::calculateTopicLength(
 }
 
 uint16_t DeviceTypeSerializer::generateTopic(
-    const HAMqtt* mqtt,
     char* output,
     const char* component,
     const char* objectId,
     const char* suffix
 )
 {
-    const char* prefix = mqtt->getDiscoveryPrefix();
+    const char* prefix = HAMqtt::instance()->getDiscoveryPrefix();
+    if (prefix == nullptr) {
+        return 0;
+    }
+
     strcpy(output, prefix);
     strcat_P(output, CharSlash);
     strcat(output, component);
     strcat_P(output, CharSlash);
 
-    if (mqtt->getDevice() != nullptr) {
-        strcat(output, mqtt->getDevice()->getUniqueId());
+    if (HAMqtt::instance()->getDevice() != nullptr) {
+        strcat(output, HAMqtt::instance()->getDevice()->getUniqueId());
         strcat_P(output, CharSlash);
     }
 
@@ -111,17 +113,15 @@ uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
 }
 
 uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
-    const HAMqtt* mqtt,
     const char* componentName,
     const char* name
 )
 {
-    if (mqtt == nullptr || componentName == nullptr || name == nullptr) {
+    if (componentName == nullptr || name == nullptr) {
         return 0;
     }
 
     const uint16_t& availabilityTopicLength = calculateTopicLength(
-        mqtt,
         componentName,
         name,
         AvailabilityTopic,
@@ -148,83 +148,76 @@ uint16_t DeviceTypeSerializer::calculateDeviceFieldSize(
     return strlen(serializedDevice) + 7; // 7 - length of the JSON decorators for this field
 }
 
-void DeviceTypeSerializer::mqttWriteBeginningJson(HAMqtt* mqtt)
+void DeviceTypeSerializer::mqttWriteBeginningJson()
 {
-    if (mqtt == nullptr) {
-        return;
-    }
-
     static const char Data[] PROGMEM = {"{"};
-    mqtt->writePayload_P(Data);
+    HAMqtt::instance()->writePayload_P(Data);
 }
 
-void DeviceTypeSerializer::mqttWriteEndJson(HAMqtt* mqtt)
+void DeviceTypeSerializer::mqttWriteEndJson()
 {
-    if (mqtt == nullptr) {
-        return;
-    }
-
     static const char Data[] PROGMEM = {"}"};
-    mqtt->writePayload_P(Data);
+    HAMqtt::instance()->writePayload_P(Data);
 }
 
 void DeviceTypeSerializer::mqttWriteConstCharField(
-    HAMqtt* mqtt,
     const char* prefix,
     const char* value
 )
 {
-    if (mqtt == nullptr || prefix == nullptr || value == nullptr) {
+    if (prefix == nullptr || value == nullptr) {
         return;
     }
 
-    mqtt->writePayload_P(prefix);
-    mqtt->writePayload(value, strlen(value));
-    mqtt->writePayload_P(CharQuotation);
+    HAMqtt::instance()->writePayload_P(prefix);
+    HAMqtt::instance()->writePayload(value, strlen(value));
+    HAMqtt::instance()->writePayload_P(CharQuotation);
 }
 
-void DeviceTypeSerializer::mqttWriteNameField(HAMqtt* mqtt, const char* name)
+void DeviceTypeSerializer::mqttWriteNameField(const char* name)
 {
-    if (mqtt == nullptr || name == nullptr) {
+    if (name == nullptr) {
         return;
     }
 
     static const char Prefix[] PROGMEM = {",\"name\":\""};
-    mqttWriteConstCharField(mqtt, Prefix, name);
+    mqttWriteConstCharField(Prefix, name);
 }
 
 void DeviceTypeSerializer::mqttWriteUniqueIdField(
-    HAMqtt* mqtt,
     const char* name
 )
 {
-    if (mqtt == nullptr || name == nullptr) {
+    if (name == nullptr) {
+        return;
+    }
+
+    HADevice* device = HAMqtt::instance()->getDevice();
+    if (device == nullptr) {
         return;
     }
 
     static const char Prefix[] PROGMEM = {",\"uniq_id\":\""};
 
-    uint8_t uniqueIdLength = strlen(name) + strlen(mqtt->getDevice()->getUniqueId()) + 2; // underscore and null temrinator
+    uint8_t uniqueIdLength = strlen(name) + strlen(device->getUniqueId()) + 2; // underscore and null temrinator
     char uniqueId[uniqueIdLength];
     strcpy(uniqueId, name);
     strcat_P(uniqueId, CharUnderscore);
-    strcat(uniqueId, mqtt->getDevice()->getUniqueId());
+    strcat(uniqueId, device->getUniqueId());
 
-    mqttWriteConstCharField(mqtt, Prefix, uniqueId);
+    mqttWriteConstCharField(Prefix, uniqueId);
 }
 
 void DeviceTypeSerializer::mqttWriteAvailabilityField(
-    HAMqtt* mqtt,
     const char* componentName,
     const char* name
 )
 {
-    if (mqtt == nullptr || componentName == nullptr || name == nullptr) {
+    if (componentName == nullptr || name == nullptr) {
         return;
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        mqtt,
         componentName,
         name,
         AvailabilityTopic
@@ -235,7 +228,6 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
 
     char availabilityTopic[topicSize];
     generateTopic(
-        mqtt,
         availabilityTopic,
         componentName,
         name,
@@ -247,22 +239,21 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     }
 
     static const char Prefix[] PROGMEM = {",\"avty_t\":\""};
-    mqttWriteConstCharField(mqtt, Prefix, availabilityTopic);
+    mqttWriteConstCharField(Prefix, availabilityTopic);
 }
 
 void DeviceTypeSerializer::mqttWriteDeviceField(
-    HAMqtt* mqtt,
     const char* serializedDevice
 )
 {
-    if (mqtt == nullptr || serializedDevice == nullptr) {
+    if (serializedDevice == nullptr) {
         return;
     }
 
     static const char Data[] PROGMEM = {",\"dev\":"};
 
-    mqtt->writePayload_P(Data);
-    mqtt->writePayload(serializedDevice, strlen(serializedDevice));
+    HAMqtt::instance()->writePayload_P(Data);
+    HAMqtt::instance()->writePayload(serializedDevice, strlen(serializedDevice));
 }
 
 bool DeviceTypeSerializer::mqttWriteTopicField(
@@ -273,7 +264,6 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
 )
 {
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        HAMqtt::instance(),
         componentName,
         name,
         topicSuffix
@@ -284,7 +274,6 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        HAMqtt::instance(),
         topic,
         componentName,
         name,
@@ -295,7 +284,7 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteConstCharField(HAMqtt::instance(), jsonPrefix, topic);
+    DeviceTypeSerializer::mqttWriteConstCharField(jsonPrefix, topic);
 }
 
 bool DeviceTypeSerializer::mqttPublishMessage(
@@ -311,7 +300,6 @@ bool DeviceTypeSerializer::mqttPublishMessage(
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        HAMqtt::instance(),
         componentName,
         name,
         topic
@@ -322,7 +310,6 @@ bool DeviceTypeSerializer::mqttPublishMessage(
 
     char finalTopic[topicSize];
     generateTopic(
-        HAMqtt::instance(),
         finalTopic,
         componentName,
         name,
