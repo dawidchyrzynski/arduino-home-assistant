@@ -62,20 +62,15 @@ bool HASwitch::setState(bool state)
 
     if (publishState(state)) {
         _currentState = state;
-        triggerCallback(_currentState);
+
+        if (_stateCallback) {
+            _stateCallback(state, this);
+        }
+
         return true;
     }
 
     return false;
-}
-
-void HASwitch::triggerCallback(bool state)
-{
-    if (_stateCallback == nullptr) {
-        return;
-    }
-
-    _stateCallback(state, this);
 }
 
 void HASwitch::publishConfig()

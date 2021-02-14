@@ -81,7 +81,6 @@ public:
         { _stateCallback = callback; }
 
 private:
-    void triggerCallback(bool state);
     void publishConfig();
     bool publishState(bool state);
     void subscribeCommandTopic();
