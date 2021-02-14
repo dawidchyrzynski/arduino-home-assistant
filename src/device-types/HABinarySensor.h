@@ -9,7 +9,7 @@ public:
     /**
      * Initializes binary sensor.
      *
-     * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
+     * @param name Name of the sensor. Recommended characters: [a-z0-9\-_]
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
