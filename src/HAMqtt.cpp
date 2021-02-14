@@ -21,27 +21,27 @@
     _devicesTypes(nullptr)
 
 static const char* DefaultDiscoveryPrefix = "homeassistant";
-static HAMqtt* instance = nullptr;
+HAMqtt* HAMqtt::_instance = nullptr;
 
 void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 {
-    if (instance == nullptr || length > UINT16_MAX) {
+    if (HAMqtt::instance() == nullptr || length > UINT16_MAX) {
         return;
     }
 
-    instance->processMessage(topic, payload, static_cast<uint16_t>(length));
+    HAMqtt::instance()->processMessage(topic, payload, static_cast<uint16_t>(length));
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     HAMQTT_INIT
 {
-    instance = this;
+    _instance = this;
 }
 
 HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
     HAMQTT_INIT
 {
-    instance = this;
+    _instance = this;
 }
 
 bool HAMqtt::begin(

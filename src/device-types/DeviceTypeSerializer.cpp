@@ -264,3 +264,78 @@ void DeviceTypeSerializer::mqttWriteDeviceField(
     mqtt->writePayload_P(Data);
     mqtt->writePayload(serializedDevice, strlen(serializedDevice));
 }
+
+bool DeviceTypeSerializer::mqttWriteTopicField(
+    const char* componentName,
+    const char* name,
+    const char* jsonPrefix,
+    const char* topicSuffix
+)
+{
+    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
+        HAMqtt::instance(),
+        componentName,
+        name,
+        topicSuffix
+    );
+    if (topicSize == 0) {
+        return false;
+    }
+
+    char topic[topicSize];
+    DeviceTypeSerializer::generateTopic(
+        HAMqtt::instance(),
+        topic,
+        componentName,
+        name,
+        topicSuffix
+    );
+
+    if (strlen(topic) == 0) {
+        return false;
+    }
+
+    DeviceTypeSerializer::mqttWriteConstCharField(HAMqtt::instance(), jsonPrefix, topic);
+}
+
+bool DeviceTypeSerializer::mqttPublishMessage(
+    const char* componentName,
+    const char* name,
+    const char* topic,
+    const char* data
+)
+{
+    if (componentName == nullptr || name == nullptr ||
+            topic == nullptr || data == nullptr) {
+        return false;
+    }
+
+    const uint16_t& topicSize = calculateTopicLength(
+        HAMqtt::instance(),
+        componentName,
+        name,
+        topic
+    );
+    if (topicSize == 0) {
+        return false;
+    }
+
+    char finalTopic[topicSize];
+    generateTopic(
+        HAMqtt::instance(),
+        finalTopic,
+        componentName,
+        name,
+        finalTopic
+    );
+
+    if (strlen(finalTopic) == 0) {
+        return false;
+    }
+
+    return HAMqtt::instance()->publish(
+        finalTopic,
+        data,
+        true
+    );
+}

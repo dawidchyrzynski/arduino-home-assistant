@@ -127,37 +127,15 @@ bool HASwitch::publishState(bool state)
         return false;
     }
 
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
+    return DeviceTypeSerializer::mqttPublishMessage(
         componentName(),
         name(),
-        DeviceTypeSerializer::StateTopic
-    );
-    if (topicSize == 0) {
-        return false;
-    }
-
-    char topic[topicSize];
-    DeviceTypeSerializer::generateTopic(
-        mqtt(),
-        topic,
-        componentName(),
-        name(),
-        DeviceTypeSerializer::StateTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return false;
-    }
-
-    return mqtt()->publish(
-        topic,
+        DeviceTypeSerializer::StateTopic,
         (
             state ?
             DeviceTypeSerializer::StateOn :
             DeviceTypeSerializer::StateOff
-        ),
-        true
+        )
     );
 }
 
@@ -263,60 +241,24 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
 
     // command topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
-            componentName(),
-            name(),
-            DeviceTypeSerializer::CommandTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            mqtt(),
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::CommandTopic
-        );
-
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {"\"cmd_t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            componentName(),
+            name(),
+            Prefix,
+            DeviceTypeSerializer::CommandTopic
+        );
     }
 
     // state topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            mqtt(),
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {",\"stat_t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            componentName(),
+            name(),
+            Prefix,
+            DeviceTypeSerializer::StateTopic
+        );
     }
 
     DeviceTypeSerializer::mqttWriteNameField(mqtt(), name());

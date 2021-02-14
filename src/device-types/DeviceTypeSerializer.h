@@ -93,6 +93,18 @@ public:
         HAMqtt* mqtt,
         const char* serializedDevice
     );
+    static bool mqttWriteTopicField(
+        const char* componentName,
+        const char* name,
+        const char* jsonPrefix,
+        const char* topicSuffix
+    );
+    static bool mqttPublishMessage(
+        const char* componentName,
+        const char* name,
+        const char* topic,
+        const char* data
+    );
 };
 
 #endif

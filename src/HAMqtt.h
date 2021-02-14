@@ -13,6 +13,9 @@ class HAMqtt
 public:
     static const uint16_t ReconnectInterval = 5000; // ms
 
+    inline static HAMqtt* instance()
+        { return _instance; }
+
     HAMqtt(Client& netClient, HADevice& device);
     HAMqtt(const char* clientId, Client& netClient, HADevice& device);
 
@@ -126,6 +129,8 @@ public:
     void processMessage(char* topic, uint8_t* payload, uint16_t length);
 
 private:
+    static HAMqtt* _instance;
+
     /**
      * Attempts to connect to the MQTT broker.
      * The method uses properties passed to the "begin" method.
