@@ -16,14 +16,6 @@ public:
     );
     virtual ~BaseDeviceType();
 
-    inline bool isOnline() const
-        { return (_availability == AvailabilityOnline); }
-
-    virtual void setAvailability(bool online);
-
-protected:
-    HAMqtt* mqtt() const;
-
     inline const char* name() const
         { return _name; }
 
@@ -32,6 +24,14 @@ protected:
 
     inline bool isAvailabilityConfigured() const
         { return (_availability != AvailabilityDefault); }
+
+    inline bool isOnline() const
+        { return (_availability == AvailabilityOnline); }
+
+    virtual void setAvailability(bool online);
+
+protected:
+    HAMqtt* mqtt() const;
 
     virtual void onMqttConnected() = 0;
     virtual void onMqttMessage(

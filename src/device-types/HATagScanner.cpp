@@ -21,7 +21,7 @@ void HATagScanner::onMqttConnected()
 
 bool HATagScanner::tagScanned(const char* tag)
 {
-    if (tag == nullptr || strlen(tag) == 0) {
+    if (tag == nullptr || strlen(tag) == 0 || strlen(name()) == 0) {
         return false;
     }
 
@@ -133,21 +133,12 @@ bool HATagScanner::writeSerializedData(const char* serializedDevice) const
 
     // topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            name(),
-            DeviceTypeSerializer::EventTopic
-        );
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::EventTopic
-        );
-
         static const char Prefix[] PROGMEM = {"\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            DeviceTypeSerializer::EventTopic
+        );
     }
 
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);

@@ -62,8 +62,7 @@ public:
         const char* name
     );
     static uint16_t calculateAvailabilityFieldSize(
-        const char* componentName,
-        const char* name
+        const BaseDeviceType* const dt
     );
     static uint16_t calculateDeviceFieldSize(
         const char* serializedDevice
@@ -82,23 +81,24 @@ public:
         const char* name
     );
     static void mqttWriteAvailabilityField(
-        const char* componentName,
-        const char* name
+        const BaseDeviceType* const dt
     );
     static void mqttWriteDeviceField(
         const char* serializedDevice
     );
     static bool mqttWriteTopicField(
-        const char* componentName,
-        const char* name,
+        const BaseDeviceType* const dt,
         const char* jsonPrefix,
         const char* topicSuffix
     );
     static bool mqttPublishMessage(
-        const char* componentName,
-        const char* name,
-        const char* topic,
+        const BaseDeviceType* const dt,
+        const char* topicSuffix,
         const char* data
+    );
+    static bool mqttSubscribeTopic(
+        const BaseDeviceType* const dt,
+        const char* topicSuffix
     );
 };
 

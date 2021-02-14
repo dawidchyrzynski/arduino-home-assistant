@@ -83,7 +83,6 @@ public:
 private:
     void publishConfig();
     bool publishState(bool state);
-    void subscribeCommandTopic();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
 

@@ -202,8 +202,7 @@ bool HAHVAC::publishAction(Action action)
     }
 
     return DeviceTypeSerializer::mqttPublishMessage(
-        componentName(),
-        name(),
+        this,
         ActionTopic,
         actionStr
     );
@@ -217,8 +216,7 @@ bool HAHVAC::publishAuxHeatingState(bool state)
     }
 
     return DeviceTypeSerializer::mqttPublishMessage(
-        componentName(),
-        name(),
+        this,
         AuxStateTopic,
         (
             state ?
@@ -236,8 +234,7 @@ bool HAHVAC::publishAwayState(bool state)
     }
 
     return DeviceTypeSerializer::mqttPublishMessage(
-        componentName(),
-        name(),
+        this,
         AwayStateTopic,
         (
             state ?
@@ -262,13 +259,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(device, _uniqueId);
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-
-    if (isAvailabilityConfigured()) {
-        size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            componentName(),
-            name()
-        );
-    }
+    size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
     // action topic
     {
@@ -312,22 +303,14 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
     {
         static const char Prefix[] PROGMEM = {"\"act_t\":\""};
         DeviceTypeSerializer::mqttWriteTopicField(
-            componentName(),
-            name(),
+            this,
             Prefix,
             ActionTopic
         );
     }
 
     DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
-
-    if (isAvailabilityConfigured()) {
-        DeviceTypeSerializer::mqttWriteAvailabilityField(
-            componentName(),
-            name()
-        );
-    }
-
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();
 }

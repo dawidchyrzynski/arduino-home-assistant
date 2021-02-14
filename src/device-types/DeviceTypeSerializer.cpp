@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #include "DeviceTypeSerializer.h"
+#include "BaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
@@ -113,17 +114,16 @@ uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
 }
 
 uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
-    const char* componentName,
-    const char* name
+    const BaseDeviceType* const dt
 )
 {
-    if (componentName == nullptr || name == nullptr) {
+    if (!dt->isAvailabilityConfigured()) {
         return 0;
     }
 
     const uint16_t& availabilityTopicLength = calculateTopicLength(
-        componentName,
-        name,
+        dt->componentName(),
+        dt->name(),
         AvailabilityTopic,
         false
     );
@@ -209,17 +209,16 @@ void DeviceTypeSerializer::mqttWriteUniqueIdField(
 }
 
 void DeviceTypeSerializer::mqttWriteAvailabilityField(
-    const char* componentName,
-    const char* name
+    const BaseDeviceType* const dt
 )
 {
-    if (componentName == nullptr || name == nullptr) {
+    if (!dt->isAvailabilityConfigured()) {
         return;
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        componentName,
-        name,
+        dt->componentName(),
+        dt->name(),
         AvailabilityTopic
     );
     if (topicSize == 0) {
@@ -229,8 +228,8 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     char availabilityTopic[topicSize];
     generateTopic(
         availabilityTopic,
-        componentName,
-        name,
+        dt->componentName(),
+        dt->name(),
         AvailabilityTopic
     );
 
@@ -257,15 +256,18 @@ void DeviceTypeSerializer::mqttWriteDeviceField(
 }
 
 bool DeviceTypeSerializer::mqttWriteTopicField(
-    const char* componentName,
-    const char* name,
+    const BaseDeviceType* const dt,
     const char* jsonPrefix,
     const char* topicSuffix
 )
 {
+    if (jsonPrefix == nullptr || topicSuffix == nullptr) {
+        return false;
+    }
+
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        componentName,
-        name,
+        dt->componentName(),
+        dt->name() ,
         topicSuffix
     );
     if (topicSize == 0) {
@@ -275,8 +277,8 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
         topic,
-        componentName,
-        name,
+        dt->componentName(),
+        dt->name(),
         topicSuffix
     );
 
@@ -288,41 +290,68 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
 }
 
 bool DeviceTypeSerializer::mqttPublishMessage(
-    const char* componentName,
-    const char* name,
-    const char* topic,
+    const BaseDeviceType* const dt,
+    const char* topicSuffix,
     const char* data
 )
 {
-    if (componentName == nullptr || name == nullptr ||
-            topic == nullptr || data == nullptr) {
+    if (topicSuffix == nullptr || data == nullptr) {
         return false;
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        componentName,
-        name,
-        topic
+        dt->componentName(),
+        dt->name(),
+        topicSuffix
     );
     if (topicSize == 0) {
         return false;
     }
 
-    char finalTopic[topicSize];
+    char topic[topicSize];
     generateTopic(
-        finalTopic,
-        componentName,
-        name,
-        finalTopic
+        topic,
+        dt->componentName(),
+        dt->name(),
+        topicSuffix
     );
 
-    if (strlen(finalTopic) == 0) {
+    if (strlen(topic) == 0) {
         return false;
     }
 
     return HAMqtt::instance()->publish(
-        finalTopic,
+        topic,
         data,
         true
     );
+}
+
+bool DeviceTypeSerializer::mqttSubscribeTopic(
+    const BaseDeviceType* const dt,
+    const char* topicSuffix
+)
+{
+    const uint16_t& topicSize = calculateTopicLength(
+        dt->componentName(),
+        dt->name(),
+        topicSuffix
+    );
+    if (topicSize == 0) {
+        return false;
+    }
+
+    char topic[topicSize];
+    generateTopic(
+        topic,
+        dt->componentName(),
+        dt->name(),
+        topicSuffix
+    );
+
+    if (strlen(topic) == 0) {
+        return;
+    }
+
+    return HAMqtt::instance()->subscribe(topic);
 }

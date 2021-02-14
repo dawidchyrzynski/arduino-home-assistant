@@ -185,13 +185,7 @@ uint16_t HASensor<T>::calculateSerializedLength(
     size += DeviceTypeSerializer::calculateNameFieldSize(name());
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(device, name());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-
-    if (isAvailabilityConfigured()) {
-        size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            componentName(),
-            name()
-        );
-    }
+    size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
@@ -236,29 +230,12 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
 
     // state topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {"\"stat_t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            DeviceTypeSerializer::StateTopic
+        );
     }
 
     // device class
@@ -275,14 +252,7 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
 
     DeviceTypeSerializer::mqttWriteNameField(name());
     DeviceTypeSerializer::mqttWriteUniqueIdField(name());
-
-    if (isAvailabilityConfigured()) {
-        DeviceTypeSerializer::mqttWriteAvailabilityField(
-            componentName(),
-            name()
-        );
-    }
-
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();
 

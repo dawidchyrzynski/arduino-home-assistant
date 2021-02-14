@@ -254,29 +254,12 @@ bool HATriggers::writeSerializedTrigger(
 
     // topic
     {
-        const uint16_t& topicSize = calculateTopicLength(
-            componentName(),
-            trigger,
-            DeviceTypeSerializer::EventTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char topic[topicSize];
-        generateTopic(
-            topic,
-            componentName(),
-            trigger,
-            DeviceTypeSerializer::EventTopic
-        );
-
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {",\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            DeviceTypeSerializer::EventTopic
+        );
     }
 
     // type
