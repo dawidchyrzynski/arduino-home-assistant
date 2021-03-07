@@ -1,3 +1,7 @@
+#ifdef ARDUINO_ARCH_SAMD
+#include <avr/dtostrf.h>
+#endif
+
 #include <Arduino.h>
 
 #include "HAUtils.h"
@@ -44,6 +48,22 @@ char* HAUtils::byteArrayToStr(
     byteArrayToStr(dst, src, length);
 
     return dst;
+}
+
+void HAUtils::tempToStr(
+    char* dst,
+    const double& temp
+)
+{
+    memset(dst, 0, sizeof(AHA_SERIALIZED_TEMP_SIZE));
+    dtostrf(temp, 0, 2, dst); // to do: custom implementation
+}
+
+double HAUtils::strToTemp(
+    const char* src
+)
+{
+    return atof(src); // to do: custo implementation
 }
 
 uint8_t HAUtils::getValueTypeLength(const ValueType& type)

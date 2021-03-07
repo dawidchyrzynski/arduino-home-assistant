@@ -2,26 +2,42 @@
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
+#include "../HAUtils.h"
 
 const char* HAHVAC::ActionTopic = "at";
 const char* HAHVAC::AuxCommandTopic = "act";
 const char* HAHVAC::AuxStateTopic = "ast";
 const char* HAHVAC::AwayCommandTopic = "amct";
 const char* HAHVAC::AwayStateTopic = "amst";
+const char* HAHVAC::HoldCommandTopic = "hct";
+const char* HAHVAC::HoldStateTopic = "hst";
+const char* HAHVAC::TargetTemperatureCommandTopic = "ttct";
+const char* HAHVAC::TargetTemperatureStateTopic = "ttst";
+const char* HAHVAC::CurrentTemperatureTopic = "ctt";
 
 HAHVAC::HAHVAC(
     const char* uniqueId,
+    Features features,
     HAMqtt& mqtt
 ) :
     BaseDeviceType("climate", uniqueId),
     _uniqueId(uniqueId),
-    _features(0),
-    _temperatureUnit(SystemUnit),
+    _features(features),
+    _temperatureUnit(DefaultUnit),
     _action(OffAction),
     _auxHeatingCallback(nullptr),
     _auxHeatingState(false),
     _awayCallback(nullptr),
-    _awayState(false)
+    _awayState(false),
+    _holdCallback(nullptr),
+    _holdState(false),
+    _currentTemperature(255),
+    _minTemp(255),
+    _maxTemp(255),
+    _tempStep(1),
+    _targetTemperature(255),
+    _targetTempCallback(nullptr),
+    _label(nullptr)
 {
 
 }
@@ -36,6 +52,9 @@ void HAHVAC::onMqttConnected()
     publishAction(_action);
     publishAuxHeatingState(_auxHeatingState);
     publishAwayState(_awayState);
+    publishHoldState(_holdState);
+    publishCurrentTemperature(_currentTemperature);
+    publishTargetTemperature(_targetTemperature);
     subscribeTopics();
 }
 
@@ -51,12 +70,19 @@ void HAHVAC::onMqttMessage(
     } else if (isMyTopic(topic, AwayCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAwayState(state);
+    } else if (isMyTopic(topic, HoldCommandTopic)) {
+        bool state = (length == strlen(DeviceTypeSerializer::StateOn));
+        setHoldState(state);
+    } else if (isMyTopic(topic, TargetTemperatureCommandTopic)) {
+        char src[length + 1];
+        memset(src, 0, sizeof(src));
+        memcpy(src, payload, length);
+
+        setTargetTemperature(HAUtils::strToTemp(src));
     }
 
     // parse topics:
-    // fan_mode_command_topic
     // mode_command_topic
-    // temperature_command_topic
 }
 
 bool HAHVAC::setAction(Action action)
@@ -75,7 +101,7 @@ bool HAHVAC::setAction(Action action)
 
 bool HAHVAC::setAuxHeatingState(bool state)
 {
-    if (!(_features & AuxHeatingFeature) == 0) {
+    if (!(_features & AuxHeatingFeature)) {
         return false;
     }
 
@@ -87,7 +113,7 @@ bool HAHVAC::setAuxHeatingState(bool state)
         _auxHeatingState = state;
 
         if (_auxHeatingCallback) {
-            _auxHeatingCallback(state);
+            _auxHeatingCallback(_auxHeatingState);
         }
 
         return true;
@@ -98,7 +124,7 @@ bool HAHVAC::setAuxHeatingState(bool state)
 
 bool HAHVAC::setAwayState(bool state)
 {
-    if (!(_features & AwayModeFeature) == 0) {
+    if (!(_features & AwayModeFeature)) {
         return;
     }
 
@@ -110,7 +136,97 @@ bool HAHVAC::setAwayState(bool state)
         _awayState = state;
 
         if (_awayCallback) {
-            _awayCallback(state);
+            _awayCallback(_awayState);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setHoldState(bool state)
+{
+    if (!(_features & HoldFeature)) {
+        return;
+    }
+
+    if (_holdState == state) {
+        return true;
+    }
+
+    if (publishHoldState(state)) {
+        _holdState = state;
+
+        if (_holdCallback) {
+            _holdCallback(_holdState);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setCurrentTemperature(double temperature)
+{
+    if (!(_features & CurrentTemperatureFeature)) {
+        return;
+    }
+
+    if (_currentTemperature == temperature) {
+        return true;
+    }
+
+    if (publishCurrentTemperature(temperature)) {
+        _currentTemperature = temperature;
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setMinTemp(double minTemp)
+{
+    if (minTemp >= 255 || minTemp <= -255) {
+        return false;
+    }
+
+    _minTemp = minTemp;
+    return true;
+}
+
+bool HAHVAC::setMaxTemp(double maxTemp)
+{
+    if (maxTemp >= 255 || maxTemp <= -255) {
+        return false;
+    }
+
+    _maxTemp = maxTemp;
+    return true;
+}
+
+bool HAHVAC::setTempStep(double tempStep)
+{
+    if (tempStep <= 0 || tempStep >= 255) {
+        return false;
+    }
+
+    _tempStep = tempStep;
+    return true;
+}
+
+bool HAHVAC::setTargetTemperature(double temperature)
+{
+    if (_targetTemperature == temperature) {
+        return true;
+    }
+
+    if (publishTargetTemperature(temperature)) {
+        _targetTemperature = temperature;
+
+        if (_targetTempCallback) {
+            _targetTempCallback(_targetTemperature);
         }
 
         return true;
@@ -244,6 +360,65 @@ bool HAHVAC::publishAwayState(bool state)
     );
 }
 
+bool HAHVAC::publishHoldState(bool state)
+{
+    if (!(_features & HoldFeature) ||
+            strlen(name()) == 0) {
+        return false;
+    }
+
+    return DeviceTypeSerializer::mqttPublishMessage(
+        this,
+        HoldStateTopic,
+        (
+            state ?
+            DeviceTypeSerializer::StateOn :
+            DeviceTypeSerializer::StateOff
+        )
+    );
+}
+
+bool HAHVAC::publishCurrentTemperature(double temperature)
+{
+    if (!(_features & CurrentTemperatureFeature) ||
+            strlen(name()) == 0) {
+        return false;
+    }
+
+    if (temperature >= 255) {
+        return false;
+    }
+
+    char str[AHA_SERIALIZED_TEMP_SIZE];
+    HAUtils::tempToStr(str, temperature);
+
+    return DeviceTypeSerializer::mqttPublishMessage(
+        this,
+        CurrentTemperatureTopic,
+        str
+    );
+}
+
+bool HAHVAC::publishTargetTemperature(double temperature)
+{
+    if (strlen(name()) == 0) {
+        return false;
+    }
+
+    if (temperature >= 255) {
+        return false;
+    }
+
+    char str[AHA_SERIALIZED_TEMP_SIZE];
+    HAUtils::tempToStr(str, temperature);
+
+    return DeviceTypeSerializer::mqttPublishMessage(
+        this,
+        TargetTemperatureStateTopic,
+        str
+    );
+}
+
 void HAHVAC::subscribeTopics()
 {
     // aux heating
@@ -262,7 +437,18 @@ void HAHVAC::subscribeTopics()
         );
     }
 
-    // to do
+    // hold
+    if (_features & HoldFeature) {
+        DeviceTypeSerializer::mqttSubscribeTopic(
+            this,
+            HoldCommandTopic
+        );
+    }
+
+    DeviceTypeSerializer::mqttSubscribeTopic(
+        this,
+        TargetTemperatureCommandTopic
+    );
 }
 
 uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
@@ -373,6 +559,137 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         }
     }
 
+    // hold
+    if (_features & HoldFeature) {
+        // command topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                HoldCommandTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"hold_cmd_t":"[TOPIC]"
+            size += topicLength + 16; // 16 - length of the JSON decorators for this field
+        }
+
+        // state topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                HoldStateTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"hold_stat_t":"[TOPIC]"
+            size += topicLength + 17; // 17 - length of the JSON decorators for this field
+        }
+    }
+
+    // current temperature
+    if (_features & CurrentTemperatureFeature) {
+        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+            componentName(),
+            name(),
+            CurrentTemperatureTopic,
+            false
+        );
+
+        if (topicLength == 0) {
+            return 0;
+        }
+
+        // Field format: ,"curr_temp_t":"[TOPIC]"
+        size += topicLength + 17; // 17 - length of the JSON decorators for this field
+    }
+
+    // min temp
+    if (_minTemp != 255) {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _minTemp);
+
+        // Field format: ,"min_temp":"[TEMP]"
+        size += strlen(str) + 14; // 14 - length of the JSON decorators for this field
+    }
+
+    // max temp
+    if (_maxTemp != 255) {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _maxTemp);
+
+        // Field format: ,"max_temp":"[TEMP]"
+        size += strlen(str) + 14; // 14 - length of the JSON decorators for this field
+    }
+
+    // temp step
+    {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _tempStep);
+
+        // Field format: ,"temp_step":"[TEMP]"
+        size += strlen(str) + 15; // 15 - length of the JSON decorators for this field
+    }
+
+    // name
+    if (_label != nullptr) {
+        // Field format: ,"name":"[NAME]"
+        size += strlen(_label) + 10; // 15 - length of the JSON decorators for this field
+    }
+
+    // target temperature
+    {
+        // command topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                TargetTemperatureCommandTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"temp_cmd_t":"[TOPIC]"
+            size += topicLength + 16; // 16 - length of the JSON decorators for this field
+        }
+
+        // state topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                TargetTemperatureStateTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"temp_stat_t":"[TOPIC]"
+            size += topicLength + 17; // 17 - length of the JSON decorators for this field
+        }
+    }
+
+    // temperature unit
+    if (_temperatureUnit != DefaultUnit) {
+        // Field format: ,"temp_unit":"[UNIT]"
+        // UNIT may C or F
+        size += 15 + 1; // 15 - length of the JSON decorators for this field
+    }
+
     return size; // exludes null terminator
 }
 
@@ -438,6 +755,116 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
                 AwayStateTopic
             );
         }
+    }
+
+    // hold
+    if (_features & HoldFeature) {
+        // command topic
+        {
+            static const char Prefix[] PROGMEM = {",\"hold_cmd_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                HoldCommandTopic
+            );
+        }
+
+        // state topic
+        {
+            static const char Prefix[] PROGMEM = {",\"hold_stat_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                HoldStateTopic
+            );
+        }
+    }
+
+    // current temperature topic
+    if (_features & CurrentTemperatureFeature) {
+        static const char Prefix[] PROGMEM = {",\"curr_temp_t\":\""};
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            CurrentTemperatureTopic
+        );
+    }
+
+    // min temp
+    if (_minTemp != 255) {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _minTemp);
+
+        static const char Prefix[] PROGMEM = {",\"min_temp\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            str
+        );
+    }
+
+    // max temp
+    if (_maxTemp != 255) {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _maxTemp);
+
+        static const char Prefix[] PROGMEM = {",\"max_temp\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            str
+        );
+    }
+
+    // temp step
+    {
+        char str[AHA_SERIALIZED_TEMP_SIZE];
+        HAUtils::tempToStr(str, _tempStep);
+
+        static const char Prefix[] PROGMEM = {",\"temp_step\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            str
+        );
+    }
+
+    // label (name)
+    if (_label != nullptr) {
+        static const char Prefix[] PROGMEM = {",\"name\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            _label
+        );
+    }
+
+    // target temperature
+    {
+        // command topic
+        {
+            static const char Prefix[] PROGMEM = {",\"temp_cmd_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                TargetTemperatureCommandTopic
+            );
+        }
+
+        // state topic
+        {
+            static const char Prefix[] PROGMEM = {",\"temp_stat_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                TargetTemperatureStateTopic
+            );
+        }
+    }
+
+    // temperature unit
+    if (_temperatureUnit != DefaultUnit) {
+        static const char Prefix[] PROGMEM = {",\"temp_unit\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            (_temperatureUnit == CelsiusUnit ? "C" : "F")
+        );
     }
 
     DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
