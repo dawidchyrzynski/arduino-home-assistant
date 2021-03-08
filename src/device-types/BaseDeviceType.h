@@ -22,6 +22,10 @@ public:
 
     virtual void setAvailability(bool online);
 
+private: 
+    HAMqtt& _mqtt;
+    friend class HAMqtt;
+
 protected:
     inline HAMqtt* mqtt() const
         { return &_mqtt; }
@@ -54,10 +58,7 @@ private:
         AvailabilityOffline
     };
 
-    HAMqtt& _mqtt;
     Availability _availability;
-
-    friend class HAMqtt;
 };
 
 #endif
