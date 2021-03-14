@@ -162,7 +162,8 @@ void DeviceTypeSerializer::mqttWriteEndJson()
 
 void DeviceTypeSerializer::mqttWriteConstCharField(
     const char* prefix,
-    const char* value
+    const char* value,
+    bool quoteSuffix
 )
 {
     if (prefix == nullptr || value == nullptr) {
@@ -171,7 +172,10 @@ void DeviceTypeSerializer::mqttWriteConstCharField(
 
     HAMqtt::instance()->writePayload_P(prefix);
     HAMqtt::instance()->writePayload(value, strlen(value));
-    HAMqtt::instance()->writePayload_P(CharQuotation);
+
+    if (quoteSuffix) {
+        HAMqtt::instance()->writePayload_P(CharQuotation);
+    }
 }
 
 void DeviceTypeSerializer::mqttWriteNameField(const char* name)

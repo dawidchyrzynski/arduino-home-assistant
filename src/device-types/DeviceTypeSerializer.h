@@ -71,7 +71,8 @@ public:
     static void mqttWriteEndJson();
     static void mqttWriteConstCharField(
         const char* prefix,
-        const char* value
+        const char* value,
+        bool quoteSuffix = true
     );
     static void mqttWriteNameField(
         const char* name
