@@ -14,6 +14,15 @@ const char* HAHVAC::HoldStateTopic = "hst";
 const char* HAHVAC::TargetTemperatureCommandTopic = "ttct";
 const char* HAHVAC::TargetTemperatureStateTopic = "ttst";
 const char* HAHVAC::CurrentTemperatureTopic = "ctt";
+const char* HAHVAC::ModeCommandTopic = "mct";
+const char* HAHVAC::ModeStateTopic = "mst";
+
+static const char OffStr[] PROGMEM = {"off"};
+static const char AutoStr[] PROGMEM = {"auto"};
+static const char CoolStr[] PROGMEM = {"cool"};
+static const char HeatStr[] PROGMEM = {"heat"};
+static const char DryStr[] PROGMEM = {"dry"};
+static const char FanOnlyStr[] PROGMEM = {"fan_only"};
 
 HAHVAC::HAHVAC(
     const char* uniqueId,
@@ -35,9 +44,19 @@ HAHVAC::HAHVAC(
     _minTemp(255),
     _maxTemp(255),
     _tempStep(1),
-    _targetTemperature(255),
     _targetTempCallback(nullptr),
-    _label(nullptr)
+    _targetTemperature(255),
+    _label(nullptr),
+    _modes(
+        OffMode |
+        AutoMode |
+        CoolMode |
+        HeatMode |
+        DryMode |
+        FanOnlyMode
+    ),
+    _modeChangedCallback(nullptr),
+    _currentMode(Mode::UnknownMode)
 {
 
 }
@@ -55,6 +74,7 @@ void HAHVAC::onMqttConnected()
     publishHoldState(_holdState);
     publishCurrentTemperature(_currentTemperature);
     publishTargetTemperature(_targetTemperature);
+    publishMode(_currentMode);
     subscribeTopics();
 }
 
@@ -79,18 +99,17 @@ void HAHVAC::onMqttMessage(
         memcpy(src, payload, length);
 
         setTargetTemperature(HAUtils::strToTemp(src));
-    }
+    } else if (isMyTopic(topic, ModeCommandTopic)) {
+        char mode[length + 1];
+        memset(mode, 0, sizeof(mode));
+        memcpy(mode, payload, length);
 
-    // parse topics:
-    // mode_command_topic
+        setModeFromStr(mode);
+    }
 }
 
 bool HAHVAC::setAction(Action action)
 {
-    if (_action == action) {
-        return true;
-    }
-
     if (publishAction(action)) {
         _action = action;
         return true;
@@ -103,10 +122,6 @@ bool HAHVAC::setAuxHeatingState(bool state)
 {
     if (!(_features & AuxHeatingFeature)) {
         return false;
-    }
-
-    if (_auxHeatingState == state) {
-        return true;
     }
 
     if (publishAuxHeatingState(state)) {
@@ -128,10 +143,6 @@ bool HAHVAC::setAwayState(bool state)
         return;
     }
 
-    if (_awayState == state) {
-        return true;
-    }
-
     if (publishAwayState(state)) {
         _awayState = state;
 
@@ -149,10 +160,6 @@ bool HAHVAC::setHoldState(bool state)
 {
     if (!(_features & HoldFeature)) {
         return;
-    }
-
-    if (_holdState == state) {
-        return true;
     }
 
     if (publishHoldState(state)) {
@@ -218,10 +225,6 @@ bool HAHVAC::setTempStep(double tempStep)
 
 bool HAHVAC::setTargetTemperature(double temperature)
 {
-    if (_targetTemperature == temperature) {
-        return true;
-    }
-
     if (publishTargetTemperature(temperature)) {
         _targetTemperature = temperature;
 
@@ -230,6 +233,44 @@ bool HAHVAC::setTargetTemperature(double temperature)
         }
 
         return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setMode(Mode mode)
+{
+    if (mode == UnknownMode) {
+        return false;
+    }
+
+    if (publishMode(mode)) {
+        _currentMode = mode;
+
+        if (_modeChangedCallback) {
+            _modeChangedCallback(_currentMode);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setModeFromStr(const char* mode)
+{
+    if (strcmp_P(mode, OffStr) == 0) {
+        return setMode(OffMode);
+    } else if (strcmp_P(mode, AutoStr) == 0) {
+        return setMode(AutoMode);
+    } else if (strcmp_P(mode, CoolStr) == 0) {
+        return setMode(CoolMode);
+    } else if (strcmp_P(mode, HeatStr) == 0) {
+        return setMode(HeatMode);
+    } else if (strcmp_P(mode, DryStr) == 0) {
+        return setMode(DryMode);
+    } else if (strcmp_P(mode, FanOnlyStr) == 0) {
+        return setMode(FanOnlyMode);
     }
 
     return false;
@@ -290,7 +331,7 @@ bool HAHVAC::publishAction(Action action)
     char actionStr[8];
     switch (action) {
         case OffAction:
-            strcpy(actionStr, "off");
+            strcpy_P(actionStr, OffStr);
             break;
 
         case HeatingAction:
@@ -419,6 +460,49 @@ bool HAHVAC::publishTargetTemperature(double temperature)
     );
 }
 
+bool HAHVAC::publishMode(Mode mode)
+{
+    if (strlen(name()) == 0 || mode == UnknownMode) {
+        return false;
+    }
+
+    char modeStr[9];
+    switch (mode) {
+        case OffMode:
+            strcpy_P(modeStr, OffStr);
+            break;
+
+        case AutoMode:
+            strcpy_P(modeStr, AutoStr);
+            break;
+
+        case CoolMode:
+            strcpy_P(modeStr, CoolStr);
+            break;
+
+        case HeatMode:
+            strcpy_P(modeStr, HeatStr);
+            break;
+
+        case DryMode:
+            strcpy_P(modeStr, DryStr);
+            break;
+
+        case FanOnlyMode:
+            strcpy_P(modeStr, FanOnlyStr);
+            break;
+
+        default:
+            return false;
+    }
+
+    return DeviceTypeSerializer::mqttPublishMessage(
+        this,
+        ModeStateTopic,
+        modeStr
+    );
+}
+
 void HAHVAC::subscribeTopics()
 {
     // aux heating
@@ -445,9 +529,16 @@ void HAHVAC::subscribeTopics()
         );
     }
 
+    // target temperature
     DeviceTypeSerializer::mqttSubscribeTopic(
         this,
         TargetTemperatureCommandTopic
+    );
+
+    // mode
+    DeviceTypeSerializer::mqttSubscribeTopic(
+        this,
+        ModeCommandTopic
     );
 }
 
@@ -690,7 +781,89 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         size += 15 + 1; // 15 - length of the JSON decorators for this field
     }
 
-    return size; // exludes null terminator
+    // modes
+    if (_modes != 0) {
+        // command topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                ModeCommandTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"mode_cmd_t":"[TOPIC]"
+            size += topicLength + 16; // 16 - length of the JSON decorators for this field
+        }
+
+        // state topic
+        {
+            const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+                componentName(),
+                name(),
+                ModeStateTopic,
+                false
+            );
+
+            if (topicLength == 0) {
+                return 0;
+            }
+
+            // Field format: ,"mode_stat_t":"[TOPIC]"
+            size += topicLength + 17; // 17 - length of the JSON decorators for this field
+        }
+    }
+
+    // Supported modes
+    // Field format: ,"modes":MODES
+    size += 9 + calculateModesLength(); // 9 - length of the JSON decorators for this field
+
+    return size; // excludes null terminator
+}
+
+uint16_t HAHVAC::calculateModesLength() const
+{
+    uint16_t length = 2; // opening and closing bracket
+
+    if (_modes & OffMode) {
+        // escape + comma
+        length += 3 + strlen_P(OffStr);
+    }
+
+    if (_modes & AutoMode) {
+        // escape + comma
+        length += 3 + strlen_P(AutoStr);
+    }
+
+    if (_modes & CoolMode) {
+        // escape + comma
+        length += 3 + strlen_P(CoolStr);
+    }
+
+    if (_modes & HeatMode) {
+        // escape + comma
+        length += 3 + strlen_P(HeatStr);
+    }
+
+    if (_modes & DryMode) {
+        // escape + comma
+        length += 3 + strlen_P(DryStr);
+    }
+
+    if (_modes & FanOnlyMode) {
+        // escape + comma
+        length += 3 + strlen_P(FanOnlyStr);
+    }
+
+    if (length > 2) {
+        length--; // remove trailing comma
+    }
+
+    return length; // excludes null terminator
 }
 
 bool HAHVAC::writeSerializedData(const char* serializedDevice) const
@@ -864,6 +1037,88 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
             (_temperatureUnit == CelsiusUnit ? "C" : "F")
+        );
+    }
+
+    // modes
+    if (_modes != 0) {
+        // command topic
+        {
+            static const char Prefix[] PROGMEM = {",\"mode_cmd_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                ModeCommandTopic
+            );
+        }
+
+        // state topic
+        {
+            static const char Prefix[] PROGMEM = {",\"mode_stat_t\":\""};
+            DeviceTypeSerializer::mqttWriteTopicField(
+                this,
+                Prefix,
+                ModeStateTopic
+            );
+        }
+    }
+
+    // supported modes
+    {
+        static const char CharQuotation[] PROGMEM = {"\""};
+        static const char CharQuotationComma[] PROGMEM = {"\","};
+        static const char Prefix[] PROGMEM = {",\"modes\":"};
+
+        char modesStr[calculateModesLength() + 1]; // plus null terminator
+        memset(modesStr, 0, sizeof(modesStr));
+        strcpy(modesStr, "[");
+
+        if (_modes != 0) {
+            if (_modes & OffMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, OffStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            if (_modes & AutoMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, AutoStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            if (_modes & CoolMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, CoolStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            if (_modes & HeatMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, HeatStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            if (_modes & DryMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, DryStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            if (_modes & FanOnlyMode) {
+                strcat_P(modesStr, CharQuotation);
+                strcat_P(modesStr, FanOnlyStr);
+                strcat_P(modesStr, CharQuotationComma);
+            }
+
+            modesStr[strlen(modesStr) - 1] = ']';
+        } else {
+            strcat(modesStr, "]");
+        }
+
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            modesStr,
+            false
         );
     }
 

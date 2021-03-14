@@ -5,6 +5,7 @@
 
 #define HAHVAC_STATE_CALLBACK_BOOL(name) void (*name)(bool)
 #define HAHVAC_STATE_CALLBACK_DOUBLE(name) void (*name)(double)
+#define HAHVAC_STATE_CALLBACK_MODE(name) void (*name)(HAHVAC::Mode)
 
 class HAHVAC : public BaseDeviceType
 {
@@ -19,6 +20,8 @@ public:
     static const char* TargetTemperatureCommandTopic;
     static const char* TargetTemperatureStateTopic;
     static const char* CurrentTemperatureTopic;
+    static const char* ModeCommandTopic;
+    static const char* ModeStateTopic;
 
     enum Features {
         DefaultFeatures = 0,
@@ -29,12 +32,23 @@ public:
     };
 
     enum Action {
-        OffAction = 1,
+        UnknownAction = 0,
+        OffAction,
         HeatingAction,
         CoolingAction,
         DryingAction,
         IdleAction,
         FanAction
+    };
+
+    enum Mode {
+        UnknownMode = 0,
+        OffMode = 1,
+        AutoMode = 2,
+        CoolMode = 4,
+        HeatMode = 8,
+        DryMode = 16,
+        FanOnlyMode = 32
     };
 
     enum TemperatureUnit {
@@ -84,7 +98,16 @@ public:
         { return _currentTemperature; }
 
     inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "name" is already in use
+        { _label = name; } // it needs to be called "label" as "_name" is already in use
+
+    inline void setModes(uint8_t modes)
+        { _modes = modes; }
+
+    inline Mode getMode() const
+        { return _currentMode; }
+
+    inline void onModeChanged(HAHVAC_STATE_CALLBACK_MODE(callback))
+        { _modeChangedCallback = callback; }
 
     bool setAction(Action action);
     bool setAuxHeatingState(bool state);
@@ -95,6 +118,8 @@ public:
     bool setMaxTemp(double maxTemp);
     bool setTempStep(double tempStep);
     bool setTargetTemperature(double targetTemperature);
+    bool setMode(Mode mode);
+    bool setModeFromStr(const char* mode);
 
 private:
     void publishConfig();
@@ -104,8 +129,10 @@ private:
     bool publishHoldState(bool state);
     bool publishCurrentTemperature(double temperature);
     bool publishTargetTemperature(double temperature);
+    bool publishMode(Mode mode);
     void subscribeTopics();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
+    uint16_t calculateModesLength() const;
     bool writeSerializedData(const char* serializedDevice) const;
 
     const char* _uniqueId;
@@ -122,9 +149,13 @@ private:
     double _minTemp;
     double _maxTemp;
     double _tempStep;
-    double _targetTemperature;
     HAHVAC_STATE_CALLBACK_DOUBLE(_targetTempCallback);
+    double _targetTemperature;
     const char* _label;
+    uint8_t _modes;
+    HAHVAC_STATE_CALLBACK_MODE(_modeChangedCallback);
+    Mode _currentMode;
+
 };
 
 #endif
