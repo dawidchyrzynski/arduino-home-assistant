@@ -1,4 +1,6 @@
 #include "HAHVAC.h"
+#ifdef ARDUINOHA_HVAC
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -1127,3 +1129,5 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();
 }
+
+#endif

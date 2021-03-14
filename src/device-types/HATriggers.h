@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_TRIGGERS
+
 struct HATrigger {
     const char* type;
     const char* subtype;
@@ -56,4 +58,5 @@ private:
     uint8_t _triggersNb;
 };
 
+#endif
 #endif

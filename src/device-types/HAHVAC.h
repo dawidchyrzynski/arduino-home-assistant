@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_HVAC
+
 #define HAHVAC_STATE_CALLBACK_BOOL(name) void (*name)(bool)
 #define HAHVAC_STATE_CALLBACK_DOUBLE(name) void (*name)(double)
 #define HAHVAC_STATE_CALLBACK_MODE(name) void (*name)(HAHVAC::Mode)
@@ -158,4 +160,5 @@ private:
 
 };
 
+#endif
 #endif

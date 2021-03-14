@@ -1,4 +1,6 @@
 #include "HATriggers.h"
+#ifdef ARDUINOHA_TRIGGERS
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -279,3 +281,5 @@ bool HATriggers::writeSerializedTrigger(
 
     return true;
 }
+
+#endif

@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_SWITCH
+
 #define HASWITCH_CALLBACK(name) void (*name)(bool, HASwitch*)
 
 class HASwitch : public BaseDeviceType
@@ -90,4 +92,5 @@ private:
     bool _currentState;
 };
 
+#endif
 #endif

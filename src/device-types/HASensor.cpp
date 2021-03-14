@@ -3,6 +3,8 @@
 #endif
 
 #include "HASensor.h"
+#ifdef ARDUINOHA_SENSOR
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -326,3 +328,5 @@ bool HASensor<T>::valueToStr(char* dst, T value) const
 
     return true;
 }
+
+#endif

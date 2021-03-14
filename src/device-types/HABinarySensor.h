@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_BINARY_SENSOR
+
 class HABinarySensor : public BaseDeviceType
 {
 public:
@@ -67,4 +69,5 @@ private:
     bool _currentState;
 };
 
+#endif
 #endif

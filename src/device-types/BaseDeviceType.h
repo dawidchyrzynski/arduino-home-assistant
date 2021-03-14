@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#include "../ArduinoHADefines.h"
 #include "DeviceTypeSerializer.h"
 
 class HAMqtt;

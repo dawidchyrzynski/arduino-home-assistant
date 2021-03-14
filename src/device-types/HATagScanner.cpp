@@ -1,4 +1,6 @@
 #include "HATagScanner.h"
+#ifdef ARDUINOHA_TAG_SCANNER
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -145,3 +147,5 @@ bool HATagScanner::writeSerializedData(const char* serializedDevice) const
 
     return true;
 }
+
+#endif

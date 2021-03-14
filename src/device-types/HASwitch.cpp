@@ -1,4 +1,6 @@
 #include "HASwitch.h"
+#ifdef ARDUINOHA_SWITCH
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -212,3 +214,5 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
 
     return true;
 }
+
+#endif

@@ -4,6 +4,8 @@
 #include "BaseDeviceType.h"
 #include "../HAUtils.h"
 
+#ifdef ARDUINOHA_SENSOR
+
 template <typename T>
 class HASensor : public BaseDeviceType
 {
@@ -81,4 +83,5 @@ private:
     T _currentValue;
 };
 
+#endif
 #endif

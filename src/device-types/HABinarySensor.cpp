@@ -1,4 +1,6 @@
 #include "HABinarySensor.h"
+#ifdef ARDUINOHA_BINARY_SENSOR
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -215,3 +217,5 @@ bool HABinarySensor::writeSerializedData(const char* serializedDevice) const
 
     return true;
 }
+
+#endif

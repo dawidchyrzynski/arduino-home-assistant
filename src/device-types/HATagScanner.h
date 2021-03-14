@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_TAG_SCANNER
+
 class HATagScanner : public BaseDeviceType
 {
 public:
@@ -37,4 +39,5 @@ private:
     bool writeSerializedData(const char* serializedDevice) const;
 };
 
+#endif
 #endif
