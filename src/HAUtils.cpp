@@ -50,20 +50,84 @@ char* HAUtils::byteArrayToStr(
     return dst;
 }
 
+void HAUtils::toStr(
+    char* dst,
+    uint32_t number
+)
+{
+    uint8_t digitsNb = (number > 1 ? ceil(log10(number)) : 1);
+    char tmp[digitsNb + 1]; // including null terminator
+    memset(tmp, 0, sizeof(tmp));
+
+    if (number > 0) {
+        uint8_t i = (digitsNb - 1);
+        while (number > 0) {
+            tmp[i] = (number % 10) + '0';
+            number /= 10;
+            i--;
+        }
+    } else {
+        tmp[0] = '0';
+    }
+
+    strcpy(dst, tmp);
+}
+
+void HAUtils::toStr(
+    char* dst,
+    int32_t number
+)
+{
+    if (number < 0) {
+        strcpy(dst, "-");
+        number *= -1;
+    }
+
+    toStr(dst, static_cast<uint32_t>(number));
+}
+
+
+
 void HAUtils::tempToStr(
     char* dst,
     const double& temp
 )
 {
     memset(dst, 0, sizeof(AHA_SERIALIZED_TEMP_SIZE));
-    dtostrf(temp, 0, 2, dst); // to do: custom implementation
+    //dtostrf(temp, 0, 2, dst); // to do: custom implementation
+}
+
+void HAUtils::tempToStr(
+    char* dst,
+    int16_t temp
+)
+{
+    bool negative = (temp < 0);
+    if (negative )
+
+    memset(dst, 0, sizeof(AHA_SERIALIZED_TEMP_SIZE));
+    int16_t whole = floor(temp / 100.0);
+    int16_t dec = fmod(temp, 100);
+
+    // it shouldn't happen but who knows...
+    if (dec < 0) {
+        dec *= -1;
+    }
+
+
+    // to do:
+    // 1. reverse numbers
+    // 2. iterate trough digits using %10 and /10
+    // 3. add each digit to str using digit+'0'
+
 }
 
 double HAUtils::strToTemp(
     const char* src
 )
 {
-    return atof(src); // to do: custo implementation
+    return 0;
+    //return atof(src); // to do: custo implementation
 }
 
 uint8_t HAUtils::getValueTypeLength(const ValueType& type)
