@@ -7,11 +7,32 @@
 
 HABinarySensor::HABinarySensor(
     const char* name,
-    bool initialState,
-    HAMqtt& mqtt
+    bool initialState
 ) :
     BaseDeviceType("binary_sensor", name),
     _class(nullptr),
+    _currentState(initialState)
+{
+
+}
+
+HABinarySensor::HABinarySensor(
+    const char* name,
+    bool initialState,
+    HAMqtt& mqtt
+) :
+    HABinarySensor(name, initialState)
+{
+    (void)mqtt;
+}
+
+HABinarySensor::HABinarySensor(
+    const char* name,
+    const char* deviceClass,
+    bool initialState
+) :
+    BaseDeviceType("binary_sensor", name),
+    _class(deviceClass),
     _currentState(initialState)
 {
 
@@ -23,11 +44,9 @@ HABinarySensor::HABinarySensor(
     bool initialState,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType("binary_sensor", name),
-    _class(deviceClass),
-    _currentState(initialState)
+    HABinarySensor(name, deviceClass, initialState)
 {
-
+    (void)mqtt;
 }
 
 void HABinarySensor::onMqttConnected()

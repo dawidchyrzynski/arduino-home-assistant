@@ -12,11 +12,36 @@
 template <typename T>
 HASensor<T>::HASensor(
     const char* name,
-    T initialValue,
-    HAMqtt& mqtt
+    T initialValue
 ) :
     BaseDeviceType("sensor", name),
     _class(nullptr),
+    _units(nullptr),
+    _valueType(HAUtils::determineValueType<T>()),
+    _currentValue(initialValue)
+{
+
+}
+
+template <typename T>
+HASensor<T>::HASensor(
+    const char* name,
+    T initialValue,
+    HAMqtt& mqtt
+) :
+    HASensor(name, initialValue)
+{
+    (void)mqtt;
+}
+
+template <typename T>
+HASensor<T>::HASensor(
+    const char* name,
+    const char* deviceClass,
+    T initialValue
+) :
+    BaseDeviceType(mqtt, "sensor", name),
+    _class(deviceClass),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
     _currentValue(initialValue)
@@ -31,13 +56,9 @@ HASensor<T>::HASensor(
     T initialValue,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt, "sensor", name),
-    _class(deviceClass),
-    _units(nullptr),
-    _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue)
+    HASensor(name, deviceClass, initialValue)
 {
-
+    (void)mqtt;
 }
 
 template <typename T>
@@ -270,6 +291,9 @@ uint16_t HASensor<T>::calculateValueLength() const
     uint16_t size = 0;
 
     switch (_valueType) {
+        case HAUtils::ValueTypeUnknown:
+            return 0;
+
         case HAUtils::ValueTypeUint8:
             size = 3; // from 0 to 255
             break;
@@ -306,11 +330,10 @@ uint16_t HASensor<T>::calculateValueLength() const
 template <typename T>
 bool HASensor<T>::valueToStr(char* dst, T value) const
 {
-    if (_valueType == HAUtils::ValueTypeUnknown) {
-        return false;
-    }
-
     switch (_valueType) {
+        case HAUtils::ValueTypeUnknown:
+            return false;
+
         case HAUtils::ValueTypeUint8:
         case HAUtils::ValueTypeUint16:
         case HAUtils::ValueTypeUint32:

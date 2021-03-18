@@ -19,9 +19,13 @@ public:
      */
     HASwitch(
         const char* name,
+        bool initialState
+    );
+    HASwitch(
+        const char* name,
         bool initialState,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.

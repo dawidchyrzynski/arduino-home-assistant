@@ -5,12 +5,22 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HASwitch::HASwitch(const char* name, bool initialState, HAMqtt& mqtt) :
+HASwitch::HASwitch(const char* name, bool initialState) :
     BaseDeviceType("switch", name),
     _stateCallback(nullptr),
     _currentState(initialState)
 {
 
+}
+
+HASwitch::HASwitch(
+    const char* name,
+    bool initialState,
+    HAMqtt& mqtt
+) :
+    HASwitch(name, initialState)
+{
+    (void)mqtt;
 }
 
 void HASwitch::onMqttConnected()
@@ -35,6 +45,8 @@ void HASwitch::onMqttMessage(
     const uint16_t& length
 )
 {
+    (void)payload;
+
     if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state);

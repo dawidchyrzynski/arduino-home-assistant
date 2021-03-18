@@ -30,6 +30,17 @@ HAMqtt* BaseDeviceType::mqtt() const
     return HAMqtt::instance();
 }
 
+void BaseDeviceType::onMqttMessage(
+    const char* topic,
+    const uint8_t* payload,
+    const uint16_t& length
+)
+{
+    (void)topic;
+    (void)payload;
+    (void)length;
+}
+
 void BaseDeviceType::publishAvailability()
 {
     if (_availability == AvailabilityDefault ||

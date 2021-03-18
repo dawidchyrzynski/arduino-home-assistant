@@ -5,10 +5,16 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
+HATagScanner::HATagScanner(const char* name) :
     BaseDeviceType("tag", name)
 {
 
+}
+
+HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
+    HATagScanner(name)
+{
+    (void)mqtt;
 }
 
 void HATagScanner::onMqttConnected()

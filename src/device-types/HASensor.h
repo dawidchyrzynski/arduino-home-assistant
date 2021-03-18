@@ -19,9 +19,13 @@ public:
      */
     HASensor(
         const char* name,
+        T initialValue
+    );
+    HASensor(
+        const char* name,
         T initialValue,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Initializes binary sensor with the specified class.
@@ -35,9 +39,14 @@ public:
     HASensor(
         const char* name,
         const char* deviceClass,
+        T initialValue
+    );
+    HASensor(
+        const char* name,
+        const char* deviceClass,
         T initialValue,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.

@@ -17,9 +17,13 @@ public:
      */
     HABinarySensor(
         const char* name,
+        bool initialState
+    );
+    HABinarySensor(
+        const char* name,
         bool initialState,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Initializes binary sensor with the specified class.
@@ -30,6 +34,11 @@ public:
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
+    HABinarySensor(
+        const char* name,
+        const char* deviceClass,
+        bool initialState
+    );
     HABinarySensor(
         const char* name,
         const char* deviceClass,

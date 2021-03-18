@@ -5,12 +5,18 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HATriggers::HATriggers(HAMqtt& mqtt) :
+HATriggers::HATriggers() :
     BaseDeviceType("device_automation", nullptr),
     _triggers(nullptr),
     _triggersNb(0)
 {
 
+}
+
+HATriggers::HATriggers(HAMqtt& mqtt) :
+    HATriggers()
+{
+    (void)mqtt;
 }
 
 HATriggers::~HATriggers()
@@ -89,6 +95,14 @@ bool HATriggers::trigger(const char* type, const char* subtype)
         return false;
     }
 
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Triggering HATrigger: "));
+    Serial.print(type);
+    Serial.print(F(" "));
+    Serial.print(subtype);
+    Serial.println();
+#endif
+
     return mqtt()->publish(topic, "");
 }
 
@@ -124,7 +138,6 @@ void HATriggers::publishConfig()
             trigger,
             serializedDevice
         );
-
         if (topicLength == 0 || dataLength == 0) {
             continue;
         }
@@ -256,11 +269,27 @@ bool HATriggers::writeSerializedTrigger(
 
     // topic
     {
-        static const char Prefix[] PROGMEM = {",\"t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
+        const uint16_t& topicSize = calculateTopicLength(
+            componentName(),
+            trigger,
             DeviceTypeSerializer::EventTopic
+        );
+        if (topicSize == 0) {
+            return false;
+        }
+
+        char topic[topicSize];
+        generateTopic(
+            topic,
+            componentName(),
+            trigger,
+            DeviceTypeSerializer::EventTopic
+        );
+
+        static const char Prefix[] PROGMEM = {",\"t\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            topic
         );
     }
 

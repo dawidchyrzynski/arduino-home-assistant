@@ -13,7 +13,8 @@ struct HATrigger {
 class HATriggers : public BaseDeviceType
 {
 public:
-    HATriggers(HAMqtt& mqtt);
+    HATriggers();
+    HATriggers(HAMqtt& mqtt); // legacy constructor
     virtual ~HATriggers();
 
     virtual void onMqttConnected() override;
@@ -21,7 +22,7 @@ public:
     /**
      * Triggers dont't support availability. Nothing to do here.
      */
-    virtual void setAvailability(bool online) override { }
+    virtual void setAvailability(bool online) override { (void)online; }
 
     bool add(const char* type, const char* subtype);
     bool trigger(const char* type, const char* subtype);

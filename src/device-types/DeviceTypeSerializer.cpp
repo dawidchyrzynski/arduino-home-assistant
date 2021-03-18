@@ -100,7 +100,7 @@ uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
     const char* name
 )
 {
-    HADevice* device = HAMqtt::instance()->getDevice();
+    HADevice const* device = HAMqtt::instance()->getDevice();
     if (device == nullptr || name == nullptr) {
         return 0;
     }
@@ -196,7 +196,7 @@ void DeviceTypeSerializer::mqttWriteUniqueIdField(
         return;
     }
 
-    HADevice* device = HAMqtt::instance()->getDevice();
+    HADevice const* device = HAMqtt::instance()->getDevice();
     if (device == nullptr) {
         return;
     }
@@ -291,6 +291,7 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
     }
 
     DeviceTypeSerializer::mqttWriteConstCharField(jsonPrefix, topic);
+    return true;
 }
 
 bool DeviceTypeSerializer::mqttPublishMessage(
@@ -354,7 +355,7 @@ bool DeviceTypeSerializer::mqttSubscribeTopic(
     );
 
     if (strlen(topic) == 0) {
-        return;
+        return false;
     }
 
     return HAMqtt::instance()->subscribe(topic);

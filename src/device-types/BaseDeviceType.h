@@ -39,7 +39,7 @@ protected:
         const char* topic,
         const uint8_t* payload,
         const uint16_t& length
-    ) { };
+    );
 
     virtual void publishAvailability();
     virtual bool isMyTopic(const char* topic, const char* expectedTopic);
