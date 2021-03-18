@@ -78,6 +78,14 @@ public:
     inline void setUnitOfMeasurement(const char* units)
         { _units = units; }
 
+    /**
+     * Sets icon of the sensor, e.g. `mdi:home`.
+     *
+     * @param icon Material Design Icon name with mdi: prefix.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
 private:
     void publishConfig();
     bool publishValue(T value);
@@ -90,6 +98,7 @@ private:
     const char* _units;
     HAUtils::ValueType _valueType;
     T _currentValue;
+    const char* _icon;
 };
 
 #endif
