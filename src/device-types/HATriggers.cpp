@@ -1,14 +1,22 @@
 #include "HATriggers.h"
+#ifdef ARDUINOHA_TRIGGERS
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HATriggers::HATriggers(HAMqtt& mqtt) :
-    BaseDeviceType(mqtt, "device_automation", nullptr),
+HATriggers::HATriggers() :
+    BaseDeviceType("device_automation", nullptr),
     _triggers(nullptr),
     _triggersNb(0)
 {
 
+}
+
+HATriggers::HATriggers(HAMqtt& mqtt) :
+    HATriggers()
+{
+    (void)mqtt;
 }
 
 HATriggers::~HATriggers()
@@ -87,6 +95,14 @@ bool HATriggers::trigger(const char* type, const char* subtype)
         return false;
     }
 
+#if defined(ARDUINOHA_DEBUG)
+    Serial.print(F("Triggering HATrigger: "));
+    Serial.print(type);
+    Serial.print(F(" "));
+    Serial.print(subtype);
+    Serial.println();
+#endif
+
     return mqtt()->publish(topic, "");
 }
 
@@ -122,7 +138,6 @@ void HATriggers::publishConfig()
             trigger,
             serializedDevice
         );
-
         if (topicLength == 0 || dataLength == 0) {
             continue;
         }
@@ -155,7 +170,6 @@ uint16_t HATriggers::calculateTopicLength(
 {
     uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 1; // + underscore
     return DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         component,
         nullptr,
         suffix,
@@ -179,7 +193,6 @@ uint16_t HATriggers::generateTopic(
     strcat(objectId, trigger->type);
 
     return DeviceTypeSerializer::generateTopic(
-        mqtt(),
         output,
         component,
         objectId,
@@ -246,7 +259,7 @@ bool HATriggers::writeSerializedTrigger(
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // automation type
     {
@@ -273,28 +286,29 @@ bool HATriggers::writeSerializedTrigger(
             DeviceTypeSerializer::EventTopic
         );
 
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {",\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            topic
+        );
     }
 
     // type
     {
         static const char Prefix[] PROGMEM = {",\"type\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->type);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, trigger->type);
     }
 
     // subtype
     {
         static const char Prefix[] PROGMEM = {",\"stype\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, trigger->subtype);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, trigger->subtype);
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }
+
+#endif

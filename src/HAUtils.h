@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#define AHA_SERIALIZED_TEMP_SIZE 8
+
 class HAUtils
 {
 public:
@@ -20,7 +22,7 @@ public:
 
     static bool endsWith(
         const char* str,
-        const char* suffi
+        const char* suffix
     );
     static void byteArrayToStr(
         char* dst,
@@ -31,12 +33,19 @@ public:
         const byte* src,
         const uint16_t& length
     );
+    static void tempToStr(
+        char* dst,
+        const double& temp
+    );
+    static double strToTemp(
+        const char* src
+    );
 
     template <typename A, typename B >
-    static bool compareType(A a, B b) { return false; }
+    static bool compareType(A a, B b) { (void)a; (void)b; return false; }
 
     template <typename A, typename B >
-    static bool compareType(A a, A b) { return true; }
+    static bool compareType(A a, A b) { (void)a; (void)b; return true; }
 
     template <typename T>
     static ValueType determineValueType() {

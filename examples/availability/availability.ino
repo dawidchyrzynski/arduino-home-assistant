@@ -16,7 +16,7 @@ HAMqtt mqtt(client, device);
 // "input" may be anything you want to be displayed in HA panel
 // "door" is device class (based on the class HA displays different icons in the panel)
 // "true" is initial state of the sensor. In this example it's "true" as we use pullup resistor
-HABinarySensor sensor("input", "door", true, mqtt);
+HABinarySensor sensor("input", "door", true);
 
 void setup() {
     pinMode(INPUT_PIN, INPUT_PULLUP);

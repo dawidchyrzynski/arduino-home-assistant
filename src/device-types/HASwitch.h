@@ -3,7 +3,9 @@
 
 #include "BaseDeviceType.h"
 
-#define HASWITCH_CALLBACK void (*callback)(bool, HASwitch*)
+#ifdef ARDUINOHA_SWITCH
+
+#define HASWITCH_CALLBACK(name) void (*name)(bool, HASwitch*)
 
 class HASwitch : public BaseDeviceType
 {
@@ -17,9 +19,13 @@ public:
      */
     HASwitch(
         const char* name,
+        bool initialState
+    );
+    HASwitch(
+        const char* name,
         bool initialState,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.
@@ -77,19 +83,18 @@ public:
      *
      * @param callback
      */
-    inline void onStateChanged(HASWITCH_CALLBACK)
+    inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
 
 private:
-    void triggerCallback(bool state);
     void publishConfig();
     bool publishState(bool state);
-    void subscribeCommandTopic();
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
 
-    void (*_stateCallback)(bool, HASwitch*);
+    HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
 };
 
+#endif
 #endif

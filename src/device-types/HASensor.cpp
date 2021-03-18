@@ -3,10 +3,25 @@
 #endif
 
 #include "HASensor.h"
+#ifdef ARDUINOHA_SENSOR
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
+
+template <typename T>
+HASensor<T>::HASensor(
+    const char* name,
+    T initialValue
+) :
+    BaseDeviceType("sensor", name),
+    _class(nullptr),
+    _units(nullptr),
+    _valueType(HAUtils::determineValueType<T>()),
+    _currentValue(initialValue)
+{
+
+}
 
 template <typename T>
 HASensor<T>::HASensor(
@@ -14,8 +29,19 @@ HASensor<T>::HASensor(
     T initialValue,
     HAMqtt& mqtt
 ) :
+    HASensor(name, initialValue)
+{
+    (void)mqtt;
+}
+
+template <typename T>
+HASensor<T>::HASensor(
+    const char* name,
+    const char* deviceClass,
+    T initialValue
+) :
     BaseDeviceType(mqtt, "sensor", name),
-    _class(nullptr),
+    _class(deviceClass),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
     _currentValue(initialValue)
@@ -30,13 +56,9 @@ HASensor<T>::HASensor(
     T initialValue,
     HAMqtt& mqtt
 ) :
-    BaseDeviceType(mqtt, "sensor", name),
-    _class(deviceClass),
-    _units(nullptr),
-    _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue)
+    HASensor(name, deviceClass, initialValue)
 {
-
+    (void)mqtt;
 }
 
 template <typename T>
@@ -95,7 +117,6 @@ void HASensor<T>::publishConfig()
     }
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::ConfigTopic
@@ -108,7 +129,6 @@ void HASensor<T>::publishConfig()
 
     char topic[topicLength];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -134,7 +154,6 @@ bool HASensor<T>::publishValue(T value)
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::StateTopic
@@ -145,7 +164,6 @@ bool HASensor<T>::publishValue(T value)
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -187,20 +205,12 @@ uint16_t HASensor<T>::calculateSerializedLength(
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
     size += DeviceTypeSerializer::calculateNameFieldSize(name());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(device, name());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-
-    if (isAvailabilityConfigured()) {
-        size += DeviceTypeSerializer::calculateAvailabilityFieldSize(
-            mqtt(),
-            componentName(),
-            name()
-        );
-    }
+    size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::StateTopic,
@@ -238,62 +248,35 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // state topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-        if (topicSize == 0) {
-            return false;
-        }
-
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            mqtt(),
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::StateTopic
-        );
-
-        if (strlen(topic) == 0) {
-            return false;
-        }
-
         static const char Prefix[] PROGMEM = {"\"stat_t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            DeviceTypeSerializer::StateTopic
+        );
     }
 
     // device class
     if (_class != nullptr) {
         static const char Prefix[] PROGMEM = {",\"dev_cla\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, _class);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _class);
     }
 
     // units of measurement
     if (_units != nullptr) {
         static const char Prefix[] PROGMEM = {",\"unit_of_meas\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, _units);
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _units);
     }
 
-    DeviceTypeSerializer::mqttWriteNameField(mqtt(), name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(mqtt(), name());
-
-    if (isAvailabilityConfigured()) {
-        DeviceTypeSerializer::mqttWriteAvailabilityField(
-            mqtt(),
-            componentName(),
-            name()
-        );
-    }
-
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteNameField(name());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }
@@ -308,6 +291,9 @@ uint16_t HASensor<T>::calculateValueLength() const
     uint16_t size = 0;
 
     switch (_valueType) {
+        case HAUtils::ValueTypeUnknown:
+            return 0;
+
         case HAUtils::ValueTypeUint8:
             size = 3; // from 0 to 255
             break;
@@ -344,11 +330,10 @@ uint16_t HASensor<T>::calculateValueLength() const
 template <typename T>
 bool HASensor<T>::valueToStr(char* dst, T value) const
 {
-    if (_valueType == HAUtils::ValueTypeUnknown) {
-        return false;
-    }
-
     switch (_valueType) {
+        case HAUtils::ValueTypeUnknown:
+            return false;
+
         case HAUtils::ValueTypeUint8:
         case HAUtils::ValueTypeUint16:
         case HAUtils::ValueTypeUint32:
@@ -366,3 +351,5 @@ bool HASensor<T>::valueToStr(char* dst, T value) const
 
     return true;
 }
+
+#endif

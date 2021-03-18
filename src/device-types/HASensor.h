@@ -4,6 +4,8 @@
 #include "BaseDeviceType.h"
 #include "../HAUtils.h"
 
+#ifdef ARDUINOHA_SENSOR
+
 template <typename T>
 class HASensor : public BaseDeviceType
 {
@@ -17,9 +19,13 @@ public:
      */
     HASensor(
         const char* name,
+        T initialValue
+    );
+    HASensor(
+        const char* name,
         T initialValue,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Initializes binary sensor with the specified class.
@@ -33,9 +39,14 @@ public:
     HASensor(
         const char* name,
         const char* deviceClass,
+        T initialValue
+    );
+    HASensor(
+        const char* name,
+        const char* deviceClass,
         T initialValue,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.
@@ -81,4 +92,5 @@ private:
     T _currentValue;
 };
 
+#endif
 #endif
