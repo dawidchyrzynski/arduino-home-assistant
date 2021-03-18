@@ -29,8 +29,7 @@ public:
         DefaultFeatures = 0,
         AuxHeatingFeature = 1,
         AwayModeFeature = 2,
-        HoldFeature = 4,
-        CurrentTemperatureFeature = 8
+        HoldFeature = 4
     };
 
     enum Action {
@@ -59,7 +58,8 @@ public:
         FahrenheitUnit
     };
 
-    HAHVAC(const char* uniqueId, Features features, HAMqtt& mqtt);
+    HAHVAC(const char* uniqueId, uint8_t features);
+    HAHVAC(const char* uniqueId, uint8_t features, HAMqtt& mqtt); // legacy constructor
 
     virtual void onMqttConnected() override;
 
@@ -68,6 +68,9 @@ public:
         const uint8_t* payload,
         const uint16_t& length
     ) override;
+
+    inline Action getAction() const
+        { return _action; }
 
     inline void setTemperatureUnit(TemperatureUnit unit)
         { _temperatureUnit = unit; }
@@ -111,6 +114,9 @@ public:
     inline void onModeChanged(HAHVAC_STATE_CALLBACK_MODE(callback))
         { _modeChangedCallback = callback; }
 
+    inline void setRetain(bool retain)
+        { _retain = retain; }
+
     bool setAction(Action action);
     bool setAuxHeatingState(bool state);
     bool setAwayState(bool state);
@@ -138,7 +144,7 @@ private:
     bool writeSerializedData(const char* serializedDevice) const;
 
     const char* _uniqueId;
-    const uint16_t _features;
+    uint8_t _features;
     TemperatureUnit _temperatureUnit;
     Action _action;
     HAHVAC_STATE_CALLBACK_BOOL(_auxHeatingCallback);
@@ -157,7 +163,7 @@ private:
     uint8_t _modes;
     HAHVAC_STATE_CALLBACK_MODE(_modeChangedCallback);
     Mode _currentMode;
-
+    bool _retain;
 };
 
 #endif

@@ -26,11 +26,7 @@ static const char HeatStr[] PROGMEM = {"heat"};
 static const char DryStr[] PROGMEM = {"dry"};
 static const char FanOnlyStr[] PROGMEM = {"fan_only"};
 
-HAHVAC::HAHVAC(
-    const char* uniqueId,
-    Features features,
-    HAMqtt& mqtt
-) :
+HAHVAC::HAHVAC(const char* uniqueId, uint8_t features) :
     BaseDeviceType("climate", uniqueId),
     _uniqueId(uniqueId),
     _features(features),
@@ -42,12 +38,12 @@ HAHVAC::HAHVAC(
     _awayState(false),
     _holdCallback(nullptr),
     _holdState(false),
-    _currentTemperature(255),
-    _minTemp(255),
-    _maxTemp(255),
+    _currentTemperature(__DBL_MAX__),
+    _minTemp(__DBL_MAX__),
+    _maxTemp(__DBL_MAX__),
     _tempStep(1),
     _targetTempCallback(nullptr),
-    _targetTemperature(255),
+    _targetTemperature(__DBL_MAX__),
     _label(nullptr),
     _modes(
         OffMode |
@@ -58,9 +54,20 @@ HAHVAC::HAHVAC(
         FanOnlyMode
     ),
     _modeChangedCallback(nullptr),
-    _currentMode(Mode::UnknownMode)
+    _currentMode(Mode::UnknownMode),
+    _retain(false)
 {
 
+}
+
+HAHVAC::HAHVAC(
+    const char* uniqueId,
+    uint8_t features,
+    HAMqtt& mqtt
+) :
+    HAHVAC(uniqueId, features)
+{
+    (void)mqtt;
 }
 
 void HAHVAC::onMqttConnected()
@@ -142,7 +149,7 @@ bool HAHVAC::setAuxHeatingState(bool state)
 bool HAHVAC::setAwayState(bool state)
 {
     if (!(_features & AwayModeFeature)) {
-        return;
+        return false;
     }
 
     if (publishAwayState(state)) {
@@ -161,7 +168,7 @@ bool HAHVAC::setAwayState(bool state)
 bool HAHVAC::setHoldState(bool state)
 {
     if (!(_features & HoldFeature)) {
-        return;
+        return false;
     }
 
     if (publishHoldState(state)) {
@@ -179,10 +186,6 @@ bool HAHVAC::setHoldState(bool state)
 
 bool HAHVAC::setCurrentTemperature(double temperature)
 {
-    if (!(_features & CurrentTemperatureFeature)) {
-        return;
-    }
-
     if (_currentTemperature == temperature) {
         return true;
     }
@@ -197,7 +200,7 @@ bool HAHVAC::setCurrentTemperature(double temperature)
 
 bool HAHVAC::setMinTemp(double minTemp)
 {
-    if (minTemp >= 255 || minTemp <= -255) {
+    if (minTemp == __DBL_MAX__) {
         return false;
     }
 
@@ -207,7 +210,7 @@ bool HAHVAC::setMinTemp(double minTemp)
 
 bool HAHVAC::setMaxTemp(double maxTemp)
 {
-    if (maxTemp >= 255 || maxTemp <= -255) {
+    if (maxTemp == __DBL_MAX__) {
         return false;
     }
 
@@ -423,12 +426,11 @@ bool HAHVAC::publishHoldState(bool state)
 
 bool HAHVAC::publishCurrentTemperature(double temperature)
 {
-    if (!(_features & CurrentTemperatureFeature) ||
-            strlen(name()) == 0) {
+    if (strlen(name()) == 0) {
         return false;
     }
 
-    if (temperature >= 255) {
+    if (temperature == __DBL_MAX__) {
         return false;
     }
 
@@ -448,7 +450,7 @@ bool HAHVAC::publishTargetTemperature(double temperature)
         return false;
     }
 
-    if (temperature >= 255) {
+    if (temperature == __DBL_MAX__) {
         return false;
     }
 
@@ -690,7 +692,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     }
 
     // current temperature
-    if (_features & CurrentTemperatureFeature) {
+    {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
             name(),
@@ -707,21 +709,21 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     }
 
     // min temp
-    if (_minTemp != 255) {
+    if (_minTemp != __DBL_MAX__) {
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _minTemp);
 
-        // Field format: ,"min_temp":"[TEMP]"
-        size += strlen(str) + 14; // 14 - length of the JSON decorators for this field
+        // Field format: ,"min_temp":[TEMP]
+        size += strlen(str) + 12; // 12 - length of the JSON decorators for this field
     }
 
     // max temp
-    if (_maxTemp != 255) {
+    if (_maxTemp != __DBL_MAX__) {
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _maxTemp);
 
-        // Field format: ,"max_temp":"[TEMP]"
-        size += strlen(str) + 14; // 14 - length of the JSON decorators for this field
+        // Field format: ,"max_temp":[TEMP]
+        size += strlen(str) + 12; // 12 - length of the JSON decorators for this field
     }
 
     // temp step
@@ -729,8 +731,8 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _tempStep);
 
-        // Field format: ,"temp_step":"[TEMP]"
-        size += strlen(str) + 15; // 15 - length of the JSON decorators for this field
+        // Field format: ,"temp_step":[TEMP]
+        size += strlen(str) + 13; // 13 - length of the JSON decorators for this field
     }
 
     // name
@@ -818,6 +820,12 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
             // Field format: ,"mode_stat_t":"[TOPIC]"
             size += topicLength + 17; // 17 - length of the JSON decorators for this field
         }
+    }
+
+    // retain flah
+    if (_retain) {
+        // Field format: ,"retain":true
+        size += 14;
     }
 
     // Supported modes
@@ -956,7 +964,7 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
     }
 
     // current temperature topic
-    if (_features & CurrentTemperatureFeature) {
+    {
         static const char Prefix[] PROGMEM = {",\"curr_temp_t\":\""};
         DeviceTypeSerializer::mqttWriteTopicField(
             this,
@@ -966,26 +974,28 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
     }
 
     // min temp
-    if (_minTemp != 255) {
+    if (_minTemp != __DBL_MAX__) {
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _minTemp);
 
-        static const char Prefix[] PROGMEM = {",\"min_temp\":\""};
+        static const char Prefix[] PROGMEM = {",\"min_temp\":"};
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
-            str
+            str,
+            false
         );
     }
 
     // max temp
-    if (_maxTemp != 255) {
+    if (_maxTemp != __DBL_MAX__) {
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _maxTemp);
 
-        static const char Prefix[] PROGMEM = {",\"max_temp\":\""};
+        static const char Prefix[] PROGMEM = {",\"max_temp\":"};
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
-            str
+            str,
+            false
         );
     }
 
@@ -994,10 +1004,11 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         char str[AHA_SERIALIZED_TEMP_SIZE];
         HAUtils::tempToStr(str, _tempStep);
 
-        static const char Prefix[] PROGMEM = {",\"temp_step\":\""};
+        static const char Prefix[] PROGMEM = {",\"temp_step\":"};
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
-            str
+            str,
+            false
         );
     }
 
@@ -1124,10 +1135,22 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
+    // retain flag
+    if (_retain) {
+        static const char Prefix[] PROGMEM = {",\"retain\":"};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            "true",
+            false
+        );
+    }
+
     DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();
+
+    return true;
 }
 
 #endif
