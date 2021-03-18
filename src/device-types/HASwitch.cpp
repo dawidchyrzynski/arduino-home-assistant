@@ -8,7 +8,8 @@
 HASwitch::HASwitch(const char* name, bool initialState) :
     BaseDeviceType("switch", name),
     _stateCallback(nullptr),
-    _currentState(initialState)
+    _currentState(initialState),
+    _icon(nullptr)
 {
 
 }
@@ -187,6 +188,12 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
         size += topicLength + 12; // 12 - length of the JSON decorators for this field
     }
 
+    // icon
+    if (_icon != nullptr) {
+        // Field format: ,"ic":"[ICON]"
+        size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
+    }
+
     return size; // exludes null terminator
 }
 
@@ -215,6 +222,15 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
             this,
             Prefix,
             DeviceTypeSerializer::StateTopic
+        );
+    }
+
+    // icon
+    if (_icon != nullptr) {
+        static const char Prefix[] PROGMEM = {",\"ic\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            _icon
         );
     }
 

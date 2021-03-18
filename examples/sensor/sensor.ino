@@ -37,6 +37,9 @@ void setup() {
     // you can set custom units for the sensor (optional)
     temp.setUnitOfMeasurement("°C");
 
+    // set icon (optional)
+    temp.setIcon("mdi:home");
+
     mqtt.begin(BROKER_ADDR);
 }
 

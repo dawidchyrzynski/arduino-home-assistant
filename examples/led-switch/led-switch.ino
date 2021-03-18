@@ -27,6 +27,9 @@ void setup() {
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
 
+    // set icon (optional)
+    led.setIcon("mdi:lightbulb");
+
     // handle switch state
     led.onStateChanged(onSwitchStateChanged);
 

@@ -86,6 +86,14 @@ public:
     inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
 
+    /**
+     * Sets icon of the switch, e.g. `mdi:home`.
+     *
+     * @param icon Material Design Icon name with mdi: prefix.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
 private:
     void publishConfig();
     bool publishState(bool state);
@@ -94,6 +102,7 @@ private:
 
     HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
+    const char* _icon;
 };
 
 #endif

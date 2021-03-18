@@ -18,7 +18,8 @@ HASensor<T>::HASensor(
     _class(nullptr),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue)
+    _currentValue(initialValue),
+    _icon(nullptr)
 {
 
 }
@@ -40,11 +41,12 @@ HASensor<T>::HASensor(
     const char* deviceClass,
     T initialValue
 ) :
-    BaseDeviceType(mqtt, "sensor", name),
+    BaseDeviceType("sensor", name),
     _class(deviceClass),
     _units(nullptr),
     _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue)
+    _currentValue(initialValue),
+    _icon(nullptr)
 {
 
 }
@@ -237,6 +239,12 @@ uint16_t HASensor<T>::calculateSerializedLength(
         size += strlen(_units) + 18; // 18 - length of the JSON decorators for this field
     }
 
+    // icon
+    if (_icon != nullptr) {
+        // Field format: ,"ic":"[ICON]"
+        size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
+    }
+
     return size; // exludes null terminator
 }
 
@@ -270,6 +278,15 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
     if (_units != nullptr) {
         static const char Prefix[] PROGMEM = {",\"unit_of_meas\":\""};
         DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _units);
+    }
+
+    // icon
+    if (_icon != nullptr) {
+        static const char Prefix[] PROGMEM = {",\"ic\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            _icon
+        );
     }
 
     DeviceTypeSerializer::mqttWriteNameField(name());
