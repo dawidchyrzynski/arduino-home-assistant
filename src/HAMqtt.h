@@ -17,7 +17,6 @@ public:
         { return _instance; }
 
     HAMqtt(Client& netClient, HADevice& device);
-    HAMqtt(const char* clientId, Client& netClient, HADevice& device);
 
     /**
      * Sets prefix for Home Assistant discovery.
