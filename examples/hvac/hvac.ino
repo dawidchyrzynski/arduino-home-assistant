@@ -1,14 +1,16 @@
 #include <ESP8266WiFi.h>
 #include <ArduinoHA.h>
 
-#define BROKER_ADDR     IPAddress(192,168,0,28)
+#define BROKER_ADDR     IPAddress(192,168,0,17)
 #define WIFI_SSID       "MyNetwork"
 #define WIFI_PASSWORD   "MyPassword"
 
 WiFiClient client;
 HADevice device;
 HAMqtt mqtt(client, device);
-HAHVAC hvac("my_name",  HAHVAC::AuxHeatingFeature | HAHVAC::AwayModeFeature | HAHVAC::HoldFeature);
+
+// see src/device-types/HAHVAC.h header for more details
+HAHVAC hvac("my_name", HAHVAC::AuxHeatingFeature | HAHVAC::AwayModeFeature | HAHVAC::HoldFeature);
 
 unsigned long lastTempPublishAt = 0;
 double lastTemp = 0;

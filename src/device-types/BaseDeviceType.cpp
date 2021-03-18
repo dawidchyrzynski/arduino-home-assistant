@@ -84,6 +84,10 @@ void BaseDeviceType::publishAvailability()
 
 bool BaseDeviceType::isMyTopic(const char* topic, const char* expectedTopic)
 {
+    if (topic == nullptr || expectedTopic == nullptr) {
+        return false;
+    }
+
     if (strlen(name()) == 0) {
         return false;
     }

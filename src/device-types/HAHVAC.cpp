@@ -184,50 +184,6 @@ bool HAHVAC::setHoldState(bool state)
     return false;
 }
 
-bool HAHVAC::setCurrentTemperature(double temperature)
-{
-    if (_currentTemperature == temperature) {
-        return true;
-    }
-
-    if (publishCurrentTemperature(temperature)) {
-        _currentTemperature = temperature;
-        return true;
-    }
-
-    return false;
-}
-
-bool HAHVAC::setMinTemp(double minTemp)
-{
-    if (minTemp == __DBL_MAX__) {
-        return false;
-    }
-
-    _minTemp = minTemp;
-    return true;
-}
-
-bool HAHVAC::setMaxTemp(double maxTemp)
-{
-    if (maxTemp == __DBL_MAX__) {
-        return false;
-    }
-
-    _maxTemp = maxTemp;
-    return true;
-}
-
-bool HAHVAC::setTempStep(double tempStep)
-{
-    if (tempStep <= 0 || tempStep >= 255) {
-        return false;
-    }
-
-    _tempStep = tempStep;
-    return true;
-}
-
 bool HAHVAC::setTargetTemperature(double temperature)
 {
     if (publishTargetTemperature(temperature)) {
@@ -237,6 +193,20 @@ bool HAHVAC::setTargetTemperature(double temperature)
             _targetTempCallback(_targetTemperature);
         }
 
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setCurrentTemperature(double temperature)
+{
+    if (_currentTemperature == temperature) {
+        return true;
+    }
+
+    if (publishCurrentTemperature(temperature)) {
+        _currentTemperature = temperature;
         return true;
     }
 
@@ -279,6 +249,36 @@ bool HAHVAC::setModeFromStr(const char* mode)
     }
 
     return false;
+}
+
+bool HAHVAC::setMinTemp(double minTemp)
+{
+    if (minTemp == __DBL_MAX__) {
+        return false;
+    }
+
+    _minTemp = minTemp;
+    return true;
+}
+
+bool HAHVAC::setMaxTemp(double maxTemp)
+{
+    if (maxTemp == __DBL_MAX__) {
+        return false;
+    }
+
+    _maxTemp = maxTemp;
+    return true;
+}
+
+bool HAHVAC::setTempStep(double tempStep)
+{
+    if (tempStep <= 0 || tempStep >= 255) {
+        return false;
+    }
+
+    _tempStep = tempStep;
+    return true;
 }
 
 void HAHVAC::publishConfig()

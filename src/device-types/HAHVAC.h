@@ -58,8 +58,21 @@ public:
         FahrenheitUnit
     };
 
-    HAHVAC(const char* uniqueId, uint8_t features);
-    HAHVAC(const char* uniqueId, uint8_t features, HAMqtt& mqtt); // legacy constructor
+    /**
+     * Initializes HVAC.
+     *
+     * @param uniqueId Unique ID of the HVAC. Recommendes characters: [a-z0-9\-_]
+     * @param features The list of additional features (flag). For example: `HAHVAC::AuxHeatingFeature | HAHVAC::AwayModeFeature`
+     */
+    HAHVAC(
+        const char* uniqueId,
+        uint8_t features = 0
+    );
+    HAHVAC(
+        const char* uniqueId,
+        uint8_t features,
+        HAMqtt& mqtt
+    ); // legacy constructor
 
     virtual void onMqttConnected() override;
 
@@ -69,65 +82,227 @@ public:
         const uint16_t& length
     ) override;
 
+    /**
+     * Changes action of the HVAC (it's displayed in the Home Assistant panel).
+     *
+     * @param action New action.
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setAction(Action action);
+
+    /**
+     * Returns action that was previously sent to MQTT.
+     */
     inline Action getAction() const
         { return _action; }
 
+    /**
+     * Changes default temperature unit.
+     * Please note that this method must be called before `mqtt.begin(...)`.
+     *
+     * @param unit See TemperatureUnit enum above
+     */
     inline void setTemperatureUnit(TemperatureUnit unit)
         { _temperatureUnit = unit; }
 
+    /**
+     * Publishes aux heating state.
+     * Please note that HAHVAC::AuxHeatingFeature must be set in the constructor.
+     *
+     * @param state ON (true) / OFF (false)
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setAuxHeatingState(bool state);
+
+    /**
+     * Registers callback that will be called each time the aux heating's state changes.
+     * Please note that it's not possible to register multiple callbacks.
+     *
+     * @param callback
+     */
     inline void onAuxHeatingStateChanged(HAHVAC_STATE_CALLBACK_BOOL(callback))
         { _auxHeatingCallback = callback; }
 
+    /**
+     * Returns state of the aux heating.
+     *
+     * @returns ON (true) / OFF (false)
+     */
     inline bool getAuxHeatingState() const
         { return _auxHeatingState; }
 
+    /**
+     * Publishes away state.
+     * Please note that HAHVAC::AwayModeFeature must be set in the constructor.
+     *
+     * @param state ON (true) / OFF (false)
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setAwayState(bool state);
+
+    /**
+     * Registers callback that will be called each time the away's state changes.
+     * Please note that it's not possible to register multiple callbacks.
+     *
+     * @param callback
+     */
     inline void onAwayStateChanged(HAHVAC_STATE_CALLBACK_BOOL(callback))
         { _awayCallback = callback; }
 
+    /**
+     * Returns away's state.
+     *
+     * @returns ON (true) / OFF (false)
+     */
     inline bool getAwayState() const
         { return _awayState; }
 
+    /**
+     * Publishes hold state.
+     * Please note that HAHVAC::HoldFeature must be set in the constructor.
+     *
+     * @param state ON (true) / OFF (false)
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setHoldState(bool state);
+
+    /**
+     * Registers callback that will be called each time the hold's state changes.
+     * Please note that it's not possible to register multiple callbacks.
+     *
+     * @param callback
+     */
     inline void onHoldStateChanged(HAHVAC_STATE_CALLBACK_BOOL(callback))
         { _holdCallback = callback; }
 
+    /**
+     * Returns hold's state.
+     *
+     * @returns ON (true) / OFF (false)
+     */
     inline bool getHoldState() const
         { return _holdState; }
 
+    /**
+     * Publishes given target temperature.
+     *
+     * @param targetTemperature
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setTargetTemperature(double targetTemperature);
+
+    /**
+     * Registers callback that will be called each time the target temperature changes
+     * Please note that it's not possible to register multiple callbacks.
+     *
+     * @param callback
+     */
     inline void onTargetTemperatureChanged(HAHVAC_STATE_CALLBACK_DOUBLE(callback))
         { _targetTempCallback = callback; }
 
+    /**
+     * Returns target temperature.
+     *
+     * @returns Target temperature or __DBL_MAX__ if temperature is not set.
+     */
     inline double getTargetTemperature() const
         { return _targetTemperature; }
 
+    /**
+     * Publishes current temperature.
+     *
+     * @param temperature
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setCurrentTemperature(double temperature);
+
+    /**
+     * Return temperature that was previously set by `setCurrentTemperature` method.
+     *
+     * @returns Temperature or __DBL_MAX__ if temperature is not set.
+     */
     inline double getCurrentTemperature() const
         { return _currentTemperature; }
 
-    inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "_name" is already in use
+    /**
+     * Publishes working mode of the HVAC.
+     *
+     * @param mode
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setMode(Mode mode);
 
-    inline void setModes(uint8_t modes)
-        { _modes = modes; }
+    /**
+     * Same as above but input is the string representation of the mode.
+     *
+     * @param mode
+     * @returns Returns true if MQTT message has been published successfully.
+     */
+    bool setModeFromStr(const char* mode);
 
-    inline Mode getMode() const
-        { return _currentMode; }
-
+    /**
+     * Registers callback that will be called each time the mode changes.
+     * Please note that it's not possible to register multiple callbacks.
+     *
+     * @param callback
+     */
     inline void onModeChanged(HAHVAC_STATE_CALLBACK_MODE(callback))
         { _modeChangedCallback = callback; }
 
+    /**
+     * Returns HVAC's mode.
+     *
+     * @returns It may be UnknownMode if it's not set.
+     */
+    inline Mode getMode() const
+        { return _currentMode; }
+
+    /**
+     * Sets name that wil be displayed in the Home Assistant panel.
+     *
+     * @param name
+     */
+    inline void setName(const char* name)
+        { _label = name; } // it needs to be called "label" as "_name" is already in use
+
+    /**
+     * Sets the list of supported modes. By default the list contains all available modes.
+     * You can merge multiple modes as following: `setModes(HAHVAC::OffMode | HAHVAC::CoolMode)`
+     *
+     * @param modes
+     */
+    inline void setModes(uint8_t modes)
+        { _modes = modes; }
+
+    /**
+     * Sets `retain` flag for commands published by Home Assistant.
+     * By default it's set to false.
+     *
+     * @param retain
+     */
     inline void setRetain(bool retain)
         { _retain = retain; }
 
-    bool setAction(Action action);
-    bool setAuxHeatingState(bool state);
-    bool setAwayState(bool state);
-    bool setHoldState(bool state);
-    bool setCurrentTemperature(double temperature);
+    /**
+     * Sets the minimum temperature that user will be able to select in Home Assistant panel.
+     *
+     * @param minTemp
+     */
     bool setMinTemp(double minTemp);
+
+    /**
+     * Sets the maximum temperature that user will be able to select in Home Assistant panel.
+     *
+     * @param minTemp
+     */
     bool setMaxTemp(double maxTemp);
+
+    /**
+     * Sets the step of the temperature's picker in the Home Assistant panel.
+     *
+     * @param tempStep
+     */
     bool setTempStep(double tempStep);
-    bool setTargetTemperature(double targetTemperature);
-    bool setMode(Mode mode);
-    bool setModeFromStr(const char* mode);
 
 private:
     void publishConfig();

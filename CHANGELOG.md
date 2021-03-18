@@ -4,9 +4,12 @@
 
 **New features:**
 * Added support for HVAC
-* Optimized code base and logic in all devices types
-* Added support for truncating devices types from the compilation using defines
+* Added support for excluding devices types from the compilation using defines (see `src/ArduinoHADefines.h`)
+
+**Updates:**
+* Optimized codebase and logic in all devices types
 * Updated all examples
+* Fixed compilation warnings in all classes
 
 ## 1.1.1
 
