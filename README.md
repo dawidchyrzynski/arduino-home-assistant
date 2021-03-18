@@ -17,6 +17,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
 * [Sensor (temperature, humidity, etc.)](examples/sensor/sensor.ino)
+* [HVAC](examples/hvac/hvac.ino)
 * [NodeMCU Wi-Fi](examples/nodemcu/nodemcu.ino)
 * [Arduino Nano 33 IoT Wi-Fi (SAMD)](examples/nano33iot/nano33iot.ino)
 * [Availability feature](examples/availability)
@@ -43,7 +44,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Switches
 * Sensors
 * Tag scanner
-* HVACs
+* HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
 
 ## Unsupported features
 
