@@ -42,10 +42,10 @@ public:
     );
 
     template <typename A, typename B >
-    static bool compareType(A a, B b) { return false; }
+    static bool compareType(A a, B b) { (void)a; (void)b; return false; }
 
     template <typename A, typename B >
-    static bool compareType(A a, A b) { return true; }
+    static bool compareType(A a, A b) { (void)a; (void)b; return true; }
 
     template <typename T>
     static ValueType determineValueType() {
