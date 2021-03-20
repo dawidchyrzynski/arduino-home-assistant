@@ -5,104 +5,79 @@
 #include "HASensor.h"
 #ifdef ARDUINOHA_SENSOR
 
-#include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-template <typename T>
-HASensor<T>::HASensor(
-    const char* name,
-    T initialValue
-) :
+HASensor::HASensor(const char* name) :
     BaseDeviceType("sensor", name),
     _class(nullptr),
     _units(nullptr),
-    _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue),
     _icon(nullptr)
 {
 
 }
 
-template <typename T>
-HASensor<T>::HASensor(
-    const char* name,
-    T initialValue,
-    HAMqtt& mqtt
-) :
-    HASensor(name, initialValue)
+HASensor::HASensor(const char* name, HAMqtt& mqtt) :
+    HASensor(name)
 {
     (void)mqtt;
 }
 
-template <typename T>
-HASensor<T>::HASensor(
-    const char* name,
-    const char* deviceClass,
-    T initialValue
-) :
-    BaseDeviceType("sensor", name),
-    _class(deviceClass),
-    _units(nullptr),
-    _valueType(HAUtils::determineValueType<T>()),
-    _currentValue(initialValue),
-    _icon(nullptr)
+void HASensor::onMqttConnected()
 {
-
-}
-
-template <typename T>
-HASensor<T>::HASensor(
-    const char* name,
-    const char* deviceClass,
-    T initialValue,
-    HAMqtt& mqtt
-) :
-    HASensor(name, deviceClass, initialValue)
-{
-    (void)mqtt;
-}
-
-template <typename T>
-void HASensor<T>::onMqttConnected()
-{
-    if (strlen(name()) == 0 ||
-            _valueType == HAUtils::ValueTypeUnknown) {
+    if (strlen(name()) == 0) {
         return;
     }
 
     publishConfig();
-    publishValue(_currentValue);
     publishAvailability();
 }
 
-template <typename T>
-bool HASensor<T>::setValue(T value)
+bool HASensor::setValue(const char* value)
 {
-    if (strlen(name()) == 0 ||
-            _valueType == HAUtils::ValueTypeUnknown) {
-        return false;
-    }
-
-    if (_currentValue == value) {
-        return true;
-    }
-
-    if (publishValue(value)) {
-        _currentValue = value;
-        return true;
-    }
-
-    return false;
+    return publishValue(value);
 }
 
-template <typename T>
-void HASensor<T>::publishConfig()
+bool HASensor::setValue(uint32_t value)
 {
-    if (_valueType == HAUtils::ValueTypeUnknown) {
-        return;
-    }
+    uint8_t digitsNb = floor(log10(value)) + 1;
+    char str[digitsNb + 1]; // + null terminator
+    memset(str, 0, sizeof(str));
+    itoa(value, str, 10);
 
+    return publishValue(str);
+}
+
+bool HASensor::setValue(int32_t value)
+{
+    uint8_t digitsNb = floor(log10(value)) + 1;
+    char str[digitsNb + 2]; // + null terminator and minus sign
+    memset(str, 0, sizeof(str));
+    itoa(value, str, 10);
+
+    return publishValue(str);
+}
+
+bool HASensor::setValue(double value, uint8_t precision)
+{
+    uint8_t digitsNb = floor(log10(floor(value))) + 1;
+    char str[digitsNb + 3 + precision]; // null terminator, dot, minus sign
+    dtostrf(value, 0, precision, str);
+
+    return publishValue(str);
+}
+
+bool HASensor::setValue(float value, uint8_t precision)
+{
+    uint8_t digitsNb = floor(log10(floor(value))) + 1;
+    char str[digitsNb + 3 + precision]; // null terminator, dot, minus sign
+    dtostrf(value, 0, precision, str);
+
+    return publishValue(str);
+}
+
+void HASensor::publishConfig()
+{
     const HADevice* device = mqtt()->getDevice();
     if (device == nullptr) {
         return;
@@ -147,11 +122,13 @@ void HASensor<T>::publishConfig()
     }
 }
 
-template <typename T>
-bool HASensor<T>::publishValue(T value)
+bool HASensor::publishValue(const char* value)
 {
-    if (strlen(name()) == 0 ||
-            _valueType == HAUtils::ValueTypeUnknown) {
+    if (strlen(name()) == 0 || value == nullptr) {
+        return false;
+    }
+
+    if (!mqtt()->isConnected()) {
         return false;
     }
 
@@ -176,26 +153,14 @@ bool HASensor<T>::publishValue(T value)
         return false;
     }
 
-    const uint16_t& valueLength = calculateValueLength();
-    if (valueLength == 0) {
-        return false;
-    }
-
-    char valueStr[valueLength];
-    if (!valueToStr(valueStr, value)) {
-        return false;
-    }
-
-    return mqtt()->publish(topic, valueStr, true);
+    return mqtt()->publish(topic, value, true);
 }
 
-template <typename T>
-uint16_t HASensor<T>::calculateSerializedLength(
+uint16_t HASensor::calculateSerializedLength(
     const char* serializedDevice
 ) const
 {
-    if (serializedDevice == nullptr ||
-            _valueType == HAUtils::ValueTypeUnknown) {
+    if (serializedDevice == nullptr) {
         return 0;
     }
 
@@ -248,11 +213,9 @@ uint16_t HASensor<T>::calculateSerializedLength(
     return size; // exludes null terminator
 }
 
-template <typename T>
-bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
+bool HASensor::writeSerializedData(const char* serializedDevice) const
 {
-    if (serializedDevice == nullptr ||
-            _valueType == HAUtils::ValueTypeUnknown) {
+    if (serializedDevice == nullptr) {
         return false;
     }
 
@@ -294,77 +257,6 @@ bool HASensor<T>::writeSerializedData(const char* serializedDevice) const
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();
-
-    return true;
-}
-
-template <typename T>
-uint16_t HASensor<T>::calculateValueLength() const
-{
-    if (_valueType == HAUtils::ValueTypeUnknown) {
-        return 0;
-    }
-
-    uint16_t size = 0;
-
-    switch (_valueType) {
-        case HAUtils::ValueTypeUnknown:
-            return 0;
-
-        case HAUtils::ValueTypeUint8:
-            size = 3; // from 0 to 255
-            break;
-
-        case HAUtils::ValueTypeUint16:
-            size = 5; // from 0 to 65535
-            break;
-
-        case HAUtils::ValueTypeUint32:
-            size = 10; // from 0 to 4294967295
-            break;
-
-        case HAUtils::ValueTypeInt8:
-            size = 4; // from -128 to 127
-            break;
-
-        case HAUtils::ValueTypeInt16:
-            size = 6; // from -32768 to 32767
-            break;
-
-        case HAUtils::ValueTypeInt32:
-            size = 11; // from -2147483648 to 2147483647
-            break;
-
-        case HAUtils::ValueTypeDouble:
-        case HAUtils::ValueTypeFloat:
-            // 3 digits per byte + dot separator + 2 precision digits
-            return (HAUtils::getValueTypeLength(_valueType) * 3) + 3;
-    }
-
-    return (size > 0 ? (size + 1) : 0);
-}
-
-template <typename T>
-bool HASensor<T>::valueToStr(char* dst, T value) const
-{
-    switch (_valueType) {
-        case HAUtils::ValueTypeUnknown:
-            return false;
-
-        case HAUtils::ValueTypeUint8:
-        case HAUtils::ValueTypeUint16:
-        case HAUtils::ValueTypeUint32:
-        case HAUtils::ValueTypeInt8:
-        case HAUtils::ValueTypeInt16:
-        case HAUtils::ValueTypeInt32:
-            itoa(value, dst, 10);
-            break;
-
-        case HAUtils::ValueTypeDouble:
-        case HAUtils::ValueTypeFloat:
-            dtostrf(value, 0, 2, dst);
-            break;
-    }
 
     return true;
 }
