@@ -10,21 +10,7 @@ double lastValue = 0;
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-
-/**
- * Supported data types:
- * - uint8_t
- * - uint16_t
- * - uint32_t
- * - int8_t
- * - int16_t
- * - int32_t
- * - double
- * - float
- */
-// you can use custom name in place of "temp"
-// "0" is initial value of the sensor
-HASensor<double> temp("temp", 0);
+HASensor temp("temp");
 
 void setup() {
     // you don't need to verify return status
@@ -34,10 +20,9 @@ void setup() {
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
 
-    // you can set custom units for the sensor (optional)
+    // configure sensor (optional)
     temp.setUnitOfMeasurement("°C");
-
-    // set icon (optional)
+    temp.setDeviceClass("temperature");
     temp.setIcon("mdi:home");
 
     mqtt.begin(BROKER_ADDR);
@@ -51,5 +36,12 @@ void loop() {
         lastSentAt = millis();
         lastValue = lastValue + 0.5;
         temp.setValue(lastValue);
+
+        // Supported data types:
+        // uint32_t (uint16_t, uint8_t)
+        // int32_t (int16_t, int8_t)
+        // double
+        // float
+        // const char*
     }
 }

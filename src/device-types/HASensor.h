@@ -2,11 +2,9 @@
 #define AHA_HASENSOR_H
 
 #include "BaseDeviceType.h"
-#include "../HAUtils.h"
 
 #ifdef ARDUINOHA_SENSOR
 
-template <typename T>
 class HASensor : public BaseDeviceType
 {
 public:
@@ -14,37 +12,12 @@ public:
      * Initializes binary sensor.
      *
      * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
-     * @param initialValue Initial value of the sensor.
-                           It will be published right after "config" message in order to update HA state.
      */
     HASensor(
-        const char* name,
-        T initialValue
+        const char* name
     );
     HASensor(
         const char* name,
-        T initialValue,
-        HAMqtt& mqtt
-    ); // legacy constructor
-
-    /**
-     * Initializes binary sensor with the specified class.
-     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
-     *
-     * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
-     * @param deviceClass Name of the class (lower case).
-     * @param initialValue Initial value of the sensor.
-                           It will be published right after "config" message in order to update HA state.
-     */
-    HASensor(
-        const char* name,
-        const char* deviceClass,
-        T initialValue
-    );
-    HASensor(
-        const char* name,
-        const char* deviceClass,
-        T initialValue,
         HAMqtt& mqtt
     ); // legacy constructor
 
@@ -54,21 +27,26 @@ public:
     virtual void onMqttConnected() override;
 
     /**
-     * Changes state of the sensor and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
+     * Publishes new value of the sensor.
+     * Please note that connection to MQTT broker must be acquired.
+     * Otherwise method will return false.
      *
-     * @param state New state of the sensor.
+     * @param state Value to publish.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setValue(T value);
+    bool setValue(const char* value);
+    bool setValue(uint32_t value);
+    bool setValue(int32_t value);
+    bool setValue(double value, uint8_t precision = 2);
+    bool setValue(float value, uint8_t precision = 2);
 
     /**
-     * Returns last known state of the sensor.
-     * If setState method wasn't called the initial value will be returned.
+     * The type/class of the sensor to set the icon in the frontend.
+     *
+     * @param className https://www.home-assistant.io/integrations/sensor/#device-class
      */
-    inline T getValue() const
-        { return _currentValue; }
+    inline void setDeviceClass(const char* className)
+        { _class = className; }
 
     /**
      * Defines the units of measurement of the sensor, if any.
@@ -88,16 +66,12 @@ public:
 
 private:
     void publishConfig();
-    bool publishValue(T value);
+    bool publishValue(const char* value);
     uint16_t calculateSerializedLength(const char* serializedDevice) const;
     bool writeSerializedData(const char* serializedDevice) const;
-    uint16_t calculateValueLength() const;
-    bool valueToStr(char* dst, T value) const;
 
     const char* _class;
     const char* _units;
-    HAUtils::ValueType _valueType;
-    T _currentValue;
     const char* _icon;
 };
 

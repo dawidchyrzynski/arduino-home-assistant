@@ -65,37 +65,3 @@ double HAUtils::strToTemp(
 {
     return atof(src);
 }
-
-uint8_t HAUtils::getValueTypeLength(const ValueType& type)
-{
-    switch(type) {
-        case ValueTypeUnknown:
-            return 0;
-
-        case ValueTypeUint8:
-            return sizeof(uint8_t);
-
-        case ValueTypeUint16:
-            return sizeof(uint16_t);
-
-        case ValueTypeUint32:
-            return sizeof(uint32_t);
-
-        case ValueTypeInt8:
-            return sizeof(int8_t);
-
-        case ValueTypeInt16:
-            return sizeof(int16_t);
-
-        case ValueTypeInt32:
-            return sizeof(int32_t);
-
-        case ValueTypeDouble:
-            return sizeof(double);
-
-        case ValueTypeFloat:
-            return sizeof(float);
-    }
-
-    return 0;
-}
