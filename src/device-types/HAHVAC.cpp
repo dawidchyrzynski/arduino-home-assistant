@@ -824,8 +824,8 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     // retain flah
     if (_retain) {
-        // Field format: ,"retain":true
-        size += 14;
+        // Field format: ,"ret":true
+        size += 11;
     }
 
     // Supported modes
@@ -1137,7 +1137,7 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
 
     // retain flag
     if (_retain) {
-        static const char Prefix[] PROGMEM = {",\"retain\":"};
+        static const char Prefix[] PROGMEM = {",\"ret\":"};
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
             "true",

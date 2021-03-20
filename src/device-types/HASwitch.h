@@ -54,9 +54,10 @@ public:
      * the MQTT message won't be published.
      *
      * @param state New state of the switch.
+     * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setState(bool state);
+    bool setState(bool state, bool force = false);
 
     /**
      * Alias for setState(true).
@@ -94,6 +95,15 @@ public:
     inline void setIcon(const char* icon)
         { _icon = icon; }
 
+    /**
+     * Sets `retain` flag for commands published by Home Assistant.
+     * By default it's set to false.
+     *
+     * @param retain
+     */
+    inline void setRetain(bool retain)
+        { _retain = retain; }
+
 private:
     void publishConfig();
     bool publishState(bool state);
@@ -103,6 +113,7 @@ private:
     HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
     const char* _icon;
+    bool _retain;
 };
 
 #endif

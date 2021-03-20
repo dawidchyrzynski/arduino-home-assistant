@@ -9,7 +9,8 @@ HASwitch::HASwitch(const char* name, bool initialState) :
     BaseDeviceType("switch", name),
     _stateCallback(nullptr),
     _currentState(initialState),
-    _icon(nullptr)
+    _icon(nullptr),
+    _retain(false)
 {
 
 }
@@ -31,8 +32,11 @@ void HASwitch::onMqttConnected()
     }
 
     publishConfig();
-    publishState(_currentState);
     publishAvailability();
+
+    if (!_retain) {
+        publishState(_currentState);
+    }
 
     DeviceTypeSerializer::mqttSubscribeTopic(
         this,
@@ -50,13 +54,13 @@ void HASwitch::onMqttMessage(
 
     if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
-        setState(state);
+        setState(state, true);
     }
 }
 
-bool HASwitch::setState(bool state)
+bool HASwitch::setState(bool state, bool force)
 {
-    if (_currentState == state) {
+    if (!force && _currentState == state) {
         return true;
     }
 
@@ -194,6 +198,12 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
         size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
     }
 
+    // retain flag
+    if (_retain) {
+        // Field format: ,"ret":true
+        size += 11;
+    }
+
     return size; // exludes null terminator
 }
 
@@ -231,6 +241,16 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
             _icon
+        );
+    }
+
+    // retain flag
+    if (_retain) {
+        static const char Prefix[] PROGMEM = {",\"ret\":"};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            "true",
+            false
         );
     }
 
