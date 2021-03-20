@@ -22,7 +22,7 @@ void setup() {
 
     // configure sensor (optional)
     temp.setUnitOfMeasurement("°C");
-    temp.setDeviceClass("temperature"");
+    temp.setDeviceClass("temperature");
     temp.setIcon("mdi:home");
 
     mqtt.begin(BROKER_ADDR);
