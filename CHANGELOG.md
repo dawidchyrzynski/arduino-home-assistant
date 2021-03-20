@@ -3,7 +3,7 @@
 ## 1.2.0
 
 **Breaking changes:**
-* Refactored HASensor implementation. Please take a look at updated example in `eamples/sensor/sensor.ino`
+* Refactored HASensor implementation. Please take a look at updated example in `examples/sensor/sensor.ino`
 
 **New features:**
 * Added support for HVAC

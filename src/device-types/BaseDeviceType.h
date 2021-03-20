@@ -41,8 +41,11 @@ protected:
         const uint16_t& length
     );
 
+    virtual void publishConfig();
     virtual void publishAvailability();
     virtual bool isMyTopic(const char* topic, const char* expectedTopic);
+    virtual uint16_t calculateSerializedLength(const char* serializedDevice) const = 0;
+    virtual bool writeSerializedData(const char* serializedDevice) const = 0;
 
     const char* const _componentName;
     const char* const _name;
