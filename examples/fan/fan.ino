@@ -40,6 +40,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // configure fan (optional)
+    // default speeds are: Off | Low | Medium | High
     fan.setSpeeds(HAFan::OffSpeed | HAFan::LowSpeed | HAFan::HighSpeed);
     fan.setName("Bathroom");
     fan.setRetain(true);
