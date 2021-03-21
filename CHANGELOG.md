@@ -11,6 +11,7 @@
 * Added support for setting icon in HASwitch and HASensor
 * Added support for setting retain flag in HASwitch
 * Added support for text (const char*) payload in HASensor
+* Added support for fans (HAFan)
 
 **Updates:**
 * Optimized codebase and logic in all devices types
