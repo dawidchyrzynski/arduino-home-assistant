@@ -144,6 +144,25 @@ public:
     bool subscribe(const char* topic);
 
     /**
+     * Enables last will message that will be produced when device disconnects from the broker.
+     * If you want to change availability of the device in Home Assistant panel
+     * please use enableLastWill() method in the HADevice object instead.
+     *
+     * @param lastWillTopic
+     * @param lastWillMessage
+     * @param lastWillRetain
+     */
+    inline void setLastWill(
+        const char* lastWillTopic,
+        const char* lastWillMessage,
+        bool lastWillRetain
+    ) {
+        _lastWillTopic = lastWillTopic;
+        _lastWillMessage = lastWillMessage;
+        _lastWillRetain = lastWillRetain;
+    }
+
+    /**
      * Processes MQTT message received from the broker (subscription).
      *
      * @param topic Topic of the message.
@@ -164,7 +183,7 @@ private:
     /**
      * This method is called each time the connection with MQTT broker is acquired.
      */
-    void notifyDevicesAboutConnection();
+    void onConnectedLogic();
 
     Client& _netClient;
     HADevice& _device;
@@ -177,6 +196,9 @@ private:
     uint32_t _lastConnectionAttemptAt;
     uint8_t _devicesTypesNb;
     BaseDeviceType** _devicesTypes;
+    const char* _lastWillTopic;
+    const char* _lastWillMessage;
+    bool _lastWillRetain;
 };
 
 #endif

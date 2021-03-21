@@ -28,7 +28,10 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _password(nullptr),
     _lastConnectionAttemptAt(0),
     _devicesTypesNb(0),
-    _devicesTypes(nullptr)
+    _devicesTypes(nullptr),
+    _lastWillTopic(nullptr),
+    _lastWillMessage(nullptr),
+    _lastWillRetain(false)
 {
     _instance = this;
 }
@@ -271,22 +274,23 @@ void HAMqtt::connectToServer()
     Serial.println();
 #endif
 
-    if (_username == nullptr || _password == nullptr) {
-        _mqtt->connect(_device.getUniqueId());
-    } else {
-        _mqtt->connect(_device.getUniqueId(), _username, _password);
-    }
+    _mqtt->connect(
+        _device.getUniqueId(),
+        _username,
+        _password,
+        _lastWillTopic,
+        0,
+        _lastWillRetain,
+        _lastWillMessage,
+        true
+    );
 
     if (isConnected()) {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Connected to the broker"));
 #endif
 
-        notifyDevicesAboutConnection();
-
-        if (_connectedCallback) {
-            _connectedCallback();
-        }
+        onConnectedLogic();
     } else {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Failed to connect to the broker"));
@@ -294,9 +298,15 @@ void HAMqtt::connectToServer()
     }
 }
 
-void HAMqtt::notifyDevicesAboutConnection()
+void HAMqtt::onConnectedLogic()
 {
+    _device.publishAvailability();
+
     for (uint8_t i = 0; i < _devicesTypesNb; i++) {
         _devicesTypes[i]->onMqttConnected();
+    }
+
+    if (_connectedCallback) {
+        _connectedCallback();
     }
 }

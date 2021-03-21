@@ -21,7 +21,7 @@ public:
 
     /**
      * Calculates length of the topic with given parameters.
-     * Topic format: [discovery prefix]/[component]/[objectId]/[suffix]
+     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param component
      * @param objectId
@@ -38,7 +38,7 @@ public:
     /**
      * Generates topic and saves it to the given buffer.
      * Please note that size of the buffer must be calculated by `calculateTopicLength` method first.
-     * Topic format: [discovery prefix]/[component]/[objectId]/[suffix]
+     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param output
      * @param component

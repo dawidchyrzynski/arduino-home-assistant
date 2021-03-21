@@ -32,18 +32,19 @@ uint16_t DeviceTypeSerializer::calculateTopicLength(
     }
 
     uint16_t size =
-        strlen(prefix) + 1 + // with slash
-        strlen(component) + 1 + // with slash
+        strlen(prefix) + 1 + // prefix with slash
         strlen(suffix);
 
-    if (objectId != nullptr) {
-        size += strlen(objectId) + 1; // with slash
-    } else {
-        size += 1; // slash
+    if (component != nullptr) {
+        size += strlen(component) + 1; // component with slash
     }
 
     if (HAMqtt::instance()->getDevice() != nullptr) {
-        size += strlen(HAMqtt::instance()->getDevice()->getUniqueId()) + 1; // with slash
+        size += strlen(HAMqtt::instance()->getDevice()->getUniqueId()) + 1; // device ID with slash
+    }
+
+    if (objectId != nullptr) {
+        size += strlen(objectId) + 1; // with slash
     }
 
     if (includeNullTerminator) {
@@ -67,16 +68,22 @@ uint16_t DeviceTypeSerializer::generateTopic(
 
     strcpy(output, prefix);
     strcat_P(output, CharSlash);
-    strcat(output, component);
-    strcat_P(output, CharSlash);
+
+    if (component != nullptr) {
+        strcat(output, component);
+        strcat_P(output, CharSlash);
+    }
 
     if (HAMqtt::instance()->getDevice() != nullptr) {
         strcat(output, HAMqtt::instance()->getDevice()->getUniqueId());
         strcat_P(output, CharSlash);
     }
 
-    strcat(output, objectId);
-    strcat_P(output, CharSlash);
+    if (objectId != nullptr) {
+        strcat(output, objectId);
+        strcat_P(output, CharSlash);
+    }
+
     strcat(output, suffix);
     return strlen(output) + 1; // size with null terminator
 }
@@ -117,13 +124,19 @@ uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
     const BaseDeviceType* const dt
 )
 {
-    if (!dt->isAvailabilityConfigured()) {
+    const HADevice* device = HAMqtt::instance()->getDevice();
+    if (device == nullptr) {
+        return 0;
+    }
+
+    const bool& sharedAvailability = device->isSharedAvailabilityEnabled();
+    if (!sharedAvailability && !dt->isAvailabilityConfigured()) {
         return 0;
     }
 
     const uint16_t& availabilityTopicLength = calculateTopicLength(
-        dt->componentName(),
-        dt->name(),
+        (sharedAvailability ? nullptr : dt->componentName()),
+        (sharedAvailability ? nullptr : dt->name()),
         AvailabilityTopic,
         false
     );
@@ -226,13 +239,19 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     const BaseDeviceType* const dt
 )
 {
-    if (!dt->isAvailabilityConfigured()) {
+    const HADevice* device = HAMqtt::instance()->getDevice();
+    if (device == nullptr) {
+        return;
+    }
+
+    const bool& sharedAvailability = device->isSharedAvailabilityEnabled();
+    if (!sharedAvailability && !dt->isAvailabilityConfigured()) {
         return;
     }
 
     const uint16_t& topicSize = calculateTopicLength(
-        dt->componentName(),
-        dt->name(),
+        (sharedAvailability ? nullptr : dt->componentName()),
+        (sharedAvailability ? nullptr : dt->name()),
         AvailabilityTopic
     );
     if (topicSize == 0) {
@@ -242,8 +261,8 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     char availabilityTopic[topicSize];
     generateTopic(
         availabilityTopic,
-        dt->componentName(),
-        dt->name(),
+        (sharedAvailability ? nullptr : dt->componentName()),
+        (sharedAvailability ? nullptr : dt->name()),
         AvailabilityTopic
     );
 

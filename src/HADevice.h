@@ -25,7 +25,14 @@ public:
     inline void setSoftwareVersion(const char* softwareVersion)
         { _softwareVersion = softwareVersion; }
 
+    inline bool isSharedAvailabilityEnabled() const
+        { return _sharedAvailability; }
+
+    void setAvailability(bool online);
+    bool enableSharedAvailability();
+    bool enableLastWill();
     bool setUniqueId(const byte* uniqueId, const uint16_t& length);
+    void publishAvailability();
     uint16_t calculateSerializedLength() const;
     uint16_t serialize(char* dst) const;
 
@@ -35,6 +42,9 @@ private:
     const char* _model;
     const char* _name;
     const char* _softwareVersion;
+    bool _sharedAvailability;
+    char* _availabilityTopic;
+    bool _available;
 };
 
 #endif
