@@ -77,13 +77,17 @@ void HAHVAC::onMqttConnected()
     }
 
     publishConfig();
-    publishAction(_action);
-    publishAuxHeatingState(_auxHeatingState);
-    publishAwayState(_awayState);
-    publishHoldState(_holdState);
     publishCurrentTemperature(_currentTemperature);
     publishTargetTemperature(_targetTemperature);
-    publishMode(_currentMode);
+
+    if (!_retain) {
+        publishAction(_action);
+        publishAuxHeatingState(_auxHeatingState);
+        publishAwayState(_awayState);
+        publishHoldState(_holdState);
+        publishMode(_currentMode);
+    }
+
     subscribeTopics();
 }
 
@@ -93,13 +97,16 @@ void HAHVAC::onMqttMessage(
     const uint16_t& length
 )
 {
-    if (isMyTopic(topic, AuxCommandTopic)) {
+    if ((_features & AuxHeatingFeature) &&
+            isMyTopic(topic, AuxCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAuxHeatingState(state);
-    } else if (isMyTopic(topic, AwayCommandTopic)) {
+    } else if ((_features & AwayModeFeature) &&
+            isMyTopic(topic, AwayCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAwayState(state);
-    } else if (isMyTopic(topic, HoldCommandTopic)) {
+    } else if ((_features & HoldFeature) &&
+            isMyTopic(topic, HoldCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setHoldState(state);
     } else if (isMyTopic(topic, TargetTemperatureCommandTopic)) {
@@ -129,10 +136,6 @@ bool HAHVAC::setAction(Action action)
 
 bool HAHVAC::setAuxHeatingState(bool state)
 {
-    if (!(_features & AuxHeatingFeature)) {
-        return false;
-    }
-
     if (publishAuxHeatingState(state)) {
         _auxHeatingState = state;
 
@@ -148,10 +151,6 @@ bool HAHVAC::setAuxHeatingState(bool state)
 
 bool HAHVAC::setAwayState(bool state)
 {
-    if (!(_features & AwayModeFeature)) {
-        return false;
-    }
-
     if (publishAwayState(state)) {
         _awayState = state;
 
@@ -167,10 +166,6 @@ bool HAHVAC::setAwayState(bool state)
 
 bool HAHVAC::setHoldState(bool state)
 {
-    if (!(_features & HoldFeature)) {
-        return false;
-    }
-
     if (publishHoldState(state)) {
         _holdState = state;
 
@@ -283,7 +278,8 @@ bool HAHVAC::setTempStep(double tempStep)
 
 bool HAHVAC::publishAction(Action action)
 {
-    if (strlen(name()) == 0) {
+    if (!(_features & ActionFeature) ||
+            strlen(name()) == 0) {
         return false;
     }
 
@@ -519,8 +515,25 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     size += DeviceTypeSerializer::calculateNameFieldSize(_label);
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
-    // action topic
+    // current temperature
     {
+        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+            componentName(),
+            name(),
+            CurrentTemperatureTopic,
+            false
+        );
+
+        if (topicLength == 0) {
+            return 0;
+        }
+
+        // Field format: "curr_temp_t":"[TOPIC]"
+        size += topicLength + 16; // 16 - length of the JSON decorators for this field
+    }
+
+    // action topic
+    if (_features & ActionFeature) {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
             name(),
@@ -532,8 +545,8 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
             return 0;
         }
 
-        // Field format: "act_t":"[TOPIC]"
-        size += topicLength + 10; // 10 - length of the JSON decorators for this field
+        // Field format: ,"act_t":"[TOPIC]"
+        size += topicLength + 11; // 11 - length of the JSON decorators for this field
     }
 
     // aux heating
@@ -645,23 +658,6 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
             // Field format: ,"hold_stat_t":"[TOPIC]"
             size += topicLength + 17; // 17 - length of the JSON decorators for this field
         }
-    }
-
-    // current temperature
-    {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            name(),
-            CurrentTemperatureTopic,
-            false
-        );
-
-        if (topicLength == 0) {
-            return 0;
-        }
-
-        // Field format: ,"curr_temp_t":"[TOPIC]"
-        size += topicLength + 17; // 17 - length of the JSON decorators for this field
     }
 
     // min temp
@@ -828,9 +824,19 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
 
     DeviceTypeSerializer::mqttWriteBeginningJson();
 
-    // action topic
+    // current temperature topic
     {
-        static const char Prefix[] PROGMEM = {"\"act_t\":\""};
+        static const char Prefix[] PROGMEM = {"\"curr_temp_t\":\""};
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            CurrentTemperatureTopic
+        );
+    }
+
+    // action topic
+    if (_features & ActionFeature) {
+        static const char Prefix[] PROGMEM = {",\"act_t\":\""};
         DeviceTypeSerializer::mqttWriteTopicField(
             this,
             Prefix,
@@ -905,16 +911,6 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
                 HoldStateTopic
             );
         }
-    }
-
-    // current temperature topic
-    {
-        static const char Prefix[] PROGMEM = {",\"curr_temp_t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
-            CurrentTemperatureTopic
-        );
     }
 
     // min temp

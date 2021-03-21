@@ -27,9 +27,10 @@ public:
 
     enum Features {
         DefaultFeatures = 0,
-        AuxHeatingFeature = 1,
-        AwayModeFeature = 2,
-        HoldFeature = 4
+        ActionFeature = 1,
+        AuxHeatingFeature = 2,
+        AwayModeFeature = 4,
+        HoldFeature = 8
     };
 
     enum Action {
@@ -318,7 +319,7 @@ private:
     bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _uniqueId;
-    uint8_t _features;
+    const uint8_t _features;
     TemperatureUnit _temperatureUnit;
     Action _action;
     HAHVAC_STATE_CALLBACK_BOOL(_auxHeatingCallback);

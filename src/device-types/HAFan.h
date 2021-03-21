@@ -137,7 +137,7 @@ protected:
     uint16_t calculateSpeedsLength() const;
     bool writeSerializedData(const char* serializedDevice) const override;
 
-    uint8_t _features;
+    const uint8_t _features;
     uint8_t _speeds;
     bool _currentState;
     HAFAN_STATE_CALLBACK_BOOL(_stateCallback);
