@@ -89,10 +89,16 @@ void BaseDeviceType::publishConfig()
 
 void BaseDeviceType::publishAvailability()
 {
+    const HADevice* device = HAMqtt::instance()->getDevice();
+    if (device == nullptr) {
+        return;
+    }
+
     if (_availability == AvailabilityDefault ||
             !mqtt()->isConnected() ||
             strlen(_name) == 0 ||
-            strlen(_componentName) == 0) {
+            strlen(_componentName) == 0 ||
+            device->isSharedAvailabilityEnabled()) {
         return;
     }
 

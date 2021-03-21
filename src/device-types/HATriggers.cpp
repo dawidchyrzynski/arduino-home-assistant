@@ -168,7 +168,7 @@ uint16_t HATriggers::calculateTopicLength(
     bool includeNullTerminator
 ) const
 {
-    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 1; // + underscore
+    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // + underscore and slash
     return DeviceTypeSerializer::calculateTopicLength(
         component,
         nullptr,

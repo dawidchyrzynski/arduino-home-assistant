@@ -12,6 +12,9 @@
 * Added support for setting retain flag in HASwitch
 * Added support for text (const char*) payload in HASensor
 * Added support for fans (HAFan)
+* Added support for connecting to the MQTT broker using hostname
+* Added `onConnected()` method in the HAMqtt
+* Added support for MQTT LWT (see `examples/advanced-availability/advanced-availability.ino`)
 
 **Updates:**
 * Optimized codebase and logic in all devices types

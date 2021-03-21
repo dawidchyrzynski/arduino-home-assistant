@@ -4,6 +4,9 @@
 #include <Client.h>
 #include <IPAddress.h>
 
+#define HAMQTT_CALLBACK(name) void (*name)()
+#define HAMQTT_DEFAULT_PORT 1883
+
 class PubSubClient;
 class HADevice;
 class BaseDeviceType;
@@ -36,7 +39,15 @@ public:
      * Returns instance of the device assigned to the HAMqtt class.
      */
     inline HADevice const* getDevice() const
-        { return (_hasDevice ? &_device : nullptr); }
+        { return &_device; }
+
+    /**
+     * Given callback will be called each time the connection with broker is acquired.
+     *
+     * @param callback
+     */
+    inline void onConnected(HAMQTT_CALLBACK(callback))
+        { _connectedCallback = callback; }
 
     /**
      * Sets parameters of the connection to the MQTT broker.
@@ -50,26 +61,40 @@ public:
      */
     bool begin(
         const IPAddress& serverIp,
-        const uint16_t& serverPort = 1883,
+        const uint16_t& serverPort = HAMQTT_DEFAULT_PORT,
         const char* username = nullptr,
         const char* password = nullptr
     );
-
-    /**
-     * Sets parameters of the connection to the MQTT broker on default port.
-     * The library will try to connect to the broker in first loop cycle.
-     * Please note that the library automatically reconnects to the broker if connection is lost.
-     *
-     * @param serverIp IP address of the MQTT broker.
-     * @param serverPort Port of the MQTT broker.
-     * @param username Username for authentication.
-     * @param password Password for authentication.
-     */
     bool begin(
         const IPAddress& serverIp,
         const char* username,
         const char* password
     );
+
+    /**
+     * Connects to the MQTT broker using hostname.
+     *
+     * @param hostname Hostname of the MQTT broker.
+     * @param serverPort Port of the MQTT broker.
+     * @param username Username for authentication.
+     * @param password Password for authentication.
+     */
+    bool begin(
+        const char* hostname,
+        const uint16_t& serverPort = HAMQTT_DEFAULT_PORT,
+        const char* username = nullptr,
+        const char* password = nullptr
+    );
+    bool begin(
+        const char* hostname,
+        const char* username = nullptr,
+        const char* password = nullptr
+    );
+
+    /**
+     * Closes connection with the MQTT broker.
+     */
+    bool disconnect();
 
     /**
      * ArduinoHA's ticker.
@@ -119,6 +144,25 @@ public:
     bool subscribe(const char* topic);
 
     /**
+     * Enables last will message that will be produced when device disconnects from the broker.
+     * If you want to change availability of the device in Home Assistant panel
+     * please use enableLastWill() method in the HADevice object instead.
+     *
+     * @param lastWillTopic
+     * @param lastWillMessage
+     * @param lastWillRetain
+     */
+    inline void setLastWill(
+        const char* lastWillTopic,
+        const char* lastWillMessage,
+        bool lastWillRetain
+    ) {
+        _lastWillTopic = lastWillTopic;
+        _lastWillMessage = lastWillMessage;
+        _lastWillRetain = lastWillRetain;
+    }
+
+    /**
      * Processes MQTT message received from the broker (subscription).
      *
      * @param topic Topic of the message.
@@ -139,21 +183,22 @@ private:
     /**
      * This method is called each time the connection with MQTT broker is acquired.
      */
-    void onConnected();
+    void onConnectedLogic();
 
     Client& _netClient;
     HADevice& _device;
-    bool _hasDevice;
+    HAMQTT_CALLBACK(_connectedCallback);
     bool _initialized;
     const char* _discoveryPrefix;
     PubSubClient* _mqtt;
-    IPAddress* _serverIp;
-    uint16_t _serverPort;
     const char* _username;
     const char* _password;
     uint32_t _lastConnectionAttemptAt;
     uint8_t _devicesTypesNb;
     BaseDeviceType** _devicesTypes;
+    const char* _lastWillTopic;
+    const char* _lastWillMessage;
+    bool _lastWillRetain;
 };
 
 #endif

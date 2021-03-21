@@ -8,6 +8,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 ## Features
 
 * MQTT discovery (device is added to the Home Assistant panel automatically)
+* MQTT Last Will and Testament
 * Auto reconnect with MQTT broker
 
 ## Examples
@@ -22,6 +23,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [NodeMCU Wi-Fi](examples/nodemcu/nodemcu.ino)
 * [Arduino Nano 33 IoT Wi-Fi (SAMD)](examples/nano33iot/nano33iot.ino)
 * [Availability feature](examples/availability)
+* [Advanced availability (MQTT LWT)](examples/advanced-availability/advanced-availability.ino)
 
 ## Tested boards
 
