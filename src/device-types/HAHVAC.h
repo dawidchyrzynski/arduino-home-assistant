@@ -305,7 +305,6 @@ public:
     bool setTempStep(double tempStep);
 
 private:
-    void publishConfig();
     bool publishAction(Action action);
     bool publishAuxHeatingState(bool state);
     bool publishAwayState(bool state);
@@ -314,9 +313,9 @@ private:
     bool publishTargetTemperature(double temperature);
     bool publishMode(Mode mode);
     void subscribeTopics();
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
     uint16_t calculateModesLength() const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _uniqueId;
     uint8_t _features;
