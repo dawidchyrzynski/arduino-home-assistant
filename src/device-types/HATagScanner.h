@@ -35,9 +35,8 @@ public:
     bool tagScanned(const char* tag);
 
 private:
-    void publishConfig();
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
+    bool writeSerializedData(const char* serializedDevice) const override;
 };
 
 #endif

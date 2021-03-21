@@ -77,52 +77,6 @@ bool HASwitch::setState(bool state, bool force)
     return false;
 }
 
-void HASwitch::publishConfig()
-{
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return;
-    }
-
-    const uint16_t& deviceLength = device->calculateSerializedLength();
-    if (deviceLength == 0) {
-        return;
-    }
-
-    char serializedDevice[deviceLength];
-    if (device->serialize(serializedDevice) == 0) {
-        return;
-    }
-
-    const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-    const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
-
-    if (topicLength == 0 || dataLength == 0) {
-        return;
-    }
-
-    char topic[topicLength];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return;
-    }
-
-    if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedData(serializedDevice);
-        mqtt()->endPublish();
-    }
-}
-
 bool HASwitch::publishState(bool state)
 {
     if (strlen(name()) == 0) {
@@ -157,6 +111,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
+    size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // cmd topic
     {
@@ -196,12 +151,6 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     if (_icon != nullptr) {
         // Field format: ,"ic":"[ICON]"
         size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
-    }
-
-    // retain flag
-    if (_retain) {
-        // Field format: ,"ret":true
-        size += 11;
     }
 
     return size; // exludes null terminator
@@ -244,16 +193,7 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    // retain flag
-    if (_retain) {
-        static const char Prefix[] PROGMEM = {",\"ret\":"};
-        DeviceTypeSerializer::mqttWriteConstCharField(
-            Prefix,
-            "true",
-            false
-        );
-    }
-
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteNameField(name());
     DeviceTypeSerializer::mqttWriteUniqueIdField(name());
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);

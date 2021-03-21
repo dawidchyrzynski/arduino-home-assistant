@@ -74,52 +74,6 @@ bool HABinarySensor::setState(bool state)
     return false;
 }
 
-void HABinarySensor::publishConfig()
-{
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return;
-    }
-
-    const uint16_t& deviceLength = device->calculateSerializedLength();
-    if (deviceLength == 0) {
-        return;
-    }
-
-    char serializedDevice[deviceLength];
-    if (device->serialize(serializedDevice) == 0) {
-        return;
-    }
-
-    const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-    const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
-
-    if (topicLength == 0 || dataLength == 0) {
-        return;
-    }
-
-    char topic[topicLength];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return;
-    }
-
-    if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedData(serializedDevice);
-        mqtt()->endPublish();
-    }
-}
-
 bool HABinarySensor::publishState(bool state)
 {
     if (strlen(name()) == 0) {
