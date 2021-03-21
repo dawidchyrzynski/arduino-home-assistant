@@ -300,13 +300,13 @@ void HAMqtt::connectToServer()
 
 void HAMqtt::onConnectedLogic()
 {
+    if (_connectedCallback) {
+        _connectedCallback();
+    }
+
     _device.publishAvailability();
 
     for (uint8_t i = 0; i < _devicesTypesNb; i++) {
         _devicesTypes[i]->onMqttConnected();
-    }
-
-    if (_connectedCallback) {
-        _connectedCallback();
     }
 }

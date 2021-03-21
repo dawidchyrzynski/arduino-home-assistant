@@ -28,6 +28,9 @@ public:
     inline bool isSharedAvailabilityEnabled() const
         { return _sharedAvailability; }
 
+    inline bool isOnline() const
+        { return _available; }
+
     void setAvailability(bool online);
     bool enableSharedAvailability();
     bool enableLastWill();
