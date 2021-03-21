@@ -136,6 +136,16 @@ uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
     return availabilityTopicLength + 12; // 12 - length of the JSON decorators for this field
 }
 
+uint16_t DeviceTypeSerializer::calculateRetainFieldSize(bool retain)
+{
+    if (!retain) {
+        return 0;
+    }
+
+    // Field format: ,"ret":true
+    return 11;
+}
+
 uint16_t DeviceTypeSerializer::calculateDeviceFieldSize(
     const char* serializedDevice
 )
@@ -243,6 +253,22 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
 
     static const char Prefix[] PROGMEM = {",\"avty_t\":\""};
     mqttWriteConstCharField(Prefix, availabilityTopic);
+}
+
+void DeviceTypeSerializer::mqttWriteRetainField(
+    bool retain
+)
+{
+    if (!retain) {
+        return;
+    }
+
+    static const char Prefix[] PROGMEM = {",\"ret\":"};
+    mqttWriteConstCharField(
+        Prefix,
+        "true",
+        false
+    );
 }
 
 void DeviceTypeSerializer::mqttWriteDeviceField(

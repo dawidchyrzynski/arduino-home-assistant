@@ -105,10 +105,9 @@ public:
         { _retain = retain; }
 
 private:
-    void publishConfig();
     bool publishState(bool state);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
+    bool writeSerializedData(const char* serializedDevice) const override;
 
     HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;

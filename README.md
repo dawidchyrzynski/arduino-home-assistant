@@ -13,6 +13,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
+* [Fan](examples/fan/fan.ino)
 * [LED switch](examples/led-switch/led-switch.ino)
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
@@ -40,6 +41,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 ## Supported HA types
 
 * Binary sensors
+* Fans
 * Device triggers
 * Switches
 * Sensors

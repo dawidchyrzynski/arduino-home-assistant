@@ -28,6 +28,16 @@ public:
     bool trigger(const char* type, const char* subtype);
 
 protected:
+    void publishConfig() override;
+
+    uint16_t calculateSerializedLength(
+        const char* serializedDevice
+    ) const override { (void)serializedDevice; return 0; }
+
+    bool writeSerializedData(
+        const char* serializedDevice
+    ) const override { (void)serializedDevice; return false; }
+
     uint16_t calculateTopicLength(
         const char* component,
         const HATrigger *trigger,
@@ -43,8 +53,6 @@ protected:
     ) const;
 
 private:
-    void publishConfig();
-
     uint16_t calculateSerializedLength(
         const HATrigger* trigger,
         const char* serializedDevice

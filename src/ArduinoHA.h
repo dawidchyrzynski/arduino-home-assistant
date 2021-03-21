@@ -5,6 +5,7 @@
 #include "HAMqtt.h"
 #include "HAUtils.h"
 #include "device-types/HABinarySensor.h"
+#include "device-types/HAFan.h"
 #include "device-types/HAHVAC.h"
 #include "device-types/HASensor.h"
 #include "device-types/HASwitch.h"

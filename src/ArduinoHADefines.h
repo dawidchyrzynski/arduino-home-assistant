@@ -5,6 +5,7 @@
 
 // You can reduce Flash size of the compiled library by commenting unused components below
 #define ARDUINOHA_BINARY_SENSOR
+#define ARDUINOHA_FAN
 #define ARDUINOHA_HVAC
 #define ARDUINOHA_SENSOR
 #define ARDUINOHA_SWITCH

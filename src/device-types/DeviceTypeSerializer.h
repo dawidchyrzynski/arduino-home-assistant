@@ -63,6 +63,9 @@ public:
     static uint16_t calculateAvailabilityFieldSize(
         const BaseDeviceType* const dt
     );
+    static uint16_t calculateRetainFieldSize(
+        bool retain
+    );
     static uint16_t calculateDeviceFieldSize(
         const char* serializedDevice
     );
@@ -82,6 +85,9 @@ public:
     );
     static void mqttWriteAvailabilityField(
         const BaseDeviceType* const dt
+    );
+    static void mqttWriteRetainField(
+        bool retain
     );
     static void mqttWriteDeviceField(
         const char* serializedDevice

@@ -281,52 +281,6 @@ bool HAHVAC::setTempStep(double tempStep)
     return true;
 }
 
-void HAHVAC::publishConfig()
-{
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return;
-    }
-
-    const uint16_t& deviceLength = device->calculateSerializedLength();
-    if (deviceLength == 0) {
-        return;
-    }
-
-    char serializedDevice[deviceLength];
-    if (device->serialize(serializedDevice) == 0) {
-        return;
-    }
-
-    const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-    const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
-
-    if (topicLength == 0 || dataLength == 0) {
-        return;
-    }
-
-    char topic[topicLength];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return;
-    }
-
-    if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedData(serializedDevice);
-        mqtt()->endPublish();
-    }
-}
-
 bool HAHVAC::publishAction(Action action)
 {
     if (strlen(name()) == 0) {
@@ -562,6 +516,8 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(_uniqueId);
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
+    size += DeviceTypeSerializer::calculateNameFieldSize(_label);
+    size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // action topic
     {
@@ -735,12 +691,6 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         size += strlen(str) + 13; // 13 - length of the JSON decorators for this field
     }
 
-    // name
-    if (_label != nullptr) {
-        // Field format: ,"name":"[NAME]"
-        size += strlen(_label) + 10; // 15 - length of the JSON decorators for this field
-    }
-
     // target temperature
     {
         // command topic
@@ -820,12 +770,6 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
             // Field format: ,"mode_stat_t":"[TOPIC]"
             size += topicLength + 17; // 17 - length of the JSON decorators for this field
         }
-    }
-
-    // retain flah
-    if (_retain) {
-        // Field format: ,"ret":true
-        size += 11;
     }
 
     // Supported modes
@@ -1012,15 +956,6 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    // label (name)
-    if (_label != nullptr) {
-        static const char Prefix[] PROGMEM = {",\"name\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(
-            Prefix,
-            _label
-        );
-    }
-
     // target temperature
     {
         // command topic
@@ -1135,16 +1070,8 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    // retain flag
-    if (_retain) {
-        static const char Prefix[] PROGMEM = {",\"ret\":"};
-        DeviceTypeSerializer::mqttWriteConstCharField(
-            Prefix,
-            "true",
-            false
-        );
-    }
-
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
+    DeviceTypeSerializer::mqttWriteNameField(_label);
     DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
