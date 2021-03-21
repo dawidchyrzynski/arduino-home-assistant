@@ -144,8 +144,6 @@ bool HAMqtt::disconnect()
         return false;
     }
 
-    // publish LWT
-
     _initialized = false;
     _lastConnectionAttemptAt = 0;
     _mqtt->disconnect();
