@@ -5,6 +5,8 @@ It's supported only by following device types:
 * Binary sensor
 * Sensor
 * Switch
+* HVACs
+* Fans
 
 ## Initialization and usage
 
