@@ -16,7 +16,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
 * [Fan](examples/fan/fan.ino)
 * [LED switch](examples/led-switch/led-switch.ino)
-* [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
 * [Sensor (temperature, humidity, etc.)](examples/sensor/sensor.ino)
 * [HVAC](examples/hvac/hvac.ino)
@@ -24,6 +23,8 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Arduino Nano 33 IoT Wi-Fi (SAMD)](examples/nano33iot/nano33iot.ino)
 * [Availability feature](examples/availability)
 * [Advanced availability (MQTT LWT)](examples/advanced-availability/advanced-availability.ino)
+* [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
+* [MQTT events](examples/mqtt-events/mqtt-events.ino)
 
 ## Tested boards
 
