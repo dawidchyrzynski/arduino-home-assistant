@@ -14,13 +14,10 @@
 * Added support for fans (HAFan)
 * Added support for connecting to the MQTT broker using hostname
 * Added `onConnected()` method in the HAMqtt
+* Added `onConnectionFailed()` method in the HAMqtt
 * Added support for MQTT LWT (see `examples/advanced-availability/advanced-availability.ino`)
 
 **Updates:**
 * Optimized codebase and logic in all devices types
 * Updated all examples
 * Fixed compilation warnings in all classes
-
-## 1.1.1
-
-## 1.1.0

@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+#include "ArduinoHADefines.h"
 #include "HADevice.h"
 #include "HAUtils.h"
 #include "HAMqtt.h"
@@ -46,6 +47,10 @@ bool HADevice::enableSharedAvailability()
     if (_sharedAvailability) {
         return false;
     }
+
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("Enabling shared availability in the device"));
+#endif
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
         nullptr,

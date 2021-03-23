@@ -40,6 +40,18 @@ public:
     bool setValue(double value, uint8_t precision = 2);
     bool setValue(float value, uint8_t precision = 2);
 
+    inline bool setValue(uint8_t value)
+        { return setValue(static_cast<uint32_t>(value)); }
+
+    inline bool setValue(uint16_t value)
+        { return setValue(static_cast<uint32_t>(value)); }
+
+    inline bool setValue(int8_t value)
+        { return setValue(static_cast<int32_t>(value)); }
+
+    inline bool setValue(int16_t value)
+        { return setValue(static_cast<int32_t>(value)); }
+
     /**
      * The type/class of the sensor to set the icon in the frontend.
      *

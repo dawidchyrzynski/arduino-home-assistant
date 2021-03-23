@@ -50,6 +50,15 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Tag scanner
 * HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
 
+## Roadmap
+
+* FAQ + Home Assistant setup instructions
+* Documentation of the library
+* Unit tests
+* Reduce flash memory usage
+* Add support for HA covers
+* Add support for HA lights
+
 ## Unsupported features
 
 The library doesn't support all features of the MQTT integration.

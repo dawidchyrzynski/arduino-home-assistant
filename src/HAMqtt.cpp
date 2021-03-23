@@ -21,6 +21,7 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _netClient(netClient),
     _device(device),
     _connectedCallback(nullptr),
+    _connectionFailedCallback(nullptr),
     _initialized(false),
     _discoveryPrefix(DefaultDiscoveryPrefix),
     _mqtt(new PubSubClient(netClient)),
@@ -138,10 +139,20 @@ bool HAMqtt::begin(
     return begin(hostname, HAMQTT_DEFAULT_PORT, username, password);
 }
 
-bool HAMqtt::disconnect()
+bool HAMqtt::disconnect(bool sendLastWill)
 {
     if (!_initialized) {
         return false;
+    }
+
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("Closing connection with MQTT broker"));
+#endif
+
+    if (sendLastWill &&
+            _lastWillTopic != nullptr &&
+            _lastWillMessage != nullptr) {
+        publish(_lastWillTopic, _lastWillMessage, _lastWillRetain);
     }
 
     _initialized = false;
@@ -292,6 +303,10 @@ void HAMqtt::connectToServer()
     } else {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Failed to connect to the broker"));
+
+        if (_connectionFailedCallback) {
+            _connectionFailedCallback();
+        }
 #endif
     }
 }

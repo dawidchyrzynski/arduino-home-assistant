@@ -50,6 +50,14 @@ public:
         { _connectedCallback = callback; }
 
     /**
+     * Given callback will be called each time the library fails to connect to the broker.
+     *
+     * @param callback
+     */
+    inline void onConnectionFailed(HAMQTT_CALLBACK(callback))
+        { _connectionFailedCallback = callback; }
+
+    /**
      * Sets parameters of the connection to the MQTT broker.
      * The library will try to connect to the broker in first loop cycle.
      * Please note that the library automatically reconnects to the broker if connection is lost.
@@ -87,14 +95,16 @@ public:
     );
     bool begin(
         const char* hostname,
-        const char* username = nullptr,
-        const char* password = nullptr
+        const char* username,
+        const char* password
     );
 
     /**
      * Closes connection with the MQTT broker.
+     *
+     * @param sendLastWill Set to true if you want to publish device unavailability before closing the connection.
      */
-    bool disconnect();
+    bool disconnect(bool sendLastWill = true);
 
     /**
      * ArduinoHA's ticker.
@@ -188,6 +198,7 @@ private:
     Client& _netClient;
     HADevice& _device;
     HAMQTT_CALLBACK(_connectedCallback);
+    HAMQTT_CALLBACK(_connectionFailedCallback);
     bool _initialized;
     const char* _discoveryPrefix;
     PubSubClient* _mqtt;

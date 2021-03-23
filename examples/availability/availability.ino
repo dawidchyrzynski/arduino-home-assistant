@@ -26,6 +26,7 @@ void setup() {
     Ethernet.begin(mac);
 
     // turn on "availability" feature
+    // this method also sets initial availability so you can use "true" or "false"
     sensor.setAvailability(false);
 
     lastReadAt = millis();
