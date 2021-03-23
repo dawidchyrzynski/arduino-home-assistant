@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_TAG_SCANNER
+
 class HATagScanner : public BaseDeviceType
 {
 public:
@@ -11,7 +13,8 @@ public:
      *
      * @param name Name of the scanner. Recommendes characters: [a-z0-9\-_]
      */
-    HATagScanner(const char* name, HAMqtt& mqtt);
+    HATagScanner(const char* name);
+    HATagScanner(const char* name, HAMqtt& mqtt); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.
@@ -21,7 +24,7 @@ public:
     /**
      * Tag scanner doesn't support availability. Nothing to do here.
      */
-    virtual void setAvailability(bool online) override { }
+    virtual void setAvailability(bool online) override { (void)online; }
 
     /**
      * Sends "tag scanned" event to the MQTT (Home Assistant).
@@ -32,9 +35,9 @@ public:
     bool tagScanned(const char* tag);
 
 private:
-    void publishConfig();
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
+    bool writeSerializedData(const char* serializedDevice) const override;
 };
 
+#endif
 #endif

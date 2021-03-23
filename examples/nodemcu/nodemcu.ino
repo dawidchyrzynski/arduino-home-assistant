@@ -9,7 +9,7 @@
 WiFiClient client;
 HADevice device;
 HAMqtt mqtt(client, device);
-HASwitch led("led", false, mqtt); // you can use custom name in place of "led"
+HASwitch led("led", false); // you can use custom name in place of "led"
 
 void onSwitchStateChanged(bool state, HASwitch* s)
 {

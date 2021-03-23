@@ -3,21 +3,27 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_BINARY_SENSOR
+
 class HABinarySensor : public BaseDeviceType
 {
 public:
     /**
      * Initializes binary sensor.
      *
-     * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
+     * @param name Name of the sensor. Recommended characters: [a-z0-9\-_]
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
     HABinarySensor(
         const char* name,
+        bool initialState
+    );
+    HABinarySensor(
+        const char* name,
         bool initialState,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Initializes binary sensor with the specified class.
@@ -28,6 +34,11 @@ public:
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
+    HABinarySensor(
+        const char* name,
+        const char* deviceClass,
+        bool initialState
+    );
     HABinarySensor(
         const char* name,
         const char* deviceClass,
@@ -58,13 +69,13 @@ public:
         { return _currentState; }
 
 private:
-    void publishConfig();
     bool publishState(bool state);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
+    bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _class;
     bool _currentState;
 };
 
+#endif
 #endif

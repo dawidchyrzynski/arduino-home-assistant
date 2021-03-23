@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-class HAMqtt;
 class HADevice;
+class BaseDeviceType;
 
 class DeviceTypeSerializer
 {
@@ -21,7 +21,7 @@ public:
 
     /**
      * Calculates length of the topic with given parameters.
-     * Topic format: [discovery prefix]/[component]/[objectId]/[suffix]
+     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param component
      * @param objectId
@@ -29,7 +29,6 @@ public:
      * @param includeNullTerminator
      */
     static uint16_t calculateTopicLength(
-        const HAMqtt* mqtt,
         const char* component,
         const char* objectId,
         const char* suffix,
@@ -39,7 +38,7 @@ public:
     /**
      * Generates topic and saves it to the given buffer.
      * Please note that size of the buffer must be calculated by `calculateTopicLength` method first.
-     * Topic format: [discovery prefix]/[component]/[objectId]/[suffix]
+     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param output
      * @param component
@@ -48,7 +47,6 @@ public:
      * @param includeNullTerminator
      */
     static uint16_t generateTopic(
-        const HAMqtt* mqtt,
         char* output,
         const char* component,
         const char* objectId,
@@ -60,38 +58,53 @@ public:
         const char* name
     );
     static uint16_t calculateUniqueIdFieldSize(
-        const HADevice* device,
         const char* name
     );
     static uint16_t calculateAvailabilityFieldSize(
-        const HAMqtt* mqtt,
-        const char* componentName,
-        const char* name
+        const BaseDeviceType* const dt
+    );
+    static uint16_t calculateRetainFieldSize(
+        bool retain
     );
     static uint16_t calculateDeviceFieldSize(
         const char* serializedDevice
     );
 
-    static void mqttWriteBeginningJson(HAMqtt* mqtt);
-    static void mqttWriteEndJson(HAMqtt* mqtt);
+    static void mqttWriteBeginningJson();
+    static void mqttWriteEndJson();
     static void mqttWriteConstCharField(
-        HAMqtt* mqtt,
         const char* prefix,
-        const char* value
+        const char* value,
+        bool quoteSuffix = true
     );
-    static void mqttWriteNameField(HAMqtt* mqtt, const char* name);
+    static void mqttWriteNameField(
+        const char* name
+    );
     static void mqttWriteUniqueIdField(
-        HAMqtt* mqtt,
         const char* name
     );
     static void mqttWriteAvailabilityField(
-        HAMqtt* mqtt,
-        const char* componentName,
-        const char* name
+        const BaseDeviceType* const dt
+    );
+    static void mqttWriteRetainField(
+        bool retain
     );
     static void mqttWriteDeviceField(
-        HAMqtt* mqtt,
         const char* serializedDevice
+    );
+    static bool mqttWriteTopicField(
+        const BaseDeviceType* const dt,
+        const char* jsonPrefix,
+        const char* topicSuffix
+    );
+    static bool mqttPublishMessage(
+        const BaseDeviceType* const dt,
+        const char* topicSuffix,
+        const char* data
+    );
+    static bool mqttSubscribeTopic(
+        const BaseDeviceType* const dt,
+        const char* topicSuffix
     );
 };
 

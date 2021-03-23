@@ -5,43 +5,36 @@
 #include "ArduinoHADefines.h"
 #include "device-types/BaseDeviceType.h"
 
-#define HAMQTT_INIT \
-    _netClient(netClient), \
-    _device(device), \
-    _hasDevice(true), \
-    _initialized(false), \
-    _discoveryPrefix(DefaultDiscoveryPrefix), \
-    _mqtt(new PubSubClient(netClient)), \
-    _serverIp(new IPAddress()), \
-    _serverPort(0), \
-    _username(nullptr), \
-    _password(nullptr), \
-    _lastConnectionAttemptAt(0), \
-    _devicesTypesNb(0), \
-    _devicesTypes(nullptr)
-
 static const char* DefaultDiscoveryPrefix = "homeassistant";
-static HAMqtt* instance = nullptr;
+HAMqtt* HAMqtt::_instance = nullptr;
 
 void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 {
-    if (instance == nullptr || length > UINT16_MAX) {
+    if (HAMqtt::instance() == nullptr || length > UINT16_MAX) {
         return;
     }
 
-    instance->processMessage(topic, payload, static_cast<uint16_t>(length));
+    HAMqtt::instance()->processMessage(topic, payload, static_cast<uint16_t>(length));
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
-    HAMQTT_INIT
+    _netClient(netClient),
+    _device(device),
+    _connectedCallback(nullptr),
+    _connectionFailedCallback(nullptr),
+    _initialized(false),
+    _discoveryPrefix(DefaultDiscoveryPrefix),
+    _mqtt(new PubSubClient(netClient)),
+    _username(nullptr),
+    _password(nullptr),
+    _lastConnectionAttemptAt(0),
+    _devicesTypesNb(0),
+    _devicesTypes(nullptr),
+    _lastWillTopic(nullptr),
+    _lastWillMessage(nullptr),
+    _lastWillRetain(false)
 {
-    instance = this;
-}
-
-HAMqtt::HAMqtt(const char* clientId, Client& netClient, HADevice& device) :
-    HAMQTT_INIT
-{
-    instance = this;
+    _instance = this;
 }
 
 bool HAMqtt::begin(
@@ -76,13 +69,11 @@ bool HAMqtt::begin(
         return false;
     }
 
-    *_serverIp = serverIp;
-    _serverPort = serverPort;
     _username = username;
     _password = password;
     _initialized = true;
 
-    _mqtt->setServer(*_serverIp, _serverPort);
+    _mqtt->setServer(serverIp, serverPort);
     _mqtt->setCallback(onMessageReceived);
 
     return true;
@@ -94,16 +85,86 @@ bool HAMqtt::begin(
     const char* password
 )
 {
-    return begin(serverIp, 1883, username, password);
+    return begin(serverIp, HAMQTT_DEFAULT_PORT, username, password);
+}
+
+bool HAMqtt::begin(
+    const char* hostname,
+    const uint16_t& serverPort,
+    const char* username,
+    const char* password
+)
+{
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("Initializing ArduinoHA"));
+    Serial.print(F("Server address: "));
+    Serial.print(hostname);
+    Serial.print(F(":"));
+    Serial.print(serverPort);
+    Serial.println();
+#endif
+
+    if (_device.getUniqueId() == nullptr) {
+#if defined(ARDUINOHA_DEBUG)
+        Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
+#endif
+
+        return false;
+    }
+
+    if (_initialized) {
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("ArduinoHA is already initialized"));
+#endif
+
+        return false;
+    }
+
+    _username = username;
+    _password = password;
+    _initialized = true;
+
+    _mqtt->setServer(hostname, serverPort);
+    _mqtt->setCallback(onMessageReceived);
+
+    return true;
+}
+
+bool HAMqtt::begin(
+    const char* hostname,
+    const char* username,
+    const char* password
+)
+{
+    return begin(hostname, HAMQTT_DEFAULT_PORT, username, password);
+}
+
+bool HAMqtt::disconnect(bool sendLastWill)
+{
+    if (!_initialized) {
+        return false;
+    }
+
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("Closing connection with MQTT broker"));
+#endif
+
+    if (sendLastWill &&
+            _lastWillTopic != nullptr &&
+            _lastWillMessage != nullptr) {
+        publish(_lastWillTopic, _lastWillMessage, _lastWillRetain);
+    }
+
+    _initialized = false;
+    _lastConnectionAttemptAt = 0;
+    _mqtt->disconnect();
+
+    return true;
 }
 
 void HAMqtt::loop()
 {
-    if (!_initialized) {
-        return;
-    }
-
-    if (!_mqtt->loop()) {
+    if (_initialized && !_mqtt->loop()) {
         connectToServer();
     }
 }
@@ -222,27 +283,42 @@ void HAMqtt::connectToServer()
     Serial.println();
 #endif
 
-    if (_username == nullptr || _password == nullptr) {
-        _mqtt->connect(_device.getUniqueId());
-    } else {
-        _mqtt->connect(_device.getUniqueId(), _username, _password);
-    }
+    _mqtt->connect(
+        _device.getUniqueId(),
+        _username,
+        _password,
+        _lastWillTopic,
+        0,
+        _lastWillRetain,
+        _lastWillMessage,
+        true
+    );
 
     if (isConnected()) {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Connected to the broker"));
 #endif
 
-        onConnected();
+        onConnectedLogic();
     } else {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Failed to connect to the broker"));
+
+        if (_connectionFailedCallback) {
+            _connectionFailedCallback();
+        }
 #endif
     }
 }
 
-void HAMqtt::onConnected()
+void HAMqtt::onConnectedLogic()
 {
+    if (_connectedCallback) {
+        _connectedCallback();
+    }
+
+    _device.publishAvailability();
+
     for (uint8_t i = 0; i < _devicesTypesNb; i++) {
         _devicesTypes[i]->onMqttConnected();
     }

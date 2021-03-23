@@ -1,13 +1,20 @@
 #include "HATagScanner.h"
+#ifdef ARDUINOHA_TAG_SCANNER
+
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
 
-HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
-    BaseDeviceType(mqtt, "tag", name)
+HATagScanner::HATagScanner(const char* name) :
+    BaseDeviceType("tag", name)
 {
 
+}
+
+HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
+    HATagScanner(name)
+{
+    (void)mqtt;
 }
 
 void HATagScanner::onMqttConnected()
@@ -21,12 +28,11 @@ void HATagScanner::onMqttConnected()
 
 bool HATagScanner::tagScanned(const char* tag)
 {
-    if (tag == nullptr || strlen(tag) == 0) {
+    if (tag == nullptr || strlen(tag) == 0 || strlen(name()) == 0) {
         return false;
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
         componentName(),
         name(),
         DeviceTypeSerializer::EventTopic
@@ -37,7 +43,6 @@ bool HATagScanner::tagScanned(const char* tag)
 
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
-        mqtt(),
         topic,
         componentName(),
         name(),
@@ -49,54 +54,6 @@ bool HATagScanner::tagScanned(const char* tag)
     }
 
     return mqtt()->publish(topic, tag);
-}
-
-void HATagScanner::publishConfig()
-{
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return;
-    }
-
-    const uint16_t& deviceLength = device->calculateSerializedLength();
-    if (deviceLength == 0) {
-        return;
-    }
-
-    char serializedDevice[deviceLength];
-    if (device->serialize(serializedDevice) == 0) {
-        return;
-    }
-
-    const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-        mqtt(),
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-    const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
-
-    if (topicLength == 0 || dataLength == 0) {
-        return;
-    }
-
-    char topic[topicLength];
-    DeviceTypeSerializer::generateTopic(
-        mqtt(),
-        topic,
-        componentName(),
-        name(),
-        DeviceTypeSerializer::ConfigTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return;
-    }
-
-    if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedData(serializedDevice);
-        mqtt()->endPublish();
-    }
 }
 
 uint16_t HATagScanner::calculateSerializedLength(
@@ -114,7 +71,6 @@ uint16_t HATagScanner::calculateSerializedLength(
     // event topic
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
             componentName(),
             name(),
             DeviceTypeSerializer::EventTopic,
@@ -134,31 +90,22 @@ bool HATagScanner::writeSerializedData(const char* serializedDevice) const
         return false;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson(mqtt());
+    DeviceTypeSerializer::mqttWriteBeginningJson();
 
     // topic
     {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            mqtt(),
-            componentName(),
-            name(),
-            DeviceTypeSerializer::EventTopic
-        );
-        char topic[topicSize];
-        DeviceTypeSerializer::generateTopic(
-            mqtt(),
-            topic,
-            componentName(),
-            name(),
-            DeviceTypeSerializer::EventTopic
-        );
-
         static const char Prefix[] PROGMEM = {"\"t\":\""};
-        DeviceTypeSerializer::mqttWriteConstCharField(mqtt(), Prefix, topic);
+        DeviceTypeSerializer::mqttWriteTopicField(
+            this,
+            Prefix,
+            DeviceTypeSerializer::EventTopic
+        );
     }
 
-    DeviceTypeSerializer::mqttWriteDeviceField(mqtt(), serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson(mqtt());
+    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
 }
+
+#endif

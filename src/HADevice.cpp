@@ -1,13 +1,19 @@
 #include <Arduino.h>
 
+#include "ArduinoHADefines.h"
 #include "HADevice.h"
 #include "HAUtils.h"
+#include "HAMqtt.h"
+#include "device-types/DeviceTypeSerializer.h"
 
 #define HADEVICE_INIT \
     _manufacturer(nullptr), \
     _model(nullptr), \
     _name(nullptr), \
-    _softwareVersion(nullptr)
+    _softwareVersion(nullptr), \
+    _sharedAvailability(false), \
+    _availabilityTopic(nullptr), \
+    _available(true) // device will be available by default
 
 HADevice::HADevice() :
     _uniqueId(nullptr),
@@ -30,6 +36,58 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
 
 }
 
+void HADevice::setAvailability(bool online)
+{
+    _available = online;
+    publishAvailability();
+}
+
+bool HADevice::enableSharedAvailability()
+{
+    if (_sharedAvailability) {
+        return false;
+    }
+
+#if defined(ARDUINOHA_DEBUG)
+    Serial.println(F("Enabling shared availability in the device"));
+#endif
+
+    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
+        nullptr,
+        nullptr,
+        DeviceTypeSerializer::AvailabilityTopic
+    );
+    if (topicSize == 0) {
+        return false;
+    }
+
+    _availabilityTopic = (char*)malloc(topicSize);
+    _sharedAvailability = true;
+
+    DeviceTypeSerializer::generateTopic(
+        _availabilityTopic,
+        nullptr,
+        nullptr,
+        DeviceTypeSerializer::AvailabilityTopic
+    );
+    return true;
+}
+
+bool HADevice::enableLastWill()
+{
+    HAMqtt* mqtt = HAMqtt::instance();
+    if (mqtt == nullptr || _availabilityTopic == nullptr) {
+        return false;
+    }
+
+    mqtt->setLastWill(
+        _availabilityTopic,
+        DeviceTypeSerializer::Offline,
+        false
+    );
+    return true;
+}
+
 bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
 {
     if (_uniqueId != nullptr) {
@@ -38,6 +96,28 @@ bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
 
     _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
     return true;
+}
+
+void HADevice::publishAvailability()
+{
+    if (!_sharedAvailability) {
+        return;
+    }
+
+    HAMqtt* mqtt = HAMqtt::instance();
+    if (mqtt == nullptr) {
+        return;
+    }
+
+    mqtt->publish(
+        _availabilityTopic,
+        (
+            _available ?
+            DeviceTypeSerializer::Online :
+            DeviceTypeSerializer::Offline
+        ),
+        true
+    );
 }
 
 uint16_t HADevice::calculateSerializedLength() const

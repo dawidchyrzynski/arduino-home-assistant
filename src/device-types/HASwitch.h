@@ -3,7 +3,9 @@
 
 #include "BaseDeviceType.h"
 
-#define HASWITCH_CALLBACK void (*callback)(bool, HASwitch*)
+#ifdef ARDUINOHA_SWITCH
+
+#define HASWITCH_CALLBACK(name) void (*name)(bool, HASwitch*)
 
 class HASwitch : public BaseDeviceType
 {
@@ -17,9 +19,13 @@ public:
      */
     HASwitch(
         const char* name,
+        bool initialState
+    );
+    HASwitch(
+        const char* name,
         bool initialState,
         HAMqtt& mqtt
-    );
+    ); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.
@@ -48,9 +54,10 @@ public:
      * the MQTT message won't be published.
      *
      * @param state New state of the switch.
+     * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setState(bool state);
+    bool setState(bool state, bool force = false);
 
     /**
      * Alias for setState(true).
@@ -77,19 +84,36 @@ public:
      *
      * @param callback
      */
-    inline void onStateChanged(HASWITCH_CALLBACK)
+    inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
 
-private:
-    void triggerCallback(bool state);
-    void publishConfig();
-    bool publishState(bool state);
-    void subscribeCommandTopic();
-    uint16_t calculateSerializedLength(const char* serializedDevice) const;
-    bool writeSerializedData(const char* serializedDevice) const;
+    /**
+     * Sets icon of the switch, e.g. `mdi:home`.
+     *
+     * @param icon Material Design Icon name with mdi: prefix.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
 
-    void (*_stateCallback)(bool, HASwitch*);
+    /**
+     * Sets `retain` flag for commands published by Home Assistant.
+     * By default it's set to false.
+     *
+     * @param retain
+     */
+    inline void setRetain(bool retain)
+        { _retain = retain; }
+
+private:
+    bool publishState(bool state);
+    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
+    bool writeSerializedData(const char* serializedDevice) const override;
+
+    HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
+    const char* _icon;
+    bool _retain;
 };
 
+#endif
 #endif

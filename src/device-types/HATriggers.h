@@ -3,6 +3,8 @@
 
 #include "BaseDeviceType.h"
 
+#ifdef ARDUINOHA_TRIGGERS
+
 struct HATrigger {
     const char* type;
     const char* subtype;
@@ -11,7 +13,8 @@ struct HATrigger {
 class HATriggers : public BaseDeviceType
 {
 public:
-    HATriggers(HAMqtt& mqtt);
+    HATriggers();
+    HATriggers(HAMqtt& mqtt); // legacy constructor
     virtual ~HATriggers();
 
     virtual void onMqttConnected() override;
@@ -19,12 +22,22 @@ public:
     /**
      * Triggers dont't support availability. Nothing to do here.
      */
-    virtual void setAvailability(bool online) override { }
+    virtual void setAvailability(bool online) override { (void)online; }
 
     bool add(const char* type, const char* subtype);
     bool trigger(const char* type, const char* subtype);
 
 protected:
+    void publishConfig() override;
+
+    uint16_t calculateSerializedLength(
+        const char* serializedDevice
+    ) const override { (void)serializedDevice; return 0; }
+
+    bool writeSerializedData(
+        const char* serializedDevice
+    ) const override { (void)serializedDevice; return false; }
+
     uint16_t calculateTopicLength(
         const char* component,
         const HATrigger *trigger,
@@ -40,8 +53,6 @@ protected:
     ) const;
 
 private:
-    void publishConfig();
-
     uint16_t calculateSerializedLength(
         const HATrigger* trigger,
         const char* serializedDevice
@@ -56,4 +67,5 @@ private:
     uint8_t _triggersNb;
 };
 
+#endif
 #endif
