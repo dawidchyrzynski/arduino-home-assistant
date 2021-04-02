@@ -20,6 +20,7 @@ void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _netClient(netClient),
     _device(device),
+    _messageCallback(nullptr),
     _connectedCallback(nullptr),
     _connectionFailedCallback(nullptr),
     _initialized(false),
@@ -262,6 +263,10 @@ void HAMqtt::processMessage(char* topic, uint8_t* payload, uint16_t length)
     Serial.print(length);
     Serial.println();
 #endif
+
+    if (_messageCallback) {
+        _messageCallback(topic, payload, length);
+    }
 
     for (uint8_t i = 0; i < _devicesTypesNb; i++) {
         _devicesTypes[i]->onMqttMessage(topic, payload, length);

@@ -5,6 +5,7 @@
 #include <IPAddress.h>
 
 #define HAMQTT_CALLBACK(name) void (*name)()
+#define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
 #define HAMQTT_DEFAULT_PORT 1883
 
 class PubSubClient;
@@ -40,6 +41,14 @@ public:
      */
     inline HADevice const* getDevice() const
         { return &_device; }
+
+    /**
+     * Given callback will be called for each received message from the broker.
+     *
+     * @param callback
+     */
+    inline void onMessage(HAMQTT_MESSAGE_CALLBACK(callback))
+        { _messageCallback = callback; }
 
     /**
      * Given callback will be called each time the connection with broker is acquired.
@@ -197,6 +206,7 @@ private:
 
     Client& _netClient;
     HADevice& _device;
+    HAMQTT_MESSAGE_CALLBACK(_messageCallback);
     HAMQTT_CALLBACK(_connectedCallback);
     HAMQTT_CALLBACK(_connectionFailedCallback);
     bool _initialized;

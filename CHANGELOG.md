@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+**New features:**
+* Added `onMessage()` method to HAMqtt class
+
+
 ## 1.2.0
 
 **Breaking changes:**
