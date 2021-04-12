@@ -132,7 +132,9 @@ void HATriggers::publishConfig()
         const uint16_t& topicLength = calculateTopicLength(
             componentName(),
             trigger,
-            DeviceTypeSerializer::ConfigTopic
+            DeviceTypeSerializer::ConfigTopic,
+            true,
+            true
         );
         const uint16_t& dataLength = calculateSerializedLength(
             trigger,
@@ -147,7 +149,8 @@ void HATriggers::publishConfig()
             topic,
             componentName(),
             trigger,
-            DeviceTypeSerializer::ConfigTopic
+            DeviceTypeSerializer::ConfigTopic,
+            true
         );
 
         if (strlen(topic) == 0) {
@@ -165,7 +168,8 @@ uint16_t HATriggers::calculateTopicLength(
     const char* component,
     const HATrigger *trigger,
     const char* suffix,
-    bool includeNullTerminator
+    bool includeNullTerminator,
+    bool isDiscoveryTopic
 ) const
 {
     uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // + underscore and slash
@@ -173,7 +177,8 @@ uint16_t HATriggers::calculateTopicLength(
         component,
         nullptr,
         suffix,
-        includeNullTerminator
+        includeNullTerminator,
+        isDiscoveryTopic
     ) + length;
 }
 
@@ -181,7 +186,8 @@ uint16_t HATriggers::generateTopic(
     char* output,
     const char* component,
     const HATrigger *trigger,
-    const char* suffix
+    const char* suffix,
+    bool isDiscoveryTopic
 ) const
 {
     static const char Underscore[] PROGMEM = {"_"};
@@ -196,7 +202,8 @@ uint16_t HATriggers::generateTopic(
         output,
         component,
         objectId,
-        suffix
+        suffix,
+        isDiscoveryTopic
     );
 }
 

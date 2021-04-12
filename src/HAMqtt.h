@@ -26,15 +26,32 @@ public:
      * Sets prefix for Home Assistant discovery.
      * It needs to match prefix set in the HA admin panel.
      * The default prefix is "homeassistant".
+     *
+     * @param prefix
      */
     inline void setDiscoveryPrefix(const char* prefix)
         { _discoveryPrefix = prefix; }
+
+    /**
+     * Sets prefix that will be used for topics different than discovery process.
+     * It may be useful if you want to pass MQTT trafic through bridge.
+     *
+     * @param prefix
+     */
+    inline void setDataPrefix(const char* prefix)
+        { _dataPrefix = prefix; }
 
     /**
      * Returns discovery prefix.
      */
     inline const char* getDiscoveryPrefix() const
         { return _discoveryPrefix; }
+
+    /**
+     * Returns data prefix.
+     */
+    inline const char* getDataPrefix() const
+        { return _dataPrefix; }
 
     /**
      * Returns instance of the device assigned to the HAMqtt class.
@@ -211,6 +228,7 @@ private:
     HAMQTT_CALLBACK(_connectionFailedCallback);
     bool _initialized;
     const char* _discoveryPrefix;
+    const char* _dataPrefix;
     PubSubClient* _mqtt;
     const char* _username;
     const char* _password;

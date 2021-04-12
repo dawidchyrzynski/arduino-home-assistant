@@ -25,6 +25,7 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _connectionFailedCallback(nullptr),
     _initialized(false),
     _discoveryPrefix(DefaultDiscoveryPrefix),
+    _dataPrefix(nullptr),
     _mqtt(new PubSubClient(netClient)),
     _username(nullptr),
     _password(nullptr),

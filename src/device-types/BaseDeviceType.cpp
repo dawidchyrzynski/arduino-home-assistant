@@ -61,7 +61,9 @@ void BaseDeviceType::publishConfig()
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
         name(),
-        DeviceTypeSerializer::ConfigTopic
+        DeviceTypeSerializer::ConfigTopic,
+        true,
+        true
     );
     const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
 
@@ -74,7 +76,8 @@ void BaseDeviceType::publishConfig()
         topic,
         componentName(),
         name(),
-        DeviceTypeSerializer::ConfigTopic
+        DeviceTypeSerializer::ConfigTopic,
+        true
     );
 
     if (strlen(topic) == 0) {
