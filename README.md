@@ -27,7 +27,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Availability feature](examples/availability)
 * [Advanced availability (MQTT LWT)](examples/advanced-availability/advanced-availability.ino)
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
-* [MQTT events](examples/mqtt-events/mqtt-events.ino)
+* [MQTT advanced](examples/mqtt-advanced/mqtt-advanced.ino)
 
 ## Tested boards
 
