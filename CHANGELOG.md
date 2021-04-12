@@ -5,12 +5,12 @@
 **New features:**
 * Added `onMessage()` method to HAMqtt class
 * Added support for HA Covers
-* Added support for setting different prefix for non-discovery topics (see [examples/mqtt-advanced/mqtt-advanced.ino](Advanced MQTT example))
+* Added support for setting different prefix for non-discovery topics (see [Advanced MQTT example](examples/mqtt-advanced/mqtt-advanced.ino))
 
 ## 1.2.0
 
 **Breaking changes:**
-* Refactored HASensor implementation. Please take a look at updated example in `examples/sensor/sensor.ino`
+* Refactored HASensor implementation. Please take a look at [updated example](examples/sensor/sensor.ino)
 
 **New features:**
 * Added support for HVAC
@@ -22,7 +22,7 @@
 * Added support for connecting to the MQTT broker using hostname
 * Added `onConnected()` method in the HAMqtt
 * Added `onConnectionFailed()` method in the HAMqtt
-* Added support for MQTT LWT (see [examples/advanced-availability/advanced-availability.ino](Advanced Availability example))
+* Added support for MQTT LWT (see [Advanced Availability example](examples/advanced-availability/advanced-availability.ino))
 
 **Updates:**
 * Optimized codebase and logic in all devices types
