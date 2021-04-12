@@ -33,19 +33,19 @@ public:
         { _discoveryPrefix = prefix; }
 
     /**
-     * Sets prefix that will be used for topics different than discovery process.
+     * Returns discovery prefix.
+     */
+    inline const char* getDiscoveryPrefix() const
+        { return _discoveryPrefix; }
+
+    /**
+     * Sets prefix that will be used for topics different than discovery.
      * It may be useful if you want to pass MQTT trafic through bridge.
      *
      * @param prefix
      */
     inline void setDataPrefix(const char* prefix)
         { _dataPrefix = prefix; }
-
-    /**
-     * Returns discovery prefix.
-     */
-    inline const char* getDiscoveryPrefix() const
-        { return _discoveryPrefix; }
 
     /**
      * Returns data prefix.

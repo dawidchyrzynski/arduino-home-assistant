@@ -29,7 +29,7 @@ public:
      * @param objectId
      * @param suffix
      * @param includeNullTerminator
-     * @param isDiscoveryTopic This field determines which prefix will be used for topic.
+     * @param isDiscoveryTopic Determines which prefix will be used for topic.
      */
     static uint16_t calculateTopicLength(
         const char* component,
@@ -49,7 +49,7 @@ public:
      * @param objectId
      * @param suffix
      * @param includeNullTerminator
-     * @param isDiscoveryTopic This field determines which prefix will be used for topic.
+     * @param isDiscoveryTopic Determines which prefix will be used for topic.
      */
     static uint16_t generateTopic(
         char* output,
