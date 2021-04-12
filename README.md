@@ -9,11 +9,14 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 * MQTT discovery (device is added to the Home Assistant panel automatically)
 * MQTT Last Will and Testament
+* Support for custom MQTT messages (publishing and subscribing)
 * Auto reconnect with MQTT broker
+* Reporting availability (online/offline states) of a device
 
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
+* [Cover](examples/cover/cover.ino)
 * [Fan](examples/fan/fan.ino)
 * [LED switch](examples/led-switch/led-switch.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
