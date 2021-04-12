@@ -14,6 +14,8 @@ void onMqttMessage(const char* topic, const uint8_t* payload, uint16_t length) {
     Serial.println(topic);
     Serial.print("Data: ");
     Serial.println((const char*)payload);
+
+    mqtt.publish("myPublishTopic", "hello");
 }
 
 void onMqttConnected() {
