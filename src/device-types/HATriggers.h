@@ -42,14 +42,16 @@ protected:
         const char* component,
         const HATrigger *trigger,
         const char* suffix,
-        bool includeNullTerminator = true
+        bool includeNullTerminator = true,
+        bool isDiscoveryTopic = false
     ) const;
 
     uint16_t generateTopic(
         char* output,
         const char* component,
         const HATrigger *trigger,
-        const char* suffix
+        const char* suffix,
+        bool isDiscoveryTopic = false
     ) const;
 
 private:

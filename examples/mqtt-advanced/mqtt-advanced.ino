@@ -36,6 +36,13 @@ void setup() {
     mqtt.onMessage(onMqttMessage);
     mqtt.onConnected(onMqttConnected);
     mqtt.onConnectionFailed(onMqttConnectionFailed);
+
+    // If you use custom discovery prefix you can change it as following:
+    // mqtt.setDiscoveryPrefix("customPrefix");
+
+    // If you want to change prefix only for non-discovery prefix:
+    // mqtt.setDataPrefix("data");
+
     mqtt.begin(BROKER_ADDR);
 }
 

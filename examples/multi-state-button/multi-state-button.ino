@@ -22,8 +22,6 @@ void setup() {
     // you don't need to verify return status
     Ethernet.begin(mac);
 
-    Serial.println(Ethernet.localIP());
-
     // set device's details (optional)
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");

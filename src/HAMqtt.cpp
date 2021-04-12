@@ -25,6 +25,7 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _connectionFailedCallback(nullptr),
     _initialized(false),
     _discoveryPrefix(DefaultDiscoveryPrefix),
+    _dataPrefix(nullptr),
     _mqtt(new PubSubClient(netClient)),
     _username(nullptr),
     _password(nullptr),
@@ -196,9 +197,9 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
     }
 
 #if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Publishing message with topic: "));
+    Serial.print(F("Publishing: "));
     Serial.print(topic);
-    Serial.print(F(", payload length: "));
+    Serial.print(F(", len: "));
     Serial.print(strlen(payload));
     Serial.println();
 #endif
@@ -215,9 +216,9 @@ bool HAMqtt::beginPublish(
 )
 {
 #if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Publishing message with topic: "));
+    Serial.print(F("Publishing: "));
     Serial.print(topic);
-    Serial.print(F(", payload length: "));
+    Serial.print(F(", len: "));
     Serial.print(payloadLength);
     Serial.println();
 #endif

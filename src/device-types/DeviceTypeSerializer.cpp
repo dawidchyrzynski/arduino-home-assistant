@@ -19,14 +19,27 @@ const char* DeviceTypeSerializer::Offline = "offline";
 const char* DeviceTypeSerializer::StateOn = "ON";
 const char* DeviceTypeSerializer::StateOff = "OFF";
 
+const char* DeviceTypeSerializer::getTopicPrefix(bool isDiscoveryTopic)
+{
+    if (!isDiscoveryTopic) {
+        const char* dataPrefix = HAMqtt::instance()->getDataPrefix();
+        if (dataPrefix != nullptr) {
+            return dataPrefix;
+        }
+    }
+
+    return HAMqtt::instance()->getDiscoveryPrefix();
+}
+
 uint16_t DeviceTypeSerializer::calculateTopicLength(
     const char* component,
     const char* objectId,
     const char* suffix,
-    bool includeNullTerminator
+    bool includeNullTerminator,
+    bool isDiscoveryTopic
 )
 {
-    const char* prefix = HAMqtt::instance()->getDiscoveryPrefix();
+    const char* prefix = getTopicPrefix(isDiscoveryTopic);
     if (prefix == nullptr) {
         return 0;
     }
@@ -58,10 +71,11 @@ uint16_t DeviceTypeSerializer::generateTopic(
     char* output,
     const char* component,
     const char* objectId,
-    const char* suffix
+    const char* suffix,
+    bool isDiscoveryTopic
 )
 {
-    const char* prefix = HAMqtt::instance()->getDiscoveryPrefix();
+    const char* prefix = getTopicPrefix(isDiscoveryTopic);
     if (prefix == nullptr) {
         return 0;
     }
