@@ -172,7 +172,7 @@ uint16_t HATriggers::calculateTopicLength(
     bool isDiscoveryTopic
 ) const
 {
-    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // + underscore and slash
+    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // underscore and slash
     return DeviceTypeSerializer::calculateTopicLength(
         component,
         nullptr,
@@ -191,7 +191,7 @@ uint16_t HATriggers::generateTopic(
 ) const
 {
     static const char Underscore[] PROGMEM = {"_"};
-    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // slash + null terminator
+    uint8_t length = strlen(trigger->type) + strlen(trigger->subtype) + 2; // underscore + null terminator
     char objectId[length];
 
     strcpy(objectId, trigger->subtype);
