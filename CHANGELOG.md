@@ -4,7 +4,7 @@
 
 **New features:**
 * Added `onMessage()` method to HAMqtt class
-
+* Added support for HA Covers
 
 ## 1.2.0
 

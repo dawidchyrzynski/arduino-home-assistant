@@ -44,6 +44,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 ## Supported HA types
 
 * Binary sensors
+* Covers
 * Fans
 * Device triggers
 * Switches
@@ -57,7 +58,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Documentation of the library
 * Unit tests
 * Reduce flash memory usage
-* Add support for HA covers
 * Add support for HA lights
 
 ## Unsupported features
