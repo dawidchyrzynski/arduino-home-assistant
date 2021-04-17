@@ -8,6 +8,7 @@
 HASwitch::HASwitch(const char* uniqueId, bool initialState) :
     BaseDeviceType("switch", uniqueId),
     _stateCallback(nullptr),
+    _beforeStateCallback(nullptr),
     _currentState(initialState),
     _icon(nullptr),
     _retain(false)
@@ -64,11 +65,15 @@ bool HASwitch::setState(bool state, bool force)
         return true;
     }
 
+    if (_beforeStateCallback) {
+        _beforeStateCallback(state, this);
+    }
+
     if (publishState(state)) {
         _currentState = state;
 
         if (_stateCallback) {
-            _stateCallback(state, this);
+            _stateCallback(_currentState, this);
         }
 
         return true;

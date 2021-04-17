@@ -8,6 +8,7 @@
 * Added support for setting different prefix for non-discovery topics (see [Advanced MQTT example](examples/mqtt-advanced/mqtt-advanced.ino))
 * Added `setName` method to HASensor
 * Added `setName` method to HASwitch
+* Added `onBeforeStateChanged` callback to HASwitch
 
 **Updates:**
 * Removed legacy properties from HAFan (Home Assistant 2021.4.4). Deprecated methods will be removed after a quarter (2021.7)
