@@ -226,10 +226,10 @@ void DeviceTypeSerializer::mqttWriteNameField(const char* name)
 }
 
 void DeviceTypeSerializer::mqttWriteUniqueIdField(
-    const char* name
+    const char* uniqueId
 )
 {
-    if (name == nullptr) {
+    if (uniqueId == nullptr) {
         return;
     }
 
@@ -240,13 +240,13 @@ void DeviceTypeSerializer::mqttWriteUniqueIdField(
 
     static const char Prefix[] PROGMEM = {",\"uniq_id\":\""};
 
-    uint8_t uniqueIdLength = strlen(name) + strlen(device->getUniqueId()) + 2; // underscore and null temrinator
-    char uniqueId[uniqueIdLength];
-    strcpy(uniqueId, name);
-    strcat_P(uniqueId, CharUnderscore);
-    strcat(uniqueId, device->getUniqueId());
+    uint8_t uniqueIdLength = strlen(uniqueId) + strlen(device->getUniqueId()) + 2; // underscore + null temrinator
+    char finalUniqueId[uniqueIdLength];
+    strcpy(finalUniqueId, uniqueId);
+    strcat_P(finalUniqueId, CharUnderscore);
+    strcat(finalUniqueId, device->getUniqueId());
 
-    mqttWriteConstCharField(Prefix, uniqueId);
+    mqttWriteConstCharField(Prefix, finalUniqueId);
 }
 
 void DeviceTypeSerializer::mqttWriteAvailabilityField(

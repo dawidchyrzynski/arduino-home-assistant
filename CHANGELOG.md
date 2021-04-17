@@ -11,7 +11,7 @@
 
 **Updates:**
 * Removed legacy properties from HAFan (Home Assistant 2021.4.4). Deprecated methods will be removed after a quarter (2021.7)
-* Separate `uniqueID` field from `name` in all devices types
+* Separated `uniqueID` field from `name` in all devices types
 
 ## 1.2.0
 

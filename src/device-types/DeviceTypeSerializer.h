@@ -87,7 +87,7 @@ public:
         const char* name
     );
     static void mqttWriteUniqueIdField(
-        const char* name
+        const char* uniqueId
     );
     static void mqttWriteAvailabilityField(
         const BaseDeviceType* const dt
