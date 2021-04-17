@@ -83,7 +83,7 @@ public:
      *
      * @param speeds
      */
-    DEPRECATED(inline void setSpeeds(uint8_t speeds))
+    AHA_DEPRECATED(inline void setSpeeds(uint8_t speeds))
         { (void)speeds; }
 
     /**
@@ -108,7 +108,7 @@ public:
     inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED(callback))
         { _speedCallback = callback; }
 
-    DEPRECATED(inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(callback)))
+    AHA_DEPRECATED(inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(callback)))
         { (void)callback; }
 
     /**

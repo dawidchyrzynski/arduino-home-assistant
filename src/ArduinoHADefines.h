@@ -14,10 +14,10 @@
 #define ARDUINOHA_TRIGGERS
 
 #ifdef __GNUC__
-#define DEPRECATED(func) func __attribute__ ((deprecated))
+#define AHA_DEPRECATED(func) func __attribute__ ((deprecated))
 #elif defined(_MSC_VER)
-#define DEPRECATED(func) __declspec(deprecated) func
+#define AHA_DEPRECATED(func) __declspec(deprecated) func
 #else
 #warning "Arduino Home Assistant: You may miss deprecation warnings."
-#define DEPRECATED(func) func
+#define AHA_DEPRECATED(func) func
 #endif
