@@ -10,6 +10,10 @@ HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
 void onMqttMessage(const char* topic, const uint8_t* payload, uint16_t length) {
+    // This callback is called when message from MQTT broker is received.
+    // Please note that you should always verify if the message's topic is the one you expect.
+    // For example: if (memcmp(topic, "myCustomTopic") == 0) { ... }
+
     Serial.print("New message on topic: ");
     Serial.println(topic);
     Serial.print("Data: ");
