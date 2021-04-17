@@ -98,10 +98,6 @@ bool HAFan::setState(bool state, bool force)
 
 bool HAFan::setSpeed(uint16_t speed)
 {
-    if (speed == UnknownSpeed) {
-        return false;
-    }
-
     if (publishSpeed(speed)) {
         _currentSpeed = speed;
 
@@ -134,7 +130,7 @@ bool HAFan::publishState(bool state)
 
 bool HAFan::publishSpeed(uint16_t speed)
 {
-    if (strlen(name()) == 0 || speed == UnknownSpeed) {
+    if (strlen(name()) == 0) {
         return false;
     }
 
