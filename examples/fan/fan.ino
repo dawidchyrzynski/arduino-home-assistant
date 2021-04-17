@@ -11,6 +11,7 @@ HAMqtt mqtt(client, device);
 
 // HAFan::SpeedsFeature enables support for setting different speeds of fan.
 // You can skip this argument if you don't need speed management.
+// "ventilation" is unique ID of the fan. You should define your own ID.
 HAFan fan("ventilation", HAFan::SpeedsFeature);
 
 void onStateChanged(bool state) {
