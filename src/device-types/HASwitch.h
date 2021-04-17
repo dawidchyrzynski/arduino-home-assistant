@@ -98,15 +98,30 @@ public:
     inline void setRetain(bool retain)
         { _retain = retain; }
 
+    /**
+     * Low latency mode forces to trigger state changed callback before publishing
+     * state update to Home Assistant. In this way you can perform operation
+     * without waiting for response from MQTT broker.
+     *
+     * Please note that if publishing a state fails the previous state will be reverted.
+     * So you may get callback calls twice.
+     *
+     * @param enabled
+     */
+    inline void setLowLatencyMode(bool enabled)
+        { _lowLatencyMode = enabled; }
+
 private:
     bool publishState(bool state);
     uint16_t calculateSerializedLength(const char* serializedDevice) const override;
     bool writeSerializedData(const char* serializedDevice) const override;
+    void updateState(bool newState);
 
     HASWITCH_CALLBACK(_stateCallback);
     bool _currentState;
     const char* _icon;
     bool _retain;
+    bool _lowLatencyMode;
 };
 
 #endif
