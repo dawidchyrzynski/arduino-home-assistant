@@ -11,6 +11,12 @@ HADevice device;
 HAMqtt mqtt(client, device);
 HASwitch led("led", false); // "led" is unique ID of the switch. You should define your own ID.
 
+void onBeforeSwitchStateChanged(bool state, HASwitch* s)
+{
+    // this callback will be called before publishing new state to HA
+    // in some cases there may be delay before onStateChanged is called due to network latency
+}
+
 void onSwitchStateChanged(bool state, HASwitch* s)
 {
     digitalWrite(LED_PIN, (state ? HIGH : LOW));
@@ -42,6 +48,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // handle switch state
+    led.onBeforeStateChanged(onBeforeSwitchStateChanged); // optional
     led.onStateChanged(onSwitchStateChanged);
     led.setName("My LED"); // optional
 

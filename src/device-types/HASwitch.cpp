@@ -8,10 +8,10 @@
 HASwitch::HASwitch(const char* uniqueId, bool initialState) :
     BaseDeviceType("switch", uniqueId),
     _stateCallback(nullptr),
+    _beforeStateCallback(nullptr),
     _currentState(initialState),
     _icon(nullptr),
-    _retain(false),
-    _lowLatencyMode(false)
+    _retain(false)
 {
 
 }
@@ -65,21 +65,18 @@ bool HASwitch::setState(bool state, bool force)
         return true;
     }
 
-    bool previousState = _currentState;
-
-    if (_lowLatencyMode) {
-        updateState(state);
+    if (_beforeStateCallback) {
+        _beforeStateCallback(state, this);
     }
 
     if (publishState(state)) {
-        if (!_lowLatencyMode) {
-            updateState(state);
+        _currentState = state;
+
+        if (_stateCallback) {
+            _stateCallback(_currentState, this);
         }
 
         return true;
-    } else if (_lowLatencyMode) {
-        // failed to synchronize state with HA
-        updateState(previousState);
     }
 
     return false;
@@ -209,15 +206,6 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
-}
-
-void HASwitch::updateState(bool newState)
-{
-    _currentState = newState;
-
-    if (_stateCallback) {
-        _stateCallback(_currentState, this);
-    }
 }
 
 #endif

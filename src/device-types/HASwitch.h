@@ -73,13 +73,22 @@ public:
         { return _currentState; }
 
     /**
-     * Registers callback that will be called each time the value of the switch changes.
+     * Registers callback that will be called each time the state of the switch changes.
      * Please note that it's not possible to register multiple callbacks for the same switch.
      *
      * @param callback
      */
     inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
+
+    /**
+     * Registers callback that will be called before state of the switch changes.
+     * The state passed to callback is a new state that is going to be set.
+     *
+     * @param callback
+     */
+    inline void onBeforeStateChanged(HASWITCH_CALLBACK(callback))
+        { _beforeStateCallback = callback; }
 
     /**
      * Sets icon of the switch, e.g. `mdi:home`.
@@ -98,30 +107,16 @@ public:
     inline void setRetain(bool retain)
         { _retain = retain; }
 
-    /**
-     * Low latency mode forces to trigger state changed callback before publishing
-     * state update to Home Assistant. In this way you can perform operation
-     * without waiting for response from MQTT broker.
-     *
-     * Please note that if publishing a state fails the previous state will be reverted.
-     * So you may get callback calls twice.
-     *
-     * @param enabled
-     */
-    inline void setLowLatencyMode(bool enabled)
-        { _lowLatencyMode = enabled; }
-
 private:
     bool publishState(bool state);
     uint16_t calculateSerializedLength(const char* serializedDevice) const override;
     bool writeSerializedData(const char* serializedDevice) const override;
-    void updateState(bool newState);
 
     HASWITCH_CALLBACK(_stateCallback);
+    HASWITCH_CALLBACK(_beforeStateCallback);
     bool _currentState;
     const char* _icon;
     bool _retain;
-    bool _lowLatencyMode;
 };
 
 #endif
