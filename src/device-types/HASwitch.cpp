@@ -107,7 +107,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    // size += DeviceTypeSerializer::calculateNameFieldSize(name()); // @todo
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
@@ -194,7 +194,7 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
     }
 
     DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    // DeviceTypeSerializer::mqttWriteNameField(name()); // @todo
+    DeviceTypeSerializer::mqttWriteNameField(getName());
     DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);

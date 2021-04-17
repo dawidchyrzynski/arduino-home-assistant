@@ -44,7 +44,6 @@ HAHVAC::HAHVAC(const char* uniqueId, uint8_t features) :
     _tempStep(1),
     _targetTempCallback(nullptr),
     _targetTemperature(__DBL_MAX__),
-    _label(nullptr),
     _modes(
         OffMode |
         AutoMode |
@@ -509,10 +508,10 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateNameFieldSize(_label); // @todo
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // current temperature
@@ -1066,11 +1065,11 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(_label); // @todo
+    DeviceTypeSerializer::mqttWriteNameField(getName());
     DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;

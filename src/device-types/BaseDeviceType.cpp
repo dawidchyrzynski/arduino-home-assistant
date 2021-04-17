@@ -9,7 +9,8 @@ BaseDeviceType::BaseDeviceType(
 ) :
     _componentName(componentName),
     _uniqueId(uniqueId),
-    _availability(AvailabilityDefault)
+    _availability(AvailabilityDefault),
+    _name(nullptr)
 {
     mqtt()->addDeviceType(this);
 }

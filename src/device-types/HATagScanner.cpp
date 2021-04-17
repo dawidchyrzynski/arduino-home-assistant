@@ -67,7 +67,6 @@ uint16_t HATagScanner::calculateSerializedLength(
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-    
 
     // event topic
     {

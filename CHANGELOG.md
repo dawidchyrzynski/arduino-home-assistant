@@ -6,6 +6,8 @@
 * Added `onMessage()` method to HAMqtt class
 * Added support for HA Covers
 * Added support for setting different prefix for non-discovery topics (see [Advanced MQTT example](examples/mqtt-advanced/mqtt-advanced.ino))
+* Added `setName` method to HASensor
+* Added `setName` method to HASwitch
 
 **Updates:**
 * Removed legacy properties from HAFan (Home Assistant 2021.4.4). Deprecated methods will be removed after a quarter (2021.7)

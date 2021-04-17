@@ -14,7 +14,6 @@ HAFan::HAFan(const char* uniqueId, uint8_t features) :
     _stateCallback(nullptr),
     _currentSpeed(0),
     _speedCallback(nullptr),
-    _label(nullptr),
     _retain(false),
     _speedRangeMin(1),
     _speedRangeMax(100)
@@ -154,10 +153,10 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
     size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateNameFieldSize(_label); // @todo
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // command topic
@@ -331,11 +330,11 @@ bool HAFan::writeSerializedData(const char* serializedDevice) const
         }
     }
 
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(_label); // @todo
+    DeviceTypeSerializer::mqttWriteNameField(getName());
     DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;

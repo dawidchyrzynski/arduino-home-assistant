@@ -29,6 +29,12 @@ public:
     inline bool isOnline() const
         { return (_availability == AvailabilityOnline); }
 
+    inline void setName(const char* name)
+        { _name = name; }
+
+    inline const char* getName() const
+        { return _name; }
+
     virtual void setAvailability(bool online);
 
 protected:
@@ -58,6 +64,7 @@ private:
     };
 
     Availability _availability;
+    const char* _name;
 
     friend class HAMqtt;
 };
