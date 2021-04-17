@@ -11,16 +11,16 @@ public:
     /**
      * Initializes binary sensor.
      *
-     * @param name Name of the sensor. Recommended characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the sensor. Recommended characters: [a-z0-9\-_]
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
     HABinarySensor(
-        const char* name,
+        const char* uniqueId,
         bool initialState
     );
     HABinarySensor(
-        const char* name,
+        const char* uniqueId,
         bool initialState,
         HAMqtt& mqtt
     ); // legacy constructor
@@ -29,18 +29,18 @@ public:
      * Initializes binary sensor with the specified class.
      * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
      *
-     * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the sensor. Recommendes characters: [a-z0-9\-_]
      * @param deviceClass Name of the class (lower case).
      * @param initialState Initial state of the sensor.
                            It will be published right after "config" message in order to update HA state.
      */
     HABinarySensor(
-        const char* name,
+        const char* uniqueId,
         const char* deviceClass,
         bool initialState
     );
     HABinarySensor(
-        const char* name,
+        const char* uniqueId,
         const char* deviceClass,
         bool initialState,
         HAMqtt& mqtt

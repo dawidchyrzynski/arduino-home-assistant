@@ -112,14 +112,6 @@ public:
         { (void)callback; }
 
     /**
-     * Sets name that wil be displayed in the Home Assistant panel.
-     *
-     * @param name
-     */
-    inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "_name" is already in use
-
-    /**
      * Sets `retain` flag for commands published by Home Assistant.
      * By default it's set to false.
      *
@@ -155,7 +147,6 @@ protected:
     HAFAN_STATE_CALLBACK_BOOL(_stateCallback);
     uint16_t _currentSpeed;
     HAFAN_STATE_CALLBACK_SPEED(_speedCallback);
-    const char* _label;
     bool _retain;
     uint16_t _speedRangeMin;
     uint16_t _speedRangeMax;

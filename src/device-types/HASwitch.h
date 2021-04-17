@@ -13,16 +13,16 @@ public:
     /**
      * Initializes switch.
      *
-     * @param name Name of the switch. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the switch. Recommendes characters: [a-z0-9\-_]
      * @param initialState Initial state of the switch.
                            It will be published right after "config" message in order to update HA state.
      */
     HASwitch(
-        const char* name,
+        const char* uniqueId,
         bool initialState
     );
     HASwitch(
-        const char* name,
+        const char* uniqueId,
         bool initialState,
         HAMqtt& mqtt
     ); // legacy constructor
@@ -41,12 +41,6 @@ public:
         const uint8_t* payload,
         const uint16_t& length
     ) override;
-
-    /**
-     * Returns name of the switch assigned via constructor.
-     */
-    inline const char* getName() const
-        { return _name; }
 
     /**
      * Changes state of the switch and publishes MQTT message.

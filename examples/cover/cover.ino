@@ -8,7 +8,7 @@ byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-HACover cover("my-cover");
+HACover cover("my-cover"); // "my-cover" is unique ID of the cover. You should define your own ID.
 
 void onCoverCommand(HACover::CoverCommand cmd) {
     if (cmd == HACover::CommandOpen) {
@@ -37,10 +37,8 @@ void setup() {
     Ethernet.begin(mac);
 
     cover.onCommand(onCoverCommand);
-    cover.setName("My cover");
-
-    // optionally you can set retain flag
-    // cover.setRetain(true);
+    cover.setName("My cover"); // optional
+    // cover.setRetain(true); // optionally you can set retain flag
 
     mqtt.begin(BROKER_ADDR);
 }

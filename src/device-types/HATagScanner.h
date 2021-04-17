@@ -11,10 +11,10 @@ public:
     /**
      * Initializes tag scanner with the given name.
      *
-     * @param name Name of the scanner. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the scanner. Recommendes characters: [a-z0-9\-_]
      */
-    HATagScanner(const char* name);
-    HATagScanner(const char* name, HAMqtt& mqtt); // legacy constructor
+    HATagScanner(const char* uniqueId);
+    HATagScanner(const char* uniqueId, HAMqtt& mqtt); // legacy constructor
 
     /**
      * Publishes configuration of the sensor to the MQTT.

@@ -259,14 +259,6 @@ public:
         { return _currentMode; }
 
     /**
-     * Sets name that wil be displayed in the Home Assistant panel.
-     *
-     * @param name
-     */
-    inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "_name" is already in use
-
-    /**
      * Sets the list of supported modes. By default the list contains all available modes.
      * You can merge multiple modes as following: `setModes(HAHVAC::OffMode | HAHVAC::CoolMode)`
      *
@@ -334,7 +326,6 @@ private:
     double _tempStep;
     HAHVAC_STATE_CALLBACK_DOUBLE(_targetTempCallback);
     double _targetTemperature;
-    const char* _label;
     uint8_t _modes;
     HAHVAC_STATE_CALLBACK_MODE(_modeChangedCallback);
     Mode _currentMode;

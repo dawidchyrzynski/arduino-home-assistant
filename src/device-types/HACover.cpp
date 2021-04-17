@@ -20,7 +20,6 @@ HACover::HACover(const char* uniqueId) :
     _commandCallback(nullptr),
     _currentState(StateUnknown),
     _currentPosition(0),
-    _label(nullptr),
     _retain(false)
 {
 
@@ -34,7 +33,7 @@ HACover::HACover(const char* uniqueId, HAMqtt& mqtt) :
 
 void HACover::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -60,7 +59,7 @@ void HACover::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         char cmd[length + 1];
         memset(cmd, 0, sizeof(cmd));
         memcpy(cmd, payload, length);
@@ -98,7 +97,7 @@ bool HACover::setPosition(int16_t position)
 
 bool HACover::publishState(CoverState state)
 {
-    if (strlen(name()) == 0 || state == StateUnknown) {
+    if (strlen(uniqueId()) == 0 || state == StateUnknown) {
         return false;
     }
 
@@ -137,7 +136,7 @@ bool HACover::publishState(CoverState state)
 
 bool HACover::publishPosition(int16_t position)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -161,17 +160,17 @@ uint16_t HACover::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateNameFieldSize(_label);
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // command topic
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::CommandTopic,
             false
         );
@@ -188,7 +187,7 @@ uint16_t HACover::calculateSerializedLength(const char* serializedDevice) const
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::StateTopic,
             false
         );
@@ -205,7 +204,7 @@ uint16_t HACover::calculateSerializedLength(const char* serializedDevice) const
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             PositionTopic,
             false
         );
@@ -259,11 +258,11 @@ bool HACover::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(_label);
-    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteNameField(getName());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;

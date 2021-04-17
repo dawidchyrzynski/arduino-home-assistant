@@ -9,7 +9,7 @@
 WiFiClient client;
 HADevice device;
 HAMqtt mqtt(client, device);
-HASwitch led("led", false); // you can use custom name in place of "led"
+HASwitch led("led", false); // "led" is unique ID of the switch. You should define your own ID.
 
 void onSwitchStateChanged(bool state, HASwitch* s)
 {
@@ -43,6 +43,7 @@ void setup() {
 
     // handle switch state
     led.onStateChanged(onSwitchStateChanged);
+    led.setName("My LED"); // optional
 
     mqtt.begin(BROKER_ADDR);
 }

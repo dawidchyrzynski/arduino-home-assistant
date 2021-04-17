@@ -64,7 +64,7 @@ public:
         const char* name
     );
     static uint16_t calculateUniqueIdFieldSize(
-        const char* name
+        const char* uniqueId
     );
     static uint16_t calculateAvailabilityFieldSize(
         const BaseDeviceType* const dt
@@ -87,7 +87,7 @@ public:
         const char* name
     );
     static void mqttWriteUniqueIdField(
-        const char* name
+        const char* uniqueId
     );
     static void mqttWriteAvailabilityField(
         const BaseDeviceType* const dt

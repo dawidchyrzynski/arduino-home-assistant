@@ -79,14 +79,6 @@ public:
         { _currentPosition = position; }
 
     /**
-     * Sets name that wil be displayed in the Home Assistant panel.
-     *
-     * @param name
-     */
-    inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "_name" is already in use
-
-    /**
      * Sets `retain` flag for commands published by Home Assistant.
      * By default it's set to false.
      *
@@ -114,7 +106,6 @@ protected:
     HACOVER_CALLBACK(_commandCallback);
     CoverState _currentState;
     int16_t _currentPosition;
-    const char* _label;
     bool _retain;
 };
 
