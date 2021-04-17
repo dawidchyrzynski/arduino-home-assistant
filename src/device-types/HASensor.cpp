@@ -8,8 +8,8 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HASensor::HASensor(const char* name) :
-    BaseDeviceType("sensor", name),
+HASensor::HASensor(const char* uniqueId) :
+    BaseDeviceType("sensor", uniqueId),
     _class(nullptr),
     _units(nullptr),
     _icon(nullptr)
@@ -17,15 +17,15 @@ HASensor::HASensor(const char* name) :
 
 }
 
-HASensor::HASensor(const char* name, HAMqtt& mqtt) :
-    HASensor(name)
+HASensor::HASensor(const char* uniqueId, HAMqtt& mqtt) :
+    HASensor(uniqueId)
 {
     (void)mqtt;
 }
 
 void HASensor::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -78,7 +78,7 @@ bool HASensor::setValue(float value, uint8_t precision)
 
 bool HASensor::publishValue(const char* value)
 {
-    if (strlen(name()) == 0 || value == nullptr) {
+    if (strlen(uniqueId()) == 0 || value == nullptr) {
         return false;
     }
 
@@ -88,7 +88,7 @@ bool HASensor::publishValue(const char* value)
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::StateTopic
     );
     if (topicSize == 0) {
@@ -99,7 +99,7 @@ bool HASensor::publishValue(const char* value)
     DeviceTypeSerializer::generateTopic(
         topic,
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::StateTopic
     );
 
@@ -125,15 +125,15 @@ uint16_t HASensor::calculateSerializedLength(
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateNameFieldSize(name());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
+    //size += DeviceTypeSerializer::calculateNameFieldSize(name()); // @todo
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::StateTopic,
             false
         );
@@ -206,8 +206,8 @@ bool HASensor::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteNameField(name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
+    // DeviceTypeSerializer::mqttWriteNameField(name()); // @todo
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();

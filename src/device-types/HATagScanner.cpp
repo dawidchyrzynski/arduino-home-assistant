@@ -5,21 +5,21 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HATagScanner::HATagScanner(const char* name) :
-    BaseDeviceType("tag", name)
+HATagScanner::HATagScanner(const char* uniqueId) :
+    BaseDeviceType("tag", uniqueId)
 {
 
 }
 
-HATagScanner::HATagScanner(const char* name, HAMqtt& mqtt) :
-    HATagScanner(name)
+HATagScanner::HATagScanner(const char* uniqueId, HAMqtt& mqtt) :
+    HATagScanner(uniqueId)
 {
     (void)mqtt;
 }
 
 void HATagScanner::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -28,13 +28,13 @@ void HATagScanner::onMqttConnected()
 
 bool HATagScanner::tagScanned(const char* tag)
 {
-    if (tag == nullptr || strlen(tag) == 0 || strlen(name()) == 0) {
+    if (tag == nullptr || strlen(tag) == 0 || strlen(uniqueId()) == 0) {
         return false;
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::EventTopic
     );
     if (topicSize == 0) {
@@ -45,7 +45,7 @@ bool HATagScanner::tagScanned(const char* tag)
     DeviceTypeSerializer::generateTopic(
         topic,
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::EventTopic
     );
 
@@ -67,12 +67,13 @@ uint16_t HATagScanner::calculateSerializedLength(
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
+    
 
     // event topic
     {
         const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::EventTopic,
             false
         );

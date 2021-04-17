@@ -11,13 +11,13 @@ public:
     /**
      * Initializes binary sensor.
      *
-     * @param name Name of the sensor. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the sensor. Recommendes characters: [a-z0-9\-_]
      */
     HASensor(
-        const char* name
+        const char* uniqueId
     );
     HASensor(
-        const char* name,
+        const char* uniqueId,
         HAMqtt& mqtt
     ); // legacy constructor
 

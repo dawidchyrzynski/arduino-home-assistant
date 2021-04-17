@@ -118,18 +118,18 @@ uint16_t DeviceTypeSerializer::calculateNameFieldSize(const char* name)
 }
 
 uint16_t DeviceTypeSerializer::calculateUniqueIdFieldSize(
-    const char* name
+    const char* uniqueId
 )
 {
     HADevice const* device = HAMqtt::instance()->getDevice();
-    if (device == nullptr || name == nullptr) {
+    if (device == nullptr || uniqueId == nullptr) {
         return 0;
     }
 
-    // Field format: ,"uniq_id":"[DEVICE ID]_[NAME]"
+    // Field format: ,"uniq_id":"[DEVICE ID]_[UNIQUE ID]"
     return (
         strlen(device->getUniqueId()) +
-        strlen(name) +
+        strlen(uniqueId) +
         14 // 14 - length of the JSON decorators for this field
     );
 }
@@ -150,7 +150,7 @@ uint16_t DeviceTypeSerializer::calculateAvailabilityFieldSize(
 
     const uint16_t& availabilityTopicLength = calculateTopicLength(
         (sharedAvailability ? nullptr : dt->componentName()),
-        (sharedAvailability ? nullptr : dt->name()),
+        (sharedAvailability ? nullptr : dt->uniqueId()),
         AvailabilityTopic,
         false
     );
@@ -265,7 +265,7 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
 
     const uint16_t& topicSize = calculateTopicLength(
         (sharedAvailability ? nullptr : dt->componentName()),
-        (sharedAvailability ? nullptr : dt->name()),
+        (sharedAvailability ? nullptr : dt->uniqueId()),
         AvailabilityTopic
     );
     if (topicSize == 0) {
@@ -276,7 +276,7 @@ void DeviceTypeSerializer::mqttWriteAvailabilityField(
     generateTopic(
         availabilityTopic,
         (sharedAvailability ? nullptr : dt->componentName()),
-        (sharedAvailability ? nullptr : dt->name()),
+        (sharedAvailability ? nullptr : dt->uniqueId()),
         AvailabilityTopic
     );
 
@@ -330,7 +330,7 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
         dt->componentName(),
-        dt->name() ,
+        dt->uniqueId() ,
         topicSuffix
     );
     if (topicSize == 0) {
@@ -341,7 +341,7 @@ bool DeviceTypeSerializer::mqttWriteTopicField(
     DeviceTypeSerializer::generateTopic(
         topic,
         dt->componentName(),
-        dt->name(),
+        dt->uniqueId(),
         topicSuffix
     );
 
@@ -365,7 +365,7 @@ bool DeviceTypeSerializer::mqttPublishMessage(
 
     const uint16_t& topicSize = calculateTopicLength(
         dt->componentName(),
-        dt->name(),
+        dt->uniqueId(),
         topicSuffix
     );
     if (topicSize == 0) {
@@ -376,7 +376,7 @@ bool DeviceTypeSerializer::mqttPublishMessage(
     generateTopic(
         topic,
         dt->componentName(),
-        dt->name(),
+        dt->uniqueId(),
         topicSuffix
     );
 
@@ -398,7 +398,7 @@ bool DeviceTypeSerializer::mqttSubscribeTopic(
 {
     const uint16_t& topicSize = calculateTopicLength(
         dt->componentName(),
-        dt->name(),
+        dt->uniqueId(),
         topicSuffix
     );
     if (topicSize == 0) {
@@ -409,7 +409,7 @@ bool DeviceTypeSerializer::mqttSubscribeTopic(
     generateTopic(
         topic,
         dt->componentName(),
-        dt->name(),
+        dt->uniqueId(),
         topicSuffix
     );
 

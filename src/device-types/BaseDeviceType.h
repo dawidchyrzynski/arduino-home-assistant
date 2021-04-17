@@ -13,12 +13,12 @@ class BaseDeviceType
 public:
     BaseDeviceType(
         const char* componentName,
-        const char* name
+        const char* uniqueId
     );
     virtual ~BaseDeviceType();
 
-    inline const char* name() const
-        { return _name; }
+    inline const char* uniqueId() const
+        { return _uniqueId; }
 
     inline const char* componentName() const
         { return _componentName; }
@@ -48,7 +48,7 @@ protected:
     virtual bool writeSerializedData(const char* serializedDevice) const = 0;
 
     const char* const _componentName;
-    const char* const _name;
+    const char* const _uniqueId;
 
 private:
     enum Availability {

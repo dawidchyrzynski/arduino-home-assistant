@@ -5,10 +5,10 @@
 
 BaseDeviceType::BaseDeviceType(
     const char* componentName,
-    const char* name
+    const char* uniqueId
 ) :
     _componentName(componentName),
-    _name(name),
+    _uniqueId(uniqueId),
     _availability(AvailabilityDefault)
 {
     mqtt()->addDeviceType(this);
@@ -60,7 +60,7 @@ void BaseDeviceType::publishConfig()
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::ConfigTopic,
         true,
         true
@@ -75,7 +75,7 @@ void BaseDeviceType::publishConfig()
     DeviceTypeSerializer::generateTopic(
         topic,
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::ConfigTopic,
         true
     );
@@ -99,15 +99,15 @@ void BaseDeviceType::publishAvailability()
 
     if (_availability == AvailabilityDefault ||
             !mqtt()->isConnected() ||
-            strlen(_name) == 0 ||
-            strlen(_componentName) == 0 ||
+            strlen(uniqueId()) == 0 ||
+            strlen(componentName()) == 0 ||
             device->isSharedAvailabilityEnabled()) {
         return;
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        _componentName,
-        _name,
+        componentName(),
+        uniqueId(),
         DeviceTypeSerializer::AvailabilityTopic
     );
     if (topicSize == 0) {
@@ -117,8 +117,8 @@ void BaseDeviceType::publishAvailability()
     char topic[topicSize];
     DeviceTypeSerializer::generateTopic(
         topic,
-        _componentName,
-        _name,
+        componentName(),
+        uniqueId(),
         DeviceTypeSerializer::AvailabilityTopic
     );
 
@@ -143,18 +143,18 @@ bool BaseDeviceType::isMyTopic(const char* topic, const char* expectedTopic)
         return false;
     }
 
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
     static const char Slash[] PROGMEM = {"/"};
 
-    // name + cmd topic + two slashes + null terminator
-    uint8_t suffixLength = strlen(name()) + strlen(expectedTopic) + 3;
+    // unique ID + cmd topic + two slashes + null terminator
+    uint8_t suffixLength = strlen(uniqueId()) + strlen(expectedTopic) + 3;
     char suffix[suffixLength];
 
     strcpy_P(suffix, Slash);
-    strcat(suffix, name());
+    strcat(suffix, uniqueId());
     strcat_P(suffix, Slash);
     strcat(suffix, expectedTopic);
 
