@@ -1,11 +1,14 @@
 # Changelog
 
-## 1.2.1
+## 1.3.0
 
 **New features:**
 * Added `onMessage()` method to HAMqtt class
 * Added support for HA Covers
 * Added support for setting different prefix for non-discovery topics (see [Advanced MQTT example](examples/mqtt-advanced/mqtt-advanced.ino))
+
+**Updates:**
+* Removed legacy properties from HAFan (Home Assistant 2021.4.4). Deprecated methods will be removed after a quarter (2021.7)
 
 ## 1.2.0
 

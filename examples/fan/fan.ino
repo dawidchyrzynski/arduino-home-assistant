@@ -18,20 +18,14 @@ void onStateChanged(bool state) {
     Serial.println(state);
 }
 
-void onSpeedChanged(HAFan::Speed speed) {
+void onSpeedChanged(uint16_t speed) {
     Serial.print("Speed: ");
-    if (speed == HAFan::OffSpeed) {
-        Serial.print("off");
-    } else if (speed == HAFan::LowSpeed) {
-        Serial.print("low");
-    } else if (speed == HAFan::MediumSpeed) {
-        Serial.print("medium");
-    } else if (speed == HAFan::HighSpeed) {
-        Serial.print("high");
-    }
+    Serial.println(speed);
 }
 
 void setup() {
+    Serial.begin(9600);
+
     // you don't need to verify return status
     Ethernet.begin(mac);
 
@@ -40,10 +34,10 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // configure fan (optional)
-    // default speeds are: Off | Low | Medium | High
-    fan.setSpeeds(HAFan::OffSpeed | HAFan::LowSpeed | HAFan::HighSpeed);
     fan.setName("Bathroom");
     fan.setRetain(true);
+    fan.setSpeedRangeMin(1);
+    fan.setSpeedRangeMax(100);
 
     // handle fan states
     fan.onStateChanged(onStateChanged);

@@ -12,3 +12,12 @@
 #define ARDUINOHA_SWITCH
 #define ARDUINOHA_TAG_SCANNER
 #define ARDUINOHA_TRIGGERS
+
+#ifdef __GNUC__
+#define DEPRECATED(func) func __attribute__ ((deprecated))
+#elif defined(_MSC_VER)
+#define DEPRECATED(func) __declspec(deprecated) func
+#else
+#warning "Arduino Home Assistant: You may miss deprecation warnings."
+#define DEPRECATED(func) func
+#endif
