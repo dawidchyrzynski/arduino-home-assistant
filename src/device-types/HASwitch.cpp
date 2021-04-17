@@ -5,9 +5,10 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HASwitch::HASwitch(const char* name, bool initialState) :
-    BaseDeviceType("switch", name),
+HASwitch::HASwitch(const char* uniqueId, bool initialState) :
+    BaseDeviceType("switch", uniqueId),
     _stateCallback(nullptr),
+    _beforeStateCallback(nullptr),
     _currentState(initialState),
     _icon(nullptr),
     _retain(false)
@@ -16,18 +17,18 @@ HASwitch::HASwitch(const char* name, bool initialState) :
 }
 
 HASwitch::HASwitch(
-    const char* name,
+    const char* uniqueId,
     bool initialState,
     HAMqtt& mqtt
 ) :
-    HASwitch(name, initialState)
+    HASwitch(uniqueId, initialState)
 {
     (void)mqtt;
 }
 
 void HASwitch::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -52,7 +53,7 @@ void HASwitch::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state, true);
     }
@@ -64,11 +65,15 @@ bool HASwitch::setState(bool state, bool force)
         return true;
     }
 
+    if (_beforeStateCallback) {
+        _beforeStateCallback(state, this);
+    }
+
     if (publishState(state)) {
         _currentState = state;
 
         if (_stateCallback) {
-            _stateCallback(state, this);
+            _stateCallback(_currentState, this);
         }
 
         return true;
@@ -79,7 +84,7 @@ bool HASwitch::setState(bool state, bool force)
 
 bool HASwitch::publishState(bool state)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -107,8 +112,8 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateNameFieldSize(name());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
@@ -117,7 +122,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::CommandTopic,
             false
         );
@@ -134,7 +139,7 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::StateTopic,
             false
         );
@@ -194,8 +199,8 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
     }
 
     DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
+    DeviceTypeSerializer::mqttWriteNameField(getName());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();

@@ -6,19 +6,21 @@
 #ifdef ARDUINOHA_FAN
 
 #define HAFAN_STATE_CALLBACK_BOOL(name) void (*name)(bool)
-#define HAFAN_STATE_CALLBACK_SPEED(name) void (*name)(Speed)
+#define HAFAN_STATE_CALLBACK_SPEED(name) void (*name)(uint16_t)
+#define HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(name) void (*name)(Speed)
 
 class HAFan : public BaseDeviceType
 {
 public:
-    static const char* SpeedCommandTopic;
-    static const char* SpeedStateTopic;
+    static const char* PercentageCommandTopic;
+    static const char* PercentageStateTopic;
 
     enum Features {
         DefaultFeatures = 0,
         SpeedsFeature = 1
     };
 
+    // @deprecated
     enum Speed {
         UnknownSpeed = 0,
         OffSpeed = 1,
@@ -81,27 +83,20 @@ public:
      *
      * @param speeds
      */
-    inline void setSpeeds(uint8_t speeds)
-        { _speeds = speeds; }
+    AHA_DEPRECATED(inline void setSpeeds(uint8_t speeds))
+        { (void)speeds; }
 
     /**
      * Sets speed of the fan.
      *
      * @param speed
      */
-    bool setSpeed(Speed speed);
-
-    /**
-     * Sets speed of the fan based on the name of the mode.
-     *
-     * @param speed
-     */
-    bool setSpeedFromStr(const char* speed);
+    bool setSpeed(uint16_t speed);
 
     /**
      * Returns current speed of the fan.
      */
-    inline Speed getSpeed() const
+    inline uint16_t getSpeed() const
         { return _currentSpeed; }
 
     /**
@@ -113,13 +108,8 @@ public:
     inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED(callback))
         { _speedCallback = callback; }
 
-    /**
-     * Sets name that wil be displayed in the Home Assistant panel.
-     *
-     * @param name
-     */
-    inline void setName(const char* name)
-        { _label = name; } // it needs to be called "label" as "_name" is already in use
+    AHA_DEPRECATED(inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(callback)))
+        { (void)callback; }
 
     /**
      * Sets `retain` flag for commands published by Home Assistant.
@@ -130,21 +120,36 @@ public:
     inline void setRetain(bool retain)
         { _retain = retain; }
 
+    /**
+     * Sets minimum range for slider in the HA panel.
+     *
+     * @param min
+     */
+    inline void setSpeedRangeMin(uint16_t min)
+        { _speedRangeMin = min; }
+
+    /**
+     * Sets maximum range for slider in the HA panel.
+     *
+     * @param min
+     */
+    inline void setSpeedRangeMax(uint16_t max)
+        { _speedRangeMax = max; }
+
 protected:
     bool publishState(bool state);
-    bool publishSpeed(Speed speed);
+    bool publishSpeed(uint16_t speed);
     uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    uint16_t calculateSpeedsLength() const;
     bool writeSerializedData(const char* serializedDevice) const override;
 
     const uint8_t _features;
-    uint8_t _speeds;
     bool _currentState;
     HAFAN_STATE_CALLBACK_BOOL(_stateCallback);
-    Speed _currentSpeed;
+    uint16_t _currentSpeed;
     HAFAN_STATE_CALLBACK_SPEED(_speedCallback);
-    const char* _label;
     bool _retain;
+    uint16_t _speedRangeMin;
+    uint16_t _speedRangeMax;
 };
 
 #endif

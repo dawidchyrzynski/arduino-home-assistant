@@ -4,24 +4,19 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-const char* HAFan::SpeedCommandTopic = {"sct"};
-const char* HAFan::SpeedStateTopic = {"sst"};
-
-static const char OffStr[] PROGMEM = {"off"};
-static const char LowStr[] PROGMEM = {"low"};
-static const char MediumStr[] PROGMEM = {"medium"};
-static const char HighStr[] PROGMEM = {"high"};
+const char* HAFan::PercentageCommandTopic = {"sct"};
+const char* HAFan::PercentageStateTopic = {"sst"};
 
 HAFan::HAFan(const char* uniqueId, uint8_t features) :
     BaseDeviceType("fan", uniqueId),
     _features(features),
-    _speeds(OffSpeed | LowSpeed | MediumSpeed | HighSpeed),
     _currentState(false),
     _stateCallback(nullptr),
-    _currentSpeed(OffSpeed),
+    _currentSpeed(0),
     _speedCallback(nullptr),
-    _label(nullptr),
-    _retain(false)
+    _retain(false),
+    _speedRangeMin(1),
+    _speedRangeMax(100)
 {
 
 }
@@ -34,7 +29,7 @@ HAFan::HAFan(const char* uniqueId, uint8_t features, HAMqtt& mqtt) :
 
 void HAFan::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -49,7 +44,7 @@ void HAFan::onMqttConnected()
     if (_features & SpeedsFeature) {
         DeviceTypeSerializer::mqttSubscribeTopic(
             this,
-            SpeedCommandTopic
+            PercentageCommandTopic
         );
     }
 
@@ -67,15 +62,17 @@ void HAFan::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state, true);
-    } else if (isMyTopic(topic, SpeedCommandTopic)) {
-        char speed[length + 1];
-        memset(speed, 0, sizeof(speed));
-        memcpy(speed, payload, length);
-
-        setSpeedFromStr(speed);
+    } else if (compareTopics(topic, PercentageCommandTopic)) {
+        char speedStr[length + 1];
+        memset(speedStr, 0, sizeof(speedStr));
+        memcpy(speedStr, payload, length);
+        int32_t speed = atoi(speedStr);
+        if (speed >= 0) {
+            setSpeed(speed);
+        }
     }
 }
 
@@ -98,12 +95,8 @@ bool HAFan::setState(bool state, bool force)
     return false;
 }
 
-bool HAFan::setSpeed(Speed speed)
+bool HAFan::setSpeed(uint16_t speed)
 {
-    if (speed == UnknownSpeed) {
-        return false;
-    }
-
     if (publishSpeed(speed)) {
         _currentSpeed = speed;
 
@@ -117,24 +110,9 @@ bool HAFan::setSpeed(Speed speed)
     return false;
 }
 
-bool HAFan::setSpeedFromStr(const char* speed)
-{
-    if (strcmp_P(speed, OffStr) == 0) {
-        return setSpeed(OffSpeed);
-    } else if (strcmp_P(speed, LowStr) == 0) {
-        return setSpeed(LowSpeed);
-    } else if (strcmp_P(speed, MediumStr) == 0) {
-        return setSpeed(MediumSpeed);
-    } else if (strcmp_P(speed, HighStr) == 0) {
-        return setSpeed(HighSpeed);
-    }
-
-    return false;
-}
-
 bool HAFan::publishState(bool state)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -149,38 +127,21 @@ bool HAFan::publishState(bool state)
     );
 }
 
-bool HAFan::publishSpeed(Speed speed)
+bool HAFan::publishSpeed(uint16_t speed)
 {
-    if (strlen(name()) == 0 || speed == UnknownSpeed) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
-    char speedStr[7];
-    switch (speed) {
-        case OffSpeed:
-            strcpy_P(speedStr, OffStr);
-            break;
-
-        case LowSpeed:
-            strcpy_P(speedStr, LowStr);
-            break;
-
-        case MediumSpeed:
-            strcpy_P(speedStr, MediumStr);
-            break;
-
-        case HighSpeed:
-            strcpy_P(speedStr, HighStr);
-            break;
-
-        default:
-            return false;
-    }
+    uint8_t digitsNb = floor(log10(speed)) + 1;
+    char str[digitsNb + 1]; // + null terminator
+    memset(str, 0, sizeof(str));
+    itoa(speed, str, 10);
 
     return DeviceTypeSerializer::mqttPublishMessage(
         this,
-        SpeedStateTopic,
-        speedStr
+        PercentageStateTopic,
+        str
     );
 }
 
@@ -192,17 +153,17 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateNameFieldSize(_label);
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // command topic
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::CommandTopic,
             false
         );
@@ -219,7 +180,7 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::StateTopic,
             false
         );
@@ -234,12 +195,12 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
 
     // speeds
     if (_features & SpeedsFeature) {
-        // command topic
+        // percentage command topic
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
-                SpeedCommandTopic,
+                uniqueId(),
+                PercentageCommandTopic,
                 false
             );
 
@@ -247,16 +208,16 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
                 return 0;
             }
 
-            // Field format: ,"spd_cmd_t":"[TOPIC]"
+            // Field format: ,"pct_cmd_t":"[TOPIC]"
             size += topicLength + 15; // 15 - length of the JSON decorators for this field
         }
 
-        // state topic
+        // percentage state topic
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
-                SpeedStateTopic,
+                uniqueId(),
+                PercentageStateTopic,
                 false
             );
 
@@ -264,47 +225,28 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
                 return 0;
             }
 
-            // Field format: ,"spd_stat_t":"[TOPIC]"
+            // Field format: ,"pct_stat_t":"[TOPIC]"
             size += topicLength + 16; // 16 - length of the JSON decorators for this field
         }
 
-        // speeds list
-        // Format: ,"spds":[SPEEDS]
-        size += calculateSpeedsLength() + 8; // 8 - length of the JSON decorators for this field
+        // speed range min
+        if (_speedRangeMin != 1) {
+            uint8_t digitsNb = floor(log10(_speedRangeMin)) + 1;
+
+            // Field format: ,"spd_rng_min":[VALUE]
+            size += digitsNb + 15; // 15 - length of the JSON decorators for this field
+        }
+
+        // speed range max
+        if (_speedRangeMax != 100) {
+            uint8_t digitsNb = floor(log10(_speedRangeMax)) + 1;
+
+            // Field format: ,"spd_rng_max":[VALUE]
+            size += digitsNb + 15; // 15 - length of the JSON decorators for this field
+        }
     }
 
-    return size; // exludes null terminator
-}
-
-uint16_t HAFan::calculateSpeedsLength() const
-{
-    uint16_t length = 2; // opening and closing bracket
-
-    if (_speeds & OffSpeed) {
-        // escape + comma
-        length += 3 + strlen_P(OffStr);
-    }
-
-    if (_speeds & LowSpeed) {
-        // escape + comma
-        length += 3 + strlen_P(LowStr);
-    }
-
-    if (_speeds & MediumSpeed) {
-        // escape + comma
-        length += 3 + strlen_P(MediumStr);
-    }
-
-    if (_speeds & HighSpeed) {
-        // escape + comma
-        length += 3 + strlen_P(HighStr);
-    }
-
-    if (length > 2) {
-        length--; // remove trailing comma
-    }
-
-    return length; // excludes null terminator
+    return size; // excludes null terminator
 }
 
 bool HAFan::writeSerializedData(const char* serializedDevice) const
@@ -337,79 +279,62 @@ bool HAFan::writeSerializedData(const char* serializedDevice) const
 
     // speeds
     if (_features & SpeedsFeature) {
-        // command topic
+        // percentage command topic
         {
-            static const char Prefix[] PROGMEM = {",\"spd_cmd_t\":\""};
+            static const char Prefix[] PROGMEM = {",\"pct_cmd_t\":\""};
             DeviceTypeSerializer::mqttWriteTopicField(
                 this,
                 Prefix,
-                SpeedCommandTopic
+                PercentageCommandTopic
             );
         }
 
-        // state topic
+        // percentage state topic
         {
-            static const char Prefix[] PROGMEM = {",\"spd_stat_t\":\""};
+            static const char Prefix[] PROGMEM = {",\"pct_stat_t\":\""};
             DeviceTypeSerializer::mqttWriteTopicField(
                 this,
                 Prefix,
-                SpeedStateTopic
+                PercentageStateTopic
             );
         }
 
-        // supported speeds
-        {
-            static const char CharQuotation[] PROGMEM = {"\""};
-            static const char CharQuotationComma[] PROGMEM = {"\","};
-            static const char Prefix[] PROGMEM = {",\"spds\":"};
+        // speed range min
+        if (_speedRangeMin != 1) {
+            uint8_t digitsNb = floor(log10(_speedRangeMin)) + 1;
+            char str[digitsNb + 1]; // + null terminator
+            memset(str, 0, sizeof(str));
+            itoa(_speedRangeMin, str, 10);
 
-            char speedStr[calculateSpeedsLength() + 1]; // plus null terminator
-            memset(speedStr, 0, sizeof(speedStr));
-            strcpy(speedStr, "[");
-
-            if (_speeds != 0) {
-                if (_speeds & OffSpeed) {
-                    strcat_P(speedStr, CharQuotation);
-                    strcat_P(speedStr, OffStr);
-                    strcat_P(speedStr, CharQuotationComma);
-                }
-
-                if (_speeds & LowSpeed) {
-                    strcat_P(speedStr, CharQuotation);
-                    strcat_P(speedStr, LowStr);
-                    strcat_P(speedStr, CharQuotationComma);
-                }
-
-                if (_speeds & MediumSpeed) {
-                    strcat_P(speedStr, CharQuotation);
-                    strcat_P(speedStr, MediumStr);
-                    strcat_P(speedStr, CharQuotationComma);
-                }
-
-                if (_speeds & HighSpeed) {
-                    strcat_P(speedStr, CharQuotation);
-                    strcat_P(speedStr, HighStr);
-                    strcat_P(speedStr, CharQuotationComma);
-                }
-
-                speedStr[strlen(speedStr) - 1] = ']';
-            } else {
-                strcat(speedStr, "]");
-            }
-
+            static const char Prefix[] PROGMEM = {",\"spd_rng_min\":"};
             DeviceTypeSerializer::mqttWriteConstCharField(
                 Prefix,
-                speedStr,
+                str,
+                false
+            );
+        }
+
+        // speed range max
+        if (_speedRangeMax != 100) {
+            uint8_t digitsNb = floor(log10(_speedRangeMax)) + 1;
+            char str[digitsNb + 1]; // + null terminator
+            memset(str, 0, sizeof(str));
+            itoa(_speedRangeMax, str, 10);
+
+            static const char Prefix[] PROGMEM = {",\"spd_rng_max\":"};
+            DeviceTypeSerializer::mqttWriteConstCharField(
+                Prefix,
+                str,
                 false
             );
         }
     }
 
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(_label);
-    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteNameField(getName());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;

@@ -19,38 +19,44 @@ public:
     static const char* StateOn;
     static const char* StateOff;
 
+    static const char* getTopicPrefix(bool isDiscoveryTopic);
+
     /**
      * Calculates length of the topic with given parameters.
-     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
+     * Topic format: [prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param component
      * @param objectId
      * @param suffix
      * @param includeNullTerminator
+     * @param isDiscoveryTopic Determines which prefix will be used for topic.
      */
     static uint16_t calculateTopicLength(
         const char* component,
         const char* objectId,
         const char* suffix,
-        bool includeNullTerminator = true
+        bool includeNullTerminator = true,
+        bool isDiscoveryTopic = false
     );
 
     /**
      * Generates topic and saves it to the given buffer.
      * Please note that size of the buffer must be calculated by `calculateTopicLength` method first.
-     * Topic format: [discovery prefix]/[component]/[deviceId]/[objectId]/[suffix]
+     * Topic format: [prefix]/[component]/[deviceId]/[objectId]/[suffix]
      *
      * @param output
      * @param component
      * @param objectId
      * @param suffix
      * @param includeNullTerminator
+     * @param isDiscoveryTopic Determines which prefix will be used for topic.
      */
     static uint16_t generateTopic(
         char* output,
         const char* component,
         const char* objectId,
-        const char* suffix
+        const char* suffix,
+        bool isDiscoveryTopic = false
     );
 
     static uint16_t calculateBaseJsonDataSize();
@@ -58,7 +64,7 @@ public:
         const char* name
     );
     static uint16_t calculateUniqueIdFieldSize(
-        const char* name
+        const char* uniqueId
     );
     static uint16_t calculateAvailabilityFieldSize(
         const BaseDeviceType* const dt
@@ -81,7 +87,7 @@ public:
         const char* name
     );
     static void mqttWriteUniqueIdField(
-        const char* name
+        const char* uniqueId
     );
     static void mqttWriteAvailabilityField(
         const BaseDeviceType* const dt

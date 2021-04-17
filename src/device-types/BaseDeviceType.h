@@ -13,12 +13,12 @@ class BaseDeviceType
 public:
     BaseDeviceType(
         const char* componentName,
-        const char* name
+        const char* uniqueId
     );
     virtual ~BaseDeviceType();
 
-    inline const char* name() const
-        { return _name; }
+    inline const char* uniqueId() const
+        { return _uniqueId; }
 
     inline const char* componentName() const
         { return _componentName; }
@@ -28,6 +28,12 @@ public:
 
     inline bool isOnline() const
         { return (_availability == AvailabilityOnline); }
+
+    inline void setName(const char* name)
+        { _name = name; }
+
+    inline const char* getName() const
+        { return _name; }
 
     virtual void setAvailability(bool online);
 
@@ -43,12 +49,12 @@ protected:
 
     virtual void publishConfig();
     virtual void publishAvailability();
-    virtual bool isMyTopic(const char* topic, const char* expectedTopic);
+    virtual bool compareTopics(const char* topic, const char* expectedTopic);
     virtual uint16_t calculateSerializedLength(const char* serializedDevice) const = 0;
     virtual bool writeSerializedData(const char* serializedDevice) const = 0;
 
     const char* const _componentName;
-    const char* const _name;
+    const char* const _uniqueId;
 
 private:
     enum Availability {
@@ -58,6 +64,7 @@ private:
     };
 
     Availability _availability;
+    const char* _name;
 
     friend class HAMqtt;
 };

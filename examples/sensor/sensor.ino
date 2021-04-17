@@ -10,7 +10,13 @@ double lastValue = 0;
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-HASensor temp("temp");
+HASensor temp("temp"); // "temp" is unique ID of the sensor. You should define your own ID.
+
+void onBeforeSwitchStateChanged(bool state, HASwitch* s)
+{
+    // this callback will be called before publishing new state to HA
+    // in some cases there may be delay before onStateChanged is called due to network latency
+}
 
 void setup() {
     // you don't need to verify return status
@@ -24,6 +30,7 @@ void setup() {
     temp.setUnitOfMeasurement("°C");
     temp.setDeviceClass("temperature");
     temp.setIcon("mdi:home");
+    temp.setName("Home temperature");
 
     mqtt.begin(BROKER_ADDR);
 }

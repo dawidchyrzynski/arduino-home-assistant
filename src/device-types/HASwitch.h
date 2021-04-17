@@ -13,16 +13,16 @@ public:
     /**
      * Initializes switch.
      *
-     * @param name Name of the switch. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId Unique ID of the switch. Recommendes characters: [a-z0-9\-_]
      * @param initialState Initial state of the switch.
                            It will be published right after "config" message in order to update HA state.
      */
     HASwitch(
-        const char* name,
+        const char* uniqueId,
         bool initialState
     );
     HASwitch(
-        const char* name,
+        const char* uniqueId,
         bool initialState,
         HAMqtt& mqtt
     ); // legacy constructor
@@ -41,12 +41,6 @@ public:
         const uint8_t* payload,
         const uint16_t& length
     ) override;
-
-    /**
-     * Returns name of the switch assigned via constructor.
-     */
-    inline const char* getName() const
-        { return _name; }
 
     /**
      * Changes state of the switch and publishes MQTT message.
@@ -79,13 +73,22 @@ public:
         { return _currentState; }
 
     /**
-     * Registers callback that will be called each time the value of the switch changes.
+     * Registers callback that will be called each time the state of the switch changes.
      * Please note that it's not possible to register multiple callbacks for the same switch.
      *
      * @param callback
      */
     inline void onStateChanged(HASWITCH_CALLBACK(callback))
         { _stateCallback = callback; }
+
+    /**
+     * Registers callback that will be called before state of the switch changes.
+     * The state passed to callback is a new state that is going to be set.
+     *
+     * @param callback
+     */
+    inline void onBeforeStateChanged(HASWITCH_CALLBACK(callback))
+        { _beforeStateCallback = callback; }
 
     /**
      * Sets icon of the switch, e.g. `mdi:home`.
@@ -110,6 +113,7 @@ private:
     bool writeSerializedData(const char* serializedDevice) const override;
 
     HASWITCH_CALLBACK(_stateCallback);
+    HASWITCH_CALLBACK(_beforeStateCallback);
     bool _currentState;
     const char* _icon;
     bool _retain;

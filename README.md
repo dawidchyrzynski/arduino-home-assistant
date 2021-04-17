@@ -9,11 +9,25 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 * MQTT discovery (device is added to the Home Assistant panel automatically)
 * MQTT Last Will and Testament
+* Support for custom MQTT messages (publishing and subscribing)
 * Auto reconnect with MQTT broker
+* Reporting availability (online/offline states) of a device
+
+## Supported HA types
+
+* Binary sensors
+* Covers
+* Fans
+* Device triggers
+* Switches
+* Sensors
+* Tag scanner
+* HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
 
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
+* [Cover](examples/cover/cover.ino)
 * [Fan](examples/fan/fan.ino)
 * [LED switch](examples/led-switch/led-switch.ino)
 * [Multi-state button](examples/multi-state-button/multi-state-button.ino)
@@ -24,32 +38,30 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [Availability feature](examples/availability)
 * [Advanced availability (MQTT LWT)](examples/advanced-availability/advanced-availability.ino)
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
-* [MQTT events](examples/mqtt-events/mqtt-events.ino)
+* [MQTT advanced](examples/mqtt-advanced/mqtt-advanced.ino)
 
 ## Tested boards
 
 * Arduino Uno
 * Arduino Mega
-* Controllino Maxi (standard/pure/automation/power)
-* Controllino Mega (standard/pure)
 * NodeMCU
 * ESP-01
 * Generic ESP8266/ESP8255
 * Arduino Nano 33 IoT (SAMD)
 
+## Tested devices
+
+* Controllino Maxi (standard/pure/automation/power)
+* Controllino Mega (standard/pure)
+* Sonoff Dual R2
+* Sonoff Basic
+* Sonoff Mini
+* Tuya Wi-Fi switch module
+* Tuya Wi-Fi curtain module
+
 ## Tested Arduino Shields
 
 * Arduino Ethernet Shield (WizNet W5100)
-
-## Supported HA types
-
-* Binary sensors
-* Fans
-* Device triggers
-* Switches
-* Sensors
-* Tag scanner
-* HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
 
 ## Roadmap
 
@@ -57,7 +69,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Documentation of the library
 * Unit tests
 * Reduce flash memory usage
-* Add support for HA covers
 * Add support for HA lights
 
 ## Unsupported features

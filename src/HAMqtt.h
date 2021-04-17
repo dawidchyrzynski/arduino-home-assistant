@@ -5,6 +5,7 @@
 #include <IPAddress.h>
 
 #define HAMQTT_CALLBACK(name) void (*name)()
+#define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
 #define HAMQTT_DEFAULT_PORT 1883
 
 class PubSubClient;
@@ -25,6 +26,8 @@ public:
      * Sets prefix for Home Assistant discovery.
      * It needs to match prefix set in the HA admin panel.
      * The default prefix is "homeassistant".
+     *
+     * @param prefix
      */
     inline void setDiscoveryPrefix(const char* prefix)
         { _discoveryPrefix = prefix; }
@@ -36,10 +39,33 @@ public:
         { return _discoveryPrefix; }
 
     /**
+     * Sets prefix that will be used for topics different than discovery.
+     * It may be useful if you want to pass MQTT trafic through bridge.
+     *
+     * @param prefix
+     */
+    inline void setDataPrefix(const char* prefix)
+        { _dataPrefix = prefix; }
+
+    /**
+     * Returns data prefix.
+     */
+    inline const char* getDataPrefix() const
+        { return _dataPrefix; }
+
+    /**
      * Returns instance of the device assigned to the HAMqtt class.
      */
     inline HADevice const* getDevice() const
         { return &_device; }
+
+    /**
+     * Given callback will be called for each received message from the broker.
+     *
+     * @param callback
+     */
+    inline void onMessage(HAMQTT_MESSAGE_CALLBACK(callback))
+        { _messageCallback = callback; }
 
     /**
      * Given callback will be called each time the connection with broker is acquired.
@@ -197,10 +223,12 @@ private:
 
     Client& _netClient;
     HADevice& _device;
+    HAMQTT_MESSAGE_CALLBACK(_messageCallback);
     HAMQTT_CALLBACK(_connectedCallback);
     HAMQTT_CALLBACK(_connectionFailedCallback);
     bool _initialized;
     const char* _discoveryPrefix;
+    const char* _dataPrefix;
     PubSubClient* _mqtt;
     const char* _username;
     const char* _password;

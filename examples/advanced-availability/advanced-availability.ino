@@ -13,7 +13,7 @@ EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
-// "input" may be anything you want to be displayed in HA panel
+// "input" is unique ID of the sensor. You should define you own ID.
 // "door" is device class (based on the class HA displays different icons in the panel)
 // "true" is initial state of the sensor. In this example it's "true" as we use pullup resistor
 HABinarySensor sensor("input", "door", true);
@@ -31,6 +31,8 @@ void setup() {
     // set device's details (optional)
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
+
+    sensor.setName("Door sensor"); // optional
 
     // This method enables availability for all device types registered on the device.
     // For example, if you have 5 sensors on the same device, you can enable

@@ -6,10 +6,10 @@
 #include "../HADevice.h"
 
 HABinarySensor::HABinarySensor(
-    const char* name,
+    const char* uniqueId,
     bool initialState
 ) :
-    BaseDeviceType("binary_sensor", name),
+    BaseDeviceType("binary_sensor", uniqueId),
     _class(nullptr),
     _currentState(initialState)
 {
@@ -17,21 +17,21 @@ HABinarySensor::HABinarySensor(
 }
 
 HABinarySensor::HABinarySensor(
-    const char* name,
+    const char* uniqueId,
     bool initialState,
     HAMqtt& mqtt
 ) :
-    HABinarySensor(name, initialState)
+    HABinarySensor(uniqueId, initialState)
 {
     (void)mqtt;
 }
 
 HABinarySensor::HABinarySensor(
-    const char* name,
+    const char* uniqueId,
     const char* deviceClass,
     bool initialState
 ) :
-    BaseDeviceType("binary_sensor", name),
+    BaseDeviceType("binary_sensor", uniqueId),
     _class(deviceClass),
     _currentState(initialState)
 {
@@ -39,19 +39,19 @@ HABinarySensor::HABinarySensor(
 }
 
 HABinarySensor::HABinarySensor(
-    const char* name,
+    const char* uniqueId,
     const char* deviceClass,
     bool initialState,
     HAMqtt& mqtt
 ) :
-    HABinarySensor(name, deviceClass, initialState)
+    HABinarySensor(uniqueId, deviceClass, initialState)
 {
     (void)mqtt;
 }
 
 void HABinarySensor::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -76,13 +76,13 @@ bool HABinarySensor::setState(bool state)
 
 bool HABinarySensor::publishState(bool state)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
     const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::StateTopic
     );
     if (topicSize == 0) {
@@ -93,7 +93,7 @@ bool HABinarySensor::publishState(bool state)
     DeviceTypeSerializer::generateTopic(
         topic,
         componentName(),
-        name(),
+        uniqueId(),
         DeviceTypeSerializer::StateTopic
     );
 
@@ -127,8 +127,8 @@ uint16_t HABinarySensor::calculateSerializedLength(
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateNameFieldSize(name());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(name());
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
 
@@ -136,7 +136,7 @@ uint16_t HABinarySensor::calculateSerializedLength(
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             DeviceTypeSerializer::StateTopic,
             false
         );
@@ -182,8 +182,8 @@ bool HABinarySensor::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _class);
     }
 
-    DeviceTypeSerializer::mqttWriteNameField(name());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(name());
+    DeviceTypeSerializer::mqttWriteNameField(getName());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteAvailabilityField(this);
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
     DeviceTypeSerializer::mqttWriteEndJson();

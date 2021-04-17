@@ -44,7 +44,6 @@ HAHVAC::HAHVAC(const char* uniqueId, uint8_t features) :
     _tempStep(1),
     _targetTempCallback(nullptr),
     _targetTemperature(__DBL_MAX__),
-    _label(nullptr),
     _modes(
         OffMode |
         AutoMode |
@@ -72,7 +71,7 @@ HAHVAC::HAHVAC(
 
 void HAHVAC::onMqttConnected()
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return;
     }
 
@@ -98,24 +97,24 @@ void HAHVAC::onMqttMessage(
 )
 {
     if ((_features & AuxHeatingFeature) &&
-            isMyTopic(topic, AuxCommandTopic)) {
+            compareTopics(topic, AuxCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAuxHeatingState(state);
     } else if ((_features & AwayModeFeature) &&
-            isMyTopic(topic, AwayCommandTopic)) {
+            compareTopics(topic, AwayCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAwayState(state);
     } else if ((_features & HoldFeature) &&
-            isMyTopic(topic, HoldCommandTopic)) {
+            compareTopics(topic, HoldCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setHoldState(state);
-    } else if (isMyTopic(topic, TargetTemperatureCommandTopic)) {
+    } else if (compareTopics(topic, TargetTemperatureCommandTopic)) {
         char src[length + 1];
         memset(src, 0, sizeof(src));
         memcpy(src, payload, length);
 
         setTargetTemperature(HAUtils::strToTemp(src));
-    } else if (isMyTopic(topic, ModeCommandTopic)) {
+    } else if (compareTopics(topic, ModeCommandTopic)) {
         char mode[length + 1];
         memset(mode, 0, sizeof(mode));
         memcpy(mode, payload, length);
@@ -279,7 +278,7 @@ bool HAHVAC::setTempStep(double tempStep)
 bool HAHVAC::publishAction(Action action)
 {
     if (!(_features & ActionFeature) ||
-            strlen(name()) == 0) {
+            strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -323,7 +322,7 @@ bool HAHVAC::publishAction(Action action)
 bool HAHVAC::publishAuxHeatingState(bool state)
 {
     if (!(_features & AuxHeatingFeature) ||
-            strlen(name()) == 0) {
+            strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -341,7 +340,7 @@ bool HAHVAC::publishAuxHeatingState(bool state)
 bool HAHVAC::publishAwayState(bool state)
 {
     if (!(_features & AwayModeFeature) ||
-            strlen(name()) == 0) {
+            strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -359,7 +358,7 @@ bool HAHVAC::publishAwayState(bool state)
 bool HAHVAC::publishHoldState(bool state)
 {
     if (!(_features & HoldFeature) ||
-            strlen(name()) == 0) {
+            strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -376,7 +375,7 @@ bool HAHVAC::publishHoldState(bool state)
 
 bool HAHVAC::publishCurrentTemperature(double temperature)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -396,7 +395,7 @@ bool HAHVAC::publishCurrentTemperature(double temperature)
 
 bool HAHVAC::publishTargetTemperature(double temperature)
 {
-    if (strlen(name()) == 0) {
+    if (strlen(uniqueId()) == 0) {
         return false;
     }
 
@@ -416,7 +415,7 @@ bool HAHVAC::publishTargetTemperature(double temperature)
 
 bool HAHVAC::publishMode(Mode mode)
 {
-    if (strlen(name()) == 0 || mode == UnknownMode) {
+    if (strlen(uniqueId()) == 0 || mode == UnknownMode) {
         return false;
     }
 
@@ -509,17 +508,17 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
 
     uint16_t size = 0;
     size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(_uniqueId);
+    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
+    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
     size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
     size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateNameFieldSize(_label);
     size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
 
     // current temperature
     {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             CurrentTemperatureTopic,
             false
         );
@@ -536,7 +535,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
     if (_features & ActionFeature) {
         const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
-            name(),
+            uniqueId(),
             ActionTopic,
             false
         );
@@ -555,7 +554,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 AuxCommandTopic,
                 false
             );
@@ -572,7 +571,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 AuxStateTopic,
                 false
             );
@@ -592,7 +591,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 AwayCommandTopic,
                 false
             );
@@ -609,7 +608,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 AwayStateTopic,
                 false
             );
@@ -629,7 +628,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 HoldCommandTopic,
                 false
             );
@@ -646,7 +645,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 HoldStateTopic,
                 false
             );
@@ -693,7 +692,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 TargetTemperatureCommandTopic,
                 false
             );
@@ -710,7 +709,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 TargetTemperatureStateTopic,
                 false
             );
@@ -737,7 +736,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 ModeCommandTopic,
                 false
             );
@@ -754,7 +753,7 @@ uint16_t HAHVAC::calculateSerializedLength(const char* serializedDevice) const
         {
             const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
                 componentName(),
-                name(),
+                uniqueId(),
                 ModeStateTopic,
                 false
             );
@@ -1066,11 +1065,11 @@ bool HAHVAC::writeSerializedData(const char* serializedDevice) const
         );
     }
 
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteNameField(_label);
-    DeviceTypeSerializer::mqttWriteUniqueIdField(_uniqueId);
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteNameField(getName());
+    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
     DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
+    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
+    DeviceTypeSerializer::mqttWriteRetainField(_retain);
     DeviceTypeSerializer::mqttWriteEndJson();
 
     return true;
