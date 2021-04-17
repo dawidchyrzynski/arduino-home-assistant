@@ -13,6 +13,17 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Auto reconnect with MQTT broker
 * Reporting availability (online/offline states) of a device
 
+## Supported HA types
+
+* Binary sensors
+* Covers
+* Fans
+* Device triggers
+* Switches
+* Sensors
+* Tag scanner
+* HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
+
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
@@ -33,27 +44,24 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 * Arduino Uno
 * Arduino Mega
-* Controllino Maxi (standard/pure/automation/power)
-* Controllino Mega (standard/pure)
 * NodeMCU
 * ESP-01
 * Generic ESP8266/ESP8255
 * Arduino Nano 33 IoT (SAMD)
 
+## Tested devices
+
+* Controllino Maxi (standard/pure/automation/power)
+* Controllino Mega (standard/pure)
+* Sonoff Dual R2
+* Sonoff Basic
+* Sonoff Mini
+* Tuya Wi-Fi switch module
+* Tuya Wi-Fi curtain module
+
 ## Tested Arduino Shields
 
 * Arduino Ethernet Shield (WizNet W5100)
-
-## Supported HA types
-
-* Binary sensors
-* Covers
-* Fans
-* Device triggers
-* Switches
-* Sensors
-* Tag scanner
-* HVACs *(side note: HVACs requires more flash size than other HA types. It's not suitable for Arduino Nano/Uno)*
 
 ## Roadmap
 
