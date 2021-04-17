@@ -97,24 +97,24 @@ void HAHVAC::onMqttMessage(
 )
 {
     if ((_features & AuxHeatingFeature) &&
-            isMyTopic(topic, AuxCommandTopic)) {
+            compareTopics(topic, AuxCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAuxHeatingState(state);
     } else if ((_features & AwayModeFeature) &&
-            isMyTopic(topic, AwayCommandTopic)) {
+            compareTopics(topic, AwayCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setAwayState(state);
     } else if ((_features & HoldFeature) &&
-            isMyTopic(topic, HoldCommandTopic)) {
+            compareTopics(topic, HoldCommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setHoldState(state);
-    } else if (isMyTopic(topic, TargetTemperatureCommandTopic)) {
+    } else if (compareTopics(topic, TargetTemperatureCommandTopic)) {
         char src[length + 1];
         memset(src, 0, sizeof(src));
         memcpy(src, payload, length);
 
         setTargetTemperature(HAUtils::strToTemp(src));
-    } else if (isMyTopic(topic, ModeCommandTopic)) {
+    } else if (compareTopics(topic, ModeCommandTopic)) {
         char mode[length + 1];
         memset(mode, 0, sizeof(mode));
         memcpy(mode, payload, length);

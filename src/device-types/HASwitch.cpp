@@ -52,7 +52,7 @@ void HASwitch::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state, true);
     }

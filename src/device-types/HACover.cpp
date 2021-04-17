@@ -59,7 +59,7 @@ void HACover::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         char cmd[length + 1];
         memset(cmd, 0, sizeof(cmd));
         memcpy(cmd, payload, length);

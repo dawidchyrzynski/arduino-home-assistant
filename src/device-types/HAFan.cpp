@@ -62,10 +62,10 @@ void HAFan::onMqttMessage(
 {
     (void)payload;
 
-    if (isMyTopic(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state, true);
-    } else if (isMyTopic(topic, PercentageCommandTopic)) {
+    } else if (compareTopics(topic, PercentageCommandTopic)) {
         char speedStr[length + 1];
         memset(speedStr, 0, sizeof(speedStr));
         memcpy(speedStr, payload, length);
