@@ -234,7 +234,7 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
         if (_speedRangeMin != 1) {
             uint8_t digitsNb = floor(log10(_speedRangeMin)) + 1;
 
-            // Field format: ,"spd_rng_min":"[VALUE]"
+            // Field format: ,"spd_rng_min":[VALUE]
             size += digitsNb + 15; // 15 - length of the JSON decorators for this field
         }
 
@@ -242,7 +242,7 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
         if (_speedRangeMax != 100) {
             uint8_t digitsNb = floor(log10(_speedRangeMax)) + 1;
 
-            // Field format: ,"spd_rng_max":"[VALUE]"
+            // Field format: ,"spd_rng_max":[VALUE]
             size += digitsNb + 15; // 15 - length of the JSON decorators for this field
         }
     }
