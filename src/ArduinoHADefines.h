@@ -12,6 +12,7 @@
 #define ARDUINOHA_SWITCH
 #define ARDUINOHA_TAG_SCANNER
 #define ARDUINOHA_TRIGGERS
+#define ARDUINOHA_LIGHT
 
 #ifdef __GNUC__
 #define AHA_DEPRECATED(func) func __attribute__ ((deprecated))

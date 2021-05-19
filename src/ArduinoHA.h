@@ -12,5 +12,6 @@
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"
 #include "device-types/HATriggers.h"
+#include "device-types/HALight.h"
 
 #endif
