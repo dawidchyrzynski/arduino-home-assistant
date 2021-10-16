@@ -12,7 +12,8 @@ HASensor::HASensor(const char* uniqueId) :
     BaseDeviceType("sensor", uniqueId),
     _class(nullptr),
     _units(nullptr),
-    _icon(nullptr)
+    _icon(nullptr),
+	_stateClass(nullptr)
 {
 
 }
@@ -163,6 +164,12 @@ uint16_t HASensor::calculateSerializedLength(
         // Field format: ,"ic":"[ICON]"
         size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
     }
+	
+	// state class
+    if (_stateClass != nullptr) {
+        // Field format: ,"stat_cla":"[CLASS]"
+        size += strlen(_stateClass) + 14; // 14 - length of the JSON decorators for this field
+    }
 
     return size; // exludes null terminator
 }
@@ -204,6 +211,12 @@ bool HASensor::writeSerializedData(const char* serializedDevice) const
             Prefix,
             _icon
         );
+    }
+	
+	    // device class
+    if (_stateClass != nullptr) {
+        static const char Prefix[] PROGMEM = {",\"stat_cla\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _stateClass);
     }
 
     DeviceTypeSerializer::mqttWriteNameField(getName());

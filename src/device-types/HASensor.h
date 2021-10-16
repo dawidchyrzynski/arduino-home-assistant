@@ -59,6 +59,14 @@ public:
      */
     inline void setDeviceClass(const char* className)
         { _class = className; }
+		
+	/**
+     * The type/class of the sensor type.
+     *
+     * @param stateClassName https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes
+     */
+    inline void setStateClass(const char* stateClassName)
+        { _stateClass = stateClassName; }
 
     /**
      * Defines the units of measurement of the sensor, if any.
@@ -84,6 +92,7 @@ private:
     const char* _class;
     const char* _units;
     const char* _icon;
+	const char* _stateClass;
 };
 
 #endif
