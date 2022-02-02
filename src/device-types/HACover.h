@@ -5,7 +5,7 @@
 
 #ifdef ARDUINOHA_COVER
 
-#define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd)
+#define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover*)
 
 class HACover : public BaseDeviceType
 {

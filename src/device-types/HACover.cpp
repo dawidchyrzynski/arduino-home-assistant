@@ -275,11 +275,11 @@ void HACover::handleCommand(const char* cmd)
     }
 
     if (strcmp_P(cmd, CloseCommandStr) == 0) {
-        _commandCallback(CommandClose);
+        _commandCallback(CommandClose, this);
     } else if (strcmp_P(cmd, OpenCommandStr) == 0) {
-        _commandCallback(CommandOpen);
+        _commandCallback(CommandOpen, this);
     } else if (strcmp_P(cmd, StopCommandStr) == 0) {
-        _commandCallback(CommandStop);
+        _commandCallback(CommandStop, this);
     }
 }
 
