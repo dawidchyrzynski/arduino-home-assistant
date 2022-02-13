@@ -91,8 +91,6 @@ void HASerializer::set(const char* propertyP, const void* value)
         return;
     }
 
-    // to do: override existing entry
-
     SerializerEntry* entry = addEntry();
     if (!entry) {
         return;
@@ -141,8 +139,6 @@ void HASerializer::topic(const char* topicP)
         return;
     }
 
-    // to do: skip duplications
-
     SerializerEntry* entry = addEntry();
     if (!entry) {
         return;
@@ -156,11 +152,6 @@ void HASerializer::topic(const char* topicP)
 
 HASerializer::SerializerEntry* HASerializer::addEntry()
 {
-    HAMqtt* mqtt = HAMqtt::instance();
-    if (!mqtt || (_deviceType && !mqtt->getDevice())) {
-        return nullptr;
-    }
-
     _entriesNb++;
     _entries = static_cast<SerializerEntry*>(
         realloc(_entries, sizeof(SerializerEntry) * _entriesNb)
@@ -171,6 +162,11 @@ HASerializer::SerializerEntry* HASerializer::addEntry()
 
 uint16_t HASerializer::calculateSize() const
 {
+    HAMqtt* mqtt = HAMqtt::instance();
+    if (!mqtt || (_deviceType && !mqtt->getDevice())) {
+        return 0;
+    }
+
     uint16_t size =
         strlen_P(HASerializerJsonDataPrefix) +
         strlen_P(HASerializerJsonDataSuffix);
@@ -183,11 +179,11 @@ uint16_t HASerializer::calculateSize() const
     return size;
 }
 
-void HASerializer::flush()
+bool HASerializer::flush() const
 {
     HAMqtt* mqtt = HAMqtt::instance();
-    if (!mqtt) {
-        return;
+    if (!mqtt || (_deviceType && !mqtt->getDevice())) {
+        return false;
     }
 
     mqtt->writePayload_P(HASerializerJsonDataPrefix);
@@ -195,11 +191,12 @@ void HASerializer::flush()
     const uint8_t lastEntryIndex = _entriesNb - 1;
     for (uint8_t i = 0; i < _entriesNb; i++) {
         if (!flushEntry(&_entries[i], i == lastEntryIndex)) {
-            return;
+            return false;
         }
     }
 
     mqtt->writePayload_P(HASerializerJsonDataSuffix);
+    return true;
 }
 
 uint16_t HASerializer::calculateEntrySize(
@@ -248,12 +245,10 @@ uint16_t HASerializer::calculateEntrySize(
 
 uint16_t HASerializer::calculateFlagSize(const FlagInternalEnum flag) const
 {
-    return 0;
-
     const HAMqtt* mqtt = HAMqtt::instance();
     const HADevice* device = mqtt->getDevice();
 
-    if (flag == InternalWithDevice && mqtt->getDevice()->getSerializer()) {
+    if (flag == InternalWithDevice && device->getSerializer()) {
         const uint16_t deviceLength = device->getSerializer()->calculateSize();
         if (deviceLength == 0) {
             return 0;
@@ -296,12 +291,13 @@ HASerializer::PropertyValueType HASerializer::determinePropertyValueType(
     return ConstCharPropertyValue;
 }
 
-bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry)
+bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry) const
 {
-    HAMqtt* mqtt = HAMqtt::instance();
-    if (!mqtt || entry->type == UnknownEntryType) {
+    if (entry->type == UnknownEntryType) {
         return false;
     }
+
+    HAMqtt* mqtt = HAMqtt::instance();
 
     if (entry->type == PropertyEntryType && entry->property && entry->value) {
         mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
@@ -328,7 +324,7 @@ bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry)
     return true;
 }
 
-bool HASerializer::flushEntryValue(const SerializerEntry* entry)
+bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
 
@@ -350,7 +346,7 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry)
     return false;;
 }
 
-bool HASerializer::flushTopic(const SerializerEntry* entry)
+bool HASerializer::flushTopic(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
 
@@ -385,7 +381,19 @@ bool HASerializer::flushTopic(const SerializerEntry* entry)
     return true;
 }
 
-bool HASerializer::flushFlag(const SerializerEntry* entry)
+bool HASerializer::flushFlag(const SerializerEntry* entry) const
 {
+    HAMqtt* mqtt = HAMqtt::instance();
+    const HADevice* device = mqtt->getDevice();
+    const FlagInternalEnum flag = static_cast<FlagInternalEnum>(entry->subtype);
+
+    if (flag == InternalWithDevice && device->getSerializer()) {
+        mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
+        mqtt->writePayload_P(HADeviceProperty);
+        mqtt->writePayload_P(HASerializerJsonPropertySuffix);
+
+        return device->getSerializer()->flush();
+    }
+
     return false;
 }

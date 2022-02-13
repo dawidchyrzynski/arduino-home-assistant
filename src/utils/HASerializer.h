@@ -55,7 +55,7 @@ public:
     void topic(const char* topicP);
 
     uint16_t calculateSize() const;
-    void flush();
+    bool flush() const;
 
 private:
     enum FlagInternalEnum {
@@ -73,10 +73,10 @@ private:
     uint16_t calculateFlagSize(const FlagInternalEnum flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;
     PropertyValueType determinePropertyValueType(const char* propertyP) const;
-    bool flushEntry(const SerializerEntry* entry, bool lastEntry);
-    bool flushEntryValue(const SerializerEntry* entry);
-    bool flushTopic(const SerializerEntry* entry);
-    bool flushFlag(const SerializerEntry* entry);
+    bool flushEntry(const SerializerEntry* entry, bool lastEntry) const;
+    bool flushEntryValue(const SerializerEntry* entry) const;
+    bool flushTopic(const SerializerEntry* entry) const;
+    bool flushFlag(const SerializerEntry* entry) const;
 };
 
 #endif

@@ -54,8 +54,6 @@ protected:
     virtual void publishConfig();
     virtual void publishAvailability();
     virtual bool compareTopics(const char* topic, const char* expectedTopic);
-    virtual uint16_t calculateSerializedLength(const char* serializedDevice) const = 0;
-    virtual bool writeSerializedData(const char* serializedDevice) const = 0;
 
     const char* const _componentName;
     const char* const _uniqueId;

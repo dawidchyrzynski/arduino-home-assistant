@@ -55,8 +55,6 @@ public:
 
 private:
     bool publishState(bool state);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _class;
     bool _currentState;
