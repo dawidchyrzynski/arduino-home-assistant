@@ -6,6 +6,8 @@
 #include "device-types/BaseDeviceType.h"
 
 static const char* DefaultDiscoveryPrefix = "homeassistant";
+static const char* DefaultDataPrefix = "aha";
+
 HAMqtt* HAMqtt::_instance = nullptr;
 
 void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
@@ -25,7 +27,7 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _connectionFailedCallback(nullptr),
     _initialized(false),
     _discoveryPrefix(DefaultDiscoveryPrefix),
-    _dataPrefix(nullptr),
+    _dataPrefix(DefaultDataPrefix),
     _mqtt(new PubSubClient(netClient)),
     _username(nullptr),
     _password(nullptr),

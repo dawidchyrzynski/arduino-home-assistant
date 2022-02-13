@@ -1,9 +1,12 @@
+#include <assert.h>
+
 #include "HABinarySensor.h"
 #ifdef ARDUINOHA_BINARY_SENSOR
 
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
+#include "../utils/HASerializer.h"
 
 HABinarySensor::HABinarySensor(
     const char* uniqueId,
@@ -16,37 +19,17 @@ HABinarySensor::HABinarySensor(
 
 }
 
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    bool initialState,
-    HAMqtt& mqtt
-) :
-    HABinarySensor(uniqueId, initialState)
+void HABinarySensor::buildSerializer()
 {
-    (void)mqtt;
-}
+    assert(!_serializer);
 
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    const char* deviceClass,
-    bool initialState
-) :
-    BaseDeviceType("binary_sensor", uniqueId),
-    _class(deviceClass),
-    _currentState(initialState)
-{
-
-}
-
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    const char* deviceClass,
-    bool initialState,
-    HAMqtt& mqtt
-) :
-    HABinarySensor(uniqueId, deviceClass, initialState)
-{
-    (void)mqtt;
+    _serializer = new HASerializer(this);
+    _serializer->set(HANameProperty, _name);
+    _serializer->set(HAUniqueIdProperty, _uniqueId);
+    _serializer->set(HADeviceClassProperty, _class);
+    _serializer->set(HASerializer::WithDevice);
+    //_serializer->set(HASerializer::WithAvailability);
+    _serializer->topic(HAStateTopic);
 }
 
 void HABinarySensor::onMqttConnected()

@@ -7,6 +7,7 @@
 #include "DeviceTypeSerializer.h"
 
 class HAMqtt;
+class HASerializer;
 
 class BaseDeviceType
 {
@@ -40,6 +41,9 @@ public:
 protected:
     HAMqtt* mqtt() const;
 
+    virtual void buildSerializer() { };
+    virtual void destroySerializer();
+
     virtual void onMqttConnected() = 0;
     virtual void onMqttMessage(
         const char* topic,
@@ -55,6 +59,8 @@ protected:
 
     const char* const _componentName;
     const char* const _uniqueId;
+    HASerializer* _serializer;
+    const char* _name;
 
 private:
     enum Availability {
@@ -64,7 +70,6 @@ private:
     };
 
     Availability _availability;
-    const char* _name;
 
     friend class HAMqtt;
 };

@@ -3,27 +3,21 @@
 
 #include <Arduino.h>
 
+class HASerializer;
+
 class HADevice
 {
 public:
     HADevice();
     HADevice(const char* uniqueId);
     HADevice(const byte* uniqueId, const uint16_t& length);
+    virtual ~HADevice();
 
     inline const char* getUniqueId() const
         { return _uniqueId; }
 
-    inline void setManufacturer(const char* manufacturer)
-        { _manufacturer = manufacturer; }
-
-    inline void setModel(const char* model)
-        { _model = model; }
-
-    inline void setName(const char* name)
-        { _name = name; }
-
-    inline void setSoftwareVersion(const char* softwareVersion)
-        { _softwareVersion = softwareVersion; }
+    inline const HASerializer* const getSerializer() const
+        { return _serializer; }
 
     inline bool isSharedAvailabilityEnabled() const
         { return _sharedAvailability; }
@@ -31,22 +25,21 @@ public:
     inline bool isOnline() const
         { return _available; }
 
+    void setManufacturer(const char* manufacturer);
+    void setModel(const char* model);
+    void setName(const char* name);
+    void setSoftwareVersion(const char* softwareVersion);
     void setAvailability(bool online);
     bool enableSharedAvailability();
     bool enableLastWill();
     bool setUniqueId(const byte* uniqueId, const uint16_t& length);
     void publishAvailability();
-    uint16_t calculateSerializedLength() const;
-    uint16_t serialize(char* dst) const;
 
 private:
+    HASerializer* _serializer;
     const char* _uniqueId;
-    const char* _manufacturer;
-    const char* _model;
-    const char* _name;
-    const char* _softwareVersion;
-    bool _sharedAvailability;
     char* _availabilityTopic;
+    bool _sharedAvailability;
     bool _available;
 };
 

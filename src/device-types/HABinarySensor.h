@@ -19,37 +19,22 @@ public:
         const char* uniqueId,
         bool initialState
     );
-    HABinarySensor(
-        const char* uniqueId,
-        bool initialState,
-        HAMqtt& mqtt
-    ); // legacy constructor
 
-    /**
-     * Initializes binary sensor with the specified class.
-     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
-     *
-     * @param uniqueId Unique ID of the sensor. Recommendes characters: [a-z0-9\-_]
-     * @param deviceClass Name of the class (lower case).
-     * @param initialState Initial state of the sensor.
-                           It will be published right after "config" message in order to update HA state.
-     */
-    HABinarySensor(
-        const char* uniqueId,
-        const char* deviceClass,
-        bool initialState
-    );
-    HABinarySensor(
-        const char* uniqueId,
-        const char* deviceClass,
-        bool initialState,
-        HAMqtt& mqtt
-    );
+    virtual void buildSerializer() override;
 
     /**
      * Publishes configuration of the sensor to the MQTT.
      */
     virtual void onMqttConnected() override;
+
+    /**
+     * Sets class of the device.
+     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
+     * 
+     * @param class Class name.
+     */
+    virtual void setDeviceClass(const char* deviceClass)
+        { _class = deviceClass; }
 
     /**
      * Changes state of the sensor and publishes MQTT message.

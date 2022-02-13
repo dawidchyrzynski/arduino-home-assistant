@@ -1,7 +1,10 @@
+#include <assert.h>
+
 #include "BaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 #include "../HAUtils.h"
+#include "../utils/HASerializer.h"
 
 BaseDeviceType::BaseDeviceType(
     const char* componentName,
@@ -9,8 +12,9 @@ BaseDeviceType::BaseDeviceType(
 ) :
     _componentName(componentName),
     _uniqueId(uniqueId),
-    _availability(AvailabilityDefault),
-    _name(nullptr)
+    _serializer(nullptr),
+    _name(nullptr),
+    _availability(AvailabilityDefault)
 {
     mqtt()->addDeviceType(this);
 }
@@ -42,22 +46,17 @@ void BaseDeviceType::onMqttMessage(
     (void)length;
 }
 
+void BaseDeviceType::destroySerializer()
+{
+    if (_serializer) {
+        delete _serializer;
+        _serializer = nullptr;
+    }
+}
+
 void BaseDeviceType::publishConfig()
 {
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
-        return;
-    }
-
-    const uint16_t& deviceLength = device->calculateSerializedLength();
-    if (deviceLength == 0) {
-        return;
-    }
-
-    char serializedDevice[deviceLength];
-    if (device->serialize(serializedDevice) == 0) {
-        return;
-    }
+    buildSerializer();
 
     const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
@@ -66,7 +65,7 @@ void BaseDeviceType::publishConfig()
         true,
         true
     );
-    const uint16_t& dataLength = calculateSerializedLength(serializedDevice);
+    const uint16_t& dataLength = _serializer->calculateSize();
 
     if (topicLength == 0 || dataLength == 0) {
         return;
@@ -81,19 +80,17 @@ void BaseDeviceType::publishConfig()
         true
     );
 
-    if (strlen(topic) == 0) {
-        return;
-    }
-
     if (mqtt()->beginPublish(topic, dataLength, true)) {
-        writeSerializedData(serializedDevice);
+        _serializer->flush();
         mqtt()->endPublish();
     }
+
+    destroySerializer();
 }
 
 void BaseDeviceType::publishAvailability()
 {
-    const HADevice* device = HAMqtt::instance()->getDevice();
+    /* const HADevice* device = HAMqtt::instance()->getDevice();
     if (device == nullptr) {
         return;
     }
@@ -135,12 +132,12 @@ void BaseDeviceType::publishAvailability()
             DeviceTypeSerializer::Offline
         ),
         true
-    );
+    ); */
 }
 
 bool BaseDeviceType::compareTopics(const char* topic, const char* expectedTopic)
 {
-    if (topic == nullptr || expectedTopic == nullptr) {
+    if (!topic || !expectedTopic) {
         return false;
     }
 
