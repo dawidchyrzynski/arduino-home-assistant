@@ -30,7 +30,7 @@ public:
 
     struct SerializerEntry {
         EntryType type;
-        uint8_t subtype; // FlagType, PropertyValueType or TopicType
+        uint8_t subtype; // FlagInternalType, PropertyValueType or TopicType
         const char* property;
         const void* value;
     };
@@ -58,7 +58,7 @@ public:
     bool flush() const;
 
 private:
-    enum FlagInternalEnum {
+    enum FlagInternalType {
         InternalWithDevice = 1,
         InternalWithSharedAvailability,
         InternalWithSeparateAvailability
@@ -69,8 +69,9 @@ private:
     uint8_t _entriesNb;
 
     SerializerEntry* addEntry();
+    SerializerEntry* getExistingEntry(const char* propertyP) const;
     uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
-    uint16_t calculateFlagSize(const FlagInternalEnum flag) const;
+    uint16_t calculateFlagSize(const FlagInternalType flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;
     PropertyValueType determinePropertyValueType(const char* propertyP) const;
     bool flushEntry(const SerializerEntry* entry, bool lastEntry) const;
