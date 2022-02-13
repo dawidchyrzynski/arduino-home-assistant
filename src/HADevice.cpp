@@ -4,7 +4,6 @@
 #include "HADevice.h"
 #include "HAUtils.h"
 #include "HAMqtt.h"
-#include "device-types/DeviceTypeSerializer.h"
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \

@@ -4,7 +4,6 @@
 #include <stdint.h>
 
 #include "../ArduinoHADefines.h"
-#include "DeviceTypeSerializer.h"
 
 class HAMqtt;
 class HASerializer;
@@ -68,7 +67,6 @@ private:
     };
 
     Availability _availability;
-
     friend class HAMqtt;
 };
 

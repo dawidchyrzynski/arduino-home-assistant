@@ -1,5 +1,3 @@
-#include <assert.h>
-
 #include "BaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
@@ -58,26 +56,23 @@ void BaseDeviceType::publishConfig()
 {
     buildSerializer();
 
-    const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+    const uint16_t topicLength = HASerializer::calculateConfigTopicLength(
         componentName(),
         uniqueId(),
-        DeviceTypeSerializer::ConfigTopic,
-        true,
         true
     );
-    const uint16_t& dataLength = _serializer->calculateSize();
+    const uint16_t dataLength = _serializer->calculateSize();
 
     if (topicLength == 0 || dataLength == 0) {
+        destroySerializer();
         return;
     }
 
     char topic[topicLength];
-    DeviceTypeSerializer::generateTopic(
+    HASerializer::generateConfigTopic(
         topic,
         componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::ConfigTopic,
-        true
+        uniqueId()
     );
 
     if (mqtt()->beginPublish(topic, dataLength, true)) {

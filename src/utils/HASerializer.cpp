@@ -7,6 +7,68 @@
 #include "../HAMqtt.h"
 #include "../device-types/BaseDeviceType.h"
 
+uint16_t HASerializer::calculateConfigTopicLength(
+    const char* componentName,
+    const char* objectId,
+    bool includeNullTerminator
+)
+{
+    const HAMqtt* mqtt = HAMqtt::instance();
+    if (
+        !componentName ||
+        !objectId ||
+        !mqtt ||
+        !mqtt->getDiscoveryPrefix() ||
+        !mqtt->getDevice()
+    ) {
+        return 0;
+    }
+
+    uint16_t size =
+        strlen(mqtt->getDiscoveryPrefix()) + 1 + // prefix with slash
+        strlen(componentName) + 1 + // component name with slash
+        strlen(mqtt->getDevice()->getUniqueId()) + 1 + // device ID with slash
+        strlen(objectId) + 1 + // object ID with slash
+        strlen_P(HAConfigTopic);
+
+    return includeNullTerminator ? size + 1 : size;
+}
+
+uint16_t HASerializer::generateConfigTopic(
+    char* output,
+    const char* componentName,
+    const char* objectId
+)
+{
+    const HAMqtt* mqtt = HAMqtt::instance();
+    if (
+        !output ||
+        !componentName ||
+        !objectId ||
+        !mqtt ||
+        !mqtt->getDiscoveryPrefix() ||
+        !mqtt->getDevice()
+    ) {
+        return 0;
+    }
+
+    strcpy(output, mqtt->getDiscoveryPrefix());
+    strcat_P(output, HASerializerSlash);
+
+    strcat(output, componentName);
+    strcat_P(output, HASerializerSlash);
+
+    strcat(output, mqtt->getDevice()->getUniqueId());
+    strcat_P(output, HASerializerSlash);
+
+    strcat(output, objectId);
+    strcat_P(output, HASerializerSlash);
+
+    strcat_P(output, HAConfigTopic);
+
+    return strlen(output) + 1; // size with null terminator
+}
+
 uint16_t HASerializer::calculateDataTopicLength(
     const char* objectId,
     const char* topicP,
@@ -15,7 +77,6 @@ uint16_t HASerializer::calculateDataTopicLength(
 {
     const HAMqtt* mqtt = HAMqtt::instance();
     if (
-        !objectId ||
         !topicP ||
         !mqtt ||
         !mqtt->getDataPrefix() ||
@@ -45,7 +106,6 @@ uint16_t HASerializer::generateDataTopic(
     const HAMqtt* mqtt = HAMqtt::instance();
     if (
         !output ||
-        !objectId ||
         !topicP ||
         !mqtt ||
         !mqtt->getDataPrefix() ||

@@ -35,6 +35,18 @@ public:
         const void* value;
     };
 
+    static uint16_t calculateConfigTopicLength(
+        const char* component,
+        const char* objectId,
+        bool includeNullTerminator = true
+    );
+
+    static uint16_t generateConfigTopic(
+        char* output,
+        const char* component,
+        const char* objectId
+    );
+
     static uint16_t calculateDataTopicLength(
         const char* objectId,
         const char* topicP,
