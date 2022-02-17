@@ -61,6 +61,18 @@ public:
         { _class = className; }
 
     /**
+     * The state class of the sensor (measurement, total, total_increasing).
+     * Home Assistant has support for storing sensors as long-term statistics if the entity
+     * has the right properties. To opt-in for statistics, the sensor must have state_class
+     * set to one of the valid state classes: measurement, total or total_increasing.
+     * Long-term statistics is needed for sensors used on the energy dashboard.
+     *
+     * @param stateClass https://www.home-assistant.io/integrations/sensor.mqtt#state_class
+     */
+    inline void setStateClass(const char* stateClass)
+        { _stateClass = stateClass; }
+
+    /**
      * Defines the units of measurement of the sensor, if any.
      *
      * @param units For example: °C, %
@@ -82,6 +94,7 @@ private:
     bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _class;
+    const char* _stateClass;
     const char* _units;
     const char* _icon;
 };
