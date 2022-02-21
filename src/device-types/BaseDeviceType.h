@@ -52,6 +52,12 @@ protected:
 
     virtual void publishConfig();
     virtual void publishAvailability();
+    virtual bool publishOnTopic(
+        const char* topicP,
+        const char* value,
+        bool retained = false,
+        bool isFlashStr = false
+    );
     virtual bool compareTopics(const char* topic, const char* expectedTopic);
 
     const char* const _componentName;

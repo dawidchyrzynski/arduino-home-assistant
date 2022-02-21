@@ -24,3 +24,7 @@ const char HADeviceClassProperty[] PROGMEM = {"dev_cla"};
 const char HAConfigTopic[] PROGMEM = {"config"};
 const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
+
+// misc
+const char HAStateOn[] PROGMEM = {"on"};
+const char HAStateOff[] PROGMEM = {"off"};

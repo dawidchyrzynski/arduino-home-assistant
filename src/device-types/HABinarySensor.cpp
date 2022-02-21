@@ -34,7 +34,7 @@ void HABinarySensor::buildSerializer()
 
 void HABinarySensor::onMqttConnected()
 {
-    if (strlen(uniqueId()) == 0) {
+    if (!uniqueId()) {
         return;
     }
 
@@ -59,42 +59,14 @@ bool HABinarySensor::setState(bool state)
 
 bool HABinarySensor::publishState(bool state)
 {
-    /* if (strlen(uniqueId()) == 0) {
-        return false;
-    }
+    return false;
 
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::StateTopic
-    );
-    if (topicSize == 0) {
-        return false;
-    }
-
-    char topic[topicSize];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::StateTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return false;
-    }
-
-    return mqtt()->publish(
-        topic,
-        (
-            state ?
-            DeviceTypeSerializer::StateOn :
-            DeviceTypeSerializer::StateOff
-        ),
+    /* return publishOnTopic(
+        HAStateTopic,
+        state ? HAStateOn : HAStateOff,
+        true,
         true
     ); */
-
-    return false;
 }
 
 #endif

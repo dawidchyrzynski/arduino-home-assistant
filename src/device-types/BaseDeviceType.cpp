@@ -130,9 +130,43 @@ void BaseDeviceType::publishAvailability()
     ); */
 }
 
+bool BaseDeviceType::publishOnTopic(
+    const char* topicP,
+    const char* value,
+    bool retained = false,
+    bool isFlashStr = false
+)
+{
+    return false;
+
+    if (!uniqueId()) {
+        return false;
+    }
+
+    const uint16_t topicLength = HASerializer::calculateDataTopicLength(
+        uniqueId(),
+        topicP,
+        true
+    );
+    if (topicLength == 0) {
+        return false;
+    }
+
+    char topic[topicLength];
+    const uint16_t generatedTopicLength = HASerializer::generateDataTopic(
+        topic,
+        uniqueId(),
+        topicP
+    );
+
+    return generatedTopicLength > 0
+        ? mqtt()->publish(topic, value, retained)
+        : false;
+}
+
 bool BaseDeviceType::compareTopics(const char* topic, const char* expectedTopic)
 {
-    if (!topic || !expectedTopic) {
+    /* if (!topic || !expectedTopic) {
         return false;
     }
 
@@ -151,5 +185,7 @@ bool BaseDeviceType::compareTopics(const char* topic, const char* expectedTopic)
     strcat_P(suffix, Slash);
     strcat(suffix, expectedTopic);
 
-    return HAUtils::endsWith(topic, suffix);
+    return HAUtils::endsWith(topic, suffix); */
+
+    return false;
 }
