@@ -21,12 +21,3 @@
 #warning "Arduino Home Assistant: You may miss deprecation warnings."
 #define AHA_DEPRECATED(func) func
 #endif
-
-#ifdef ARDUINOHA_DEBUG
-#define AHA_S1(x) #x
-#define AHA_S2(x) AHA_S1(x)
-#define AHA_LOCATION __FILE__ ":" AHA_S2(__LINE__)
-#define AHA_ASSERT(x) if (!x) { Serial.println("assert: " AHA_LOCATION); delay(1000); abort(); }
-#else
-#define AHA_ASSERT(...)
-#endif
