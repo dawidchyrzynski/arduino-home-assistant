@@ -192,7 +192,7 @@ void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
     }
 }
 
-bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
+bool HAMqtt::publish(const char* topic, const char* payload, bool retained, bool isFlashStr)
 {
     if (!isConnected()) {
         return false;
@@ -202,12 +202,18 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
     Serial.print(F("Publishing: "));
     Serial.print(topic);
     Serial.print(F(", len: "));
-    Serial.print(strlen(payload));
+    Serial.print(isFlashStr ? strlen_P(payload) : strlen(payload));
     Serial.println();
 #endif
 
     _mqtt->beginPublish(topic, strlen(payload), retained);
-    _mqtt->write((const uint8_t*)(payload), strlen(payload));
+
+    if (isFlashStr) {
+        writePayload_P(payload);
+    } else {
+        writePayload(payload, strlen(payload));
+    }
+
     return _mqtt->endPublish();
 }
 

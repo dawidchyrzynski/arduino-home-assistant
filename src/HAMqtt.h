@@ -159,8 +159,14 @@ public:
      * @param topic Topic to publish.
      * @param payload Payload to publish (it may be empty const char).
      * @param retained Determines whether message should be retained.
+     * @param isFlashStr Determines whether given payload is stored in the flash memory.
      */
-    bool publish(const char* topic, const char* payload, bool retained = false);
+    bool publish(
+        const char* topic,
+        const char* payload,
+        bool retained = false,
+        bool isFlashStr = false
+    );
 
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
     bool writePayload(const char* data, uint16_t length);
