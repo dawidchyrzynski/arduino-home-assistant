@@ -9,6 +9,7 @@
 #include "device-types/HAFan.h"
 #include "device-types/HAHVAC.h"
 #include "device-types/HASensor.h"
+#include "device-types/HANumber.h"
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"
 #include "device-types/HATriggers.h"
