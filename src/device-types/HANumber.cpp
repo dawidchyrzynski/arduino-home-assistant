@@ -15,7 +15,8 @@ HANumber::HANumber(const char* uniqueId) :
     _valueCallback(nullptr),
     _retain(false),
     _value(0),
-    _precision(0)
+    _precision(0),
+    _step(1)
 {
 
 }
@@ -63,9 +64,11 @@ void HANumber::onMqttMessage(
 }
 
 
-bool HANumber::setValue(float value, uint8_t precision)
+bool HANumber::setValue(float value, bool force)
 {
-    _precision = precision;
+    if (!force && _value == value) {
+        return true;
+    }
 
     if (publishValue(value)) {
         _value = value;
@@ -174,6 +177,9 @@ uint16_t HANumber::calculateSerializedLength(
         size += topicLength + 12; // 12 - length of the JSON decorators for this field
     }
 
+    // Field format: ,"step":"[STEP]"   
+    size +=  (_step > 1 ? floor(log10(_step)) : 1) + _precision + (_precision > 0 ? 1 : 0)  + 10;
+
     // units of measurement
     if (_units != nullptr) {
         // Format: ,"unit_of_meas":"[UNITS]"
@@ -217,6 +223,15 @@ bool HANumber::writeSerializedData(const char* serializedDevice) const
         );
     }
 
+    {
+
+        uint8_t digits = (_step > 1 ? floor(log10(_step)) : 1) + _precision + (_precision > 0 ? 1 : 0) ;
+        char str[digits + 1]; // null terminator, dot, minus sign
+        dtostrf(_step, 0, _precision, str);
+
+        static const char Prefix[] PROGMEM = {",\"step\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(Prefix, str);
+    }
 
     // units of measurement
     if (_units != nullptr) {

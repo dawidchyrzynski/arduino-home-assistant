@@ -49,10 +49,14 @@ public:
      * @param state Value to publish.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setValue(float value, uint8_t precision = 2);
+    bool setValue(float value, bool force = false);
 
 
     inline float getValue(){ return _value;}
+
+    void setStep(float step){_step = step;}
+
+    void setPrecision(uint8_t precision){_precision = precision;}
 
     /**
      * Defines the units of measurement of the sensor, if any.
@@ -89,6 +93,7 @@ private:
     const char* _units;
     const char* _icon;
     bool _retain;
+    float _step;
 
     HANumber_CALLBACK(_valueCallback);
 
