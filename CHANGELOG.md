@@ -9,6 +9,7 @@
 **Breaking changes:**
 
 * Changed structure of all MQTT topics used in the library.
+* Changed constructor of the `HABinarySensor` class (removed `deviceClass` argument. Please use `HABinarySensor::setDeviceClass` method)
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 
 ## 1.3.0

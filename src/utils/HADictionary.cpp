@@ -26,5 +26,7 @@ const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
 
 // misc
+const char HAOnline[] PROGMEM = {"online"};
+const char HAOffline[] PROGMEM = {"offline"};
 const char HAStateOn[] PROGMEM = {"on"};
 const char HAStateOff[] PROGMEM = {"off"};

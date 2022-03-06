@@ -56,7 +56,7 @@ protected:
         const char* topicP,
         const char* value,
         bool retained = false,
-        bool isFlashStr = false
+        bool isProgmemValue = false
     );
     virtual bool compareTopics(const char* topic, const char* expectedTopic);
 

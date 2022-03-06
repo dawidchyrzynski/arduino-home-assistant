@@ -85,61 +85,33 @@ void BaseDeviceType::publishConfig()
 
 void BaseDeviceType::publishAvailability()
 {
-    /* const HADevice* device = HAMqtt::instance()->getDevice();
-    if (device == nullptr) {
+    const HADevice* device = mqtt()->getDevice();
+    if (
+        !device ||
+        !uniqueId() ||
+        device->isSharedAvailabilityEnabled()
+    ) {
         return;
     }
 
-    if (_availability == AvailabilityDefault ||
-            !mqtt()->isConnected() ||
-            strlen(uniqueId()) == 0 ||
-            strlen(componentName()) == 0 ||
-            device->isSharedAvailabilityEnabled()) {
-        return;
-    }
-
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::AvailabilityTopic
-    );
-    if (topicSize == 0) {
-        return;
-    }
-
-    char topic[topicSize];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::AvailabilityTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return;
-    }
-
-    mqtt()->publish(
-        topic,
-        (
-            _availability == AvailabilityOnline ?
-            DeviceTypeSerializer::Online :
-            DeviceTypeSerializer::Offline
-        ),
+    publishOnTopic(
+        HAAvailabilityTopic,
+        _availability == AvailabilityOnline
+            ? HAOnline
+            : HAOffline,
+        true,
         true
-    ); */
+    );
 }
 
 bool BaseDeviceType::publishOnTopic(
     const char* topicP,
     const char* value,
     bool retained = false,
-    bool isFlashStr = false
+    bool isProgmemValue = false
 )
 {
-    return false;
-
-    if (!uniqueId()) {
+    if (!uniqueId() || !topicP || !value) {
         return false;
     }
 
@@ -158,10 +130,25 @@ bool BaseDeviceType::publishOnTopic(
         uniqueId(),
         topicP
     );
+    if (generatedTopicLength == 0) {
+        return false;
+    }
 
-    return generatedTopicLength > 0
-        ? mqtt()->publish(topic, value, retained)
-        : false;
+    const uint16_t valueLength = isProgmemValue
+        ? strlen_P(value)
+        : strlen(value);
+
+    if (mqtt()->beginPublish(topic, valueLength, retained)) {
+        if (isProgmemValue) {
+            mqtt()->writePayload_P(value);
+        } else {
+            mqtt()->writePayload(value, valueLength);
+        }
+
+        return mqtt()->endPublish();
+    }
+
+    return false;
 }
 
 bool BaseDeviceType::compareTopics(const char* topic, const char* expectedTopic)

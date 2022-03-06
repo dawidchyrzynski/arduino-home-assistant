@@ -26,6 +26,8 @@ extern const char HAAvailabilityTopic[];
 extern const char HAStateTopic[];
 
 // misc
+extern const char HAOnline[];
+extern const char HAOffline[];
 extern const char HAStateOn[];
 extern const char HAStateOff[];
 

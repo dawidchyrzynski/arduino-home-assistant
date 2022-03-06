@@ -59,14 +59,12 @@ bool HABinarySensor::setState(bool state)
 
 bool HABinarySensor::publishState(bool state)
 {
-    return false;
-
-    /* return publishOnTopic(
+    return publishOnTopic(
         HAStateTopic,
         state ? HAStateOn : HAStateOff,
         true,
         true
-    ); */
+    );
 }
 
 #endif
