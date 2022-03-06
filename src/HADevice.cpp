@@ -70,14 +70,14 @@ void HADevice::setAvailability(bool online)
 bool HADevice::enableSharedAvailability()
 {
     if (_sharedAvailability) {
-        return false;
+        return true; // already enabled
     }
 
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         nullptr,
         HAAvailabilityTopic
     );
-    if (topicLength <= 0) {
+    if (topicLength == 0) {
         return false;
     }
 
@@ -89,6 +89,7 @@ bool HADevice::enableSharedAvailability()
         HAAvailabilityTopic
     ) > 0) {
         _sharedAvailability = true;
+        return true;
     }
 
     return false;

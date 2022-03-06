@@ -22,7 +22,10 @@ public:
     inline bool isSharedAvailabilityEnabled() const
         { return _sharedAvailability; }
 
-    inline bool isOnline() const
+    inline const char* getAvailabilityTopic() const
+        { return _availabilityTopic; }
+
+    inline bool isAvailable() const
         { return _available; }
 
     void setManufacturer(const char* manufacturer);

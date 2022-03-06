@@ -28,7 +28,7 @@ void HABinarySensor::buildSerializer()
     _serializer->set(HAUniqueIdProperty, _uniqueId);
     _serializer->set(HADeviceClassProperty, _class);
     _serializer->set(HASerializer::WithDevice);
-    //_serializer->set(HASerializer::WithAvailability);
+    _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(HAStateTopic);
 }
 

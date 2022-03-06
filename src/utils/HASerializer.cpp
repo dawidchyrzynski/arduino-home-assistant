@@ -132,7 +132,7 @@ uint16_t HASerializer::generateDataTopic(
 
 HASerializer::HASerializer(BaseDeviceType* deviceType) :
     _deviceType(deviceType),
-    _entries(NULL),
+    _entries(nullptr),
     _entriesNb(0)
 {
 
@@ -168,32 +168,37 @@ void HASerializer::set(const char* propertyP, const void* value)
 
 void HASerializer::set(const FlagType flag)
 {
-    SerializerEntry* entry = addEntry();
-    if (!entry) {
-        return;
-    }
-
     if (flag == WithDevice) {
+        SerializerEntry* entry = addEntry();
+        if (!entry) {
+            return;
+        }
+
         entry->type = FlagEntryType;
         entry->subtype = static_cast<uint8_t>(InternalWithDevice);
-        entry->property = NULL;
-        entry->value = NULL;
+        entry->property = nullptr;
+        entry->value = nullptr;
     } else if (flag == WithAvailability) {
-        entry->type = TopicEntryType;
-        entry->property = HAAvailabilityTopic;
-        entry->value = NULL;
-
+        uint8_t subtype = 0;
         HAMqtt* mqtt = HAMqtt::instance();
         const bool isSharedAvailability = mqtt->getDevice()->isSharedAvailabilityEnabled();
         const bool isAvailabilityConfigured = _deviceType->isAvailabilityConfigured();
 
-        if (isSharedAvailability) {
-            entry->subtype = static_cast<uint8_t>(InternalWithSharedAvailability);
-        } else if (isAvailabilityConfigured) {
-            entry->subtype = static_cast<uint8_t>(InternalWithSeparateAvailability);
-        } else {
-            entry->type = UnknownEntryType;
+        if (!isSharedAvailability && !isAvailabilityConfigured) {
+            return; // not configured
         }
+
+        SerializerEntry* entry = addEntry();
+        if (!entry) {
+            return;
+        }
+
+        entry->type = TopicEntryType;
+        entry->subtype = subtype;
+        entry->property = HAAvailabilityTopic;
+        entry->value = isSharedAvailability
+            ? mqtt->getDevice()->getAvailabilityTopic()
+            : nullptr;
     }
 }
 
@@ -211,7 +216,7 @@ void HASerializer::topic(const char* topicP)
     entry->type = TopicEntryType;
     entry->subtype = 0;
     entry->property = topicP;
-    entry->value = NULL;
+    entry->value = nullptr;
 }
 
 HASerializer::SerializerEntry* HASerializer::addEntry()
@@ -304,12 +309,19 @@ uint16_t HASerializer::calculateEntrySize(
             strlen_P(entry->property) +
             strlen_P(HASerializerJsonPropertySuffix);
 
-        // topic length (escaped)
-        size += 2 * strlen_P(HASerializerJsonEscapeChar) + calculateDataTopicLength(
-            _deviceType->uniqueId(),
-            entry->property,
-            false
-        );
+        // topic escape
+        size += 2 * strlen_P(HASerializerJsonEscapeChar);
+
+        // topic
+        if (entry->value) {
+            size += strlen(static_cast<const char*>(entry->value));
+        } else {
+            size += calculateDataTopicLength(
+                _deviceType->uniqueId(),
+                entry->property,
+                false
+            );
+        }
     } else if (entry->type == FlagEntryType) {
         size += calculateFlagSize(static_cast<FlagInternalType>(entry->subtype));
     }
@@ -428,13 +440,18 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
 
+    // property name
     mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
     mqtt->writePayload_P(entry->property);
     mqtt->writePayload_P(HASerializerJsonPropertySuffix);
 
+    // value (escaped)
     mqtt->writePayload_P(HASerializerJsonEscapeChar);
     
-    {
+    if (entry->value) {
+        const char* topic = static_cast<const char*>(entry->value);
+        mqtt->writePayload(topic, strlen(topic));
+    } else {
         const uint16_t length = calculateDataTopicLength(
             _deviceType->uniqueId(),
             entry->property

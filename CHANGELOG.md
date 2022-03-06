@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.0
+
+**New features:**
+
+**Updates:**
+
+**Breaking changes:**
+
+* Changed structure of all MQTT topics used in the library.
+* Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
+
 ## 1.3.0
 
 **New features:**
