@@ -95,18 +95,19 @@ bool HADevice::enableSharedAvailability()
     return false;
 }
 
-bool HADevice::enableLastWill()
+bool HADevice::enableLastWill(bool retained)
 {
     HAMqtt* mqtt = HAMqtt::instance();
     if (!mqtt || !_availabilityTopic) {
         return false;
     }
 
-    /* mqtt->setLastWill(
+    mqtt->setLastWill(
         _availabilityTopic,
-        DeviceTypeSerializer::Offline,
-        false
-    ); */
+        "offline",
+        retained
+    );
+
     return true;
 }
 
@@ -123,20 +124,16 @@ bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
 
 void HADevice::publishAvailability()
 {
-    if (!_sharedAvailability) {
+    HAMqtt* mqtt = HAMqtt::instance();
+    if (!_availabilityTopic || !mqtt) {
         return;
     }
 
-    /* HAMqtt* mqtt = HAMqtt::instance();
-    if (mqtt) {
-        mqtt->publish(
-            _availabilityTopic,
-            (
-                _available ?
-                DeviceTypeSerializer::Online :
-                DeviceTypeSerializer::Offline
-            ),
-            true
-        );
-    } */
+    const char* payload = _available ? HAOnline : HAOffline;
+    const uint16_t length = strlen_P(payload);
+
+    if (mqtt->beginPublish(_availabilityTopic, length, true)) {
+        mqtt->writePayload_P(payload);
+        mqtt->endPublish();
+    }
 }
