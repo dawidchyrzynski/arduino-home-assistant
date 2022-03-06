@@ -12,6 +12,7 @@ HABinarySensor::HABinarySensor(
 ) :
     BaseDeviceType("binary_sensor", uniqueId),
     _class(nullptr),
+    _icon(nullptr),
     _currentState(initialState)
 {
 
@@ -27,6 +28,7 @@ void HABinarySensor::buildSerializer()
     _serializer->set(HANameProperty, _name);
     _serializer->set(HAUniqueIdProperty, _uniqueId);
     _serializer->set(HADeviceClassProperty, _class);
+    _serializer->set(HAIconProperty, _icon);
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(HAStateTopic);

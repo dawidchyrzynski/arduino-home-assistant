@@ -31,10 +31,19 @@ public:
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
      * 
-     * @param class Class name.
+     * @param class Class name
      */
     virtual void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
+
+    /**
+     * Sets icon of the sensor.
+     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     *
+     * @param class Icon name
+     */
+    virtual void setIcon(const char* icon)
+        { _icon = icon; }
 
     /**
      * Changes state of the sensor and publishes MQTT message.
@@ -57,6 +66,7 @@ private:
     bool publishState(bool state);
 
     const char* _class;
+    const char* _icon;
     bool _currentState;
 };
 
