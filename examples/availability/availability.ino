@@ -14,9 +14,8 @@ HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
 // "input" is unique ID of the sensor. You should define you own ID.
-// "door" is device class (based on the class HA displays different icons in the panel)
 // "true" is initial state of the sensor. In this example it's "true" as we use pullup resistor
-HABinarySensor sensor("input", "door", true);
+HABinarySensor sensor("input", true);
 
 void setup() {
     pinMode(INPUT_PIN, INPUT_PULLUP);
@@ -37,6 +36,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     sensor.setName("Door sensor"); // optional
+    sensor.setDeviceClass("door"); // optional
 
     mqtt.begin(BROKER_ADDR);
 }

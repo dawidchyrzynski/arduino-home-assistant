@@ -16,7 +16,7 @@ sensor/switch you need to set initial state of the unit by calling `setAvailabil
 Example:
 ```cpp
 ...
-HABinarySensor sensor("input", "door", true, mqtt);
+HABinarySensor sensor("input", true, mqtt);
 
 void setup() {
     // ...
