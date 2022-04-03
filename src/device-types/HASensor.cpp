@@ -79,14 +79,14 @@ bool HASensor::setValue(float value, uint8_t precision)
 bool HASensor::publishValue(const char* value)
 {
 
-    if(value == _currentState) {
-        return false;
-    }
-    _currentState = value;
-
     if (strlen(uniqueId()) == 0 || value == nullptr) {
         return false;
     }
+
+    if(_currentState != nullptr && strcmp(value, _currentState) == 0) {
+        return false;
+    }
+    _currentState = value;
 
     if (!mqtt()->isConnected()) {
         return false;
