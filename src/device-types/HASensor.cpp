@@ -78,6 +78,12 @@ bool HASensor::setValue(float value, uint8_t precision)
 
 bool HASensor::publishValue(const char* value)
 {
+
+    if(value == _currentState) {
+        return false;
+    }
+    _currentState = value;
+
     if (strlen(uniqueId()) == 0 || value == nullptr) {
         return false;
     }

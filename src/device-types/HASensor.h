@@ -84,6 +84,8 @@ private:
     const char* _class;
     const char* _units;
     const char* _icon;
+
+    const char* _currentState;
 };
 
 #endif
