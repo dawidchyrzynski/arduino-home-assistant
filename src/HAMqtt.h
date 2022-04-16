@@ -20,7 +20,11 @@ public:
     inline static HAMqtt* instance()
         { return _instance; }
 
+    inline static void clearInstance()
+        { _instance = nullptr; }
+
     HAMqtt(Client& netClient, HADevice& device);
+    virtual ~HAMqtt();
 
     /**
      * Sets prefix for Home Assistant discovery.
@@ -221,7 +225,6 @@ private:
      */
     void onConnectedLogic();
 
-    Client& _netClient;
     HADevice& _device;
     HAMQTT_MESSAGE_CALLBACK(_messageCallback);
     HAMQTT_CALLBACK(_connectedCallback);

@@ -20,7 +20,6 @@ void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
-    _netClient(netClient),
     _device(device),
     _messageCallback(nullptr),
     _connectedCallback(nullptr),
@@ -39,6 +38,13 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     _lastWillRetain(false)
 {
     _instance = this;
+}
+
+HAMqtt::~HAMqtt()
+{
+    if (_mqtt) {
+        delete _mqtt;
+    }
 }
 
 bool HAMqtt::begin(
