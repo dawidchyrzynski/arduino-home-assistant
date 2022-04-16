@@ -12,10 +12,10 @@ bool HAUtils::endsWith(const char* str, const char* suffix)
         return false;
     }
 
-    const uint16_t& lenstr = strlen(str);
-    const uint16_t& lensuffix = strlen(suffix);
+    const uint16_t lenstr = strlen(str);
+    const uint16_t lensuffix = strlen(suffix);
 
-    if (lensuffix > lenstr) {
+    if (lensuffix > lenstr || lenstr == 0 || lensuffix == 0) {
         return false;
     }
 
