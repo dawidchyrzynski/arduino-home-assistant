@@ -8,9 +8,9 @@ class HASerializer;
 class HADevice
 {
 public:
-    HADevice();
-    HADevice(const char* uniqueId);
-    HADevice(const byte* uniqueId, const uint16_t& length);
+    explicit HADevice(HASerializer* serializer = nullptr);
+    explicit HADevice(const char* uniqueId, HASerializer* serializer = nullptr);
+    explicit HADevice(const byte* uniqueId, const uint16_t length, HASerializer* serializer = nullptr);
     virtual ~HADevice();
 
     inline const char* getUniqueId() const
@@ -35,11 +35,12 @@ public:
     void setAvailability(bool online);
     bool enableSharedAvailability();
     bool enableLastWill(bool retained = false);
-    bool setUniqueId(const byte* uniqueId, const uint16_t& length);
+    bool setUniqueId(const byte* uniqueId, const uint16_t length);
     void publishAvailability();
 
 private:
     HASerializer* _serializer;
+    bool _customSerializer;
     const char* _uniqueId;
     char* _availabilityTopic;
     bool _sharedAvailability;

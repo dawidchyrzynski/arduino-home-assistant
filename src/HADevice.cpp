@@ -7,26 +7,27 @@
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
-    _serializer(new HASerializer(nullptr)), \
+    _serializer(serializer ? serializer : new HASerializer(nullptr)), \
+    _customSerializer(serializer != nullptr), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
     _available(true) // device will be available by default
 
-HADevice::HADevice() :
+HADevice::HADevice(HASerializer* serializer) :
     _uniqueId(nullptr),
     HADEVICE_INIT
 {
 
 }
 
-HADevice::HADevice(const char* uniqueId) :
+HADevice::HADevice(const char* uniqueId, HASerializer* serializer) :
     _uniqueId(uniqueId),
     HADEVICE_INIT
 {
     _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
 }
 
-HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
+HADevice::HADevice(const byte* uniqueId, const uint16_t length, HASerializer* serializer) :
     _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
     HADEVICE_INIT
 {
@@ -35,9 +36,8 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
 
 HADevice::~HADevice()
 {
-    if (_serializer) {
-        delete _serializer;
-        _serializer = nullptr;
+    if (_serializer && !_customSerializer) {
+        free(_serializer);
     }
 }
 
@@ -111,9 +111,9 @@ bool HADevice::enableLastWill(bool retained)
     return true;
 }
 
-bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
 {
-    if (!_uniqueId) {
+    if (_uniqueId) {
         return false; // unique ID cannot be changed at runtime once it's set
     }
 
