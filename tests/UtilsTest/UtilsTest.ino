@@ -1,5 +1,4 @@
 #include <AUnit.h>
-#include <Ethernet.h>
 #include <ArduinoHATests.h>
 
 using aunit::TestRunner;
