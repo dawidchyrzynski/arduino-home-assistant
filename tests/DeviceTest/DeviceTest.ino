@@ -241,7 +241,7 @@ test(DeviceTest, availability_publish_offline) {
     mock->connectDummy();
 
     assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), "offline");
+    assertStringCaseEqual(mock->getMessageBuffer(), F("offline"));
     assertTrue(mock->isMessageFlushed());
 }
 
@@ -256,10 +256,12 @@ test(DeviceTest, availability_publish_online) {
     mock->connectDummy();
 
     assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), "online");
+    assertStringCaseEqual(mock->getMessageBuffer(), F("online"));
     assertTrue(mock->isMessageFlushed());
 }
 
+// to do: last will test
+// to do: serializer json data
 
 void setup()
 {

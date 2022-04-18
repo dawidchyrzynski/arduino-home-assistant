@@ -380,6 +380,9 @@ uint16_t HASerializer::calculatePropertyValueSize(const SerializerEntry* entry) 
     } else if (entry->subtype == FloatP1PropertyType || entry->subtype == FloatP2PropertyType) {
         const float value = *static_cast<const float*>(entry->value);
         return HAUtils::calculateFloatSize(value, entry->subtype == FloatP1PropertyType ? 1 : 2);
+    } else if (entry->subtype == Int32PropertyType) {
+        const int32_t value = *static_cast<const int32_t*>(entry->value);
+        return HAUtils::calculateNumberSize(value);
     }
 
     return 0;
@@ -443,7 +446,17 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         const uint8_t bufferSize = HAUtils::calculateFloatSize(value, precision);
 
         char tmp[bufferSize + 1]; // including null terminator
+        memset(tmp, 0, sizeof(tmp));
         HAUtils::floatToStr(tmp, value, precision);
+        mqtt->writePayload(tmp, strlen(tmp));
+
+        return true;
+    } else if (entry->subtype == Int32PropertyType) {
+        const int32_t value = *static_cast<const int32_t*>(entry->value);
+        const uint8_t digitsNb = HAUtils::calculateNumberSize(value);
+        char tmp[digitsNb + 1]; // including null terminator
+        memset(tmp, 0, sizeof(tmp));
+        HAUtils::numberToStr(tmp, value);
         mqtt->writePayload(tmp, strlen(tmp));
 
         return true;

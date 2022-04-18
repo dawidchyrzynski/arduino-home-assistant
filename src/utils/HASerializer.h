@@ -28,7 +28,8 @@ public:
         ConstCharPropertyValue = 1,
         BoolPropertyType,
         FloatP1PropertyType, // 1 digit after decimal
-        FloatP2PropertyType // 2 digits after decimal
+        FloatP2PropertyType, // 2 digits after decimal
+        Int32PropertyType
     };
 
     struct SerializerEntry {

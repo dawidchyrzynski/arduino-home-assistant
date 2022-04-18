@@ -33,8 +33,6 @@ test(SerializerTopicsTest, calculate_config_invalid_component) {
             "objectId"
         )
     );
-
-    Serial.println("checked");
 }
 
 test(SerializerTopicsTest, calculate_config_invalid_object) {

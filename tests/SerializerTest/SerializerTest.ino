@@ -113,11 +113,41 @@ test(SerializerTest, float_unsigned_field) {
 test(SerializerTest, float_signed_field) {
     prepareTest
 
-    float value = -0.333;
+    float value = -11.333;
     serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":-0.33}"));
+    assertJson(mock, serializer, F("{\"name\":-11.33}"));
+}
+
+test(SerializerTest, number_zero_field) {
+    prepareTest
+
+    int32_t value = 0;
+    serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":0}"));
+}
+
+test(SerializerTest, number_signed_field) {
+    prepareTest
+
+    int32_t value = -12346756;
+    serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":-12346756}"));
+}
+
+test(SerializerTest, number_unsigned_field) {
+    prepareTest
+
+    int32_t value = 312346733;
+    serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":312346733}"));
 }
 
 // to do: number
