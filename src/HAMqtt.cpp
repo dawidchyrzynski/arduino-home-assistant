@@ -56,7 +56,7 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
 HAMqtt::~HAMqtt()
 {
     if (_mqtt) {
-        free(_mqtt);
+        delete _mqtt;
     }
 
     _instance = nullptr;

@@ -146,7 +146,7 @@ HASerializer::HASerializer(BaseDeviceType* deviceType) :
 HASerializer::~HASerializer()
 {
     if (_entries) {
-        free(_entries);
+        delete _entries;
     }
 }
 
@@ -160,9 +160,9 @@ void HASerializer::set(
         return;
     }
 
-    SerializerEntry* entry = getExistingEntry(propertyP);
+    SerializerEntry* entry = getExistingEntry(PropertyEntryType, propertyP);
     if (!entry) {
-        entry =  addEntry();
+        entry = addEntry();
     }
 
     if (!entry) {
@@ -217,7 +217,11 @@ void HASerializer::topic(const char* topicP)
         return;
     }
 
-    SerializerEntry* entry = addEntry();
+    SerializerEntry* entry = getExistingEntry(TopicEntryType, topicP);
+    if (!entry) {
+        entry = addEntry();
+    }
+
     if (!entry) {
         return;
     }
@@ -239,12 +243,13 @@ HASerializer::SerializerEntry* HASerializer::addEntry()
 }
 
 HASerializer::SerializerEntry* HASerializer::getExistingEntry(
+    const EntryType type,
     const char* propertyP
 ) const
 {
     for (uint8_t i = 0; i < _entriesNb; i++) {
         SerializerEntry* entry = &_entries[i];
-        if (entry->type == PropertyEntryType && entry->property == propertyP) {
+        if (entry->type == type && entry->property == propertyP) {
             return entry;
         }
     }

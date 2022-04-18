@@ -87,7 +87,7 @@ public:
         { return _willMessage; }
 
 private:
-    char _messageBuffer[256];
+    char _messageBuffer[128];
     const char* _messageTopic;
     bool _messageRetained;
     bool _messageFlushed;

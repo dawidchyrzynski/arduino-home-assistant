@@ -36,11 +36,11 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
 HADevice::~HADevice()
 {
     if (_serializer) {
-        free(_serializer);
+        delete _serializer;
     }
 
     if (_availabilityTopic) {
-        free(_availabilityTopic);
+        delete _availabilityTopic;
     }
 }
 
