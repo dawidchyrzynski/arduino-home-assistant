@@ -15,10 +15,9 @@
 
 #define assertJson(mock, serializer, expectedJson) \
 { \
-    const char* json = expectedJson; \
     assertStringCaseEqual(mock->getMessageTopic(), testTopic); \
-    assertStringCaseEqual(mock->getMessageBuffer(), json); \
-    assertEqual(strlen(json), serializer.calculateSize()); \
+    assertStringCaseEqual(mock->getMessageBuffer(), expectedJson); \
+    assertEqual(strlen_P(reinterpret_cast<const char *>(expectedJson)), serializer.calculateSize()); \
 }
 
 using aunit::TestRunner;
@@ -29,7 +28,7 @@ static const char* testTopic = "testTopic";
 test(SerializerTest, empty_json) {
     prepareTest
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{}");
+    assertJson(mock, serializer, F("{}"));
 }
 
 test(SerializerTest, char_field) {
@@ -38,7 +37,7 @@ test(SerializerTest, char_field) {
     serializer.set(HANameProperty, "XYZ");
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"name\":\"XYZ\"}");
+    assertJson(mock, serializer, F("{\"name\":\"XYZ\"}"));
 }
 
 test(SerializerTest, char_fields) {
@@ -48,7 +47,7 @@ test(SerializerTest, char_fields) {
     serializer.set(HAIconProperty, "Icon");
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"dev_cla\":\"Class\",\"ic\":\"Icon\"}");
+    assertJson(mock, serializer, F("{\"dev_cla\":\"Class\",\"ic\":\"Icon\"}"));
 }
 
 test(SerializerTest, field_override) {
@@ -58,7 +57,7 @@ test(SerializerTest, field_override) {
     serializer.set(HADeviceClassProperty, "Class2");
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"dev_cla\":\"Class2\"}");
+    assertJson(mock, serializer, F("{\"dev_cla\":\"Class2\"}"));
 }
 
 test(SerializerTest, skip_null_fields) {
@@ -68,7 +67,7 @@ test(SerializerTest, skip_null_fields) {
     serializer.set(HAIconProperty, nullptr);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"dev_cla\":\"Class\"}");
+    assertJson(mock, serializer, F("{\"dev_cla\":\"Class\"}"));
 }
 
 test(SerializerTest, bool_false_field) {
@@ -78,7 +77,7 @@ test(SerializerTest, bool_false_field) {
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"name\":false}");
+    assertJson(mock, serializer, F("{\"name\":false}"));
 }
 
 test(SerializerTest, bool_true_field) {
@@ -88,7 +87,7 @@ test(SerializerTest, bool_true_field) {
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"name\":true}");
+    assertJson(mock, serializer, F("{\"name\":true}"));
 }
 
 // to do: float
