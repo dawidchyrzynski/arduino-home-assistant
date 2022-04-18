@@ -62,6 +62,12 @@ public:
     HASerializer(BaseDeviceType* deviceType);
     virtual ~HASerializer();
 
+    inline uint8_t getEntriesNb() const
+        { return _entriesNb; }
+
+    inline SerializerEntry* getEntries() const
+        { return _entries; }
+
     void set(const char* propertyP, const void* value);
     void set(const FlagType flag);
     void topic(const char* topicP);

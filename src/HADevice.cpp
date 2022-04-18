@@ -7,27 +7,26 @@
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
-    _serializer(serializer ? serializer : new HASerializer(nullptr)), \
-    _customSerializer(serializer != nullptr), \
+    _serializer(new HASerializer(nullptr)), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
     _available(true) // device will be available by default
 
-HADevice::HADevice(HASerializer* serializer) :
+HADevice::HADevice() :
     _uniqueId(nullptr),
     HADEVICE_INIT
 {
 
 }
 
-HADevice::HADevice(const char* uniqueId, HASerializer* serializer) :
+HADevice::HADevice(const char* uniqueId) :
     _uniqueId(uniqueId),
     HADEVICE_INIT
 {
     _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
 }
 
-HADevice::HADevice(const byte* uniqueId, const uint16_t length, HASerializer* serializer) :
+HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
     _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
     HADEVICE_INIT
 {
@@ -36,7 +35,7 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t length, HASerializer* se
 
 HADevice::~HADevice()
 {
-    if (_serializer && !_customSerializer) {
+    if (_serializer) {
         free(_serializer);
     }
 }
