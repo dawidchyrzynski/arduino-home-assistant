@@ -68,7 +68,11 @@ public:
     inline SerializerEntry* getEntries() const
         { return _entries; }
 
-    void set(const char* propertyP, const void* value);
+    void set(
+        const char* propertyP,
+        const void* value,
+        PropertyValueType valueType = ConstCharPropertyValue
+    );
     void set(const FlagType flag);
     void topic(const char* topicP);
 
@@ -91,7 +95,6 @@ private:
     uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
     uint16_t calculateFlagSize(const FlagInternalType flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;
-    PropertyValueType determinePropertyValueType(const char* propertyP) const;
     bool flushEntry(const SerializerEntry* entry, bool lastEntry) const;
     bool flushEntryValue(const SerializerEntry* entry) const;
     bool flushTopic(const SerializerEntry* entry) const;

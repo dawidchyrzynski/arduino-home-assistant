@@ -145,7 +145,11 @@ HASerializer::~HASerializer()
     }
 }
 
-void HASerializer::set(const char* propertyP, const void* value)
+void HASerializer::set(
+    const char* propertyP,
+    const void* value,
+    PropertyValueType valueType
+)
 {
     if (!propertyP || !value) {
         return;
@@ -161,7 +165,7 @@ void HASerializer::set(const char* propertyP, const void* value)
     }
 
     entry->type = PropertyEntryType;
-    entry->subtype = determinePropertyValueType(propertyP);
+    entry->subtype = static_cast<uint8_t>(valueType);
     entry->property = propertyP;
     entry->value = value;
 }
@@ -370,15 +374,6 @@ uint16_t HASerializer::calculatePropertyValueSize(const SerializerEntry* entry) 
     // to do: add more types here
 
     return 0;
-}
-
-HASerializer::PropertyValueType HASerializer::determinePropertyValueType(
-    const char* propertyP
-) const
-{
-    // to do: add non const char properties here
-
-    return ConstCharPropertyValue;
 }
 
 bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry) const
