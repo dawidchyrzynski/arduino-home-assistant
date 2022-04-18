@@ -20,10 +20,8 @@ public:
     inline static HAMqtt* instance()
         { return _instance; }
 
-    inline static void clearInstance()
-        { _instance = nullptr; }
-
-    HAMqtt(Client& netClient, HADevice& device);
+    explicit HAMqtt(Client& netClient, HADevice& device);
+    explicit HAMqtt(PubSubClient* pubSub, HADevice& device);
     virtual ~HAMqtt();
 
     /**

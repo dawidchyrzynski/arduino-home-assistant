@@ -5,6 +5,23 @@
 #include "ArduinoHADefines.h"
 #include "device-types/BaseDeviceType.h"
 
+#define HAMQTT_INIT \
+    _device(device), \
+    _messageCallback(nullptr), \
+    _connectedCallback(nullptr), \
+    _connectionFailedCallback(nullptr), \
+    _initialized(false), \
+    _discoveryPrefix(DefaultDiscoveryPrefix), \
+    _dataPrefix(DefaultDataPrefix), \
+    _username(nullptr), \
+    _password(nullptr), \
+    _lastConnectionAttemptAt(0), \
+    _devicesTypesNb(0), \
+    _devicesTypes(nullptr), \
+    _lastWillTopic(nullptr), \
+    _lastWillMessage(nullptr), \
+    _lastWillRetain(false)
+
 static const char* DefaultDiscoveryPrefix = "homeassistant";
 static const char* DefaultDataPrefix = "aha";
 
@@ -20,22 +37,15 @@ void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 }
 
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
-    _device(device),
-    _messageCallback(nullptr),
-    _connectedCallback(nullptr),
-    _connectionFailedCallback(nullptr),
-    _initialized(false),
-    _discoveryPrefix(DefaultDiscoveryPrefix),
-    _dataPrefix(DefaultDataPrefix),
-    _mqtt(new PubSubClient(netClient)),
-    _username(nullptr),
-    _password(nullptr),
-    _lastConnectionAttemptAt(0),
-    _devicesTypesNb(0),
-    _devicesTypes(nullptr),
-    _lastWillTopic(nullptr),
-    _lastWillMessage(nullptr),
-    _lastWillRetain(false)
+    HAMQTT_INIT,
+    _mqtt(new PubSubClient(netClient))
+{
+    _instance = this;
+}
+
+HAMqtt::HAMqtt(PubSubClient* pubSub, HADevice& device) :
+    HAMQTT_INIT,
+    _mqtt(pubSub)
 {
     _instance = this;
 }
@@ -43,8 +53,10 @@ HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
 HAMqtt::~HAMqtt()
 {
     if (_mqtt) {
-        delete _mqtt;
+        free(_mqtt);
     }
+
+    _instance = nullptr;
 }
 
 bool HAMqtt::begin(
@@ -317,11 +329,11 @@ void HAMqtt::connectToServer()
     } else {
 #if defined(ARDUINOHA_DEBUG)
         Serial.println(F("Failed to connect to the broker"));
+#endif
 
         if (_connectionFailedCallback) {
             _connectionFailedCallback();
         }
-#endif
     }
 }
 
