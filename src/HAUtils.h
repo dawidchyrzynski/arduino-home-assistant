@@ -22,14 +22,16 @@ public:
         const uint16_t length
     );
     static uint8_t calculateFloatSize(
-        const float& value,
+        float value,
         const uint8_t precision
     );
     static void floatToStr(
         char* dst,
-        const float value,
+        const float& value,
         const uint8_t precision
     );
+    static uint8_t calculateNumberSize(int32_t value);
+    static void numberToStr(char* dst, int32_t value);
 };
 
 #endif
