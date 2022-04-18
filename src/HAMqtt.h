@@ -3,12 +3,14 @@
 
 #include <Client.h>
 #include <IPAddress.h>
+#include "ArduinoHADefines.h"
 
 #define HAMQTT_CALLBACK(name) void (*name)()
 #define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
 #define HAMQTT_DEFAULT_PORT 1883
 
 class PubSubClient;
+class PubSubClientMock;
 class HADevice;
 class BaseDeviceType;
 
@@ -20,8 +22,11 @@ public:
     inline static HAMqtt* instance()
         { return _instance; }
 
+#ifdef ARDUINOHA_TEST
+    explicit HAMqtt(PubSubClientMock* pubSub, HADevice& device);
+#else
     explicit HAMqtt(Client& netClient, HADevice& device);
-    explicit HAMqtt(PubSubClient* pubSub, HADevice& device);
+#endif
     virtual ~HAMqtt();
 
     /**
@@ -230,7 +235,11 @@ private:
     bool _initialized;
     const char* _discoveryPrefix;
     const char* _dataPrefix;
+#ifdef ARDUINOHA_TEST
+    PubSubClientMock* _mqtt;
+#else
     PubSubClient* _mqtt;
+#endif
     const char* _username;
     const char* _password;
     uint32_t _lastConnectionAttemptAt;

@@ -4,6 +4,7 @@
 #include "HADevice.h"
 #include "ArduinoHADefines.h"
 #include "device-types/BaseDeviceType.h"
+#include "mocks/PubSubClientMock.h"
 
 #define HAMQTT_INIT \
     _device(device), \
@@ -36,19 +37,21 @@ void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
     HAMqtt::instance()->processMessage(topic, payload, static_cast<uint16_t>(length));
 }
 
+#ifdef ARDUINOHA_TEST
+HAMqtt::HAMqtt(PubSubClientMock* pubSub, HADevice& device) :
+    HAMQTT_INIT,
+    _mqtt(pubSub)
+{
+    _instance = this;
+}
+#else
 HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
     HAMQTT_INIT,
     _mqtt(new PubSubClient(netClient))
 {
     _instance = this;
 }
-
-HAMqtt::HAMqtt(PubSubClient* pubSub, HADevice& device) :
-    HAMQTT_INIT,
-    _mqtt(pubSub)
-{
-    _instance = this;
-}
+#endif
 
 HAMqtt::~HAMqtt()
 {
