@@ -1,10 +1,15 @@
 
 #include <Arduino.h>
 
+#ifdef ARDUINO_ARCH_SAMD
+#include <avr/dtostrf.h>
+#endif
+
 #include "HASerializer.h"
 #include "../ArduinoHADefines.h"
 #include "../HADevice.h"
 #include "../HAMqtt.h"
+#include "../HAUtils.h"
 #include "../device-types/BaseDeviceType.h"
 
 uint16_t HASerializer::calculateConfigTopicLength(
@@ -370,11 +375,12 @@ uint16_t HASerializer::calculatePropertyValueSize(const SerializerEntry* entry) 
             return 2 * strlen_P(HASerializerJsonEscapeChar) + strlen(value);
         }
     } else if (entry->subtype == BoolPropertyType) {
-        bool value = *static_cast<const bool*>(entry->value);
+        const bool value = *static_cast<const bool*>(entry->value);
         return value ? 4 : 5; // true / false
+    } else if (entry->subtype == FloatP1PropertyType || entry->subtype == FloatP2PropertyType) {
+        const float value = *static_cast<const float*>(entry->value);
+        return HAUtils::calculateFloatSize(value, entry->subtype == FloatP1PropertyType ? 1 : 2);
     }
-
-    // to do: add more types here
 
     return 0;
 }
@@ -428,13 +434,20 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
 
         return true;
     } else if (entry->subtype == BoolPropertyType) {
-        bool value = *static_cast<const bool*>(entry->value);
-
+        const bool value = *static_cast<const bool*>(entry->value);
         mqtt->writePayload_P(value ? HATrue : HAFalse);
         return true;
-    }
+    } else if (entry->subtype == FloatP1PropertyType || entry->subtype == FloatP2PropertyType) {
+        const float value = *static_cast<const float*>(entry->value);
+        const uint8_t precision = entry->subtype == FloatP1PropertyType ? 1 : 2;
+        const uint8_t bufferSize = HAUtils::calculateFloatSize(value, precision);
 
-    // to do: add more types here
+        char tmp[bufferSize + 1]; // including null terminator
+        HAUtils::floatToStr(tmp, value, precision);
+        mqtt->writePayload(tmp, strlen(tmp));
+
+        return true;
+    }
 
     return false;;
 }

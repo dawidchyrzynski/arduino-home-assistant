@@ -31,25 +31,6 @@ test(SerializerTest, empty_json) {
     assertJson(mock, serializer, F("{}"));
 }
 
-test(SerializerTest, char_field) {
-    prepareTest
-
-    serializer.set(HANameProperty, "XYZ");
-
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":\"XYZ\"}"));
-}
-
-test(SerializerTest, char_fields) {
-    prepareTest
-
-    serializer.set(HADeviceClassProperty, "Class");
-    serializer.set(HAIconProperty, "Icon");
-
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"dev_cla\":\"Class\",\"ic\":\"Icon\"}"));
-}
-
 test(SerializerTest, field_override) {
     prepareTest
 
@@ -68,6 +49,15 @@ test(SerializerTest, skip_null_fields) {
 
     flushSerializer(mock, serializer);
     assertJson(mock, serializer, F("{\"dev_cla\":\"Class\"}"));
+}
+
+test(SerializerTest, char_field) {
+    prepareTest
+
+    serializer.set(HANameProperty, "XYZ");
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":\"XYZ\"}"));
 }
 
 test(SerializerTest, bool_false_field) {
@@ -90,10 +80,47 @@ test(SerializerTest, bool_true_field) {
     assertJson(mock, serializer, F("{\"name\":true}"));
 }
 
-// to do: float
-// to do: unsigned number
-// to do: signed number
-// to do: zero number
+test(SerializerTest, float_zero_field) {
+    prepareTest
+
+    float value = 0;
+    serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":0.0}"));
+}
+
+test(SerializerTest, float_truncate_field) {
+    prepareTest
+
+    float value = 1.22222;
+    serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":1.2}"));
+}
+
+test(SerializerTest, float_unsigned_field) {
+    prepareTest
+
+    float value = 1.15;
+    serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":1.15}"));
+}
+
+test(SerializerTest, float_signed_field) {
+    prepareTest
+
+    float value = -0.333;
+    serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, F("{\"name\":-0.33}"));
+}
+
+// to do: number
 // to do: array
 // to do: topic
 // to do: two topics

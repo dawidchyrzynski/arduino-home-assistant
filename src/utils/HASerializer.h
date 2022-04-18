@@ -26,7 +26,9 @@ public:
 
     enum PropertyValueType {
         ConstCharPropertyValue = 1,
-        BoolPropertyType
+        BoolPropertyType,
+        FloatP1PropertyType, // 1 digit after decimal
+        FloatP2PropertyType // 2 digits after decimal
     };
 
     struct SerializerEntry {

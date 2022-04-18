@@ -15,18 +15,20 @@ public:
     static void byteArrayToStr(
         char* dst,
         const byte* src,
-        const uint16_t& length
+        const uint16_t length
     );
     static char* byteArrayToStr(
         const byte* src,
-        const uint16_t& length
+        const uint16_t length
     );
-    static void tempToStr(
+    static uint8_t calculateFloatSize(
+        const float& value,
+        const uint8_t precision
+    );
+    static void floatToStr(
         char* dst,
-        const double& temp
-    );
-    static double strToTemp(
-        const char* src
+        const float value,
+        const uint8_t precision
     );
 };
 

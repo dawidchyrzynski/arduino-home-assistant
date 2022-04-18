@@ -25,7 +25,7 @@ bool HAUtils::endsWith(const char* str, const char* suffix)
 void HAUtils::byteArrayToStr(
     char* dst,
     const byte* src,
-    const uint16_t& length
+    const uint16_t length
 )
 {
     const uint16_t& finalLength = (length * 2);
@@ -41,7 +41,7 @@ void HAUtils::byteArrayToStr(
 
 char* HAUtils::byteArrayToStr(
     const byte* src,
-    const uint16_t& length
+    const uint16_t length
 )
 {
     char* dst = (char*)malloc((length * 2) + 1); // include null terminator
@@ -50,18 +50,22 @@ char* HAUtils::byteArrayToStr(
     return dst;
 }
 
-void HAUtils::tempToStr(
-    char* dst,
-    const double& temp
+uint8_t HAUtils::calculateFloatSize(
+    const float& value,
+    const uint8_t precision
 )
 {
-    memset(dst, 0, sizeof(AHA_SERIALIZED_TEMP_SIZE));
-    dtostrf(temp, 0, 2, dst);
+    const uint8_t digitsNb = value > 0 ? floor(log10(floor(value))) + 1 : 1;
+
+    // sign + digits + dot + decimal
+    return (value < 0 ? 1 : 0) + digitsNb + 1 + precision;
 }
 
-double HAUtils::strToTemp(
-    const char* src
+ void HAUtils::floatToStr(
+    char* dst,
+    const float value,
+    const uint8_t precision
 )
 {
-    return atof(src);
+    dtostrf(value, 0, precision, dst);
 }
