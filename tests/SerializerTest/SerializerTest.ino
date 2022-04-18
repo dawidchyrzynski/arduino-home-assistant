@@ -5,7 +5,8 @@
     PubSubClientMock* mock = new PubSubClientMock(); \
     HADevice device(testDeviceId); \
     HAMqtt mqtt(mock, device); \
-    HASerializer serializer(nullptr);
+    mqtt.setDataPrefix("testData"); \
+    HASerializer serializer(&dummyDeviceType);
 
 #define flushSerializer(mock, serializer) \
     mock->connectDummy(); \
@@ -16,19 +17,29 @@
 #define assertJson(mock, serializer, expectedJson) \
 { \
     assertStringCaseEqual(mock->getMessageTopic(), testTopic); \
-    assertStringCaseEqual(mock->getMessageBuffer(), expectedJson); \
+    assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
     assertEqual(strlen_P(reinterpret_cast<const char *>(expectedJson)), serializer.calculateSize()); \
 }
+
+class DummyDeviceType : public BaseDeviceType
+{
+public:
+    DummyDeviceType(): BaseDeviceType("testComponent", "testId") { }
+
+protected:
+    virtual void onMqttConnected() override { }
+};
 
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testTopic = "testTopic";
+DummyDeviceType dummyDeviceType;
 
 test(SerializerTest, empty_json) {
     prepareTest
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{}"));
+    assertJson(mock, serializer, "{}");
 }
 
 test(SerializerTest, field_override) {
@@ -38,7 +49,7 @@ test(SerializerTest, field_override) {
     serializer.set(HADeviceClassProperty, "Class2");
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"dev_cla\":\"Class2\"}"));
+    assertJson(mock, serializer, "{\"dev_cla\":\"Class2\"}");
 }
 
 test(SerializerTest, skip_null_fields) {
@@ -48,7 +59,7 @@ test(SerializerTest, skip_null_fields) {
     serializer.set(HAIconProperty, nullptr);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"dev_cla\":\"Class\"}"));
+    assertJson(mock, serializer, "{\"dev_cla\":\"Class\"}");
 }
 
 test(SerializerTest, char_field) {
@@ -57,7 +68,7 @@ test(SerializerTest, char_field) {
     serializer.set(HANameProperty, "XYZ");
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":\"XYZ\"}"));
+    assertJson(mock, serializer, "{\"name\":\"XYZ\"}");
 }
 
 test(SerializerTest, bool_false_field) {
@@ -67,7 +78,7 @@ test(SerializerTest, bool_false_field) {
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":false}"));
+    assertJson(mock, serializer, "{\"name\":false}");
 }
 
 test(SerializerTest, bool_true_field) {
@@ -77,7 +88,7 @@ test(SerializerTest, bool_true_field) {
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":true}"));
+    assertJson(mock, serializer, "{\"name\":true}");
 }
 
 test(SerializerTest, float_zero_field) {
@@ -87,7 +98,7 @@ test(SerializerTest, float_zero_field) {
     serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":0.0}"));
+    assertJson(mock, serializer, "{\"name\":0.0}");
 }
 
 test(SerializerTest, float_truncate_field) {
@@ -97,7 +108,7 @@ test(SerializerTest, float_truncate_field) {
     serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":1.2}"));
+    assertJson(mock, serializer, "{\"name\":1.2}");
 }
 
 test(SerializerTest, float_unsigned_field) {
@@ -107,7 +118,7 @@ test(SerializerTest, float_unsigned_field) {
     serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":1.15}"));
+    assertJson(mock, serializer, "{\"name\":1.15}");
 }
 
 test(SerializerTest, float_signed_field) {
@@ -117,7 +128,7 @@ test(SerializerTest, float_signed_field) {
     serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":-11.33}"));
+    assertJson(mock, serializer, "{\"name\":-11.33}");
 }
 
 test(SerializerTest, number_zero_field) {
@@ -127,7 +138,7 @@ test(SerializerTest, number_zero_field) {
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":0}"));
+    assertJson(mock, serializer, "{\"name\":0}");
 }
 
 test(SerializerTest, number_signed_field) {
@@ -137,7 +148,7 @@ test(SerializerTest, number_signed_field) {
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":-12346756}"));
+    assertJson(mock, serializer, "{\"name\":-12346756}");
 }
 
 test(SerializerTest, number_unsigned_field) {
@@ -147,16 +158,90 @@ test(SerializerTest, number_unsigned_field) {
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
 
     flushSerializer(mock, serializer);
-    assertJson(mock, serializer, F("{\"name\":312346733}"));
+    assertJson(mock, serializer, "{\"name\":312346733}");
 }
 
-// to do: number
+test(SerializerTest, topic_field) {
+    prepareTest
+
+    serializer.topic(HAStateTopic);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"stat_t\":\"testData/testDevice/testId/stat_t\"}");
+}
+
+test(SerializerTest, topic_duplicate_field) {
+    prepareTest
+
+    serializer.topic(HAStateTopic);
+    serializer.topic(HAStateTopic);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"stat_t\":\"testData/testDevice/testId/stat_t\"}");
+}
+
+test(SerializerTest, topics_field) {
+    prepareTest
+
+    serializer.topic(HAStateTopic);
+    serializer.topic(HAAvailabilityTopic);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"stat_t\":\"testData/testDevice/testId/stat_t\",\"avty_t\":\"testData/testDevice/testId/avty_t\"}");
+}
+
+test(SerializerTest, device_serialization) {
+    prepareTest
+
+    serializer.set(HASerializer::WithDevice);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"dev\":{\"ids\":\"testDevice\"}}");
+}
+
+test(SerializerTest, device_mixed_serialization) {
+    prepareTest
+
+    serializer.set(HASerializer::WithDevice);
+    serializer.set(HADeviceClassProperty, "Class1");
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"dev\":{\"ids\":\"testDevice\"},\"dev_cla\":\"Class1\"}");
+}
+
+test(SerializerTest, device_type_availability) {
+    prepareTest
+
+    dummyDeviceType.setAvailability(false);
+    serializer.set(HASerializer::WithAvailability);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"avty_t\":\"testData/testDevice/testId/avty_t\"}");
+}
+
+test(SerializerTest, device_type_availability_mixed) {
+    prepareTest
+
+    dummyDeviceType.setAvailability(false);
+    serializer.set(HASerializer::WithAvailability);
+    serializer.set(HADeviceClassProperty, "Class1");
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev_cla\":\"Class1\"}");
+}
+
+test(SerializerTest, shared_availability) {
+    prepareTest
+
+    device.enableSharedAvailability();
+    serializer.set(HASerializer::WithAvailability);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"avty_t\":\"testData/testDevice/avty_t\"}");
+}
+
 // to do: array
-// to do: topic
-// to do: two topics
-// to do: topics duplicate call
-// to do: with device
-// to do: with availability
+// to do: mixed fields
 
 void setup()
 {
