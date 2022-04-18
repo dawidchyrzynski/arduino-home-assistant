@@ -1,8 +1,13 @@
 #include <AUnit.h>
-#include <Ethernet.h>
 #include <ArduinoHATests.h>
 
 using aunit::TestRunner;
+
+static const char* testDeviceId = "testDevice";
+static byte testDeviceByteId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
+static const char* testDeviceByteIdChar = "11223344aabb";
+static const char* mqttDataPrefix = "dataPrefix";
+static const char* availabilityTopic = "dataPrefix/testDevice/avty_t";
 
 #define assertSerializerEntry(entry, eType, eSubtype, eProperty, eValue) \
     assertEqual(eType, entry->type); \
@@ -16,35 +21,32 @@ test(DeviceTest, default_unique_id) {
 }
 
 test(DeviceTest, unique_id_constructor_char) {
-    HADevice device("testDevice");
-    assertEqual("testDevice", device.getUniqueId());
+    HADevice device(testDeviceId);
+    assertStringCaseEqual(testDeviceId, device.getUniqueId());
 }
 
 test(DeviceTest, unique_id_constructor_byte_array) {
-    byte uniqueId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
-    HADevice device(uniqueId, sizeof(uniqueId));
-    assertEqual("11223344aabb", device.getUniqueId());
+    HADevice device(testDeviceByteId, sizeof(testDeviceByteId));
+    assertStringCaseEqual(testDeviceByteIdChar, device.getUniqueId());
 }
 
 test(DeviceTest, unique_id_setter) {
-    byte uniqueId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
     HADevice device;
     assertEqual((const char*)nullptr, device.getUniqueId());
 
-    bool result = device.setUniqueId(uniqueId, sizeof(uniqueId));
+    bool result = device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     assertTrue(result);
-    assertEqual("11223344aabb", device.getUniqueId());
+    assertStringCaseEqual(testDeviceByteIdChar, device.getUniqueId());
 }
 
 test(DeviceTest, unique_id_setter_runtime) {
-    byte uniqueId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
-    HADevice device("testDevice");
-    assertEqual("testDevice", device.getUniqueId());
+    HADevice device(testDeviceId);
+    assertStringCaseEqual(testDeviceId, device.getUniqueId());
 
     // unique ID cannot be changed if it's already set
-    bool result = device.setUniqueId(uniqueId, sizeof(uniqueId));
+    bool result = device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     assertFalse(result);
-    assertEqual("testDevice", device.getUniqueId());
+    assertStringCaseEqual(testDeviceId, device.getUniqueId());
 }
 
 test(DeviceTest, serializer_no_unique_id) {
@@ -55,8 +57,7 @@ test(DeviceTest, serializer_no_unique_id) {
 }
 
 test(DeviceTest, serializer_unique_id_contructor_char) {
-    const char* uniqueId = "testDevice";
-    HADevice device(uniqueId);
+    HADevice device(testDeviceId);
     HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
@@ -70,13 +71,12 @@ test(DeviceTest, serializer_unique_id_contructor_char) {
         HASerializer::PropertyEntryType,
         HASerializer::ConstCharPropertyValue,
         HADeviceIdentifiersProperty,
-        uniqueId
+        testDeviceId
     )
 }
 
 test(DeviceTest, serializer_unique_id_contructor_byte_array) {
-    byte uniqueId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
-    HADevice device(uniqueId);
+    HADevice device(testDeviceId);
     HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
@@ -95,9 +95,8 @@ test(DeviceTest, serializer_unique_id_contructor_byte_array) {
 }
 
 test(DeviceTest, serializer_unique_id_setter) {
-    byte uniqueId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
     HADevice device;
-    device.setUniqueId(uniqueId, sizeof(uniqueId));
+    device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
@@ -202,6 +201,65 @@ test(DeviceTest, serializer_software_version) {
         softwareVersion
     )
 }
+
+test(DeviceTest, default_availability) {
+    HADevice device(testDeviceId);
+
+    assertTrue(device.isAvailable());
+    assertFalse(device.isSharedAvailabilityEnabled());
+    assertEqual((const char*)nullptr, device.getAvailabilityTopic());
+}
+
+test(DeviceTest, enable_availability) {
+    HADevice device(testDeviceId);
+    HAMqtt mqtt(nullptr, device);
+    mqtt.setDataPrefix(mqttDataPrefix);
+    bool result = device.enableSharedAvailability();
+
+    assertTrue(result);
+    assertTrue(device.isSharedAvailabilityEnabled());
+    assertStringCaseEqual(availabilityTopic, device.getAvailabilityTopic());
+}
+
+test(DeviceTest, enable_availability_no_unique_id) {
+    HADevice device;
+    bool result = device.enableSharedAvailability();
+
+    assertFalse(result);
+    assertFalse(device.isSharedAvailabilityEnabled());
+    assertEqual((const char*)nullptr, device.getAvailabilityTopic());
+}
+
+test(DeviceTest, availability_publish_offline) {
+    PubSubClientMock* mock = new PubSubClientMock();
+    HADevice device(testDeviceId);
+    HAMqtt mqtt(mock, device);
+    mqtt.setDataPrefix(mqttDataPrefix);
+
+    device.enableSharedAvailability();
+    device.setAvailability(false);
+    mock->connectDummy();
+
+    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
+    assertStringCaseEqual(mock->getMessageBuffer(), "offline");
+    assertTrue(mock->isMessageFlushed());
+}
+
+test(DeviceTest, availability_publish_online) {
+    PubSubClientMock* mock = new PubSubClientMock();
+    HADevice device(testDeviceId);
+    HAMqtt mqtt(mock, device);
+    mqtt.setDataPrefix(mqttDataPrefix);
+
+    device.enableSharedAvailability();
+    device.setAvailability(true);
+    mock->connectDummy();
+
+    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
+    assertStringCaseEqual(mock->getMessageBuffer(), "online");
+    assertTrue(mock->isMessageFlushed());
+}
+
 
 void setup()
 {
