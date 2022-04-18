@@ -105,7 +105,7 @@ bool PubSubClientMock::beginPublish(const char* topic, unsigned int plength, boo
 
 size_t PubSubClientMock::write(const uint8_t *buffer, size_t size)
 {
-    strncpy(_messageBuffer, (const char*)buffer, size);
+    strncat(_messageBuffer, (const char*)buffer, size);
     return size;
 }
 
