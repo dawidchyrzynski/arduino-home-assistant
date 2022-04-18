@@ -31,5 +31,7 @@ extern const char HAOnline[];
 extern const char HAOffline[];
 extern const char HAStateOn[];
 extern const char HAStateOff[];
+extern const char HATrue[];
+extern const char HAFalse[];
 
 #endif

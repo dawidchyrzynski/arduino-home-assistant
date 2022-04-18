@@ -31,3 +31,5 @@ const char HAOnline[] PROGMEM = {"online"};
 const char HAOffline[] PROGMEM = {"offline"};
 const char HAStateOn[] PROGMEM = {"on"};
 const char HAStateOff[] PROGMEM = {"off"};
+const char HATrue[] PROGMEM = {"true"};
+const char HAFalse[] PROGMEM = {"false"};

@@ -25,7 +25,8 @@ public:
     };
 
     enum PropertyValueType {
-        ConstCharPropertyValue = 1
+        ConstCharPropertyValue = 1,
+        BoolPropertyType
     };
 
     struct SerializerEntry {

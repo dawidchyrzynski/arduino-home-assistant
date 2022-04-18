@@ -369,6 +369,9 @@ uint16_t HASerializer::calculatePropertyValueSize(const SerializerEntry* entry) 
         if (value) {
             return 2 * strlen_P(HASerializerJsonEscapeChar) + strlen(value);
         }
+    } else if (entry->subtype == BoolPropertyType) {
+        bool value = *static_cast<const bool*>(entry->value);
+        return value ? 4 : 5; // true / false
     }
 
     // to do: add more types here
@@ -423,6 +426,11 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         mqtt->writePayload(value, strlen(value));
         mqtt->writePayload_P(HASerializerJsonEscapeChar);
 
+        return true;
+    } else if (entry->subtype == BoolPropertyType) {
+        bool value = *static_cast<const bool*>(entry->value);
+
+        mqtt->writePayload_P(value ? HATrue : HAFalse);
         return true;
     }
 
