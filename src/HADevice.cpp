@@ -38,6 +38,10 @@ HADevice::~HADevice()
     if (_serializer) {
         free(_serializer);
     }
+
+    if (_availabilityTopic) {
+        free(_availabilityTopic);
+    }
 }
 
 void HADevice::setManufacturer(const char* manufacturer)
