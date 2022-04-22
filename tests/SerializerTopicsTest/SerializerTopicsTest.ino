@@ -111,17 +111,12 @@ test(SerializerTopicsTest, calculate_config_with_null_terminator) {
 test(SerializerTopicsTest, generate_config_no_mqtt) {
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateConfigTopic(
+    // it should return false if there is no HAMqtt instance (singleton)
+    assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
         "componentName",
         "objectId"
-    );
-
-    // it should return 0 if there is no HAMqtt instance (singleton)
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -130,17 +125,12 @@ test(SerializerTopicsTest, generate_config_invalid_component) {
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateConfigTopic(
+    // it should return false if componentName is null
+    assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
         nullptr,
         "objectId"
-    );
-
-    // it should return 0 if componentName is null
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -149,17 +139,12 @@ test(SerializerTopicsTest, generate_config_invalid_object) {
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateConfigTopic(
+    // it should return false if objectId is null
+    assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
         "componentName",
         nullptr
-    );
-
-    // it should return 0 if objectId is null
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -169,17 +154,12 @@ test(SerializerTopicsTest, generate_config_invalid_prefix) {
     mqtt.setDiscoveryPrefix(nullptr);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateConfigTopic(
+    // it should return false if discovery prefix is null
+    assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
         "componentName",
         "objectId"
-    );
-
-    // it should return 0 if discovery prefix is null
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -195,17 +175,12 @@ test(SerializerTopicsTest, generate_config) {
     mqtt.setDiscoveryPrefix(discoveryPrefix);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateConfigTopic(
+    // it should generate valid topic
+    assertTrue(HASerializer::generateConfigTopic(
         tmpBuffer,
         componentName,
         objectId
-    );
-
-    // it should generate valid topic
-    assertEqual(
-        (uint16_t)strlen(expectedTopic) + 1,
-        generatedLength
-    );
+    ));
     assertTrue(strcmp(tmpBuffer, expectedTopic) == 0);
 }
 
@@ -295,17 +270,12 @@ test(SerializerTopicsTest, calculate_data_partial_with_null_terminator) {
 test(SerializerTopicsTest, generate_data_no_mqtt) {
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateDataTopic(
+    // it should return false if there is no HAMqtt instance (singleton)
+    assertFalse(HASerializer::generateDataTopic(
         tmpBuffer,
         "objectId",
         DummyProgmemStr
-    );
-
-    // it should return 0 if there is no HAMqtt instance (singleton)
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -314,17 +284,12 @@ test(SerializerTopicsTest, generate_data_invalid_topic) {
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateDataTopic(
+    // it should return false if topicP is null
+    assertFalse(HASerializer::generateDataTopic(
         tmpBuffer,
         "objectId",
         nullptr
-    );
-
-    // it should return 0 if topicP is null
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -334,17 +299,12 @@ test(SerializerTopicsTest, generate_data_invalid_prefix) {
     mqtt.setDataPrefix(nullptr);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateDataTopic(
+    // it should return false if data prefix is null
+    assertFalse(HASerializer::generateDataTopic(
         tmpBuffer,
         "objectId",
         DummyProgmemStr
-    );
-
-    // it should return 0 if data prefix is null
-    assertEqual(
-        (uint16_t)0,
-        generatedLength
-    );
+    ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
@@ -359,17 +319,12 @@ test(SerializerTopicsTest, generate_data_partial) {
     mqtt.setDataPrefix(dataPrefix);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateDataTopic(
+    // it should generate valid partial data topic (without objectId)
+    assertTrue(HASerializer::generateDataTopic(
         tmpBuffer,
         objectId,
         DummyProgmemStr
-    );
-
-    // it should generate valid partial data topic (without objectId)
-    assertEqual(
-        (uint16_t)strlen(expectedTopic) + 1,
-        generatedLength
-    );
+    ));
     assertStringCaseEqual(tmpBuffer, expectedTopic);
 }
 
@@ -384,17 +339,12 @@ test(SerializerTopicsTest, generate_data_full) {
     mqtt.setDataPrefix(dataPrefix);
     clearTmpBuffer();
 
-    uint16_t generatedLength = HASerializer::generateDataTopic(
+    // it should generate valid full data topic
+    assertTrue(HASerializer::generateDataTopic(
         tmpBuffer,
         objectId,
         DummyProgmemStr
-    );
-
-    // it should generate valid full data topic
-    assertEqual(
-        (uint16_t)strlen(expectedTopic) + 1,
-        generatedLength
-    );
+    ));
     assertStringCaseEqual(tmpBuffer, expectedTopic);
 }
 

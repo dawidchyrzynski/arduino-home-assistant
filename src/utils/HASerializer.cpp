@@ -39,7 +39,7 @@ uint16_t HASerializer::calculateConfigTopicLength(
     return includeNullTerminator ? size + 1 : size;
 }
 
-uint16_t HASerializer::generateConfigTopic(
+bool HASerializer::generateConfigTopic(
     char* output,
     const char* componentName,
     const char* objectId
@@ -54,7 +54,7 @@ uint16_t HASerializer::generateConfigTopic(
         !mqtt->getDiscoveryPrefix() ||
         !mqtt->getDevice()
     ) {
-        return 0;
+        return false;
     }
 
     strcpy(output, mqtt->getDiscoveryPrefix());
@@ -70,8 +70,7 @@ uint16_t HASerializer::generateConfigTopic(
     strcat_P(output, HASerializerSlash);
 
     strcat_P(output, HAConfigTopic);
-
-    return strlen(output) + 1; // size with null terminator
+    return true;
 }
 
 uint16_t HASerializer::calculateDataTopicLength(
@@ -102,7 +101,7 @@ uint16_t HASerializer::calculateDataTopicLength(
     return includeNullTerminator ? size + 1 : size;
 }
 
-uint16_t HASerializer::generateDataTopic(
+bool HASerializer::generateDataTopic(
     char* output,
     const char* objectId,
     const char* topicP
@@ -116,7 +115,7 @@ uint16_t HASerializer::generateDataTopic(
         !mqtt->getDataPrefix() ||
         !mqtt->getDevice()
     ) {
-        return 0;
+        return false;
     }
 
     strcpy(output, mqtt->getDataPrefix());
@@ -131,8 +130,7 @@ uint16_t HASerializer::generateDataTopic(
     }
 
     strcat_P(output, topicP);
-
-    return strlen(output) + 1; // size with null terminator
+    return true;
 }
 
 HASerializer::HASerializer(BaseDeviceType* deviceType) :

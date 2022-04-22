@@ -47,7 +47,7 @@ public:
         bool includeNullTerminator = true
     );
 
-    static uint16_t generateConfigTopic(
+    static bool generateConfigTopic(
         char* output,
         const char* component,
         const char* objectId
@@ -59,7 +59,7 @@ public:
         bool includeNullTerminator = true
     );
 
-    static uint16_t generateDataTopic(
+    static bool generateDataTopic(
         char* output,
         const char* objectId,
         const char* topicP
