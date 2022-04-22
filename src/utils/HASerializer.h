@@ -30,7 +30,8 @@ public:
         BoolPropertyType,
         FloatP1PropertyType, // 1 digit after decimal
         FloatP2PropertyType, // 2 digits after decimal
-        Int32PropertyType
+        Int32PropertyType,
+        ArrayPropertyType
     };
 
     struct SerializerEntry {
@@ -100,7 +101,8 @@ private:
     uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
     uint16_t calculateFlagSize(const FlagInternalType flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;
-    bool flushEntry(const SerializerEntry* entry, bool lastEntry) const;
+    uint16_t calculateArraySize(const HASerializerArray* array) const;
+    bool flushEntry(const SerializerEntry* entry) const;
     bool flushEntryValue(const SerializerEntry* entry) const;
     bool flushTopic(const SerializerEntry* entry) const;
     bool flushFlag(const SerializerEntry* entry) const;

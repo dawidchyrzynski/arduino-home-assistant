@@ -240,6 +240,16 @@ test(SerializerTest, shared_availability) {
     assertJson(mock, serializer, "{\"avty_t\":\"testData/testDevice/avty_t\"}");
 }
 
+test(SerializerTest, empty_array) {
+    prepareTest
+
+    HASerializerArray array(0);
+    serializer.set(HADeviceClassProperty, &array, HASerializer::ArrayPropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"dev_cla\":[]}");
+}
+
 // to do: array
 // to do: mixed fields
 

@@ -9,6 +9,8 @@ extern const char HASerializerJsonPropertyPrefix[];
 extern const char HASerializerJsonPropertySuffix[];
 extern const char HASerializerJsonEscapeChar[];
 extern const char HASerializerJsonPropertiesSeparator[];
+extern const char HASerializerJsonArrayPrefix[];
+extern const char HASerializerJsonArraySuffix[];
 
 // properties
 extern const char HADeviceIdentifiersProperty[];

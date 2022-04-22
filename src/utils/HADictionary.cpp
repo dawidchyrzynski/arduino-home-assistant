@@ -9,6 +9,8 @@ const char HASerializerJsonPropertyPrefix[] PROGMEM = {"\""};
 const char HASerializerJsonPropertySuffix[] PROGMEM = {"\":"};
 const char HASerializerJsonEscapeChar[] PROGMEM = {"\""};
 const char HASerializerJsonPropertiesSeparator[] PROGMEM = {","};
+const char HASerializerJsonArrayPrefix[] PROGMEM = {"["};
+const char HASerializerJsonArraySuffix[] PROGMEM = {"]"};
 
 // properties
 const char HADeviceIdentifiersProperty[] PROGMEM = {"ids"};

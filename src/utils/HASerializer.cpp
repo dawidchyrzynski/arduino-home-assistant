@@ -287,7 +287,11 @@ bool HASerializer::flush() const
 
     const uint8_t lastEntryIndex = _entriesNb - 1;
     for (uint8_t i = 0; i < _entriesNb; i++) {
-        if (!flushEntry(&_entries[i], i == lastEntryIndex)) {
+        if (i > 0) {
+            mqtt->writePayload_P(HASerializerJsonPropertiesSeparator);
+        }
+
+        if (!flushEntry(&_entries[i])) {
             return false;
         }
     }
@@ -381,19 +385,22 @@ uint16_t HASerializer::calculatePropertyValueSize(const SerializerEntry* entry) 
         }
     } else if (entry->subtype == BoolPropertyType) {
         const bool value = *static_cast<const bool*>(entry->value);
-        return value ? 4 : 5; // true / false
+        return value ? 4 : 5; // "true" or "false"
     } else if (entry->subtype == FloatP1PropertyType || entry->subtype == FloatP2PropertyType) {
         const float value = *static_cast<const float*>(entry->value);
         return HAUtils::calculateFloatSize(value, entry->subtype == FloatP1PropertyType ? 1 : 2);
     } else if (entry->subtype == Int32PropertyType) {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         return HAUtils::calculateNumberSize(value);
+    } else if (entry->subtype == ArrayPropertyType) {
+        const HASerializerArray* array = static_cast<const HASerializerArray*>(entry->value);
+        return array->calculateSize();
     }
 
     return 0;
 }
 
-bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry) const
+bool HASerializer::flushEntry(const SerializerEntry* entry) const
 {
     if (entry->type == UnknownEntryType) {
         return false;
@@ -417,10 +424,6 @@ bool HASerializer::flushEntry(const SerializerEntry* entry, bool lastEntry) cons
         if (!flushFlag(entry)) {
             return true; // ignore flag
         }
-    }
-
-    if (!lastEntry) {
-        mqtt->writePayload_P(HASerializerJsonPropertiesSeparator);
     }
 
     return true;
@@ -451,18 +454,29 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         const uint8_t bufferSize = HAUtils::calculateFloatSize(value, precision);
 
         char tmp[bufferSize + 1]; // including null terminator
-        memset(tmp, 0, sizeof(tmp));
+        memset(tmp, 0, bufferSize);
         HAUtils::floatToStr(tmp, value, precision);
-        mqtt->writePayload(tmp, strlen(tmp));
+        mqtt->writePayload(tmp, bufferSize);
 
         return true;
     } else if (entry->subtype == Int32PropertyType) {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         const uint8_t digitsNb = HAUtils::calculateNumberSize(value);
+
         char tmp[digitsNb + 1]; // including null terminator
-        memset(tmp, 0, sizeof(tmp));
+        memset(tmp, 0, digitsNb);
         HAUtils::numberToStr(tmp, value);
-        mqtt->writePayload(tmp, strlen(tmp));
+        mqtt->writePayload(tmp, digitsNb);
+
+        return true;
+    } else if (entry->subtype == ArrayPropertyType) {
+        const HASerializerArray* array = static_cast<const HASerializerArray*>(entry->value);
+        const uint16_t size = array->calculateSize();
+
+        char tmp[size + 1]; // including null terminator
+        memset(tmp, 0, size);
+        array->serialize(tmp);
+        mqtt->writePayload(tmp, size);
 
         return true;
     }
