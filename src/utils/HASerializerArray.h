@@ -17,6 +17,8 @@ public:
         { return _items; }
 
     bool add(const char* itemP);
+    uint16_t calculateSize() const;
+    bool serialize(char* destination) const;
 
 private:
     uint8_t _size;
