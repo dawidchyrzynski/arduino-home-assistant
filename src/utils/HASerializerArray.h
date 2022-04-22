@@ -18,7 +18,7 @@ public:
 
     bool add(const char* itemP);
     uint16_t calculateSize() const;
-    bool serialize(char* destination) const;
+    bool serialize(char* output) const;
 
 private:
     uint8_t _size;

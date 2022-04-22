@@ -47,28 +47,28 @@ uint16_t HASerializerArray::calculateSize() const
     return size;
 }
 
-bool HASerializerArray::serialize(char* destination) const
+bool HASerializerArray::serialize(char* output) const
 {
-    if (!destination) {
+    if (!output) {
         return false;
     }
 
-    strcat_P(destination, HASerializerJsonArrayPrefix);
+    strcat_P(output, HASerializerJsonArrayPrefix);
 
     if (_itemsNb > 0) {
         for (uint8_t i = 0; i < _itemsNb; i++) {
             const char* item = _items[i];
 
             if (i > 0) {
-                strcat_P(destination, HASerializerJsonPropertiesSeparator);
+                strcat_P(output, HASerializerJsonPropertiesSeparator);
             }
 
-            strcat_P(destination, HASerializerJsonEscapeChar);
-            strcat_P(destination, item);
-            strcat_P(destination, HASerializerJsonEscapeChar);
+            strcat_P(output, HASerializerJsonEscapeChar);
+            strcat_P(output, item);
+            strcat_P(output, HASerializerJsonEscapeChar);
         }
     }
 
-    strcat_P(destination, HASerializerJsonArraySuffix);
+    strcat_P(output, HASerializerJsonArraySuffix);
     return true;
 }
