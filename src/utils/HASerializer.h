@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "HADictionary.h"
+#include "HASerializerArray.h"
 
 class HAMqtt;
 class BaseDeviceType;
