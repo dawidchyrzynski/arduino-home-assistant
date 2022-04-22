@@ -250,6 +250,18 @@ test(SerializerTest, empty_array) {
     assertJson(mock, serializer, "{\"dev_cla\":[]}");
 }
 
+test(SerializerTest, two_element_array) {
+    prepareTest
+
+    HASerializerArray array(2);
+    array.add(HADeviceProperty);
+    array.add(HAIconProperty);
+    serializer.set(HADeviceClassProperty, &array, HASerializer::ArrayPropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"dev_cla\":[\"dev\",\"ic\"]}");
+}
+
 // to do: array
 // to do: mixed fields
 

@@ -14,7 +14,7 @@ public:
         { return _itemsNb; }
 
     inline const char* getItems() const
-        { return _items; }
+        { return *_items; }
 
     bool add(const char* itemP);
     uint16_t calculateSize() const;
@@ -23,7 +23,7 @@ public:
 private:
     uint8_t _size;
     uint8_t _itemsNb;
-    char* _items;
+    char** _items;
 };
 
 #endif

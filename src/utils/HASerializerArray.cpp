@@ -7,7 +7,7 @@
 HASerializerArray::HASerializerArray(const uint8_t size) :
     _size(size),
     _itemsNb(0),
-    _items(static_cast<char*>(malloc(size * sizeof(const char*))))
+    _items(malloc(size * sizeof(char*)))
 {
 
 }
