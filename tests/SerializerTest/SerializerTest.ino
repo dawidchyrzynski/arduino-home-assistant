@@ -262,8 +262,28 @@ test(SerializerTest, two_element_array) {
     assertJson(mock, serializer, "{\"dev_cla\":[\"dev\",\"ic\"]}");
 }
 
-// to do: array
-// to do: mixed fields
+test(SerializerTest, mixed_elements) {
+    prepareTest
+
+    HASerializerArray array(2);
+    array.add(HADeviceProperty);
+    array.add(HAIconProperty);
+
+    serializer.set(HADeviceClassProperty, &array, HASerializer::ArrayPropertyType);
+    serializer.set(HASerializer::WithAvailability);
+    serializer.set(HASerializer::WithDevice);
+    serializer.set(HANameProperty, "TestName");
+    serializer.topic(HAStateTopic);
+
+    int32_t intValue = 312346733;
+    serializer.set(HAIconProperty, &intValue, HASerializer::Int32PropertyType);
+
+    float floatValue = -11.333;
+    serializer.set(HADeviceManufacturerProperty, &floatValue, HASerializer::FloatP2PropertyType);
+
+    flushSerializer(mock, serializer);
+    assertJson(mock, serializer, "{\"dev_cla\":[\"dev\",\"ic\"],\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev\":{\"ids\":\"testDevice\"},\"name\":\"TestName\",\"stat_t\":\"testData/testDevice/testId/stat_t\",\"ic\":312346733,\"mf\":-11.33}");
+}
 
 void setup()
 {
