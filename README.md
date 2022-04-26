@@ -63,14 +63,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 * Arduino Ethernet Shield (WizNet W5100)
 
-## Roadmap
-
-* FAQ + Home Assistant setup instructions
-* Documentation of the library
-* Unit tests
-* Reduce flash memory usage
-* Add support for HA lights
-
 ## Unsupported features
 
 The library doesn't support all features of the MQTT integration.

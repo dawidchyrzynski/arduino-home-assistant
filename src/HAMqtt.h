@@ -9,8 +9,12 @@
 #define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
 #define HAMQTT_DEFAULT_PORT 1883
 
-class PubSubClient;
+#ifdef ARDUINOHA_TEST
 class PubSubClientMock;
+#else
+class PubSubClient;
+#endif
+
 class HADevice;
 class BaseDeviceType;
 
