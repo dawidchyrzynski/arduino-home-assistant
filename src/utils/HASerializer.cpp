@@ -133,6 +133,25 @@ bool HASerializer::generateDataTopic(
     return true;
 }
 
+bool HASerializer::compareDataTopics(
+    const char* topic,
+    const char* objectId,
+    const char* topicP
+)
+{
+    const uint16_t topicLength = calculateDataTopicLength(objectId, topicP);
+    if (topicLength == 0) {
+        return false;
+    }
+
+    char expectedTopic[topicLength];
+    if (!generateDataTopic(expectedTopic, objectId, topicP)) {
+        return false;
+    }
+
+    return strcmp(topic, expectedTopic) == 0;
+}
+
 HASerializer::HASerializer(BaseDeviceType* deviceType) :
     _deviceType(deviceType),
     _entries(nullptr),

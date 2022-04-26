@@ -3,6 +3,9 @@
 
 using aunit::TestRunner;
 
+const char* deviceId = "testDevice";
+const char* dataPrefix = "dataPrefix";
+const char* discoveryPrefix = "discoveryPrefix";
 const char DummyProgmemStr[] PROGMEM = {"dummyProgmem"};
 char tmpBuffer[64];
 
@@ -22,7 +25,7 @@ test(SerializerTopicsTest, calculate_config_no_mqtt) {
 }
 
 test(SerializerTopicsTest, calculate_config_invalid_component) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
 
     // it should return 0 if componentName is null
@@ -36,7 +39,7 @@ test(SerializerTopicsTest, calculate_config_invalid_component) {
 }
 
 test(SerializerTopicsTest, calculate_config_invalid_object) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
 
     // it should return 0 if objectId is null
@@ -50,7 +53,7 @@ test(SerializerTopicsTest, calculate_config_invalid_object) {
 }
 
 test(SerializerTopicsTest, calculate_config_invalid_prefix) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDiscoveryPrefix(nullptr);
 
@@ -65,8 +68,6 @@ test(SerializerTopicsTest, calculate_config_invalid_prefix) {
 }
 
 test(SerializerTopicsTest, calculate_config_without_null_terminator) {
-    const char* deviceId = "testDevice";
-    const char* discoveryPrefix = "discoveryPrefix";
     const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
@@ -87,8 +88,6 @@ test(SerializerTopicsTest, calculate_config_without_null_terminator) {
 }
 
 test(SerializerTopicsTest, calculate_config_with_null_terminator) {
-    const char* deviceId = "testDevice";
-    const char* discoveryPrefix = "discoveryPrefix";
     const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
@@ -121,7 +120,7 @@ test(SerializerTopicsTest, generate_config_no_mqtt) {
 }
 
 test(SerializerTopicsTest, generate_config_invalid_component) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
@@ -135,7 +134,7 @@ test(SerializerTopicsTest, generate_config_invalid_component) {
 }
 
 test(SerializerTopicsTest, generate_config_invalid_object) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
@@ -149,7 +148,7 @@ test(SerializerTopicsTest, generate_config_invalid_object) {
 }
 
 test(SerializerTopicsTest, generate_config_invalid_prefix) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDiscoveryPrefix(nullptr);
     clearTmpBuffer();
@@ -164,8 +163,6 @@ test(SerializerTopicsTest, generate_config_invalid_prefix) {
 }
 
 test(SerializerTopicsTest, generate_config) {
-    const char* deviceId = "testDevice";
-    const char* discoveryPrefix = "discoveryPrefix";
     const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
@@ -196,9 +193,9 @@ test(SerializerTopicsTest, calculate_data_no_mqtt) {
 }
 
 test(SerializerTopicsTest, calculate_data_invalid_topic) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
-    mqtt.setDataPrefix("dataPrefix");
+    mqtt.setDataPrefix(dataPrefix);
 
     // it should return 0 if topicP is null
     assertEqual(
@@ -211,7 +208,7 @@ test(SerializerTopicsTest, calculate_data_invalid_topic) {
 }
 
 test(SerializerTopicsTest, calculate_data_invalid_prefix) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDataPrefix(nullptr);
 
@@ -226,8 +223,6 @@ test(SerializerTopicsTest, calculate_data_invalid_prefix) {
 }
 
 test(SerializerTopicsTest, calculate_data_partial_without_null_terminator) {
-    const char* deviceId = "testDevice";
-    const char* dataPrefix = "dataPrefix";
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -247,8 +242,6 @@ test(SerializerTopicsTest, calculate_data_partial_without_null_terminator) {
 }
 
 test(SerializerTopicsTest, calculate_data_partial_with_null_terminator) {
-    const char* deviceId = "testDevice";
-    const char* dataPrefix = "dataPrefix";
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -280,7 +273,7 @@ test(SerializerTopicsTest, generate_data_no_mqtt) {
 }
 
 test(SerializerTopicsTest, generate_data_invalid_topic) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
 
@@ -294,7 +287,7 @@ test(SerializerTopicsTest, generate_data_invalid_topic) {
 }
 
 test(SerializerTopicsTest, generate_data_invalid_prefix) {
-    HADevice device("testDevice");
+    HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDataPrefix(nullptr);
     clearTmpBuffer();
@@ -309,8 +302,6 @@ test(SerializerTopicsTest, generate_data_invalid_prefix) {
 }
 
 test(SerializerTopicsTest, generate_data_partial) {
-    const char* deviceId = "testDevice";
-    const char* dataPrefix = "dataPrefix";
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -329,8 +320,6 @@ test(SerializerTopicsTest, generate_data_partial) {
 }
 
 test(SerializerTopicsTest, generate_data_full) {
-    const char* deviceId = "testDevice";
-    const char* dataPrefix = "dataPrefix";
     const char* objectId = "objectId";
     const char* expectedTopic = "dataPrefix/testDevice/objectId/dummyProgmem";
 
@@ -346,6 +335,51 @@ test(SerializerTopicsTest, generate_data_full) {
         DummyProgmemStr
     ));
     assertStringCaseEqual(tmpBuffer, expectedTopic);
+}
+
+test(SerializerTopicsTest, compare_invalid_topic) {
+    const char* topic = nullptr;
+    const char* objectId = "objectId";
+
+    HADevice device(deviceId);
+    HAMqtt mqtt(nullptr, device);
+    mqtt.setDataPrefix(dataPrefix);
+
+    assertFalse(HASerializer::compareDataTopics(
+        topic,
+        objectId,
+        DummyProgmemStr
+    ));
+}
+
+test(SerializerTopicsTest, compare_matching_topics) {
+    const char* topic = "dataPrefix/testDevice/objectId/dummyProgmem";
+    const char* objectId = "objectId";
+
+    HADevice device(deviceId);
+    HAMqtt mqtt(nullptr, device);
+    mqtt.setDataPrefix(dataPrefix);
+
+    assertTrue(HASerializer::compareDataTopics(
+        topic,
+        objectId,
+        DummyProgmemStr
+    ));
+}
+
+test(SerializerTopicsTest, compare_not_matching_topics) {
+    const char* topic = "dataPrefix/testDevice/objectId/Progmem";
+    const char* objectId = "objectId";
+
+    HADevice device(deviceId);
+    HAMqtt mqtt(nullptr, device);
+    mqtt.setDataPrefix(dataPrefix);
+
+    assertFalse(HASerializer::compareDataTopics(
+        topic,
+        objectId,
+        DummyProgmemStr
+    ));
 }
 
 void setup()

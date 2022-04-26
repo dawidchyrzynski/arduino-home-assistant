@@ -10,11 +10,13 @@ BaseDeviceType::BaseDeviceType(
 ) :
     _componentName(componentName),
     _uniqueId(uniqueId),
-    _serializer(nullptr),
     _name(nullptr),
+    _serializer(nullptr),
     _availability(AvailabilityDefault)
 {
-    mqtt()->addDeviceType(this);
+    if (mqtt()) {
+        mqtt()->addDeviceType(this);
+    }
 }
 
 BaseDeviceType::~BaseDeviceType()
@@ -94,7 +96,7 @@ void BaseDeviceType::publishAvailability()
         return;
     }
 
-    publishOnTopic(
+    publishOnDataTopic(
         HAAvailabilityTopic,
         _availability == AvailabilityOnline
             ? HAOnline
@@ -104,7 +106,7 @@ void BaseDeviceType::publishAvailability()
     );
 }
 
-bool BaseDeviceType::publishOnTopic(
+bool BaseDeviceType::publishOnDataTopic(
     const char* topicP,
     const char* value,
     bool retained,
@@ -147,32 +149,6 @@ bool BaseDeviceType::publishOnTopic(
 
         return mqtt()->endPublish();
     }
-
-    return false;
-}
-
-bool BaseDeviceType::compareTopics(const char* topic, const char* expectedTopic)
-{
-    /* if (!topic || !expectedTopic) {
-        return false;
-    }
-
-    if (strlen(uniqueId()) == 0) {
-        return false;
-    }
-
-    static const char Slash[] PROGMEM = {"/"};
-
-    // unique ID + cmd topic + two slashes + null terminator
-    uint8_t suffixLength = strlen(uniqueId()) + strlen(expectedTopic) + 3;
-    char suffix[suffixLength];
-
-    strcpy_P(suffix, Slash);
-    strcat(suffix, uniqueId());
-    strcat_P(suffix, Slash);
-    strcat(suffix, expectedTopic);
-
-    return HAUtils::endsWith(topic, suffix); */
 
     return false;
 }

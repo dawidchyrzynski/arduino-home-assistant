@@ -52,18 +52,17 @@ protected:
 
     virtual void publishConfig();
     virtual void publishAvailability();
-    virtual bool publishOnTopic(
+    virtual bool publishOnDataTopic(
         const char* topicP,
         const char* value,
         bool retained = false,
         bool isProgmemValue = false
     );
-    virtual bool compareTopics(const char* topic, const char* expectedTopic);
 
     const char* const _componentName;
     const char* const _uniqueId;
-    HASerializer* _serializer;
     const char* _name;
+    HASerializer* _serializer;
 
 private:
     enum Availability {

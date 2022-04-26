@@ -65,6 +65,12 @@ public:
         const char* topicP
     );
 
+    static bool compareDataTopics(
+        const char* topic,
+        const char* objectId,
+        const char* topicP
+    );
+
     HASerializer(BaseDeviceType* deviceType);
     virtual ~HASerializer();
 
