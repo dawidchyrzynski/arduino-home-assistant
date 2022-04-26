@@ -107,8 +107,8 @@ void BaseDeviceType::publishAvailability()
 bool BaseDeviceType::publishOnTopic(
     const char* topicP,
     const char* value,
-    bool retained = false,
-    bool isProgmemValue = false
+    bool retained,
+    bool isProgmemValue
 )
 {
     if (!uniqueId() || !topicP || !value) {

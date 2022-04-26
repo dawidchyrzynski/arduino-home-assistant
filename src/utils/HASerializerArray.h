@@ -10,7 +10,7 @@ public:
     HASerializerArray(const uint8_t size);
     virtual ~HASerializerArray();
 
-    inline const uint8_t getItemsNb() const
+    inline uint8_t getItemsNb() const
         { return _itemsNb; }
 
     inline const char* getItems() const
@@ -23,7 +23,7 @@ public:
 private:
     uint8_t _size;
     uint8_t _itemsNb;
-    char** _items;
+    const char** _items;
 };
 
 #endif

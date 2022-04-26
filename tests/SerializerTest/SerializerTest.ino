@@ -5,6 +5,7 @@
     PubSubClientMock* mock = new PubSubClientMock(); \
     HADevice device(testDeviceId); \
     HAMqtt mqtt(mock, device); \
+    DummyDeviceType dummyDeviceType; \
     mqtt.setDataPrefix("testData"); \
     HASerializer serializer(&dummyDeviceType);
 
@@ -18,7 +19,7 @@
 { \
     assertStringCaseEqual(mock->getMessageTopic(), testTopic); \
     assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
-    assertEqual(strlen_P(reinterpret_cast<const char *>(expectedJson)), serializer.calculateSize()); \
+    assertEqual((uint16_t)strlen_P(reinterpret_cast<const char *>(expectedJson)), serializer.calculateSize()); \
 }
 
 class DummyDeviceType : public BaseDeviceType
@@ -34,7 +35,6 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testTopic = "testTopic";
-DummyDeviceType dummyDeviceType;
 
 test(SerializerTest, empty_json) {
     prepareTest
@@ -269,6 +269,7 @@ test(SerializerTest, mixed_elements) {
     array.add(HADeviceProperty);
     array.add(HAIconProperty);
 
+    dummyDeviceType.setAvailability(false);
     serializer.set(HADeviceClassProperty, &array, HASerializer::ArrayPropertyType);
     serializer.set(HASerializer::WithAvailability);
     serializer.set(HASerializer::WithDevice);

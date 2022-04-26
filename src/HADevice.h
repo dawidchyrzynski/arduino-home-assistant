@@ -16,7 +16,7 @@ public:
     inline const char* getUniqueId() const
         { return _uniqueId; }
 
-    inline const HASerializer* const getSerializer() const
+    inline const HASerializer* getSerializer() const
         { return _serializer; }
 
     inline bool isSharedAvailabilityEnabled() const
@@ -39,8 +39,8 @@ public:
     void publishAvailability();
 
 private:
-    HASerializer* _serializer;
     const char* _uniqueId;
+    HASerializer* _serializer;
     char* _availabilityTopic;
     bool _sharedAvailability;
     bool _available;

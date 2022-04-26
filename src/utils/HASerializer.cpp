@@ -283,7 +283,6 @@ bool HASerializer::flush() const
 
     mqtt->writePayload_P(HASerializerJsonDataPrefix);
 
-    const uint8_t lastEntryIndex = _entriesNb - 1;
     for (uint8_t i = 0; i < _entriesNb; i++) {
         if (i > 0) {
             mqtt->writePayload_P(HASerializerJsonPropertiesSeparator);

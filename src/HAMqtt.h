@@ -228,6 +228,11 @@ private:
      */
     void onConnectedLogic();
 
+#ifdef ARDUINOHA_TEST
+    PubSubClientMock* _mqtt;
+#else
+    PubSubClient* _mqtt;
+#endif
     HADevice& _device;
     HAMQTT_MESSAGE_CALLBACK(_messageCallback);
     HAMQTT_CALLBACK(_connectedCallback);
@@ -235,11 +240,6 @@ private:
     bool _initialized;
     const char* _discoveryPrefix;
     const char* _dataPrefix;
-#ifdef ARDUINOHA_TEST
-    PubSubClientMock* _mqtt;
-#else
-    PubSubClient* _mqtt;
-#endif
     const char* _username;
     const char* _password;
     uint32_t _lastConnectionAttemptAt;

@@ -51,14 +51,14 @@ test(DeviceTest, unique_id_setter_runtime) {
 
 test(DeviceTest, serializer_no_unique_id) {
     HADevice device;
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)0, serializer->getEntriesNb());
 }
 
 test(DeviceTest, serializer_unique_id_contructor_char) {
     HADevice device(testDeviceId);
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
     assertTrue(serializer->getEntries() != nullptr);
@@ -77,7 +77,7 @@ test(DeviceTest, serializer_unique_id_contructor_char) {
 
 test(DeviceTest, serializer_unique_id_contructor_byte_array) {
     HADevice device(testDeviceId);
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
     assertTrue(serializer->getEntries() != nullptr);
@@ -97,7 +97,7 @@ test(DeviceTest, serializer_unique_id_contructor_byte_array) {
 test(DeviceTest, serializer_unique_id_setter) {
     HADevice device;
     device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)1, serializer->getEntriesNb());
     assertTrue(serializer->getEntries() != nullptr);
@@ -117,7 +117,7 @@ test(DeviceTest, serializer_unique_id_setter) {
 test(DeviceTest, serializer_manufacturer) {
     const char* manufacturer = "testManufacturer";
     HADevice device;
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     device.setManufacturer(manufacturer);
 
@@ -139,7 +139,7 @@ test(DeviceTest, serializer_manufacturer) {
 test(DeviceTest, serializer_model) {
     const char* model = "testModel";
     HADevice device;
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     device.setModel(model);
 
@@ -161,7 +161,7 @@ test(DeviceTest, serializer_model) {
 test(DeviceTest, serializer_name) {
     const char* name = "testName";
     HADevice device;
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     device.setName(name);
 
@@ -183,7 +183,7 @@ test(DeviceTest, serializer_name) {
 test(DeviceTest, serializer_software_version) {
     const char* softwareVersion = "softwareVersion";
     HADevice device;
-    HASerializer* serializer = device.getSerializer();
+    const HASerializer* serializer = device.getSerializer();
 
     device.setSoftwareVersion(softwareVersion);
 

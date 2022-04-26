@@ -60,10 +60,10 @@ public:
         { return _domain; } 
 
     inline const IPAddress& getIp() const
-        { return &_ip; }
+        { return _ip; }
 
     inline const uint16_t& getPort() const
-        { return &_port; }
+        { return _port; }
 
     inline const char* getId() const
         { return _id; }
