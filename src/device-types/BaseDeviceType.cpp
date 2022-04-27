@@ -127,12 +127,11 @@ bool BaseDeviceType::publishOnDataTopic(
     }
 
     char topic[topicLength];
-    const uint16_t generatedTopicLength = HASerializer::generateDataTopic(
+    if (!HASerializer::generateDataTopic(
         topic,
         uniqueId(),
         topicP
-    );
-    if (generatedTopicLength == 0) {
+    )) {
         return false;
     }
 

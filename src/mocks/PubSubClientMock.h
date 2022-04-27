@@ -88,7 +88,7 @@ public:
 
 private:
     char _messageBuffer[256];
-    const char* _messageTopic;
+    char _messageTopic[48];
     bool _messageRetained;
     bool _messageFlushed;
     size_t _messageLength;

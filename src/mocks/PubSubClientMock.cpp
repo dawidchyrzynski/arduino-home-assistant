@@ -2,7 +2,6 @@
 #ifdef ARDUINOHA_TEST
 
 PubSubClientMock::PubSubClientMock() :
-    _messageTopic(nullptr),
     _messageRetained(false),
     _messageFlushed(false),
     _messageLength(0),
@@ -17,6 +16,7 @@ PubSubClientMock::PubSubClientMock() :
     _willMessage(nullptr)
 {
     memset(_messageBuffer, 0, sizeof(_messageBuffer));
+    memset(_messageTopic, 0, sizeof(_messageTopic));
 }
 
 bool PubSubClientMock::loop()
@@ -94,11 +94,11 @@ PubSubClientMock& PubSubClientMock::setCallback(MQTT_CALLBACK_SIGNATURE)
 
 bool PubSubClientMock::beginPublish(const char* topic, unsigned int plength, bool retained)
 {
-    _messageTopic = topic;
     _messageRetained = retained;
     _messageFlushed = false;
     _messageLength = plength;
 
+    strcpy(_messageTopic, topic);
     memset(_messageBuffer, 0, sizeof(_messageBuffer));
     return true;
 }

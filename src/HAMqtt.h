@@ -218,6 +218,14 @@ public:
      */
     void processMessage(char* topic, uint8_t* payload, uint16_t length);
 
+#ifdef ARDUINOHA_TEST
+    inline uint8_t getDevicesTypesNb() const
+        { return _devicesTypesNb; }
+
+    inline BaseDeviceType** getDevicesTypes() const
+        { return _devicesTypes; }
+#endif
+
 private:
     static HAMqtt* _instance;
 
