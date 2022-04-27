@@ -139,6 +139,10 @@ bool HASerializer::compareDataTopics(
     const char* topicP
 )
 {
+    if (!topic) {
+        return false;
+    }
+
     const uint16_t topicLength = calculateDataTopicLength(objectId, topicP);
     if (topicLength == 0) {
         return false;

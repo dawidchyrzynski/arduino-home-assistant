@@ -178,7 +178,7 @@ test(SerializerTopicsTest, generate_config) {
         componentName,
         objectId
     ));
-    assertTrue(strcmp(tmpBuffer, expectedTopic) == 0);
+    assertStringCaseEqual(expectedTopic, tmpBuffer);
 }
 
 test(SerializerTopicsTest, calculate_data_no_mqtt) {
