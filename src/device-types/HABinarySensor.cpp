@@ -20,7 +20,7 @@ HABinarySensor::HABinarySensor(
 
 void HABinarySensor::buildSerializer()
 {
-    if (_serializer) {
+    if (_serializer || !uniqueId()) {
         return;
     }
 

@@ -37,6 +37,11 @@ public:
 
     virtual void setAvailability(bool online);
 
+#ifdef ARDUINOHA_TEST
+    inline HASerializer* getSerializer() const
+        { return _serializer; }
+#endif
+
 protected:
     HAMqtt* mqtt() const;
 
