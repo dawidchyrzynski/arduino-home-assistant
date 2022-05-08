@@ -13,6 +13,9 @@
     assertStringCaseEqual(mock->getMessageTopic(), configTopic); \
     assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
     assertEqual(mock->getMessageLength(), (size_t)strlen_P(reinterpret_cast<const char *>(expectedJson))); \
+    assertTrue(mock->isMessageRetained()); \
+    assertTrue(mock->isMessageFlushed()); \
+    assertTrue(sensor.getSerializer() == nullptr); \
 }
 
 using aunit::TestRunner;
