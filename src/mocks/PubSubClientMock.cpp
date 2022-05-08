@@ -98,6 +98,10 @@ bool PubSubClientMock::beginPublish(const char* topic, unsigned int plength, boo
     _messageFlushed = false;
     _messageLength = plength;
 
+    if (strlen(topic) >= sizeof(_messageTopic)) {
+        Serial.println("WARNING: Message topic overflow (PubSubClientMock)");
+    }
+
     strcpy(_messageTopic, topic);
     memset(_messageBuffer, 0, sizeof(_messageBuffer));
     return true;

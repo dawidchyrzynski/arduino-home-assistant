@@ -40,6 +40,18 @@ public:
 #ifdef ARDUINOHA_TEST
     inline HASerializer* getSerializer() const
         { return _serializer; }
+
+    inline void publishConfigTest()
+        { publishConfig(); }
+
+    inline void publishOnDataTopicTest(
+        const char* topicP,
+        const char* value,
+        bool retained = false,
+        bool isProgmemValue = false
+    ) {
+        publishOnDataTopic(topicP, value, retained, isProgmemValue);
+    }
 #endif
 
 protected:

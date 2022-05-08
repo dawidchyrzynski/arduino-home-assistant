@@ -6,25 +6,20 @@
     HADevice device(testDeviceId); \
     HAMqtt mqtt(mock, device);
 
-#define flushSerializer(mock, serializer) \
-    assertTrue(serializer != nullptr); \
-    mock->connectDummy(); \
-    mock->beginPublish(testTopic, 0, false); \
-    serializer->flush(); \
-    mock->endPublish();
-
-#define assertJson(mock, serializer, expectedJson) \
+#define assertConfig(mock, expectedJson) \
 { \
-    assertStringCaseEqual(mock->getMessageTopic(), testTopic); \
+    mock->connectDummy(); \
+    sensor.publishConfigTest(); \
+    assertStringCaseEqual(mock->getMessageTopic(), configTopic); \
     assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
-    assertEqual((uint16_t)strlen_P(reinterpret_cast<const char *>(expectedJson)), serializer->calculateSize()); \
+    assertEqual(mock->getMessageLength(), (size_t)strlen_P(reinterpret_cast<const char *>(expectedJson))); \
 }
 
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
-static const char* testTopic = "testTopic";
+static const char* configTopic = "homeassistant/binary_sensor/testDevice/uniqueSensor/config";
 
 test(BinarySensorTest, invalid_unique_id) {
     prepareTest
@@ -40,11 +35,7 @@ test(BinarySensorTest, default_params) {
     prepareTest
 
     HABinarySensor sensor(testUniqueId, false);
-    sensor.buildSerializer();
-    HASerializer* serializer = sensor.getSerializer();
-
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, name_setter) {
@@ -52,11 +43,8 @@ test(BinarySensorTest, name_setter) {
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setName("testName");
-    sensor.buildSerializer();
-    HASerializer* serializer = sensor.getSerializer();
 
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, device_class) {
@@ -64,11 +52,8 @@ test(BinarySensorTest, device_class) {
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setDeviceClass("testClass");
-    sensor.buildSerializer();
-    HASerializer* serializer = sensor.getSerializer();
 
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, icon_setter) {
@@ -76,11 +61,8 @@ test(BinarySensorTest, icon_setter) {
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setIcon("testIcon");
-    sensor.buildSerializer();
-    HASerializer* serializer = sensor.getSerializer();
 
-    flushSerializer(mock, serializer);
-    assertJson(mock, serializer, "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, default_state_false) {
