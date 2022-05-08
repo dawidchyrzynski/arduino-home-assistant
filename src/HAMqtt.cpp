@@ -65,34 +65,21 @@ HAMqtt::~HAMqtt()
 }
 
 bool HAMqtt::begin(
-    const IPAddress& serverIp,
-    const uint16_t& serverPort,
+    const IPAddress serverIp,
+    const uint16_t serverPort,
     const char* username,
     const char* password
 )
 {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("Initializing ArduinoHA"));
-    Serial.print(F("Server address: "));
-    Serial.print(serverIp);
-    Serial.print(F(":"));
-    Serial.print(serverPort);
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", String(serverIp).c_str(), serverPort);
 
     if (_device.getUniqueId() == nullptr) {
-#if defined(ARDUINOHA_DEBUG)
-        Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
-#endif
-
+        ARDUINOHA_DEBUG_PRINTLN("AHA: init failed. Missing device unique ID");
         return false;
     }
 
     if (_initialized) {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("ArduinoHA is already initialized"));
-#endif
-
+        ARDUINOHA_DEBUG_PRINTLN("AHA: already initialized");
         return false;
     }
 
@@ -107,7 +94,7 @@ bool HAMqtt::begin(
 }
 
 bool HAMqtt::begin(
-    const IPAddress& serverIp,
+    const IPAddress serverIp,
     const char* username,
     const char* password
 )
@@ -117,33 +104,20 @@ bool HAMqtt::begin(
 
 bool HAMqtt::begin(
     const char* hostname,
-    const uint16_t& serverPort,
+    const uint16_t serverPort,
     const char* username,
     const char* password
 )
 {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("Initializing ArduinoHA"));
-    Serial.print(F("Server address: "));
-    Serial.print(hostname);
-    Serial.print(F(":"));
-    Serial.print(serverPort);
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", hostname, serverPort);
 
     if (_device.getUniqueId() == nullptr) {
-#if defined(ARDUINOHA_DEBUG)
-        Serial.println(F("Failed to initialize ArduinoHA. Missing device's unique ID."));
-#endif
-
+        ARDUINOHA_DEBUG_PRINTLN("AHA: init failed. Missing device unique ID");
         return false;
     }
 
     if (_initialized) {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("ArduinoHA is already initialized"));
-#endif
-
+        ARDUINOHA_DEBUG_PRINTLN("AHA: already initialized");
         return false;
     }
 
@@ -166,21 +140,13 @@ bool HAMqtt::begin(
     return begin(hostname, HAMQTT_DEFAULT_PORT, username, password);
 }
 
-bool HAMqtt::disconnect(bool sendLastWill)
+bool HAMqtt::disconnect()
 {
     if (!_initialized) {
         return false;
     }
 
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("Closing connection with MQTT broker"));
-#endif
-
-    if (sendLastWill &&
-            _lastWillTopic != nullptr &&
-            _lastWillMessage != nullptr) {
-        publish(_lastWillTopic, _lastWillMessage, _lastWillRetain);
-    }
+    ARDUINOHA_DEBUG_PRINTLN("AHA: disconnecting");
 
     _initialized = false;
     _lastConnectionAttemptAt = 0;
@@ -221,13 +187,7 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
         return false;
     }
 
-#if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Publishing: "));
-    Serial.print(topic);
-    Serial.print(F(", len: "));
-    Serial.print(strlen(payload));
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: publishing %s, len: %d\n", topic, strlen(payload));
 
     _mqtt->beginPublish(topic, strlen(payload), retained);
     _mqtt->write((const uint8_t*)(payload), strlen(payload));
@@ -240,13 +200,7 @@ bool HAMqtt::beginPublish(
     bool retained
 )
 {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Publishing: "));
-    Serial.print(topic);
-    Serial.print(F(", len: "));
-    Serial.print(payloadLength);
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: being publish %s, len: %d\n", topic, payloadLength);
 
     return _mqtt->beginPublish(topic, payloadLength, retained);
 }
@@ -271,24 +225,14 @@ bool HAMqtt::endPublish()
 
 bool HAMqtt::subscribe(const char* topic)
 {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Subscribing topic: "));
-    Serial.print(topic);
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: subscribing %s\n", topic);
 
     return _mqtt->subscribe(topic);
 }
 
 void HAMqtt::processMessage(char* topic, uint8_t* payload, uint16_t length)
 {
-#if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Received message on topic: "));
-    Serial.print(topic);
-    Serial.print(F(", payload length: "));
-    Serial.print(length);
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: received call %s, len: %d\n", topic, length);
 
     if (_messageCallback) {
         _messageCallback(topic, payload, length);
@@ -307,12 +251,7 @@ void HAMqtt::connectToServer()
     }
 
     _lastConnectionAttemptAt = millis();
-
-#if defined(ARDUINOHA_DEBUG)
-    Serial.print(F("Connecting to the MQTT broker... Client ID: "));
-    Serial.print(_device.getUniqueId());
-    Serial.println();
-#endif
+    ARDUINOHA_DEBUG_PRINTF("AHA: connecting, client ID %s\n", _device.getUniqueId());
 
     _mqtt->connect(
         _device.getUniqueId(),
@@ -326,15 +265,10 @@ void HAMqtt::connectToServer()
     );
 
     if (isConnected()) {
-#if defined(ARDUINOHA_DEBUG)
-        Serial.println(F("Connected to the broker"));
-#endif
-
+        ARDUINOHA_DEBUG_PRINTLN("AHA: connected");
         onConnectedLogic();
     } else {
-#if defined(ARDUINOHA_DEBUG)
-        Serial.println(F("Failed to connect to the broker"));
-#endif
+        ARDUINOHA_DEBUG_PRINTLN("AHA: failed to connect");
 
         if (_connectionFailedCallback) {
             _connectionFailedCallback();

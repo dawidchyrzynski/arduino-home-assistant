@@ -79,14 +79,6 @@ public:
         { _stateCallback = callback; }
 
     /**
-     * Sets the list of supported fan's speeds.
-     *
-     * @param speeds
-     */
-    AHA_DEPRECATED(inline void setSpeeds(uint8_t speeds))
-        { (void)speeds; }
-
-    /**
      * Sets speed of the fan.
      *
      * @param speed
@@ -107,9 +99,6 @@ public:
      */
     inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED(callback))
         { _speedCallback = callback; }
-
-    AHA_DEPRECATED(inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(callback)))
-        { (void)callback; }
 
     /**
      * Sets `retain` flag for commands published by Home Assistant.

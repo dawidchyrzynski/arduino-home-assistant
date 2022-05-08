@@ -105,13 +105,13 @@ public:
      * @param password Password for authentication.
      */
     bool begin(
-        const IPAddress& serverIp,
-        const uint16_t& serverPort = HAMQTT_DEFAULT_PORT,
+        const IPAddress serverIp,
+        const uint16_t serverPort = HAMQTT_DEFAULT_PORT,
         const char* username = nullptr,
         const char* password = nullptr
     );
     bool begin(
-        const IPAddress& serverIp,
+        const IPAddress serverIp,
         const char* username,
         const char* password
     );
@@ -126,7 +126,7 @@ public:
      */
     bool begin(
         const char* hostname,
-        const uint16_t& serverPort = HAMQTT_DEFAULT_PORT,
+        const uint16_t serverPort = HAMQTT_DEFAULT_PORT,
         const char* username = nullptr,
         const char* password = nullptr
     );
@@ -138,10 +138,8 @@ public:
 
     /**
      * Closes connection with the MQTT broker.
-     *
-     * @param sendLastWill Set to true if you want to publish device unavailability before closing the connection.
      */
-    bool disconnect(bool sendLastWill = true);
+    bool disconnect();
 
     /**
      * ArduinoHA's ticker.
