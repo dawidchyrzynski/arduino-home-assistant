@@ -1,20 +1,17 @@
-.. Arduino Home Assistant documentation master file, created by
-   sphinx-quickstart on Mon May  9 17:01:02 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to Arduino Home Assistant's documentation!
+Arduino Home Assistant integration
 ==================================================
 
+ArduinoHA allows to integrate an Arduino/ESP based device with Home Assistant using MQTT.
+The library is designed to use as little resources (RAM/flash) as possible.
+Initially it was optimized to work on Arduino Uno with Ethernet Shield, but I successfully use it on ESP8266/ESP8255 boards in my projects.
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 0
+   :titlesonly:
+   :caption: Getting started
 
-   api/library_root
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   documents/getting-started/prerequisites
+   documents/getting-started/installation
+   documents/getting-started/supported-platforms
+   documents/getting-started/common-issues
+   documents/getting-started/examples

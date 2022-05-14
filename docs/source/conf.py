@@ -14,7 +14,6 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-
 # -- Project information -----------------------------------------------------
 
 project = 'Arduino Home Assistant'
@@ -23,7 +22,6 @@ author = 'Dawid Chyrzynski'
 
 # The full version, including alpha/beta/rc tags
 release = '2.0.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -36,7 +34,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+# templates_path = ['templates']
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -45,24 +43,22 @@ exclude_patterns = []
 
 # Setup the breathe extension
 breathe_projects = {
-    "Arduino Home Assistant": "./xml"
+    'Arduino Home Assistant': './xml'
 }
-breathe_default_project = "Arduino Home Assistant"
+breathe_default_project = 'Arduino Home Assistant'
 breathe_show_include = True
 
 # Setup the exhale extension
 exhale_args = {
     # These arguments are required
-    "containmentFolder":     "./api",
-    "rootFileName":          "library_root.rst",
-    "doxygenStripFromPath":  "..",
-    # Heavily encouraged optional argument (see docs)
-    "rootFileTitle":         "Library API",
-    # Suggested optional arguments
-    "createTreeView":        False,
-    "exhaleExecutesDoxygen": True,
-    "exhaleUseDoxyfile": True,
-    "doxygenStripFromPath": "../../src"
+    'containmentFolder':     './api',
+    'rootFileName':          'library_root.rst',
+    'doxygenStripFromPath':  '..',
+    'rootFileTitle':         'Library API',
+    'createTreeView':        False,
+    'exhaleExecutesDoxygen': True,
+    'exhaleUseDoxyfile':     True,
+    'doxygenStripFromPath':  '../../src'
 }
 
 # Tell sphinx what the primary language being documented is.
@@ -73,17 +69,21 @@ highlight_language = 'cpp'
 
 # -- Options for HTML output -------------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-html_theme = 'sphinx_book_theme'
-
+html_scaled_image_link = False
+html_theme = 'press'
 html_theme_options = {
-    'repository_url': 'https://github.com/dawidchyrzynski/arduino-home-assistant',
-    'use_repository_button': True
+    'external_links': [
+        ('Github', 'https://github.com/dawidchyrzynski/arduino-home-assistant')
+    ]
 }
+html_js_files = [
+    'custom.js'
+]
+html_css_files = [
+    'custom.css'
+]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# so a file named 'default.css' will overwrite the builtin 'default.css'.
+html_static_path = ['static']
