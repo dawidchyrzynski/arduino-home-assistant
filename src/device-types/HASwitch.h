@@ -26,6 +26,9 @@ public:
         bool initialState,
         HAMqtt& mqtt
     ); // legacy constructor
+    HASwitch(
+        const char* uniqueId
+    );
 
     /**
      * Publishes configuration of the sensor to the MQTT.

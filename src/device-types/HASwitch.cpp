@@ -5,55 +5,63 @@
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 
-HASwitch::HASwitch(const char* uniqueId, bool initialState) :
-    BaseDeviceType("switch", uniqueId),
-    _stateCallback(nullptr),
-    _beforeStateCallback(nullptr),
-    _currentState(initialState),
-    _icon(nullptr),
-    _retain(false)
-{
-
-}
-
 HASwitch::HASwitch(
-    const char* uniqueId,
+    const char *uniqueId,
     bool initialState,
-    HAMqtt& mqtt
-) :
-    HASwitch(uniqueId, initialState)
+    HAMqtt &mqtt) : HASwitch(uniqueId, initialState)
 {
     (void)mqtt;
 }
 
+HASwitch::HASwitch(const char *uniqueId, bool initialState) : BaseDeviceType("switch", uniqueId),
+                                                              _stateCallback(nullptr),
+                                                              _beforeStateCallback(nullptr),
+                                                              _currentState(initialState),
+                                                              _icon(nullptr),
+                                                              _retain(false)
+{
+    this->_hasValue = true;
+}
+
+
+HASwitch::HASwitch(const char *uniqueId) : BaseDeviceType("switch", uniqueId),
+                                           _stateCallback(nullptr),
+                                           _beforeStateCallback(nullptr),
+                                           _icon(nullptr),
+                                           _retain(false)
+{
+    this->_hasValue = false;
+}
+
 void HASwitch::onMqttConnected()
 {
-    if (strlen(uniqueId()) == 0) {
+    if (strlen(uniqueId()) == 0)
+    {
         return;
     }
 
     publishConfig();
     publishAvailability();
 
-    if (!_retain) {
+    if (!_retain && this->_hasValue)
+    {
         publishState(_currentState);
     }
 
     DeviceTypeSerializer::mqttSubscribeTopic(
         this,
-        DeviceTypeSerializer::CommandTopic
-    );
+        DeviceTypeSerializer::CommandTopic);
 }
 
 void HASwitch::onMqttMessage(
-    const char* topic,
-    const uint8_t* payload,
-    const uint16_t& length
-)
+    const char *topic,
+    const uint8_t *payload,
+    const uint16_t &length)
 {
     (void)payload;
 
-    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
+    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic))
+    {
         bool state = (length == strlen(DeviceTypeSerializer::StateOn));
         setState(state, true);
     }
@@ -61,18 +69,23 @@ void HASwitch::onMqttMessage(
 
 bool HASwitch::setState(bool state, bool force)
 {
-    if (!force && _currentState == state) {
+    if (!force && this->_hasValue && _currentState == state)
+    {
         return true;
     }
 
-    if (_beforeStateCallback) {
+    if (_beforeStateCallback)
+    {
         _beforeStateCallback(state, this);
     }
 
-    if (publishState(state)) {
+    if (publishState(state))
+    {
         _currentState = state;
+        this->_hasValue = true;
 
-        if (_stateCallback) {
+        if (_stateCallback)
+        {
             _stateCallback(_currentState, this);
         }
 
@@ -84,7 +97,8 @@ bool HASwitch::setState(bool state, bool force)
 
 bool HASwitch::publishState(bool state)
 {
-    if (strlen(uniqueId()) == 0) {
+    if (strlen(uniqueId()) == 0)
+    {
         return false;
     }
 
@@ -92,21 +106,19 @@ bool HASwitch::publishState(bool state)
         this,
         DeviceTypeSerializer::StateTopic,
         (
-            state ?
-            DeviceTypeSerializer::StateOn :
-            DeviceTypeSerializer::StateOff
-        )
-    );
+            state ? DeviceTypeSerializer::StateOn : DeviceTypeSerializer::StateOff));
 }
 
-uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
+uint16_t HASwitch::calculateSerializedLength(const char *serializedDevice) const
 {
-    if (serializedDevice == nullptr) {
+    if (serializedDevice == nullptr)
+    {
         return 0;
     }
 
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
+    const HADevice *device = mqtt()->getDevice();
+    if (device == nullptr)
+    {
         return 0;
     }
 
@@ -120,14 +132,14 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     // cmd topic
     {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+        const uint16_t &topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
             uniqueId(),
             DeviceTypeSerializer::CommandTopic,
-            false
-        );
+            false);
 
-        if (topicLength == 0) {
+        if (topicLength == 0)
+        {
             return 0;
         }
 
@@ -137,14 +149,14 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
 
     // state topic
     {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+        const uint16_t &topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
             uniqueId(),
             DeviceTypeSerializer::StateTopic,
-            false
-        );
+            false);
 
-        if (topicLength == 0) {
+        if (topicLength == 0)
+        {
             return 0;
         }
 
@@ -153,7 +165,8 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     }
 
     // icon
-    if (_icon != nullptr) {
+    if (_icon != nullptr)
+    {
         // Field format: ,"ic":"[ICON]"
         size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
     }
@@ -161,9 +174,10 @@ uint16_t HASwitch::calculateSerializedLength(const char* serializedDevice) const
     return size; // exludes null terminator
 }
 
-bool HASwitch::writeSerializedData(const char* serializedDevice) const
+bool HASwitch::writeSerializedData(const char *serializedDevice) const
 {
-    if (serializedDevice == nullptr) {
+    if (serializedDevice == nullptr)
+    {
         return false;
     }
 
@@ -175,8 +189,7 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteTopicField(
             this,
             Prefix,
-            DeviceTypeSerializer::CommandTopic
-        );
+            DeviceTypeSerializer::CommandTopic);
     }
 
     // state topic
@@ -185,17 +198,16 @@ bool HASwitch::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteTopicField(
             this,
             Prefix,
-            DeviceTypeSerializer::StateTopic
-        );
+            DeviceTypeSerializer::StateTopic);
     }
 
     // icon
-    if (_icon != nullptr) {
+    if (_icon != nullptr)
+    {
         static const char Prefix[] PROGMEM = {",\"ic\":\""};
         DeviceTypeSerializer::mqttWriteConstCharField(
             Prefix,
-            _icon
-        );
+            _icon);
     }
 
     DeviceTypeSerializer::mqttWriteRetainField(_retain);

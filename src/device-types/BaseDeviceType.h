@@ -55,6 +55,7 @@ protected:
 
     const char* const _componentName;
     const char* const _uniqueId;
+    bool _hasValue = false;
 
 private:
     enum Availability {

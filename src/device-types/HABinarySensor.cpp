@@ -6,67 +6,72 @@
 #include "../HADevice.h"
 
 HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    bool initialState
-) :
-    BaseDeviceType("binary_sensor", uniqueId),
-    _class(nullptr),
-    _currentState(initialState)
-{
-
-}
-
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
+    const char *uniqueId,
     bool initialState,
-    HAMqtt& mqtt
-) :
-    HABinarySensor(uniqueId, initialState)
+    HAMqtt &mqtt) : HABinarySensor(uniqueId, initialState)
 {
     (void)mqtt;
 }
 
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    const char* deviceClass,
-    bool initialState
-) :
-    BaseDeviceType("binary_sensor", uniqueId),
-    _class(deviceClass),
-    _currentState(initialState)
-{
 
+HABinarySensor::HABinarySensor(
+    const char *uniqueId,
+    bool initialState) : HABinarySensor(uniqueId, nullptr, initialState)
+{
 }
 
 HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    const char* deviceClass,
-    bool initialState,
-    HAMqtt& mqtt
-) :
-    HABinarySensor(uniqueId, deviceClass, initialState)
+    const char *uniqueId,
+    const char *deviceClass,
+    bool initialState) : BaseDeviceType("binary_sensor", uniqueId),
+                         _class(deviceClass),
+                         _currentState(initialState)
 {
+    this->_hasValue = true;
+}
+
+HABinarySensor::HABinarySensor(
+    const char *uniqueId) : BaseDeviceType("binary_sensor", uniqueId),
+                         _class(nullptr)
+{
+    this->_hasValue = false;
+}
+
+HABinarySensor::HABinarySensor(
+    const char *uniqueId,
+    const char *deviceClass,
+    bool initialState,
+    HAMqtt &mqtt) : HABinarySensor(uniqueId, deviceClass, initialState)
+{
+    this->_hasValue = true;
     (void)mqtt;
 }
 
 void HABinarySensor::onMqttConnected()
 {
-    if (strlen(uniqueId()) == 0) {
+    if (strlen(uniqueId()) == 0)
+    {
         return;
     }
 
     publishConfig();
-    publishState(_currentState);
+    if (this->_hasValue)
+    {
+        publishState(_currentState);
+    }
     publishAvailability();
 }
 
 bool HABinarySensor::setState(bool state)
 {
-    if (state == _currentState) {
+    if (this->_hasValue && state == _currentState)
+    {
         return true;
     }
 
-    if (publishState(state)) {
+    if (publishState(state))
+    {
+        this->_hasValue = true;
         _currentState = state;
         return true;
     }
@@ -76,16 +81,17 @@ bool HABinarySensor::setState(bool state)
 
 bool HABinarySensor::publishState(bool state)
 {
-    if (strlen(uniqueId()) == 0) {
+    if (strlen(uniqueId()) == 0)
+    {
         return false;
     }
 
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
+    const uint16_t &topicSize = DeviceTypeSerializer::calculateTopicLength(
         componentName(),
         uniqueId(),
-        DeviceTypeSerializer::StateTopic
-    );
-    if (topicSize == 0) {
+        DeviceTypeSerializer::StateTopic);
+    if (topicSize == 0)
+    {
         return false;
     }
 
@@ -94,34 +100,29 @@ bool HABinarySensor::publishState(bool state)
         topic,
         componentName(),
         uniqueId(),
-        DeviceTypeSerializer::StateTopic
-    );
+        DeviceTypeSerializer::StateTopic);
 
-    if (strlen(topic) == 0) {
+    if (strlen(topic) == 0)
+    {
         return false;
     }
 
     return mqtt()->publish(
         topic,
-        (
-            state ?
-            DeviceTypeSerializer::StateOn :
-            DeviceTypeSerializer::StateOff
-        ),
-        true
-    );
+        (state ? DeviceTypeSerializer::StateOn : DeviceTypeSerializer::StateOff),
+        true);
 }
 
-uint16_t HABinarySensor::calculateSerializedLength(
-    const char* serializedDevice
-) const
+uint16_t HABinarySensor::calculateSerializedLength(const char *serializedDevice) const
 {
-    if (serializedDevice == nullptr) {
+    if (serializedDevice == nullptr)
+    {
         return 0;
     }
 
-    const HADevice* device = mqtt()->getDevice();
-    if (device == nullptr) {
+    const HADevice *device = mqtt()->getDevice();
+    if (device == nullptr)
+    {
         return 0;
     }
 
@@ -134,14 +135,14 @@ uint16_t HABinarySensor::calculateSerializedLength(
 
     // state topic
     {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
+        const uint16_t &topicLength = DeviceTypeSerializer::calculateTopicLength(
             componentName(),
             uniqueId(),
             DeviceTypeSerializer::StateTopic,
-            false
-        );
+            false);
 
-        if (topicLength == 0) {
+        if (topicLength == 0)
+        {
             return 0;
         }
 
@@ -150,7 +151,8 @@ uint16_t HABinarySensor::calculateSerializedLength(
     }
 
     // device class
-    if (_class != nullptr) {
+    if (_class != nullptr)
+    {
         // Field format: ,"dev_cla":"[CLASS]"
         size += strlen(_class) + 13; // 13 - length of the JSON decorators for this field
     }
@@ -158,9 +160,10 @@ uint16_t HABinarySensor::calculateSerializedLength(
     return size; // exludes null terminator
 }
 
-bool HABinarySensor::writeSerializedData(const char* serializedDevice) const
+bool HABinarySensor::writeSerializedData(const char *serializedDevice) const
 {
-    if (serializedDevice == nullptr) {
+    if (serializedDevice == nullptr)
+    {
         return false;
     }
 
@@ -172,12 +175,12 @@ bool HABinarySensor::writeSerializedData(const char* serializedDevice) const
         DeviceTypeSerializer::mqttWriteTopicField(
             this,
             Prefix,
-            DeviceTypeSerializer::StateTopic
-        );
+            DeviceTypeSerializer::StateTopic);
     }
 
     // device class
-    if (_class != nullptr) {
+    if (_class != nullptr)
+    {
         static const char Prefix[] PROGMEM = {",\"dev_cla\":\""};
         DeviceTypeSerializer::mqttWriteConstCharField(Prefix, _class);
     }

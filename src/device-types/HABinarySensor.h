@@ -24,6 +24,9 @@ public:
         bool initialState,
         HAMqtt& mqtt
     ); // legacy constructor
+    HABinarySensor(
+        const char* uniqueId
+    );
 
     /**
      * Initializes binary sensor with the specified class.
