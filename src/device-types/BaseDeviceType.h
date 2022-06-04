@@ -43,6 +43,9 @@ public:
 
     inline void publishConfigTest()
         { publishConfig(); }
+
+    inline void buildSerializerTest()
+        { buildSerializer(); }
 #endif
 
 protected:
@@ -55,7 +58,7 @@ protected:
     virtual void onMqttMessage(
         const char* topic,
         const uint8_t* payload,
-        const uint16_t& length
+        const uint16_t length
     );
 
     virtual void publishConfig();

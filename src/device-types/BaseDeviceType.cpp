@@ -38,7 +38,7 @@ HAMqtt* BaseDeviceType::mqtt() const
 void BaseDeviceType::onMqttMessage(
     const char* topic,
     const uint8_t* payload,
-    const uint16_t& length
+    const uint16_t length
 )
 {
     (void)topic;
