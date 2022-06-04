@@ -22,11 +22,13 @@ const char HAUniqueIdProperty[] PROGMEM = {"uniq_id"};
 const char HADeviceProperty[] PROGMEM = {"dev"};
 const char HADeviceClassProperty[] PROGMEM = {"dev_cla"};
 const char HAIconProperty[] PROGMEM = {"ic"};
+const char HARetainProperty[] PROGMEM = {"ret"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
 const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
+const char HACommandTopic[] PROGMEM = {"cmd_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

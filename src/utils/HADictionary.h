@@ -22,11 +22,13 @@ extern const char HAUniqueIdProperty[];
 extern const char HADeviceProperty[];
 extern const char HADeviceClassProperty[];
 extern const char HAIconProperty[];
+extern const char HARetainProperty[];
 
 // topics
 extern const char HAConfigTopic[];
 extern const char HAAvailabilityTopic[];
 extern const char HAStateTopic[];
+extern const char HACommandTopic[];
 
 // misc
 extern const char HAOnline[];
