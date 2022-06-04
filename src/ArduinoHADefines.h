@@ -4,6 +4,7 @@
 // #define ARDUINOHA_DEBUG
 
 // #define EX_ARDUINOHA_BINARY_SENSOR
+// #define EX_ARDUINOHA_BUTTON
 
 #if defined(ARDUINOHA_DEBUG)
     #include <Arduino.h>
