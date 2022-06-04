@@ -43,6 +43,23 @@ struct MqttMessage
     }
 };
 
+struct MqttSubscription {
+    char* topic;
+
+    MqttSubscription() :
+        topic(nullptr)
+    {
+
+    }
+
+    ~MqttSubscription()
+    {
+        if (topic) {
+            delete topic;
+        }
+    }
+};
+
 struct MqttConnection
 {
     bool connected;
@@ -115,6 +132,12 @@ public:
     inline MqttMessage* getFlushedMessages() const
         { return _flushedMessages; }
 
+    inline uint8_t getSubscriptionsNb() const
+        { return _flushedMessagesNb; }
+
+    inline MqttSubscription* getSubscriptions() const
+        { return _subscriptions; }      
+
     inline const MqttConnection& getConnection() const
         { return _connection; }
 
@@ -128,6 +151,8 @@ private:
     MqttMessage* _pendingMessage;
     MqttMessage* _flushedMessages;
     uint8_t _flushedMessagesNb;
+    MqttSubscription* _subscriptions;
+    uint8_t _subscriptionsNb;
     MqttConnection _connection;
     MqttWill _lastWill;
 };

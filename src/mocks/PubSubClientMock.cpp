@@ -4,7 +4,9 @@
 PubSubClientMock::PubSubClientMock() :
     _pendingMessage(nullptr),
     _flushedMessages(nullptr),
-    _flushedMessagesNb(0)
+    _flushedMessagesNb(0),
+    _subscriptions(nullptr),
+    _subscriptionsNb(0)
 {
 
 }
@@ -13,6 +15,10 @@ PubSubClientMock::~PubSubClientMock()
 {
     if (_pendingMessage) {
         delete _pendingMessage;
+    }
+
+    if (_subscriptions) {
+        delete _subscriptions;
     }
 
     clearFlushedMessages();
@@ -168,7 +174,19 @@ int PubSubClientMock::endPublish()
 
 bool PubSubClientMock::subscribe(const char* topic)
 {
-    return false; // to do
+    uint8_t index = _subscriptionsNb;
+
+    _subscriptionsNb++;
+    _subscriptions = static_cast<MqttSubscription*>(
+        realloc(_subscriptions, _subscriptionsNb * sizeof(MqttSubscription))
+    );
+
+    size_t topicSize = strlen(topic) + 1;
+    MqttSubscription* subscription = &_subscriptions[index];
+    subscription->topic = new char[topicSize];
+
+    memcpy(subscription->topic, topic, topicSize);
+    return true;
 }
 
 void PubSubClientMock::clearFlushedMessages()
