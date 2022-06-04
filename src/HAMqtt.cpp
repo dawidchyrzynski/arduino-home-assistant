@@ -230,7 +230,7 @@ bool HAMqtt::subscribe(const char* topic)
     return _mqtt->subscribe(topic);
 }
 
-void HAMqtt::processMessage(char* topic, uint8_t* payload, uint16_t length)
+void HAMqtt::processMessage(const char* topic, const uint8_t* payload, uint16_t length)
 {
     ARDUINOHA_DEBUG_PRINTF("AHA: received call %s, len: %d\n", topic, length);
 

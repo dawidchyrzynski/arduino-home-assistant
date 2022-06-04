@@ -214,7 +214,7 @@ public:
      * @param payload Content of the message.
      * @param length Length of the message.
      */
-    void processMessage(char* topic, uint8_t* payload, uint16_t length);
+    void processMessage(const char* topic, const uint8_t* payload, uint16_t length);
 
 #ifdef ARDUINOHA_TEST
     inline uint8_t getDevicesTypesNb() const
