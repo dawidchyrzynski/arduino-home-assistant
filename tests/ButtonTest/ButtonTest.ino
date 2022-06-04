@@ -47,6 +47,32 @@ test(ButtonTest, default_params) {
     )
 }
 
+test(ButtonTest, command_subscription) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertStringCaseEqual(commandTopic, mock->getSubscriptions()[0].topic);
+}
+
+test(ButtonTest, availability) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    button.setAvailability(true);
+    mqtt.loop();
+
+    // availability is published after config in HAButton
+    assertMqttMessage(
+        1,
+        "testData/testDevice/uniqueButton/avty_t",
+        "online",
+        true
+    )
+}
+
 test(ButtonTest, name_setter) {
     prepareTest
 

@@ -15,7 +15,7 @@
     const __FlashStringHelper* messageP = F(eMessage); \
     size_t messageLen = strlen_P(reinterpret_cast<const char *>(messageP)); \
     MqttMessage* publishedMessage = &mock->getFlushedMessages()[index]; \
-    assertStringCaseEqual(publishedMessage->topic, eTopic); \
+    assertStringCaseEqual(publishedMessage->topic, F(eTopic)); \
     assertStringCaseEqual(publishedMessage->buffer, messageP); \
     assertEqual(publishedMessage->bufferSize - 1, messageLen); \
     assertEqual(publishedMessage->retained, eRetained); \
@@ -28,9 +28,8 @@
 
 #define assertEntityConfig(mock, entity, expectedJson) \
 { \
-    mock->connectDummy(); \
-    entity.publishConfigTest(); \
-    assertSingleMqttMessage(configTopic, expectedJson, true) \
+    mqtt.loop(); \
+    assertMqttMessage(0, configTopic, expectedJson, true) \
     assertTrue(entity.getSerializer() == nullptr); \
 }
 

@@ -5,6 +5,7 @@
 
 // #define EX_ARDUINOHA_BINARY_SENSOR
 // #define EX_ARDUINOHA_BUTTON
+// #define EX_ARDUINOHA_COVER
 
 #if defined(ARDUINOHA_DEBUG)
     #include <Arduino.h>
