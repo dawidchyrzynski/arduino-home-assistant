@@ -1,7 +1,6 @@
 #ifndef AHA_PUBSUBCLIENTMOCK_H
 #define AHA_PUBSUBCLIENTMOCK_H
 
-#include "../ArduinoHADefines.h"
 #ifdef ARDUINOHA_TEST
 
 #include <Arduino.h>
