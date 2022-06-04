@@ -120,6 +120,18 @@ test(BinarySensorTest, publish_state_debounce) {
     assertEqual(mock->getMessageLength(), (size_t)0);
 }
 
+test(BinarySensorTest, publish_state_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HABinarySensor sensor(testUniqueId, true); // initial state is true
+    sensor.setState(true, true);
+
+    assertStringCaseEqual(mock->getMessageTopic(), F("aha/testDevice/uniqueSensor/stat_t"));
+    assertStringCaseEqual(mock->getMessageBuffer(), F("ON"));
+    assertEqual(mock->getMessageLength(), (size_t)2);
+}
+
 void setup()
 {
     Serial.begin(115200);

@@ -45,9 +45,9 @@ void HABinarySensor::onMqttConnected()
     publishAvailability();
 }
 
-bool HABinarySensor::setState(bool state)
+bool HABinarySensor::setState(bool state, bool force)
 {
-    if (state == _currentState) {
+    if (!force && state == _currentState) {
         return true;
     }
 

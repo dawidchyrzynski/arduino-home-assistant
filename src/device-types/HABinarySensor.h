@@ -44,9 +44,10 @@ public:
      * the MQTT message won't be published.
      *
      * @param state New state of the sensor.
+     * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setState(bool state);
+    bool setState(bool state, bool force = false);
 
     /**
      * Returns last known state of the sensor.
