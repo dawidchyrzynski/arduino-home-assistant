@@ -34,7 +34,7 @@ public:
     void setSoftwareVersion(const char* softwareVersion);
     void setAvailability(bool online);
     bool enableSharedAvailability();
-    bool enableLastWill(bool retained = false);
+    bool enableLastWill();
     bool setUniqueId(const byte* uniqueId, const uint16_t length);
     void publishAvailability();
 

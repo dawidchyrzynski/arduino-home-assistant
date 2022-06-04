@@ -98,7 +98,7 @@ bool HADevice::enableSharedAvailability()
     return false;
 }
 
-bool HADevice::enableLastWill(bool retained)
+bool HADevice::enableLastWill()
 {
     HAMqtt* mqtt = HAMqtt::instance();
     if (!mqtt || !_availabilityTopic) {
@@ -108,7 +108,7 @@ bool HADevice::enableLastWill(bool retained)
     mqtt->setLastWill(
         _availabilityTopic,
         "offline",
-        retained
+        true
     );
 
     return true;
