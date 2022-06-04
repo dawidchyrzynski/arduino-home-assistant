@@ -45,6 +45,20 @@ test(BinarySensorTest, availability) {
     )
 }
 
+test(BinarySensorTest, publish_default_state) {
+    initMqttTest(testDeviceId)
+
+    HABinarySensor sensor(testUniqueId, true);
+    mqtt.loop();
+
+    assertMqttMessage(
+        1,
+        "testData/testDevice/uniqueSensor/stat_t",
+        "ON",
+        true
+    )
+}
+
 test(BinarySensorTest, name_setter) {
     initMqttTest(testDeviceId)
 
