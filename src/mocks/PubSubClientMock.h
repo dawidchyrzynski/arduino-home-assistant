@@ -15,9 +15,9 @@
 
 struct MqttMessage
 {
-    const char* topic;
+    char* topic;
     size_t topicSize;
-    const char* buffer;
+    char* buffer;
     size_t bufferSize;
     bool retained;
 
@@ -33,8 +33,13 @@ struct MqttMessage
 
     ~MqttMessage()
     {
-        delete topic;
-        delete buffer;
+        if (topic) {
+            delete topic;
+        }
+
+        if (buffer) {
+            delete buffer;
+        }
     }
 };
 
@@ -79,6 +84,7 @@ class PubSubClientMock
 {
 public:
     PubSubClientMock();
+    ~PubSubClientMock();
 
     bool loop();
     void disconnect();
@@ -97,25 +103,17 @@ public:
     PubSubClientMock& setServer(IPAddress ip, uint16_t port);
     PubSubClientMock& setServer(const char* domain, uint16_t port);
     PubSubClientMock& setCallback(MQTT_CALLBACK_SIGNATURE);
+
     bool beginPublish(const char* topic, unsigned int plength, bool retained);
     size_t write(const uint8_t *buffer, size_t size);
     int endPublish();
     bool subscribe(const char* topic);
 
-    inline const char* getMessageBuffer() const
-        { return _messageBuffer; }
+    inline uint8_t getFlushedMessagesNb() const
+        { return _flushedMessagesNb; }
 
-    inline const char* getMessageTopic() const
-        { return _messageTopic; }
-
-    inline bool isMessageRetained() const
-        { return _messageRetained; }
-
-    inline const size_t& getMessageLength() const
-        { return _messageLength; }
-
-    inline bool isMessageFlushed() const
-        { return _messageFlushed; }
+    inline MqttMessage* getFlushedMessages() const
+        { return _flushedMessages; }
 
     inline const MqttConnection& getConnection() const
         { return _connection; }
@@ -123,13 +121,13 @@ public:
     inline const MqttWill& getLastWill() const
         { return _lastWill; }
 
+    void clearFlushedMessages();
+    MqttMessage* getFirstFlushedMessage();
+
 private:
-    char _messageBuffer[256];
-    char _messageTopic[64];
-    bool _messageRetained;
-    bool _messageFlushed;
-    size_t _messageLength;
-    
+    MqttMessage* _pendingMessage;
+    MqttMessage* _flushedMessages;
+    uint8_t _flushedMessagesNb;
     MqttConnection _connection;
     MqttWill _lastWill;
 };

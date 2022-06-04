@@ -2,12 +2,20 @@
 #ifdef ARDUINOHA_TEST
 
 PubSubClientMock::PubSubClientMock() :
-    _messageRetained(false),
-    _messageFlushed(false),
-    _messageLength(0)
+    _pendingMessage(nullptr),
+    _flushedMessages(nullptr),
+    _flushedMessagesNb(0)
 {
-    memset(_messageBuffer, 0, sizeof(_messageBuffer));
-    memset(_messageTopic, 0, sizeof(_messageTopic));
+
+}
+
+PubSubClientMock::~PubSubClientMock()
+{
+    if (_pendingMessage) {
+        delete _pendingMessage;
+    }
+
+    clearFlushedMessages();
 }
 
 bool PubSubClientMock::loop()
@@ -54,7 +62,7 @@ bool PubSubClientMock::connect(
 bool PubSubClientMock::connectDummy()
 {
     _connection.connected = true;
-    _connection.id = nullptr;
+    _connection.id = "dummyId";
     _connection.user = nullptr;
     _connection.pass = nullptr;
 
@@ -73,7 +81,10 @@ PubSubClientMock& PubSubClientMock::setServer(IPAddress ip, uint16_t port)
     return *this;
 }
 
-PubSubClientMock& PubSubClientMock::setServer(const char * domain, uint16_t port)
+PubSubClientMock& PubSubClientMock::setServer(
+    const char * domain,
+    uint16_t port
+)
 {
     _connection.domain = domain;
     _connection.port = port;
@@ -88,36 +99,86 @@ PubSubClientMock& PubSubClientMock::setCallback(MQTT_CALLBACK_SIGNATURE)
     return *this;
 }
 
-bool PubSubClientMock::beginPublish(const char* topic, unsigned int plength, bool retained)
+bool PubSubClientMock::beginPublish(
+    const char* topic,
+    unsigned int plength,
+    bool retained
+)
 {
-    _messageRetained = retained;
-    _messageFlushed = false;
-    _messageLength = plength;
-
-    if (strlen(topic) >= sizeof(_messageTopic)) {
-        Serial.println("WARNING: Message topic overflow (PubSubClientMock)");
+    if (_pendingMessage) {
+        delete _pendingMessage;
     }
 
-    strcpy(_messageTopic, topic);
-    memset(_messageBuffer, 0, sizeof(_messageBuffer));
+    _pendingMessage = new MqttMessage();
+    _pendingMessage->retained = retained; 
+
+    {
+        size_t size = strlen(topic) + 1;
+        _pendingMessage->topic = new char[size];
+        _pendingMessage->topicSize = size;
+
+        memset(_pendingMessage->topic, 0, size);
+        memcpy(_pendingMessage->topic, topic, size);
+    }
+
+    {
+        size_t size = plength + 1;
+        _pendingMessage->buffer = new char[size];
+        _pendingMessage->bufferSize = size;
+
+        memset(_pendingMessage->buffer, 0, size);
+    }
+
     return true;
 }
 
 size_t PubSubClientMock::write(const uint8_t *buffer, size_t size)
 {
-    strncat(_messageBuffer, (const char*)buffer, size);
+    if (!_pendingMessage || !_pendingMessage->buffer) {
+        return 0;
+    }
+
+    strncat(_pendingMessage->buffer, (const char*)buffer, size);
     return size;
 }
 
 int PubSubClientMock::endPublish()
 {
-    _messageFlushed = true;
-    return strlen(_messageBuffer);
+    if (!_pendingMessage) {
+        return 0;
+    }
+
+    size_t messageSize = _pendingMessage->bufferSize;
+    uint8_t index = _flushedMessagesNb;
+
+    _flushedMessagesNb++;
+    _flushedMessages = static_cast<MqttMessage*>(
+        realloc(_flushedMessages, _flushedMessagesNb * sizeof(MqttMessage))
+    );
+
+    _flushedMessages[index] = *_pendingMessage; // handover memory responsibility
+    _pendingMessage = nullptr; // do not call destructor
+
+    return messageSize;
 }
 
 bool PubSubClientMock::subscribe(const char* topic)
 {
     return false; // to do
+}
+
+void PubSubClientMock::clearFlushedMessages()
+{
+    if (_flushedMessages) {
+        delete _flushedMessages;
+    }
+
+    _flushedMessagesNb = 0;
+}
+
+MqttMessage* PubSubClientMock::getFirstFlushedMessage()
+{
+    return _flushedMessagesNb > 0 ? &_flushedMessages[0] : nullptr;
 }
 
 #endif
