@@ -3,8 +3,7 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    DummyDeviceType deviceType(testComponentName, testUniqueId); \
-    mock->connectDummy();
+    DummyDeviceType deviceType(testComponentName, testUniqueId);
 
 using aunit::TestRunner;
 
@@ -20,7 +19,9 @@ public:
         BaseDeviceType(componentName, uniqueId) { }
 
 protected:
-    virtual void onMqttConnected() override { }
+    virtual void onMqttConnected() override {
+        publishAvailability();
+    }
 };
 
 test(BaseDeviceTypeTest, constructor_params) {
@@ -55,16 +56,25 @@ test(BaseDeviceTypeTest, default_availability) {
     assertFalse(deviceType.isAvailabilityConfigured());
 }
 
-test(BaseDeviceTypeTest, publish_availability_online) {
+test(BaseDeviceTypeTest, publish_nothing_if_not_configured) {
     prepareTest
 
+    mqtt.loop();
+    assertNoMqttMessage();
+}
+
+test(BaseDeviceTypeTest, publish_availability_online_runtime) {
+    prepareTest
+
+    mock->connectDummy();
     deviceType.setAvailability(true);
     assertSingleMqttMessage(availabilityTopic, "online", true)
 }
 
-test(BaseDeviceTypeTest, publish_availability_offline) {
+test(BaseDeviceTypeTest, publish_availability_offline_runtime) {
     prepareTest
 
+    mock->connectDummy();
     deviceType.setAvailability(false);
     assertSingleMqttMessage(availabilityTopic, "offline", true)
 }

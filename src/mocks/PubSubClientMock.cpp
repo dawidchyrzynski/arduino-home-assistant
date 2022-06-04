@@ -26,7 +26,7 @@ PubSubClientMock::~PubSubClientMock()
 
 bool PubSubClientMock::loop()
 {
-    return true; // nothing to do
+    return connected();
 }
 
 void PubSubClientMock::disconnect()
@@ -196,11 +196,6 @@ void PubSubClientMock::clearFlushedMessages()
     }
 
     _flushedMessagesNb = 0;
-}
-
-MqttMessage* PubSubClientMock::getFirstFlushedMessage()
-{
-    return _flushedMessagesNb > 0 ? &_flushedMessages[0] : nullptr;
 }
 
 #endif

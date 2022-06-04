@@ -133,7 +133,7 @@ public:
         { return _flushedMessages; }
 
     inline uint8_t getSubscriptionsNb() const
-        { return _flushedMessagesNb; }
+        { return _subscriptionsNb; }
 
     inline MqttSubscription* getSubscriptions() const
         { return _subscriptions; }      
@@ -145,7 +145,6 @@ public:
         { return _lastWill; }
 
     void clearFlushedMessages();
-    MqttMessage* getFirstFlushedMessage();
 
 private:
     MqttMessage* _pendingMessage;

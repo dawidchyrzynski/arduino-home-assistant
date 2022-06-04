@@ -91,7 +91,8 @@ void BaseDeviceType::publishAvailability()
     if (
         !device ||
         !uniqueId() ||
-        device->isSharedAvailabilityEnabled()
+        device->isSharedAvailabilityEnabled() ||
+        !isAvailabilityConfigured()
     ) {
         return;
     }
