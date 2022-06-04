@@ -1,11 +1,17 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
 
+#define prepareTest \
+    initMqttTest(testDeviceId) \
+    DummyDeviceType deviceType(testComponentName, testUniqueId); \
+    mock->connectDummy();
+
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testComponentName = "testComponent";
 static const char* testUniqueId = "uniqueId";
+static const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
 
 class DummyDeviceType : public BaseDeviceType
 {
@@ -41,6 +47,7 @@ test(BaseDeviceTypeTest, name_setter) {
     const char* name = "testName";
     DummyDeviceType deviceType(testComponentName, testUniqueId);
     deviceType.setName(name);
+    assertEqual(name, deviceType.getName());
 }
 
 test(BaseDeviceTypeTest, default_availability) {
@@ -49,35 +56,17 @@ test(BaseDeviceTypeTest, default_availability) {
 }
 
 test(BaseDeviceTypeTest, publish_availability_online) {
-    const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
-    PubSubClientMock* mock = new PubSubClientMock();
-    HADevice device(testDeviceId);
-    HAMqtt mqtt(mock, device);
-    mqtt.setDataPrefix("testData");
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    prepareTest
 
-    mock->connectDummy();
     deviceType.setAvailability(true);
-
-    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), F("online"));
-    assertTrue(mock->isMessageFlushed());
+    assertSingleMqttMessage(availabilityTopic, "online", true)
 }
 
 test(BaseDeviceTypeTest, publish_availability_offline) {
-    const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
-    PubSubClientMock* mock = new PubSubClientMock();
-    HADevice device(testDeviceId);
-    HAMqtt mqtt(mock, device);
-    mqtt.setDataPrefix("testData");
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    prepareTest
 
-    mock->connectDummy();
     deviceType.setAvailability(false);
-
-    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), F("offline"));
-    assertTrue(mock->isMessageFlushed());
+    assertSingleMqttMessage(availabilityTopic, "offline", true)
 }
 
 void setup()
