@@ -20,13 +20,6 @@ public:
         bool initialState
     );
 
-    virtual void buildSerializer() override;
-
-    /**
-     * Publishes configuration of the sensor to the MQTT.
-     */
-    virtual void onMqttConnected() override;
-
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
@@ -61,6 +54,10 @@ public:
      */
     inline bool getState() const
         { return _currentState; }
+
+protected:
+    virtual void buildSerializer() override;
+    virtual void onMqttConnected() override;
 
 private:
     bool publishState(bool state);
