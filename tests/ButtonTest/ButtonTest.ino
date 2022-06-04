@@ -2,23 +2,9 @@
 #include <ArduinoHA.h>
 
 #define prepareTest \
-    PubSubClientMock* mock = new PubSubClientMock(); \
-    HADevice device(testDeviceId); \
-    HAMqtt mqtt(mock, device); \
+    initMqttTest(testDeviceId) \
     commandCallbackCalled = false; \
     commandCallbackButtonPtr = nullptr;
-
-#define assertConfig(mock, expectedJson) \
-{ \
-    mock->connectDummy(); \
-    button.publishConfigTest(); \
-    assertStringCaseEqual(mock->getMessageTopic(), configTopic); \
-    assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
-    assertEqual(mock->getMessageLength(), (size_t)strlen_P(reinterpret_cast<const char *>(expectedJson))); \
-    assertTrue(mock->isMessageRetained()); \
-    assertTrue(mock->isMessageFlushed()); \
-    assertTrue(button.getSerializer() == nullptr); \
-}
 
 #define assertCallback(shouldBeCalled, callerPtr) \
     assertTrue(commandCallbackCalled == shouldBeCalled); \
@@ -29,7 +15,7 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueButton";
 static const char* configTopic = "homeassistant/button/testDevice/uniqueButton/config";
-static const char* commandTopic = "aha/testDevice/uniqueButton/cmd_t";
+static const char* commandTopic = "testData/testDevice/uniqueButton/cmd_t";
 static const char* commandMessage = "PRESS";
 static bool commandCallbackCalled = false;
 static HAButton* commandCallbackButtonPtr = nullptr;
@@ -54,7 +40,11 @@ test(ButtonTest, default_params) {
     prepareTest
 
     HAButton button(testUniqueId);
-    assertConfig(mock, "{\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+    assertEntityConfig(
+        mock,
+        button,
+        "{\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+    )
 }
 
 test(ButtonTest, name_setter) {
@@ -63,7 +53,11 @@ test(ButtonTest, name_setter) {
     HAButton button(testUniqueId);
     button.setName("testName");
 
-    assertConfig(mock, "{\"name\":\"testName\",\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+    assertEntityConfig(
+        mock,
+        button,
+        "{\"name\":\"testName\",\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+    )
 }
 
 test(ButtonTest, device_class) {
@@ -72,7 +66,11 @@ test(ButtonTest, device_class) {
     HAButton button(testUniqueId);
     button.setDeviceClass("testClass");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueButton\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+    assertEntityConfig(
+        mock,
+        button,
+        "{\"uniq_id\":\"uniqueButton\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+    )
 }
 
 test(ButtonTest, icon_setter) {
@@ -81,7 +79,11 @@ test(ButtonTest, icon_setter) {
     HAButton button(testUniqueId);
     button.setIcon("testIcon");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueButton\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+    assertEntityConfig(
+        mock,
+        button,
+        "{\"uniq_id\":\"uniqueButton\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+    )
 }
 
 test(ButtonTest, retain_setter) {
@@ -90,7 +92,11 @@ test(ButtonTest, retain_setter) {
     HAButton button(testUniqueId);
     button.setRetain(true);
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueButton\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+    assertEntityConfig(
+        mock,
+        button,
+        "{\"uniq_id\":\"uniqueButton\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+    )
 }
 
 test(ButtonTest, command_callback) {
@@ -126,7 +132,7 @@ test(ButtonTest, different_button_command) {
     HAButton button(testUniqueId);
     button.onPress(onCommandReceived);
     mqtt.processMessage(
-        "aha/testDevice/uniqueButtonDifferent/cmd_t",
+        "testData/testDevice/uniqueButtonDifferent/cmd_t",
         reinterpret_cast<const uint8_t*>(commandMessage),
         strlen(commandMessage)
     );
