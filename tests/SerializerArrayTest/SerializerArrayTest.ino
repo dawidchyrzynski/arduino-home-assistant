@@ -1,5 +1,5 @@
 #include <AUnit.h>
-#include <ArduinoHATests.h>
+#include <ArduinoHA.h>
 
 #define assertJson(expectedJson, array) \
     const __FlashStringHelper* expectedJsonP = F(expectedJson); \

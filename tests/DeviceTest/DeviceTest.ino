@@ -1,5 +1,5 @@
 #include <AUnit.h>
-#include <ArduinoHATests.h>
+#include <ArduinoHA.h>
 
 using aunit::TestRunner;
 
