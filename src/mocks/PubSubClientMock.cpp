@@ -4,12 +4,7 @@
 PubSubClientMock::PubSubClientMock() :
     _messageRetained(false),
     _messageFlushed(false),
-    _messageLength(0),
-    _connected(false),
-    _port(0),
-    _id(nullptr),
-    _user(nullptr),
-    _pass(nullptr)
+    _messageLength(0)
 {
     memset(_messageBuffer, 0, sizeof(_messageBuffer));
     memset(_messageTopic, 0, sizeof(_messageTopic));
@@ -17,17 +12,17 @@ PubSubClientMock::PubSubClientMock() :
 
 bool PubSubClientMock::loop()
 {
-    // nothing to do
+    return true; // nothing to do
 }
 
 void PubSubClientMock::disconnect()
 {
-    _connected = false;
+    _connection.connected = false;
 }
 
 bool PubSubClientMock::connected()
 {
-    return _connected;
+    return _connection.connected;
 }
 
 bool PubSubClientMock::connect(
@@ -44,10 +39,10 @@ bool PubSubClientMock::connect(
     (void)willQos;
     (void)cleanSession;
 
-    _connected = true;
-    _id = id;
-    _user = user;
-    _pass = pass;
+    _connection.connected = true;
+    _connection.id = id;
+    _connection.user = user;
+    _connection.pass = pass;
 
     _lastWill.topic = willTopic;
     _lastWill.message = willMessage;
@@ -58,10 +53,10 @@ bool PubSubClientMock::connect(
 
 bool PubSubClientMock::connectDummy()
 {
-    _connected = true;
-    _id = nullptr;
-    _user = nullptr;
-    _pass = nullptr;
+    _connection.connected = true;
+    _connection.id = nullptr;
+    _connection.user = nullptr;
+    _connection.pass = nullptr;
 
     _lastWill.topic = nullptr;
     _lastWill.message = nullptr;
@@ -72,22 +67,24 @@ bool PubSubClientMock::connectDummy()
 
 PubSubClientMock& PubSubClientMock::setServer(IPAddress ip, uint16_t port)
 {
-    _ip = ip;
-    _port = port;
+    _connection.ip = ip;
+    _connection.port = port;
 
     return *this;
 }
 
 PubSubClientMock& PubSubClientMock::setServer(const char * domain, uint16_t port)
 {
-    _domain = domain;
-    _port = port;
+    _connection.domain = domain;
+    _connection.port = port;
 
     return *this;
 }
 
 PubSubClientMock& PubSubClientMock::setCallback(MQTT_CALLBACK_SIGNATURE)
 {
+    (void)callback;
+
     return *this;
 }
 

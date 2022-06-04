@@ -13,6 +13,53 @@
 #define MQTT_CALLBACK_SIGNATURE void (*callback)(char*, uint8_t*, unsigned int)
 #endif
 
+struct MqttMessage
+{
+    const char* topic;
+    size_t topicSize;
+    const char* buffer;
+    size_t bufferSize;
+    bool retained;
+
+    MqttMessage() :
+        topic(nullptr),
+        topicSize(0),
+        buffer(nullptr),
+        bufferSize(0),
+        retained(false)
+    {
+
+    }
+
+    ~MqttMessage()
+    {
+        delete topic;
+        delete buffer;
+    }
+};
+
+struct MqttConnection
+{
+    bool connected;
+    const char* domain;
+    IPAddress ip;
+    uint16_t port;
+    const char* id;
+    const char* user;
+    const char* pass;
+
+    MqttConnection() :
+        connected(false),
+        domain(nullptr),
+        port(0),
+        id(nullptr),
+        user(nullptr),
+        pass(nullptr)
+    {
+
+    }
+};
+
 struct MqttWill
 {
     const char* topic;
@@ -70,23 +117,8 @@ public:
     inline bool isMessageFlushed() const
         { return _messageFlushed; }
 
-    inline const char* getDomain() const
-        { return _domain; } 
-
-    inline const IPAddress& getIp() const
-        { return _ip; }
-
-    inline const uint16_t& getPort() const
-        { return _port; }
-
-    inline const char* getId() const
-        { return _id; }
-
-    inline const char* getUser() const
-        { return _user; }
-
-    inline const char* getPass() const
-        { return _pass; }
+    inline const MqttConnection& getConnection() const
+        { return _connection; }
 
     inline const MqttWill& getLastWill() const
         { return _lastWill; }
@@ -97,13 +129,8 @@ private:
     bool _messageRetained;
     bool _messageFlushed;
     size_t _messageLength;
-    bool _connected;
-    const char* _domain;
-    IPAddress _ip;
-    uint16_t _port;
-    const char* _id;
-    const char* _user;
-    const char* _pass;
+    
+    MqttConnection _connection;
     MqttWill _lastWill;
 };
 
