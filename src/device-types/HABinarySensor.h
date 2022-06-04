@@ -47,7 +47,7 @@ public:
      * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setState(bool state, bool force = false);
+    bool setState(const bool state, const bool force = false);
 
     /**
      * Returns last known state of the sensor.

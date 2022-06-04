@@ -36,7 +36,7 @@ public:
      * 
      * @param retain
      */
-    inline void setRetain(bool retain)
+    inline void setRetain(const bool retain)
         { _retain = retain; }
 
     /**

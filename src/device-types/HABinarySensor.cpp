@@ -18,6 +18,30 @@ HABinarySensor::HABinarySensor(
 
 }
 
+bool HABinarySensor::setState(const bool state, const bool force)
+{
+    if (!force && state == _currentState) {
+        return true;
+    }
+
+    if (publishState(state)) {
+        _currentState = state;
+        return true;
+    }
+
+    return false;
+}
+
+bool HABinarySensor::publishState(const bool state)
+{
+    return publishOnDataTopic(
+        HAStateTopic,
+        state ? HAStateOn : HAStateOff,
+        true,
+        true
+    );
+}
+
 void HABinarySensor::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
@@ -43,30 +67,6 @@ void HABinarySensor::onMqttConnected()
     publishConfig();
     publishState(_currentState);
     publishAvailability();
-}
-
-bool HABinarySensor::setState(bool state, bool force)
-{
-    if (!force && state == _currentState) {
-        return true;
-    }
-
-    if (publishState(state)) {
-        _currentState = state;
-        return true;
-    }
-
-    return false;
-}
-
-bool HABinarySensor::publishState(bool state)
-{
-    return publishOnDataTopic(
-        HAStateTopic,
-        state ? HAStateOn : HAStateOff,
-        true,
-        true
-    );
 }
 
 #endif
