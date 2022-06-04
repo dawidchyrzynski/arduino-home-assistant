@@ -28,7 +28,7 @@ test(BinarySensorTest, invalid_unique_id) {
     prepareTest
 
     HABinarySensor sensor(nullptr, false);
-    sensor.buildSerializer();
+    sensor.buildSerializerTest();
     HASerializer* serializer = sensor.getSerializer();
 
     assertTrue(serializer == nullptr);
