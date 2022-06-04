@@ -5,6 +5,7 @@
 **New features:**
 
 * Added support for `icon` property in `HABinarySensor` (you can set icon using `HABinarySensor::setIcon("iconName")`)
+* Added support for `HAButton`
 
 **Updates:**
 
