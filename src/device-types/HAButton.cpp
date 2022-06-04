@@ -1,9 +1,7 @@
 #include "HAButton.h"
 #ifndef EX_ARDUINOHA_BUTTON
 
-#include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
-#include "../HADevice.h"
 #include "../utils/HASerializer.h"
 
 HAButton::HAButton(const char* uniqueId) :

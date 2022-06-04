@@ -29,6 +29,7 @@ const char HAConfigTopic[] PROGMEM = {"config"};
 const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
 const char HACommandTopic[] PROGMEM = {"cmd_t"};
+const char HAPositionTopic[] PROGMEM = {"pos_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};
@@ -37,3 +38,13 @@ const char HAStateOn[] PROGMEM = {"on"};
 const char HAStateOff[] PROGMEM = {"off"};
 const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
+
+// covers
+const char HAClosedState[] PROGMEM = {"closed"};
+const char HAClosingState[] PROGMEM = {"closing"};
+const char HAOpenState[] PROGMEM = {"open"};
+const char HAOpeningState[] PROGMEM = {"opening"};
+const char HAStoppedState[] PROGMEM = {"stopped"};
+const char HAOpenCommand[] PROGMEM = {"OPEN"};
+const char HACloseCommand[] PROGMEM = {"CLOSE"};
+const char HAStopCommand[] PROGMEM = {"STOP"};

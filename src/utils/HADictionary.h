@@ -29,6 +29,7 @@ extern const char HAConfigTopic[];
 extern const char HAAvailabilityTopic[];
 extern const char HAStateTopic[];
 extern const char HACommandTopic[];
+extern const char HAPositionTopic[];
 
 // misc
 extern const char HAOnline[];
@@ -37,5 +38,16 @@ extern const char HAStateOn[];
 extern const char HAStateOff[];
 extern const char HATrue[];
 extern const char HAFalse[];
+
+// covers
+extern const char HAClosedState[];
+extern const char HAClosingState[];
+extern const char HAOpenState[];
+extern const char HAOpeningState[];
+extern const char HAStoppedState[];
+extern const char HAOpenCommand[];
+extern const char HACloseCommand[];
+extern const char HAStopCommand[];
+
 
 #endif

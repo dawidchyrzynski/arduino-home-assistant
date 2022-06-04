@@ -1,9 +1,7 @@
 #include "HABinarySensor.h"
 #ifndef EX_ARDUINOHA_BINARY_SENSOR
 
-#include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
-#include "../HADevice.h"
 #include "../utils/HASerializer.h"
 
 HABinarySensor::HABinarySensor(
