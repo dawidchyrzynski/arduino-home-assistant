@@ -20,6 +20,7 @@
 * Changed structure of all MQTT topics used in the library.
 * Changed constructor of the `HABinarySensor` class (removed `deviceClass` argument. Please use `HABinarySensor::setDeviceClass` method)
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
+* Removed all legacy constructors with `HAMqtt` argument
 
 ## 1.3.0
 
