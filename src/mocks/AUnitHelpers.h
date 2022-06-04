@@ -21,4 +21,12 @@
     assertEqual(publishedMessage->retained, eRetained); \
 }
 
+#define assertEntityConfig(mock, entity, expectedJson) \
+{ \
+    mock->connectDummy(); \
+    entity.publishConfigTest(); \
+    assertSingleMqttMessage(configTopic, expectedJson, true) \
+    assertTrue(entity.getSerializer() == nullptr); \
+}
+
 #endif

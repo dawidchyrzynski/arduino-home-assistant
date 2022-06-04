@@ -1,14 +1,6 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
 
-#define assertConfig(mock, expectedJson) \
-{ \
-    mock->connectDummy(); \
-    sensor.publishConfigTest(); \
-    assertSingleMqttMessage(configTopic, expectedJson, true) \
-    assertTrue(sensor.getSerializer() == nullptr); \
-}
-
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
@@ -30,7 +22,11 @@ test(BinarySensorTest, default_params) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
 }
 
 test(BinarySensorTest, name_setter) {
@@ -39,7 +35,11 @@ test(BinarySensorTest, name_setter) {
     HABinarySensor sensor(testUniqueId, false);
     sensor.setName("testName");
 
-    assertConfig(mock, "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
 }
 
 test(BinarySensorTest, device_class) {
@@ -48,7 +48,11 @@ test(BinarySensorTest, device_class) {
     HABinarySensor sensor(testUniqueId, false);
     sensor.setDeviceClass("testClass");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
 }
 
 test(BinarySensorTest, icon_setter) {
@@ -57,7 +61,11 @@ test(BinarySensorTest, icon_setter) {
     HABinarySensor sensor(testUniqueId, false);
     sensor.setIcon("testIcon");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
 }
 
 test(BinarySensorTest, default_state_false) {
