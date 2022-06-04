@@ -5,9 +5,15 @@
 **New features:**
 
 * Added support for `icon` property in `HABinarySensor` (you can set icon using `HABinarySensor::setIcon("iconName")`)
-* Added support for `HAButton`
+* Added support for forcing `setState` in `HABinarySensor` using second argument as following `HABinarySensor::setState(true, true)`
+* Added support for `device_class` property in `HACover` (you can set class using `HACover::setDeviceClass("className")`
+* Added support for `icon` property in `HACover` (you can set icon using `HACover::setIcon("iconName")`)
+* Added pointer of the sender to the `HACover` callback function
+* Added support for forcing `setPosition` in `HACover` using second argument as following `HACover::setPosition(100, true)`
+* Added support for `HAButton` entity
 
-**Updates:**
+**Bugs fixes:**
+* Last Will Message is now retained (#70)
 
 **Breaking changes:**
 
