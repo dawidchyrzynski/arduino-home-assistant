@@ -1,5 +1,5 @@
 #include "HABinarySensor.h"
-#ifdef ARDUINOHA_BINARY_SENSOR
+#ifndef EX_ARDUINOHA_BINARY_SENSOR
 
 #include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
