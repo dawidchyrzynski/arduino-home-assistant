@@ -1,20 +1,11 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
 
-#define prepareTest \
-    PubSubClientMock* mock = new PubSubClientMock(); \
-    HADevice device(testDeviceId); \
-    HAMqtt mqtt(mock, device);
-
 #define assertConfig(mock, expectedJson) \
 { \
     mock->connectDummy(); \
     sensor.publishConfigTest(); \
-    assertStringCaseEqual(mock->getMessageTopic(), configTopic); \
-    assertStringCaseEqual(mock->getMessageBuffer(), F(expectedJson)); \
-    assertEqual(mock->getMessageLength(), (size_t)strlen_P(reinterpret_cast<const char *>(expectedJson))); \
-    assertTrue(mock->isMessageRetained()); \
-    assertTrue(mock->isMessageFlushed()); \
+    assertSingleMqttMessage(configTopic, expectedJson, true) \
     assertTrue(sensor.getSerializer() == nullptr); \
 }
 
@@ -23,9 +14,10 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
 static const char* configTopic = "homeassistant/binary_sensor/testDevice/uniqueSensor/config";
+static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
 
 test(BinarySensorTest, invalid_unique_id) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(nullptr, false);
     sensor.buildSerializerTest();
@@ -35,101 +27,92 @@ test(BinarySensorTest, invalid_unique_id) {
 }
 
 test(BinarySensorTest, default_params) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, name_setter) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setName("testName");
 
-    assertConfig(mock, "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, device_class) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setDeviceClass("testClass");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, icon_setter) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
     sensor.setIcon("testIcon");
 
-    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"aha/testDevice/uniqueSensor/stat_t\"}");
+    assertConfig(mock, "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}");
 }
 
 test(BinarySensorTest, default_state_false) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
     assertEqual(false, sensor.getState());
 }
 
 test(BinarySensorTest, default_state_true) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, true);
     assertEqual(true, sensor.getState());
 }
 
 test(BinarySensorTest, publish_state_on) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, false);
     sensor.setState(!sensor.getState());
 
-    assertStringCaseEqual(mock->getMessageTopic(), F("aha/testDevice/uniqueSensor/stat_t"));
-    assertStringCaseEqual(mock->getMessageBuffer(), F("ON"));
-    assertEqual(mock->getMessageLength(), (size_t)2);
-    assertTrue(mock->isMessageRetained());
+    assertSingleMqttMessage(stateTopic, "ON", true)
 }
 
 test(BinarySensorTest, publish_state_off) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true);
     sensor.setState(!sensor.getState());
 
-    assertStringCaseEqual(mock->getMessageTopic(), F("aha/testDevice/uniqueSensor/stat_t"));
-    assertStringCaseEqual(mock->getMessageBuffer(), F("OFF"));
-    assertEqual(mock->getMessageLength(), (size_t)3);
+    assertSingleMqttMessage(stateTopic, "OFF", true)
 }
 
 test(BinarySensorTest, publish_state_debounce) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true); // initial state is true
     sensor.setState(true);
 
     // it shouldn't publish data if state doesn't change
-    assertStringCaseEqual(mock->getMessageTopic(), "");
-    assertStringCaseEqual(mock->getMessageBuffer(), "");
-    assertEqual(mock->getMessageLength(), (size_t)0);
+    assertEqual(mock->getFlushedMessagesNb(), 0);
 }
 
 test(BinarySensorTest, publish_state_debounce_skip) {
-    prepareTest
+    initMqttTest(testDeviceId)
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true); // initial state is true
     sensor.setState(true, true);
 
-    assertStringCaseEqual(mock->getMessageTopic(), F("aha/testDevice/uniqueSensor/stat_t"));
-    assertStringCaseEqual(mock->getMessageBuffer(), F("ON"));
-    assertEqual(mock->getMessageLength(), (size_t)2);
+    assertSingleMqttMessage(stateTopic, "ON", true)
 }
 
 void setup()
