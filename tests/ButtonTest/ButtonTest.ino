@@ -130,26 +130,18 @@ test(ButtonTest, command_callback) {
 
     HAButton button(testUniqueId);
     button.onPress(onCommandReceived);
-    mqtt.processMessage(
-        commandTopic,
-        reinterpret_cast<const uint8_t*>(commandMessage),
-        strlen(commandMessage)
-    );
+    mock->fakeMessage(commandTopic, commandMessage);
 
-    assertCallback(true, &button);
+    assertCallback(true, &button)
 }
 
 test(ButtonTest, no_command_callback) {
     prepareTest
 
     HAButton button(testUniqueId);
-    mqtt.processMessage(
-        commandTopic,
-        reinterpret_cast<const uint8_t*>(commandMessage),
-        strlen(commandMessage)
-    );
+    mock->fakeMessage(commandTopic, commandMessage);
 
-    assertCallback(false, nullptr);
+    assertCallback(false, nullptr)
 }
 
 test(ButtonTest, different_button_command) {
@@ -157,13 +149,12 @@ test(ButtonTest, different_button_command) {
 
     HAButton button(testUniqueId);
     button.onPress(onCommandReceived);
-    mqtt.processMessage(
+    mock->fakeMessage(
         "testData/testDevice/uniqueButtonDifferent/cmd_t",
-        reinterpret_cast<const uint8_t*>(commandMessage),
-        strlen(commandMessage)
+        commandMessage
     );
 
-    assertCallback(false, nullptr);
+    assertCallback(false, nullptr)
 }
 
 void setup()

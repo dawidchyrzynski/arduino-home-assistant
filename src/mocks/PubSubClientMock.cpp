@@ -6,7 +6,8 @@ PubSubClientMock::PubSubClientMock() :
     _flushedMessages(nullptr),
     _flushedMessagesNb(0),
     _subscriptions(nullptr),
-    _subscriptionsNb(0)
+    _subscriptionsNb(0),
+    callback(nullptr)
 {
 
 }
@@ -100,8 +101,7 @@ PubSubClientMock& PubSubClientMock::setServer(
 
 PubSubClientMock& PubSubClientMock::setCallback(MQTT_CALLBACK_SIGNATURE)
 {
-    (void)callback;
-
+    this->callback = callback;
     return *this;
 }
 
@@ -196,6 +196,19 @@ void PubSubClientMock::clearFlushedMessages()
     }
 
     _flushedMessagesNb = 0;
+}
+
+void PubSubClientMock::fakeMessage(const char* topic, const char* message)
+{
+    if (!callback) {
+        return;
+    }
+
+    callback(
+        const_cast<char*>(topic), // hack
+        const_cast<uint8_t*>(reinterpret_cast<const uint8_t*>(message)), // hack
+        strlen(message)
+    );
 }
 
 #endif

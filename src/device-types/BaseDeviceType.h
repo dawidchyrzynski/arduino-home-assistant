@@ -41,9 +41,6 @@ public:
     inline HASerializer* getSerializer() const
         { return _serializer; }
 
-    inline void publishConfigTest()
-        { publishConfig(); }
-
     inline void buildSerializerTest()
         { buildSerializer(); }
 #endif

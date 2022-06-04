@@ -145,6 +145,7 @@ public:
         { return _lastWill; }
 
     void clearFlushedMessages();
+    void fakeMessage(const char* topic, const char* message);
 
 private:
     MqttMessage* _pendingMessage;
@@ -154,6 +155,7 @@ private:
     uint8_t _subscriptionsNb;
     MqttConnection _connection;
     MqttWill _lastWill;
+    MQTT_CALLBACK_SIGNATURE;
 };
 
 #endif
