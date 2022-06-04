@@ -4,7 +4,9 @@
 #define prepareTest \
     PubSubClientMock* mock = new PubSubClientMock(); \
     HADevice device(testDeviceId); \
-    HAMqtt mqtt(mock, device);
+    HAMqtt mqtt(mock, device); \
+    commandCallbackCalled = false; \
+    commandCallbackButtonPtr = nullptr;
 
 #define assertConfig(mock, expectedJson) \
 { \
@@ -18,11 +20,25 @@
     assertTrue(button.getSerializer() == nullptr); \
 }
 
+#define assertCallback(shouldBeCalled, callerPtr) \
+    assertTrue(commandCallbackCalled == shouldBeCalled); \
+    assertTrue(commandCallbackButtonPtr == callerPtr);
+
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueButton";
 static const char* configTopic = "homeassistant/button/testDevice/uniqueButton/config";
+static const char* commandTopic = "aha/testDevice/uniqueButton/cmd_t";
+static const char* commandMessage = "PRESS";
+static bool commandCallbackCalled = false;
+static HAButton* commandCallbackButtonPtr = nullptr;
+
+void onCommandReceived(HAButton* button)
+{
+    commandCallbackCalled = true;
+    commandCallbackButtonPtr = button;
+}
 
 test(ButtonTest, invalid_unique_id) {
     prepareTest
@@ -75,6 +91,47 @@ test(ButtonTest, retain_setter) {
     button.setRetain(true);
 
     assertConfig(mock, "{\"uniq_id\":\"uniqueButton\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"aha/testDevice/uniqueButton/cmd_t\"}");
+}
+
+test(ButtonTest, command_callback) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    button.onPress(onCommandReceived);
+    mqtt.processMessage(
+        commandTopic,
+        reinterpret_cast<const uint8_t*>(commandMessage),
+        strlen(commandMessage)
+    );
+
+    assertCallback(true, &button);
+}
+
+test(ButtonTest, no_command_callback) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    mqtt.processMessage(
+        commandTopic,
+        reinterpret_cast<const uint8_t*>(commandMessage),
+        strlen(commandMessage)
+    );
+
+    assertCallback(false, nullptr);
+}
+
+test(ButtonTest, different_button_command) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    button.onPress(onCommandReceived);
+    mqtt.processMessage(
+        "aha/testDevice/uniqueButtonDifferent/cmd_t",
+        reinterpret_cast<const uint8_t*>(commandMessage),
+        strlen(commandMessage)
+    );
+
+    assertCallback(false, nullptr);
 }
 
 void setup()

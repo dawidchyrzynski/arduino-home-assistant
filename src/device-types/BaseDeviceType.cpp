@@ -151,3 +151,15 @@ bool BaseDeviceType::publishOnDataTopic(
 
     return false;
 }
+
+bool BaseDeviceType::checkTopic(
+    const char* topic,
+    const char* desiredTopicP
+)
+{
+    return HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        desiredTopicP
+    );
+}

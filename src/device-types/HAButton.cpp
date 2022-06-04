@@ -54,7 +54,12 @@ void HAButton::onMqttMessage(
     const uint16_t length
 )
 {
-    // to do
+    (void)payload;
+    (void)length;
+
+    if (_commandCallback && checkTopic(topic, HACommandTopic)) {
+        _commandCallback(this);
+    }
 }
 
 #endif

@@ -69,6 +69,10 @@ protected:
         bool retained = false,
         bool isProgmemValue = false
     );
+    virtual bool checkTopic(
+        const char* topic,
+        const char* desiredTopicP
+    );
 
     const char* const _componentName;
     const char* const _uniqueId;
