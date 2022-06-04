@@ -69,6 +69,9 @@ protected:
         bool retained = false,
         bool isProgmemValue = false
     );
+    virtual void subscribeTopic(
+        const char* topicP
+    );
     virtual bool checkTopic(
         const char* topic,
         const char* desiredTopicP

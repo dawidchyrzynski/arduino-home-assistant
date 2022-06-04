@@ -46,6 +46,7 @@ void HAButton::onMqttConnected()
 
     publishConfig();
     publishAvailability();
+    subscribeTopic(HACommandTopic);
 }
 
 void HAButton::onMqttMessage(

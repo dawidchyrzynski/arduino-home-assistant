@@ -152,6 +152,35 @@ bool BaseDeviceType::publishOnDataTopic(
     return false;
 }
 
+void BaseDeviceType::subscribeTopic(
+    const char* topicP
+)
+{
+    if (!uniqueId() || !topicP) {
+        return;
+    }
+
+    const uint16_t topicLength = HASerializer::calculateDataTopicLength(
+        uniqueId(),
+        topicP,
+        true
+    );
+    if (topicLength == 0) {
+        return;
+    }
+
+    char topic[topicLength];
+    if (!HASerializer::generateDataTopic(
+        topic,
+        uniqueId(),
+        topicP
+    )) {
+        return;
+    }
+
+    mqtt()->subscribe(topic);
+}
+
 bool BaseDeviceType::checkTopic(
     const char* topic,
     const char* desiredTopicP
