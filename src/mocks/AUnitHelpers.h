@@ -5,20 +5,25 @@
     PubSubClientMock* mock = new PubSubClientMock(); \
     HADevice device(testDeviceId); \
     HAMqtt mqtt(mock, device); \
-    mqtt.setDataPrefix("testData");
+    mqtt.setDataPrefix("testData"); \
+    mqtt.begin("testHost", "testUser", "testPass");
 
 #define assertNoMqttMessage() \
     assertTrue(mock->getFlushedMessagesNb() == 0);
 
-#define assertSingleMqttMessage(eTopic, eMessage, eRetained) { \
+#define assertMqttMessage(index, eTopic, eMessage, eRetained) { \
     const __FlashStringHelper* messageP = F(eMessage); \
     size_t messageLen = strlen_P(reinterpret_cast<const char *>(messageP)); \
-    assertEqual(1, mock->getFlushedMessagesNb()); \
-    MqttMessage* publishedMessage = mock->getFirstFlushedMessage(); \
+    MqttMessage* publishedMessage = &mock->getFlushedMessages()[index]; \
     assertStringCaseEqual(publishedMessage->topic, eTopic); \
     assertStringCaseEqual(publishedMessage->buffer, messageP); \
     assertEqual(publishedMessage->bufferSize - 1, messageLen); \
     assertEqual(publishedMessage->retained, eRetained); \
+}
+
+#define assertSingleMqttMessage(eTopic, eMessage, eRetained) { \
+    assertEqual(1, mock->getFlushedMessagesNb()); \
+    assertMqttMessage(0, eTopic, eMessage, eRetained) \
 }
 
 #define assertEntityConfig(mock, entity, expectedJson) \

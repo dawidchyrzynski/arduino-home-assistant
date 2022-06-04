@@ -11,6 +11,7 @@ static const char* testDeviceId = "testDevice";
 static const char* testComponentName = "testComponent";
 static const char* testUniqueId = "uniqueId";
 static const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
+static const char* sharedAvailabilityTopic = "testData/testDevice/avty_t";
 
 class DummyDeviceType : public BaseDeviceType
 {
@@ -77,6 +78,24 @@ test(BaseDeviceTypeTest, publish_availability_offline_runtime) {
     mock->connectDummy();
     deviceType.setAvailability(false);
     assertSingleMqttMessage(availabilityTopic, "offline", true)
+}
+
+test(BaseDeviceTypeTest, publish_shared_availability_on_connect) {
+    prepareTest
+
+    device.enableSharedAvailability();
+    mqtt.loop();
+    assertSingleMqttMessage(sharedAvailabilityTopic, "online", true)
+}
+
+test(BaseDeviceTypeTest, publish_shared_availability_runtime) {
+    prepareTest
+
+    device.enableSharedAvailability();
+    mock->connectDummy();
+    device.setAvailability(false);
+
+    assertSingleMqttMessage(sharedAvailabilityTopic, "offline", true)
 }
 
 void setup()
