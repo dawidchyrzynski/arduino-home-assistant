@@ -63,8 +63,8 @@ void HABinarySensor::onMqttConnected()
     }
 
     publishConfig();
-    publishState(_currentState);
     publishAvailability();
+    publishState(_currentState);
 }
 
 #endif

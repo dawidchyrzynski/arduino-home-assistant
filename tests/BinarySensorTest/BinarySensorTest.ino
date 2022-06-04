@@ -29,6 +29,22 @@ test(BinarySensorTest, default_params) {
     )
 }
 
+test(BinarySensorTest, availability) {
+    initMqttTest(testDeviceId)
+
+    HABinarySensor sensor(testUniqueId, false);
+    sensor.setAvailability(true);
+    mqtt.loop();
+
+    // availability is published after config in HABinarySensor
+    assertMqttMessage(
+        1,
+        "testData/testDevice/uniqueSensor/avty_t",
+        "online",
+        true
+    )
+}
+
 test(BinarySensorTest, name_setter) {
     initMqttTest(testDeviceId)
 
