@@ -6,8 +6,7 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static byte testDeviceByteId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
 static const char* testDeviceByteIdChar = "11223344aabb";
-static const char* mqttDataPrefix = "dataPrefix";
-static const char* availabilityTopic = "dataPrefix/testDevice/avty_t";
+static const char* availabilityTopic = "testData/testDevice/avty_t";
 
 #define assertSerializerEntry(entry, eType, eSubtype, eProperty, eValue) \
     assertEqual(eType, entry->type); \
@@ -211,14 +210,12 @@ test(DeviceTest, default_availability) {
 }
 
 test(DeviceTest, enable_availability) {
-    HADevice device(testDeviceId);
-    HAMqtt mqtt(nullptr, device);
-    mqtt.setDataPrefix(mqttDataPrefix);
-    bool result = device.enableSharedAvailability();
+    initMqttTest(testDeviceId)
 
-    assertTrue(result);
+    assertTrue(device.enableSharedAvailability());
     assertTrue(device.isSharedAvailabilityEnabled());
     assertStringCaseEqual(availabilityTopic, device.getAvailabilityTopic());
+    assertNoMqttMessage()
 }
 
 test(DeviceTest, enable_availability_no_unique_id) {
@@ -231,33 +228,21 @@ test(DeviceTest, enable_availability_no_unique_id) {
 }
 
 test(DeviceTest, availability_publish_offline) {
-    PubSubClientMock* mock = new PubSubClientMock();
-    HADevice device(testDeviceId);
-    HAMqtt mqtt(mock, device);
-    mqtt.setDataPrefix(mqttDataPrefix);
+    initMqttTest(testDeviceId)
 
     device.enableSharedAvailability();
     device.setAvailability(false);
-    mock->connectDummy();
 
-    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), F("offline"));
-    assertTrue(mock->isMessageFlushed());
+    assertSingleMqttMessage(availabilityTopic, "offline", true)
 }
 
 test(DeviceTest, availability_publish_online) {
-    PubSubClientMock* mock = new PubSubClientMock();
-    HADevice device(testDeviceId);
-    HAMqtt mqtt(mock, device);
-    mqtt.setDataPrefix(mqttDataPrefix);
+    initMqttTest(testDeviceId)
 
     device.enableSharedAvailability();
     device.setAvailability(true);
-    mock->connectDummy();
 
-    assertStringCaseEqual(mock->getMessageTopic(), availabilityTopic);
-    assertStringCaseEqual(mock->getMessageBuffer(), F("online"));
-    assertTrue(mock->isMessageFlushed());
+    assertSingleMqttMessage(availabilityTopic, "online", true)
 }
 
 // to do: last will test
