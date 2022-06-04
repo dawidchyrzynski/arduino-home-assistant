@@ -13,6 +13,21 @@
 #define MQTT_CALLBACK_SIGNATURE void (*callback)(char*, uint8_t*, unsigned int)
 #endif
 
+struct MqttWill
+{
+    const char* topic;
+    const char* message;
+    bool retain;
+
+    MqttWill() :
+        topic(nullptr),
+        message(nullptr),
+        retain(false)
+    {
+
+    }
+};
+
 class PubSubClientMock
 {
 public:
@@ -73,17 +88,8 @@ public:
     inline const char* getPass() const
         { return _pass; }
 
-    inline const char* willTopic() const
-        { return _willTopic; }
-
-    inline const uint8_t& getWillQos() const
-        { return _willQos; }
-
-    inline bool isWillRetain() const
-        { return _willRetain; }
-
-    inline const char* getWillMessage() const
-        { return _willMessage; }
+    inline const MqttWill& getLastWill() const
+        { return _lastWill; }
 
 private:
     char _messageBuffer[256];
@@ -98,10 +104,7 @@ private:
     const char* _id;
     const char* _user;
     const char* _pass;
-    const char* _willTopic;
-    uint8_t _willQos;
-    bool _willRetain;
-    const char* _willMessage;
+    MqttWill _lastWill;
 };
 
 #endif

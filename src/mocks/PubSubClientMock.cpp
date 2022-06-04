@@ -9,11 +9,7 @@ PubSubClientMock::PubSubClientMock() :
     _port(0),
     _id(nullptr),
     _user(nullptr),
-    _pass(nullptr),
-    _willTopic(nullptr),
-    _willQos(0),
-    _willRetain(false),
-    _willMessage(nullptr)
+    _pass(nullptr)
 {
     memset(_messageBuffer, 0, sizeof(_messageBuffer));
     memset(_messageTopic, 0, sizeof(_messageTopic));
@@ -45,14 +41,17 @@ bool PubSubClientMock::connect(
     bool cleanSession
 )
 {
+    (void)willQos;
+    (void)cleanSession;
+
     _connected = true;
     _id = id;
     _user = user;
     _pass = pass;
-    _willTopic = willTopic;
-    _willQos = willQos;
-    _willRetain = willRetain;
-    _willMessage = willMessage;
+
+    _lastWill.topic = willTopic;
+    _lastWill.message = willMessage;
+    _lastWill.retain = willRetain;
 
     return true;
 }
@@ -63,10 +62,10 @@ bool PubSubClientMock::connectDummy()
     _id = nullptr;
     _user = nullptr;
     _pass = nullptr;
-    _willTopic = nullptr;
-    _willQos = 0;
-    _willRetain = false;
-    _willMessage = nullptr;
+
+    _lastWill.topic = nullptr;
+    _lastWill.message = nullptr;
+    _lastWill.retain = false;
 
     return true;
 }
