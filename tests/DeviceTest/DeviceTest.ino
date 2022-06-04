@@ -8,6 +8,10 @@ static byte testDeviceByteId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
 static const char* testDeviceByteIdChar = "11223344aabb";
 static const char* availabilityTopic = "testData/testDevice/avty_t";
 
+#define prepareMqttTest \
+    initMqttTest(testDeviceId) \
+    mock->connectDummy();
+
 #define assertSerializerEntry(entry, eType, eSubtype, eProperty, eValue) \
     assertEqual(eType, entry->type); \
     assertEqual(eSubtype, entry->subtype); \
@@ -210,7 +214,7 @@ test(DeviceTest, default_availability) {
 }
 
 test(DeviceTest, enable_availability) {
-    initMqttTest(testDeviceId)
+    prepareMqttTest
 
     assertTrue(device.enableSharedAvailability());
     assertTrue(device.isSharedAvailabilityEnabled());
@@ -228,7 +232,7 @@ test(DeviceTest, enable_availability_no_unique_id) {
 }
 
 test(DeviceTest, availability_publish_offline) {
-    initMqttTest(testDeviceId)
+    prepareMqttTest
 
     device.enableSharedAvailability();
     device.setAvailability(false);
@@ -237,7 +241,7 @@ test(DeviceTest, availability_publish_offline) {
 }
 
 test(DeviceTest, availability_publish_online) {
-    initMqttTest(testDeviceId)
+    prepareMqttTest
 
     device.enableSharedAvailability();
     device.setAvailability(true);

@@ -105,6 +105,10 @@ bool PubSubClientMock::beginPublish(
     bool retained
 )
 {
+    if (!connected()) {
+        return false;
+    }
+
     if (_pendingMessage) {
         delete _pendingMessage;
     }
