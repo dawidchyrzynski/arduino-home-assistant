@@ -23,6 +23,7 @@ const char HADeviceProperty[] PROGMEM = {"dev"};
 const char HADeviceClassProperty[] PROGMEM = {"dev_cla"};
 const char HAIconProperty[] PROGMEM = {"ic"};
 const char HARetainProperty[] PROGMEM = {"ret"};
+const char HASourceTypeProperty[] PROGMEM = {"src_type"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -51,3 +52,9 @@ const char HAStoppedState[] PROGMEM = {"stopped"};
 const char HAOpenCommand[] PROGMEM = {"OPEN"};
 const char HACloseCommand[] PROGMEM = {"CLOSE"};
 const char HAStopCommand[] PROGMEM = {"STOP"};
+
+// device tracker
+const char HAGPSType[] PROGMEM = {"gps"};
+const char HARouterType[] PROGMEM = {"router"};
+const char HABluetoothType[] PROGMEM = {"bluetooth"};
+const char HABluetoothLEType[] PROGMEM = {"bluetooth_le"};

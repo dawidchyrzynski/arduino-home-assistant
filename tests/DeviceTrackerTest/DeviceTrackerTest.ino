@@ -29,6 +29,54 @@ test(DeviceTrackerTest, default_params) {
     )
 }
 
+test(DeviceTrackerTest, source_type_gps) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setSourceType(HADeviceTracker::SourceTypeGPS);
+    assertEntityConfig(
+        mock,
+        tracker,
+        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"gps\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+    )
+}
+
+test(DeviceTrackerTest, source_type_router) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setSourceType(HADeviceTracker::SourceTypeRouter);
+    assertEntityConfig(
+        mock,
+        tracker,
+        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"router\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+    )
+}
+
+test(DeviceTrackerTest, source_type_bluetooth) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setSourceType(HADeviceTracker::SourceTypeBluetooth);
+    assertEntityConfig(
+        mock,
+        tracker,
+        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"bluetooth\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+    )
+}
+
+test(DeviceTrackerTest, source_type_bluetooth_le) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setSourceType(HADeviceTracker::SourceTypeBluetoothLE);
+    assertEntityConfig(
+        mock,
+        tracker,
+        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"bluetooth_le\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+    )
+}
+
 test(DeviceTrackerTest, availability) {
     initMqttTest(testDeviceId)
 

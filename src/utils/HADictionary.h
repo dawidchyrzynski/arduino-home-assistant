@@ -23,6 +23,7 @@ extern const char HADeviceProperty[];
 extern const char HADeviceClassProperty[];
 extern const char HAIconProperty[];
 extern const char HARetainProperty[];
+extern const char HASourceTypeProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -51,5 +52,11 @@ extern const char HAStoppedState[];
 extern const char HAOpenCommand[];
 extern const char HACloseCommand[];
 extern const char HAStopCommand[];
+
+// device tracker
+extern const char HAGPSType[];
+extern const char HARouterType[];
+extern const char HABluetoothType[];
+extern const char HABluetoothLEType[];
 
 #endif

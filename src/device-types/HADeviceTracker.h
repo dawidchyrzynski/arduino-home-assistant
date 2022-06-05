@@ -69,6 +69,7 @@ protected:
 
 private:
     bool publishState(TrackerState state);
+    const char* getSourceTypeProperty() const;
 
     const char* _icon;
     SourceType _sourceType;
