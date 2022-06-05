@@ -80,7 +80,7 @@ test(CoverTest, availability) {
 }
 
 test(CoverTest, publish_default_state) {
-    initMqttTest(testDeviceId)
+    prepareTest
 
     HACover cover(testUniqueId);
     cover.setCurrentState(HACover::StateClosed);
@@ -103,7 +103,7 @@ test(CoverTest, publish_default_state) {
 }
 
 test(CoverTest, publish_nothing_if_retained) {
-    initMqttTest(testDeviceId)
+    prepareTest
 
     HACover cover(testUniqueId);
     cover.setRetain(true);
