@@ -166,18 +166,39 @@ test(CoverTest, retain_setter) {
     )
 }
 
+test(CoverTest, current_state_setter) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.setCurrentState(HACover::StateStopped);
+
+    assertEqual(0, mock->getFlushedMessagesNb());
+    assertEqual(HACover::StateStopped, cover.getCurrentState());
+}
+
+test(CoverTest, current_position_setter) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.setCurrentPosition(500);
+
+    assertEqual(0, mock->getFlushedMessagesNb());
+    assertEqual(500, cover.getCurrentPosition());
+}
+
 test(CoverTest, publish_state_closed) {
     prepareTest
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setState(HACover::StateClosed);
+    bool result = cover.setState(HACover::StateClosed);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/stat_t",
         "closed",
         true
     )
+    assertTrue(result);
 }
 
 test(CoverTest, publish_state_closing) {
@@ -185,13 +206,14 @@ test(CoverTest, publish_state_closing) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setState(HACover::StateClosing);
+    bool result = cover.setState(HACover::StateClosing);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/stat_t",
         "closing",
         true
     )
+    assertTrue(result);
 }
 
 test(CoverTest, publish_state_open) {
@@ -199,13 +221,14 @@ test(CoverTest, publish_state_open) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setState(HACover::StateOpen);
+    bool result = cover.setState(HACover::StateOpen);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/stat_t",
         "open",
         true
     )
+    assertTrue(result);
 }
 
 test(CoverTest, publish_state_opening) {
@@ -213,13 +236,14 @@ test(CoverTest, publish_state_opening) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setState(HACover::StateOpening);
+    bool result = cover.setState(HACover::StateOpening);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/stat_t",
         "opening",
         true
     )
+    assertTrue(result);
 }
 
 test(CoverTest, publish_state_stopped) {
@@ -227,13 +251,14 @@ test(CoverTest, publish_state_stopped) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setState(HACover::StateStopped);
+    bool result = cover.setState(HACover::StateStopped);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/stat_t",
         "stopped",
         true
     )
+    assertTrue(result);
 }
 
 test(CoverTest, publish_position) {
@@ -241,13 +266,14 @@ test(CoverTest, publish_position) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    cover.setPosition(250);
+    bool result = cover.setPosition(250);
 
     assertSingleMqttMessage(
         "testData/testDevice/uniqueCover/pos_t",
         "250",
         true
     )
+    assertTrue(result);
 }
 
 test(ButtonTest, command_open) {

@@ -51,6 +51,13 @@ public:
         { _currentState = state; }
 
     /**
+     * Returns last known state of the cover.
+     * By default state is set to CoverState::StateUnknown
+     */
+    inline CoverState getCurrentState() const
+        { return _currentState; }
+
+    /**
      * Changes position of the cover and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
@@ -70,6 +77,13 @@ public:
      */
     inline void setCurrentPosition(const int16_t position)
         { _currentPosition = position; }
+
+    /**
+     * Returns last known position of the cover.
+     * By default position is set to HACover::DefaultPosition
+     */
+    inline int16_t getCurrentPosition() const
+        { return _currentPosition; }
 
     /**
      * Sets class of the device.
