@@ -117,9 +117,10 @@ test(BinarySensorTest, publish_state_on) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, false);
-    sensor.setState(!sensor.getState());
+    bool result = sensor.setState(!sensor.getState());
 
     assertSingleMqttMessage(stateTopic, "ON", true)
+    assertTrue(result);
 }
 
 test(BinarySensorTest, publish_state_off) {
@@ -127,9 +128,10 @@ test(BinarySensorTest, publish_state_off) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true);
-    sensor.setState(!sensor.getState());
+    bool result = sensor.setState(!sensor.getState());
 
     assertSingleMqttMessage(stateTopic, "OFF", true)
+    assertTrue(result);
 }
 
 test(BinarySensorTest, publish_state_debounce) {
@@ -137,10 +139,11 @@ test(BinarySensorTest, publish_state_debounce) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true); // initial state is true
-    sensor.setState(true);
+    bool result = sensor.setState(true);
 
     // it shouldn't publish data if state doesn't change
     assertEqual(mock->getFlushedMessagesNb(), 0);
+    assertTrue(result);
 }
 
 test(BinarySensorTest, publish_state_debounce_skip) {
@@ -148,9 +151,10 @@ test(BinarySensorTest, publish_state_debounce_skip) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true); // initial state is true
-    sensor.setState(true, true);
+    bool result = sensor.setState(true, true);
 
     assertSingleMqttMessage(stateTopic, "ON", true)
+    assertTrue(result);
 }
 
 void setup()
