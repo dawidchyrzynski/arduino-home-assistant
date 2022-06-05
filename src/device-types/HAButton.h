@@ -18,7 +18,7 @@ public:
      * 
      * @param class Class name
      */
-    virtual void setDeviceClass(const char* deviceClass)
+    inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
@@ -27,7 +27,7 @@ public:
      *
      * @param class Icon name
      */
-    virtual void setIcon(const char* icon)
+    inline void setIcon(const char* icon)
         { _icon = icon; }
 
     /**

@@ -86,21 +86,21 @@ public:
         { return _currentPosition; }
 
     /**
-     * Sets class of the device.
+     * Sets class of the cover.
      * You can find list of available values here: https://www.home-assistant.io/integrations/cover/
      * 
      * @param class Class name
      */
-    virtual void setDeviceClass(const char* deviceClass)
+    inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
-     * Sets icon of the sensor.
+     * Sets icon of the cover.
      * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
      *
      * @param class Icon name
      */
-    virtual void setIcon(const char* icon)
+    inline void setIcon(const char* icon)
         { _icon = icon; }
 
     /**
