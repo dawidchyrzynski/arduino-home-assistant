@@ -45,7 +45,7 @@ test(BinarySensorTest, availability) {
     )
 }
 
-test(BinarySensorTest, publish_default_state) {
+test(BinarySensorTest, publish_initial_state) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, true);
