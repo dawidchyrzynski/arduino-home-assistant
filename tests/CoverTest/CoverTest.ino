@@ -2,7 +2,15 @@
 #include <ArduinoHA.h>
 
 #define prepareTest \
-    initMqttTest(testDeviceId)
+    initMqttTest(testDeviceId) \
+    commandCallbackCalled = false; \
+    commandCallbackCommand = unknownCommand; \
+    commandCallbackCoverPtr = nullptr;
+
+#define assertCallback(shouldBeCalled, expectedCommand, callerPtr) \
+    assertTrue(commandCallbackCalled == shouldBeCalled); \
+    assertEqual(expectedCommand, commandCallbackCommand); \
+    assertEqual(callerPtr, commandCallbackCoverPtr);
 
 using aunit::TestRunner;
 
@@ -10,7 +18,18 @@ static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueCover";
 static const char* configTopic = "homeassistant/cover/testDevice/uniqueCover/config";
 static const char* commandTopic = "testData/testDevice/uniqueCover/cmd_t";
-static const char* commandMessage = "PRESS";
+static const HACover::CoverCommand unknownCommand = static_cast<HACover::CoverCommand>(0);
+
+static bool commandCallbackCalled = false;
+static HACover::CoverCommand commandCallbackCommand = unknownCommand;
+static HACover* commandCallbackCoverPtr = nullptr;
+
+void onCommandReceived(HACover::CoverCommand command, HACover* cover)
+{
+    commandCallbackCalled = true;
+    commandCallbackCommand = command;
+    commandCallbackCoverPtr = cover;
+}
 
 test(CoverTest, invalid_unique_id) {
     prepareTest
@@ -31,6 +50,7 @@ test(CoverTest, default_params) {
         cover,
         "{\"uniq_id\":\"uniqueCover\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
     )
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
 test(CoverTest, command_subscription) {
@@ -59,20 +79,40 @@ test(CoverTest, availability) {
     )
 }
 
-test(CoverTest, publish_default_position) {
+test(CoverTest, publish_default_state) {
     initMqttTest(testDeviceId)
 
-    HACover cover(testUniqueId, true);
+    HACover cover(testUniqueId);
+    cover.setCurrentState(HACover::StateClosed);
+    cover.setCurrentPosition(100);
     mqtt.loop();
 
+    assertEqual(3, mock->getFlushedMessagesNb());
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueSensor/stat_t",
-        "ON",
+        "testData/testDevice/uniqueCover/stat_t",
+        "closed",
+        true
+    )
+    assertMqttMessage(
+        2,
+        "testData/testDevice/uniqueCover/pos_t",
+        "100",
         true
     )
 }
 
+test(CoverTest, publish_nothing_if_retained) {
+    initMqttTest(testDeviceId)
+
+    HACover cover(testUniqueId);
+    cover.setRetain(true);
+    cover.setCurrentState(HACover::StateClosed);
+    cover.setCurrentPosition(100);
+    mqtt.loop();
+
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
 
 test(CoverTest, name_setter) {
     prepareTest
@@ -126,7 +166,142 @@ test(CoverTest, retain_setter) {
     )
 }
 
-// to do
+test(CoverTest, publish_state_closed) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setState(HACover::StateClosed);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/stat_t",
+        "closed",
+        true
+    )
+}
+
+test(CoverTest, publish_state_closing) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setState(HACover::StateClosing);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/stat_t",
+        "closing",
+        true
+    )
+}
+
+test(CoverTest, publish_state_open) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setState(HACover::StateOpen);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/stat_t",
+        "open",
+        true
+    )
+}
+
+test(CoverTest, publish_state_opening) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setState(HACover::StateOpening);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/stat_t",
+        "opening",
+        true
+    )
+}
+
+test(CoverTest, publish_state_stopped) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setState(HACover::StateStopped);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/stat_t",
+        "stopped",
+        true
+    )
+}
+
+test(CoverTest, publish_position) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId);
+    cover.setPosition(250);
+
+    assertSingleMqttMessage(
+        "testData/testDevice/uniqueCover/pos_t",
+        "250",
+        true
+    )
+}
+
+test(ButtonTest, command_open) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.onCommand(onCommandReceived);
+    mock->fakeMessage(commandTopic, "OPEN");
+
+    assertCallback(true, HACover::CommandOpen, &cover)
+}
+
+test(ButtonTest, command_close) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.onCommand(onCommandReceived);
+    mock->fakeMessage(commandTopic, "CLOSE");
+
+    assertCallback(true, HACover::CommandClose, &cover)
+}
+
+test(ButtonTest, command_stop) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.onCommand(onCommandReceived);
+    mock->fakeMessage(commandTopic, "STOP");
+
+    assertCallback(true, HACover::CommandStop, &cover)
+}
+
+test(ButtonTest, command_invalid) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.onCommand(onCommandReceived);
+    mock->fakeMessage(commandTopic, "NOT_SUPPORTED");
+
+    assertCallback(false, unknownCommand, nullptr)
+}
+
+test(ButtonTest, different_cover_command) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.onCommand(onCommandReceived);
+    mock->fakeMessage(
+        "testData/testDevice/uniqueCoverDifferent/cmd_t",
+        "CLOSE"
+    );
+
+    assertCallback(false, unknownCommand, nullptr)
+}
 
 void setup()
 {

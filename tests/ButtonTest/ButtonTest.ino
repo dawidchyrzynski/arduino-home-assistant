@@ -8,7 +8,7 @@
 
 #define assertCallback(shouldBeCalled, callerPtr) \
     assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertTrue(commandCallbackButtonPtr == callerPtr);
+    asserEqual(callerPtr, commandCallbackButtonPtr);
 
 using aunit::TestRunner;
 
