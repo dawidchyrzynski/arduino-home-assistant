@@ -27,6 +27,7 @@ extern const char HARetainProperty[];
 // topics
 extern const char HAConfigTopic[];
 extern const char HAAvailabilityTopic[];
+extern const char HATopic[];
 extern const char HAStateTopic[];
 extern const char HACommandTopic[];
 extern const char HAPositionTopic[];

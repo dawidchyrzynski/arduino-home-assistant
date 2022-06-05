@@ -27,6 +27,7 @@ const char HARetainProperty[] PROGMEM = {"ret"};
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
 const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
+const char HATopic[] PROGMEM = {"t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
 const char HACommandTopic[] PROGMEM = {"cmd_t"};
 const char HAPositionTopic[] PROGMEM = {"pos_t"};

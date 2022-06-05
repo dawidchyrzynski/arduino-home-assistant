@@ -7,6 +7,7 @@
 #include "device-types/HABinarySensor.h"
 #include "device-types/HAButton.h"
 #include "device-types/HACover.h"
+#include "device-types/HATagScanner.h"
 
 #ifdef ARDUINOHA_TEST
 #include "mocks/AUnitHelpers.h"
