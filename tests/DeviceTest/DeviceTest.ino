@@ -249,8 +249,24 @@ test(DeviceTest, availability_publish_online) {
     assertSingleMqttMessage(availabilityTopic, "online", true)
 }
 
-// to do: last will test
-// to do: serializer json data
+test(DeviceTest, lwt_disabled) {
+    prepareMqttTest
+
+    assertEqual((const char*)nullptr, mock->getLastWill().topic);
+    assertEqual((const char*)nullptr, mock->getLastWill().message);
+}
+
+test(DeviceTest, lwt_enabled) {
+    initMqttTest(testDeviceId)
+
+    device.enableSharedAvailability();
+    device.enableLastWill();
+    mqtt.loop();
+
+    assertEqual(availabilityTopic, mock->getLastWill().topic);
+    assertEqual("offline", mock->getLastWill().message);
+    assertEqual(true, mock->getLastWill().retain);
+}
 
 void setup()
 {
