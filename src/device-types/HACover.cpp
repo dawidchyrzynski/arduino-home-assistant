@@ -9,7 +9,7 @@ HACover::HACover(const char* uniqueId) :
     BaseDeviceType("cover", uniqueId),
     _commandCallback(nullptr),
     _currentState(StateUnknown),
-    _currentPosition(0),
+    _currentPosition(DefaultPosition),
     _class(nullptr),
     _icon(nullptr),
     _retain(false)
@@ -133,12 +133,12 @@ bool HACover::publishState(CoverState state)
             return false;
     }
 
-    return publishOnDataTopic(HAStateTopic, stateP, false, true);
+    return publishOnDataTopic(HAStateTopic, stateP, true, true);
 }
 
 bool HACover::publishPosition(int16_t position)
 {
-    if (!uniqueId()) {
+    if (!uniqueId() || position == DefaultPosition) {
         return false;
     }
 
@@ -148,9 +148,10 @@ bool HACover::publishPosition(int16_t position)
     }
 
     char str[size + 1]; // with null terminator
+    memset(str, 0, sizeof(str));
     HAUtils::numberToStr(str, position);
 
-    return publishOnDataTopic(HAPositionTopic, str);
+    return publishOnDataTopic(HAPositionTopic, str, true);
 }
 
 void HACover::handleCommand(const char* cmd)

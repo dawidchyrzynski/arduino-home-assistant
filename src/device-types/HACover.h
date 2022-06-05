@@ -10,6 +10,8 @@
 class HACover : public BaseDeviceType
 {
 public:
+    static const int16_t DefaultPosition = -32768;
+
     enum CoverState {
         StateUnknown = 0,
         StateClosed,
