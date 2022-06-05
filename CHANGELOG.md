@@ -10,7 +10,8 @@
 * Added support for `icon` property in `HACover` (you can set icon using `HACover::setIcon("iconName")`)
 * Added pointer of the sender to the `HACover` callback function
 * Added support for forcing `setPosition` in `HACover` using second argument as following `HACover::setPosition(100, true)`
-* Added support for `HAButton` entity
+* Added support for `HAButton` device type
+* Added support for `HADeviceTracker` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)

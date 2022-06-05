@@ -39,6 +39,8 @@ extern const char HAStateOn[];
 extern const char HAStateOff[];
 extern const char HATrue[];
 extern const char HAFalse[];
+extern const char HAHome[];
+extern const char HANotHome[];
 
 // covers
 extern const char HAClosedState[];
@@ -49,6 +51,5 @@ extern const char HAStoppedState[];
 extern const char HAOpenCommand[];
 extern const char HACloseCommand[];
 extern const char HAStopCommand[];
-
 
 #endif

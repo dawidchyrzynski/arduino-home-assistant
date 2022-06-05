@@ -39,6 +39,8 @@ const char HAStateOn[] PROGMEM = {"on"};
 const char HAStateOff[] PROGMEM = {"off"};
 const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
+const char HAHome[] PROGMEM = {"home"};
+const char HANotHome[] PROGMEM = {"not_home"};
 
 // covers
 const char HAClosedState[] PROGMEM = {"closed"};
