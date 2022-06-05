@@ -109,28 +109,28 @@ bool HACover::publishState(CoverState state)
 
     const char *stateP = nullptr;
     switch (state) {
-        case StateClosed:
-            stateP = HAClosedState;
-            break;
+    case StateClosed:
+        stateP = HAClosedState;
+        break;
 
-        case StateClosing:
-            stateP = HAClosingState;
-            break;
+    case StateClosing:
+        stateP = HAClosingState;
+        break;
 
-        case StateOpen:
-            stateP = HAOpenState;
-            break;
+    case StateOpen:
+        stateP = HAOpenState;
+        break;
 
-        case StateOpening:
-            stateP = HAOpeningState;
-            break;
+    case StateOpening:
+        stateP = HAOpeningState;
+        break;
 
-        case StateStopped:
-            stateP = HAStoppedState;
-            break;
+    case StateStopped:
+        stateP = HAStoppedState;
+        break;
 
-        default:
-            return false;
+    default:
+        return false;
     }
 
     return publishOnDataTopic(HAStateTopic, stateP, true, true);
