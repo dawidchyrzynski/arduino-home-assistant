@@ -154,6 +154,16 @@ test(SerializerTest, number_unsigned_field) {
     assertSerializerMqttMessage("{\"name\":312346733}");
 }
 
+test(SerializerTest, progmem_field) {
+    prepareTest
+
+    int32_t value = 0;
+    serializer.set(HANameProperty, HAOffline, HASerializer::ProgmemPropertyValue);
+
+    flushSerializer(mock, serializer)
+    assertSerializerMqttMessage("{\"name\":\"offline\"}")
+}
+
 test(SerializerTest, topic_field) {
     prepareTest
 
