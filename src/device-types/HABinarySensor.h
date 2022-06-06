@@ -53,7 +53,7 @@ public:
      * Returns last known state of the sensor.
      * If setState method wasn't called the initial value will be returned.
      */
-    inline bool getState() const
+    inline bool getCurrentState() const
         { return _currentState; }
 
 protected:

@@ -102,14 +102,14 @@ test(BinarySensorTest, default_state_false) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, false);
-    assertEqual(false, sensor.getState());
+    assertEqual(false, sensor.getCurrentState());
 }
 
 test(BinarySensorTest, default_state_true) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId, true);
-    assertEqual(true, sensor.getState());
+    assertEqual(true, sensor.getCurrentState());
 }
 
 test(BinarySensorTest, publish_state_on) {
@@ -117,7 +117,7 @@ test(BinarySensorTest, publish_state_on) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, false);
-    bool result = sensor.setState(!sensor.getState());
+    bool result = sensor.setState(!sensor.getCurrentState());
 
     assertSingleMqttMessage(stateTopic, "ON", true)
     assertTrue(result);
@@ -128,7 +128,7 @@ test(BinarySensorTest, publish_state_off) {
 
     mock->connectDummy();
     HABinarySensor sensor(testUniqueId, true);
-    bool result = sensor.setState(!sensor.getState());
+    bool result = sensor.setState(!sensor.getCurrentState());
 
     assertSingleMqttMessage(stateTopic, "OFF", true)
     assertTrue(result);
