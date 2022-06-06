@@ -41,7 +41,7 @@ public:
     bool setState(const CoverState state, const bool force = false);
 
     /**
-     * Sets current state of the cover without pushing the state to Home Assistant.
+     * Sets current state of the cover without publishing it to Home Assistant.
      * This method may be useful if you want to change state before connection
      * with MQTT broker is acquired.
      *

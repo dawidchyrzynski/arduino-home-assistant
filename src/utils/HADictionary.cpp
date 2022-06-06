@@ -39,6 +39,8 @@ const char HAOnline[] PROGMEM = {"online"};
 const char HAOffline[] PROGMEM = {"offline"};
 const char HAStateOn[] PROGMEM = {"on"};
 const char HAStateOff[] PROGMEM = {"off"};
+const char HAStateLocked[] PROGMEM = {"locked"};
+const char HAStateUnlocked[] PROGMEM = {"unlocked"};
 const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
 const char HAHome[] PROGMEM = {"home"};
@@ -50,9 +52,13 @@ const char HAClosingState[] PROGMEM = {"closing"};
 const char HAOpenState[] PROGMEM = {"open"};
 const char HAOpeningState[] PROGMEM = {"opening"};
 const char HAStoppedState[] PROGMEM = {"stopped"};
+
+// commands
 const char HAOpenCommand[] PROGMEM = {"OPEN"};
 const char HACloseCommand[] PROGMEM = {"CLOSE"};
 const char HAStopCommand[] PROGMEM = {"STOP"};
+const char HALockCommand[] PROGMEM = {"LOCK"};
+const char HAUnlockCommand[] PROGMEM = {"UNLOCK"};
 
 // device tracker
 const char HAGPSType[] PROGMEM = {"gps"};

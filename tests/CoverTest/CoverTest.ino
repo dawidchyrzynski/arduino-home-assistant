@@ -79,7 +79,7 @@ test(CoverTest, availability) {
     )
 }
 
-test(CoverTest, publish_default_state) {
+test(CoverTest, publish_last_known_state) {
     prepareTest
 
     HACover cover(testUniqueId);

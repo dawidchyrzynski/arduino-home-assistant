@@ -39,6 +39,8 @@ extern const char HAOnline[];
 extern const char HAOffline[];
 extern const char HAStateOn[];
 extern const char HAStateOff[];
+extern const char HAStateLocked[];
+extern const char HAStateUnlocked[];
 extern const char HATrue[];
 extern const char HAFalse[];
 extern const char HAHome[];
@@ -50,9 +52,13 @@ extern const char HAClosingState[];
 extern const char HAOpenState[];
 extern const char HAOpeningState[];
 extern const char HAStoppedState[];
+
+// commands
 extern const char HAOpenCommand[];
 extern const char HACloseCommand[];
 extern const char HAStopCommand[];
+extern const char HALockCommand[];
+extern const char HAUnlockCommand[];
 
 // device tracker
 extern const char HAGPSType[];

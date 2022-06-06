@@ -13,6 +13,7 @@
 * Added support for `HAButton` device type
 * Added support for `HADeviceTracker` device type
 * Added support for `HACamera` device type
+* Added support for `HALock` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)

@@ -6,7 +6,7 @@
 
 HACamera::HACamera(const char* uniqueId) :
     BaseDeviceType("camera", uniqueId),
-     _encoding(EncodingBinary),
+    _encoding(EncodingBinary),
     _icon(nullptr)
 {
 
