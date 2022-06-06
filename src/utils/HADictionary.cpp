@@ -24,6 +24,7 @@ const char HADeviceClassProperty[] PROGMEM = {"dev_cla"};
 const char HAIconProperty[] PROGMEM = {"ic"};
 const char HARetainProperty[] PROGMEM = {"ret"};
 const char HASourceTypeProperty[] PROGMEM = {"src_type"};
+const char HAEncodingProperty[] PROGMEM = {"e"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -58,3 +59,6 @@ const char HAGPSType[] PROGMEM = {"gps"};
 const char HARouterType[] PROGMEM = {"router"};
 const char HABluetoothType[] PROGMEM = {"bluetooth"};
 const char HABluetoothLEType[] PROGMEM = {"bluetooth_le"};
+
+// camera
+const char HAEncodingBase64[] PROGMEM = {"b64"};

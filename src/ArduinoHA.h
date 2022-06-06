@@ -6,6 +6,7 @@
 #include "HAUtils.h"
 #include "device-types/HABinarySensor.h"
 #include "device-types/HAButton.h"
+#include "device-types/HACamera.h"
 #include "device-types/HACover.h"
 #include "device-types/HADeviceTracker.h"
 #include "device-types/HATagScanner.h"

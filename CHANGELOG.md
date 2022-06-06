@@ -12,6 +12,7 @@
 * Added support for forcing `setPosition` in `HACover` using second argument as following `HACover::setPosition(100, true)`
 * Added support for `HAButton` device type
 * Added support for `HADeviceTracker` device type
+* Added support for `HACamera` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)

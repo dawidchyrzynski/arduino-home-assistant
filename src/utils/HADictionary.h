@@ -24,6 +24,7 @@ extern const char HADeviceClassProperty[];
 extern const char HAIconProperty[];
 extern const char HARetainProperty[];
 extern const char HASourceTypeProperty[];
+extern const char HAEncodingProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -58,5 +59,8 @@ extern const char HAGPSType[];
 extern const char HARouterType[];
 extern const char HABluetoothType[];
 extern const char HABluetoothLEType[];
+
+// camera
+extern const char HAEncodingBase64[];
 
 #endif
