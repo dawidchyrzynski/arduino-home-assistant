@@ -5,7 +5,7 @@
 
 #ifndef EX_ARDUINOHA_LOCK
 
-#define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* lock)
+#define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* sender)
 
 class HALock : public BaseDeviceType
 {

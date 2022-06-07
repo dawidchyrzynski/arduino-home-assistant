@@ -5,7 +5,7 @@
 
 #ifndef EX_ARDUINOHA_COVER
 
-#define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* cover)
+#define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
 
 class HACover : public BaseDeviceType
 {

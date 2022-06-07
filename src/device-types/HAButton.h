@@ -5,7 +5,7 @@
 
 #ifndef EX_ARDUINOHA_BUTTON
 
-#define HABUTTON_CALLBACK(name) void (*name)(HAButton* button)
+#define HABUTTON_CALLBACK(name) void (*name)(HAButton* sender)
 
 class HAButton : public BaseDeviceType
 {
