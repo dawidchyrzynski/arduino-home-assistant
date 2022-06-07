@@ -104,7 +104,6 @@ private:
     uint8_t _entriesNb;
 
     SerializerEntry* addEntry();
-    SerializerEntry* getExistingEntry(const EntryType type, const char* propertyP) const;
     uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
     uint16_t calculateFlagSize(const FlagInternalType flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;

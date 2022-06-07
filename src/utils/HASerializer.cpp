@@ -181,11 +181,7 @@ void HASerializer::set(
         return;
     }
 
-    SerializerEntry* entry = getExistingEntry(PropertyEntryType, propertyP);
-    if (!entry) {
-        entry = addEntry();
-    }
-
+    SerializerEntry* entry = addEntry();
     if (!entry) {
         return;
     }
@@ -238,11 +234,7 @@ void HASerializer::topic(const char* topicP)
         return;
     }
 
-    SerializerEntry* entry = getExistingEntry(TopicEntryType, topicP);
-    if (!entry) {
-        entry = addEntry();
-    }
-
+    SerializerEntry* entry = addEntry();
     if (!entry) {
         return;
     }
@@ -261,21 +253,6 @@ HASerializer::SerializerEntry* HASerializer::addEntry()
     );
 
     return &_entries[_entriesNb - 1];
-}
-
-HASerializer::SerializerEntry* HASerializer::getExistingEntry(
-    const EntryType type,
-    const char* propertyP
-) const
-{
-    for (uint8_t i = 0; i < _entriesNb; i++) {
-        SerializerEntry* entry = &_entries[i];
-        if (entry->type == type && entry->property == propertyP) {
-            return entry;
-        }
-    }
-
-    return nullptr;
 }
 
 uint16_t HASerializer::calculateSize() const

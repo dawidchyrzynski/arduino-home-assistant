@@ -35,16 +35,6 @@ test(SerializerTest, empty_json) {
     assertSerializerMqttMessage("{}")
 }
 
-test(SerializerTest, field_override) {
-    prepareTest
-
-    serializer.set(HADeviceClassProperty, "Class1");
-    serializer.set(HADeviceClassProperty, "Class2");
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"dev_cla\":\"Class2\"}")
-}
-
 test(SerializerTest, skip_null_fields) {
     prepareTest
 
@@ -167,16 +157,6 @@ test(SerializerTest, progmem_field) {
 test(SerializerTest, topic_field) {
     prepareTest
 
-    serializer.topic(HAStateTopic);
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"stat_t\":\"testData/testDevice/testId/stat_t\"}")
-}
-
-test(SerializerTest, topic_duplicate_field) {
-    prepareTest
-
-    serializer.topic(HAStateTopic);
     serializer.topic(HAStateTopic);
 
     flushSerializer(mock, serializer)
