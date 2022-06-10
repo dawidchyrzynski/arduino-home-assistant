@@ -123,6 +123,7 @@ public:
 
     bool beginPublish(const char* topic, unsigned int plength, bool retained);
     size_t write(const uint8_t *buffer, size_t size);
+    size_t print(const __FlashStringHelper* buffer);
     int endPublish();
     bool subscribe(const char* topic);
 

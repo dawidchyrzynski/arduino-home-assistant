@@ -192,18 +192,14 @@ bool HAMqtt::beginPublish(
     return _mqtt->beginPublish(topic, payloadLength, retained);
 }
 
-bool HAMqtt::writePayload(const char* data, uint16_t length)
+void HAMqtt::writePayload(const char* data, uint16_t length)
 {
-    return (_mqtt->write((const uint8_t*)(data), length) > 0);
+    _mqtt->write((const uint8_t*)(data), length);
 }
 
-bool HAMqtt::writePayload_P(const char* src)
+void HAMqtt::writePayload_P(const char* src)
 {
-    const size_t len = strlen_P(src);;
-    char data[len];
-    strcpy_P(data, src);
-
-    return _mqtt->write((const uint8_t*)(data), len);
+    _mqtt->print((const __FlashStringHelper*)(src));
 }
 
 bool HAMqtt::endPublish()

@@ -152,6 +152,15 @@ size_t PubSubClientMock::write(const uint8_t *buffer, size_t size)
     return size;
 }
 
+size_t PubSubClientMock::print(const __FlashStringHelper* buffer)
+{
+    const size_t len = strlen_P(reinterpret_cast<const char*>(buffer));
+    char data[len];
+    strcpy_P(data, reinterpret_cast<const char*>(buffer));
+
+    return write((const uint8_t*)(data), len);
+}
+
 int PubSubClientMock::endPublish()
 {
     if (!_pendingMessage) {
