@@ -550,7 +550,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
             entry->property
         );
 
-        mqtt->writePayload(topic, strlen(topic));
+        mqtt->writePayload(topic, length - 1);
     }
 
     mqtt->writePayload_P(HASerializerJsonEscapeChar);

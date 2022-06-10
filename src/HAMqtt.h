@@ -160,17 +160,6 @@ public:
      */
     void addDeviceType(BaseDeviceType* deviceType);
 
-    /**
-     * Publishes MQTT message with given topic and payload.
-     * Message won't be published if connection with MQTT broker is not established.
-     * In this case method returns false.
-     *
-     * @param topic Topic to publish.
-     * @param payload Payload to publish (it may be empty const char).
-     * @param retained Determines whether message should be retained.
-     */
-    bool publish(const char* topic, const char* payload, bool retained = false);
-
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
     bool writePayload(const char* data, uint16_t length);
     bool writePayload_P(const char* src);

@@ -181,19 +181,6 @@ void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
     }
 }
 
-bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
-{
-    if (!isConnected()) {
-        return false;
-    }
-
-    ARDUINOHA_DEBUG_PRINTF("AHA: publishing %s, len: %d\n", topic, strlen(payload));
-
-    _mqtt->beginPublish(topic, strlen(payload), retained);
-    _mqtt->write((const uint8_t*)(payload), strlen(payload));
-    return _mqtt->endPublish();
-}
-
 bool HAMqtt::beginPublish(
     const char* topic,
     uint16_t payloadLength,
@@ -212,10 +199,11 @@ bool HAMqtt::writePayload(const char* data, uint16_t length)
 
 bool HAMqtt::writePayload_P(const char* src)
 {
-    char data[strlen_P(src) + 1];
+    const size_t len = strlen_P(src);;
+    char data[len];
     strcpy_P(data, src);
 
-    return _mqtt->write((const uint8_t*)(data), strlen(data));
+    return _mqtt->write((const uint8_t*)(data), len);
 }
 
 bool HAMqtt::endPublish()
