@@ -6,9 +6,6 @@
 
 #include "HAUtils.h"
 
-static const char HAZero[] PROGMEM = {"0"};
-static const char HASign[] PROGMEM = {"-"};
-
 bool HAUtils::endsWith(const char* str, const char* suffix)
 {
     if (str == nullptr || suffix == nullptr) {
@@ -64,14 +61,21 @@ uint8_t HAUtils::calculateFloatSize(
     }
 
     const int32_t number = static_cast<int32_t>(value);
-    const uint8_t digitsNb = calculateNumberSize(number);
+    uint8_t digitsNb = calculateNumberSize(number);
 
     if (number == 0 && precision == 0) {
         isSigned = false;
     }
 
-    // sign + digits + dot + decimal
-    return (isSigned ? 1 : 0) + digitsNb + (precision > 0 ? 1 + precision : 0);
+    if (isSigned) {
+        digitsNb++; // sign
+    }
+
+    if (precision > 0) {
+        digitsNb += precision + 1; // dot + decimal
+    }
+
+    return digitsNb;
 }
 
 void HAUtils::floatToStr(
@@ -82,7 +86,7 @@ void HAUtils::floatToStr(
 {
     const int32_t number = static_cast<int32_t>(value);
     if (number == 0 && precision == 0) {
-        strcat_P(dst, HAZero);
+        dst[0] = 0x30; // digit 0
         return;
     }
 
@@ -96,10 +100,17 @@ uint8_t HAUtils::calculateNumberSize(int32_t value)
         value *= -1;
     }
 
-    const uint8_t digitsNb = value > 0 ? floor(log10(value)) + 1 : 1;
+    uint8_t digitsNb = 1;
+    while (value > 9) {
+        value /= 10;
+        digitsNb++;
+    }
 
-    // sign + digits
-    return (isSigned ? 1 : 0) + digitsNb;
+    if (isSigned) {
+        digitsNb++; // sign
+    }
+
+    return digitsNb;
 }
 
 void HAUtils::numberToStr(char* dst, int32_t value)
@@ -107,11 +118,11 @@ void HAUtils::numberToStr(char* dst, int32_t value)
     const bool isSigned = value < 0;
 
     if (value == 0) {
-        strcat_P(dst, HAZero);
+        dst[0] = 0x30; // digit 0
         return;
     } else if (isSigned) {
         value *= -1;
-        strcat_P(dst, HASign);
+        dst[0] = 0x2D; // hyphen
     }
 
     const uint8_t digitsNb = calculateNumberSize(value);

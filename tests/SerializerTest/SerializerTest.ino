@@ -74,7 +74,7 @@ test(SerializerTest, bool_true_field) {
     assertSerializerMqttMessage("{\"name\":true}")
 }
 
-test(SerializerTest, float_zero_field) {
+test(SerializerTest, float_zero_p1_field) {
     prepareTest
 
     float value = 0;
