@@ -115,26 +115,21 @@ uint8_t HAUtils::calculateNumberSize(int32_t value)
 
 void HAUtils::numberToStr(char* dst, int32_t value)
 {
-    const bool isSigned = value < 0;
-
     if (value == 0) {
         dst[0] = 0x30; // digit 0
         return;
-    } else if (isSigned) {
+    }
+
+    const uint8_t digitsNb = calculateNumberSize(value);
+    if (value < 0) {
         value *= -1;
         dst[0] = 0x2D; // hyphen
     }
 
-    const uint8_t digitsNb = calculateNumberSize(value);
-    char tmp[digitsNb + 1];
-    memset(tmp, 0, sizeof(tmp));
-
-    uint8_t i = digitsNb - 1;
+    char* ch = &dst[digitsNb - 1];
     while (value != 0) {
-       tmp[i] = (value % 10) + '0';
+       *ch = (value % 10) + '0';
        value /= 10;
-       i--;
+       ch--;
     }
-
-    strcat(dst, tmp);
 }

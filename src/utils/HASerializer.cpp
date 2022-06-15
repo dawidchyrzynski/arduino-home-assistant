@@ -485,8 +485,7 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
             precision
         );
 
-        char tmp[bufferSize + 1]; // including null terminator
-        memset(tmp, 0, bufferSize);
+        char tmp[bufferSize];
         HAUtils::floatToStr(tmp, value, precision);
         mqtt->writePayload(tmp, bufferSize);
 
@@ -495,8 +494,7 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         const uint8_t digitsNb = HAUtils::calculateNumberSize(value);
 
-        char tmp[digitsNb + 1]; // including null terminator
-        memset(tmp, 0, digitsNb);
+        char tmp[digitsNb];
         HAUtils::numberToStr(tmp, value);
         mqtt->writePayload(tmp, digitsNb);
 
@@ -507,8 +505,8 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         );
         const uint16_t size = array->calculateSize();
 
-        char tmp[size + 1]; // including null terminator
-        memset(tmp, 0, size);
+        char tmp[size];
+        tmp[0] = 0;
         array->serialize(tmp);
         mqtt->writePayload(tmp, size);
 
