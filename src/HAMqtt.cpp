@@ -20,7 +20,8 @@
     _password(nullptr), \
     _lastConnectionAttemptAt(0), \
     _devicesTypesNb(0), \
-    _devicesTypes(nullptr), \
+    _maxDevicesTypesNb(maxDevicesTypesNb), \
+    _devicesTypes(new BaseDeviceType*[maxDevicesTypesNb]), \
     _lastWillTopic(nullptr), \
     _lastWillMessage(nullptr), \
     _lastWillRetain(false)
@@ -40,18 +41,28 @@ void onMessageReceived(char* topic, uint8_t* payload, unsigned int length)
 }
 
 #ifdef ARDUINOHA_TEST
-HAMqtt::HAMqtt(PubSubClientMock* pubSub, HADevice& device) :
+HAMqtt::HAMqtt(
+    PubSubClientMock* pubSub,
+    HADevice& device,
+    uint8_t maxDevicesTypesNb
+) :
     _mqtt(pubSub),
     HAMQTT_INIT
 {
     _instance = this;
+    memset(_devicesTypes, 0, sizeof(BaseDeviceType*) * maxDevicesTypesNb);
 }
 #else
-HAMqtt::HAMqtt(Client& netClient, HADevice& device) :
+HAMqtt::HAMqtt(
+    Client& netClient,
+    HADevice& device,
+    uint8_t maxDevicesTypesNb
+) :
     _mqtt(new PubSubClient(netClient)),
     HAMQTT_INIT
 {
     _instance = this;
+    memset(_devicesTypes, 0, sizeof(BaseDeviceType*) * maxDevicesTypesNb);
 }
 #endif
 
@@ -169,16 +180,11 @@ bool HAMqtt::isConnected()
 
 void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
 {
-    BaseDeviceType** data = (BaseDeviceType**)realloc(
-        _devicesTypes,
-        sizeof(BaseDeviceType*) * (_devicesTypesNb + 1)
-    );
-
-    if (data != nullptr) {
-        _devicesTypes = data;
-        _devicesTypes[_devicesTypesNb] = deviceType;
-        _devicesTypesNb++;
+    if (_devicesTypesNb + 1 >= _maxDevicesTypesNb) {
+        return;
     }
+
+    _devicesTypes[_devicesTypesNb++] = deviceType;
 }
 
 bool HAMqtt::beginPublish(

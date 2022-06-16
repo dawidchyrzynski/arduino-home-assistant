@@ -27,9 +27,17 @@ public:
         { return _instance; }
 
 #ifdef ARDUINOHA_TEST
-    explicit HAMqtt(PubSubClientMock* pubSub, HADevice& device);
+    explicit HAMqtt(
+        PubSubClientMock* pubSub,
+        HADevice& device,
+        const uint8_t maxDevicesTypesNb = 6
+    );
 #else
-    explicit HAMqtt(Client& netClient, HADevice& device);
+    explicit HAMqtt(
+        Client& netClient,
+        HADevice& device,
+        const uint8_t maxDevicesTypesNb = 6
+    );
 #endif
     virtual ~HAMqtt();
 
@@ -243,6 +251,7 @@ private:
     const char* _password;
     uint32_t _lastConnectionAttemptAt;
     uint8_t _devicesTypesNb;
+    uint8_t _maxDevicesTypesNb;
     BaseDeviceType** _devicesTypes;
     const char* _lastWillTopic;
     const char* _lastWillMessage;
