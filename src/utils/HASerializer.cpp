@@ -389,15 +389,6 @@ uint16_t HASerializer::calculatePropertyValueSize(
         return value ? 4 : 5; // "true" or "false"
     }
 
-    case FloatP1PropertyType:
-    case FloatP2PropertyType: {
-    const float value = *static_cast<const float*>(entry->value);
-        return HAUtils::calculateFloatSize(
-            value,
-            entry->subtype == FloatP1PropertyType ? 1 : 2
-        );
-    }
-
     case Int32PropertyType:  {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         return HAUtils::calculateNumberSize(value);
@@ -462,22 +453,6 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
     case BoolPropertyType: {
         const bool value = *static_cast<const bool*>(entry->value);
         mqtt->writePayload_P(value ? HATrue : HAFalse);
-        return true;
-    }
-
-    case FloatP1PropertyType:
-    case FloatP2PropertyType: {
-        const float value = *static_cast<const float*>(entry->value);
-        const uint8_t precision = entry->subtype == FloatP1PropertyType ? 1 : 2;
-        const uint8_t bufferSize = HAUtils::calculateFloatSize(
-            value,
-            precision
-        );
-
-        char tmp[bufferSize];
-        HAUtils::floatToStr(tmp, value, precision);
-        mqtt->writePayload(tmp, bufferSize);
-
         return true;
     }
 

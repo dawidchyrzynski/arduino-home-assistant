@@ -74,46 +74,6 @@ test(SerializerTest, bool_true_field) {
     assertSerializerMqttMessage("{\"name\":true}")
 }
 
-test(SerializerTest, float_zero_p1_field) {
-    prepareTest(1)
-
-    float value = 0;
-    serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"name\":0.0}")
-}
-
-test(SerializerTest, float_truncate_field) {
-    prepareTest(1)
-
-    float value = 1.22222;
-    serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"name\":1.2}")
-}
-
-test(SerializerTest, float_unsigned_field) {
-    prepareTest(1)
-
-    float value = 1.15;
-    serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"name\":1.15}")
-}
-
-test(SerializerTest, float_signed_field) {
-    prepareTest(1)
-
-    float value = -11.333;
-    serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
-
-    flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"name\":-11.33}")
-}
-
 test(SerializerTest, number_zero_field) {
     prepareTest(1)
 
@@ -261,11 +221,8 @@ test(SerializerTest, mixed_elements) {
     int32_t intValue = 312346733;
     serializer.set(HAIconProperty, &intValue, HASerializer::Int32PropertyType);
 
-    float floatValue = -11.333;
-    serializer.set(HADeviceManufacturerProperty, &floatValue, HASerializer::FloatP2PropertyType);
-
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"dev_cla\":[\"dev\",\"ic\"],\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev\":{\"ids\":\"testDevice\"},\"name\":\"TestName\",\"stat_t\":\"testData/testDevice/testId/stat_t\",\"ic\":312346733,\"mf\":-11.33}")
+    assertSerializerMqttMessage("{\"dev_cla\":[\"dev\",\"ic\"],\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev\":{\"ids\":\"testDevice\"},\"name\":\"TestName\",\"stat_t\":\"testData/testDevice/testId/stat_t\",\"ic\":312346733}")
 }
 
 void setup()

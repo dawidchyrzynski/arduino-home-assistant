@@ -29,8 +29,6 @@ public:
         ConstCharPropertyValue = 1,
         ProgmemPropertyValue,
         BoolPropertyType,
-        FloatP1PropertyType, // 1 digit after decimal
-        FloatP2PropertyType, // 2 digits after decimal
         Int32PropertyType,
         ArrayPropertyType
     };
