@@ -50,7 +50,6 @@ void BaseDeviceType::destroySerializer()
 {
     if (_serializer) {
         delete _serializer;
-        _serializer = nullptr;
     }
 }
 
@@ -89,7 +88,6 @@ void BaseDeviceType::publishAvailability()
     const HADevice* device = mqtt()->getDevice();
     if (
         !device ||
-        !uniqueId() ||
         device->isSharedAvailabilityEnabled() ||
         !isAvailabilityConfigured()
     ) {
@@ -113,7 +111,7 @@ bool BaseDeviceType::publishOnDataTopic(
     bool isProgmemValue
 )
 {
-    if (!uniqueId() || !topicP || !value) {
+    if (!value) {
         return false;
     }
 
@@ -155,10 +153,6 @@ void BaseDeviceType::subscribeTopic(
     const char* topicP
 )
 {
-    if (!uniqueId() || !topicP) {
-        return;
-    }
-
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         uniqueId(),
         topicP

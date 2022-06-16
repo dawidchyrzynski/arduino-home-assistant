@@ -110,7 +110,8 @@ private:
     SerializerEntry* _entries;
 
     SerializerEntry* addEntry();
-    uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
+    uint16_t calculateEntrySize(const SerializerEntry* entry) const;
+    uint16_t calculateTopicEntrySize(const SerializerEntry* entry) const;
     uint16_t calculateFlagSize(const FlagInternalType flag) const;
     uint16_t calculatePropertyValueSize(const SerializerEntry* entry) const;
     uint16_t calculateArraySize(const HASerializerArray* array) const;

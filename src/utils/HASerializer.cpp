@@ -94,7 +94,7 @@ uint16_t HASerializer::calculateDataTopicLength(
         size += strlen(objectId) + 1; // object ID with slash;
     }
 
-    return size + 1; // include null terminator
+    return size + 1; // including null terminator
 }
 
 bool HASerializer::generateDataTopic(
@@ -200,7 +200,6 @@ void HASerializer::set(const FlagType flag)
         entry->property = nullptr;
         entry->value = nullptr;
     } else if (flag == WithAvailability) {
-        uint8_t subtype = 0;
         HAMqtt* mqtt = HAMqtt::instance();
         const bool isSharedAvailability = mqtt->getDevice()->isSharedAvailabilityEnabled();
         const bool isAvailabilityConfigured = _deviceType->isAvailabilityConfigured();
@@ -215,7 +214,6 @@ void HASerializer::set(const FlagType flag)
         }
 
         entry->type = TopicEntryType;
-        entry->subtype = subtype;
         entry->property = HAAvailabilityTopic;
         entry->value = isSharedAvailability
             ? mqtt->getDevice()->getAvailabilityTopic()
@@ -235,9 +233,7 @@ void HASerializer::topic(const char* topicP)
     }
 
     entry->type = TopicEntryType;
-    entry->subtype = 0;
     entry->property = topicP;
-    entry->value = nullptr;
 }
 
 HASerializer::SerializerEntry* HASerializer::addEntry()
@@ -247,18 +243,22 @@ HASerializer::SerializerEntry* HASerializer::addEntry()
 
 uint16_t HASerializer::calculateSize() const
 {
-    HAMqtt* mqtt = HAMqtt::instance();
-    if (!mqtt || (_deviceType && !mqtt->getDevice())) {
-        return 0;
-    }
-
     uint16_t size =
         strlen_P(HASerializerJsonDataPrefix) +
         strlen_P(HASerializerJsonDataSuffix);
-    
-    const uint8_t lastEntryIndex = _entriesNb - 1;
+
     for (uint8_t i = 0; i < _entriesNb; i++) {
-        size += calculateEntrySize(&_entries[i], i == lastEntryIndex);
+        const uint16_t entrySize = calculateEntrySize(&_entries[i]);
+        if (entrySize == 0) {
+            continue;
+        }
+
+        size += entrySize;
+
+        // items separator
+        if (i > 0) {
+            size += strlen_P(HASerializerJsonPropertiesSeparator);
+        }
     }
 
     return size;
@@ -287,53 +287,58 @@ bool HASerializer::flush() const
     return true;
 }
 
-uint16_t HASerializer::calculateEntrySize(
-    const SerializerEntry* entry,
-    bool lastEntry
-) const
+uint16_t HASerializer::calculateEntrySize(const SerializerEntry* entry) const
 {
-    if (entry->type == UnknownEntryType) {
-        return 0;
-    }
-
-    uint16_t size = 0;
-
-    if (entry->type == PropertyEntryType && entry->property && entry->value) {
-        // property name
-        size +=
+    switch (entry->type) {
+    case PropertyEntryType:
+        return
+            // property name
             strlen_P(HASerializerJsonPropertyPrefix) +
             strlen_P(entry->property) +
-            strlen_P(HASerializerJsonPropertySuffix);
+            strlen_P(HASerializerJsonPropertySuffix) +
+            // property value
+            calculatePropertyValueSize(entry);
 
-        // property value
-        size += calculatePropertyValueSize(entry);
-    } else if (entry->type == TopicEntryType && entry->property) {
-        // property name
-        size +=
-            strlen_P(HASerializerJsonPropertyPrefix) +
-            strlen_P(entry->property) +
-            strlen_P(HASerializerJsonPropertySuffix);
+    case TopicEntryType:
+        return calculateTopicEntrySize(entry);
 
-        // topic escape
-        size += 2 * strlen_P(HASerializerJsonEscapeChar);
-
-        // topic
-        if (entry->value) {
-            size += strlen(static_cast<const char*>(entry->value));
-        } else {
-            size += calculateDataTopicLength(
-                _deviceType->uniqueId(),
-                entry->property
-            ) - 1; // exclude null terminator
-        }
-    } else if (entry->type == FlagEntryType) {
-        size += calculateFlagSize(
+    case FlagEntryType:
+        return calculateFlagSize(
             static_cast<FlagInternalType>(entry->subtype)
         );
-    }
 
-    if (!lastEntry && size > 0) {
-        size += strlen_P(HASerializerJsonPropertiesSeparator);
+    default:
+        return 0;
+    }
+}
+
+uint16_t HASerializer::calculateTopicEntrySize(
+    const SerializerEntry* entry
+) const
+{
+    uint16_t size = 0;
+
+    // property name
+    size +=
+        strlen_P(HASerializerJsonPropertyPrefix) +
+        strlen_P(entry->property) +
+        strlen_P(HASerializerJsonPropertySuffix);
+
+    // topic escape
+    size += 2 * strlen_P(HASerializerJsonEscapeChar);
+
+    // topic
+    if (entry->value) {
+        size += strlen(static_cast<const char*>(entry->value));
+    } else {
+        if (!_deviceType) {
+            return 0;
+        }
+
+        size += calculateDataTopicLength(
+            _deviceType->uniqueId(),
+            entry->property
+        ) - 1; // exclude null terminator
     }
 
     return size;
@@ -364,90 +369,84 @@ uint16_t HASerializer::calculatePropertyValueSize(
     const SerializerEntry* entry
 ) const
 {
-    if (entry->type != PropertyEntryType) {
-        return 0;
+    switch (entry->subtype) {
+    case ConstCharPropertyValue: {
+        const char* value = static_cast<const char*>(entry->value);
+        return 
+            2 * strlen_P(HASerializerJsonEscapeChar) +
+            strlen(value);
     }
 
-    if (
-        entry->subtype == ConstCharPropertyValue ||
-        entry->subtype == ProgmemPropertyValue
-    ) {
+    case ProgmemPropertyValue: {
         const char* value = static_cast<const char*>(entry->value);
-        if (value) {
-            return 
-                2 * strlen_P(HASerializerJsonEscapeChar)
-                + (entry->subtype == ConstCharPropertyValue
-                    ? strlen(value)
-                    : strlen_P(value)
-                  );
-        }
-    } else if (entry->subtype == BoolPropertyType) {
+        return 
+            2 * strlen_P(HASerializerJsonEscapeChar) +
+            strlen_P(value);
+    }
+
+    case BoolPropertyType: {
         const bool value = *static_cast<const bool*>(entry->value);
         return value ? 4 : 5; // "true" or "false"
-    } else if (
-        entry->subtype == FloatP1PropertyType ||
-        entry->subtype == FloatP2PropertyType
-    ) {
-        const float value = *static_cast<const float*>(entry->value);
+    }
+
+    case FloatP1PropertyType:
+    case FloatP2PropertyType: {
+    const float value = *static_cast<const float*>(entry->value);
         return HAUtils::calculateFloatSize(
             value,
             entry->subtype == FloatP1PropertyType ? 1 : 2
         );
-    } else if (entry->subtype == Int32PropertyType) {
+    }
+
+    case Int32PropertyType:  {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         return HAUtils::calculateNumberSize(value);
-    } else if (entry->subtype == ArrayPropertyType) {
+    }
+
+    case ArrayPropertyType: {
         const HASerializerArray* array = static_cast<const HASerializerArray*>(
             entry->value
         );
         return array->calculateSize();
     }
 
-    return 0;
+    default:
+        return 0;
+    }
 }
 
 bool HASerializer::flushEntry(const SerializerEntry* entry) const
 {
-    if (entry->type == UnknownEntryType) {
-        return false;
-    }
-
     HAMqtt* mqtt = HAMqtt::instance();
 
-    if (entry->type == PropertyEntryType && entry->property && entry->value) {
+    switch (entry->type) {
+    case PropertyEntryType: {
         mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
         mqtt->writePayload_P(entry->property);
         mqtt->writePayload_P(HASerializerJsonPropertySuffix);
-        
-        if (!flushEntryValue(entry)) {
-            return false;
-        }
-    } else if (entry->type == TopicEntryType) {
-        if (!flushTopic(entry)) {
-            return false;
-        }
-    } else if (entry->type == FlagEntryType) {
-        if (!flushFlag(entry)) {
-            return true; // ignore flag
-        }
+
+        return flushEntryValue(entry);
     }
 
-    return true;
+    case TopicEntryType:
+        return flushTopic(entry);
+
+    case FlagEntryType:
+        return flushFlag(entry);
+
+    default:
+        return true;
+    }
 }
 
 bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
 
-    if (
-        entry->subtype == ConstCharPropertyValue ||
-        entry->subtype == ProgmemPropertyValue
-    ) {
+    switch (entry->subtype) {
+    case ConstCharPropertyValue:
+    case ProgmemPropertyValue: {
         const char* value = static_cast<const char*>(entry->value);
-        if (!value) {
-            return false;
-        }
-
         mqtt->writePayload_P(HASerializerJsonEscapeChar);
 
         if (entry->subtype == ConstCharPropertyValue) {
@@ -457,16 +456,17 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         }
 
         mqtt->writePayload_P(HASerializerJsonEscapeChar);
-
         return true;
-    } else if (entry->subtype == BoolPropertyType) {
+    }
+
+    case BoolPropertyType: {
         const bool value = *static_cast<const bool*>(entry->value);
         mqtt->writePayload_P(value ? HATrue : HAFalse);
         return true;
-    } else if (
-        entry->subtype == FloatP1PropertyType ||
-        entry->subtype == FloatP2PropertyType
-    ) {
+    }
+
+    case FloatP1PropertyType:
+    case FloatP2PropertyType: {
         const float value = *static_cast<const float*>(entry->value);
         const uint8_t precision = entry->subtype == FloatP1PropertyType ? 1 : 2;
         const uint8_t bufferSize = HAUtils::calculateFloatSize(
@@ -479,7 +479,9 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         mqtt->writePayload(tmp, bufferSize);
 
         return true;
-    } else if (entry->subtype == Int32PropertyType) {
+    }
+
+    case Int32PropertyType: {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
         const uint8_t digitsNb = HAUtils::calculateNumberSize(value);
 
@@ -488,12 +490,13 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         mqtt->writePayload(tmp, digitsNb);
 
         return true;
-    } else if (entry->subtype == ArrayPropertyType) {
+    }
+
+    case ArrayPropertyType: {
         const HASerializerArray* array = static_cast<const HASerializerArray*>(
             entry->value
         );
         const uint16_t size = array->calculateSize();
-
         char tmp[size];
         tmp[0] = 0;
         array->serialize(tmp);
@@ -502,7 +505,9 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         return true;
     }
 
-    return false;;
+    default:
+        return false;
+    }
 }
 
 bool HASerializer::flushTopic(const SerializerEntry* entry) const
@@ -525,7 +530,6 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
             _deviceType->uniqueId(),
             entry->property
         );
-
         if (length == 0) {
             return false;
         }
@@ -541,7 +545,6 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
     }
 
     mqtt->writePayload_P(HASerializerJsonEscapeChar);
-
     return true;
 }
 
@@ -549,11 +552,11 @@ bool HASerializer::flushFlag(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
     const HADevice* device = mqtt->getDevice();
-    const FlagInternalType& flag = static_cast<FlagInternalType>(
+    const FlagInternalType flag = static_cast<FlagInternalType>(
         entry->subtype
     );
 
-    if (flag == InternalWithDevice && device->getSerializer()) {
+    if (flag == InternalWithDevice && device) {
         mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
         mqtt->writePayload_P(HADeviceProperty);
         mqtt->writePayload_P(HASerializerJsonPropertySuffix);
