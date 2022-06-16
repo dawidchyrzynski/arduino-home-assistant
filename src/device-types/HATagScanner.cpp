@@ -25,7 +25,7 @@ void HATagScanner::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this);
+    _serializer = new HASerializer(this, 2); // 2 - max properties nb
     _serializer->set(HASerializer::WithDevice);
     _serializer->topic(HATopic);
 }

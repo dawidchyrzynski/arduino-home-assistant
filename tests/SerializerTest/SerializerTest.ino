@@ -1,10 +1,10 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
 
-#define prepareTest \
+#define prepareTest(maxEntriesNb) \
     initMqttTest(testDeviceId); \
     DummyDeviceType dummyDeviceType; \
-    HASerializer serializer(&dummyDeviceType);
+    HASerializer serializer(&dummyDeviceType, maxEntriesNb);
 
 #define flushSerializer(mock, serializer) \
     mock->connectDummy(); \
@@ -30,13 +30,13 @@ static const char* testDeviceId = "testDevice";
 static const char* testTopic = "testTopic";
 
 test(SerializerTest, empty_json) {
-    prepareTest
+    prepareTest(0)
     flushSerializer(mock, serializer);
     assertSerializerMqttMessage("{}")
 }
 
 test(SerializerTest, skip_null_fields) {
-    prepareTest
+    prepareTest(2)
 
     serializer.set(HADeviceClassProperty, "Class");
     serializer.set(HAIconProperty, nullptr);
@@ -46,7 +46,7 @@ test(SerializerTest, skip_null_fields) {
 }
 
 test(SerializerTest, char_field) {
-    prepareTest
+    prepareTest(1)
 
     serializer.set(HANameProperty, "XYZ");
 
@@ -55,7 +55,7 @@ test(SerializerTest, char_field) {
 }
 
 test(SerializerTest, bool_false_field) {
-    prepareTest
+    prepareTest(1)
 
     bool value = false;
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
@@ -65,7 +65,7 @@ test(SerializerTest, bool_false_field) {
 }
 
 test(SerializerTest, bool_true_field) {
-    prepareTest
+    prepareTest(1)
 
     bool value = true;
     serializer.set(HANameProperty, &value, HASerializer::BoolPropertyType);
@@ -75,7 +75,7 @@ test(SerializerTest, bool_true_field) {
 }
 
 test(SerializerTest, float_zero_p1_field) {
-    prepareTest
+    prepareTest(1)
 
     float value = 0;
     serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
@@ -85,7 +85,7 @@ test(SerializerTest, float_zero_p1_field) {
 }
 
 test(SerializerTest, float_truncate_field) {
-    prepareTest
+    prepareTest(1)
 
     float value = 1.22222;
     serializer.set(HANameProperty, &value, HASerializer::FloatP1PropertyType);
@@ -95,7 +95,7 @@ test(SerializerTest, float_truncate_field) {
 }
 
 test(SerializerTest, float_unsigned_field) {
-    prepareTest
+    prepareTest(1)
 
     float value = 1.15;
     serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
@@ -105,7 +105,7 @@ test(SerializerTest, float_unsigned_field) {
 }
 
 test(SerializerTest, float_signed_field) {
-    prepareTest
+    prepareTest(1)
 
     float value = -11.333;
     serializer.set(HANameProperty, &value, HASerializer::FloatP2PropertyType);
@@ -115,7 +115,7 @@ test(SerializerTest, float_signed_field) {
 }
 
 test(SerializerTest, number_zero_field) {
-    prepareTest
+    prepareTest(1)
 
     int32_t value = 0;
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
@@ -125,7 +125,7 @@ test(SerializerTest, number_zero_field) {
 }
 
 test(SerializerTest, number_signed_field) {
-    prepareTest
+    prepareTest(1)
 
     int32_t value = -12346756;
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
@@ -135,7 +135,7 @@ test(SerializerTest, number_signed_field) {
 }
 
 test(SerializerTest, number_unsigned_field) {
-    prepareTest
+    prepareTest(1)
 
     int32_t value = 312346733;
     serializer.set(HANameProperty, &value, HASerializer::Int32PropertyType);
@@ -145,9 +145,8 @@ test(SerializerTest, number_unsigned_field) {
 }
 
 test(SerializerTest, progmem_field) {
-    prepareTest
+    prepareTest(1)
 
-    int32_t value = 0;
     serializer.set(HANameProperty, HAOffline, HASerializer::ProgmemPropertyValue);
 
     flushSerializer(mock, serializer)
@@ -155,7 +154,7 @@ test(SerializerTest, progmem_field) {
 }
 
 test(SerializerTest, topic_field) {
-    prepareTest
+    prepareTest(1)
 
     serializer.topic(HAStateTopic);
 
@@ -164,7 +163,7 @@ test(SerializerTest, topic_field) {
 }
 
 test(SerializerTest, topics_field) {
-    prepareTest
+    prepareTest(2)
 
     serializer.topic(HAStateTopic);
     serializer.topic(HAAvailabilityTopic);
@@ -174,7 +173,7 @@ test(SerializerTest, topics_field) {
 }
 
 test(SerializerTest, device_serialization) {
-    prepareTest
+    prepareTest(1)
 
     serializer.set(HASerializer::WithDevice);
 
@@ -183,7 +182,7 @@ test(SerializerTest, device_serialization) {
 }
 
 test(SerializerTest, device_mixed_serialization) {
-    prepareTest
+    prepareTest(2)
 
     serializer.set(HASerializer::WithDevice);
     serializer.set(HADeviceClassProperty, "Class1");
@@ -193,7 +192,7 @@ test(SerializerTest, device_mixed_serialization) {
 }
 
 test(SerializerTest, device_type_availability) {
-    prepareTest
+    prepareTest(1)
 
     dummyDeviceType.setAvailability(false);
     serializer.set(HASerializer::WithAvailability);
@@ -203,7 +202,7 @@ test(SerializerTest, device_type_availability) {
 }
 
 test(SerializerTest, device_type_availability_mixed) {
-    prepareTest
+    prepareTest(2)
 
     dummyDeviceType.setAvailability(false);
     serializer.set(HASerializer::WithAvailability);
@@ -214,7 +213,7 @@ test(SerializerTest, device_type_availability_mixed) {
 }
 
 test(SerializerTest, shared_availability) {
-    prepareTest
+    prepareTest(1)
 
     device.enableSharedAvailability();
     serializer.set(HASerializer::WithAvailability);
@@ -224,7 +223,7 @@ test(SerializerTest, shared_availability) {
 }
 
 test(SerializerTest, empty_array) {
-    prepareTest
+    prepareTest(1)
 
     HASerializerArray array(0);
     serializer.set(HADeviceClassProperty, &array, HASerializer::ArrayPropertyType);
@@ -234,7 +233,7 @@ test(SerializerTest, empty_array) {
 }
 
 test(SerializerTest, two_element_array) {
-    prepareTest
+    prepareTest(1)
 
     HASerializerArray array(2);
     array.add(HADeviceProperty);
@@ -246,7 +245,7 @@ test(SerializerTest, two_element_array) {
 }
 
 test(SerializerTest, mixed_elements) {
-    prepareTest
+    prepareTest(7)
 
     HASerializerArray array(2);
     array.add(HADeviceProperty);

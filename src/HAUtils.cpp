@@ -28,15 +28,13 @@ void HAUtils::byteArrayToStr(
     const uint16_t length
 )
 {
-    const uint16_t& finalLength = (length * 2);
     static const char map[] PROGMEM = {"0123456789abcdef"};
-
     for (uint8_t i = 0; i < length; i++) {
         dst[i*2] = pgm_read_byte(&map[((char)src[i] & 0XF0) >> 4]);
         dst[i*2+1] = pgm_read_byte(&map[((char)src[i] & 0x0F)]);
     }
 
-    dst[finalLength] = '\0';
+    dst[length * 2] = 0;
 }
 
 char* HAUtils::byteArrayToStr(
@@ -44,7 +42,7 @@ char* HAUtils::byteArrayToStr(
     const uint16_t length
 )
 {
-    char* dst = (char*)malloc((length * 2) + 1); // include null terminator
+    char* dst = new char[(length * 2) + 1]; // include null terminator
     byteArrayToStr(dst, src, length);
 
     return dst;

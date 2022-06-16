@@ -7,6 +7,7 @@ static const char* testDeviceId = "testDevice";
 static byte testDeviceByteId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
 static const char* testDeviceByteIdChar = "11223344aabb";
 static const char* availabilityTopic = "testData/testDevice/avty_t";
+static const char* dummyTopic = "dummyTopic";
 
 #define prepareMqttTest \
     initMqttTest(testDeviceId) \
@@ -17,6 +18,15 @@ static const char* availabilityTopic = "testData/testDevice/avty_t";
     assertEqual(eSubtype, entry->subtype); \
     assertEqual(eProperty, entry->property); \
     assertEqual(eValue, entry->value);
+
+#define flushSerializer(mock, serializer) \
+    mock->connectDummy(); \
+    mock->beginPublish(dummyTopic, serializer->calculateSize(), false); \
+    serializer->flush(); \
+    mock->endPublish();
+
+#define assertSerializerMqttMessage(expectedJson) \
+    assertSingleMqttMessage(dummyTopic, expectedJson, false)
 
 test(DeviceTest, default_unique_id) {
     HADevice device;
@@ -266,6 +276,19 @@ test(DeviceTest, lwt_enabled) {
     assertEqual(availabilityTopic, mock->getLastWill().topic);
     assertEqual("offline", mock->getLastWill().message);
     assertEqual(true, mock->getLastWill().retain);
+}
+
+test(DeviceTest, full_serialization) {
+    initMqttTest("myDeviceId");
+    
+    device.setManufacturer("myManufacturer");
+    device.setModel("myModel");
+    device.setName("myName");
+    device.setSoftwareVersion("myVersion");
+
+    const HASerializer* serializer = device.getSerializer();
+    flushSerializer(mock, serializer)
+    assertSerializerMqttMessage("{\"ids\":\"myDeviceId\",\"mf\":\"myManufacturer\",\"mdl\":\"myModel\",\"name\":\"myName\",\"sw\":\"myVersion\"}")
 }
 
 void setup()

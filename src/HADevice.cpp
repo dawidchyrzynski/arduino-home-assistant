@@ -7,7 +7,7 @@
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
-    _serializer(new HASerializer(nullptr)), \
+    _serializer(new HASerializer(nullptr, 5)), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
     _available(true) // device will be available by default
@@ -35,9 +35,7 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
 
 HADevice::~HADevice()
 {
-    if (_serializer) {
-        delete _serializer;
-    }
+    delete _serializer;
 
     if (_availabilityTopic) {
         delete _availabilityTopic;
@@ -84,7 +82,7 @@ bool HADevice::enableSharedAvailability()
         return false;
     }
 
-    _availabilityTopic = (char*)malloc(topicLength);
+    _availabilityTopic = new char[topicLength];
 
     if (HASerializer::generateDataTopic(
         _availabilityTopic,

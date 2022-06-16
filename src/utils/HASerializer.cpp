@@ -156,19 +156,18 @@ bool HASerializer::compareDataTopics(
     return strcmp(topic, expectedTopic) == 0;
 }
 
-HASerializer::HASerializer(BaseDeviceType* deviceType) :
+HASerializer::HASerializer(BaseDeviceType* deviceType, const uint8_t maxEntriesNb) :
     _deviceType(deviceType),
-    _entries(nullptr),
-    _entriesNb(0)
+    _entriesNb(0),
+    _maxEntriesNb(maxEntriesNb),
+    _entries(new SerializerEntry[maxEntriesNb])
 {
 
 }
 
 HASerializer::~HASerializer()
 {
-    if (_entries) {
-        delete _entries;
-    }
+    delete[] _entries;
 }
 
 void HASerializer::set(
@@ -247,12 +246,7 @@ void HASerializer::topic(const char* topicP)
 
 HASerializer::SerializerEntry* HASerializer::addEntry()
 {
-    _entriesNb++;
-    _entries = static_cast<SerializerEntry*>(
-        realloc(_entries, sizeof(SerializerEntry) * _entriesNb)
-    );
-
-    return &_entries[_entriesNb - 1];
+    return &_entries[_entriesNb++]; // intentional lack of protection against overflow
 }
 
 uint16_t HASerializer::calculateSize() const

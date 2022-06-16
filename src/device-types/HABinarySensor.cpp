@@ -36,7 +36,7 @@ void HABinarySensor::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this);
+    _serializer = new HASerializer(this, 7); // 7 - max properties nb
     _serializer->set(HANameProperty, _name);
     _serializer->set(HAUniqueIdProperty, _uniqueId);
     _serializer->set(HADeviceClassProperty, _class);

@@ -40,6 +40,13 @@ public:
         uint8_t subtype; // FlagInternalType, PropertyValueType or TopicType
         const char* property;
         const void* value;
+
+        SerializerEntry():
+            type(UnknownEntryType),
+            subtype(0),
+            property(nullptr),
+            value(nullptr)
+        { }
     };
 
     static uint16_t calculateConfigTopicLength(
@@ -72,7 +79,7 @@ public:
         const char* topicP
     );
 
-    HASerializer(BaseDeviceType* deviceType);
+    HASerializer(BaseDeviceType* deviceType, const uint8_t maxEntriesNb);
     virtual ~HASerializer();
 
     inline uint8_t getEntriesNb() const
@@ -100,8 +107,9 @@ private:
     };
 
     BaseDeviceType* _deviceType;
-    SerializerEntry* _entries;
     uint8_t _entriesNb;
+    uint8_t _maxEntriesNb;
+    SerializerEntry* _entries;
 
     SerializerEntry* addEntry();
     uint16_t calculateEntrySize(const SerializerEntry* entry, bool lastEntry) const;
