@@ -76,7 +76,7 @@ public:
     );
 
     HASerializer(BaseDeviceType* deviceType, const uint8_t maxEntriesNb);
-    virtual ~HASerializer();
+    ~HASerializer();
 
     inline uint8_t getEntriesNb() const
         { return _entriesNb; }

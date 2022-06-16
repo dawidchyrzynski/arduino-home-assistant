@@ -39,7 +39,7 @@ public:
         const uint8_t maxDevicesTypesNb = 6
     );
 #endif
-    virtual ~HAMqtt();
+    ~HAMqtt();
 
     /**
      * Sets prefix for Home Assistant discovery.

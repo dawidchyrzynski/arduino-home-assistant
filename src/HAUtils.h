@@ -3,8 +3,6 @@
 
 #include <Arduino.h>
 
-#define AHA_SERIALIZED_TEMP_SIZE 8
-
 class HAUtils
 {
 public:

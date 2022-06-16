@@ -8,7 +8,7 @@ class HASerializerArray
 {
 public:
     HASerializerArray(const uint8_t size);
-    virtual ~HASerializerArray();
+    ~HASerializerArray();
 
     inline uint8_t getItemsNb() const
         { return _itemsNb; }

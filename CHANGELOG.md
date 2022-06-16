@@ -35,7 +35,7 @@
 * Added `setName` method to HASwitch
 * Added `onBeforeStateChanged` callback to HASwitch
 
-**Updates:**
+**Improvements:**
 * Removed legacy properties from HAFan (Home Assistant 2021.4.4). Deprecated methods will be removed after a quarter (2021.7)
 * Separated `uniqueID` field from `name` in all devices types
 
@@ -56,7 +56,7 @@
 * Added `onConnectionFailed()` method in the HAMqtt
 * Added support for MQTT LWT (see [Advanced Availability example](examples/advanced-availability/advanced-availability.ino))
 
-**Updates:**
+**Improvements:**
 * Optimized codebase and logic in all devices types
 * Updated all examples
 * Fixed compilation warnings in all classes

@@ -11,7 +11,7 @@ public:
     HADevice();
     HADevice(const char* uniqueId);
     HADevice(const byte* uniqueId, const uint16_t length);
-    virtual ~HADevice();
+    ~HADevice();
 
     inline const char* getUniqueId() const
         { return _uniqueId; }
