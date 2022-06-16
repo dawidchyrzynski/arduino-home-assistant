@@ -67,27 +67,7 @@ test(SerializerTopicsTest, calculate_config_invalid_prefix) {
     );
 }
 
-test(SerializerTopicsTest, calculate_config_without_null_terminator) {
-    const char* componentName = "componentName";
-    const char* objectId = "objectId";
-    const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
-
-    HADevice device(deviceId);
-    HAMqtt mqtt(nullptr, device);
-    mqtt.setDiscoveryPrefix(discoveryPrefix);
-
-    // it should return valid length of the topic
-    assertEqual(
-        (uint16_t)strlen(expectedTopic),
-        HASerializer::calculateConfigTopicLength(
-            componentName,
-            objectId,
-            false
-        )
-    );
-}
-
-test(SerializerTopicsTest, calculate_config_with_null_terminator) {
+test(SerializerTopicsTest, calculate_config) {
     const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
@@ -101,8 +81,7 @@ test(SerializerTopicsTest, calculate_config_with_null_terminator) {
         (uint16_t)(strlen(expectedTopic) + 1),
         HASerializer::calculateConfigTopicLength(
             componentName,
-            objectId,
-            true
+            objectId
         )
     );
 }
@@ -222,26 +201,7 @@ test(SerializerTopicsTest, calculate_data_invalid_prefix) {
     );
 }
 
-test(SerializerTopicsTest, calculate_data_partial_without_null_terminator) {
-    const char* objectId = nullptr;
-    const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
-
-    HADevice device(deviceId);
-    HAMqtt mqtt(nullptr, device);
-    mqtt.setDataPrefix(dataPrefix);
-
-    // it should return valid length of the topic
-    assertEqual(
-        (uint16_t)strlen(expectedTopic),
-        HASerializer::calculateDataTopicLength(
-            objectId,
-            DummyProgmemStr,
-            false
-        )
-    );
-}
-
-test(SerializerTopicsTest, calculate_data_partial_with_null_terminator) {
+test(SerializerTopicsTest, calculate_data_partial) {
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -254,8 +214,7 @@ test(SerializerTopicsTest, calculate_data_partial_with_null_terminator) {
         (uint16_t)strlen(expectedTopic) + 1,
         HASerializer::calculateDataTopicLength(
             objectId,
-            DummyProgmemStr,
-            true
+            DummyProgmemStr
         )
     );
 }

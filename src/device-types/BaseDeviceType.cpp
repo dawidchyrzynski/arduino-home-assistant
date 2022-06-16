@@ -60,8 +60,7 @@ void BaseDeviceType::publishConfig()
 
     const uint16_t topicLength = HASerializer::calculateConfigTopicLength(
         componentName(),
-        uniqueId(),
-        true
+        uniqueId()
     );
     const uint16_t dataLength = _serializer->calculateSize();
 
@@ -120,8 +119,7 @@ bool BaseDeviceType::publishOnDataTopic(
 
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         uniqueId(),
-        topicP,
-        true
+        topicP
     );
     if (topicLength == 0) {
         return false;
@@ -163,8 +161,7 @@ void BaseDeviceType::subscribeTopic(
 
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         uniqueId(),
-        topicP,
-        true
+        topicP
     );
     if (topicLength == 0) {
         return;

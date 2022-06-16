@@ -51,8 +51,7 @@ public:
 
     static uint16_t calculateConfigTopicLength(
         const char* component,
-        const char* objectId,
-        bool includeNullTerminator = true
+        const char* objectId
     );
 
     static bool generateConfigTopic(
@@ -63,8 +62,7 @@ public:
 
     static uint16_t calculateDataTopicLength(
         const char* objectId,
-        const char* topicP,
-        bool includeNullTerminator = true
+        const char* topicP
     );
 
     static bool generateDataTopic(

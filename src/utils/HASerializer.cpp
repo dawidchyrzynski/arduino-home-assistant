@@ -14,8 +14,7 @@
 
 uint16_t HASerializer::calculateConfigTopicLength(
     const char* componentName,
-    const char* objectId,
-    bool includeNullTerminator
+    const char* objectId
 )
 {
     const HAMqtt* mqtt = HAMqtt::instance();
@@ -29,14 +28,12 @@ uint16_t HASerializer::calculateConfigTopicLength(
         return 0;
     }
 
-    uint16_t size =
+    return
         strlen(mqtt->getDiscoveryPrefix()) + 1 + // prefix with slash
         strlen(componentName) + 1 + // component name with slash
         strlen(mqtt->getDevice()->getUniqueId()) + 1 + // device ID with slash
         strlen(objectId) + 1 + // object ID with slash
-        strlen_P(HAConfigTopic);
-
-    return includeNullTerminator ? size + 1 : size;
+        strlen_P(HAConfigTopic) + 1; // including null terminator
 }
 
 bool HASerializer::generateConfigTopic(
@@ -75,8 +72,7 @@ bool HASerializer::generateConfigTopic(
 
 uint16_t HASerializer::calculateDataTopicLength(
     const char* objectId,
-    const char* topicP,
-    bool includeNullTerminator
+    const char* topicP
 )
 {
     const HAMqtt* mqtt = HAMqtt::instance();
@@ -98,7 +94,7 @@ uint16_t HASerializer::calculateDataTopicLength(
         size += strlen(objectId) + 1; // object ID with slash;
     }
 
-    return includeNullTerminator ? size + 1 : size;
+    return size + 1; // include null terminator
 }
 
 bool HASerializer::generateDataTopic(
@@ -327,9 +323,8 @@ uint16_t HASerializer::calculateEntrySize(
         } else {
             size += calculateDataTopicLength(
                 _deviceType->uniqueId(),
-                entry->property,
-                false
-            );
+                entry->property
+            ) - 1; // exclude null terminator
         }
     } else if (entry->type == FlagEntryType) {
         size += calculateFlagSize(
