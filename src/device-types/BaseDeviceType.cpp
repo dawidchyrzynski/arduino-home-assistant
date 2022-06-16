@@ -35,6 +35,31 @@ HAMqtt* BaseDeviceType::mqtt() const
     return HAMqtt::instance();
 }
 
+void BaseDeviceType::subscribeTopic(
+    const char* uniqueId,
+    const char* topicP
+)
+{
+    const uint16_t topicLength = HASerializer::calculateDataTopicLength(
+        uniqueId,
+        topicP
+    );
+    if (topicLength == 0) {
+        return;
+    }
+
+    char topic[topicLength];
+    if (!HASerializer::generateDataTopic(
+        topic,
+        uniqueId,
+        topicP
+    )) {
+        return;
+    }
+
+    HAMqtt::instance()->subscribe(topic);
+}
+
 void BaseDeviceType::onMqttMessage(
     const char* topic,
     const uint8_t* payload,
@@ -50,6 +75,7 @@ void BaseDeviceType::destroySerializer()
 {
     if (_serializer) {
         delete _serializer;
+        _serializer = nullptr;
     }
 }
 
@@ -147,40 +173,4 @@ bool BaseDeviceType::publishOnDataTopic(
     }
 
     return false;
-}
-
-void BaseDeviceType::subscribeTopic(
-    const char* topicP
-)
-{
-    const uint16_t topicLength = HASerializer::calculateDataTopicLength(
-        uniqueId(),
-        topicP
-    );
-    if (topicLength == 0) {
-        return;
-    }
-
-    char topic[topicLength];
-    if (!HASerializer::generateDataTopic(
-        topic,
-        uniqueId(),
-        topicP
-    )) {
-        return;
-    }
-
-    mqtt()->subscribe(topic);
-}
-
-bool BaseDeviceType::checkTopic(
-    const char* topic,
-    const char* desiredTopicP
-)
-{
-    return HASerializer::compareDataTopics(
-        topic,
-        uniqueId(),
-        desiredTopicP
-    );
 }

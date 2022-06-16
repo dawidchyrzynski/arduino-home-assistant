@@ -63,7 +63,7 @@ void HALock::onMqttConnected()
         publishState(_currentState);
     }
 
-    subscribeTopic(HACommandTopic);
+    subscribeTopic(uniqueId(), HACommandTopic);
 }
 
 void HALock::onMqttMessage(
@@ -75,7 +75,11 @@ void HALock::onMqttMessage(
     (void)payload;
     (void)length;
 
-    if (_commandCallback && checkTopic(topic, HACommandTopic)) {
+    if (_commandCallback && HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        HACommandTopic
+    )) {
         char cmd[length + 1];
         memset(cmd, 0, sizeof(cmd));
         memcpy(cmd, payload, length);

@@ -47,6 +47,10 @@ public:
 
 protected:
     HAMqtt* mqtt() const;
+    static void subscribeTopic(
+        const char* uniqueId,
+        const char* topicP
+    );
 
     virtual void buildSerializer() { };
     virtual void destroySerializer();
@@ -65,13 +69,6 @@ protected:
         const char* value,
         bool retained = false,
         bool isProgmemValue = false
-    );
-    virtual void subscribeTopic(
-        const char* topicP
-    );
-    virtual bool checkTopic(
-        const char* topic,
-        const char* desiredTopicP
     );
 
     const char* const _componentName;

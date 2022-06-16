@@ -84,7 +84,7 @@ void HACover::onMqttConnected()
         publishPosition(_currentPosition);
     }
 
-    subscribeTopic(HACommandTopic);
+    subscribeTopic(uniqueId(), HACommandTopic);
 }
 
 void HACover::onMqttMessage(
@@ -93,7 +93,11 @@ void HACover::onMqttMessage(
     const uint16_t length
 )
 {
-    if (_commandCallback && checkTopic(topic, HACommandTopic)) {
+    if (_commandCallback && HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        HACommandTopic
+    )) {
         char cmd[length + 1];
         memset(cmd, 0, sizeof(cmd));
         memcpy(cmd, payload, length);

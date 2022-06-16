@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include "ArduinoHADefines.h"
 #include "HADevice.h"
 #include "HAUtils.h"
