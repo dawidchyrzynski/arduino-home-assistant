@@ -25,6 +25,7 @@ const char HAIconProperty[] PROGMEM = {"ic"};
 const char HARetainProperty[] PROGMEM = {"ret"};
 const char HASourceTypeProperty[] PROGMEM = {"src_type"};
 const char HAEncodingProperty[] PROGMEM = {"e"};
+const char HAOptimisticProperty[] PROGMEM = {"opt"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};

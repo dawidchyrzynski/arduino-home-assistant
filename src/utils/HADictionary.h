@@ -25,6 +25,7 @@ extern const char HAIconProperty[];
 extern const char HARetainProperty[];
 extern const char HASourceTypeProperty[];
 extern const char HAEncodingProperty[];
+extern const char HAOptimisticProperty[];
 
 // topics
 extern const char HAConfigTopic[];

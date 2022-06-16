@@ -1,5 +1,5 @@
-#ifndef AHA_HACLOCK_H
-#define AHA_HACLOCK_H
+#ifndef AHA_HALOCK_H
+#define AHA_HALOCK_H
 
 #include "BaseDeviceType.h"
 

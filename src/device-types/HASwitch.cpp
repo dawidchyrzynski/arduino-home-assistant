@@ -1,20 +1,22 @@
-#include "HALock.h"
-#ifndef EX_ARDUINOHA_LOCK
+#include "HASwitch.h"
+#ifndef EX_ARDUINOHA_SWITCH
 
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-HALock::HALock(const char* uniqueId) :
-    BaseDeviceType("lock", uniqueId),
+HASwitch::HASwitch(const char* uniqueId, bool initialState) :
+    BaseDeviceType("switch", uniqueId),
+    _class(nullptr),
     _icon(nullptr),
     _retain(false),
-    _currentState(StateUnknown),
+    _optimistic(false),
+    _currentState(initialState),
     _commandCallback(nullptr)
 {
 
 }
 
-bool HALock::setState(const LockState state, const bool force)
+bool HASwitch::setState(const bool state, const bool force)
 {
     if (!force && state == _currentState) {
         return true;
@@ -28,15 +30,16 @@ bool HALock::setState(const LockState state, const bool force)
     return false;
 }
 
-void HALock::buildSerializer()
+void HASwitch::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
         return;
     }
 
-    _serializer = new HASerializer(this, 8); // 8 - max properties nb
+    _serializer = new HASerializer(this, 10); // 10 - max properties nb
     _serializer->set(HANameProperty, _name);
     _serializer->set(HAUniqueIdProperty, _uniqueId);
+    _serializer->set(HADeviceClassProperty, _class);
     _serializer->set(HAIconProperty, _icon);
 
     // optional property
@@ -48,13 +51,18 @@ void HALock::buildSerializer()
         );
     }
 
+    _serializer->set(
+        HAOptimisticProperty,
+        &_optimistic,
+        HASerializer::BoolPropertyType
+    );
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(HAStateTopic);
     _serializer->topic(HACommandTopic);
 }
 
-void HALock::onMqttConnected()
+void HASwitch::onMqttConnected()
 {
     if (!uniqueId()) {
         return;
@@ -70,54 +78,32 @@ void HALock::onMqttConnected()
     subscribeTopic(uniqueId(), HACommandTopic);
 }
 
-void HALock::onMqttMessage(
+void HASwitch::onMqttMessage(
     const char* topic,
     const uint8_t* payload,
     const uint16_t length
 )
 {
     (void)payload;
-    (void)length;
 
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         HACommandTopic
     )) {
-        char cmd[length + 1];
-        memset(cmd, 0, sizeof(cmd));
-        memcpy(cmd, payload, length);
-        handleCommand(cmd);
+        bool state = length == strlen_P(HAStateOn);
+        _commandCallback(state, this);
     }
 }
 
-bool HALock::publishState(const LockState state)
+bool HASwitch::publishState(const bool state)
 {
-    if (state == StateUnknown) {
-        return false;
-    }
-
     return publishOnDataTopic(
         HAStateTopic,
-        state == StateLocked ? HAStateLocked : HAStateUnlocked,
+        state ? HAStateOn : HAStateOff,
         true,
         true
     );
-}
-
-void HALock::handleCommand(const char* cmd)
-{
-    if (!_commandCallback) {
-        return;
-    }
-
-    if (strcmp_P(cmd, HALockCommand) == 0) {
-        _commandCallback(CommandLock, this);
-    } else if (strcmp_P(cmd, HAUnlockCommand) == 0) {
-        _commandCallback(CommandUnlock, this);
-    } else if (strcmp_P(cmd, HAOpenCommand) == 0) {
-        _commandCallback(CommandOpen, this);
-    }
 }
 
 #endif

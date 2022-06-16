@@ -14,6 +14,8 @@
 * Added support for `HADeviceTracker` device type
 * Added support for `HACamera` device type
 * Added support for `HALock` device type
+* Added support for `device_class` property in the `HASwitch`
+* Added support for `optimistic` property in the `HASwitch`
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
@@ -23,6 +25,7 @@
 * Changed structure of all MQTT topics used in the library.
 * Changed constructor of the `HABinarySensor` class (removed `deviceClass` argument. Please use `HABinarySensor::setDeviceClass` method)
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
+* Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
 * Removed all legacy constructors with `HAMqtt` argument
 
 ## 1.3.0
