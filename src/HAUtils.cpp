@@ -78,17 +78,45 @@ uint8_t HAUtils::calculateFloatSize(
 
 void HAUtils::floatToStr(
     char* dst,
-    const float& value,
+    float value,
     const uint8_t precision
 )
 {
-    const int32_t number = static_cast<int32_t>(value);
+    bool isSigned = value < 0;
+    if (isSigned) {
+        value *= -1;
+    }
+
+    int32_t number = static_cast<int32_t>(value);
     if (number == 0 && precision == 0) {
         dst[0] = 0x30; // digit 0
         return;
     }
 
-    dtostrf(value, 0, precision, dst);
+    char* ch = &dst[0];
+    if (isSigned) {
+        ch[0] = 0x2D; // hyphen
+        ch++;
+    }
+
+    numberToStr(ch, number);
+    ch = &dst[strlen(dst)];
+
+    if (precision > 0) {
+        float fraction = (value - number) * 10;
+
+        ch[0] = 0x2E; // dot
+        ch++;
+
+        for (uint8_t i = 0; i < precision; i++) {
+            const uint8_t digit = static_cast<uint8_t>(fraction);
+
+            ch[0] = digit + '0';
+            ch++;
+
+            fraction = (fraction - digit) * 10;
+        }
+    }
 }
 
 uint8_t HAUtils::calculateNumberSize(int32_t value)

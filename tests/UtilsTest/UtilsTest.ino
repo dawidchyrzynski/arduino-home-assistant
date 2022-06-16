@@ -130,6 +130,11 @@ test(UtilsTest, calculate_float_size_large_unsigned_p2) {
     assertEqual(8, HAUtils::calculateFloatSize(16345.333, 2));
 }
 
+test(UtilsTest, calculate_float_p2_leading_zero) {
+    // expects "165.03"
+    assertEqual(6, HAUtils::calculateFloatSize(165.0333, 2));
+}
+
 test(UtilsTest, calculate_number_zero) {
     // expects "0"
     assertEqual(1, HAUtils::calculateNumberSize(0));
@@ -218,6 +223,18 @@ test(UtilsTest, float_to_str_large_unsigned_p1) {
 
 test(UtilsTest, float_to_str_large_unsigned_p2) {
     floatToStrAssert(16345.333, 2, "16345.33");
+}
+
+test(UtilsTest, float_to_str_large_unsigned_p3) {
+    floatToStrAssert(16345.333, 3, "16345.333");
+}
+
+test(UtilsTest, float_to_str_unsigned_p2_leading_zero) {
+    floatToStrAssert(163.0333, 2, "163.03");
+}
+
+test(UtilsTest, float_to_str_unsigned_p1_leading_zero) {
+    floatToStrAssert(163.0333, 1, "163.0");
 }
 
 test(UtilsTest, number_to_str_zero) {

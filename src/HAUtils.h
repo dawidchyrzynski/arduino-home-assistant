@@ -27,7 +27,7 @@ public:
     );
     static void floatToStr(
         char* dst,
-        const float& value,
+        float value,
         const uint8_t precision
     );
     static uint8_t calculateNumberSize(int32_t value);
