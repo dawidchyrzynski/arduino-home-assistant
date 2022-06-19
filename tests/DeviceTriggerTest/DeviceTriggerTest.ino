@@ -19,6 +19,21 @@ test(DeviceTriggerTest, invalid_type) {
     assertTrue(serializer == nullptr);
 }
 
+test(DeviceTriggerTest, invalid_type_progmem) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTrigger trigger(
+        static_cast<HADeviceTrigger::TriggerType>(50),
+        triggerSubtype
+    );
+    trigger.buildSerializerTest();
+    HASerializer* serializer = trigger.getSerializer();
+
+    assertTrue(serializer == nullptr);
+    assertTrue(trigger.getType() == nullptr);
+    assertTrue(trigger.isProgmemType());
+}
+
 test(DeviceTriggerTest, invalid_subtype) {
     initMqttTest(testDeviceId)
 
@@ -27,6 +42,21 @@ test(DeviceTriggerTest, invalid_subtype) {
     HASerializer* serializer = trigger.getSerializer();
 
     assertTrue(serializer == nullptr);
+}
+
+test(DeviceTriggerTest, invalid_subtype_progmem) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTrigger trigger(
+        triggerType,
+        static_cast<HADeviceTrigger::TriggerSubtype>(50)
+    );
+    trigger.buildSerializerTest();
+    HASerializer* serializer = trigger.getSerializer();
+
+    assertTrue(serializer == nullptr);
+    assertTrue(trigger.getSubtype() == nullptr);
+    assertTrue(trigger.isProgmemSubtype());
 }
 
 test(DeviceTriggerTest, unique_id_generator) {

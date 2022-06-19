@@ -75,4 +75,23 @@ extern const char HABluetoothLEType[];
 // camera
 extern const char HAEncodingBase64[];
 
+// trigger
+extern const char HAButtonShortPressType[];
+extern const char HAButtonShortReleaseType[];
+extern const char HAButtonLongPressType[];
+extern const char HAButtonLongReleaseType[];
+extern const char HAButtonDoublePressType[];
+extern const char HAButtonTriplePressType[];
+extern const char HAButtonQuadruplePressType[];
+extern const char HAButtonQuintuplePressType[];
+extern const char HATurnOnSubtype[];
+extern const char HATurnOffSubtype[];
+extern const char HAButton1Subtype[];
+extern const char HAButton2Subtype[];
+extern const char HAButton3Subtype[];
+extern const char HAButton4Subtype[];
+extern const char HAButton5Subtype[];
+extern const char HAButton6Subtype[];
+
+
 #endif

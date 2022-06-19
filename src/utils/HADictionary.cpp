@@ -74,3 +74,21 @@ const char HABluetoothLEType[] PROGMEM = {"bluetooth_le"};
 
 // camera
 const char HAEncodingBase64[] PROGMEM = {"b64"};
+
+// trigger
+const char HAButtonShortPressType[] PROGMEM = {"button_short_press"};
+const char HAButtonShortReleaseType[] PROGMEM = {"button_short_release"};
+const char HAButtonLongPressType[] PROGMEM = {"button_long_press"};
+const char HAButtonLongReleaseType[] PROGMEM = {"button_long_release"};
+const char HAButtonDoublePressType[] PROGMEM = {"button_double_press"};
+const char HAButtonTriplePressType[] PROGMEM = {"button_triple_press"};
+const char HAButtonQuadruplePressType[] PROGMEM = {"button_quadruple_press"};
+const char HAButtonQuintuplePressType[] PROGMEM = {"button_quintuple_press"};
+const char HATurnOnSubtype[] PROGMEM = {"turn_on"};
+const char HATurnOffSubtype[] PROGMEM = {"turn_off"};
+const char HAButton1Subtype[] PROGMEM = {"button_1"};
+const char HAButton2Subtype[] PROGMEM = {"button_2"};
+const char HAButton3Subtype[] PROGMEM = {"button_3"};
+const char HAButton4Subtype[] PROGMEM = {"button_4"};
+const char HAButton5Subtype[] PROGMEM = {"button_5"};
+const char HAButton6Subtype[] PROGMEM = {"button_6"};

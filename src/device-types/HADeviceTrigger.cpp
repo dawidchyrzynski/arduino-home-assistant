@@ -7,7 +7,39 @@
 HADeviceTrigger::HADeviceTrigger(const char* type, const char* subtype) :
     BaseDeviceType("device_automation", nullptr),
     _type(type),
-    _subtype(subtype)
+    _subtype(subtype),
+    _isProgmemType(false),
+    _isProgmemSubtype(false)
+{
+    buildUniqueId();
+}
+
+HADeviceTrigger::HADeviceTrigger(TriggerType type, const char* subtype) :
+    BaseDeviceType("device_automation", nullptr),
+    _type(determineProgmemType(type)),
+    _subtype(subtype),
+    _isProgmemType(true),
+    _isProgmemSubtype(false)
+{
+    buildUniqueId();
+}
+
+HADeviceTrigger::HADeviceTrigger(const char* type, TriggerSubtype subtype) :
+    BaseDeviceType("device_automation", nullptr),
+    _type(type),
+    _subtype(determineProgmemSubtype(subtype)),
+    _isProgmemType(false),
+    _isProgmemSubtype(true)
+{
+    buildUniqueId();
+}
+
+HADeviceTrigger::HADeviceTrigger(TriggerType type, TriggerSubtype subtype) :
+    BaseDeviceType("device_automation", nullptr),
+    _type(determineProgmemType(type)),
+    _subtype(determineProgmemSubtype(subtype)),
+    _isProgmemType(true),
+    _isProgmemSubtype(true)
 {
     buildUniqueId();
 }
@@ -54,8 +86,10 @@ uint16_t HADeviceTrigger::calculateIdSize() const
         return 0;
     }
 
-    const uint16_t typeSize = strlen(_type);
-    const uint16_t subtypeSize = strlen(_subtype);
+    const uint16_t typeSize = _isProgmemType ? strlen_P(_type) : strlen(_type);
+    const uint16_t subtypeSize = _isProgmemSubtype
+        ? strlen_P(_subtype)
+        : strlen(_subtype);
 
     // plus underscore separator and null terminator
     return typeSize + subtypeSize + 2;
@@ -69,11 +103,88 @@ void HADeviceTrigger::buildUniqueId()
     }
 
     char* id = new char[idSize];
-    strcpy(id, _type);
+
+    if (_isProgmemType) {
+        strcpy_P(id, _type);
+    } else {
+        strcpy(id, _type);
+    }
+
     strcat(id, HASerializerUnderscore);
-    strcat(id, _subtype);
+
+    if (_isProgmemSubtype) {
+        strcat_P(id, _subtype);
+    } else {
+        strcat(id, _subtype);
+    }
 
     _uniqueId = id;
+}
+
+const char* HADeviceTrigger::determineProgmemType(TriggerType type) const
+{
+    switch (type) {
+    case ButtonShortPressType:
+        return HAButtonShortPressType;
+
+    case ButtonLShortReleaseType:
+        return HAButtonShortReleaseType;
+
+    case ButtonLongPressType:
+        return HAButtonLongPressType;
+
+    case ButtonLongReleaseType:
+        return HAButtonLongReleaseType;
+
+    case ButtonDoublePressType:
+        return HAButtonDoublePressType;
+
+    case ButtonTriplePressType:
+        return HAButtonTriplePressType;
+
+    case ButtonQuadruplePressType:
+        return HAButtonQuadruplePressType;
+
+    case ButtonQuintuplePressType:
+        return HAButtonQuintuplePressType;
+
+    default:
+        return nullptr;
+    }
+}
+
+const char* HADeviceTrigger::determineProgmemSubtype(
+    TriggerSubtype subtype
+) const
+{
+    switch (subtype) {
+    case TurnOnSubtype:
+        return HATurnOnSubtype;
+
+    case TurnOffSubtype:
+        return HATurnOffSubtype;
+
+    case Button1Subtype:
+        return HAButton1Subtype;
+
+    case Button2Subtype:
+        return HAButton2Subtype;
+
+    case Button3Subtype:
+        return HAButton3Subtype;
+
+    case Button4Subtype:
+        return HAButton4Subtype;
+
+    case Button5Subtype:
+        return HAButton5Subtype;
+
+    case Button6Subtype:
+        return HAButton6Subtype;
+
+    default:
+        return nullptr;
+    }
 }
 
 #endif
