@@ -10,7 +10,7 @@ class HADeviceTrigger : public BaseDeviceType
 public:
     enum TriggerType {
         ButtonShortPressType = 1,
-        ButtonLShortReleaseType,
+        ButtonShortReleaseType,
         ButtonLongPressType,
         ButtonLongReleaseType,
         ButtonDoublePressType,

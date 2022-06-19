@@ -127,7 +127,7 @@ const char* HADeviceTrigger::determineProgmemType(TriggerType type) const
     case ButtonShortPressType:
         return HAButtonShortPressType;
 
-    case ButtonLShortReleaseType:
+    case ButtonShortReleaseType:
         return HAButtonShortReleaseType;
 
     case ButtonLongPressType:
