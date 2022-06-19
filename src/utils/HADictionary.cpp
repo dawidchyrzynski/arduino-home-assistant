@@ -11,6 +11,7 @@ const char HASerializerJsonEscapeChar[] PROGMEM = {"\""};
 const char HASerializerJsonPropertiesSeparator[] PROGMEM = {","};
 const char HASerializerJsonArrayPrefix[] PROGMEM = {"["};
 const char HASerializerJsonArraySuffix[] PROGMEM = {"]"};
+const char HASerializerUnderscore[] PROGMEM = {"_"};
 
 // properties
 const char HADeviceIdentifiersProperty[] PROGMEM = {"ids"};
@@ -26,6 +27,9 @@ const char HARetainProperty[] PROGMEM = {"ret"};
 const char HASourceTypeProperty[] PROGMEM = {"src_type"};
 const char HAEncodingProperty[] PROGMEM = {"e"};
 const char HAOptimisticProperty[] PROGMEM = {"opt"};
+const char HAAutomationTypeProperty[] PROGMEM = {"atype"};
+const char HATypeProperty[] PROGMEM = {"type"};
+const char HASubtypeProperty[] PROGMEM = {"stype"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -46,6 +50,7 @@ const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
 const char HAHome[] PROGMEM = {"home"};
 const char HANotHome[] PROGMEM = {"not_home"};
+const char HATrigger[] PROGMEM = {"trigger"};
 
 // covers
 const char HAClosedState[] PROGMEM = {"closed"};

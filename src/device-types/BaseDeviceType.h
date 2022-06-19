@@ -72,7 +72,7 @@ protected:
     );
 
     const char* const _componentName;
-    const char* const _uniqueId;
+    const char* _uniqueId;
     const char* _name;
     HASerializer* _serializer;
 

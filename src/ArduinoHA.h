@@ -9,6 +9,7 @@
 #include "device-types/HACamera.h"
 #include "device-types/HACover.h"
 #include "device-types/HADeviceTracker.h"
+#include "device-types/HADeviceTrigger.h"
 #include "device-types/HALock.h"
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"

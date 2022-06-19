@@ -6,7 +6,6 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueScanner";
 static const char* configTopic = "homeassistant/tag/testDevice/uniqueScanner/config";
-static const char* scannedTopic = "testData/testDevice/uniqueScanner/t";
 
 test(TagScannerTest, invalid_unique_id) {
     initMqttTest(testDeviceId)

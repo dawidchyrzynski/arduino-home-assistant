@@ -11,6 +11,7 @@ extern const char HASerializerJsonEscapeChar[];
 extern const char HASerializerJsonPropertiesSeparator[];
 extern const char HASerializerJsonArrayPrefix[];
 extern const char HASerializerJsonArraySuffix[];
+extern const char HASerializerUnderscore[];
 
 // properties
 extern const char HADeviceIdentifiersProperty[];
@@ -26,6 +27,9 @@ extern const char HARetainProperty[];
 extern const char HASourceTypeProperty[];
 extern const char HAEncodingProperty[];
 extern const char HAOptimisticProperty[];
+extern const char HAAutomationTypeProperty[];
+extern const char HATypeProperty[];
+extern const char HASubtypeProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -46,6 +50,7 @@ extern const char HATrue[];
 extern const char HAFalse[];
 extern const char HAHome[];
 extern const char HANotHome[];
+extern const char HATrigger[];
 
 // covers
 extern const char HAClosedState[];
