@@ -61,6 +61,14 @@ public:
         { _class = className; }
 
     /**
+     * Type of state represented by sensor, e.g. "measurement".
+     * 
+     * @param stateClassName https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes
+     */
+    inline void setStateClass(const char* stateClassName)
+        { _stateClass = stateClassName; }
+
+    /**
      * Defines the units of measurement of the sensor, if any.
      *
      * @param units For example: °C, %
@@ -82,6 +90,7 @@ private:
     bool writeSerializedData(const char* serializedDevice) const override;
 
     const char* _class;
+    const char* _stateClass;
     const char* _units;
     const char* _icon;
 };
