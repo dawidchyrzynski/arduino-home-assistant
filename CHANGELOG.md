@@ -16,6 +16,7 @@
 * Added support for `HALock` device type
 * Added support for `device_class` property in the `HASwitch`
 * Added support for `optimistic` property in the `HASwitch`
+* Added support for `force_update` property in the `HASensor`
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
