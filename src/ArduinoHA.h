@@ -12,6 +12,7 @@
 #include "device-types/HADeviceTrigger.h"
 #include "device-types/HALock.h"
 #include "device-types/HASensor.h"
+#include "device-types/HASensorInteger.h"
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"
 

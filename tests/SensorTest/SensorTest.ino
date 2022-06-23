@@ -134,6 +134,99 @@ test(SensorTest, publish_value) {
     assertTrue(result);
 }
 
+test(SensorIntegerTest, publish_int8) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    int8_t value = 127;
+
+    bool result = sensor.setValue(value);
+
+    assertSingleMqttMessage(stateTopic, "127", true)
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_uint8) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    uint8_t value = 50;
+
+    bool result = sensor.setValue(value);
+
+    assertSingleMqttMessage(stateTopic, "50", true)
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_int16) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    int16_t value = 32766;
+
+    bool result = sensor.setValue(value);
+
+    assertSingleMqttMessage(stateTopic, "32766", true)
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_uint16) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    uint16_t value = 65534;
+
+    bool result = sensor.setValue(value);
+
+    assertSingleMqttMessage(stateTopic, "65534", true)
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_int32) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    int32_t value = 2147483646;
+
+    bool result = sensor.setValue(value);
+
+    assertSingleMqttMessage(stateTopic, "2147483646", true)
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_debounce) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    uint8_t value = 50;
+
+    sensor.setCurrentValue(value);
+    bool result = sensor.setValue(value);
+
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+    assertTrue(result);
+}
+
+test(SensorIntegerTest, publish_force) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorInteger sensor(testUniqueId);
+    uint8_t value = 50;
+
+    sensor.setCurrentValue(value);
+    bool result = sensor.setValue(value, true);
+
+    assertSingleMqttMessage(stateTopic, "50", true)
+    assertTrue(result);
+}
+
 void setup()
 {
     Serial.begin(115200);
