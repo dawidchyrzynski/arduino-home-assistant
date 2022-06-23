@@ -134,6 +134,21 @@ test(SensorTest, publish_value) {
     assertTrue(result);
 }
 
+test(SensorIntegerTest, publish_value_on_connect) {
+    initMqttTest(testDeviceId)
+
+    HASensorInteger sensor(testUniqueId);
+    sensor.setCurrentValue(520);
+    mqtt.loop();
+
+    assertMqttMessage(
+        1,
+        "testData/testDevice/uniqueSensor/stat_t",
+        "520",
+        true
+    )
+}
+
 test(SensorIntegerTest, publish_int8) {
     initMqttTest(testDeviceId)
 
@@ -225,6 +240,21 @@ test(SensorIntegerTest, publish_force) {
 
     assertSingleMqttMessage(stateTopic, "50", true)
     assertTrue(result);
+}
+
+test(SensorFloatTest, publish_value_on_connect) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId);
+    sensor.setCurrentValue(520.5235);
+    mqtt.loop();
+
+    assertMqttMessage(
+        1,
+        "testData/testDevice/uniqueSensor/stat_t",
+        "52052",
+        true
+    )
 }
 
 test(SensorFloatTest, config_p0) {
