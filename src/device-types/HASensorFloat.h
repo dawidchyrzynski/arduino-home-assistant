@@ -32,9 +32,9 @@ protected:
     virtual void onMqttConnected() override;
 
 private:
-    bool publishValue(float value);
+    bool publishValue(const float value);
     void initValueTemplate();
-    uint8_t getPrecision(const Precision precision) const;
+    int32_t processValue(const float value) const;
 
     Precision _precision;
     float _currentValue;

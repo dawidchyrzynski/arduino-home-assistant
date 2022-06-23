@@ -1,8 +1,6 @@
 #include "HASensorFloat.h"
 #ifndef EX_ARDUINOHA_SENSOR
 
-#include <math.h>
-
 #include "../HAUtils.h"
 #include "../utils/HASerializer.h"
 
@@ -38,11 +36,9 @@ void HASensorFloat::onMqttConnected()
     publishValue(_currentValue);
 }
 
-bool HASensorFloat::publishValue(float value)
+bool HASensorFloat::publishValue(const float value)
 {
-    value *= pow(10, getPrecision(_precision));
-
-    int32_t number = static_cast<int32_t>(value);
+    int32_t number = processValue(value);
     uint8_t size = HAUtils::calculateNumberSize(number);
     if (size == 0) {
         return false;
@@ -83,23 +79,24 @@ void HASensorFloat::initValueTemplate()
     }
 }
 
-uint8_t HASensorFloat::getPrecision(const Precision precision) const
+int32_t HASensorFloat::processValue(const float value) const
 {
-    switch (precision) {
+    // using pow() increases flash size by ~1k
+    switch (_precision) {
     case PrecisionP1:
-        return 1;
+        return static_cast<int32_t>(value * 10);
 
     case PrecisionP2:
-        return 2;
+        return static_cast<int32_t>(value * 100);
 
     case PrecisionP3:
-        return 3;
+        return static_cast<int32_t>(value * 1000);
 
     case PrecisionP4:
-        return 4;
+        return static_cast<int32_t>(value * 10000);
 
     default:
-        return 0;
+        return static_cast<int32_t>(value);
     }
 }
 

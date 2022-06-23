@@ -27,6 +27,7 @@
 * Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check updated example of the `multi-state-button`.
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
+* Refactored `HASensor` logic. It's now divided into three different classes: `HASensor`, `HASensorInteger` and `HASensorFloat`. This approach reduces flash size by ~2k
 * Removed all legacy constructors with `HAMqtt` argument
 
 ## 1.3.0
