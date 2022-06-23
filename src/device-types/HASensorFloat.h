@@ -28,6 +28,9 @@ public:
     inline float getCurrentValue() const
         { return _currentValue; }
 
+protected:
+    virtual void onMqttConnected() override;
+
 private:
     bool publishValue(float value);
     void initValueTemplate();

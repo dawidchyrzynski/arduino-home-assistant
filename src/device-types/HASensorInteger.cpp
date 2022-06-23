@@ -25,6 +25,16 @@ bool HASensorInteger::setValue(const int32_t value, const bool force)
     return false;
 }
 
+void HASensorInteger::onMqttConnected()
+{
+    if (!uniqueId()) {
+        return;
+    }
+
+    HASensor::onMqttConnected();
+    publishValue(_currentValue);
+}
+
 bool HASensorInteger::publishValue(const int32_t value)
 {
     uint8_t size = HAUtils::calculateNumberSize(value);

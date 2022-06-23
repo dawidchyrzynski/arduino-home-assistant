@@ -28,6 +28,16 @@ bool HASensorFloat::setValue(const float value, const bool force)
     return false;
 }
 
+void HASensorFloat::onMqttConnected()
+{
+    if (!uniqueId()) {
+        return;
+    }
+
+    HASensor::onMqttConnected();
+    publishValue(_currentValue);
+}
+
 bool HASensorFloat::publishValue(float value)
 {
     value *= pow(10, getPrecision(_precision));
