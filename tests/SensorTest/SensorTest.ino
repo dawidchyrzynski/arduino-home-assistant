@@ -227,6 +227,140 @@ test(SensorIntegerTest, publish_force) {
     assertTrue(result);
 }
 
+test(SensorFloatTest, config_p0) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP0);
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
+}
+
+test(SensorFloatTest, config_p1) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP1);
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**1}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
+}
+
+test(SensorFloatTest, config_p2) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP2);
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**2}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
+}
+
+test(SensorFloatTest, config_p3) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP3);
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**3}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
+}
+
+test(SensorFloatTest, config_p4) {
+    initMqttTest(testDeviceId)
+
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP4);
+    assertEntityConfig(
+        mock,
+        sensor,
+        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**4}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+    )
+}
+
+test(SensorFloatTest, publish_p0) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP0);
+    bool result = sensor.setValue(173.5426);
+
+    assertSingleMqttMessage(stateTopic, "173", true)
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_p1) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP1);
+    bool result = sensor.setValue(173.5426);
+
+    assertSingleMqttMessage(stateTopic, "1735", true)
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_p2) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP2);
+    bool result = sensor.setValue(173.1534);
+
+    assertSingleMqttMessage(stateTopic, "17315", true)
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_p3) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP3);
+    bool result = sensor.setValue(173.333);
+
+    assertSingleMqttMessage(stateTopic, "173333", true)
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_p4) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP4);
+    bool result = sensor.setValue(173.33356);
+
+    assertSingleMqttMessage(stateTopic, "1733335", true)
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_debounce) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId);
+    sensor.setCurrentValue(1555.555);
+    bool result = sensor.setValue(1555.555);
+
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+    assertTrue(result);
+}
+
+test(SensorFloatTest, publish_force) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorFloat sensor(testUniqueId);
+    sensor.setCurrentValue(1555.555);
+    bool result = sensor.setValue(1555.555, true);
+
+    assertSingleMqttMessage(stateTopic, "155555", true)
+    assertTrue(result);
+}
+
 void setup()
 {
     Serial.begin(115200);

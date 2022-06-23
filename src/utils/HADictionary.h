@@ -96,5 +96,10 @@ extern const char HAButton4Subtype[];
 extern const char HAButton5Subtype[];
 extern const char HAButton6Subtype[];
 
+// value templates
+extern const char HAValueTemplateFloatP1[];
+extern const char HAValueTemplateFloatP2[];
+extern const char HAValueTemplateFloatP3[];
+extern const char HAValueTemplateFloatP4[];
 
 #endif
