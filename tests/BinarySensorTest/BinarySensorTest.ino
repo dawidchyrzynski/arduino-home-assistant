@@ -11,7 +11,7 @@ static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
 test(BinarySensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(nullptr, false);
+    HABinarySensor sensor(nullptr);
     sensor.buildSerializerTest();
     HASerializer* serializer = sensor.getSerializer();
 
@@ -21,7 +21,7 @@ test(BinarySensorTest, invalid_unique_id) {
 test(BinarySensorTest, default_params) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     assertEntityConfig(
         mock,
         sensor,
@@ -32,7 +32,7 @@ test(BinarySensorTest, default_params) {
 test(BinarySensorTest, availability) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     sensor.setAvailability(true);
     mqtt.loop();
 
@@ -48,7 +48,8 @@ test(BinarySensorTest, availability) {
 test(BinarySensorTest, publish_initial_state) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, true);
+    HABinarySensor sensor(testUniqueId);
+    sensor.setCurrentState(true);
     mqtt.loop();
 
     assertMqttMessage(
@@ -62,7 +63,7 @@ test(BinarySensorTest, publish_initial_state) {
 test(BinarySensorTest, name_setter) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     sensor.setName("testName");
 
     assertEntityConfig(
@@ -75,7 +76,7 @@ test(BinarySensorTest, name_setter) {
 test(BinarySensorTest, device_class) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     sensor.setDeviceClass("testClass");
 
     assertEntityConfig(
@@ -88,7 +89,7 @@ test(BinarySensorTest, device_class) {
 test(BinarySensorTest, icon_setter) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     sensor.setIcon("testIcon");
 
     assertEntityConfig(
@@ -101,14 +102,15 @@ test(BinarySensorTest, icon_setter) {
 test(BinarySensorTest, default_state_false) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     assertEqual(false, sensor.getCurrentState());
 }
 
 test(BinarySensorTest, default_state_true) {
     initMqttTest(testDeviceId)
 
-    HABinarySensor sensor(testUniqueId, true);
+    HABinarySensor sensor(testUniqueId);
+    sensor.setCurrentState(true);
     assertEqual(true, sensor.getCurrentState());
 }
 
@@ -116,7 +118,7 @@ test(BinarySensorTest, publish_state_on) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HABinarySensor sensor(testUniqueId, false);
+    HABinarySensor sensor(testUniqueId);
     bool result = sensor.setState(!sensor.getCurrentState());
 
     assertSingleMqttMessage(stateTopic, "ON", true)
@@ -127,7 +129,8 @@ test(BinarySensorTest, publish_state_off) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HABinarySensor sensor(testUniqueId, true);
+    HABinarySensor sensor(testUniqueId);
+    sensor.setCurrentState(true);
     bool result = sensor.setState(!sensor.getCurrentState());
 
     assertSingleMqttMessage(stateTopic, "OFF", true)
@@ -138,7 +141,8 @@ test(BinarySensorTest, publish_state_debounce) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HABinarySensor sensor(testUniqueId, true); // initial state is true
+    HABinarySensor sensor(testUniqueId);
+    sensor.setCurrentState(true);
     bool result = sensor.setState(true);
 
     // it shouldn't publish data if state doesn't change
@@ -150,7 +154,8 @@ test(BinarySensorTest, publish_state_debounce_skip) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HABinarySensor sensor(testUniqueId, true); // initial state is true
+    HABinarySensor sensor(testUniqueId);
+    sensor.setCurrentState(true);
     bool result = sensor.setState(true, true);
 
     assertSingleMqttMessage(stateTopic, "ON", true)

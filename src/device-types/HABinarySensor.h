@@ -8,17 +8,7 @@
 class HABinarySensor : public BaseDeviceType
 {
 public:
-    /**
-     * Initializes binary sensor.
-     *
-     * @param uniqueId Unique ID of the sensor. Recommended characters: [a-z0-9\-_]
-     * @param initialState Initial state of the sensor.
-                           It will be published right after "config" message in order to update HA state.
-     */
-    HABinarySensor(
-        const char* uniqueId,
-        bool initialState
-    );
+    HABinarySensor(const char* uniqueId);
 
     /**
      * Sets class of the device.
@@ -48,6 +38,16 @@ public:
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const bool state, const bool force = false);
+
+    /**
+     * Sets current state of the sensor without publishing it to Home Assistant.
+     * This method may be useful if you want to change state before connection
+     * with MQTT broker is acquired.
+     *
+     * @param state New state of the sensor.
+     */
+    inline void setCurrentState(const bool state)
+        { _currentState = state; }
 
     /**
      * Returns last known state of the sensor.

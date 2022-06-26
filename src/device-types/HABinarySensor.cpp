@@ -4,14 +4,11 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-HABinarySensor::HABinarySensor(
-    const char* uniqueId,
-    bool initialState
-) :
+HABinarySensor::HABinarySensor(const char* uniqueId) :
     BaseDeviceType("binary_sensor", uniqueId),
     _class(nullptr),
     _icon(nullptr),
-    _currentState(initialState)
+    _currentState(false)
 {
 
 }

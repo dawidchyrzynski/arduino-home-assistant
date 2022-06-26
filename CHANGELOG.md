@@ -24,7 +24,7 @@
 **Breaking changes:**
 
 * Changed structure of all MQTT topics used in the library.
-* Changed constructor of the `HABinarySensor` class (removed `deviceClass` argument. Please use `HABinarySensor::setDeviceClass` method)
+* Changed constructor of the `HABinarySensor` class (removed `deviceClass` and `initialState` arguments)
 * Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check updated example of the `multi-state-button`.
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
