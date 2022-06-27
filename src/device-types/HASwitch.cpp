@@ -4,13 +4,13 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-HASwitch::HASwitch(const char* uniqueId, bool initialState) :
+HASwitch::HASwitch(const char* uniqueId) :
     BaseDeviceType("switch", uniqueId),
     _class(nullptr),
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _currentState(initialState),
+    _currentState(false),
     _commandCallback(nullptr)
 {
 

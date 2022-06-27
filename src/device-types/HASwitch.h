@@ -10,7 +10,7 @@
 class HASwitch : public BaseDeviceType
 {
 public:
-    HASwitch(const char* uniqueId, bool initialState);
+    HASwitch(const char* uniqueId);
 
     /**
      * Sets class of the switch.

@@ -33,7 +33,7 @@ void onCommandReceived(bool state, HASwitch* sender)
 test(SwitchTest, invalid_unique_id) {
     prepareTest
 
-    HASwitch testSwitch(nullptr, false);
+    HASwitch testSwitch(nullptr);
     testSwitch.buildSerializerTest();
     HASerializer* serializer = testSwitch.getSerializer();
 
@@ -43,7 +43,7 @@ test(SwitchTest, invalid_unique_id) {
 test(SwitchTest, default_params) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     assertEntityConfig(
         mock,
         testSwitch,
@@ -55,7 +55,7 @@ test(SwitchTest, default_params) {
 test(SwitchTest, command_subscription) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
@@ -65,7 +65,7 @@ test(SwitchTest, command_subscription) {
 test(SwitchTest, availability) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setAvailability(true);
     mqtt.loop();
 
@@ -81,7 +81,7 @@ test(SwitchTest, availability) {
 test(SwitchTest, publish_last_known_state) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setCurrentState(true);
     mqtt.loop();
 
@@ -97,7 +97,7 @@ test(SwitchTest, publish_last_known_state) {
 test(SwitchTest, publish_nothing_if_retained) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setRetain(true);
     testSwitch.setCurrentState(true);
     mqtt.loop();
@@ -108,7 +108,7 @@ test(SwitchTest, publish_nothing_if_retained) {
 test(SwitchTest, name_setter) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setName("testName");
 
     assertEntityConfig(
@@ -121,7 +121,7 @@ test(SwitchTest, name_setter) {
 test(SwitchTest, device_class) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setDeviceClass("testClass");
 
     assertEntityConfig(
@@ -134,7 +134,7 @@ test(SwitchTest, device_class) {
 test(SwitchTest, icon_setter) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setIcon("testIcon");
 
     assertEntityConfig(
@@ -147,7 +147,7 @@ test(SwitchTest, icon_setter) {
 test(SwitchTest, retain_setter) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setRetain(true);
 
     assertEntityConfig(
@@ -160,7 +160,7 @@ test(SwitchTest, retain_setter) {
 test(SwitchTest, optimistic_setter) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setOptimistic(true);
 
     assertEntityConfig(
@@ -172,7 +172,7 @@ test(SwitchTest, optimistic_setter) {
 test(SwitchTest, current_state_setter) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
@@ -183,7 +183,7 @@ test(SwitchTest, publish_state_on) {
     prepareTest
 
     mock->connectDummy();
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     bool result = testSwitch.setState(true);
 
     assertSingleMqttMessage(
@@ -198,7 +198,8 @@ test(SwitchTest, publish_state_off) {
     prepareTest
 
     mock->connectDummy();
-    HASwitch testSwitch(testUniqueId, true);
+    HASwitch testSwitch(testUniqueId);
+    testSwitch.setCurrentState(true);
     bool result = testSwitch.setState(false);
 
     assertSingleMqttMessage(
@@ -212,7 +213,7 @@ test(SwitchTest, publish_state_off) {
 test(SwitchTest, command_on) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(commandTopic, "ON");
 
@@ -222,7 +223,7 @@ test(SwitchTest, command_on) {
 test(SwitchTest, command_off) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(commandTopic, "OFF");
 
@@ -232,7 +233,7 @@ test(SwitchTest, command_off) {
 test(SwitchTest, different_switch_command) {
     prepareTest
 
-    HASwitch testSwitch(testUniqueId, false);
+    HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(
         "testData/testDevice/uniqueSwitchDifferent/cmd_t",
