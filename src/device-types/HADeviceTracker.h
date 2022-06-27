@@ -23,10 +23,7 @@ public:
         StateNotAvailable
     };
 
-    HADeviceTracker(
-        const char* uniqueId,
-        const TrackerState initialState = StateUnknown
-    );
+    HADeviceTracker(const char* uniqueId);
 
     /**
      * Sets icon of the tracker.
@@ -55,6 +52,16 @@ public:
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const TrackerState state, const bool force = false);
+
+    /**
+     * Sets current state of the tracker without publishing it to Home Assistant.
+     * This method may be useful if you want to change state before connection
+     * with MQTT broker is acquired.
+     *
+     * @param state New state of the tracker.
+     */
+    inline void setCurrentState(const TrackerState state)
+        { _currentState = state; }
 
     /**
      * Returns last known state of the tracker.

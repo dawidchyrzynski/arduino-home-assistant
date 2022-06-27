@@ -4,14 +4,11 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-HADeviceTracker::HADeviceTracker(
-    const char* uniqueId,
-    const TrackerState initialState
-) :
+HADeviceTracker::HADeviceTracker(const char* uniqueId) :
     BaseDeviceType("device_tracker", uniqueId),
     _icon(nullptr),
     _sourceType(SourceTypeUnknown),
-    _currentState(initialState)
+    _currentState(StateUnknown)
 {
 
 }

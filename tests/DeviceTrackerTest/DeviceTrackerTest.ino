@@ -96,7 +96,8 @@ test(DeviceTrackerTest, availability) {
 test(DeviceTrackerTest, publish_initial_state) {
     initMqttTest(testDeviceId)
 
-    HADeviceTracker tracker(testUniqueId, HADeviceTracker::StateHome);
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setCurrentState(HADeviceTracker::StateHome);
     mqtt.loop();
 
     assertMqttMessage(
@@ -143,7 +144,8 @@ test(DeviceTrackerTest, default_state_unknown) {
 test(DeviceTrackerTest, default_state) {
     initMqttTest(testDeviceId)
 
-    HADeviceTracker tracker(testUniqueId, HADeviceTracker::StateNotAvailable);
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setCurrentState(HADeviceTracker::StateNotAvailable);
     assertEqual(HADeviceTracker::StateNotAvailable, tracker.getState());
 }
 
@@ -184,7 +186,8 @@ test(DeviceTrackerTest, publish_state_debounce) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HADeviceTracker tracker(testUniqueId, HADeviceTracker::StateHome);
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setCurrentState(HADeviceTracker::StateHome);
     bool result = tracker.setState(HADeviceTracker::StateHome);
 
     // it shouldn't publish data if state doesn't change
@@ -196,7 +199,8 @@ test(DeviceTrackerTest, publish_state_debounce_skip) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HADeviceTracker tracker(testUniqueId, HADeviceTracker::StateHome);
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setCurrentState(HADeviceTracker::StateHome);
     bool result = tracker.setState(HADeviceTracker::StateHome, true);
 
     assertSingleMqttMessage(stateTopic, "home", true)
