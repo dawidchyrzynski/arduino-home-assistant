@@ -1,5 +1,5 @@
-#ifndef AHA_HASWICTH_H
-#define AHA_HASWICTH_H
+#ifndef AHA_HASWITCH_H
+#define AHA_HASWITCH_H
 
 #include "BaseDeviceType.h"
 
