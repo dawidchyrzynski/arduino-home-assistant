@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Class BaseDeviceType</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Class BaseDeviceType</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="class-basedevicetype">
+<span id="exhale-class-class-base-device-type"></span><h1>Class BaseDeviceType<a class="headerlink" href="#class-basedevicetype" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_device-types_BaseDeviceType.h.html#file-device-types-basedevicetype-h"><span class="std std-ref">File BaseDeviceType.h</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<section id="derived-types">
+<h3>Derived Types<a class="headerlink" href="#derived-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HABinarySensor</span></code> (<a class="reference internal" href="class_h_a_binary_sensor.html#exhale-class-class-h-a-binary-sensor"><span class="std std-ref">Class HABinarySensor</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HAButton</span></code> (<a class="reference internal" href="class_h_a_button.html#exhale-class-class-h-a-button"><span class="std std-ref">Class HAButton</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HACamera</span></code> (<a class="reference internal" href="class_h_a_camera.html#exhale-class-class-h-a-camera"><span class="std std-ref">Class HACamera</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HACover</span></code> (<a class="reference internal" href="class_h_a_cover.html#exhale-class-class-h-a-cover"><span class="std std-ref">Class HACover</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HADeviceTracker</span></code> (<a class="reference internal" href="class_h_a_device_tracker.html#exhale-class-class-h-a-device-tracker"><span class="std std-ref">Class HADeviceTracker</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HADeviceTrigger</span></code> (<a class="reference internal" href="class_h_a_device_trigger.html#exhale-class-class-h-a-device-trigger"><span class="std std-ref">Class HADeviceTrigger</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HALock</span></code> (<a class="reference internal" href="class_h_a_lock.html#exhale-class-class-h-a-lock"><span class="std std-ref">Class HALock</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HASensor</span></code> (<a class="reference internal" href="class_h_a_sensor.html#exhale-class-class-h-a-sensor"><span class="std std-ref">Class HASensor</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HASwitch</span></code> (<a class="reference internal" href="class_h_a_switch.html#exhale-class-class-h-a-switch"><span class="std std-ref">Class HASwitch</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">HATagScanner</span></code> (<a class="reference internal" href="class_h_a_tag_scanner.html#exhale-class-class-h-a-tag-scanner"><span class="std std-ref">Class HATagScanner</span></a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv414BaseDeviceType">
+<span id="_CPPv314BaseDeviceType"></span><span id="_CPPv214BaseDeviceType"></span><span id="BaseDeviceType"></span><span class="target" id="class_base_device_type"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BaseDeviceType</span></span></span><a class="headerlink" href="#_CPPv414BaseDeviceType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subclassed by <a class="reference internal" href="class_h_a_binary_sensor.html#class_h_a_binary_sensor"><span class="std std-ref">HABinarySensor</span></a>, <a class="reference internal" href="class_h_a_button.html#class_h_a_button"><span class="std std-ref">HAButton</span></a>, <a class="reference internal" href="class_h_a_camera.html#class_h_a_camera"><span class="std std-ref">HACamera</span></a>, <a class="reference internal" href="class_h_a_cover.html#class_h_a_cover"><span class="std std-ref">HACover</span></a>, <a class="reference internal" href="class_h_a_device_tracker.html#class_h_a_device_tracker"><span class="std std-ref">HADeviceTracker</span></a>, <a class="reference internal" href="class_h_a_device_trigger.html#class_h_a_device_trigger"><span class="std std-ref">HADeviceTrigger</span></a>, <a class="reference internal" href="class_h_a_lock.html#class_h_a_lock"><span class="std std-ref">HALock</span></a>, <a class="reference internal" href="class_h_a_sensor.html#class_h_a_sensor"><span class="std std-ref">HASensor</span></a>, <a class="reference internal" href="class_h_a_switch.html#class_h_a_switch"><span class="std std-ref">HASwitch</span></a>, <a class="reference internal" href="class_h_a_tag_scanner.html#class_h_a_tag_scanner"><span class="std std-ref">HATagScanner</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType14BaseDeviceTypeEPKcPKc">
+<span id="_CPPv3N14BaseDeviceType14BaseDeviceTypeEPKcPKc"></span><span id="_CPPv2N14BaseDeviceType14BaseDeviceTypeEPKcPKc"></span><span id="BaseDeviceType::BaseDeviceType__cCP.cCP"></span><span class="target" id="class_base_device_type_1a1105517d67ea7eb7db6c6640736c6f2d"></span><span class="sig-name descname"><span class="n"><span class="pre">BaseDeviceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">componentName</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType14BaseDeviceTypeEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceTypeD0Ev">
+<span id="_CPPv3N14BaseDeviceTypeD0Ev"></span><span id="_CPPv2N14BaseDeviceTypeD0Ev"></span><span id="BaseDeviceType::~BaseDeviceType"></span><span class="target" id="class_base_device_type_1ac1061c17271560fdc4b0a4631cadea69"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">~BaseDeviceType</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceTypeD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType8uniqueIdEv">
+<span id="_CPPv3NK14BaseDeviceType8uniqueIdEv"></span><span id="_CPPv2NK14BaseDeviceType8uniqueIdEv"></span><span id="BaseDeviceType::uniqueIdC"></span><span class="target" id="class_base_device_type_1a67cb6e96120a5e949ea5b8536a45d0fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">uniqueId</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType8uniqueIdEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType13componentNameEv">
+<span id="_CPPv3NK14BaseDeviceType13componentNameEv"></span><span id="_CPPv2NK14BaseDeviceType13componentNameEv"></span><span id="BaseDeviceType::componentNameC"></span><span class="target" id="class_base_device_type_1acdbc9b6764dd933cc4e85620b5836200"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">componentName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType13componentNameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType24isAvailabilityConfiguredEv">
+<span id="_CPPv3NK14BaseDeviceType24isAvailabilityConfiguredEv"></span><span id="_CPPv2NK14BaseDeviceType24isAvailabilityConfiguredEv"></span><span id="BaseDeviceType::isAvailabilityConfiguredC"></span><span class="target" id="class_base_device_type_1a057190f235fd85fe68b9188018b837db"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isAvailabilityConfigured</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType24isAvailabilityConfiguredEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType8isOnlineEv">
+<span id="_CPPv3NK14BaseDeviceType8isOnlineEv"></span><span id="_CPPv2NK14BaseDeviceType8isOnlineEv"></span><span id="BaseDeviceType::isOnlineC"></span><span class="target" id="class_base_device_type_1a681f69fd945cf79355deed335e08580f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isOnline</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType8isOnlineEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType7setNameEPKc">
+<span id="_CPPv3N14BaseDeviceType7setNameEPKc"></span><span id="_CPPv2N14BaseDeviceType7setNameEPKc"></span><span id="BaseDeviceType::setName__cCP"></span><span class="target" id="class_base_device_type_1a31b299ff5c672ff90f49e5e9a421e0fc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType7setNameEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType7getNameEv">
+<span id="_CPPv3NK14BaseDeviceType7getNameEv"></span><span id="_CPPv2NK14BaseDeviceType7getNameEv"></span><span id="BaseDeviceType::getNameC"></span><span class="target" id="class_base_device_type_1a43e0ac342128094764536ca7eaad3217"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType7getNameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType15setAvailabilityEb">
+<span id="_CPPv3N14BaseDeviceType15setAvailabilityEb"></span><span id="_CPPv2N14BaseDeviceType15setAvailabilityEb"></span><span id="BaseDeviceType::setAvailability__b"></span><span class="target" id="class_base_device_type_1ade0d24c832bd61714d8341d60e41f332"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setAvailability</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">online</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType15setAvailabilityEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14BaseDeviceType4mqttEv">
+<span id="_CPPv3NK14BaseDeviceType4mqttEv"></span><span id="_CPPv2NK14BaseDeviceType4mqttEv"></span><span id="BaseDeviceType::mqttC"></span><span class="target" id="class_base_device_type_1a1a09f30459a3c933c1d76a9171ff0d4a"></span><a class="reference internal" href="class_h_a_mqtt.html#_CPPv46HAMqtt" title="HAMqtt"><span class="n"><span class="pre">HAMqtt</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mqtt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14BaseDeviceType4mqttEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType15buildSerializerEv">
+<span id="_CPPv3N14BaseDeviceType15buildSerializerEv"></span><span id="_CPPv2N14BaseDeviceType15buildSerializerEv"></span><span id="BaseDeviceType::buildSerializer"></span><span class="target" id="class_base_device_type_1a3118a190e5c627d77a4b0483674c95c8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType17destroySerializerEv">
+<span id="_CPPv3N14BaseDeviceType17destroySerializerEv"></span><span id="_CPPv2N14BaseDeviceType17destroySerializerEv"></span><span id="BaseDeviceType::destroySerializer"></span><span class="target" id="class_base_device_type_1a401238184ee7f7c425dc87d31755b471"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">destroySerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType17destroySerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType15onMqttConnectedEv">
+<span id="_CPPv3N14BaseDeviceType15onMqttConnectedEv"></span><span id="_CPPv2N14BaseDeviceType15onMqttConnectedEv"></span><span id="BaseDeviceType::onMqttConnected"></span><span class="target" id="class_base_device_type_1a1702574d5eeb512c1ae7142a77224345"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N14BaseDeviceType15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N14BaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N14BaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="BaseDeviceType::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_base_device_type_1a9ad8fa91d2a8bac2b306a2c02eb03b03"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType13publishConfigEv">
+<span id="_CPPv3N14BaseDeviceType13publishConfigEv"></span><span id="_CPPv2N14BaseDeviceType13publishConfigEv"></span><span id="BaseDeviceType::publishConfig"></span><span class="target" id="class_base_device_type_1aa6c564d3733f704d1237af93d568bb68"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishConfig</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType13publishConfigEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType19publishAvailabilityEv">
+<span id="_CPPv3N14BaseDeviceType19publishAvailabilityEv"></span><span id="_CPPv2N14BaseDeviceType19publishAvailabilityEv"></span><span id="BaseDeviceType::publishAvailability"></span><span class="target" id="class_base_device_type_1a37ac2436737dc2fe527fd384e6e3943d"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishAvailability</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType19publishAvailabilityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType18publishOnDataTopicEPKcPKcbb">
+<span id="_CPPv3N14BaseDeviceType18publishOnDataTopicEPKcPKcbb"></span><span id="_CPPv2N14BaseDeviceType18publishOnDataTopicEPKcPKcbb"></span><span id="BaseDeviceType::publishOnDataTopic__cCP.cCP.b.b"></span><span class="target" id="class_base_device_type_1a2a4e170c1c80b8c62730140d081e633a"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishOnDataTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">isProgmemValue</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType18publishOnDataTopicEPKcPKcbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType14_componentNameE">
+<span id="_CPPv3N14BaseDeviceType14_componentNameE"></span><span id="_CPPv2N14BaseDeviceType14_componentNameE"></span><span id="BaseDeviceType::_componentName__cCPC"></span><span class="target" id="class_base_device_type_1a6ee967e4437b1f29364da86c1137e76d"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_componentName</span></span></span><a class="headerlink" href="#_CPPv4N14BaseDeviceType14_componentNameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType9_uniqueIdE">
+<span id="_CPPv3N14BaseDeviceType9_uniqueIdE"></span><span id="_CPPv2N14BaseDeviceType9_uniqueIdE"></span><span id="BaseDeviceType::_uniqueId__cCP"></span><span class="target" id="class_base_device_type_1a529a6a0a6751ece533df10c4aa931187"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_uniqueId</span></span></span><a class="headerlink" href="#_CPPv4N14BaseDeviceType9_uniqueIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType5_nameE">
+<span id="_CPPv3N14BaseDeviceType5_nameE"></span><span id="_CPPv2N14BaseDeviceType5_nameE"></span><span id="BaseDeviceType::_name__cCP"></span><span class="target" id="class_base_device_type_1a5407b56eb5eb5542ab38d024aa2ed74e"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_name</span></span></span><a class="headerlink" href="#_CPPv4N14BaseDeviceType5_nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType11_serializerE">
+<span id="_CPPv3N14BaseDeviceType11_serializerE"></span><span id="_CPPv2N14BaseDeviceType11_serializerE"></span><span id="BaseDeviceType::_serializer__HASerializerP"></span><span class="target" id="class_base_device_type_1a7a1d60b157846c6c1f8249ef530000c3"></span><a class="reference internal" href="class_h_a_serializer.html#_CPPv412HASerializer" title="HASerializer"><span class="n"><span class="pre">HASerializer</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_serializer</span></span></span><a class="headerlink" href="#_CPPv4N14BaseDeviceType11_serializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-static-functions">Protected Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14BaseDeviceType14subscribeTopicEPKcPKc">
+<span id="_CPPv3N14BaseDeviceType14subscribeTopicEPKcPKc"></span><span id="_CPPv2N14BaseDeviceType14subscribeTopicEPKcPKc"></span><span id="BaseDeviceType::subscribeTopic__cCP.cCP"></span><span class="target" id="class_base_device_type_1a1e4161be49dab9d7458dfafd5c8a9bb8"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">subscribeTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14BaseDeviceType14subscribeTopicEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

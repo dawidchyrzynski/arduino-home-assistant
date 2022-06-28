@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Class HADeviceTrigger</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Class HADeviceTrigger</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="class-hadevicetrigger">
+<span id="exhale-class-class-h-a-device-trigger"></span><h1>Class HADeviceTrigger<a class="headerlink" href="#class-hadevicetrigger" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#file-device-types-hadevicetrigger-h"><span class="std std-ref">File HADeviceTrigger.h</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">BaseDeviceType</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv415HADeviceTrigger">
+<span id="_CPPv315HADeviceTrigger"></span><span id="_CPPv215HADeviceTrigger"></span><span id="HADeviceTrigger"></span><span class="target" id="class_h_a_device_trigger"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTrigger</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="class_base_device_type.html#_CPPv414BaseDeviceType" title="BaseDeviceType"><span class="n"><span class="pre">BaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv415HADeviceTrigger" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TriggerType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType20ButtonShortPressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType20ButtonShortPressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType20ButtonShortPressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1dad6717b65d447ef8d5cbb27033c8faafe"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonShortPressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType20ButtonShortPressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType22ButtonShortReleaseTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType22ButtonShortReleaseTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType22ButtonShortReleaseTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1da97cab92fc1a4c5d117596de62f44eea5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonShortReleaseType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType22ButtonShortReleaseTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType19ButtonLongPressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType19ButtonLongPressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType19ButtonLongPressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1dac0a68af076e090149de9e4a919309396"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonLongPressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType19ButtonLongPressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType21ButtonLongReleaseTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType21ButtonLongReleaseTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType21ButtonLongReleaseTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1dab8db1cbd9ee8cfd2101e3c756898ff5c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonLongReleaseType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType21ButtonLongReleaseTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType21ButtonDoublePressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType21ButtonDoublePressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType21ButtonDoublePressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1dae265d114060e83a3a4db482ff40a842e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonDoublePressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType21ButtonDoublePressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType21ButtonTriplePressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType21ButtonTriplePressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType21ButtonTriplePressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1da5847c8c8416254feb5253c6ce6fafcfd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonTriplePressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType21ButtonTriplePressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType24ButtonQuadruplePressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType24ButtonQuadruplePressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType24ButtonQuadruplePressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1da53f99bf193a8b55271b566156747b818"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonQuadruplePressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType24ButtonQuadruplePressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger11TriggerType24ButtonQuintuplePressTypeE">
+<span id="_CPPv3N15HADeviceTrigger11TriggerType24ButtonQuintuplePressTypeE"></span><span id="_CPPv2N15HADeviceTrigger11TriggerType24ButtonQuintuplePressTypeE"></span><span class="target" id="class_h_a_device_trigger_1afa5293814079971c7a3c1d87246d0e1daf66827148f676fdebf1c4e643f93ba10"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ButtonQuintuplePressType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger11TriggerType24ButtonQuintuplePressTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TriggerSubtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype13TurnOnSubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype13TurnOnSubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype13TurnOnSubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2a4d5ebff1c4268ac380e55e1fd1736bde"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TurnOnSubtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype13TurnOnSubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14TurnOffSubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14TurnOffSubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14TurnOffSubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2aed8699d3de9d8f9539142c41cad62d89"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TurnOffSubtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14TurnOffSubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button1SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button1SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button1SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2aa5aebea4d4bbfef72e4830c5502596ac"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button1Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button1SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button2SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button2SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button2SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2a2d6fdf69024c6f926db0e05180eba712"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button2Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button2SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button3SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button3SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button3SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2ac4623bbd8a5d43c0d2ecd9dd93d88ce8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button3Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button3SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button4SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button4SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button4SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2ac7a49891229d57fc3057f910a542205f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button4Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button4SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button5SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button5SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button5SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2a8eb212a635673f429223bdd11d93ea4a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button5Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button5SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger14TriggerSubtype14Button6SubtypeE">
+<span id="_CPPv3N15HADeviceTrigger14TriggerSubtype14Button6SubtypeE"></span><span id="_CPPv2N15HADeviceTrigger14TriggerSubtype14Button6SubtypeE"></span><span class="target" id="class_h_a_device_trigger_1aed4ca461bb696c41399027c0d649aaa2acd5c5a533845879683dfb13a5d3cee19"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Button6Subtype</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger14TriggerSubtype14Button6SubtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15HADeviceTriggerEPKcPKc">
+<span id="_CPPv3N15HADeviceTrigger15HADeviceTriggerEPKcPKc"></span><span id="_CPPv2N15HADeviceTrigger15HADeviceTriggerEPKcPKc"></span><span id="HADeviceTrigger::HADeviceTrigger__cCP.cCP"></span><span class="target" id="class_h_a_device_trigger_1a381ad9d7051b424050c9985c5fccf996"></span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTrigger</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">type</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">subtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15HADeviceTriggerEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a new trigge based on the given type and subtype. Please note that combination of type and subtype needs to be unique in a scope of the device.</p>
+<p>The list of built-in types is available here: <a class="reference external" href="https://www.home-assistant.io/integrations/device_trigger.mqtt/#type">https://www.home-assistant.io/integrations/device_trigger.mqtt/#type</a> The list of built-in subtypes is available here: <a class="reference external" href="https://www.home-assistant.io/integrations/device_trigger.mqtt/#subtype">https://www.home-assistant.io/integrations/device_trigger.mqtt/#subtype</a> </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15HADeviceTriggerE11TriggerTypePKc">
+<span id="_CPPv3N15HADeviceTrigger15HADeviceTriggerE11TriggerTypePKc"></span><span id="_CPPv2N15HADeviceTrigger15HADeviceTriggerE11TriggerTypePKc"></span><span id="HADeviceTrigger::HADeviceTrigger__TriggerType.cCP"></span><span class="target" id="class_h_a_device_trigger_1a87671ef60055147a9f592863dec26352"></span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTrigger</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15HADeviceTrigger11TriggerTypeE" title="HADeviceTrigger::TriggerType"><span class="n"><span class="pre">TriggerType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">subtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15HADeviceTriggerE11TriggerTypePKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15HADeviceTriggerEPKc14TriggerSubtype">
+<span id="_CPPv3N15HADeviceTrigger15HADeviceTriggerEPKc14TriggerSubtype"></span><span id="_CPPv2N15HADeviceTrigger15HADeviceTriggerEPKc14TriggerSubtype"></span><span id="HADeviceTrigger::HADeviceTrigger__cCP.TriggerSubtype"></span><span class="target" id="class_h_a_device_trigger_1a8a466d3acdea037af5ab9dd304b78a84"></span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTrigger</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">type</span></span>, <a class="reference internal" href="#_CPPv4N15HADeviceTrigger14TriggerSubtypeE" title="HADeviceTrigger::TriggerSubtype"><span class="n"><span class="pre">TriggerSubtype</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">subtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15HADeviceTriggerEPKc14TriggerSubtype" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15HADeviceTriggerE11TriggerType14TriggerSubtype">
+<span id="_CPPv3N15HADeviceTrigger15HADeviceTriggerE11TriggerType14TriggerSubtype"></span><span id="_CPPv2N15HADeviceTrigger15HADeviceTriggerE11TriggerType14TriggerSubtype"></span><span id="HADeviceTrigger::HADeviceTrigger__TriggerType.TriggerSubtype"></span><span class="target" id="class_h_a_device_trigger_1a905404693ada525dd1d7bda17dbd4706"></span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTrigger</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N15HADeviceTrigger11TriggerTypeE" title="HADeviceTrigger::TriggerType"><span class="n"><span class="pre">TriggerType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span>, <a class="reference internal" href="#_CPPv4N15HADeviceTrigger14TriggerSubtypeE" title="HADeviceTrigger::TriggerSubtype"><span class="n"><span class="pre">TriggerSubtype</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">subtype</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15HADeviceTriggerE11TriggerType14TriggerSubtype" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger7getTypeEv">
+<span id="_CPPv3NK15HADeviceTrigger7getTypeEv"></span><span id="_CPPv2NK15HADeviceTrigger7getTypeEv"></span><span id="HADeviceTrigger::getTypeC"></span><span class="target" id="class_h_a_device_trigger_1a41c0dfc7efb9afbeebda68200f1ab368"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getType</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger7getTypeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns type of the trigger. Please note that it may be pointer to the flash memory if you have used enum in the constructor. Use <code class="docutils literal notranslate"><span class="pre">HADeviceTrigger::isProgmemType</span></code> to verify if type points to flash memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pointer to the type. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger13isProgmemTypeEv">
+<span id="_CPPv3NK15HADeviceTrigger13isProgmemTypeEv"></span><span id="_CPPv2NK15HADeviceTrigger13isProgmemTypeEv"></span><span id="HADeviceTrigger::isProgmemTypeC"></span><span class="target" id="class_h_a_device_trigger_1a9c71bfeb19fca803eb2f1c9e2f0e9320"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isProgmemType</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger13isProgmemTypeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns true if the type pointer points to flash memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Boolean </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger10getSubtypeEv">
+<span id="_CPPv3NK15HADeviceTrigger10getSubtypeEv"></span><span id="_CPPv2NK15HADeviceTrigger10getSubtypeEv"></span><span id="HADeviceTrigger::getSubtypeC"></span><span class="target" id="class_h_a_device_trigger_1ac7e88ab8a8c25414e7b424ade446f1bd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getSubtype</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger10getSubtypeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns subtype of the trigger. Please note that it may be pointer to the flash memory if you have used enum in the constructor. Use <code class="docutils literal notranslate"><span class="pre">HADeviceTrigger::isProgmemSubtype</span></code> to verify if type points to flash memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Pointer to the subtype. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger16isProgmemSubtypeEv">
+<span id="_CPPv3NK15HADeviceTrigger16isProgmemSubtypeEv"></span><span id="_CPPv2NK15HADeviceTrigger16isProgmemSubtypeEv"></span><span id="HADeviceTrigger::isProgmemSubtypeC"></span><span class="target" id="class_h_a_device_trigger_1a590f7b3442517232be40ea28753b5439"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isProgmemSubtype</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger16isProgmemSubtypeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns true if the subtype pointer points to flash memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Boolean </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger7triggerEv">
+<span id="_CPPv3N15HADeviceTrigger7triggerEv"></span><span id="_CPPv2N15HADeviceTrigger7triggerEv"></span><span id="HADeviceTrigger::trigger"></span><span class="target" id="class_h_a_device_trigger_1af5ccc2a8c7725822d5fff6be89432903"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trigger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger7triggerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes MQTT message with the trigger event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns true if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15buildSerializerEv">
+<span id="_CPPv3N15HADeviceTrigger15buildSerializerEv"></span><span id="_CPPv2N15HADeviceTrigger15buildSerializerEv"></span><span id="HADeviceTrigger::buildSerializer"></span><span class="target" id="class_h_a_device_trigger_1aeef456030b0ba692375a113eed61188c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger15onMqttConnectedEv">
+<span id="_CPPv3N15HADeviceTrigger15onMqttConnectedEv"></span><span id="_CPPv2N15HADeviceTrigger15onMqttConnectedEv"></span><span id="HADeviceTrigger::onMqttConnected"></span><span class="target" id="class_h_a_device_trigger_1a9bbed3bdc645a3653d9993074d77f342"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

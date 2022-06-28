@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Installation</title>
+    
+          <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../_static/theme-vendors.js"></script> -->
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../genindex.html" />
+  <link rel="search" title="Search" href="../../search.html" />
+  <link rel="next" title="Supported Platforms" href="supported-platforms.html" />
+  <link rel="prev" title="Prerequisites" href="prerequisites.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="current">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 current">
+            
+              <a href="#" class="reference internal current">Installation</a>
+            
+
+            
+              <ul>
+                
+                  <li class="toctree-l2"><a href="#arduino-ide" class="reference internal">Arduino IDE</a></li>
+                
+                  <li class="toctree-l2"><a href="#makeesparduino" class="reference internal">makeEspArduino</a></li>
+                
+              </ul>
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+    <li>Installation</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="prerequisites.html"
+       title="previous chapter">← Prerequisites</a>
+  </li>
+  <li class="next">
+    <a href="supported-platforms.html"
+       title="next chapter">Supported Platforms →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>There are two ways to install the library depending on your project.
+If you’re using Arduino IDE to compile your project you only need to install the library into the IDE.</p>
+<p>The second method is meant for more advanced users that use <em>makeEspArduino</em> for building the project for ESP32/ESP8266 devices.</p>
+<section id="arduino-ide">
+<h2>Arduino IDE<a class="headerlink" href="#arduino-ide" title="Permalink to this headline">¶</a></h2>
+<p>To install the library into your Arduino IDE you can use Library Manager (available from IDE version 1.6.2).
+Open the IDE and click to the “Sketch” menu and then <em>Include Library &gt; Manage Libraries</em>.</p>
+<img alt="../../_images/manage-libraries.png" class="align-center" src="../../_images/manage-libraries.png" style="width: 500px;" />
+<p>Type “home-assistant-integration” in the search field, select the latest version of the library from the dropdown and then click <em>Install</em>.</p>
+<img alt="../../_images/library-search.png" class="align-center" src="../../_images/library-search.png" style="width: 500px;" />
+<p>For other installation methods please refer to <a class="reference external" href="https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries">Arduino documentation</a>.</p>
+</section>
+<section id="makeesparduino">
+<h2>makeEspArduino<a class="headerlink" href="#makeesparduino" title="Permalink to this headline">¶</a></h2>
+<p>The library can be installed in an environment managed by <a class="reference external" href="https://github.com/plerup/makeEspArduino">makeEspArduino</a>.
+The best approach is to add the library as a submodule in the project as follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">https</span><span class="o">:</span><span class="c1">//github.com/dawidchyrzynski/arduino-home-assistant.git arduino-home-assistant</span>
+<span class="n">cd</span><span class="w"> </span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">tags</span><span class="o">/</span><span class="mf">2.0.0</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Then you just need to add one extra line in your <cite>Makefile</cite>:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">LIBS</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">$</span><span class="p">(</span><span class="n">ROOT</span><span class="p">)</span><span class="o">/</span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="prerequisites.html"
+       title="previous chapter">← Prerequisites</a>
+  </li>
+  <li class="next">
+    <a href="supported-platforms.html"
+       title="next chapter">Supported Platforms →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

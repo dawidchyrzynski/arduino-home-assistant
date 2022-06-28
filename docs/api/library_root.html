@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Library API</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Library API</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="library-api">
+<h1>Library API<a class="headerlink" href="#library-api" title="Permalink to this headline">¶</a></h1>
+<section id="class-hierarchy">
+<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="class_base_device_type.html#exhale-class-class-base-device-type"><span class="std std-ref">Class BaseDeviceType</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_binary_sensor.html#exhale-class-class-h-a-binary-sensor"><span class="std std-ref">Class HABinarySensor</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_button.html#exhale-class-class-h-a-button"><span class="std std-ref">Class HAButton</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_camera.html#exhale-class-class-h-a-camera"><span class="std std-ref">Class HACamera</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_cover.html#exhale-class-class-h-a-cover"><span class="std std-ref">Class HACover</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_device.html#exhale-class-class-h-a-device"><span class="std std-ref">Class HADevice</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_device_tracker.html#exhale-class-class-h-a-device-tracker"><span class="std std-ref">Class HADeviceTracker</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_device_trigger.html#exhale-class-class-h-a-device-trigger"><span class="std std-ref">Class HADeviceTrigger</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_lock.html#exhale-class-class-h-a-lock"><span class="std std-ref">Class HALock</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_mqtt.html#exhale-class-class-h-a-mqtt"><span class="std std-ref">Class HAMqtt</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_sensor.html#exhale-class-class-h-a-sensor"><span class="std std-ref">Class HASensor</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_sensor_float.html#exhale-class-class-h-a-sensor-float"><span class="std std-ref">Class HASensorFloat</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_sensor_integer.html#exhale-class-class-h-a-sensor-integer"><span class="std std-ref">Class HASensorInteger</span></a></p></li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="class_h_a_serializer.html#exhale-class-class-h-a-serializer"><span class="std std-ref">Class HASerializer</span></a></dt><dd><ul>
+<li><p><a class="reference internal" href="struct_h_a_serializer_1_1_serializer_entry.html#exhale-struct-struct-h-a-serializer-1-1-serializer-entry"><span class="std std-ref">Struct HASerializer::SerializerEntry</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><a class="reference internal" href="class_h_a_serializer_array.html#exhale-class-class-h-a-serializer-array"><span class="std std-ref">Class HASerializerArray</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_switch.html#exhale-class-class-h-a-switch"><span class="std std-ref">Class HASwitch</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_tag_scanner.html#exhale-class-class-h-a-tag-scanner"><span class="std std-ref">Class HATagScanner</span></a></p></li>
+<li><p><a class="reference internal" href="class_h_a_utils.html#exhale-class-class-h-a-utils"><span class="std std-ref">Class HAUtils</span></a></p></li>
+</ul>
+</section>
+<section id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><dl class="simple">
+<dt><a class="reference internal" href="dir_device-types.html#dir-device-types"><span class="std std-ref">Directory device-types</span></a></dt><dd><ul>
+<li><p><a class="reference internal" href="file_device-types_BaseDeviceType.cpp.html#file-device-types-basedevicetype-cpp"><span class="std std-ref">File BaseDeviceType.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_BaseDeviceType.h.html#file-device-types-basedevicetype-h"><span class="std std-ref">File BaseDeviceType.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HABinarySensor.cpp.html#file-device-types-habinarysensor-cpp"><span class="std std-ref">File HABinarySensor.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HABinarySensor.h.html#file-device-types-habinarysensor-h"><span class="std std-ref">File HABinarySensor.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HAButton.cpp.html#file-device-types-habutton-cpp"><span class="std std-ref">File HAButton.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HAButton.h.html#file-device-types-habutton-h"><span class="std std-ref">File HAButton.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HACamera.cpp.html#file-device-types-hacamera-cpp"><span class="std std-ref">File HACamera.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HACamera.h.html#file-device-types-hacamera-h"><span class="std std-ref">File HACamera.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HACover.cpp.html#file-device-types-hacover-cpp"><span class="std std-ref">File HACover.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HACover.h.html#file-device-types-hacover-h"><span class="std std-ref">File HACover.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HADeviceTracker.cpp.html#file-device-types-hadevicetracker-cpp"><span class="std std-ref">File HADeviceTracker.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HADeviceTracker.h.html#file-device-types-hadevicetracker-h"><span class="std std-ref">File HADeviceTracker.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HADeviceTrigger.cpp.html#file-device-types-hadevicetrigger-cpp"><span class="std std-ref">File HADeviceTrigger.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#file-device-types-hadevicetrigger-h"><span class="std std-ref">File HADeviceTrigger.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HALock.cpp.html#file-device-types-halock-cpp"><span class="std std-ref">File HALock.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HALock.h.html#file-device-types-halock-h"><span class="std std-ref">File HALock.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensor.cpp.html#file-device-types-hasensor-cpp"><span class="std std-ref">File HASensor.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensor.h.html#file-device-types-hasensor-h"><span class="std std-ref">File HASensor.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensorFloat.cpp.html#file-device-types-hasensorfloat-cpp"><span class="std std-ref">File HASensorFloat.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensorFloat.h.html#file-device-types-hasensorfloat-h"><span class="std std-ref">File HASensorFloat.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensorInteger.cpp.html#file-device-types-hasensorinteger-cpp"><span class="std std-ref">File HASensorInteger.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASensorInteger.h.html#file-device-types-hasensorinteger-h"><span class="std std-ref">File HASensorInteger.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASwitch.cpp.html#file-device-types-haswitch-cpp"><span class="std std-ref">File HASwitch.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HASwitch.h.html#file-device-types-haswitch-h"><span class="std std-ref">File HASwitch.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HATagScanner.cpp.html#file-device-types-hatagscanner-cpp"><span class="std std-ref">File HATagScanner.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_device-types_HATagScanner.h.html#file-device-types-hatagscanner-h"><span class="std std-ref">File HATagScanner.h</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="dir_mocks.html#dir-mocks"><span class="std std-ref">Directory mocks</span></a></dt><dd><ul>
+<li><p><a class="reference internal" href="file_mocks_AUnitHelpers.h.html#file-mocks-aunithelpers-h"><span class="std std-ref">File AUnitHelpers.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_mocks_PubSubClientMock.cpp.html#file-mocks-pubsubclientmock-cpp"><span class="std std-ref">File PubSubClientMock.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_mocks_PubSubClientMock.h.html#file-mocks-pubsubclientmock-h"><span class="std std-ref">File PubSubClientMock.h</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><a class="reference internal" href="dir_utils.html#dir-utils"><span class="std std-ref">Directory utils</span></a></dt><dd><ul>
+<li><p><a class="reference internal" href="file_utils_HASerializer.cpp.html#file-utils-haserializer-cpp"><span class="std std-ref">File HASerializer.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_utils_HASerializer.h.html#file-utils-haserializer-h"><span class="std std-ref">File HASerializer.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_utils_HASerializerArray.cpp.html#file-utils-haserializerarray-cpp"><span class="std std-ref">File HASerializerArray.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_utils_HASerializerArray.h.html#file-utils-haserializerarray-h"><span class="std std-ref">File HASerializerArray.h</span></a></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><a class="reference internal" href="file_ArduinoHA.h.html#file-arduinoha-h"><span class="std std-ref">File ArduinoHA.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_ArduinoHADefines.h.html#file-arduinohadefines-h"><span class="std std-ref">File ArduinoHADefines.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_HADevice.cpp.html#file-hadevice-cpp"><span class="std std-ref">File HADevice.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_HADevice.h.html#file-hadevice-h"><span class="std std-ref">File HADevice.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_HAMqtt.cpp.html#file-hamqtt-cpp"><span class="std std-ref">File HAMqtt.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_HAMqtt.h.html#file-hamqtt-h"><span class="std std-ref">File HAMqtt.h</span></a></p></li>
+<li><p><a class="reference internal" href="file_HAUtils.cpp.html#file-hautils-cpp"><span class="std std-ref">File HAUtils.cpp</span></a></p></li>
+<li><p><a class="reference internal" href="file_HAUtils.h.html#file-hautils-h"><span class="std std-ref">File HAUtils.h</span></a></p></li>
+</ul>
+</section>
+<section id="full-api">
+<h2>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h2>
+<section id="classes-and-structs">
+<h3>Classes and Structs<a class="headerlink" href="#classes-and-structs" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="struct_h_a_serializer_1_1_serializer_entry.html">Struct HASerializer::SerializerEntry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="struct_h_a_serializer_1_1_serializer_entry.html#nested-relationships">Nested Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="struct_h_a_serializer_1_1_serializer_entry.html#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_base_device_type.html">Class BaseDeviceType</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_base_device_type.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_base_device_type.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_base_device_type.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_binary_sensor.html">Class HABinarySensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_binary_sensor.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_binary_sensor.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_binary_sensor.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_button.html">Class HAButton</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_button.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_button.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_button.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_camera.html">Class HACamera</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_camera.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_camera.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_camera.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_cover.html">Class HACover</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_cover.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_cover.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_cover.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_device.html">Class HADevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_device.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_device_tracker.html">Class HADeviceTracker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_device_tracker.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_device_tracker.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_device_tracker.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_device_trigger.html">Class HADeviceTrigger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_device_trigger.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_device_trigger.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_device_trigger.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_lock.html">Class HALock</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_lock.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_lock.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_lock.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_mqtt.html">Class HAMqtt</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_mqtt.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_sensor.html">Class HASensor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_sensor.html#base-type">Base Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_sensor.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_sensor_float.html">Class HASensorFloat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor_float.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_sensor_float.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor_float.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_sensor_integer.html">Class HASensorInteger</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor_integer.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_sensor_integer.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_sensor_integer.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_serializer.html">Class HASerializer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_serializer.html#nested-relationships">Nested Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_serializer.html#nested-types">Nested Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_serializer.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_serializer_array.html">Class HASerializerArray</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_serializer_array.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_switch.html">Class HASwitch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_switch.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_switch.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_switch.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_tag_scanner.html">Class HATagScanner</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_tag_scanner.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_h_a_tag_scanner.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_tag_scanner.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_h_a_utils.html">Class HAUtils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_h_a_utils.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__h_a_mqtt_8cpp_1a9ed483a106ac3db29f0384ffee65a9c9.html">Function onMessageReceived</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__h_a_mqtt_8cpp_1a9ed483a106ac3db29f0384ffee65a9c9.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__h_a_mqtt_8cpp_1aa5136e93e50fe8defdee28ab5a1bf0c0.html">Variable DefaultDataPrefix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__h_a_mqtt_8cpp_1aa5136e93e50fe8defdee28ab5a1bf0c0.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__h_a_mqtt_8cpp_1a2a4075b72deee29fc6f2e7a8f00f2fc5.html">Variable DefaultDiscoveryPrefix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__h_a_mqtt_8cpp_1a2a4075b72deee29fc6f2e7a8f00f2fc5.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="defines">
+<h3>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__a_unit_helpers_8h_1a9b8edd621c7537dc8dd250db0c901637.html">Define assertEntityConfig</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__a_unit_helpers_8h_1a9b8edd621c7537dc8dd250db0c901637.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__a_unit_helpers_8h_1afbb8c62045bb5341b47edea6e3499ecb.html">Define assertMqttMessage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__a_unit_helpers_8h_1afbb8c62045bb5341b47edea6e3499ecb.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__a_unit_helpers_8h_1ae796a22ecd27f5e0f07914be19d0886a.html">Define assertNoMqttMessage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__a_unit_helpers_8h_1ae796a22ecd27f5e0f07914be19d0886a.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__a_unit_helpers_8h_1ad6dc3e073f934272a3ba5b3209cacdec.html">Define assertSingleMqttMessage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__a_unit_helpers_8h_1ad6dc3e073f934272a3ba5b3209cacdec.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__h_a_button_8h_1a4add248491206c5f9be6681f0fc28e37.html">Define HABUTTON_CALLBACK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__h_a_button_8h_1a4add248491206c5f9be6681f0fc28e37.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__h_a_cover_8h_1a995c4afa2a1b0e90a6cb62cfaad016a8.html">Define HACOVER_CALLBACK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__h_a_cover_8h_1a995c4afa2a1b0e90a6cb62cfaad016a8.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__h_a_lock_8h_1a25c440b421371ea45443051ef70a6506.html">Define HALOCK_CALLBACK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__h_a_lock_8h_1a25c440b421371ea45443051ef70a6506.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__h_a_switch_8h_1ad42176f8da39fbe6726c775108ab5b88.html">Define HASWITCH_CALLBACK</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__h_a_switch_8h_1ad42176f8da39fbe6726c775108ab5b88.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__a_unit_helpers_8h_1abf718d6bb17f8b66e651a55c12b47dca.html">Define initMqttTest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__a_unit_helpers_8h_1abf718d6bb17f8b66e651a55c12b47dca.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Class HASerializer</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Class HASerializer</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="class-haserializer">
+<span id="exhale-class-class-h-a-serializer"></span><h1>Class HASerializer<a class="headerlink" href="#class-haserializer" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_utils_HASerializer.h.html#file-utils-haserializer-h"><span class="std std-ref">File HASerializer.h</span></a></p></li>
+</ul>
+<section id="nested-relationships">
+<h2>Nested Relationships<a class="headerlink" href="#nested-relationships" title="Permalink to this headline">¶</a></h2>
+<section id="nested-types">
+<h3>Nested Types<a class="headerlink" href="#nested-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="struct_h_a_serializer_1_1_serializer_entry.html#exhale-struct-struct-h-a-serializer-1-1-serializer-entry"><span class="std std-ref">Struct HASerializer::SerializerEntry</span></a></p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv412HASerializer">
+<span id="_CPPv312HASerializer"></span><span id="_CPPv212HASerializer"></span><span id="HASerializer"></span><span class="target" id="class_h_a_serializer"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASerializer</span></span></span><a class="headerlink" href="#_CPPv412HASerializer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType16UnknownEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType16UnknownEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType16UnknownEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a4b639d5c8c1f1b5dcfd4c3c0806901e2"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType16UnknownEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType17PropertyEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType17PropertyEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType17PropertyEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a7a217c953d1bab14c8b9965d895f41a4"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PropertyEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType17PropertyEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType14TopicEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType14TopicEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType14TopicEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a1a8ec082ba78a59265913658f8324d1f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TopicEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType14TopicEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType13FlagEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType13FlagEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType13FlagEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a9f13783a46ffe8e021a1436936bb7773"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FlagEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType13FlagEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagTypeE">
+<span id="_CPPv3N12HASerializer8FlagTypeE"></span><span id="_CPPv2N12HASerializer8FlagTypeE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FlagType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagType10WithDeviceE">
+<span id="_CPPv3N12HASerializer8FlagType10WithDeviceE"></span><span id="_CPPv2N12HASerializer8FlagType10WithDeviceE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20aa55ad781fc08255ec1b9ae9e133623fa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WithDevice</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagType10WithDeviceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagType16WithAvailabilityE">
+<span id="_CPPv3N12HASerializer8FlagType16WithAvailabilityE"></span><span id="_CPPv2N12HASerializer8FlagType16WithAvailabilityE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20ab6eb2bc6b231c4a431cd7124c4f3d9d8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WithAvailability</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagType16WithAvailabilityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PropertyValueType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType22ConstCharPropertyValueE">
+<span id="_CPPv3N12HASerializer17PropertyValueType22ConstCharPropertyValueE"></span><span id="_CPPv2N12HASerializer17PropertyValueType22ConstCharPropertyValueE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da70ed2ecab6d1ca6f97f8b6dab3672261"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ConstCharPropertyValue</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType22ConstCharPropertyValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType20ProgmemPropertyValueE">
+<span id="_CPPv3N12HASerializer17PropertyValueType20ProgmemPropertyValueE"></span><span id="_CPPv2N12HASerializer17PropertyValueType20ProgmemPropertyValueE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da1dbd161613dc5c39802e8e9a7fa9079a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ProgmemPropertyValue</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType20ProgmemPropertyValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType16BoolPropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType16BoolPropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType16BoolPropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da0626b8fa2eb98d45ddab24f2cec0753f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BoolPropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType16BoolPropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType17Int32PropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType17Int32PropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType17Int32PropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199daf67e87dfb744841e9c96c07874f7134e"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Int32PropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType17Int32PropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType17ArrayPropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType17ArrayPropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType17ArrayPropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da2bfb76b45d3697a1cb1d15cd0e9f30ce"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ArrayPropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType17ArrayPropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer12HASerializerEP14BaseDeviceTypeK7uint8_t">
+<span id="_CPPv3N12HASerializer12HASerializerEP14BaseDeviceTypeK7uint8_t"></span><span id="_CPPv2N12HASerializer12HASerializerEP14BaseDeviceTypeK7uint8_t"></span><span id="HASerializer::HASerializer__BaseDeviceTypeP.uint8_tC"></span><span class="target" id="class_h_a_serializer_1ad066cc5a327a3bb10d17c5394d72637f"></span><span class="sig-name descname"><span class="n"><span class="pre">HASerializer</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="class_base_device_type.html#_CPPv414BaseDeviceType" title="BaseDeviceType"><span class="n"><span class="pre">BaseDeviceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceType</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">maxEntriesNb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer12HASerializerEP14BaseDeviceTypeK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializerD0Ev">
+<span id="_CPPv3N12HASerializerD0Ev"></span><span id="_CPPv2N12HASerializerD0Ev"></span><span id="HASerializer::~HASerializer"></span><span class="target" id="class_h_a_serializer_1a278c7b4b862407e74a57ff7b95e68338"></span><span class="sig-name descname"><span class="n"><span class="pre">~HASerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer12getEntriesNbEv">
+<span id="_CPPv3NK12HASerializer12getEntriesNbEv"></span><span id="_CPPv2NK12HASerializer12getEntriesNbEv"></span><span id="HASerializer::getEntriesNbC"></span><span class="target" id="class_h_a_serializer_1a0bfdc9ac369945cf60c902e71c7c6439"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getEntriesNb</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer12getEntriesNbEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer10getEntriesEv">
+<span id="_CPPv3NK12HASerializer10getEntriesEv"></span><span id="_CPPv2NK12HASerializer10getEntriesEv"></span><span id="HASerializer::getEntriesC"></span><span class="target" id="class_h_a_serializer_1a052f3e59212ad7dba3ae7c9911e2c2e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getEntries</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer10getEntriesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer3setEPKcPKv17PropertyValueType">
+<span id="_CPPv3N12HASerializer3setEPKcPKv17PropertyValueType"></span><span id="_CPPv2N12HASerializer3setEPKcPKv17PropertyValueType"></span><span id="HASerializer::set__cCP.voidCP.PropertyValueType"></span><span class="target" id="class_h_a_serializer_1ac8ad333ffecf9569d7de7c93ec05e3fe"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">propertyP</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span>, <a class="reference internal" href="#_CPPv4N12HASerializer17PropertyValueTypeE" title="HASerializer::PropertyValueType"><span class="n"><span class="pre">PropertyValueType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">valueType</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">ConstCharPropertyValue</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer3setEPKcPKv17PropertyValueType" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer3setEK8FlagType">
+<span id="_CPPv3N12HASerializer3setEK8FlagType"></span><span id="_CPPv2N12HASerializer3setEK8FlagType"></span><span id="HASerializer::set__FlagTypeC"></span><span class="target" id="class_h_a_serializer_1ab6621da36ef95e2e516d4333abbff8c5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer8FlagTypeE" title="HASerializer::FlagType"><span class="n"><span class="pre">FlagType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">flag</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer3setEK8FlagType" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer5topicEPKc">
+<span id="_CPPv3N12HASerializer5topicEPKc"></span><span id="_CPPv2N12HASerializer5topicEPKc"></span><span id="HASerializer::topic__cCP"></span><span class="target" id="class_h_a_serializer_1a6395439b1eb889834b8b0f158b615c41"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">topic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer5topicEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer13calculateSizeEv">
+<span id="_CPPv3NK12HASerializer13calculateSizeEv"></span><span id="_CPPv2NK12HASerializer13calculateSizeEv"></span><span id="HASerializer::calculateSizeC"></span><span class="target" id="class_h_a_serializer_1a68850036a40b01336815967a53f12abf"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer13calculateSizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer5flushEv">
+<span id="_CPPv3NK12HASerializer5flushEv"></span><span id="_CPPv2NK12HASerializer5flushEv"></span><span id="HASerializer::flushC"></span><span class="target" id="class_h_a_serializer_1a393c7c33d9e270034771786679952070"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flush</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer5flushEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer26calculateConfigTopicLengthEPKcPKc">
+<span id="_CPPv3N12HASerializer26calculateConfigTopicLengthEPKcPKc"></span><span id="_CPPv2N12HASerializer26calculateConfigTopicLengthEPKcPKc"></span><span id="HASerializer::calculateConfigTopicLength__cCP.cCP"></span><span class="target" id="class_h_a_serializer_1a839e8b247b53b92dc13516b1f7e0f530"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateConfigTopicLength</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">component</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer26calculateConfigTopicLengthEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer19generateConfigTopicEPcPKcPKc">
+<span id="_CPPv3N12HASerializer19generateConfigTopicEPcPKcPKc"></span><span id="_CPPv2N12HASerializer19generateConfigTopicEPcPKcPKc"></span><span id="HASerializer::generateConfigTopic__cP.cCP.cCP"></span><span class="target" id="class_h_a_serializer_1a886985de609eed8b574fd304786e6525"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generateConfigTopic</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">component</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer19generateConfigTopicEPcPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer24calculateDataTopicLengthEPKcPKc">
+<span id="_CPPv3N12HASerializer24calculateDataTopicLengthEPKcPKc"></span><span id="_CPPv2N12HASerializer24calculateDataTopicLengthEPKcPKc"></span><span id="HASerializer::calculateDataTopicLength__cCP.cCP"></span><span class="target" id="class_h_a_serializer_1ab8e1ab05415dffa2888e1fe4952c75af"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateDataTopicLength</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer24calculateDataTopicLengthEPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17generateDataTopicEPcPKcPKc">
+<span id="_CPPv3N12HASerializer17generateDataTopicEPcPKcPKc"></span><span id="_CPPv2N12HASerializer17generateDataTopicEPcPKcPKc"></span><span id="HASerializer::generateDataTopic__cP.cCP.cCP"></span><span class="target" id="class_h_a_serializer_1a902cb88aea72fc8475ef5e3dc953fbd5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generateDataTopic</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer17generateDataTopicEPcPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17compareDataTopicsEPKcPKcPKc">
+<span id="_CPPv3N12HASerializer17compareDataTopicsEPKcPKcPKc"></span><span id="_CPPv2N12HASerializer17compareDataTopicsEPKcPKcPKc"></span><span id="HASerializer::compareDataTopics__cCP.cCP.cCP"></span><span class="target" id="class_h_a_serializer_1a94d7e19f2688288e6c5a6cee567b04a4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compareDataTopics</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topicP</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer17compareDataTopicsEPKcPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntryE">
+<span id="_CPPv3N12HASerializer15SerializerEntryE"></span><span id="_CPPv2N12HASerializer15SerializerEntryE"></span><span id="HASerializer::SerializerEntry"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SerializerEntry</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry15SerializerEntryEv">
+<span id="_CPPv3N12HASerializer15SerializerEntry15SerializerEntryEv"></span><span id="_CPPv2N12HASerializer15SerializerEntry15SerializerEntryEv"></span><span id="HASerializer::SerializerEntry::SerializerEntry"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1aa4a289e81a8c48dee11b1337c3d033ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SerializerEntry</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry15SerializerEntryEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry4typeE">
+<span id="_CPPv3N12HASerializer15SerializerEntry4typeE"></span><span id="_CPPv2N12HASerializer15SerializerEntry4typeE"></span><span id="HASerializer::SerializerEntry::type__EntryType"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1a99b8d520fb4a9cfe86de2e0d7bb94c5b"></span><a class="reference internal" href="#_CPPv4N12HASerializer9EntryTypeE" title="HASerializer::EntryType"><span class="n"><span class="pre">EntryType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry7subtypeE">
+<span id="_CPPv3N12HASerializer15SerializerEntry7subtypeE"></span><span id="_CPPv2N12HASerializer15SerializerEntry7subtypeE"></span><span id="HASerializer::SerializerEntry::subtype__uint8_t"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1a1db4acee885aa141f3d6c6c5561c2e54"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">subtype</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry7subtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry8propertyE">
+<span id="_CPPv3N12HASerializer15SerializerEntry8propertyE"></span><span id="_CPPv2N12HASerializer15SerializerEntry8propertyE"></span><span id="HASerializer::SerializerEntry::property__cCP"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1ac7ae0ce62e787c02589bea34b22f858c"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">property</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry8propertyE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry5valueE">
+<span id="_CPPv3N12HASerializer15SerializerEntry5valueE"></span><span id="_CPPv2N12HASerializer15SerializerEntry5valueE"></span><span id="HASerializer::SerializerEntry::value__voidCP"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1aa49acec07e91e4b86e91ba6876f1b0ba"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">value</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry5valueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

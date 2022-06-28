@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Class HAMqtt</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Class HAMqtt</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="class-hamqtt">
+<span id="exhale-class-class-h-a-mqtt"></span><h1>Class HAMqtt<a class="headerlink" href="#class-hamqtt" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_HAMqtt.h.html#file-hamqtt-h"><span class="std std-ref">File HAMqtt.h</span></a></p></li>
+</ul>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv46HAMqtt">
+<span id="_CPPv36HAMqtt"></span><span id="_CPPv26HAMqtt"></span><span id="HAMqtt"></span><span class="target" id="class_h_a_mqtt"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><a class="headerlink" href="#_CPPv46HAMqtt" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t">
+<span id="_CPPv3N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="_CPPv2N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="HAMqtt::HAMqtt__ClientR.HADeviceR.uint8_tC"></span><span class="target" id="class_h_a_mqtt_1a336b9511591544e2642451aae3c174fd"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Client</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">netClient</span></span>, <a class="reference internal" href="class_h_a_device.html#_CPPv48HADevice" title="HADevice"><span class="n"><span class="pre">HADevice</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">device</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">maxDevicesTypesNb</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqttD0Ev">
+<span id="_CPPv3N6HAMqttD0Ev"></span><span id="_CPPv2N6HAMqttD0Ev"></span><span id="HAMqtt::~HAMqtt"></span><span class="target" id="class_h_a_mqtt_1a0fe962c9910705eceec4c6140af5ab34"></span><span class="sig-name descname"><span class="n"><span class="pre">~HAMqtt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqttD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt18setDiscoveryPrefixEPKc">
+<span id="_CPPv3N6HAMqtt18setDiscoveryPrefixEPKc"></span><span id="_CPPv2N6HAMqtt18setDiscoveryPrefixEPKc"></span><span id="HAMqtt::setDiscoveryPrefix__cCP"></span><span class="target" id="class_h_a_mqtt_1ac2fdb3809d982943d93fa25b1e52f602"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDiscoveryPrefix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">prefix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt18setDiscoveryPrefixEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets prefix for Home Assistant discovery. It needs to match prefix set in the HA admin panel. The default prefix is “homeassistant”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prefix</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt18getDiscoveryPrefixEv">
+<span id="_CPPv3NK6HAMqtt18getDiscoveryPrefixEv"></span><span id="_CPPv2NK6HAMqtt18getDiscoveryPrefixEv"></span><span id="HAMqtt::getDiscoveryPrefixC"></span><span class="target" id="class_h_a_mqtt_1aa9dd119e662c89ff5280402bca56a2e3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getDiscoveryPrefix</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt18getDiscoveryPrefixEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns discovery prefix. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13setDataPrefixEPKc">
+<span id="_CPPv3N6HAMqtt13setDataPrefixEPKc"></span><span id="_CPPv2N6HAMqtt13setDataPrefixEPKc"></span><span id="HAMqtt::setDataPrefix__cCP"></span><span class="target" id="class_h_a_mqtt_1a4748e8afb6d7f76828a7a6921db96fa8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDataPrefix</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">prefix</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt13setDataPrefixEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets prefix that will be used for topics different than discovery. It may be useful if you want to pass MQTT trafic through bridge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>prefix</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt13getDataPrefixEv">
+<span id="_CPPv3NK6HAMqtt13getDataPrefixEv"></span><span id="_CPPv2NK6HAMqtt13getDataPrefixEv"></span><span id="HAMqtt::getDataPrefixC"></span><span class="target" id="class_h_a_mqtt_1a05d9e73b772974a8bbb1b794308b21af"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getDataPrefix</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt13getDataPrefixEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns data prefix. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt9getDeviceEv">
+<span id="_CPPv3NK6HAMqtt9getDeviceEv"></span><span id="_CPPv2NK6HAMqtt9getDeviceEv"></span><span id="HAMqtt::getDeviceC"></span><span class="target" id="class_h_a_mqtt_1afbb64f2068f00dfd5450f46bbda43092"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_h_a_device.html#_CPPv48HADevice" title="HADevice"><span class="n"><span class="pre">HADevice</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getDevice</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt9getDeviceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns instance of the device assigned to the HAMqtt class. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt9onMessageEPFvPKcPK7uint8_t8uint16_tE">
+<span id="_CPPv3N6HAMqtt9onMessageEPFvPKcPK7uint8_t8uint16_tE"></span><span id="_CPPv2N6HAMqtt9onMessageEPFvPKcPK7uint8_t8uint16_tE"></span><span class="target" id="class_h_a_mqtt_1a292b419488b88088d6c383650082387b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMessage</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">topic</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">length</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt9onMessageEPFvPKcPK7uint8_t8uint16_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Given callback will be called for each received message from the broker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt11onConnectedEPFvvE">
+<span id="_CPPv3N6HAMqtt11onConnectedEPFvvE"></span><span id="_CPPv2N6HAMqtt11onConnectedEPFvvE"></span><span class="target" id="class_h_a_mqtt_1a2f1500869d7afc5979b0d0b4f9c6214e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onConnected</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt11onConnectedEPFvvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Given callback will be called each time the connection with broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt18onConnectionFailedEPFvvE">
+<span id="_CPPv3N6HAMqtt18onConnectionFailedEPFvvE"></span><span id="_CPPv2N6HAMqtt18onConnectionFailedEPFvvE"></span><span class="target" id="class_h_a_mqtt_1af74c2dd53a19f1575ed8846f13568d25"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onConnectionFailed</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt18onConnectionFailedEPFvvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Given callback will be called each time the library fails to connect to the broker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc">
+<span id="_CPPv3N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc"></span><span id="_CPPv2N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc"></span><span id="HAMqtt::begin__IPAddressC.uint16_tC.cCP.cCP"></span><span class="target" id="class_h_a_mqtt_1ae4e2ebb17afaeef26d98c69d6a9e5cbb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">IPAddress</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverIp</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverPort</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1883</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">username</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">password</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets parameters of the connection to the MQTT broker. The library will try to connect to the broker in first loop cycle. Please note that the library automatically reconnects to the broker if connection is lost.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serverIp</strong> – IP address of the MQTT broker. </p></li>
+<li><p><strong>serverPort</strong> – Port of the MQTT broker. </p></li>
+<li><p><strong>username</strong> – Username for authentication. </p></li>
+<li><p><strong>password</strong> – Password for authentication. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt5beginEK9IPAddressPKcPKc">
+<span id="_CPPv3N6HAMqtt5beginEK9IPAddressPKcPKc"></span><span id="_CPPv2N6HAMqtt5beginEK9IPAddressPKcPKc"></span><span id="HAMqtt::begin__IPAddressC.cCP.cCP"></span><span class="target" id="class_h_a_mqtt_1ab65462ce00b7ffe5f7a89546cfcf6e0a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">IPAddress</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverIp</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">username</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">password</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt5beginEK9IPAddressPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt5beginEPKcK8uint16_tPKcPKc">
+<span id="_CPPv3N6HAMqtt5beginEPKcK8uint16_tPKcPKc"></span><span id="_CPPv2N6HAMqtt5beginEPKcK8uint16_tPKcPKc"></span><span id="HAMqtt::begin__cCP.uint16_tC.cCP.cCP"></span><span class="target" id="class_h_a_mqtt_1a29ddaf9ce578daa12f3d3eb3abb8a36a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hostname</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverPort</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1883</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">username</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">password</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt5beginEPKcK8uint16_tPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Connects to the MQTT broker using hostname.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hostname</strong> – Hostname of the MQTT broker. </p></li>
+<li><p><strong>serverPort</strong> – Port of the MQTT broker. </p></li>
+<li><p><strong>username</strong> – Username for authentication. </p></li>
+<li><p><strong>password</strong> – Password for authentication. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt5beginEPKcPKcPKc">
+<span id="_CPPv3N6HAMqtt5beginEPKcPKcPKc"></span><span id="_CPPv2N6HAMqtt5beginEPKcPKcPKc"></span><span id="HAMqtt::begin__cCP.cCP.cCP"></span><span class="target" id="class_h_a_mqtt_1a2c29f4bccd95a722dc71de055fe328ca"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">hostname</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">username</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">password</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt5beginEPKcPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt10disconnectEv">
+<span id="_CPPv3N6HAMqtt10disconnectEv"></span><span id="_CPPv2N6HAMqtt10disconnectEv"></span><span id="HAMqtt::disconnect"></span><span class="target" id="class_h_a_mqtt_1a02e55450818a9a59334bdd9fa0c491e9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">disconnect</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt10disconnectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Closes connection with the MQTT broker. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt4loopEv">
+<span id="_CPPv3N6HAMqtt4loopEv"></span><span id="_CPPv2N6HAMqtt4loopEv"></span><span id="HAMqtt::loop"></span><span class="target" id="class_h_a_mqtt_1a401a1de191b0dff10d8d80b4d15d92a1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">loop</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt4loopEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>ArduinoHA’s ticker. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt11isConnectedEv">
+<span id="_CPPv3N6HAMqtt11isConnectedEv"></span><span id="_CPPv2N6HAMqtt11isConnectedEv"></span><span id="HAMqtt::isConnected"></span><span class="target" id="class_h_a_mqtt_1ab51f537cac5443aa23b0490a495edfae"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt11isConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns true if connection to the MQTT broker is established. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13addDeviceTypeEP14BaseDeviceType">
+<span id="_CPPv3N6HAMqtt13addDeviceTypeEP14BaseDeviceType"></span><span id="_CPPv2N6HAMqtt13addDeviceTypeEP14BaseDeviceType"></span><span id="HAMqtt::addDeviceType__BaseDeviceTypeP"></span><span class="target" id="class_h_a_mqtt_1af816daeeaec64206663b37df34d95fb1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addDeviceType</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="class_base_device_type.html#_CPPv414BaseDeviceType" title="BaseDeviceType"><span class="n"><span class="pre">BaseDeviceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceType</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt13addDeviceTypeEP14BaseDeviceType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a new device’s type to the MQTT. Each time the connection with MQTT broker is acquired, the HAMqtt class calls “onMqttConnected” method in all devices’ types instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deviceType</strong> – Instance of the device’s type (eg. HATriggers). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12beginPublishEPKc8uint16_tb">
+<span id="_CPPv3N6HAMqtt12beginPublishEPKc8uint16_tb"></span><span id="_CPPv2N6HAMqtt12beginPublishEPKc8uint16_tb"></span><span id="HAMqtt::beginPublish__cCP.uint16_t.b"></span><span class="target" id="class_h_a_mqtt_1a2652787f2c681505d473cb6ed20f0261"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">beginPublish</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">payloadLength</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12beginPublishEPKc8uint16_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12writePayloadEPKc8uint16_t">
+<span id="_CPPv3N6HAMqtt12writePayloadEPKc8uint16_t"></span><span id="_CPPv2N6HAMqtt12writePayloadEPKc8uint16_t"></span><span id="HAMqtt::writePayload__cCP.uint16_t"></span><span class="target" id="class_h_a_mqtt_1a48e6056c0ed85ae6e69a9110d0b7ef89"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">writePayload</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12writePayloadEPKc8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt14writePayload_PEPKc">
+<span id="_CPPv3N6HAMqtt14writePayload_PEPKc"></span><span id="_CPPv2N6HAMqtt14writePayload_PEPKc"></span><span id="HAMqtt::writePayload_P__cCP"></span><span class="target" id="class_h_a_mqtt_1ae980c209948bc0e055029f869e3f64d5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">writePayload_P</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt14writePayload_PEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt10endPublishEv">
+<span id="_CPPv3N6HAMqtt10endPublishEv"></span><span id="_CPPv2N6HAMqtt10endPublishEv"></span><span id="HAMqtt::endPublish"></span><span class="target" id="class_h_a_mqtt_1aae5c2ccb16731730962f3519f5612d1f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">endPublish</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt10endPublishEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt9subscribeEPKc">
+<span id="_CPPv3N6HAMqtt9subscribeEPKc"></span><span id="_CPPv2N6HAMqtt9subscribeEPKc"></span><span id="HAMqtt::subscribe__cCP"></span><span class="target" id="class_h_a_mqtt_1aa7bd61b1dc02b3117bc60496fe40e252"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">subscribe</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt9subscribeEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subscribes to the given topic. Whenever a new message is received the onMqttMessage callback in all devices types is called.</p>
+<p>Please note that you need to subscribe topic each time the connection with the broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>topic</strong> – Topic to subscribe </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt11setLastWillEPKcPKcb">
+<span id="_CPPv3N6HAMqtt11setLastWillEPKcPKcb"></span><span id="_CPPv2N6HAMqtt11setLastWillEPKcPKcb"></span><span id="HAMqtt::setLastWill__cCP.cCP.b"></span><span class="target" id="class_h_a_mqtt_1a87c9c08db323a22e065bfa6762a94732"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setLastWill</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">lastWillTopic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">lastWillMessage</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">lastWillRetain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt11setLastWillEPKcPKcb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables last will message that will be produced when device disconnects from the broker. If you want to change availability of the device in Home Assistant panel please use enableLastWill() method in the HADevice object instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lastWillTopic</strong> – </p></li>
+<li><p><strong>lastWillMessage</strong> – </p></li>
+<li><p><strong>lastWillRetain</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt14processMessageEPKcPK7uint8_t8uint16_t">
+<span id="_CPPv3N6HAMqtt14processMessageEPKcPK7uint8_t8uint16_t"></span><span id="_CPPv2N6HAMqtt14processMessageEPKcPK7uint8_t8uint16_t"></span><span id="HAMqtt::processMessage__cCP.uint8_tCP.uint16_t"></span><span class="target" id="class_h_a_mqtt_1a0d5d7ee57697e2d40773e45237f5d8a8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt14processMessageEPKcPK7uint8_t8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Processes MQTT message received from the broker (subscription).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> – Topic of the message. </p></li>
+<li><p><strong>payload</strong> – Content of the message. </p></li>
+<li><p><strong>length</strong> – Length of the message. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt8instanceEv">
+<span id="_CPPv3N6HAMqtt8instanceEv"></span><span id="_CPPv2N6HAMqtt8instanceEv"></span><span id="HAMqtt::instance"></span><span class="target" id="class_h_a_mqtt_1ac87ae19dad989427104e17fd231d873b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAMqtt" title="HAMqtt"><span class="n"><span class="pre">HAMqtt</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">instance</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt8instanceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt17ReconnectIntervalE">
+<span id="_CPPv3N6HAMqtt17ReconnectIntervalE"></span><span id="_CPPv2N6HAMqtt17ReconnectIntervalE"></span><span id="HAMqtt::ReconnectInterval__uint16_tC"></span><span class="target" id="class_h_a_mqtt_1a68a6a0d104024dcee5cf2534b419a035"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReconnectInterval</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">5000</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt17ReconnectIntervalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

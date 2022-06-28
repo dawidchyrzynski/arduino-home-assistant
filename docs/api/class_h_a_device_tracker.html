@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Class HADeviceTracker</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Class HADeviceTracker</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="class-hadevicetracker">
+<span id="exhale-class-class-h-a-device-tracker"></span><h1>Class HADeviceTracker<a class="headerlink" href="#class-hadevicetracker" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_device-types_HADeviceTracker.h.html#file-device-types-hadevicetracker-h"><span class="std std-ref">File HADeviceTracker.h</span></a></p></li>
+</ul>
+<section id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<section id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">BaseDeviceType</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv415HADeviceTracker">
+<span id="_CPPv315HADeviceTracker"></span><span id="_CPPv215HADeviceTracker"></span><span id="HADeviceTracker"></span><span class="target" id="class_h_a_device_tracker"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTracker</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="class_base_device_type.html#_CPPv414BaseDeviceType" title="BaseDeviceType"><span class="n"><span class="pre">BaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv415HADeviceTracker" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceTypeE">
+<span id="_CPPv3N15HADeviceTracker10SourceTypeE"></span><span id="_CPPv2N15HADeviceTracker10SourceTypeE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6f"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceType</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceType17SourceTypeUnknownE">
+<span id="_CPPv3N15HADeviceTracker10SourceType17SourceTypeUnknownE"></span><span id="_CPPv2N15HADeviceTracker10SourceType17SourceTypeUnknownE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6fac0a09ef1c187b102b0435fc650b3fcbe"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceTypeUnknown</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceType17SourceTypeUnknownE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceType13SourceTypeGPSE">
+<span id="_CPPv3N15HADeviceTracker10SourceType13SourceTypeGPSE"></span><span id="_CPPv2N15HADeviceTracker10SourceType13SourceTypeGPSE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6fa60a8a4aa8d8ae4d6e453d169d32c1871"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceTypeGPS</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceType13SourceTypeGPSE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceType16SourceTypeRouterE">
+<span id="_CPPv3N15HADeviceTracker10SourceType16SourceTypeRouterE"></span><span id="_CPPv2N15HADeviceTracker10SourceType16SourceTypeRouterE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6fa42ff1741c0461a5afd8f526c1a872ed5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceTypeRouter</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceType16SourceTypeRouterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceType19SourceTypeBluetoothE">
+<span id="_CPPv3N15HADeviceTracker10SourceType19SourceTypeBluetoothE"></span><span id="_CPPv2N15HADeviceTracker10SourceType19SourceTypeBluetoothE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6faa53035502cf00b9f26c9968ea0d3d897"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceTypeBluetooth</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceType19SourceTypeBluetoothE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker10SourceType21SourceTypeBluetoothLEE">
+<span id="_CPPv3N15HADeviceTracker10SourceType21SourceTypeBluetoothLEE"></span><span id="_CPPv2N15HADeviceTracker10SourceType21SourceTypeBluetoothLEE"></span><span class="target" id="class_h_a_device_tracker_1a38a338bbdb1b7cf37092e1fefaef6c6fa6fb61fe863b9a18d992a27a73115bf39"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SourceTypeBluetoothLE</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker10SourceType21SourceTypeBluetoothLEE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker12TrackerStateE">
+<span id="_CPPv3N15HADeviceTracker12TrackerStateE"></span><span id="_CPPv2N15HADeviceTracker12TrackerStateE"></span><span class="target" id="class_h_a_device_tracker_1a984e77906c38849770bfc9893b607bfe"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TrackerState</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker12TrackerState12StateUnknownE">
+<span id="_CPPv3N15HADeviceTracker12TrackerState12StateUnknownE"></span><span id="_CPPv2N15HADeviceTracker12TrackerState12StateUnknownE"></span><span class="target" id="class_h_a_device_tracker_1a984e77906c38849770bfc9893b607bfeab4411e307b821590b20a457b28e94404"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateUnknown</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker12TrackerState12StateUnknownE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker12TrackerState9StateHomeE">
+<span id="_CPPv3N15HADeviceTracker12TrackerState9StateHomeE"></span><span id="_CPPv2N15HADeviceTracker12TrackerState9StateHomeE"></span><span class="target" id="class_h_a_device_tracker_1a984e77906c38849770bfc9893b607bfea98cab4bf2c8b7f766c578844c871e9fd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateHome</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker12TrackerState9StateHomeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker12TrackerState12StateNotHomeE">
+<span id="_CPPv3N15HADeviceTracker12TrackerState12StateNotHomeE"></span><span id="_CPPv2N15HADeviceTracker12TrackerState12StateNotHomeE"></span><span class="target" id="class_h_a_device_tracker_1a984e77906c38849770bfc9893b607bfeabfe0d8076e8567535903887ced3b9628"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateNotHome</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker12TrackerState12StateNotHomeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker12TrackerState17StateNotAvailableE">
+<span id="_CPPv3N15HADeviceTracker12TrackerState17StateNotAvailableE"></span><span id="_CPPv2N15HADeviceTracker12TrackerState17StateNotAvailableE"></span><span class="target" id="class_h_a_device_tracker_1a984e77906c38849770bfc9893b607bfeacd717223d3b368f35dba02ce1c7c9416"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateNotAvailable</span></span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker12TrackerState17StateNotAvailableE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker15HADeviceTrackerEPKc">
+<span id="_CPPv3N15HADeviceTracker15HADeviceTrackerEPKc"></span><span id="_CPPv2N15HADeviceTracker15HADeviceTrackerEPKc"></span><span id="HADeviceTracker::HADeviceTracker__cCP"></span><span class="target" id="class_h_a_device_tracker_1ad93d8a008fc52e8dce708b0d538f51af"></span><span class="sig-name descname"><span class="n"><span class="pre">HADeviceTracker</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker15HADeviceTrackerEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker7setIconEPKc">
+<span id="_CPPv3N15HADeviceTracker7setIconEPKc"></span><span id="_CPPv2N15HADeviceTracker7setIconEPKc"></span><span id="HADeviceTracker::setIcon__cCP"></span><span class="target" id="class_h_a_device_tracker_1a727faee54b475aae5351afe7b3e72bf9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the tracker. Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class</strong> – Icon name </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType">
+<span id="_CPPv3N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="_CPPv2N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="HADeviceTracker::setSourceType__SourceTypeC"></span><span class="target" id="class_h_a_device_tracker_1ac5ae4dfb5dea532dc3b891524f6ceb62"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSourceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker10SourceTypeE" title="HADeviceTracker::SourceType"><span class="n"><span class="pre">SourceType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets source type of the tracker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Source</strong> – type (see SourceType enum) </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker8setStateEK12TrackerStateKb">
+<span id="_CPPv3N15HADeviceTracker8setStateEK12TrackerStateKb"></span><span id="_CPPv2N15HADeviceTracker8setStateEK12TrackerStateKb"></span><span id="HADeviceTracker::setState__TrackerStateC.bC"></span><span class="target" id="class_h_a_device_tracker_1ac36ef94bb91c143301f35ecec2f47b66"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="HADeviceTracker::TrackerState"><span class="n"><span class="pre">TrackerState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker8setStateEK12TrackerStateKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the tracker and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the tracker. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns true if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker15setCurrentStateEK12TrackerState">
+<span id="_CPPv3N15HADeviceTracker15setCurrentStateEK12TrackerState"></span><span id="_CPPv2N15HADeviceTracker15setCurrentStateEK12TrackerState"></span><span id="HADeviceTracker::setCurrentState__TrackerStateC"></span><span class="target" id="class_h_a_device_tracker_1a58e49bf4027e3cb9e4f45177d4ed2bb0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="HADeviceTracker::TrackerState"><span class="n"><span class="pre">TrackerState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker15setCurrentStateEK12TrackerState" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the tracker without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the tracker. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTracker8getStateEv">
+<span id="_CPPv3NK15HADeviceTracker8getStateEv"></span><span id="_CPPv2NK15HADeviceTracker8getStateEv"></span><span id="HADeviceTracker::getStateC"></span><span class="target" id="class_h_a_device_tracker_1a385aaea54a1facc2d01db59bf7a63a88"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="HADeviceTracker::TrackerState"><span class="n"><span class="pre">TrackerState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTracker8getStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the tracker. If setState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker15buildSerializerEv">
+<span id="_CPPv3N15HADeviceTracker15buildSerializerEv"></span><span id="_CPPv2N15HADeviceTracker15buildSerializerEv"></span><span id="HADeviceTracker::buildSerializer"></span><span class="target" id="class_h_a_device_tracker_1a52fed7aaee611a723c13c64a070c544a"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker15onMqttConnectedEv">
+<span id="_CPPv3N15HADeviceTracker15onMqttConnectedEv"></span><span id="_CPPv2N15HADeviceTracker15onMqttConnectedEv"></span><span id="HADeviceTracker::onMqttConnected"></span><span class="target" id="class_h_a_device_tracker_1a446442b203fadd9703feae71567c8dbf"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N15HADeviceTracker15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Full API</title>
+    
+          <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../_static/theme-vendors.js"></script> -->
+      <script src="../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../genindex.html" />
+  <link rel="search" title="Search" href="../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../index.html" class="home-link">
+    
+      <span class="site-name">Arduino Home Assistant</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../index.html#arduino-home-assistant-integration">Getting started</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/prerequisites.html" class="reference internal ">Prerequisites</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/installation.html" class="reference internal ">Installation</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/supported-platforms.html" class="reference internal ">Supported Platforms</a>
+            
+
+            
+          </li>
+
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../documents/getting-started/examples.html" class="reference internal ">Examples</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+    
+    <li>Full API</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="full-api">
+<h1>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h1>
+<section id="directories">
+<h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_device-types.html">Directory device-types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_device-types.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_mocks.html">Directory mocks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_mocks.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_utils.html">Directory utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_utils.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_ArduinoHA.h.html">File ArduinoHA.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_ArduinoHA.h.html#definition-arduinoha-h">Definition (<code class="docutils literal notranslate"><span class="pre">ArduinoHA.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ArduinoHA.h.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_ArduinoHADefines.h.html">File ArduinoHADefines.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_ArduinoHADefines.h.html#definition-arduinohadefines-h">Definition (<code class="docutils literal notranslate"><span class="pre">ArduinoHADefines.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_ArduinoHADefines.h.html#included-by">Included By</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_mocks_AUnitHelpers.h.html">File AUnitHelpers.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_AUnitHelpers.h.html#definition-mocks-aunithelpers-h">Definition (<code class="docutils literal notranslate"><span class="pre">mocks/AUnitHelpers.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_AUnitHelpers.h.html#defines">Defines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_BaseDeviceType.cpp.html">File BaseDeviceType.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.cpp.html#definition-device-types-basedevicetype-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/BaseDeviceType.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_BaseDeviceType.h.html">File BaseDeviceType.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.h.html#definition-device-types-basedevicetype-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/BaseDeviceType.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_BaseDeviceType.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HABinarySensor.cpp.html">File HABinarySensor.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.cpp.html#definition-device-types-habinarysensor-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HABinarySensor.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HABinarySensor.h.html">File HABinarySensor.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.h.html#definition-device-types-habinarysensor-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HABinarySensor.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HABinarySensor.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HAButton.cpp.html">File HAButton.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.cpp.html#definition-device-types-habutton-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HAButton.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HAButton.h.html">File HAButton.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.h.html#definition-device-types-habutton-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HAButton.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.h.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HAButton.h.html#defines">Defines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HACamera.cpp.html">File HACamera.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.cpp.html#definition-device-types-hacamera-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HACamera.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HACamera.h.html">File HACamera.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.h.html#definition-device-types-hacamera-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HACamera.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACamera.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HACover.cpp.html">File HACover.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.cpp.html#definition-device-types-hacover-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HACover.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HACover.h.html">File HACover.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.h.html#definition-device-types-hacover-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HACover.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.h.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HACover.h.html#defines">Defines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HADevice.cpp.html">File HADevice.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.cpp.html#definition-hadevice-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">HADevice.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HADevice.h.html">File HADevice.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.h.html#definition-hadevice-h">Definition (<code class="docutils literal notranslate"><span class="pre">HADevice.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HADevice.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HADeviceTracker.cpp.html">File HADeviceTracker.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.cpp.html#definition-device-types-hadevicetracker-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HADeviceTracker.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HADeviceTracker.h.html">File HADeviceTracker.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.h.html#definition-device-types-hadevicetracker-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HADeviceTracker.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTracker.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HADeviceTrigger.cpp.html">File HADeviceTrigger.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.cpp.html#definition-device-types-hadevicetrigger-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HADeviceTrigger.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html">File HADeviceTrigger.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#definition-device-types-hadevicetrigger-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HADeviceTrigger.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HADeviceTrigger.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HALock.cpp.html">File HALock.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.cpp.html#definition-device-types-halock-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HALock.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HALock.h.html">File HALock.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.h.html#definition-device-types-halock-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HALock.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.h.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HALock.h.html#defines">Defines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HAMqtt.cpp.html">File HAMqtt.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.cpp.html#definition-hamqtt-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">HAMqtt.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.cpp.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.cpp.html#variables">Variables</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HAMqtt.h.html">File HAMqtt.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.h.html#definition-hamqtt-h">Definition (<code class="docutils literal notranslate"><span class="pre">HAMqtt.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAMqtt.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensor.cpp.html">File HASensor.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.cpp.html#definition-device-types-hasensor-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensor.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensor.h.html">File HASensor.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.h.html#definition-device-types-hasensor-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensor.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensor.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensorFloat.cpp.html">File HASensorFloat.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.cpp.html#definition-device-types-hasensorfloat-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensorFloat.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensorFloat.h.html">File HASensorFloat.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.h.html#definition-device-types-hasensorfloat-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensorFloat.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorFloat.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensorInteger.cpp.html">File HASensorInteger.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.cpp.html#definition-device-types-hasensorinteger-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensorInteger.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASensorInteger.h.html">File HASensorInteger.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.h.html#definition-device-types-hasensorinteger-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASensorInteger.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASensorInteger.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_utils_HASerializer.cpp.html">File HASerializer.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.cpp.html#definition-utils-haserializer-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">utils/HASerializer.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_utils_HASerializer.h.html">File HASerializer.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.h.html#definition-utils-haserializer-h">Definition (<code class="docutils literal notranslate"><span class="pre">utils/HASerializer.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializer.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_utils_HASerializerArray.cpp.html">File HASerializerArray.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.cpp.html#definition-utils-haserializerarray-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">utils/HASerializerArray.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_utils_HASerializerArray.h.html">File HASerializerArray.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.h.html#definition-utils-haserializerarray-h">Definition (<code class="docutils literal notranslate"><span class="pre">utils/HASerializerArray.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_utils_HASerializerArray.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASwitch.cpp.html">File HASwitch.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.cpp.html#definition-device-types-haswitch-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASwitch.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HASwitch.h.html">File HASwitch.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.h.html#definition-device-types-haswitch-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HASwitch.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.h.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HASwitch.h.html#defines">Defines</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HATagScanner.cpp.html">File HATagScanner.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.cpp.html#definition-device-types-hatagscanner-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HATagScanner.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_device-types_HATagScanner.h.html">File HATagScanner.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.h.html#definition-device-types-hatagscanner-h">Definition (<code class="docutils literal notranslate"><span class="pre">device-types/HATagScanner.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_device-types_HATagScanner.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HAUtils.cpp.html">File HAUtils.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.cpp.html#definition-hautils-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">HAUtils.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_HAUtils.h.html">File HAUtils.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.h.html#definition-hautils-h">Definition (<code class="docutils literal notranslate"><span class="pre">HAUtils.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_HAUtils.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_mocks_PubSubClientMock.cpp.html">File PubSubClientMock.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_PubSubClientMock.cpp.html#definition-mocks-pubsubclientmock-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">mocks/PubSubClientMock.cpp</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_PubSubClientMock.cpp.html#includes">Includes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_mocks_PubSubClientMock.h.html">File PubSubClientMock.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_PubSubClientMock.h.html#definition-mocks-pubsubclientmock-h">Definition (<code class="docutils literal notranslate"><span class="pre">mocks/PubSubClientMock.h</span></code>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_mocks_PubSubClientMock.h.html#included-by">Included By</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
