@@ -15,6 +15,8 @@ help:
 # Build Github pages
 github:
 	@make html
+	@rm -rf ../docs/*
+	@touch ../docs/.nojekyll
 	@cp -a build/html/. ../docs
 
 .PHONY: help Makefile
