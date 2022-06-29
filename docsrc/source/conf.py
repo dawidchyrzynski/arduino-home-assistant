@@ -30,7 +30,8 @@ release = '2.0.0'
 # ones.
 extensions = [
     'breathe',
-    'exhale'
+    'exhale',
+    'sphinx.ext.extlinks'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -66,6 +67,10 @@ primary_domain = 'cpp'
 
 # Tell sphinx what the pygments highlight language should be.
 highlight_language = 'cpp'
+
+extlinks = {
+    'example': ('https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/', None)
+}
 
 # -- Options for HTML output -------------------------------------------------
 

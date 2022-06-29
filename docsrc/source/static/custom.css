@@ -1,3 +1,6 @@
 .body-header + hr {
     margin-top: 0 !important;
 }
+table.examples-table tbody td + td {
+    text-align: left;
+}

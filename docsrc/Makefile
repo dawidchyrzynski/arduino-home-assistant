@@ -14,6 +14,7 @@ help:
 
 # Build Github pages
 github:
+	@make clean
 	@make html
 	@rm -rf ../docs/*
 	@touch ../docs/.nojekyll
