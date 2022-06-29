@@ -16,7 +16,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Arduino Home Assistant'
+project = 'ArduinoHA'
 copyright = '2022, Dawid Chyrzynski'
 author = 'Dawid Chyrzynski'
 
@@ -44,9 +44,9 @@ exclude_patterns = []
 
 # Setup the breathe extension
 breathe_projects = {
-    'Arduino Home Assistant': './xml'
+    'ArduinoHA': './xml'
 }
-breathe_default_project = 'Arduino Home Assistant'
+breathe_default_project = 'ArduinoHA'
 breathe_show_include = True
 
 # Setup the exhale extension
@@ -76,7 +76,9 @@ extlinks = {
 
 html_scaled_image_link = False
 html_copy_source = False
-html_theme = 'press'
+html_theme = 'press-ext'
+html_theme_path = ['themes']
+html_title = 'ArduinoHA'
 html_theme_options = {
     'external_links': [
         ('Github', 'https://github.com/dawidchyrzynski/arduino-home-assistant')

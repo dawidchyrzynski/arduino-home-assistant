@@ -1,0 +1,7 @@
+{%- extends "sphinx_press_theme/layout.html" %}
+
+{%- if pagename != "index" and docstitle %}
+    {%- set titlesuffix = " - "|safe + docstitle|e %}
+{%- else %}
+    {%- set titlesuffix = "" %}
+{%- endif %}

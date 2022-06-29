@@ -1,4 +1,4 @@
-Arduino Home Assistant integration
+ArduinoHA documentation
 ==================================================
 
 ArduinoHA allows to integrate an Arduino/ESP based device with Home Assistant using MQTT.
