@@ -7,11 +7,7 @@ Initially, it was optimized to work on Arduino Uno with Ethernet Shield,
 but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 .. toctree::
-   :maxdepth: 0
-   :titlesonly:
-   :caption: Getting started
+   :caption: Docs
 
-   documents/getting-started/prerequisites
-   documents/getting-started/installation
-   documents/getting-started/compatible-hardware
-   documents/getting-started/examples
+   documents/getting-started/index
+   documents/basics/index

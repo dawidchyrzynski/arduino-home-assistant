@@ -79,6 +79,7 @@ html_copy_source = False
 html_theme = 'press-ext'
 html_theme_path = ['themes']
 html_title = 'ArduinoHA'
+html_sidebars = {'**': ['util/searchbox.html', 'sidetoc.html']}
 html_theme_options = {
     'external_links': [
         ('Github', 'https://github.com/dawidchyrzynski/arduino-home-assistant')

@@ -1,6 +1,66 @@
+header.navbar {
+    background: #3eaf7c
+}
+header.navbar a {
+    color: #fff
+}
+header.navbar .nav-item a:hover {
+    color: #eee
+}
+header.navbar .site-name {
+    color: #fff
+}
+header.navbar .icon {
+    color: #fff;
+    position: relative;
+    top: 2px
+}
+.body-header ul.page-nav {
+    margin-right: 1.2em;
+    padding-right: 0
+}
 .body-header + hr {
     margin-top: 0 !important;
 }
 table.examples-table tbody td + td {
     text-align: left;
+}
+.sidebar-links li.toctree-l1 > a {
+    font-weight: 600
+}
+.sidebar-links > .caption {
+    display: none
+}
+.content + div.page-nav {
+    max-width: 840px;
+}
+.content + div.page-nav ul.page-nav {
+    max-width: 100%;
+    padding: 0 0 0.5em
+}
+.searchbox .caption-text {
+    display: none
+}
+form.search {
+    margin-top: 0.5em
+}
+form.search input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 8px 15px;
+    font-size: 15px;
+    outline: none;
+}
+form.search input[type="submit"] {
+    background: #3eaf7c;
+    border: 1px solid #3eaf7c;
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color .3s
+}
+form.search input[type="submit"]:hover {
+    background: #58C996
 }
