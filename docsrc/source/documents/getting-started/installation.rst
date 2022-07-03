@@ -28,15 +28,17 @@ makeEspArduino
 --------------
 
 The library can be installed in an environment managed by `makeEspArduino <https://github.com/plerup/makeEspArduino>`_.
-The best approach is to add the library as a submodule in the project as follows:
+The best approach is to add the library and its dependency as submodules in the project as follows:
 
 ::
 
     git submodule add https://github.com/dawidchyrzynski/arduino-home-assistant.git arduino-home-assistant
-    cd arduino-home-assistant && git checkout tags/2.0.0
+    cd arduino-home-assistant && git checkout tags/2.0.0 && cd ..
+    git submodule add https://github.com/knolleary/pubsubclient.git pubsubclient
+    cd pubsubclient && git checkout tags/v2.8
 
 Then you just need to add one extra line in your `Makefile`:
 
 ::
 
-    LIBS := $(ROOT)/arduino-home-assistant
+    LIBS := $(ROOT)/arduino-home-assistant $(ROOT)/pubsubclient

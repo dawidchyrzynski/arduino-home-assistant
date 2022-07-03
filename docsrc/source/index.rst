@@ -8,6 +8,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 .. toctree::
    :caption: Docs
+   :maxdepth: 3
 
    documents/getting-started/index
    documents/basics/index

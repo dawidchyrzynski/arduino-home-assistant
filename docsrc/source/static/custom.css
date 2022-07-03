@@ -64,3 +64,9 @@ form.search input[type="submit"] {
 form.search input[type="submit"]:hover {
     background: #58C996
 }
+.content p + ul {
+    margin-top: -10px
+}
+.content pre {
+    font-size: 14px
+}
