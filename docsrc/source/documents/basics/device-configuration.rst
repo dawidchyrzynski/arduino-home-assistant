@@ -1,5 +1,5 @@
 Device configuration
-=============
+====================
 
 ``HADevice`` represents the physical device where the library is installed.
 Logically it's a group of types like sensors, switches, lights and so on. 
@@ -30,6 +30,8 @@ You can pick one depending on your needs.
 
 ::
 
+    #include <ArduinoHA.h>
+
     HADevice device("myUniqueID");
 
     void setup() {
@@ -44,6 +46,8 @@ You can pick one depending on your needs.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
+
+    #include <ArduinoHA.h>
 
     // use your own unique bytes sequence
     byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
@@ -62,12 +66,14 @@ You can pick one depending on your needs.
 
 ::
 
+    #include <ArduinoHA.h>
+
     HADevice device;
 
     void setup() {
         // any length is acceptable
         byte myId[] = {0x05, 0xb4, 0xc6, 0x9f, 0xbe, 0xce, 0x8c, 0x1f, 0xc7};
-        device.setUniqueId(myId, sizeof(myId));
+        device.setUniqueId(myId, sizeof(myId)); // the input array is cloned internally
 
         // ...
     }
@@ -80,9 +86,11 @@ Device properties
 -----------------
 
 Each property has its corresponding setter method in the ``HADevice`` class.
-Please note that all these methods accept const char pointer whose content is not copied.
+Please note that all these methods accept const char pointer whose **content is not copied**.
 
 ::
+
+    #include <ArduinoHA.h>
 
     HADevice device("myUniqueId");
 

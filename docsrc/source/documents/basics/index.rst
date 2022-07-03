@@ -1,14 +1,16 @@
 
 Basics
-============
+======
 
-To do
+This chapter describes basic concepts of the library's core.
+Solid understanding of foundations will allow you to utilize full potential of the library.
 
 .. toctree::
+    :maxdepth: 2
+
     introduction
     device-configuration
     availability-reporting
     mqtt-discovery
     mqtt-security
-    mqtt-lwt
     mqtt-custom-messages

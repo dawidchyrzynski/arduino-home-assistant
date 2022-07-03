@@ -8,25 +8,11 @@ Examples
 
    * - Example
      - Description
-   * - :example:`Availability <availability/availability.ino>`
-     - Reporting entities' availability (online / offline) to the Home Assistant.
-   * - :example:`Advanced availability <advanced-availability/advanced-availability.ino>`
-     - Advanced availability reporting with MQTT LWT (Last Will and Testament).
-   * - :example:`MQTT credentials <mqtt-with-credentials/mqtt-with-credentials.ino>`
-     - Estabilishing connection with a MQTT broker with credentials (username and password).
-   * - :example:`MQTT SSL <mqtt-with-ssl/mqtt-with-ssl.ino>`
-     - Establishing secure connection with a MQTT broker.
-   * - :example:`MQTT messages <mqtt-messages/mqtt-messages.ino>`
-     - Publishing MQTT messages, subscribing to custom topics and connection's state callbacks.
-   * - :example:`NodeMCU (ESP8266) <nodemcu/nodemcu.ino>`
-     - Basic example for ESP8266 devices.
-   * - :example:`Arduino Nano 33 IoT <nano33iot/nano33iot.ino>`
-     - Basic example for Arduino Nano 33 IoT devices.
-   * - :example:`ESP32-CAM <esp32-cam/esp32-cam.ino>`
-     - Publishing the camera's image to the Home Assistant.
    * - :example:`Binary sensor <binary-sensor/binary-sensor.ino>`
      - to do
    * - :example:`Button <button/button.ino>`
+     - to do
+   * - :example:`Camera <camera/camera.ino>`
      - to do
    * - :example:`Cover <cover/cover.ino>`
      - to do
@@ -34,7 +20,21 @@ Examples
      - to do
    * - :example:`Device trigger <device-trigger/device-trigger.ino>`
      - to do
+   * - :example:`Fan <fan/fan.ino>`
+     - to do
+   * - :example:`Humidifer <humidifer/humidifer.ino>`
+     - to do
+   * - :example:`HVAC <hvac/hvac.ino>`
+     - to do
+   * - :example:`Light <light/light.ino>`
+     - to do
    * - :example:`Lock <lock/lock.ino>`
+     - to do
+   * - :example:`Number <number/number.ino>`
+     - to do
+   * - :example:`Scene <scene/scene.ino>`
+     - to do
+   * - :example:`Select <select/select.ino>`
      - to do
    * - :example:`Sensor <sensor/sensor.ino>`
      - to do
@@ -46,4 +46,16 @@ Examples
      - to do
    * - :example:`Tag scanner <tag-scanner/tag-scanner.ino>`
      - to do
+   * - :example:`Availability <availability/availability.ino>`
+     - Reporting entities' availability (online / offline) to the Home Assistant.
+   * - :example:`Advanced availability <advanced-availability/advanced-availability.ino>`
+     - Advanced availability reporting with MQTT LWT (Last Will and Testament).
+   * - :example:`MQTT SSL <mqtt-with-ssl/mqtt-with-ssl.ino>`
+     - Establishing secure connection with a MQTT broker.
+   * - :example:`NodeMCU (ESP8266) <nodemcu/nodemcu.ino>`
+     - Basic example for ESP8266 devices.
+   * - :example:`Arduino Nano 33 IoT <nano33iot/nano33iot.ino>`
+     - Basic example for Arduino Nano 33 IoT devices.
+   * - :example:`ESP32-CAM <esp32-cam/esp32-cam.ino>`
+     - Publishing the camera's image to the Home Assistant.
 

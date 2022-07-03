@@ -1,5 +1,5 @@
 Introduction
-=============
+============
 
 Before implementing the business logic of your application you will need to
 add a few necessary pieces of code to your project.
@@ -8,6 +8,7 @@ Basically, everything comes up to a few basic rules:
 1) ``HADevice`` and ``HAMqtt`` instances need to be initialized once globally or as a part of another global object.
 2) ``HAMqtt::begin`` needs to be called at the end of setup logic. It provides MQTT broker credentials that will be used for a connection.
 3) ``HAMqtt::loop`` method needs to be called periodically (it doesn't need to be called on each tick)
+4) Device types need to be initialized after ``HAMqtt`` class (it will be described later in the documentation)
 
 Here are the minimal boilerplates that you can start with.
 Don't worry if you have no idea what's going on here.
