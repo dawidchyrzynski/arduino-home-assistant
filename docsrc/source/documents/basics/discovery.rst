@@ -1,5 +1,5 @@
-MQTT discovery
-==============
+Discovery
+=========
 
 The library automatically maintains connection to the MQTT broker and takes care of the discovery process.
 Each device type that you create (sensor, switch, light, fan, etc.) is automatically registered in MQTT manager.

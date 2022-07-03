@@ -9,7 +9,7 @@ By default you can use the same credentials you use for login in the Home Assist
     This solution is not 100% secure because communication between Arduino and Home Assistant is not encrypted.
     Username and password can be easily discovered by analyzing your local network traffic.
     However, that's fine as long as your local network is secured against unattended access.
-    On high-spec devices (like ESP), you should consider using SSL.
+    On more powerful devices (like ESP), you should consider using SSL.
 
 ::
 
@@ -36,5 +36,5 @@ By default you can use the same credentials you use for login in the Home Assist
 SSL connection
 --------------
 
-On ESP32/ESP8266 you can use ``WiFiClientSecure`` client to establish encrypted communication between your device and the Home Assistant.
+On ESP32/ESP8266 you can use ``WiFiClientSecure`` client to establish encrypted connection between your device and Home Assistant.
 Please take a look at :example:`this example <mqtt-with-ssl/mqtt-with-ssl.ino>`.
