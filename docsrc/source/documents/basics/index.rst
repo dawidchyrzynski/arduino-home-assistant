@@ -13,4 +13,4 @@ Solid understanding of foundations will allow you to utilize full potential of t
     availability-reporting
     mqtt-discovery
     mqtt-security
-    mqtt-custom-messages
+    mqtt-advanced

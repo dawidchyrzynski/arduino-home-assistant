@@ -13,6 +13,8 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Support for custom MQTT messages (publishing and subscribing)
 * Auto reconnect with MQTT broker
 * Reporting availability (online/offline states) of a device
+* Doxygen documentation
+* Covered by unit tests (~100% coverage)
 
 ## Supported HA types
 
@@ -21,6 +23,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Binary sensor       |     ✅     |     -    |
 | Buttons             |     ✅     |     -    |
 | Camera              |     ✅     |     -    |
+| Cover               |     ✅     |     -    |
 | Device tracker      |     ✅     |     -    |
 | Device trigger      |     ✅     |     -    |
 | Fan                 |     ✅     |     -    |

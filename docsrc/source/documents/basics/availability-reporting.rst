@@ -95,6 +95,6 @@ Please note that this solution requires shared availability to be disabled and i
         // ...
 
         // you can control availability at runtime as follows:
-        // mySwitch.setAvailability(true); // online
-        // mySwitch.setAvailability(false); // offline
+        mySwitch.setAvailability(true); // online
+        mySwitch.setAvailability(false); // offline
     }

@@ -28,6 +28,8 @@ You can pick one depending on your needs.
 1) Providing string (const char*) to the ``HADevice`` constructor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Try to keep the ID simple (alphanumeric characters) and short.
+
 ::
 
     #include <ArduinoHA.h>
@@ -42,7 +44,7 @@ You can pick one depending on your needs.
         // ...
     }
 
-2) Providing byte array to the ``HADevice`` constructor
+1) Providing byte array to the ``HADevice`` constructor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
