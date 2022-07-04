@@ -15,6 +15,8 @@ help:
 # Build Github pages
 github:
 	@make clean
+	@rm -rf xml
+	@doxygen source/Doxyfile
 	@make html
 	@rm -rf ../docs/*
 	@touch ../docs/.nojekyll

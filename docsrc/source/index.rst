@@ -24,3 +24,4 @@ Features
 
    documents/getting-started/index
    documents/basics/index
+   documents/api/index

@@ -30,7 +30,6 @@ release = '2.0.0'
 # ones.
 extensions = [
     'breathe',
-    'exhale',
     'sphinx.ext.extlinks',
     'sphinxcontrib.email'
 ]
@@ -45,23 +44,11 @@ exclude_patterns = []
 
 # Setup the breathe extension
 breathe_projects = {
-    'ArduinoHA': './xml'
+    'ArduinoHA': '../xml'
 }
 breathe_default_project = 'ArduinoHA'
 breathe_show_include = True
-
-# Setup the exhale extension
-exhale_args = {
-    # These arguments are required
-    'containmentFolder':     './api',
-    'rootFileName':          'library_root.rst',
-    'doxygenStripFromPath':  '..',
-    'rootFileTitle':         'Library API',
-    'createTreeView':        False,
-    'exhaleExecutesDoxygen': True,
-    'exhaleUseDoxyfile':     True,
-    'doxygenStripFromPath':  '../../src'
-}
+breathe_default_members = ('members', 'undoc-members')
 
 # Tell sphinx what the primary language being documented is.
 primary_domain = 'cpp'

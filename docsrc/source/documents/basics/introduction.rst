@@ -15,7 +15,7 @@ Don't worry if you have no idea what's going on here.
 Everything will be covered in the following chapters.
 
 Arduino Boilerplate
------------
+-------------------
 
 ::
 
