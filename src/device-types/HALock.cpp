@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HALock::HALock(const char* uniqueId) :
-    BaseDeviceType("lock", uniqueId),
+    HABaseDeviceType("lock", uniqueId),
     _icon(nullptr),
     _retain(false),
     _currentState(StateUnknown),

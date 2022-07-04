@@ -5,7 +5,7 @@
 #endif
 
 #include "HADevice.h"
-#include "device-types/BaseDeviceType.h"
+#include "device-types/HABaseDeviceType.h"
 #include "mocks/PubSubClientMock.h"
 
 #define HAMQTT_INIT \
@@ -21,7 +21,7 @@
     _lastConnectionAttemptAt(0), \
     _devicesTypesNb(0), \
     _maxDevicesTypesNb(maxDevicesTypesNb), \
-    _devicesTypes(new BaseDeviceType*[maxDevicesTypesNb]), \
+    _devicesTypes(new HABaseDeviceType*[maxDevicesTypesNb]), \
     _lastWillTopic(nullptr), \
     _lastWillMessage(nullptr), \
     _lastWillRetain(false)
@@ -50,7 +50,7 @@ HAMqtt::HAMqtt(
     HAMQTT_INIT
 {
     _instance = this;
-    memset(_devicesTypes, 0, sizeof(BaseDeviceType*) * maxDevicesTypesNb);
+    memset(_devicesTypes, 0, sizeof(HABaseDeviceType*) * maxDevicesTypesNb);
 }
 #else
 HAMqtt::HAMqtt(
@@ -62,7 +62,7 @@ HAMqtt::HAMqtt(
     HAMQTT_INIT
 {
     _instance = this;
-    memset(_devicesTypes, 0, sizeof(BaseDeviceType*) * maxDevicesTypesNb);
+    memset(_devicesTypes, 0, sizeof(HABaseDeviceType*) * maxDevicesTypesNb);
 }
 #endif
 
@@ -178,7 +178,7 @@ bool HAMqtt::isConnected()
     return _mqtt->connected();
 }
 
-void HAMqtt::addDeviceType(BaseDeviceType* deviceType)
+void HAMqtt::addDeviceType(HABaseDeviceType* deviceType)
 {
     if (_devicesTypesNb + 1 >= _maxDevicesTypesNb) {
         return;

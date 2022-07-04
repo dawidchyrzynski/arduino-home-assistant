@@ -1,13 +1,13 @@
 #ifndef AHA_HASWITCH_H
 #define AHA_HASWITCH_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_SWITCH
 
 #define HASWITCH_CALLBACK(name) void (*name)(bool state, HASwitch* sender)
 
-class HASwitch : public BaseDeviceType
+class HASwitch : public HABaseDeviceType
 {
 public:
     HASwitch(const char* uniqueId);

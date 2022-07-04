@@ -6,7 +6,7 @@
 #include "../utils/HASerializer.h"
 
 HACover::HACover(const char* uniqueId) :
-    BaseDeviceType("cover", uniqueId),
+    HABaseDeviceType("cover", uniqueId),
     _commandCallback(nullptr),
     _currentState(StateUnknown),
     _currentPosition(DefaultPosition),

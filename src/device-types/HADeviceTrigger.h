@@ -1,11 +1,11 @@
 #ifndef AHA_HADEVICETRIGGER_H
 #define AHA_HADEVICETRIGGER_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_DEVICE_TRIGGER
 
-class HADeviceTrigger : public BaseDeviceType
+class HADeviceTrigger : public HABaseDeviceType
 {
 public:
     enum TriggerType {

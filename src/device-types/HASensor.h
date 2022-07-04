@@ -1,11 +1,11 @@
 #ifndef AHA_HASENSOR_H
 #define AHA_HASENSOR_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_SENSOR
 
-class HASensor : public BaseDeviceType
+class HASensor : public HABaseDeviceType
 {
 public:
     /**

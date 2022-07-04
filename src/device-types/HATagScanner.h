@@ -1,11 +1,11 @@
 #ifndef AHA_HATAGSCANNER_H
 #define AHA_HATAGSCANNER_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_TAG_SCANNER
 
-class HATagScanner : public BaseDeviceType
+class HATagScanner : public HABaseDeviceType
 {
 public:
     HATagScanner(const char* uniqueId);

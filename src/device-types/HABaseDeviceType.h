@@ -1,5 +1,5 @@
-#ifndef AHA_BASEDEVICETYPE_H
-#define AHA_BASEDEVICETYPE_H
+#ifndef AHA_HABASEDEVICETYPE_H
+#define AHA_HABASEDEVICETYPE_H
 
 #include <stdint.h>
 
@@ -8,14 +8,14 @@
 class HAMqtt;
 class HASerializer;
 
-class BaseDeviceType
+class HABaseDeviceType
 {
 public:
-    BaseDeviceType(
+    HABaseDeviceType(
         const char* componentName,
         const char* uniqueId
     );
-    virtual ~BaseDeviceType();
+    virtual ~HABaseDeviceType();
 
     inline const char* uniqueId() const
         { return _uniqueId; }

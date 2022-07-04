@@ -1,13 +1,13 @@
 #ifndef AHA_HACOVER_H
 #define AHA_HACOVER_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_COVER
 
 #define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
 
-class HACover : public BaseDeviceType
+class HACover : public HABaseDeviceType
 {
 public:
     static const int16_t DefaultPosition = -32768;

@@ -1,11 +1,11 @@
 #ifndef AHA_HADEVICETRACKER_H
 #define AHA_HADEVICETRACKER_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_DEVICE_TRACKER
 
-class HADeviceTracker : public BaseDeviceType
+class HADeviceTracker : public HABaseDeviceType
 {
 public:
     enum SourceType {

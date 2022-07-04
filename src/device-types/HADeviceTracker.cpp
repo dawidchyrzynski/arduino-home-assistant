@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HADeviceTracker::HADeviceTracker(const char* uniqueId) :
-    BaseDeviceType("device_tracker", uniqueId),
+    HABaseDeviceType("device_tracker", uniqueId),
     _icon(nullptr),
     _sourceType(SourceTypeUnknown),
     _currentState(StateUnknown)

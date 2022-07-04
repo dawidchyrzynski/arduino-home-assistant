@@ -1,10 +1,10 @@
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
 #include "../HAUtils.h"
 #include "../utils/HASerializer.h"
 
-BaseDeviceType::BaseDeviceType(
+HABaseDeviceType::HABaseDeviceType(
     const char* componentName,
     const char* uniqueId
 ) :
@@ -19,23 +19,23 @@ BaseDeviceType::BaseDeviceType(
     }
 }
 
-BaseDeviceType::~BaseDeviceType()
+HABaseDeviceType::~HABaseDeviceType()
 {
 
 }
 
-void BaseDeviceType::setAvailability(bool online)
+void HABaseDeviceType::setAvailability(bool online)
 {
     _availability = (online ? AvailabilityOnline : AvailabilityOffline);
     publishAvailability();
 }
 
-HAMqtt* BaseDeviceType::mqtt() const
+HAMqtt* HABaseDeviceType::mqtt() const
 {
     return HAMqtt::instance();
 }
 
-void BaseDeviceType::subscribeTopic(
+void HABaseDeviceType::subscribeTopic(
     const char* uniqueId,
     const char* topicP
 )
@@ -60,7 +60,7 @@ void BaseDeviceType::subscribeTopic(
     HAMqtt::instance()->subscribe(topic);
 }
 
-void BaseDeviceType::onMqttMessage(
+void HABaseDeviceType::onMqttMessage(
     const char* topic,
     const uint8_t* payload,
     const uint16_t length
@@ -71,7 +71,7 @@ void BaseDeviceType::onMqttMessage(
     (void)length;
 }
 
-void BaseDeviceType::destroySerializer()
+void HABaseDeviceType::destroySerializer()
 {
     if (_serializer) {
         delete _serializer;
@@ -79,7 +79,7 @@ void BaseDeviceType::destroySerializer()
     }
 }
 
-void BaseDeviceType::publishConfig()
+void HABaseDeviceType::publishConfig()
 {
     buildSerializer();
 
@@ -109,7 +109,7 @@ void BaseDeviceType::publishConfig()
     destroySerializer();
 }
 
-void BaseDeviceType::publishAvailability()
+void HABaseDeviceType::publishAvailability()
 {
     const HADevice* device = mqtt()->getDevice();
     if (
@@ -130,7 +130,7 @@ void BaseDeviceType::publishAvailability()
     );
 }
 
-bool BaseDeviceType::publishOnDataTopic(
+bool HABaseDeviceType::publishOnDataTopic(
     const char* topicP,
     const char* value,
     bool retained,

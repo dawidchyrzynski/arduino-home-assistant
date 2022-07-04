@@ -1,13 +1,13 @@
 #ifndef AHA_HALOCK_H
 #define AHA_HALOCK_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_LOCK
 
 #define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* sender)
 
-class HALock : public BaseDeviceType
+class HALock : public HABaseDeviceType
 {
 public:
     enum LockState {

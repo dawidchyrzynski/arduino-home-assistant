@@ -1,11 +1,11 @@
 #ifndef AHA_HACAMERA_H
 #define AHA_HACAMERA_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_CAMERA
 
-class HACamera : public BaseDeviceType
+class HACamera : public HABaseDeviceType
 {
 public:
     enum ImageEncoding {

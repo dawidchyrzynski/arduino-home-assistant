@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HAButton::HAButton(const char* uniqueId) :
-    BaseDeviceType("button", uniqueId),
+    HABaseDeviceType("button", uniqueId),
     _class(nullptr),
     _icon(nullptr),
     _retain(false),

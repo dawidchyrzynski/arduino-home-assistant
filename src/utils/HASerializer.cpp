@@ -10,7 +10,7 @@
 #include "../HADevice.h"
 #include "../HAMqtt.h"
 #include "../HAUtils.h"
-#include "../device-types/BaseDeviceType.h"
+#include "../device-types/HABaseDeviceType.h"
 
 uint16_t HASerializer::calculateConfigTopicLength(
     const char* componentName,
@@ -152,7 +152,10 @@ bool HASerializer::compareDataTopics(
     return strcmp(topic, expectedTopic) == 0;
 }
 
-HASerializer::HASerializer(BaseDeviceType* deviceType, const uint8_t maxEntriesNb) :
+HASerializer::HASerializer(
+    HABaseDeviceType* deviceType,
+    const uint8_t maxEntriesNb
+) :
     _deviceType(deviceType),
     _entriesNb(0),
     _maxEntriesNb(maxEntriesNb),

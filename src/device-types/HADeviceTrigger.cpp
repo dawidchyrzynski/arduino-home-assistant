@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HADeviceTrigger::HADeviceTrigger(const char* type, const char* subtype) :
-    BaseDeviceType("device_automation", nullptr),
+    HABaseDeviceType("device_automation", nullptr),
     _type(type),
     _subtype(subtype),
     _isProgmemType(false),
@@ -15,7 +15,7 @@ HADeviceTrigger::HADeviceTrigger(const char* type, const char* subtype) :
 }
 
 HADeviceTrigger::HADeviceTrigger(TriggerType type, const char* subtype) :
-    BaseDeviceType("device_automation", nullptr),
+    HABaseDeviceType("device_automation", nullptr),
     _type(determineProgmemType(type)),
     _subtype(subtype),
     _isProgmemType(true),
@@ -25,7 +25,7 @@ HADeviceTrigger::HADeviceTrigger(TriggerType type, const char* subtype) :
 }
 
 HADeviceTrigger::HADeviceTrigger(const char* type, TriggerSubtype subtype) :
-    BaseDeviceType("device_automation", nullptr),
+    HABaseDeviceType("device_automation", nullptr),
     _type(type),
     _subtype(determineProgmemSubtype(subtype)),
     _isProgmemType(false),
@@ -35,7 +35,7 @@ HADeviceTrigger::HADeviceTrigger(const char* type, TriggerSubtype subtype) :
 }
 
 HADeviceTrigger::HADeviceTrigger(TriggerType type, TriggerSubtype subtype) :
-    BaseDeviceType("device_automation", nullptr),
+    HABaseDeviceType("device_automation", nullptr),
     _type(determineProgmemType(type)),
     _subtype(determineProgmemSubtype(subtype)),
     _isProgmemType(true),

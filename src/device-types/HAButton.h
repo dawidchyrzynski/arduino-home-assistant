@@ -1,13 +1,13 @@
 #ifndef AHA_HABUTTON_H
 #define AHA_HABUTTON_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_BUTTON
 
 #define HABUTTON_CALLBACK(name) void (*name)(HAButton* sender)
 
-class HAButton : public BaseDeviceType
+class HAButton : public HABaseDeviceType
 {
 public:
     HAButton(const char* uniqueId);

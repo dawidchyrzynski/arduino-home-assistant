@@ -8,7 +8,7 @@
 #include "HASerializerArray.h"
 
 class HAMqtt;
-class BaseDeviceType;
+class HABaseDeviceType;
 
 class HASerializer
 {
@@ -75,7 +75,7 @@ public:
         const char* topicP
     );
 
-    HASerializer(BaseDeviceType* deviceType, const uint8_t maxEntriesNb);
+    HASerializer(HABaseDeviceType* deviceType, const uint8_t maxEntriesNb);
     ~HASerializer();
 
     inline uint8_t getEntriesNb() const
@@ -102,7 +102,7 @@ private:
         InternalWithSeparateAvailability
     };
 
-    BaseDeviceType* _deviceType;
+    HABaseDeviceType* _deviceType;
     uint8_t _entriesNb;
     uint8_t _maxEntriesNb;
     SerializerEntry* _entries;

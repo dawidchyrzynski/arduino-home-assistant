@@ -1,11 +1,11 @@
 #ifndef AHA_HABINARYSENSOR_H
 #define AHA_HABINARYSENSOR_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
 #ifndef EX_ARDUINOHA_BINARY_SENSOR
 
-class HABinarySensor : public BaseDeviceType
+class HABinarySensor : public HABaseDeviceType
 {
 public:
     HABinarySensor(const char* uniqueId);

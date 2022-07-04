@@ -16,7 +16,7 @@ class PubSubClient;
 #endif
 
 class HADevice;
-class BaseDeviceType;
+class HABaseDeviceType;
 
 class HAMqtt
 {
@@ -166,7 +166,7 @@ public:
      *
      * @param deviceType Instance of the device's type (eg. HATriggers).
      */
-    void addDeviceType(BaseDeviceType* deviceType);
+    void addDeviceType(HABaseDeviceType* deviceType);
 
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
     void writePayload(const char* data, uint16_t length);
@@ -217,7 +217,7 @@ public:
     inline uint8_t getDevicesTypesNb() const
         { return _devicesTypesNb; }
 
-    inline BaseDeviceType** getDevicesTypes() const
+    inline HABaseDeviceType** getDevicesTypes() const
         { return _devicesTypes; }
 #endif
 
@@ -252,7 +252,7 @@ private:
     uint32_t _lastConnectionAttemptAt;
     uint8_t _devicesTypesNb;
     uint8_t _maxDevicesTypesNb;
-    BaseDeviceType** _devicesTypes;
+    HABaseDeviceType** _devicesTypes;
     const char* _lastWillTopic;
     const char* _lastWillMessage;
     bool _lastWillRetain;
