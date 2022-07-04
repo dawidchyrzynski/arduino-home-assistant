@@ -1,4 +1,4 @@
-docsrc/source/xml
-docsrc/source/api
+docsrc/source
+docsrc/xml
 docsrc/build
 .DS_Store
