@@ -70,3 +70,92 @@ form.search input[type="submit"]:hover {
 .content pre {
     font-size: 14px
 }
+.cpp.var,
+.cpp.function {
+    border: 1px solid #eee;
+    background: #fcfcfc;
+    margin-bottom: 0.5em;
+    padding: 15px
+}
+.cpp > dt {
+    border-bottom: 1px solid #eee;
+    margin: 0 0 10px;
+    padding-bottom: 5px;
+}
+.cpp.function > dt {
+    border-bottom: 2px solid #eee;
+}
+.cpp > dt * {
+    font-size: 16px;
+    font-weight: 600
+}
+.cpp.class > dt * {
+    font-size: 20px
+}
+.cpp > dt a * {
+    color: #3eaf7c
+}
+.cpp > dt .k::after {
+    content: " "
+}
+.cpp > dt .kt + .w::before {
+    content: " "
+}
+.cpp > dd {
+    margin-left: 0;
+    text-align: justify;
+    font-size: 15px;
+}
+.cpp .sig-paren {
+    margin-left: 0;
+    margin-right: 3px;
+}
+.cpp .sig-name {
+    margin-right: 2px
+}
+.cpp .p::after,
+.cpp .n::after {
+    content: " "
+}
+.cpp .k,
+.cpp .kt {
+    color: #2664b9
+}
+.cpp .n {
+    color: #2c3e50;
+    margin: 0
+}
+.cpp.function .field-list {
+    display: block;
+    margin-bottom: 0
+}
+.cpp.function .field-list dt {
+    padding-left: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    color: #999 !important;
+}
+.cpp.function .field-list dd {
+    padding-left: 0
+}
+.cpp.function .field-list dd > p,
+.cpp.function .field-list dd > ul {
+    margin: 8px 0 0;
+    list-style-type: none;
+    padding-left: 0
+}
+.cpp.function .field-list dd p strong {
+    margin-left: 0
+}
+.cpp .admonition {
+    padding: 8px 15px
+}
+.breathe-sectiondef-title {
+    color: #222 !important;
+    font-size: 20px !important;
+    text-align: center;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
