@@ -40,6 +40,17 @@ HADevice::~HADevice()
     }
 }
 
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
+{
+    if (_uniqueId) {
+        return false; // unique ID cannot be changed at runtime once it's set
+    }
+
+    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
+    _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
+    return true;
+}
+
 void HADevice::setManufacturer(const char* manufacturer)
 {
     _serializer->set(HADeviceManufacturerProperty, manufacturer);
@@ -94,11 +105,11 @@ bool HADevice::enableSharedAvailability()
     return false;
 }
 
-bool HADevice::enableLastWill()
+void HADevice::enableLastWill()
 {
     HAMqtt* mqtt = HAMqtt::instance();
     if (!mqtt || !_availabilityTopic) {
-        return false;
+        return;
     }
 
     mqtt->setLastWill(
@@ -106,19 +117,6 @@ bool HADevice::enableLastWill()
         "offline",
         true
     );
-
-    return true;
-}
-
-bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
-{
-    if (_uniqueId) {
-        return false; // unique ID cannot be changed at runtime once it's set
-    }
-
-    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
-    _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
-    return true;
 }
 
 void HADevice::publishAvailability()
