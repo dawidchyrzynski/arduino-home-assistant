@@ -16,8 +16,8 @@ class HADevice
 public:
     /**
      * Constructs HADevice without unique ID.
-     * Please note that you will need to set ID using HADevice::setUniqueId method.
-     * Otherwise none of the entities will work.
+     * 
+     * @note You will need to set ID using HADevice::setUniqueId method. Otherwise none of the entities will work.
      */
     HADevice();
 
@@ -51,7 +51,7 @@ public:
 
     /**
      * Returns the instance of the HASerializer used by the device.
-     * This method is used by all entites to serialize device's representation.
+     * This method is used by all entities to serialize device's representation.
      */
     inline const HASerializer* getSerializer() const
         { return _serializer; }
@@ -117,7 +117,7 @@ public:
      * Sets device's availability and publishes MQTT message on the availability topic.
      * If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens.
      * 
-     * @param online Set to true if the device should be displayed as availabile in the HA panel.
+     * @param online Set to true if the device should be displayed as available in the HA panel.
      */
     void setAvailability(bool online);
 
