@@ -5,8 +5,8 @@ The library automatically maintains connection to the MQTT broker and takes care
 Each device type that you create (sensor, switch, light, fan, etc.) is automatically registered in MQTT manager.
 Whenever connection with the MQTT broker is acquired the configuration of all device types is pushed to the Home Assistant.
 
-There is one basic rule that you need to follow: device types need to be constructed after ``HAMqtt`` class.
-That's because device types are relying on ``HAMqtt`` instance internally.
+There is one basic rule that you need to follow: device types need to be constructed after :doc:`HAMqtt </documents/api/core/ha-mqtt>` class.
+That's because device types are relying on :doc:`HAMqtt </documents/api/core/ha-mqtt>` instance internally.
 
 Topics prefix
 -------------

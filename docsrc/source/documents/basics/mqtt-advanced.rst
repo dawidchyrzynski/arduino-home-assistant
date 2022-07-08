@@ -4,7 +4,7 @@ MQTT advanced features
 Callbacks
 ---------
 
-``HAMqtt`` class exposes some useful callbacks that you can bind to.
+:doc:`HAMqtt </documents/api/core/ha-mqtt>` class exposes some useful callbacks that you can bind to.
 Please take a look at the example below.
 
 ::

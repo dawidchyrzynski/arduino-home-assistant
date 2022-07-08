@@ -1,7 +1,7 @@
 Device configuration
 ====================
 
-``HADevice`` represents the physical device where the library is installed.
+:doc:`HADevice </documents/api/core/ha-device>` represents the physical device where the library is installed.
 Logically it's a group of types like sensors, switches, lights and so on. 
 In the Home Assistant, it's listed with properties that may be configured using the library's API.
 
@@ -25,8 +25,8 @@ The safest solution is to use the MAC address of an Ethernet or Wi-Fi chip but y
 There are three different ways to set the ID of the device.
 You can pick one depending on your needs.
 
-1) Providing string (const char*) to the ``HADevice`` constructor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1) Providing string (const char*) to the :doc:`HADevice </documents/api/core/ha-device>` constructor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Try to keep the ID simple (alphanumeric characters) and short.
 
@@ -44,8 +44,8 @@ Try to keep the ID simple (alphanumeric characters) and short.
         // ...
     }
 
-1) Providing byte array to the ``HADevice`` constructor
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+1) Providing byte array to the :doc:`HADevice </documents/api/core/ha-device>` constructor
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -63,8 +63,8 @@ Try to keep the ID simple (alphanumeric characters) and short.
         // ...
     }
 
-3) Using ``HADevice::setUniqueId`` method during the setup
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+3) Using :doc:`HADevice::setUniqueId </documents/api/core/ha-device>` method during the setup
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
 
@@ -87,7 +87,7 @@ Try to keep the ID simple (alphanumeric characters) and short.
 Device properties
 -----------------
 
-Each property has its corresponding setter method in the ``HADevice`` class.
+Each property has its corresponding setter method in the :doc:`HADevice </documents/api/core/ha-device>` class.
 Please note that all these methods accept const char pointer whose **content is not copied**.
 
 ::

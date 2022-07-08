@@ -1,7 +1,7 @@
 Connection parameters
 =====================
 
-``HAMqtt`` class exposes a few variants of the ``begin`` method that allows specifying the MQTT connection parameters.
+:doc:`HAMqtt </documents/api/core/ha-mqtt>` class exposes a few variants of the ``begin`` method that allows specifying the MQTT connection parameters.
 **This method should be called only once and at the end of the setup logic.**
 The example below presents all possible variants. Pick one that meets your requirements.
 
