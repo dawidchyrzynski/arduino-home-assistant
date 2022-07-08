@@ -149,6 +149,9 @@ form.search input[type="submit"]:hover {
 .cpp.function .field-list dd p strong {
     margin-left: 0
 }
+.cpp.function .field-list dd + dt {
+    margin-top: 15px
+}
 .cpp .admonition {
     padding: 8px 15px
 }
