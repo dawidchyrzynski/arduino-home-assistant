@@ -16,7 +16,8 @@ HAFan::HAFan(const char* uniqueId, uint8_t features) :
     _speedCallback(nullptr),
     _retain(false),
     _speedRangeMin(1),
-    _speedRangeMax(100)
+    _speedRangeMax(100),
+    _icon(nullptr)
 {
 
 }
@@ -193,6 +194,16 @@ uint16_t HAFan::calculateSerializedLength(const char* serializedDevice) const
         size += topicLength + 12; // 12 - length of the JSON decorators for this field
     }
 
+    // icon
+    {
+        // icon
+        if (_icon != nullptr) {
+            // Field format: ,"ic":"[ICON]"
+            size += strlen(_icon) + 8; // 8 - length of the JSON decorators for this field
+        }
+
+    }
+
     // speeds
     if (_features & SpeedsFeature) {
         // percentage command topic
@@ -274,6 +285,15 @@ bool HAFan::writeSerializedData(const char* serializedDevice) const
             this,
             Prefix,
             DeviceTypeSerializer::StateTopic
+        );
+    }
+
+    // icon
+    if (_icon != nullptr) {
+        static const char Prefix[] PROGMEM = {",\"ic\":\""};
+        DeviceTypeSerializer::mqttWriteConstCharField(
+            Prefix,
+            _icon
         );
     }
 

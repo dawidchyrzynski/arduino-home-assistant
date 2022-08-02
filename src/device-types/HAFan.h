@@ -136,7 +136,15 @@ public:
     inline void setSpeedRangeMax(uint16_t max)
         { _speedRangeMax = max; }
 
-protected:
+    /**
+     * Sets icon of the sensor, e.g. `mdi:home`.
+     *
+     * @param icon Material Design Icon name with mdi: prefix.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
+private:
     bool publishState(bool state);
     bool publishSpeed(uint16_t speed);
     uint16_t calculateSerializedLength(const char* serializedDevice) const override;
@@ -150,6 +158,8 @@ protected:
     bool _retain;
     uint16_t _speedRangeMin;
     uint16_t _speedRangeMax;
+
+    const char* _icon;
 };
 
 #endif
