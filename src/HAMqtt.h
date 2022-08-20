@@ -18,11 +18,17 @@ class PubSubClient;
 class HADevice;
 class HABaseDeviceType;
 
+/**
+ * This class is a wrapper for the PubSub API.
+ * It's a central point of the library where instances of all device types are stored.
+ */
 class HAMqtt
 {
 public:
-    static const uint16_t ReconnectInterval = 5000; // ms
-
+    /**
+     * Returns existing instance (singleton) of the HAMqtt class.
+     * It may be a null pointer if the HAMqtt object was never constructed or it was destroyed.
+     */
     inline static HAMqtt* instance()
         { return _instance; }
 
@@ -33,84 +39,94 @@ public:
         const uint8_t maxDevicesTypesNb = 6
     );
 #else
+    /**
+     * Creates a new instance of the HAMqtt class.
+     * Please note that only one instance of the class can be initialized at the same time.
+     * 
+     * @param netClient The EthernetClient or WiFiClient that's going to be used for the network communication.
+     * @param device An instance of the HADevice class representing your device.
+     * @param maxDevicesTypesNb The maximum number of device types (sensors, switches, etc.) that you're going to implement.
+     */
     explicit HAMqtt(
         Client& netClient,
         HADevice& device,
         const uint8_t maxDevicesTypesNb = 6
     );
 #endif
+
+    /**
+     * Removes singleton of the HAMqtt class.
+     */
     ~HAMqtt();
 
     /**
-     * Sets prefix for Home Assistant discovery.
-     * It needs to match prefix set in the HA admin panel.
+     * Sets the prefix of the Home Assistant discovery topics.
+     * It needs to match the prefix set in the HA admin panel.
      * The default prefix is "homeassistant".
      *
-     * @param prefix
+     * @param prefix The discovery topics' prefix.
      */
     inline void setDiscoveryPrefix(const char* prefix)
         { _discoveryPrefix = prefix; }
 
     /**
-     * Returns discovery prefix.
+     * Returns the discovery topics' prefix.
      */
     inline const char* getDiscoveryPrefix() const
         { return _discoveryPrefix; }
 
     /**
-     * Sets prefix that will be used for topics different than discovery.
-     * It may be useful if you want to pass MQTT trafic through bridge.
+     * Sets prefix of the data topics.
+     * It may be useful if you want to pass MQTT traffic through a bridge.
+     * The default prefix is "aha".
      *
-     * @param prefix
+     * @param prefix The data topics' prefix.
      */
     inline void setDataPrefix(const char* prefix)
         { _dataPrefix = prefix; }
 
     /**
-     * Returns data prefix.
+     * Returns the data topics' prefix.
      */
     inline const char* getDataPrefix() const
         { return _dataPrefix; }
 
     /**
      * Returns instance of the device assigned to the HAMqtt class.
+     * It's the same object (pointer) that was passed to the HAMqtt constructor.
      */
     inline HADevice const* getDevice() const
         { return &_device; }
 
     /**
-     * Given callback will be called for each received message from the broker.
+     * Registers a new callback method that will be called when the device receives an MQTT message.
+     * Please note that the callback is also fired by internal MQTT messages used by the library.
+     * You should always verify the topic of the received message.
      *
-     * @param callback
+     * @param callback Callback method.
      */
     inline void onMessage(HAMQTT_MESSAGE_CALLBACK(callback))
         { _messageCallback = callback; }
 
     /**
-     * Given callback will be called each time the connection with broker is acquired.
+     * Registers a new callback method that will be called each time a connection to the MQTT broker is acquired.
+     * The callback is also fired after reconnecting to the broker.
+     * You can use this method to register topics' subscriptions.
      *
-     * @param callback
+     * @param callback Callback method.
      */
     inline void onConnected(HAMQTT_CALLBACK(callback))
         { _connectedCallback = callback; }
 
     /**
-     * Given callback will be called each time the library fails to connect to the broker.
-     *
-     * @param callback
-     */
-    inline void onConnectionFailed(HAMQTT_CALLBACK(callback))
-        { _connectionFailedCallback = callback; }
-
-    /**
-     * Sets parameters of the connection to the MQTT broker.
+     * Sets parameters of the MQTT connection using the IP address and port.
      * The library will try to connect to the broker in first loop cycle.
      * Please note that the library automatically reconnects to the broker if connection is lost.
      *
      * @param serverIp IP address of the MQTT broker.
      * @param serverPort Port of the MQTT broker.
-     * @param username Username for authentication.
-     * @param password Password for authentication.
+     * @param username Username for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     * @param password Password for authentication. It can be nullptr if the anonymous connection needs to be performed.
      */
     bool begin(
         const IPAddress serverIp,
@@ -118,59 +134,114 @@ public:
         const char* username = nullptr,
         const char* password = nullptr
     );
-    bool begin(
-        const IPAddress serverIp,
-        const char* username,
-        const char* password
-    );
 
     /**
-     * Connects to the MQTT broker using hostname.
+     * Sets parameters of the MQTT connection using the IP address and the default port (1883).
+     * The library will try to connect to the broker in first loop cycle.
+     * Please note that the library automatically reconnects to the broker if connection is lost.
      *
-     * @param hostname Hostname of the MQTT broker.
-     * @param serverPort Port of the MQTT broker.
-     * @param username Username for authentication.
-     * @param password Password for authentication.
+     * @param serverIp IP address of the MQTT broker.
+     * @param username Username for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     * @param password Password for authentication. It can be nullptr if the anonymous connection needs to be performed.
      */
     bool begin(
-        const char* hostname,
-        const uint16_t serverPort = HAMQTT_DEFAULT_PORT,
-        const char* username = nullptr,
-        const char* password = nullptr
-    );
-    bool begin(
-        const char* hostname,
+        const IPAddress serverIp,
         const char* username,
         const char* password
     );
 
     /**
-     * Closes connection with the MQTT broker.
+     * Sets parameters of the MQTT connection using the hostname and port.
+     * The library will try to connect to the broker in first loop cycle.
+     * Please note that the library automatically reconnects to the broker if connection is lost.
+     *
+     * @param serverHostname Hostname of the MQTT broker.
+     * @param serverPort Port of the MQTT broker.
+     * @param username Username for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     * @param password Password for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     */
+    bool begin(
+        const char* serverHostname,
+        const uint16_t serverPort = HAMQTT_DEFAULT_PORT,
+        const char* username = nullptr,
+        const char* password = nullptr
+    );
+
+    /**
+     * Sets parameters of the MQTT connection using the hostname and the default port (1883).
+     * The library will try to connect to the broker in first loop cycle.
+     * Please note that the library automatically reconnects to the broker if connection is lost.
+     *
+     * @param serverHostname Hostname of the MQTT broker.
+     * @param username Username for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     * @param password Password for authentication. It can be nullptr if the anonymous connection needs to be performed.
+     */
+    bool begin(
+        const char* serverHostname,
+        const char* username,
+        const char* password
+    );
+
+    /**
+     * Closes the MQTT connection.
      */
     bool disconnect();
 
     /**
-     * ArduinoHA's ticker.
+     * This method should be called periodically inside the main loop of the firmware.
+     * It's safe to call this method in some interval (like 5ms).
      */
     void loop();
 
     /**
      * Returns true if connection to the MQTT broker is established.
      */
-    bool isConnected();
+    bool isConnected() const;
 
     /**
      * Adds a new device's type to the MQTT.
      * Each time the connection with MQTT broker is acquired, the HAMqtt class
      * calls "onMqttConnected" method in all devices' types instances.
      *
-     * @param deviceType Instance of the device's type (eg. HATriggers).
+     * @note The HAMqtt class doesn't take ownership of the given pointer.
+     * @param deviceType Instance of the device's type (HASwitch, HABinarySensor, etc.).
      */
     void addDeviceType(HABaseDeviceType* deviceType);
 
+    /**
+     * Begins publishing of a message with the given properties.
+     * When this method returns true the payload can be written using 
+     * HAMqtt::writePayload or HAMqtt::writePayload_P methods.
+     * 
+     * @param topic Topic of the published message.
+     * @param payloadLength Length of the payload (bytes) that's going to be published.
+     * @param retained Specifies whether the published message should be retained.
+     */
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
+
+    /**
+     * Writes given data to the TCP stream.
+     * Please note that before writing any data the HAMqtt::beginPublish method
+     * needs to be called.
+     * 
+     * @param data Data to publish.
+     * @param length Length of the data (bytes).
+     */
     void writePayload(const char* data, uint16_t length);
+
+    /**
+     * Writes given progmem data to the TCP stream.
+     * Please note that before writing any data the HAMqtt::beginPublish method
+     * needs to be called.
+     * 
+     * @param src Progmem region to publish.
+     */
     void writePayload_P(const char* src);
+
+    /**
+     * Finishes publishing of a message.
+     * After calling this method the message will be processed by the broker.
+     */
     bool endPublish();
 
     /**
@@ -181,18 +252,18 @@ public:
      * Please note that you need to subscribe topic each time the connection
      * with the broker is acquired.
      *
-     * @param topic Topic to subscribe
+     * @param topic Topic to subscribe.
      */
     bool subscribe(const char* topic);
 
     /**
-     * Enables last will message that will be produced when device disconnects from the broker.
+     * Enables the last will message that will be produced when the device disconnects from the broker.
      * If you want to change availability of the device in Home Assistant panel
-     * please use enableLastWill() method in the HADevice object instead.
+     * please use enableLastWill() method from the HADevice class instead.
      *
-     * @param lastWillTopic
-     * @param lastWillMessage
-     * @param lastWillRetain
+     * @param lastWillTopic The topic to publish.
+     * @param lastWillMessage The message (payload) to publish.
+     * @param lastWillRetain Specifies whether the published message should be retained.
      */
     inline void setLastWill(
         const char* lastWillTopic,
@@ -207,6 +278,7 @@ public:
     /**
      * Processes MQTT message received from the broker (subscription).
      *
+     * @note Do not use this method on your own. It's only for the internal purpose.
      * @param topic Topic of the message.
      * @param payload Content of the message.
      * @param length Length of the message.
@@ -222,6 +294,10 @@ public:
 #endif
 
 private:
+    /// Interval between MQTT reconnects (milliseconds).
+    static const uint16_t ReconnectInterval = 5000;
+
+    /// Living instance of the HAMqtt class. It can be nullptr.
     static HAMqtt* _instance;
 
     /**
@@ -238,23 +314,53 @@ private:
 #ifdef ARDUINOHA_TEST
     PubSubClientMock* _mqtt;
 #else
+    /// Instance of the PubSubClient class. It's initialized in the constructor.
     PubSubClient* _mqtt;
 #endif
+
+    /// Instance of the HADevice passed to the constructor.
     HADevice& _device;
+
+    /// The callback method that will be called when an MQTT message is received.
     HAMQTT_MESSAGE_CALLBACK(_messageCallback);
+
+    /// The callback method that will be called when the MQTT connection is acquired.
     HAMQTT_CALLBACK(_connectedCallback);
-    HAMQTT_CALLBACK(_connectionFailedCallback);
+
+    /// Specifies whether the HAMqtt::begin method was ever called.
     bool _initialized;
+
+    /// Teh discovery prefix that's used for the configuration messages.
     const char* _discoveryPrefix;
+
+    /// The data prefix that's used for publishing data messages.
     const char* _dataPrefix;
+
+    /// The username used for the authentication. It's set in the HAMqtt::begin method.
     const char* _username;
+
+    /// The password used for the authentication. It's set in the HAMqtt::begin method.
     const char* _password;
+
+    /// Time of the last connection attemps (milliseconds since boot).
     uint32_t _lastConnectionAttemptAt;
+
+    /// The amount of registered devices types.
     uint8_t _devicesTypesNb;
+
+    /// The maximum amount of devices types that can be registered.
     uint8_t _maxDevicesTypesNb;
+
+    /// Pointers of all registered devices types (array of pointers).
     HABaseDeviceType** _devicesTypes;
+
+    /// The last will topic set by HAMqtt::setLastWill
     const char* _lastWillTopic;
+
+    /// The last will message set by HAMqtt::setLastWill
     const char* _lastWillMessage;
+
+    /// The last will retain set by HAMqtt::setLastWill
     bool _lastWillRetain;
 };
 

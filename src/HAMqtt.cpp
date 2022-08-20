@@ -12,7 +12,6 @@
     _device(device), \
     _messageCallback(nullptr), \
     _connectedCallback(nullptr), \
-    _connectionFailedCallback(nullptr), \
     _initialized(false), \
     _discoveryPrefix(DefaultDiscoveryPrefix), \
     _dataPrefix(DefaultDataPrefix), \
@@ -114,13 +113,13 @@ bool HAMqtt::begin(
 }
 
 bool HAMqtt::begin(
-    const char* hostname,
+    const char* serverHostname,
     const uint16_t serverPort,
     const char* username,
     const char* password
 )
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", hostname, serverPort);
+    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", serverHostname, serverPort);
 
     if (_device.getUniqueId() == nullptr) {
         ARDUINOHA_DEBUG_PRINTLN("AHA: init failed. Missing device unique ID");
@@ -136,19 +135,19 @@ bool HAMqtt::begin(
     _password = password;
     _initialized = true;
 
-    _mqtt->setServer(hostname, serverPort);
+    _mqtt->setServer(serverHostname, serverPort);
     _mqtt->setCallback(onMessageReceived);
 
     return true;
 }
 
 bool HAMqtt::begin(
-    const char* hostname,
+    const char* serverHostname,
     const char* username,
     const char* password
 )
 {
-    return begin(hostname, HAMQTT_DEFAULT_PORT, username, password);
+    return begin(serverHostname, HAMQTT_DEFAULT_PORT, username, password);
 }
 
 bool HAMqtt::disconnect()
@@ -173,7 +172,7 @@ void HAMqtt::loop()
     }
 }
 
-bool HAMqtt::isConnected()
+bool HAMqtt::isConnected() const
 {
     return _mqtt->connected();
 }
@@ -259,10 +258,6 @@ void HAMqtt::connectToServer()
         onConnectedLogic();
     } else {
         ARDUINOHA_DEBUG_PRINTLN("AHA: failed to connect");
-
-        if (_connectionFailedCallback) {
-            _connectionFailedCallback();
-        }
     }
 }
 

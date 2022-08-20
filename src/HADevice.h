@@ -8,16 +8,14 @@ class HASerializer;
 /**
  * This class represents your device that's going to be registered in the Home Assistant devices registry.
  * Each entity (HABinarySensor, HASensor, etc.) that you use will be owned by this device.
- * 
- * 
  */
 class HADevice
 {
 public:
     /**
-     * Constructs HADevice without unique ID.
+     * Constructs HADevice without the unique ID.
      * 
-     * @note You will need to set ID using HADevice::setUniqueId method. Otherwise none of the entities will work.
+     * @note You will need to set the ID using HADevice::setUniqueId method. Otherwise none of the entities will work.
      */
     HADevice();
 
@@ -30,7 +28,7 @@ public:
     HADevice(const char* uniqueId);
 
     /**
-     * Constructs HADevice using the given byte array as unique ID.
+     * Constructs HADevice using the given byte array as the unique ID.
      * It works in the same way as HADevice::setUniqueId method.
      * 
      * @param uniqueId Bytes array that's going to be converted into the string.
@@ -86,28 +84,28 @@ public:
     bool setUniqueId(const byte* uniqueId, const uint16_t length);
 
     /**
-     * Sets "manufacturer" property that's going to be displayed in the Home Assistant.
+     * Sets the "manufacturer" property that's going to be displayed in the Home Assistant.
      * 
      * @param manufacturer Any string. Keep it short to save the memory.
      */
     void setManufacturer(const char* manufacturer);
 
     /**
-     * Sets "model" property that's going to be displayed in the Home Assistant.
+     * Sets the "model" property that's going to be displayed in the Home Assistant.
      * 
      * @param model Any string. Keep it short to save the memory.
      */
     void setModel(const char* model);
 
     /**
-     * Sets "name" property that's going to be displayed in the Home Assistant.
+     * Sets the "name" property that's going to be displayed in the Home Assistant.
      * 
      * @param name Any string. Keep it short to save the memory.
      */
     void setName(const char* name);
 
     /**
-     * Sets "software version" property that's going to be displayed in the Home Assistant.
+     * Sets the "software version" property that's going to be displayed in the Home Assistant.
      * 
      * @param softwareVersion Any string. Keep it short to save the memory.
      */

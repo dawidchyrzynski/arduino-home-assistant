@@ -30,6 +30,7 @@
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
 * Refactored `HASensor` logic. It's now divided into three different classes: `HASensor`, `HASensorInteger` and `HASensorFloat`. This approach reduces flash size by ~2k
 * Removed all legacy constructors with `HAMqtt` argument
+* Removed `onConnectionFailed` callback from the `HAMqtt` class
 
 ## 1.3.0
 
