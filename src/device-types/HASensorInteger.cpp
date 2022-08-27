@@ -1,7 +1,7 @@
 #include "HASensorInteger.h"
 #ifndef EX_ARDUINOHA_SENSOR
 
-#include "../HAUtils.h"
+#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
 HASensorInteger::HASensorInteger(const char* uniqueId) :

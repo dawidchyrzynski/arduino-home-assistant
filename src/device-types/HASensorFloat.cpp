@@ -1,7 +1,7 @@
 #include "HASensorFloat.h"
 #ifndef EX_ARDUINOHA_SENSOR
 
-#include "../HAUtils.h"
+#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
 HASensorFloat::HASensorFloat(const char* uniqueId, const Precision precision) :

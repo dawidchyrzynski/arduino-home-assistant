@@ -1,7 +1,7 @@
 #include "HABaseDeviceType.h"
 #include "../HAMqtt.h"
 #include "../HADevice.h"
-#include "../HAUtils.h"
+#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
 HABaseDeviceType::HABaseDeviceType(

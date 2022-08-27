@@ -9,7 +9,7 @@
 #include "../ArduinoHADefines.h"
 #include "../HADevice.h"
 #include "../HAMqtt.h"
-#include "../HAUtils.h"
+#include "../utils/HAUtils.h"
 #include "../device-types/HABaseDeviceType.h"
 
 uint16_t HASerializer::calculateConfigTopicLength(

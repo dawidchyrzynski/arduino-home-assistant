@@ -2,7 +2,7 @@
 #ifndef EX_ARDUINOHA_COVER
 
 #include "../HAMqtt.h"
-#include "../HAUtils.h"
+#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
 HACover::HACover(const char* uniqueId) :

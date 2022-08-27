@@ -3,7 +3,6 @@
 #endif
 
 #include <Arduino.h>
-
 #include "HAUtils.h"
 
 bool HAUtils::endsWith(const char* str, const char* suffix)

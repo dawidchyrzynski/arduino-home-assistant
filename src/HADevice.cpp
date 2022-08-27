@@ -1,7 +1,7 @@
 #include "ArduinoHADefines.h"
 #include "HADevice.h"
-#include "HAUtils.h"
 #include "HAMqtt.h"
+#include "utils/HAUtils.h"
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
