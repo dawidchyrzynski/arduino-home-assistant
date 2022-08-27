@@ -19,18 +19,13 @@ HABaseDeviceType::HABaseDeviceType(
     }
 }
 
-HABaseDeviceType::~HABaseDeviceType()
-{
-
-}
-
 void HABaseDeviceType::setAvailability(bool online)
 {
     _availability = (online ? AvailabilityOnline : AvailabilityOffline);
     publishAvailability();
 }
 
-HAMqtt* HABaseDeviceType::mqtt() const
+HAMqtt* HABaseDeviceType::mqtt()
 {
     return HAMqtt::instance();
 }
@@ -89,21 +84,18 @@ void HABaseDeviceType::publishConfig()
     );
     const uint16_t dataLength = _serializer->calculateSize();
 
-    if (topicLength == 0 || dataLength == 0) {
-        destroySerializer();
-        return;
-    }
+    if (topicLength > 0 && dataLength > 0) {
+        char topic[topicLength];
+        HASerializer::generateConfigTopic(
+            topic,
+            componentName(),
+            uniqueId()
+        );
 
-    char topic[topicLength];
-    HASerializer::generateConfigTopic(
-        topic,
-        componentName(),
-        uniqueId()
-    );
-
-    if (mqtt()->beginPublish(topic, dataLength, true)) {
-        _serializer->flush();
-        mqtt()->endPublish();
+        if (mqtt()->beginPublish(topic, dataLength, true)) {
+            _serializer->flush();
+            mqtt()->endPublish();
+        }
     }
 
     destroySerializer();

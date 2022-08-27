@@ -22,8 +22,6 @@ public:
         const char* uniqueId
     );
 
-    virtual ~HABaseDeviceType();
-
     /**
      * Returns unique ID of the device type.
      */
@@ -87,7 +85,7 @@ protected:
     /**
      * Returns instance of the HAMqtt class.
      */
-    HAMqtt* mqtt() const;
+    static HAMqtt* mqtt();
 
     /**
      * Subscribes to the given data topic.
@@ -106,11 +104,6 @@ protected:
      * Follow implementation of the existing device types to get better understanding of the logic.
      */
     virtual void buildSerializer() { };
-
-    /**
-     * Destroys the existing serializer.
-     */
-    virtual void destroySerializer();
 
     /**
      * This method is called each time the MQTT connection is acquired.
@@ -134,17 +127,30 @@ protected:
     );
 
     /**
+     * Destroys the existing serializer.
+     */
+    void destroySerializer();
+
+    /**
      * Publishes configuration of this device type on the HA discovery topic.
      */
-    virtual void publishConfig();
+    void publishConfig();
 
     /**
      * Publishes current availability of the device type.
      * The message is only produced if the availability is configured for this device type.
      */
-    virtual void publishAvailability();
+    void publishAvailability();
 
-    virtual bool publishOnDataTopic(
+    /**
+     * Publishes the given data on the data topic.
+     *
+     * @param topicP The topic to publish on (progmem string).
+     * @param value The message's payload.
+     * @param retained Specifies whether the message should be retained.
+     * @param isProgmemValue Specifies whether the given value is stored in the progmem.
+     */
+    bool publishOnDataTopic(
         const char* topicP,
         const char* value,
         bool retained = false,

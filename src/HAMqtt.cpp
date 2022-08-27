@@ -215,7 +215,6 @@ bool HAMqtt::endPublish()
 bool HAMqtt::subscribe(const char* topic)
 {
     ARDUINOHA_DEBUG_PRINTF("AHA: subscribing %s\n", topic);
-
     return _mqtt->subscribe(topic);
 }
 
