@@ -32,8 +32,6 @@ Examples
      - to do
    * - :example:`Number <number/number.ino>`
      - to do
-   * - :example:`Scene <scene/scene.ino>`
-     - to do
    * - :example:`Select <select/select.ino>`
      - to do
    * - :example:`Sensor <sensor/sensor.ino>`

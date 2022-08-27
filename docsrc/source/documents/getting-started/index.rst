@@ -2,9 +2,9 @@
 Getting started
 ===============
 
-Welcome to ArduinoHA library!
+Welcome to the ArduinoHA library!
 This documentation is a step-by-step guide that presents all features of the library.
-If you feel that something is not clear don't hesitate to contact me via e-mail dev@chyrzynski.pl.
+If you feel that there is anything unclear don't hesitate to contact me via e-mail dev@chyrzynski.pl.
 
 Good luck!
 

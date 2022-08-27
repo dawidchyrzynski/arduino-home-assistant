@@ -13,5 +13,6 @@ Solid understanding of foundations will allow you to utilize full potential of t
     availability-reporting
     connection-params
     discovery
+    device-types
     mqtt-security
     mqtt-advanced

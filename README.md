@@ -21,7 +21,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Home Assistant type | Supported | Documentation |
 | ------------------- | :-------: | :------: |
 | Binary sensor       |     ✅     |     -    |
-| Buttons             |     ✅     |     -    |
+| Button              |     ✅     |     -    |
 | Camera              |     ✅     |     -    |
 | Cover               |     ✅     |     -    |
 | Device tracker      |     ✅     |     -    |

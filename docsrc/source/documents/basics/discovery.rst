@@ -30,7 +30,7 @@ The data topic's prefix can be changed using ``HAMqtt::setDataPrefix(const char*
     HADevice device(mac, sizeof(mac));
     HAMqtt mqtt(client, device);
 
-    // register your types here
+    // register your device types here
 
     void setup() {
         mqtt.setDiscoveryPrefix("myCustomPrefix");

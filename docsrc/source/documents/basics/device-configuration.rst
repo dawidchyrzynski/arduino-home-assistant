@@ -44,7 +44,7 @@ Try to keep the ID simple (alphanumeric characters) and short.
         // ...
     }
 
-1) Providing byte array to the :doc:`HADevice </documents/api/core/ha-device>` constructor
+2) Providing byte array to the :doc:`HADevice </documents/api/core/ha-device>` constructor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ::
