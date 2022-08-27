@@ -13,11 +13,11 @@ static const char* testUniqueId = "uniqueId";
 static const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
 static const char* sharedAvailabilityTopic = "testData/testDevice/avty_t";
 
-class DummyDeviceType : public BaseDeviceType
+class DummyDeviceType : public HABaseDeviceType
 {
 public:
     DummyDeviceType(const char* componentName, const char* uniqueId) :
-        BaseDeviceType(componentName, uniqueId) { }
+        HABaseDeviceType(componentName, uniqueId) { }
 
 protected:
     virtual void onMqttConnected() override {

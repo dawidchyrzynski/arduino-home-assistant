@@ -15,10 +15,10 @@
 #define assertSerializerMqttMessage(expectedJson) \
     assertSingleMqttMessage(testTopic, expectedJson, false)
 
-class DummyDeviceType : public BaseDeviceType
+class DummyDeviceType : public HABaseDeviceType
 {
 public:
-    DummyDeviceType(): BaseDeviceType("testComponent", "testId") { }
+    DummyDeviceType(): HABaseDeviceType("testComponent", "testId") { }
 
 protected:
     virtual void onMqttConnected() override { }
