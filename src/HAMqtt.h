@@ -319,7 +319,7 @@ private:
 #endif
 
     /// Instance of the HADevice passed to the constructor.
-    HADevice& _device;
+    const HADevice& _device;
 
     /// The callback method that will be called when an MQTT message is received.
     HAMQTT_MESSAGE_CALLBACK(_messageCallback);

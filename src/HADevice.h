@@ -135,7 +135,7 @@ public:
      * If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens.
      * This method is called by the HAMqtt when the connection to an MQTT broker is acquired.
      */
-    void publishAvailability();
+    void publishAvailability() const;
 
 private:
     /// The unique ID of the device. It can be a memory allocated by HADevice::setUniqueId method.

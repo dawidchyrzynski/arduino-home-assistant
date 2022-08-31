@@ -119,7 +119,7 @@ void HADevice::enableLastWill()
     );
 }
 
-void HADevice::publishAvailability()
+void HADevice::publishAvailability() const
 {
     HAMqtt* mqtt = HAMqtt::instance();
     if (!_availabilityTopic || !mqtt) {
