@@ -5,6 +5,15 @@
 
 #ifndef EX_ARDUINOHA_CAMERA
 
+/**
+ * HACamera allows to display an image in the Home Assistant panel.
+ * It can be used for publishing an image from the ESP32-Cam module or any other
+ * module that's equipped with a camera. 
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/camera.mqtt/
+ */
 class HACamera : public HABaseDeviceType
 {
 public:
@@ -17,23 +26,25 @@ public:
 
     /**
      * Sets encoding of the image content.
+     * Bu default Home Assistant expects raw binary data.
      * 
-     * @param encoding
+     * @param encoding The image's data encoding.
      */
     inline void setEncoding(const ImageEncoding encoding)
         { _encoding = encoding; }
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
-     * @param class Icon name
+     * @param icon The icon name.
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }
 
     /**
-     * Publishes MQTT message with the given data as a message content.
+     * Publishes MQTT message with the given image data as a message content.
+     * It updates image displayed in the Home Assistant panel.
      *
      * @param data Image data (raw binary data or base64)
      * @returns Returns true if MQTT message has been published successfully.
@@ -45,9 +56,15 @@ protected:
     virtual void onMqttConnected() override;
 
 private:
+    /**
+     * Returns progmem string representing the encoding property.
+     */
     const char* getEncodingProperty() const;
 
+    /// The encoding of the image's data. By default it's HACamera::EncodingBinary.
     ImageEncoding _encoding;
+
+    /// The icon of the camera. It can be nullptr.
     const char* _icon;
     
 };

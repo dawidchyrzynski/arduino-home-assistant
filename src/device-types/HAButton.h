@@ -7,6 +7,14 @@
 
 #define HABUTTON_CALLBACK(name) void (*name)(HAButton* sender)
 
+/**
+ * HAButton represents a button that's displayed in the Home Assistant panel and
+ * triggers some logic on your Arduino/ESP device once clicked.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/button.mqtt/
+ */
 class HAButton : public HABaseDeviceType
 {
 public:
@@ -16,16 +24,16 @@ public:
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/button/#device-class
      * 
-     * @param class Class name
+     * @param deviceClass The class name
      */
     inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
-     * @param class Icon name
+     * @param icon The icon name.
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }
@@ -58,11 +66,16 @@ protected:
     ) override;
 
 private:
-    bool publishState(bool state);
-
+    /// The device class. It can be nullptr.
     const char* _class;
+
+    /// The icon of the button. It can be nullptr.
     const char* _icon;
+
+    /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The command callback that will be called once clicking the button in HA panel.
     HABUTTON_CALLBACK(_commandCallback);
 };
 

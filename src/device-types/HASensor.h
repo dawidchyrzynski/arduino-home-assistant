@@ -19,7 +19,7 @@ public:
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/sensor/#device-class
      * 
-     * @param class Class name
+     * @param deviceClass The class name
      */
     inline void setDeviceClass(const char* deviceClass)
         { _deviceClass = deviceClass; }
@@ -34,9 +34,9 @@ public:
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
-     * @param class Icon name
+     * @param class The icon name.
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }

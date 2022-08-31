@@ -5,6 +5,13 @@
 
 #ifndef EX_ARDUINOHA_DEVICE_TRACKER
 
+/**
+ * HADeviceTracker allows to implement a custom device's tracker.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/device_tracker.mqtt/
+ */
 class HADeviceTracker : public HABaseDeviceType
 {
 public:
@@ -35,27 +42,27 @@ public:
         { _icon = icon; }
 
     /**
-     * Sets source type of the tracker.
+     * Sets the source type of the tracker.
      * 
-     * @param Source type (see SourceType enum)
+     * @param type The source type (gps, router, bluetooth, bluetooth LE).
      */
     inline void setSourceType(const SourceType type)
         { _sourceType = type; }
 
     /**
-     * Changes state of the tracker and publishes MQTT message.
+     * Changes the state of the tracker and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param state New state of the tracker.
-     * @param force Forces to update state without comparing it to previous known state.
+     * @param state The new state of the tracker.
+     * @param force Forces to update the state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const TrackerState state, const bool force = false);
 
     /**
-     * Sets current state of the tracker without publishing it to Home Assistant.
-     * This method may be useful if you want to change state before connection
+     * Sets the current state of the tracker without publishing it to Home Assistant.
+     * This method may be useful if you want to change the state before connection
      * with MQTT broker is acquired.
      *
      * @param state New state of the tracker.
@@ -64,7 +71,7 @@ public:
         { _currentState = state; }
 
     /**
-     * Returns last known state of the tracker.
+     * Returns the last known state of the tracker.
      * If setState method wasn't called the initial value will be returned.
      */
     inline TrackerState getState() const
@@ -75,11 +82,26 @@ protected:
     virtual void onMqttConnected() override;
 
 private:
+   /**
+     * Publishes the MQTT message with the given state.
+     * 
+     * @param state The state to publish.
+     * @returns Returns true if the MQTT message has been published successfully.
+     */
     bool publishState(TrackerState state);
+
+    /**
+     * Returns progmem string representing source type of the tracker.
+     */
     const char* getSourceTypeProperty() const;
 
+    /// The icon of the tracker. It can be nullptr.
     const char* _icon;
+
+    /// The source type of the tracker. By default it's HADeviceTracker::SourceTypeUnknown.
     SourceType _sourceType;
+
+    /// The current state of the device's tracker. By default its HADeviceTracker::StateUnknown.
     TrackerState _currentState;
 };
 

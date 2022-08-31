@@ -13,19 +13,19 @@ public:
     HASwitch(const char* uniqueId);
 
     /**
-     * Sets class of the switch.
+     * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/switch/#device-class
      * 
-     * @param class Class name
+     * @param deviceClass The class name
      */
     inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
-     * Sets icon of the switch.
-     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     * Sets icon of the sensor.
+     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
-     * @param class Icon name
+     * @param icon The icon name.
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }

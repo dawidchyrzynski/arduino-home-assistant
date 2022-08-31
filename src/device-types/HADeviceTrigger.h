@@ -31,7 +31,7 @@ public:
     };
 
     /**
-     * Creates a new trigge based on the given type and subtype.
+     * Creates a new trigger based on the given type and subtype.
      * Please note that combination of type and subtype needs to be unique in a scope of the device.
      *
      * The list of built-in types is available here: https://www.home-assistant.io/integrations/device_trigger.mqtt/#type
