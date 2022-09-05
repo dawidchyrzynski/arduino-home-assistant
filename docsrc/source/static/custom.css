@@ -155,6 +155,9 @@ form.search input[type="submit"]:hover {
 .cpp .admonition {
     padding: 8px 15px
 }
+.cpp .admonition .admonition-title {
+    margin-bottom: 5px
+}
 .breathe-sectiondef-title {
     color: #222 !important;
     font-size: 20px !important;

@@ -30,13 +30,16 @@ public:
         StateNotAvailable
     };
 
+    /**
+     * @param uniqueId The unique ID of the tracker. It needs to be unique in a scope of your device.
+     */
     HADeviceTracker(const char* uniqueId);
 
     /**
      * Sets icon of the tracker.
-     * Any icon from MaterialDesignIcons.com. Prefix name with mdi:, ie mdi:home.
+     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
-     * @param class Icon name
+     * @param icon The icon name.
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }
@@ -55,7 +58,7 @@ public:
      * the MQTT message won't be published.
      *
      * @param state The new state of the tracker.
-     * @param force Forces to update the state without comparing it to previous known state.
+     * @param force Forces to update the state without comparing it to a previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const TrackerState state, const bool force = false);
@@ -65,7 +68,7 @@ public:
      * This method may be useful if you want to change the state before connection
      * with MQTT broker is acquired.
      *
-     * @param state New state of the tracker.
+     * @param state The new state of the tracker.
      */
     inline void setCurrentState(const TrackerState state)
         { _currentState = state; }

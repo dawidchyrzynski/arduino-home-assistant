@@ -34,6 +34,9 @@ public:
         CommandStop
     };
 
+    /**
+     * @param uniqueId The unique ID of the cover. It needs to be unique in a scope of your device.
+     */
     HACover(const char* uniqueId);
 
     /**
@@ -59,7 +62,7 @@ public:
 
     /**
      * Returns last known state of the cover.
-     * By default state is set to CoverState::StateUnknown
+     * By default the state is set to CoverState::StateUnknown
      */
     inline CoverState getCurrentState() const
         { return _currentState; }
@@ -70,7 +73,7 @@ public:
      * the MQTT message won't be published.
      *
      * @param position The new position of the cover.
-     * @param force Forces to update state without comparing it to previous known state.
+     * @param force Forces to update the state without comparing it to a previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setPosition(const int16_t position, const bool force = false);
@@ -96,13 +99,13 @@ public:
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/cover/
      * 
-     * @param deviceClass The class name
+     * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
-     * Sets icon of the sensor.
+     * Sets icon of the cover.
      * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
      * @param icon The icon name.

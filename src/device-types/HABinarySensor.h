@@ -15,6 +15,9 @@
 class HABinarySensor : public HABaseDeviceType
 {
 public:
+    /**
+     * @param uniqueId The unique ID of the button. It needs to be unique in a scope of your device.
+     */
     HABinarySensor(const char* uniqueId);
 
     /**
@@ -40,7 +43,7 @@ public:
      * Please note that if a new value is the same as the previous one the MQTT message won't be published.
      *
      * @param state New state of the sensor (true - on, false - off).
-     * @param force Forces to update state without comparing it to a previous known state.
+     * @param force Forces to update the state without comparing it to a previous known state.
      * @returns Returns true if the MQTT message has been published successfully.
      */
     bool setState(const bool state, const bool force = false);

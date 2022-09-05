@@ -22,11 +22,14 @@ public:
         EncodingBase64
     };
 
+    /**
+     * @param uniqueId The unique ID of the camera. It needs to be unique in a scope of your device.
+     */
     HACamera(const char* uniqueId);
 
     /**
      * Sets encoding of the image content.
-     * Bu default Home Assistant expects raw binary data.
+     * Bu default Home Assistant expects raw binary data (e.g. JPEG binary data).
      * 
      * @param encoding The image's data encoding.
      */
@@ -34,7 +37,7 @@ public:
         { _encoding = encoding; }
 
     /**
-     * Sets icon of the sensor.
+     * Sets icon of the camera.
      * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
      * @param icon The icon name.

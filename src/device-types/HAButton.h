@@ -18,19 +18,22 @@
 class HAButton : public HABaseDeviceType
 {
 public:
+    /**
+     * @param uniqueId The unique ID of the button. It needs to be unique in a scope of your device.
+     */
     HAButton(const char* uniqueId);
 
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/button/#device-class
      * 
-     * @param deviceClass The class name
+     * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
-     * Sets icon of the sensor.
+     * Sets icon of the button.
      * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
      * @param icon The icon name.
