@@ -6,7 +6,7 @@
 #ifndef EX_ARDUINOHA_TAG_SCANNER
 
 /**
- * HASwitch 
+ * HATagScanner allow to produce scan events that can be used in the HA automation. 
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
@@ -15,6 +15,9 @@
 class HATagScanner : public HABaseDeviceType
 {
 public:
+    /**
+     * @param uniqueId The unique ID of the scanner. It needs to be unique in a scope of your device.
+     */
     HATagScanner(const char* uniqueId);
 
     /**
@@ -22,6 +25,7 @@ public:
      * Based on this event HA may perform user-defined automation.
      *
      * @param tag Value of the scanned tag.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool tagScanned(const char* tag);
 
