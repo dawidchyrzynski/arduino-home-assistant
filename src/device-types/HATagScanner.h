@@ -5,6 +5,13 @@
 
 #ifndef EX_ARDUINOHA_TAG_SCANNER
 
+/**
+ * HASwitch 
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/tag.mqtt/
+ */
 class HATagScanner : public HABaseDeviceType
 {
 public:

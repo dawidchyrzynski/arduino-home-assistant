@@ -34,7 +34,7 @@ public:
 
     /**
      * Sets icon of the button.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -43,7 +43,7 @@ public:
 
     /**
      * Sets retain flag for the button's command.
-     * If set to true the command produced by Home Assistant will be retained.
+     * If set to `true` the command produced by Home Assistant will be retained.
      * 
      * @param retain
      */

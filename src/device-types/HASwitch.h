@@ -7,23 +7,33 @@
 
 #define HASWITCH_CALLBACK(name) void (*name)(bool state, HASwitch* sender)
 
+/**
+ * HASwitch allows to display on/off switch in the HA panel and receive commands on your device.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/switch.mqtt/
+ */
 class HASwitch : public HABaseDeviceType
 {
 public:
+    /**
+     * @param uniqueId The unique ID of the sensor. It needs to be unique in a scope of your device.
+     */
     HASwitch(const char* uniqueId);
 
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/switch/#device-class
      * 
-     * @param deviceClass The class name
+     * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
         { _class = deviceClass; }
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -32,7 +42,7 @@ public:
 
     /**
      * Sets retain flag for the switch command.
-     * If set to true the command produced by Home Assistant will be retained.
+     * If set to `true` the command produced by Home Assistant will be retained.
      * 
      * @param retain
      */
@@ -41,8 +51,10 @@ public:
 
     /**
      * Sets optimistic flag for the switch state.
+     * In this mode the switch state doesn't need to be reported back to the HA panel when a command is received.
+     * By default the optimistic mode is disabled.
      *
-     * @param optimistic
+     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
      */
     inline void setOptimistic(const bool optimistic)
         { _optimistic = optimistic; }
@@ -54,18 +66,18 @@ public:
      *
      * @param state New state of the switch.
      * @param force Forces to update state without comparing it to previous known state.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setState(const bool state, const bool force = false);
 
     /**
-     * Alias for setState(true).
+     * Alias for `setState(true)`.
      */
     inline bool turnOn()
         { return setState(true); }
 
     /**
-     * Alias for setState(false).
+     * Alias for `setState(false)`.
      */
     inline bool turnOff()
         { return setState(false); }
@@ -82,7 +94,7 @@ public:
 
     /**
      * Returns last known state of the switch.
-     * If setState method wasn't called the initial value will be returned.
+     * By default it's `false`.
      */
     inline bool getCurrentState() const
         { return _currentState; }
@@ -106,14 +118,37 @@ protected:
     ) override;
 
 private:
+    /**
+     * Publishes the MQTT message with the given state.
+     * 
+     * @param state The state to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
     bool publishState(const bool state);
+
+    /**
+     * Parses the given on/off command and executes the switch callback with the proper state.
+     * 
+     * @param cmd The string representation of the command.
+     */
     void handleCommand(const char* cmd);
 
+    /// The device class. It can be nullptr.
     const char* _class;
+
+    /// The icon of the button. It can be nullptr.
     const char* _icon;
+
+    /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The optimistic mode of the switch (`true` - enabled, `false` - disabled).
     bool _optimistic;
+
+    /// The current state of the switch. By default it's `false`.
     bool _currentState;
+
+    /// The callback that will be called when switch command is received from the HA.
     HASWITCH_CALLBACK(_commandCallback);
 };
 

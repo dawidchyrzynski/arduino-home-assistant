@@ -74,7 +74,7 @@ public:
      *
      * @param position The new position of the cover.
      * @param force Forces to update the state without comparing it to a previous known state.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setPosition(const int16_t position, const bool force = false);
 
@@ -106,7 +106,7 @@ public:
 
     /**
      * Sets icon of the cover.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -115,7 +115,7 @@ public:
 
     /**
      * Sets retain flag for the cover's command.
-     * If set to true the command produced by Home Assistant will be retained.
+     * If set to `true` the command produced by Home Assistant will be retained.
      *
      * @param retain
      */
@@ -145,7 +145,7 @@ private:
      * Publishes the MQTT message with the given state.
      * 
      * @param state The state to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishState(const CoverState state);
 
@@ -153,7 +153,7 @@ private:
      * Publishes the MQTT message with the given position.
      * 
      * @param position The position to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishPosition(const int16_t position);
 
@@ -167,10 +167,10 @@ private:
     /// The command callback that will be called when clicking the cover's button in the HA panel.
     HACOVER_CALLBACK(_commandCallback);
 
-    /// The current state of the cover. By default it's HACover::StateUnknown.
+    /// The current state of the cover. By default it's `HACover::StateUnknown`.
     CoverState _currentState;
 
-    /// The current position of the cover. By default it's HACover::DefaultPosition.
+    /// The current position of the cover. By default it's `HACover::DefaultPosition`.
     int16_t _currentPosition;
 
     /// The device class. It can be nullptr.

@@ -31,7 +31,7 @@ public:
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -42,9 +42,9 @@ public:
      * Changes state of the sensor and publish MQTT message.
      * Please note that if a new value is the same as the previous one the MQTT message won't be published.
      *
-     * @param state New state of the sensor (true - on, false - off).
+     * @param state New state of the sensor (`true` - on, `false` - off).
      * @param force Forces to update the state without comparing it to a previous known state.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool setState(const bool state, const bool force = false);
 
@@ -72,7 +72,7 @@ private:
      * Publishes the MQTT message with the given state.
      * 
      * @param state The state to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishState(bool state);
 

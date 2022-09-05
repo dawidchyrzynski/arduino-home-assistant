@@ -13,7 +13,7 @@ public:
     /**
      * Creates a new device type instance and registers it in the HAMqtt class.
      * 
-     * @param componentName The name of the Home Assistant component (e.g. "binary_sensor").
+     * @param componentName The name of the Home Assistant component (e.g. `binary_sensor`).
      *                      You can find all available component names in the Home Assistant documentation.
      * @param uniqueId The unique ID of the device type. It needs to be unique in a scope of the HADevice.
      */
@@ -36,7 +36,7 @@ public:
         { return _componentName; }
 
     /**
-     * Returns true if the availability was configured for this device type.
+     * Returns `true` if the availability was configured for this device type.
      */
     inline bool isAvailabilityConfigured() const
         { return (_availability != AvailabilityDefault); }

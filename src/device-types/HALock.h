@@ -39,7 +39,7 @@ public:
 
     /**
      * Sets icon of the lock.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -48,7 +48,7 @@ public:
 
     /**
      * Sets retain flag for the lock's command.
-     * If set to true the command produced by Home Assistant will be retained.
+     * If set to `true` the command produced by Home Assistant will be retained.
      * 
      * @param retain
      */
@@ -62,7 +62,7 @@ public:
      *
      * @param state New state of the lock.
      * @param force Forces to update state without comparing it to a previous known state.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setState(const LockState state, const bool force = false);
 
@@ -106,7 +106,7 @@ private:
      * Publishes the MQTT message with the given state.
      * 
      * @param state The state to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishState(const LockState state);
 
@@ -123,7 +123,7 @@ private:
     /// The retain flag for the HA commands.
     bool _retain;
 
-    /// The current state of the lock. By default it's LockState::StateUnknown.
+    /// The current state of the lock. By default it's `HALock::StateUnknown`.
     LockState _currentState;
 
     /// The callback that will be called when lock/unlock/open command is received from the HA.

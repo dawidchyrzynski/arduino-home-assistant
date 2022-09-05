@@ -48,7 +48,7 @@ public:
 
     /**
      * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param class The icon name.
      */
@@ -76,7 +76,7 @@ public:
      * Publishes the MQTT message with the given value.
      * 
      * @param value String representation of the sensor's value.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setValue(const char* value);
 

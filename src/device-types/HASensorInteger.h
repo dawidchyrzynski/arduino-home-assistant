@@ -25,7 +25,7 @@ public:
      *
      * @param value New value of the sensor.
      * @param force Forces to update the value without comparing it to a previous known value.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool setValue(const int32_t value, const bool force = false);
 
@@ -53,7 +53,7 @@ private:
      * Publishes the MQTT message with the given value.
      * 
      * @param state The value to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishValue(const int32_t value);
 

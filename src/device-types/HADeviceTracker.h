@@ -39,7 +39,7 @@ public:
 
     /**
      * Sets icon of the tracker.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -61,7 +61,7 @@ public:
      *
      * @param state The new state of the tracker.
      * @param force Forces to update the state without comparing it to a previous known state.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setState(const TrackerState state, const bool force = false);
 
@@ -91,7 +91,7 @@ private:
      * Publishes the MQTT message with the given state.
      * 
      * @param state The state to publish.
-     * @returns Returns true if the MQTT message has been published successfully.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishState(TrackerState state);
 
@@ -103,10 +103,10 @@ private:
     /// The icon of the tracker. It can be nullptr.
     const char* _icon;
 
-    /// The source type of the tracker. By default it's HADeviceTracker::SourceTypeUnknown.
+    /// The source type of the tracker. By default it's `HADeviceTracker::SourceTypeUnknown`.
     SourceType _sourceType;
 
-    /// The current state of the device's tracker. By default its HADeviceTracker::StateUnknown.
+    /// The current state of the device's tracker. By default its `HADeviceTracker::StateUnknown`.
     TrackerState _currentState;
 };
 

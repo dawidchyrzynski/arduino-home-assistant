@@ -38,7 +38,7 @@ public:
 
     /**
      * Sets icon of the camera.
-     * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
      * @param icon The icon name.
      */
@@ -50,7 +50,7 @@ public:
      * It updates image displayed in the Home Assistant panel.
      *
      * @param data Image data (raw binary data or base64)
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool publishImage(const char* data);
 
@@ -64,7 +64,7 @@ private:
      */
     const char* getEncodingProperty() const;
 
-    /// The encoding of the image's data. By default it's HACamera::EncodingBinary.
+    /// The encoding of the image's data. By default it's `HACamera::EncodingBinary`.
     ImageEncoding _encoding;
 
     /// The icon of the camera. It can be nullptr.
