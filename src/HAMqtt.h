@@ -18,6 +18,10 @@ class PubSubClient;
 class HADevice;
 class HABaseDeviceType;
 
+#ifdef __SAMD21G18A__
+using namespace arduino;
+#endif
+
 /**
  * This class is a wrapper for the PubSub API.
  * It's a central point of the library where instances of all device types are stored.
