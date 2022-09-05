@@ -13,6 +13,8 @@
  * * HASensorFloat - allows to publish floating point numbers (e.g. `12.5`).
  *                   It can be also used to publish integer values (e.g. `123`) but it has lower maximum value than HASensorInteger.
  * * HASensorInteger - allows to publish integer values (e.g. `123`, `-50`);
+ * 
+ * @note It's not possible to define a sensor that publishes mixed values (e.g. string + integer values).
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:

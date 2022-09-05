@@ -58,7 +58,7 @@ public:
         { _currentState = state; }
 
     /**
-     * Returns last known state of the sensor.
+     * Returns the last known state of the sensor.
      */
     inline bool getCurrentState() const
         { return _currentState; }
