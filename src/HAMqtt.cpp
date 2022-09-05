@@ -186,6 +186,19 @@ void HAMqtt::addDeviceType(HABaseDeviceType* deviceType)
     _devicesTypes[_devicesTypesNb++] = deviceType;
 }
 
+bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
+{
+    if (!isConnected()) {
+        return false;
+    }
+
+    ARDUINOHA_DEBUG_PRINTF("AHA: publishing %s, len: %d\n", topic, strlen(payload));
+
+    _mqtt->beginPublish(topic, strlen(payload), retained);
+    _mqtt->write((const uint8_t*)(payload), strlen(payload));
+    return _mqtt->endPublish();
+}
+
 bool HAMqtt::beginPublish(
     const char* topic,
     uint16_t payloadLength,

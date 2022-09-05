@@ -213,6 +213,17 @@ public:
     void addDeviceType(HABaseDeviceType* deviceType);
 
     /**
+     * Publishes the MQTT message with given topic and payload.
+     * Message won't be published if the connection with the MQTT broker is not established.
+     * In this case method returns false.
+     *
+     * @param topic The topic to publish.
+     * @param payload The payload to publish (it may be empty const char).
+     * @param retained Specifies whether message should be retained.
+     */
+    bool publish(const char* topic, const char* payload, bool retained = false);
+
+    /**
      * Begins publishing of a message with the given properties.
      * When this method returns true the payload can be written using 
      * HAMqtt::writePayload or HAMqtt::writePayload_P methods.
