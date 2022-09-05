@@ -7,25 +7,38 @@
 
 #define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* sender)
 
+/**
+ * HALock allows to implement a custom lock (for example: door lock)
+ * that can be controlled from the Home Assistant panel.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/lock.mqtt/
+ */
 class HALock : public HABaseDeviceType
 {
 public:
+    /// Available states of the lock that can be reported to the HA panel.
     enum LockState {
         StateUnknown = 0,
         StateLocked,
         StateUnlocked
     };
 
+    /// Commands that will be produced by the HA panel.
     enum LockCommand {
         CommandLock = 1,
         CommandUnlock,
         CommandOpen
     };
 
+    /**
+     * @param uniqueId The unique ID of the lock. It needs to be unique in a scope of your device.
+     */
     HALock(const char* uniqueId);
 
     /**
-     * Sets icon of the sensor.
+     * Sets icon of the lock.
      * Any icon from MaterialDesignIcons.com (for example: "mdi:home").
      *
      * @param icon The icon name.
@@ -48,7 +61,7 @@ public:
      * the MQTT message won't be published.
      *
      * @param state New state of the lock.
-     * @param force Forces to update state without comparing it to previous known state.
+     * @param force Forces to update state without comparing it to a previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const LockState state, const bool force = false);
@@ -71,7 +84,7 @@ public:
         { return _currentState; }
 
     /**
-     * Registers callback that will be called each time the lock/unlock/open command from HA is received.
+     * Registers callback that will be called each time the lock/unlock/open command from the HA is received.
      * Please note that it's not possible to register multiple callbacks for the same lock.
      *
      * @param callback
@@ -89,12 +102,31 @@ protected:
     ) override;
 
 private:
+    /**
+     * Publishes the MQTT message with the given state.
+     * 
+     * @param state The state to publish.
+     * @returns Returns true if the MQTT message has been published successfully.
+     */
     bool publishState(const LockState state);
+
+    /**
+     * Parses the given command and executes the lock's callback with proper enum's property.
+     * 
+     * @param cmd The string representation of the command.
+     */
     void handleCommand(const char* cmd);
 
+    /// The icon of the lock. It can be nullptr.
     const char* _icon;
+
+    /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The current state of the lock. By default it's LockState::StateUnknown.
     LockState _currentState;
+
+    /// The callback that will be called when lock/unlock/open command is received from the HA.
     HALOCK_CALLBACK(_commandCallback);
 };
 

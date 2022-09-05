@@ -158,7 +158,7 @@ private:
     bool publishPosition(const int16_t position);
 
     /**
-     * Parses the given command and executed the cover's callback with proper enum's property.
+     * Parses the given command and executes the cover's callback with proper enum's property.
      * 
      * @param cmd The string representation of the command.
      */

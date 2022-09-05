@@ -15,6 +15,7 @@
 class HADeviceTracker : public HABaseDeviceType
 {
 public:
+    /// Available source types of the tracker.
     enum SourceType {
         SourceTypeUnknown = 0,
         SourceTypeGPS,
@@ -23,6 +24,7 @@ public:
         SourceTypeBluetoothLE
     };
 
+    /// Available states that can be reported to the HA panel.
     enum TrackerState {
         StateUnknown = 0,
         StateHome,
