@@ -18,6 +18,7 @@ github:
 	@rm -rf xml
 	@doxygen source/Doxyfile
 	@make html
+	@mkdir -p ../docs
 	@rm -rf ../docs/*
 	@touch ../docs/.nojekyll
 	@cp -a build/html/. ../docs
