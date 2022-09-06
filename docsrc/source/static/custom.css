@@ -175,3 +175,6 @@ input[type="submit"]:hover {
 .cpp p + ul {
     margin-top: 5px
 }
+p.highlight-link {
+    margin-bottom: 0
+}

@@ -56,6 +56,16 @@ public:
         { _retain = retain; }
 
     /**
+     * Sets optimistic flag for the lock state.
+     * In this mode the lock state doesn't need to be reported back to the HA panel when a command is received.
+     * By default the optimistic mode is disabled.
+     *
+     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
+     */
+    inline void setOptimistic(const bool optimistic)
+        { _optimistic = optimistic; }
+
+    /**
      * Changes state of the lock and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
@@ -122,6 +132,9 @@ private:
 
     /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The optimistic mode of the lock (`true` - enabled, `false` - disabled).
+    bool _optimistic;
 
     /// The current state of the lock. By default it's `HALock::StateUnknown`.
     LockState _currentState;

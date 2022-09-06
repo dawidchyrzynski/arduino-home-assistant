@@ -8,6 +8,7 @@ HALock::HALock(const char* uniqueId) :
     HABaseDeviceType("lock", uniqueId),
     _icon(nullptr),
     _retain(false),
+    _optimistic(false),
     _currentState(StateUnknown),
     _commandCallback(nullptr)
 {
@@ -34,16 +35,23 @@ void HALock::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 8); // 8 - max properties nb
+    _serializer = new HASerializer(this, 9); // 9 - max properties nb
     _serializer->set(HANameProperty, _name);
     _serializer->set(HAUniqueIdProperty, _uniqueId);
     _serializer->set(HAIconProperty, _icon);
 
-    // optional property
     if (_retain) {
         _serializer->set(
             HARetainProperty,
             &_retain,
+            HASerializer::BoolPropertyType
+        );
+    }
+
+    if (_optimistic) {
+        _serializer->set(
+            HAOptimisticProperty,
+            &_optimistic,
             HASerializer::BoolPropertyType
         );
     }

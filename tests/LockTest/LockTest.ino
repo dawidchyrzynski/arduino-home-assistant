@@ -145,6 +145,19 @@ test(LockTest, retain_setter) {
     )
 }
 
+test(LockTest, optimistic_setter) {
+    prepareTest
+
+    HALock lock(testUniqueId);
+    lock.setOptimistic(true);
+
+    assertEntityConfig(
+        mock,
+        lock,
+        "{\"uniq_id\":\"uniqueLock\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+    )
+}
+
 test(LockTest, current_state_setter) {
     prepareTest
 
