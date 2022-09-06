@@ -4,13 +4,13 @@
 #define BROKER_ADDR IPAddress(192,168,0,17)
 
 byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
-unsigned long lastSentAt = millis();
-double lastValue = 0;
 
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-HASensor temp("temp"); // "temp" is unique ID of the sensor. You should define your own ID.
+
+// "myValve" is unique ID of the sensor. You should define your own ID.
+HASensor valve("myValve");
 
 void setup() {
     // you don't need to verify return status
@@ -21,10 +21,8 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // configure sensor (optional)
-    temp.setUnitOfMeasurement("°C");
-    temp.setDeviceClass("temperature");
-    temp.setIcon("mdi:home");
-    temp.setName("Home temperature");
+    valve.setIcon("mdi:home");
+    valve.setName("Water valve");
 
     mqtt.begin(BROKER_ADDR);
 }
@@ -33,16 +31,11 @@ void loop() {
     Ethernet.maintain();
     mqtt.loop();
 
-    if ((millis() - lastSentAt) >= 5000) {
-        lastSentAt = millis();
-        lastValue = lastValue + 0.5;
-        temp.setValue(lastValue);
+    // you can report different states as follows:
+    // valve.setValue("open");
+    // valve.setValue("opening");
+    // valve.setValue("close");
 
-        // Supported data types:
-        // uint32_t (uint16_t, uint8_t)
-        // int32_t (int16_t, int8_t)
-        // double
-        // float
-        // const char*
-    }
+    // Unlike the other device types, the HASensor doesn't store the previous value that was set.
+    // It means that the MQTT message is produced each time the setValue method is called.
 }

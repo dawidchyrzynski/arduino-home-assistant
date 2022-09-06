@@ -74,6 +74,8 @@ public:
 
     /**
      * Publishes the MQTT message with the given value.
+     * Unlike the other device types, the HASensor doesn't store the previous value that was set.
+     * It means that the MQTT message is produced each time the setValue method is called.
      * 
      * @param value String representation of the sensor's value.
      * @returns Returns `true` if MQTT message has been published successfully.

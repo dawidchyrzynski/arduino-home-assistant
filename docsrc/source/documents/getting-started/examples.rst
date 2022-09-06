@@ -23,7 +23,7 @@ Examples
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
    * - :example:`Sensor <sensor/sensor.ino>`
-     - A simple sensor that reports a state in a string representation (open / close).
+     - A simple sensor that reports a state in a string representation (open / opening / close).
    * - :example:`Analog sensor <analog-sensor/analog-sensor.ino>`
      - Reporting the analog pin's state to the Home Assistant.
    * - :example:`Integer sensor <integer-sensor/integer-sensor.ino>`
