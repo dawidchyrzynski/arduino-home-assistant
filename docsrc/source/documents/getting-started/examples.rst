@@ -18,7 +18,7 @@ Examples
      - Controlling a window cover (open / close / stop).
    * - :example:`Device tracker <device-tracker/device-tracker.ino>`
      - Tracking a device's position using the NEO-6M GPS module.
-   * - :example:`Device trigger <device-trigger/device-trigger.ino>`
+   * - :example:`Device trigger <multi-state-button/multi-state-button.ino>`
      - Implementation of a simple wall switch that reports press and hold states.
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
