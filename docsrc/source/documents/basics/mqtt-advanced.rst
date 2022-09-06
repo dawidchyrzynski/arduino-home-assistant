@@ -81,3 +81,35 @@ The subscription needs to be made each time a connection to the MQTT broker is e
         Ethernet.maintain();
         mqtt.loop();
     }
+
+Publishing a message
+--------------------
+
+HAMqtt class also exposes the method that allows to publish custom messages.
+
+::
+
+    #include <Ethernet.h>
+    #include <ArduinoHA.h>
+
+    byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
+    EthernetClient client;
+    HADevice device(mac, sizeof(mac));
+    HAMqtt mqtt(client, device);
+
+    void setup() {
+        Ethernet.begin(mac);
+
+        mqtt.begin("192.168.1.50", "username", "password");
+    }
+
+    void loop() {
+        Ethernet.maintain();
+        mqtt.loop();
+
+        // Publishing the non-retained message:
+        // mqtt.publish("customTopic", "customPayload");
+
+        // Publishing the retained message:
+        // mqtt.publish("customTopic", "customPayload", true);
+    }

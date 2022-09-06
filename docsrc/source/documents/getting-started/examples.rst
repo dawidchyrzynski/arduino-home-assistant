@@ -36,6 +36,10 @@ Examples
      - Reporting entities' availability (online / offline) to the Home Assistant.
    * - :example:`Advanced availability <advanced-availability/advanced-availability.ino>`
      - Advanced availability reporting with MQTT LWT (Last Will and Testament).
+   * - :example:`MQTT advanced <mqtt-advanced/mqtt-advanced.ino>`
+     - Subscribing to custom topics and publishing custom messages.
+   * - :example:`MQTT with credentials <mqtt-with-credentials/mqtt-with-credentials.ino>`
+     - Establishing connection with a MQTT broker using the credentials. 
    * - :example:`MQTT SSL <mqtt-with-ssl/mqtt-with-ssl.ino>`
      - Establishing secure connection with a MQTT broker.
    * - :example:`NodeMCU (ESP8266) <nodemcu/nodemcu.ino>`
