@@ -22,6 +22,7 @@
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
+* Compilation error on SAMD family (#82)
 
 **New examples:** 
 * [Button](examples/button/button.ino) - adding simple buttons to the Home Assistant panel. 

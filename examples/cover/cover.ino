@@ -41,11 +41,11 @@ void setup() {
     cover.onCommand(onCoverCommand);
     cover.setName("My cover"); // optional
 
-    // optionally you can set retain flag for the HA commands
+    // Optionally you can set retain flag for the HA commands
     // cover.setRetain(true);
 
-    // optionally you can enable optimistic mode for the HACover.
-    // in this mode you won't need to report state back to the HA when a commands are executed
+    // Optionally you can enable optimistic mode for the HACover.
+    // In this mode you won't need to report state back to the HA when commands are executed.
     // cover.setOptimistic(true);
 
     mqtt.begin(BROKER_ADDR);

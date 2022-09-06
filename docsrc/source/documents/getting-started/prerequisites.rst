@@ -6,6 +6,3 @@ The MQTT broker is not installed by default so you will need to install an extra
 
 The recommended setup method is to use the `Mosquitto Brokker addon <https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md>`_.
 After installing the addon your HA instance acts as a broker for all devices you're going to integrate with it.
-
-Please note that ArduinoHA library requires the static IP of the MQTT broker.
-Make sure that your PC that hosts Home Assistant has static IP assigned.
