@@ -4,29 +4,36 @@
 
 **New features:**
 
-* Added support for `icon` property in `HABinarySensor` (you can set icon using `HABinarySensor::setIcon("iconName")`)
-* Added support for forcing `setState` in `HABinarySensor` using second argument as following `HABinarySensor::setState(true, true)`
-* Added support for `device_class` property in `HACover` (you can set class using `HACover::setDeviceClass("className")`
-* Added support for `icon` property in `HACover` (you can set icon using `HACover::setIcon("iconName")`)
+* Added support for the `icon` property in the `HABinarySensor` (you can set the icon using `HABinarySensor::setIcon("iconName")`)
+* Added support for changing the current state of the `HABinarySensor` using `HABinarySensor::setCurrentState` method
+* Added support for forcing `setState` in `HABinarySensor` using a second argument as follows `HABinarySensor::setState(true, true)`
+* Added support for the `device_class` property in the `HACover` (you can set the class using `HACover::setDeviceClass("className")`
+* Added support for the `icon` property in the `HACover` (you can set the icon using `HACover::setIcon("iconName")`)
 * Added pointer of the sender to the `HACover` callback function
-* Added support for forcing `setPosition` in `HACover` using second argument as following `HACover::setPosition(100, true)`
-* Added support for `HAButton` device type
-* Added support for `HADeviceTracker` device type
-* Added support for `HACamera` device type
-* Added support for `HALock` device type
-* Added support for `device_class` property in the `HASwitch`
-* Added support for `optimistic` property in the `HASwitch`
-* Added support for `force_update` property in the `HASensor`
+* Added support for `optimistic` property in the `HACover` (you can change the mode using `HACover::setOptimistic(true)`)
+* Added support for forcing `setPosition` in `HACover` using a second argument as follows `HACover::setPosition(100, true)`
+* Added support for the `device_class` property in the `HASwitch` (you can set the class using `HASwitch::setDeviceClass("className")`
+* Added support for the `optimistic` property in the `HASwitch` (you can change the mode using `HASwitch::setOptimistic(true)`)
+* Added support for the `force_update` property in the `HASensor` (you can set the mode using `HASensor::setForceUpdate(true)`)
+* Added support for the `HAButton` device type
+* Added support for the `HADeviceTracker` device type
+* Added support for the `HACamera` device type
+* Added support for the `HALock` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
+
+**New examples:** 
+* [Button](examples/button/button.ino) - adding simple buttons to the Home Assistant panel. 
 
 **Breaking changes:**
 
 * Changed structure of all MQTT topics used in the library.
 * Changed constructor of the `HABinarySensor` class (removed `deviceClass` and `initialState` arguments)
+* Renamed `HABinarySensor::getState()` method to `HABinarySensor::getCurrentState()`
 * Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check updated example of the `multi-state-button`.
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
+* Renamed `HASwitch::onStateChanged` method to `HASwitch::onCommand`.
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
 * Refactored `HASensor` logic. It's now divided into three different classes: `HASensor`, `HASensorInteger` and `HASensorFloat`. This approach reduces flash size by ~2k
 * Removed all legacy constructors with `HAMqtt` argument
