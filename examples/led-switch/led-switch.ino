@@ -9,17 +9,14 @@ byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-HASwitch led("led", false); // "led" is unique ID of the switch. You should define your own ID.
 
-void onBeforeSwitchStateChanged(bool state, HASwitch* s)
-{
-    // this callback will be called before publishing new state to HA
-    // in some cases there may be delay before onStateChanged is called due to network latency
-}
+// "led" is unique ID of the switch. You should define your own ID.
+HASwitch led("led");
 
-void onSwitchStateChanged(bool state, HASwitch* s)
+void onSwitchCommand(bool state, HASwitch* s)
 {
     digitalWrite(LED_PIN, (state ? HIGH : LOW));
+    s->setState(state); // report state back to the Home Assistant
 }
 
 void setup() {
@@ -38,8 +35,7 @@ void setup() {
     led.setName("My LED");
 
     // handle switch state
-    led.onBeforeStateChanged(onBeforeSwitchStateChanged); // optional
-    led.onStateChanged(onSwitchStateChanged);
+    led.onCommand(onSwitchCommand);
 
     mqtt.begin(BROKER_ADDR);
 }

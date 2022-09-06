@@ -9,7 +9,7 @@ Examples
    * - Example
      - Description
    * - :example:`Binary sensor <binary-sensor/binary-sensor.ino>`
-     - to do
+     - Using the binary sensor as a door contact sensor.
    * - :example:`Button <button/button.ino>`
      - to do
    * - :example:`Camera <camera/camera.ino>`
