@@ -13,7 +13,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Support for custom MQTT messages (publishing and subscribing)
 * Auto reconnect with MQTT broker
 * Reporting availability (online/offline states) of a device
-* Doxygen documentation
+* Doxygen documentation for all classes
 * Covered by unit tests (~100% coverage)
 
 ## Supported HA types
@@ -27,7 +27,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Device tracker      |     ✅     |     -    |
 | Device trigger      |     ✅     |     -    |
 | Fan                 |     ✅     |     -    |
-| Humidifier          |     ✅     |     -    |
+| Humidifier          |     ❌     |     -    |
 | HVAC\*              |     ✅     |     -    |
 | Light               |     ✅     |     -    |
 | Lock                |     ✅     |     -    |
@@ -57,19 +57,23 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * [MQTT with credentials](examples/mqtt-with-credentials/mqtt-with-credentials.ino)
 * [MQTT advanced](examples/mqtt-advanced/mqtt-advanced.ino)
 
-## Tested boards
+## Compatible hardware
+
+The library uses the Arduino Ethernet Client API for interacting with the network hardware.
+It should work fine as long as the `Client` class is available.
+
+Here is the list of devices on which the library was tested:
 
 * Arduino Uno
 * Arduino Mega
+* Arduino Nano
+* Arduino Pro Mini
+* Arduino Nano 33 IoT
 * NodeMCU
+* Controllino Mega (Pure)
+* Controllino Maxi (Pure)
 * ESP-01
-* Generic ESP8266/ESP8255
-* Arduino Nano 33 IoT (SAMD)
-
-## Tested devices
-
-* Controllino Maxi (standard/pure/automation/power)
-* Controllino Mega (standard/pure)
+* ESP32-CAM
 * Sonoff Dual R2
 * Sonoff Dual R3
 * Sonoff Basic
@@ -77,9 +81,8 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Tuya Wi-Fi switch module
 * Tuya Wi-Fi curtain module
 
-## Tested Arduino Shields
-
-* Arduino Ethernet Shield (WizNet W5100)
+Please note that it's not the complete list of supported devices.
+You may try to use the library on any device that uses Arduino core.
 
 # License
 
