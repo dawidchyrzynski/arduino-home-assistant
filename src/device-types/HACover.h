@@ -123,6 +123,16 @@ public:
         { _retain = retain; }
 
     /**
+     * Sets optimistic flag for the cover state.
+     * In this mode the cover state doesn't need to be reported back to the HA panel when a command is received.
+     * By default the optimistic mode is disabled.
+     *
+     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
+     */
+    inline void setOptimistic(const bool optimistic)
+        { _optimistic = optimistic; }
+
+    /**
      * Registers callback that will be called each time the command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same cover.
      *
@@ -181,6 +191,9 @@ private:
 
     /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The optimistic mode of the cover (`true` - enabled, `false` - disabled).
+    bool _optimistic;
 };
 
 #endif

@@ -12,7 +12,8 @@ HACover::HACover(const char* uniqueId) :
     _currentPosition(DefaultPosition),
     _class(nullptr),
     _icon(nullptr),
-    _retain(false)
+    _retain(false),
+    _optimistic(false)
 {
 
 }
@@ -52,15 +53,26 @@ void HACover::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 10); // 10 - max properties nb
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
     _serializer->set(HANameProperty, _name);
     _serializer->set(HAUniqueIdProperty, _uniqueId);
     _serializer->set(HADeviceClassProperty, _class);
     _serializer->set(HAIconProperty, _icon);
 
-    // optional property
     if (_retain) {
-        _serializer->set(HARetainProperty, &_retain, HASerializer::BoolPropertyType);
+        _serializer->set(
+            HARetainProperty,
+            &_retain,
+            HASerializer::BoolPropertyType
+        );
+    }
+
+    if (_optimistic) {
+        _serializer->set(
+            HAOptimisticProperty,
+            &_optimistic,
+            HASerializer::BoolPropertyType
+        );
     }
 
     _serializer->set(HASerializer::WithDevice);

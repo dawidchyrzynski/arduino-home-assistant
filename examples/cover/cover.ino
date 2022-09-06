@@ -15,13 +15,13 @@ HACover cover("myCover");
 void onCoverCommand(HACover::CoverCommand cmd) {
     if (cmd == HACover::CommandOpen) {
         Serial.println("Command: Open");
-        cover.setState(HACover::StateOpening);
+        cover.setState(HACover::StateOpening); // report state back to the HA
     } else if (cmd == HACover::CommandClose) {
         Serial.println("Command: Close");
-        cover.setState(HACover::StateClosing);
+        cover.setState(HACover::StateClosing); // report state back to the HA
     } else if (cmd == HACover::CommandStop) {
         Serial.println("Command: Stop");
-        cover.setState(HACover::StateStopped);
+        cover.setState(HACover::StateStopped); // report state back to the HA
     }
 
     // Available states:
@@ -40,7 +40,13 @@ void setup() {
 
     cover.onCommand(onCoverCommand);
     cover.setName("My cover"); // optional
-    // cover.setRetain(true); // optionally you can set retain flag for the HA commands
+
+    // optionally you can set retain flag for the HA commands
+    // cover.setRetain(true);
+
+    // optionally you can enable optimistic mode for the HACover.
+    // in this mode you won't need to report state back to the HA when a commands are executed
+    // cover.setOptimistic(true);
 
     mqtt.begin(BROKER_ADDR);
 }

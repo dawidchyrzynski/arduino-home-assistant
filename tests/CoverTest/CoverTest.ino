@@ -166,6 +166,19 @@ test(CoverTest, retain_setter) {
     )
 }
 
+test(CoverTest, optimistic_setter) {
+    prepareTest
+
+    HACover cover(testUniqueId);
+    cover.setOptimistic(true);
+
+    assertEntityConfig(
+        mock,
+        cover,
+        "{\"uniq_id\":\"uniqueCover\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+    )
+}
+
 test(CoverTest, current_state_setter) {
     prepareTest
 
