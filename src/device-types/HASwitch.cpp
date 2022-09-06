@@ -51,11 +51,14 @@ void HASwitch::buildSerializer()
         );
     }
 
-    _serializer->set(
-        HAOptimisticProperty,
-        &_optimistic,
-        HASerializer::BoolPropertyType
-    );
+    if (_optimistic) {
+        _serializer->set(
+            HAOptimisticProperty,
+            &_optimistic,
+            HASerializer::BoolPropertyType
+        );
+    }
+
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(HAStateTopic);
