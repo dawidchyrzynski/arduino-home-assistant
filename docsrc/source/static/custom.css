@@ -41,17 +41,23 @@ table.examples-table tbody td + td {
 .searchbox .caption-text {
     display: none
 }
-form.search {
+form {
+    display: flex;
+    flex-direction: row;
     margin-top: 0.5em
 }
-form.search input[type="text"] {
+form.search {
+    padding-right: 0.5em
+}
+input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 2px;
+    flex: 1;
     padding: 8px 15px;
     font-size: 15px;
     outline: none;
 }
-form.search input[type="submit"] {
+input[type="submit"] {
     background: #3eaf7c;
     border: 1px solid #3eaf7c;
     color: #fff;
@@ -59,9 +65,10 @@ form.search input[type="submit"] {
     font-size: 15px;
     padding: 8px;
     cursor: pointer;
+    text-transform: capitalize;
     transition: background-color .3s
 }
-form.search input[type="submit"]:hover {
+input[type="submit"]:hover {
     background: #58C996
 }
 .content p + ul {
