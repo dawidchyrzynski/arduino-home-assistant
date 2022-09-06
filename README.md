@@ -43,6 +43,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 ## Examples
 
 * [Binary Sensor](examples/binary-sensor/binary-sensor.ino)
+* [Button](examples/button/button.ino)
 * [Cover](examples/cover/cover.ino)
 * [Fan](examples/fan/fan.ino)
 * [LED switch](examples/led-switch/led-switch.ino)

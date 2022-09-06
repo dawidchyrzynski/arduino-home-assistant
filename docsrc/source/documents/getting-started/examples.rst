@@ -11,7 +11,7 @@ Examples
    * - :example:`Binary sensor <binary-sensor/binary-sensor.ino>`
      - Using the binary sensor as a door contact sensor.
    * - :example:`Button <button/button.ino>`
-     - to do
+     - Adding simple buttons to the Home Assistant panel.
    * - :example:`Camera <camera/camera.ino>`
      - to do
    * - :example:`Cover <cover/cover.ino>`
