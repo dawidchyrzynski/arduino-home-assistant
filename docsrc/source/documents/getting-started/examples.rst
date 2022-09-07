@@ -24,10 +24,10 @@ Examples
      - A simple door lock that's controlled by the Home Assistant.
    * - :example:`Sensor <sensor/sensor.ino>`
      - A simple sensor that reports a state in a string representation (open / opening / close).
-   * - :example:`Analog sensor <analog-sensor/analog-sensor.ino>`
-     - Reporting the analog pin's state to the Home Assistant.
-   * - :example:`Integer sensor <integer-sensor/integer-sensor.ino>`
-     - Reporting the device's boot time to the Home Assistant.
+   * - :example:`Analog sensor <sensor-analog/sensor-analog.ino>`
+     - Reporting the analog pin's voltage to the Home Assistant.
+   * - :example:`Integer sensor <sensor-integer/sensor-integer.ino>`
+     - Reporting the device's uptime to the Home Assistant.
    * - :example:`Switch <led-switch/led-switch.ino>`
      - The LED that's controlled by the Home Assistant.
    * - :example:`Tag scanner <tag-scanner/tag-scanner.ino>`
