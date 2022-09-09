@@ -53,4 +53,8 @@ void setup() {
 
 void loop() {
     mqtt.loop();
+
+    // You can also change the state at runtime as shown below.
+    // This kind of logic can be used if you want to control your switch using a button connected to the device.
+    // led.setState(true); // use any state you want
 }

@@ -54,4 +54,8 @@ void setup() {
 void loop() {
     Ethernet.maintain();
     mqtt.loop();
+
+    // You can also change the state at runtime as shown below.
+    // This kind of logic can be used if you want to control your cover using a button connected to the device.
+    // cover.setState(HACover::StateOpening); // use any state you want
 }
