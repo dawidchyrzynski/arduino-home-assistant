@@ -78,6 +78,10 @@ void HABaseDeviceType::publishConfig()
 {
     buildSerializer();
 
+    if (_serializer == nullptr) {
+        return;
+    }
+
     const uint16_t topicLength = HASerializer::calculateConfigTopicLength(
         componentName(),
         uniqueId()
