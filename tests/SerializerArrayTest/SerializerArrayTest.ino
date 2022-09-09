@@ -19,39 +19,68 @@ test(SerializerArrayTest, empty_array) {
     assertJson("[]", array);
 }
 
-test(SerializerArrayTest, single_element) {
+test(SerializerArrayTest, single_element_progmem) {
     HASerializerArray array(1);
     bool result = array.add(HANameProperty);
 
     assertTrue(result);
     assertEqual(1, array.getItemsNb());
-    assertEqual(HANameProperty, array.getItems()[0]);
+    assertEqual((uintptr_t)HANameProperty, (uintptr_t)&(*array.getItems()[0]));
     assertJson("[\"name\"]", array);
 }
 
-test(SerializerArrayTest, multiple_element) {
-    HASerializerArray array(3);
+test(SerializerArrayTest, multiple_elements_progmem) {
+    HASerializerArray array(3, false);
 
     assertTrue(array.add(HANameProperty));
     assertTrue(array.add(HADeviceManufacturerProperty));
     assertTrue(array.add(HAUniqueIdProperty));
     assertEqual(3, array.getItemsNb());
 
-    const char* items = array.getItems();
-    assertEqual(HANameProperty, items[0]);
-    assertEqual(HADeviceManufacturerProperty, items[1]);
-    assertEqual(HAUniqueIdProperty, items[2]);
+    HASerializerArray::ItemType* items = array.getItems();
+    assertEqual((uintptr_t)HANameProperty, (uintptr_t)&(*items[0]));
+    assertEqual((uintptr_t)HADeviceManufacturerProperty, (uintptr_t)&(*items[1]));
+    assertEqual((uintptr_t)HAUniqueIdProperty, (uintptr_t)&(*items[2]));
     assertJson("[\"name\",\"mf\",\"uniq_id\"]", array);
 }
 
-test(SerializerArrayTest, size_overflow) {
+test(SerializerArrayTest, size_overflow_progmem) {
     HASerializerArray array(1);
 
     assertTrue(array.add(HANameProperty));
     assertFalse(array.add(HAUniqueIdProperty));
     assertEqual(1, array.getItemsNb());
-    assertEqual(HANameProperty, array.getItems()[0]);
+    assertEqual((uintptr_t)HANameProperty, (uintptr_t)&(*array.getItems()[0]));
     assertJson("[\"name\"]", array);
+}
+
+test(SerializerArrayTest, single_element_ram) {
+    const char* item = "test";
+    HASerializerArray array(1, false);
+    bool result = array.add(item);
+
+    assertTrue(result);
+    assertEqual(1, array.getItemsNb());
+    assertEqual((uintptr_t)item, (uintptr_t)&(*array.getItems()[0]));
+    assertJson("[\"test\"]", array);
+}
+
+test(SerializerArrayTest, multiple_elements_ram) {
+    const char* item0 = "item0";
+    const char* item1 = "item1";
+    const char* item2 = "item2";
+    HASerializerArray array(3, false);
+
+    assertTrue(array.add(item0));
+    assertTrue(array.add(item1));
+    assertTrue(array.add(item2));
+    assertEqual(3, array.getItemsNb());
+
+    HASerializerArray::ItemType* items = array.getItems();
+    assertEqual((uintptr_t)item0, (uintptr_t)&(*items[0]));
+    assertEqual((uintptr_t)item1, (uintptr_t)&(*items[1]));
+    assertEqual((uintptr_t)item2, (uintptr_t)&(*items[2]));
+    assertJson("[\"item0\",\"item1\",\"item2\"]", array);
 }
 
 void setup()

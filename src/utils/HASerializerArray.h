@@ -6,18 +6,20 @@
 
 /**
  * HASerializerArray represents array of items that can be used as a HASerializer property.
- * Each item needs to point to the flash memory string.
  */
 class HASerializerArray
 {
 public:
+    typedef const char* ItemType;
+
     /**
      * Constructs HASerializerArray with the static size (number of elements).
      * The array is allocated dynamically in the memory based on the given size.
      *
      * @param size The desired number of elements that will be stored in the array.
+     * @param progmemItems Specifies whether items are going to be stored in the flash memory.
      */
-    HASerializerArray(const uint8_t size);
+    HASerializerArray(const uint8_t size, const bool progmemItems = true);
     ~HASerializerArray();
 
     /**
@@ -30,17 +32,16 @@ public:
     /**
      * Returns pointer to the array.
      */
-    inline const char* getItems() const
-        { return *_items; }
+    inline ItemType* getItems() const
+        { return _items; }
 
     /**
      * Adds a new element to the array.
-     * The item needs to point to the flash memory that stores the string.
      * 
-     * @param itemP Item to add (flash string).
+     * @param itemP Item to add (string).
      * @returns Returns `true` if item has been added to the array successfully.
      */
-    bool add(const char* itemP);
+    bool add(ItemType item);
 
     /**
      * Calculates the size of the serialized array (JSON representation).
@@ -53,14 +54,17 @@ public:
     bool serialize(char* output) const;
 
 private:
+    /// Specifies whether items are stored in the flash memory.
+    const bool _progmemItems;
+
     /// The maximum size of the array.
-    uint8_t _size;
+    const uint8_t _size;
 
     /// The number of items that were added to the array.
     uint8_t _itemsNb;
 
     /// Pointer to the array elements.
-    const char** _items;
+    ItemType* _items;
 };
 
 #endif
