@@ -205,7 +205,7 @@ test(SerializerTest, two_element_array) {
 }
 
 test(SerializerTest, mixed_elements) {
-    prepareTest(7)
+    prepareTest(6)
 
     HASerializerArray array(2);
     array.add(HADeviceProperty);
