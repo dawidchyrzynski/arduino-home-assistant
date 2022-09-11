@@ -110,10 +110,7 @@ void HACover::onMqttMessage(
         uniqueId(),
         HACommandTopic
     )) {
-        char cmd[length + 1];
-        memset(cmd, 0, sizeof(cmd));
-        memcpy(cmd, payload, length);
-        handleCommand(cmd);
+        handleCommand(reinterpret_cast<const char*>(payload));
     }
 }
 
