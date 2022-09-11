@@ -289,7 +289,7 @@ test(CoverTest, publish_position) {
     assertTrue(result);
 }
 
-test(ButtonTest, command_open) {
+test(CoverTest, command_open) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -299,7 +299,7 @@ test(ButtonTest, command_open) {
     assertCallback(true, HACover::CommandOpen, &cover)
 }
 
-test(ButtonTest, command_close) {
+test(CoverTest, command_close) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -309,7 +309,7 @@ test(ButtonTest, command_close) {
     assertCallback(true, HACover::CommandClose, &cover)
 }
 
-test(ButtonTest, command_stop) {
+test(CoverTest, command_stop) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -319,7 +319,7 @@ test(ButtonTest, command_stop) {
     assertCallback(true, HACover::CommandStop, &cover)
 }
 
-test(ButtonTest, command_invalid) {
+test(CoverTest, command_invalid) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -329,7 +329,7 @@ test(ButtonTest, command_invalid) {
     assertCallback(false, unknownCommand, nullptr)
 }
 
-test(ButtonTest, different_cover_command) {
+test(CoverTest, different_cover_command) {
     prepareTest
 
     HACover cover(testUniqueId);
