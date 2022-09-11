@@ -144,10 +144,7 @@ void HASelect::onMqttMessage(
         uniqueId(),
         HACommandTopic
     )) {
-        char option[length + 1];
-        memset(option, 0, sizeof(option));
-        memcpy(option, payload, length);
-
+        const char* option = reinterpret_cast<const char*>(payload);
         const uint8_t optionsNb = _options->getItemsNb();
         const HASerializerArray::ItemType* options = _options->getItems();
 
