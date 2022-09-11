@@ -136,7 +136,6 @@ void HASelect::onMqttMessage(
     const uint16_t length
 )
 {
-    (void)payload;
     (void)length;
 
     if (_commandCallback && HASerializer::compareDataTopics(

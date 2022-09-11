@@ -105,6 +105,8 @@ void HACover::onMqttMessage(
     const uint16_t length
 )
 {
+    (void)length;
+
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),

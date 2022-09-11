@@ -84,7 +84,6 @@ void HALock::onMqttMessage(
     const uint16_t length
 )
 {
-    (void)payload;
     (void)length;
 
     if (_commandCallback && HASerializer::compareDataTopics(
@@ -92,10 +91,7 @@ void HALock::onMqttMessage(
         uniqueId(),
         HACommandTopic
     )) {
-        char cmd[length + 1];
-        memset(cmd, 0, sizeof(cmd));
-        memcpy(cmd, payload, length);
-        handleCommand(cmd);
+        handleCommand(reinterpret_cast<const char*>(payload));
     }
 }
 
