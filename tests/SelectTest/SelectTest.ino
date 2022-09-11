@@ -17,6 +17,7 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSelect";
 static const char* configTopic = "homeassistant/select/testDevice/uniqueSelect/config";
+static const char* stateTopic = "testData/testDevice/uniqueSelect/stat_t";
 static const char* commandTopic = "testData/testDevice/uniqueSelect/cmd_t";
 
 static bool commandCallbackCalled = false;
@@ -137,12 +138,7 @@ test(SelectTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueSelect/stat_t",
-        "B",
-        true
-    )
+    assertMqttMessage(1, stateTopic, "B", true)
 }
 
 test(SelectTest, publish_nothing_if_retained) {
@@ -232,11 +228,7 @@ test(SelectTest, publish_state_first) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(0);
 
-    assertSingleMqttMessage(
-        "testData/testDevice/uniqueSelect/stat_t",
-        "Option A",
-        true
-    )
+    assertSingleMqttMessage(stateTopic, "Option A", true)
     assertTrue(result);
 }
 
@@ -248,11 +240,7 @@ test(SelectTest, publish_state_last) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(2);
 
-    assertSingleMqttMessage(
-        "testData/testDevice/uniqueSelect/stat_t",
-        "C",
-        true
-    )
+    assertSingleMqttMessage(stateTopic, "C", true)
     assertTrue(result);
 }
 
@@ -264,11 +252,34 @@ test(SelectTest, publish_state_only) {
     select.setOptions("Option A");
     bool result = select.setState(0);
 
-    assertSingleMqttMessage(
-        "testData/testDevice/uniqueSelect/stat_t",
-        "Option A",
-        true
-    )
+    assertSingleMqttMessage(stateTopic, "Option A", true)
+    assertTrue(result);
+}
+
+test(SelectTest, publish_state_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HASelect select(testUniqueId);
+    select.setOptions("Option A");
+    select.setCurrentState(0);
+    bool result = select.setState(0);
+
+    // it shouldn't publish data if state doesn't change
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+    assertTrue(result);
+}
+
+test(SelectTest, publish_state_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HASelect select(testUniqueId);
+    select.setOptions("Option A");
+    select.setCurrentState(0);
+    bool result = select.setState(0, true);
+
+    assertSingleMqttMessage(stateTopic, "Option A", true)
     assertTrue(result);
 }
 
