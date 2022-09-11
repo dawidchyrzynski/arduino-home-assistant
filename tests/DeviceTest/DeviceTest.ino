@@ -69,7 +69,7 @@ test(DeviceTest, serializer_no_unique_id) {
     assertEqual((uint8_t)0, serializer->getEntriesNb());
 }
 
-test(DeviceTest, serializer_unique_id_contructor_char) {
+test(DeviceTest, serializer_unique_id_constructor_char) {
     HADevice device(testDeviceId);
     const HASerializer* serializer = device.getSerializer();
 
@@ -88,7 +88,7 @@ test(DeviceTest, serializer_unique_id_contructor_char) {
     )
 }
 
-test(DeviceTest, serializer_unique_id_contructor_byte_array) {
+test(DeviceTest, serializer_unique_id_constructor_byte_array) {
     HADevice device(testDeviceId);
     const HASerializer* serializer = device.getSerializer();
 
