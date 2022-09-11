@@ -19,6 +19,7 @@
 * Added support for the `HADeviceTracker` device type
 * Added support for the `HACamera` device type
 * Added support for the `HALock` device type
+* Added support for the `HASelect` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)

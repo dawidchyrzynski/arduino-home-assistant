@@ -26,13 +26,12 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Cover               |     ✅     |     -    |
 | Device tracker      |     ✅     |     -    |
 | Device trigger      |     ✅     |     -    |
-| Fan                 |     ✅     |     -    |
+| Fan                 |     ❌     |     -    |
 | Humidifier          |     ❌     |     -    |
-| HVAC\*              |     ✅     |     -    |
-| Light               |     ✅     |     -    |
+| HVAC\*              |     ❌     |     -    |
+| Light               |     ❌     |     -    |
 | Lock                |     ✅     |     -    |
-| Number              |     ✅     |     -    |
-| Scene               |     ✅     |     -    |
+| Number              |     ❌     |     -    |
 | Select              |     ✅     |     -    |
 | Sensor              |     ✅     |     -    |
 | Switch              |     ✅     |     -    |
