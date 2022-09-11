@@ -33,6 +33,7 @@ const char HASubtypeProperty[] PROGMEM = {"stype"};
 const char HAForceUpdateProperty[] PROGMEM = {"frc_upd"};
 const char HAUnitOfMeasurementProperty[] PROGMEM = {"unit_of_meas"};
 const char HAValueTemplateProperty[] PROGMEM = {"val_tpl"};
+const char HAOptionsProperty[] PROGMEM = {"options"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};

@@ -10,6 +10,7 @@
 #include "device-types/HADeviceTracker.h"
 #include "device-types/HADeviceTrigger.h"
 #include "device-types/HALock.h"
+#include "device-types/HASelect.h"
 #include "device-types/HASensor.h"
 #include "device-types/HASensorFloat.h"
 #include "device-types/HASensorInteger.h"

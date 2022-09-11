@@ -33,6 +33,7 @@ extern const char HASubtypeProperty[];
 extern const char HAForceUpdateProperty[];
 extern const char HAUnitOfMeasurementProperty[];
 extern const char HAValueTemplateProperty[];
+extern const char HAOptionsProperty[];
 
 // topics
 extern const char HAConfigTopic[];
