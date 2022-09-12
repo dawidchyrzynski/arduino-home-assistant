@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-      <title>Installation</title>
+      <title>Installation - ArduinoHA</title>
     
           <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
           <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
@@ -24,7 +24,7 @@
     
   <link rel="index" title="Index" href="../../genindex.html" />
   <link rel="search" title="Search" href="../../search.html" />
-  <link rel="next" title="Supported Platforms" href="supported-platforms.html" />
+  <link rel="next" title="Compatible Hardware" href="compatible-hardware.html" />
   <link rel="prev" title="Prerequisites" href="prerequisites.html" /> 
   </head>
 
@@ -33,7 +33,7 @@
     <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
   <router-link to="../../index.html" class="home-link">
     
-      <span class="site-name">Arduino Home Assistant</span>
+      <span class="site-name">ArduinoHA</span>
     
   </router-link>
 
@@ -87,60 +87,34 @@
     </div>
   </div>
 </div><div class="sidebar-links" role="navigation" aria-label="main navigation">
-  
-    <div class="sidebar-group">
-      <p class="caption">
-        <span class="caption-text"><a href="../../index.html#arduino-home-assistant-integration">Getting started</a></span>
-      </p>
-      <ul class="current">
-        
-          <li class="toctree-l1 ">
-            
-              <a href="prerequisites.html" class="reference internal ">Prerequisites</a>
-            
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/index.html">Basics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/mqtt-advanced.html">MQTT advanced features</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/device-types/index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
 
-            
-          </li>
-
-        
-          <li class="toctree-l1 current">
-            
-              <a href="#" class="reference internal current">Installation</a>
-            
-
-            
-              <ul>
-                
-                  <li class="toctree-l2"><a href="#arduino-ide" class="reference internal">Arduino IDE</a></li>
-                
-                  <li class="toctree-l2"><a href="#makeesparduino" class="reference internal">makeEspArduino</a></li>
-                
-              </ul>
-            
-          </li>
-
-        
-          <li class="toctree-l1 ">
-            
-              <a href="supported-platforms.html" class="reference internal ">Supported Platforms</a>
-            
-
-            
-          </li>
-
-        
-          <li class="toctree-l1 ">
-            
-              <a href="examples.html" class="reference internal ">Examples</a>
-            
-
-            
-          </li>
-
-        
-      </ul>
-    </div>
-  
 </div>
         </sidebar>
 
@@ -149,6 +123,8 @@
   
   <ul class="breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Getting started</a> &raquo;</li>
     
     <li>Installation</li>
   </ul>
@@ -160,8 +136,8 @@
        title="previous chapter">← Prerequisites</a>
   </li>
   <li class="next">
-    <a href="supported-platforms.html"
-       title="next chapter">Supported Platforms →</a>
+    <a href="compatible-hardware.html"
+       title="next chapter">Compatible Hardware →</a>
   </li>
 </ul>
   
@@ -186,13 +162,15 @@ Open the IDE and click to the “Sketch” menu and then <em>Include Library &gt
 <section id="makeesparduino">
 <h2>makeEspArduino<a class="headerlink" href="#makeesparduino" title="Permalink to this headline">¶</a></h2>
 <p>The library can be installed in an environment managed by <a class="reference external" href="https://github.com/plerup/makeEspArduino">makeEspArduino</a>.
-The best approach is to add the library as a submodule in the project as follows:</p>
+The best approach is to add the library and its dependency as submodules in the project as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">https</span><span class="o">:</span><span class="c1">//github.com/dawidchyrzynski/arduino-home-assistant.git arduino-home-assistant</span>
-<span class="n">cd</span><span class="w"> </span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">tags</span><span class="o">/</span><span class="mf">2.0.0</span><span class="w"></span>
+<span class="n">cd</span><span class="w"> </span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">tags</span><span class="o">/</span><span class="mf">2.0.0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="p">..</span><span class="w"></span>
+<span class="n">git</span><span class="w"> </span><span class="n">submodule</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">https</span><span class="o">:</span><span class="c1">//github.com/knolleary/pubsubclient.git pubsubclient</span>
+<span class="n">cd</span><span class="w"> </span><span class="n">pubsubclient</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="n">checkout</span><span class="w"> </span><span class="n">tags</span><span class="o">/</span><span class="n">v2</span><span class="mf">.8</span><span class="w"></span>
 </pre></div>
 </div>
 <p>Then you just need to add one extra line in your <cite>Makefile</cite>:</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">LIBS</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">$</span><span class="p">(</span><span class="n">ROOT</span><span class="p">)</span><span class="o">/</span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"></span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="nl">LIBS</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">$</span><span class="p">(</span><span class="n">ROOT</span><span class="p">)</span><span class="o">/</span><span class="n">arduino</span><span class="o">-</span><span class="n">home</span><span class="o">-</span><span class="n">assistant</span><span class="w"> </span><span class="n">$</span><span class="p">(</span><span class="n">ROOT</span><span class="p">)</span><span class="o">/</span><span class="n">pubsubclient</span><span class="w"></span>
 </pre></div>
 </div>
 </section>
@@ -207,8 +185,8 @@ The best approach is to add the library as a submodule in the project as follows
        title="previous chapter">← Prerequisites</a>
   </li>
   <li class="next">
-    <a href="supported-platforms.html"
-       title="next chapter">Supported Platforms →</a>
+    <a href="compatible-hardware.html"
+       title="next chapter">Compatible Hardware →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2022, Dawid Chyrzynski.

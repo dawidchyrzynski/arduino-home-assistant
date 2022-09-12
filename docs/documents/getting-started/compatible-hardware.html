@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-      <title>Prerequisites - ArduinoHA</title>
+      <title>Compatible Hardware - ArduinoHA</title>
     
           <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
           <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
@@ -24,8 +24,8 @@
     
   <link rel="index" title="Index" href="../../genindex.html" />
   <link rel="search" title="Search" href="../../search.html" />
-  <link rel="next" title="Installation" href="installation.html" />
-  <link rel="prev" title="Getting started" href="index.html" /> 
+  <link rel="next" title="Examples" href="examples.html" />
+  <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
 
   <body>
@@ -90,9 +90,9 @@
   <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Compatible Hardware</a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 </li>
@@ -126,18 +126,18 @@
     
       <li><a href="index.html">Getting started</a> &raquo;</li>
     
-    <li>Prerequisites</li>
+    <li>Compatible Hardware</li>
   </ul>
   
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="index.html"
-       title="previous chapter">← Getting started</a>
+    <a href="installation.html"
+       title="previous chapter">← Installation</a>
   </li>
   <li class="next">
-    <a href="installation.html"
-       title="next chapter">Installation →</a>
+    <a href="examples.html"
+       title="next chapter">Examples →</a>
   </li>
 </ul>
   
@@ -145,12 +145,31 @@
 <hr>
           <div class="content" role="main" v-pre>
             
-  <section id="prerequisites">
-<h1>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h1>
-<p>ArduinoHA uses MQTT protocol over TCP to communicate with your Home Assistant instance.
-The MQTT broker is not installed by default so you will need to install an extra HA addon in order to get the integration working.</p>
-<p>The recommended setup method is to use the <a class="reference external" href="https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md">Mosquitto Brokker addon</a>.
-After installing the addon your HA instance acts as a broker for all devices you’re going to integrate with it.</p>
+  <section id="compatible-hardware">
+<h1>Compatible Hardware<a class="headerlink" href="#compatible-hardware" title="Permalink to this headline">¶</a></h1>
+<p>The library uses the Arduino Ethernet Client API for interacting with the network hardware.
+It should work fine as long as the <cite>Client</cite> class is available.</p>
+<p>Here is the list of devices on which the library was tested:</p>
+<ul class="simple">
+<li><p>Arduino Uno</p></li>
+<li><p>Arduino Mega</p></li>
+<li><p>Arduino Nano</p></li>
+<li><p>Arduino Pro Mini</p></li>
+<li><p>Arduino Nano 33 IoT</p></li>
+<li><p>NodeMCU</p></li>
+<li><p>Controllino Mega (Pure)</p></li>
+<li><p>Controllino Maxi (Pure)</p></li>
+<li><p>ESP-01</p></li>
+<li><p>ESP32-CAM</p></li>
+<li><p>Sonoff Dual R2</p></li>
+<li><p>Sonoff Dual R3</p></li>
+<li><p>Sonoff Basic</p></li>
+<li><p>Sonoff Mini</p></li>
+<li><p>Tuya Wi-Fi switch module</p></li>
+<li><p>Tuya Wi-Fi curtain module</p></li>
+</ul>
+<p>Please note that it’s not the complete list of supported devices.
+You may try to use the library on any device that uses Arduino core.</p>
 </section>
 
 
@@ -158,12 +177,12 @@ After installing the addon your HA instance acts as a broker for all devices you
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="index.html"
-       title="previous chapter">← Getting started</a>
+    <a href="installation.html"
+       title="previous chapter">← Installation</a>
   </li>
   <li class="next">
-    <a href="installation.html"
-       title="next chapter">Installation →</a>
+    <a href="examples.html"
+       title="next chapter">Examples →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2022, Dawid Chyrzynski.
