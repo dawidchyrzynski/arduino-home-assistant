@@ -28,17 +28,17 @@ void HACamera::buildSerializer()
     }
 
     _serializer = new HASerializer(this, 7); // 7 - max properties nb
-    _serializer->set(HANameProperty, _name);
-    _serializer->set(HAUniqueIdProperty, _uniqueId);
-    _serializer->set(HAIconProperty, _icon);
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(
-        HAEncodingProperty,
+        AHATOFSTR(HAEncodingProperty),
         getEncodingProperty(),
         HASerializer::ProgmemPropertyValue
     );
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
-    _serializer->topic(HATopic);
+    _serializer->topic(AHATOFSTR(HATopic));
 }
 
 void HACamera::onMqttConnected()
@@ -51,11 +51,11 @@ void HACamera::onMqttConnected()
     publishAvailability();
 }
 
-const char* HACamera::getEncodingProperty() const
+const __FlashStringHelper* HACamera::getEncodingProperty() const
 {
     switch (_encoding) {
     case EncodingBase64:
-        return HAEncodingBase64;
+        return AHATOFSTR(HAEncodingBase64);
 
     default:
         return nullptr;

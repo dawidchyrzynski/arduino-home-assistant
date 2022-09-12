@@ -27,7 +27,7 @@ void HATagScanner::buildSerializer()
 
     _serializer = new HASerializer(this, 2); // 2 - max properties nb
     _serializer->set(HASerializer::WithDevice);
-    _serializer->topic(HATopic);
+    _serializer->topic(AHATOFSTR(HATopic));
 }
 
 void HATagScanner::onMqttConnected()

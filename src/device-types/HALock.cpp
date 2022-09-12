@@ -36,13 +36,13 @@ void HALock::buildSerializer()
     }
 
     _serializer = new HASerializer(this, 9); // 9 - max properties nb
-    _serializer->set(HANameProperty, _name);
-    _serializer->set(HAUniqueIdProperty, _uniqueId);
-    _serializer->set(HAIconProperty, _icon);
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
 
     if (_retain) {
         _serializer->set(
-            HARetainProperty,
+            AHATOFSTR(HARetainProperty),
             &_retain,
             HASerializer::BoolPropertyType
         );
@@ -50,7 +50,7 @@ void HALock::buildSerializer()
 
     if (_optimistic) {
         _serializer->set(
-            HAOptimisticProperty,
+            AHATOFSTR(HAOptimisticProperty),
             &_optimistic,
             HASerializer::BoolPropertyType
         );
@@ -58,8 +58,8 @@ void HALock::buildSerializer()
 
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
-    _serializer->topic(HAStateTopic);
-    _serializer->topic(HACommandTopic);
+    _serializer->topic(AHATOFSTR(HAStateTopic));
+    _serializer->topic(AHATOFSTR(HACommandTopic));
 }
 
 void HALock::onMqttConnected()

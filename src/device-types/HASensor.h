@@ -69,7 +69,7 @@ public:
      *
      * @param template
      */
-    inline void setValueTemplate(const char* valueTemplate)
+    inline void setValueTemplate(const __FlashStringHelper* valueTemplate)
         { _valueTemplate = valueTemplate; }   
 
     /**
@@ -100,7 +100,7 @@ private:
     const char* _unitOfMeasurement;
     
     /// The template for the sensor's value. It can be nullptr.
-    const char* _valueTemplate;
+    const __FlashStringHelper* _valueTemplate;
 };
 
 #endif

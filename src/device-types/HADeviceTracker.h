@@ -98,7 +98,7 @@ private:
     /**
      * Returns progmem string representing source type of the tracker.
      */
-    const char* getSourceTypeProperty() const;
+    const __FlashStringHelper* getSourceTypeProperty() const;
 
     /// The icon of the tracker. It can be nullptr.
     const char* _icon;

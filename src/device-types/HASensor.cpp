@@ -27,17 +27,17 @@ void HASensor::buildSerializer()
     }
 
     _serializer = new HASerializer(this, 10); // 10 - max properties nb
-    _serializer->set(HANameProperty, _name);
-    _serializer->set(HAUniqueIdProperty, _uniqueId);
-    _serializer->set(HADeviceClassProperty, _deviceClass);
-    _serializer->set(HAIconProperty, _icon);
-    _serializer->set(HAUnitOfMeasurementProperty, _unitOfMeasurement);
-    _serializer->set(HAValueTemplateProperty, _valueTemplate);
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
+    _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
+    _serializer->set(AHATOFSTR(HAValueTemplateProperty), _valueTemplate);
 
     // optional property
     if (_forceUpdate) {
         _serializer->set(
-            HAForceUpdateProperty,
+            AHATOFSTR(HAForceUpdateProperty),
             &_forceUpdate,
             HASerializer::BoolPropertyType
         );
@@ -45,7 +45,7 @@ void HASensor::buildSerializer()
 
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
-    _serializer->topic(HAStateTopic);
+    _serializer->topic(AHATOFSTR(HAStateTopic));
 }
 
 void HASensor::onMqttConnected()

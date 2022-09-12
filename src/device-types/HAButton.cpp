@@ -21,19 +21,23 @@ void HAButton::buildSerializer()
     }
 
     _serializer = new HASerializer(this, 8); // 8 - max properties nb
-    _serializer->set(HANameProperty, _name);
-    _serializer->set(HAUniqueIdProperty, _uniqueId);
-    _serializer->set(HADeviceClassProperty, _class);
-    _serializer->set(HAIconProperty, _icon);
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
 
     // optional property
     if (_retain) {
-        _serializer->set(HARetainProperty, &_retain, HASerializer::BoolPropertyType);
+        _serializer->set(
+            AHATOFSTR(HARetainProperty),
+            &_retain,
+            HASerializer::BoolPropertyType
+        );
     }
 
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
-    _serializer->topic(HACommandTopic);
+    _serializer->topic(AHATOFSTR(HACommandTopic));
 }
 
 void HAButton::onMqttConnected()

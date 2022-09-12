@@ -34,17 +34,17 @@ void HADeviceTracker::buildSerializer()
     }
 
     _serializer = new HASerializer(this, 7); // 7 - max properties nb
-    _serializer->set(HANameProperty, _name);
-    _serializer->set(HAUniqueIdProperty, _uniqueId);
-    _serializer->set(HAIconProperty, _icon);
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(
-        HASourceTypeProperty,
+        AHATOFSTR(HASourceTypeProperty),
         getSourceTypeProperty(),
         HASerializer::ProgmemPropertyValue
     );
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
-    _serializer->topic(HAStateTopic);
+    _serializer->topic(AHATOFSTR(HAStateTopic));
 }
 
 void HADeviceTracker::onMqttConnected()
@@ -81,20 +81,20 @@ bool HADeviceTracker::publishState(const TrackerState state)
     return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateP, true, true);
 }
 
-const char* HADeviceTracker::getSourceTypeProperty() const
+const __FlashStringHelper* HADeviceTracker::getSourceTypeProperty() const
 {
     switch (_sourceType) {
     case SourceTypeGPS:
-        return HAGPSType;
+        return AHATOFSTR(HAGPSType);
 
     case SourceTypeRouter:
-        return HARouterType;
+        return AHATOFSTR(HARouterType);
 
     case SourceTypeBluetooth:
-        return HABluetoothType;
+        return AHATOFSTR(HABluetoothType);
 
     case SourceTypeBluetoothLE:
-        return HABluetoothLEType;
+        return AHATOFSTR(HABluetoothLEType);
 
     default:
         return nullptr;

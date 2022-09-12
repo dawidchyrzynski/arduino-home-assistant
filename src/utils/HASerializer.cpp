@@ -170,12 +170,12 @@ HASerializer::~HASerializer()
 }
 
 void HASerializer::set(
-    const char* propertyP,
+    const __FlashStringHelper* property,
     const void* value,
     PropertyValueType valueType
 )
 {
-    if (!propertyP || !value) {
+    if (!property || !value) {
         return;
     }
 
@@ -186,7 +186,7 @@ void HASerializer::set(
 
     entry->type = PropertyEntryType;
     entry->subtype = static_cast<uint8_t>(valueType);
-    entry->property = propertyP;
+    entry->property = property;
     entry->value = value;
 }
 
@@ -217,16 +217,16 @@ void HASerializer::set(const FlagType flag)
         }
 
         entry->type = TopicEntryType;
-        entry->property = HAAvailabilityTopic;
+        entry->property = AHATOFSTR(HAAvailabilityTopic);
         entry->value = isSharedAvailability
             ? mqtt->getDevice()->getAvailabilityTopic()
             : nullptr;
     }
 }
 
-void HASerializer::topic(const char* topicP)
+void HASerializer::topic(const __FlashStringHelper* topic)
 {
-    if (!_deviceType || !topicP) {
+    if (!_deviceType || !topic) {
         return;
     }
 
@@ -236,7 +236,7 @@ void HASerializer::topic(const char* topicP)
     }
 
     entry->type = TopicEntryType;
-    entry->property = topicP;
+    entry->property = topic;
 }
 
 HASerializer::SerializerEntry* HASerializer::addEntry()
@@ -297,7 +297,7 @@ uint16_t HASerializer::calculateEntrySize(const SerializerEntry* entry) const
         return
             // property name
             strlen_P(HASerializerJsonPropertyPrefix) +
-            strlen_P(entry->property) +
+            strlen_P(AHAFROMFSTR(entry->property)) +
             strlen_P(HASerializerJsonPropertySuffix) +
             // property value
             calculatePropertyValueSize(entry);
@@ -324,7 +324,7 @@ uint16_t HASerializer::calculateTopicEntrySize(
     // property name
     size +=
         strlen_P(HASerializerJsonPropertyPrefix) +
-        strlen_P(entry->property) +
+        strlen_P(AHAFROMFSTR(entry->property)) +
         strlen_P(HASerializerJsonPropertySuffix);
 
     // topic escape
@@ -340,7 +340,7 @@ uint16_t HASerializer::calculateTopicEntrySize(
 
         size += calculateDataTopicLength(
             _deviceType->uniqueId(),
-            AHATOFSTR(entry->property)
+            entry->property
         ) - 1; // exclude null terminator
     }
 
@@ -416,7 +416,7 @@ bool HASerializer::flushEntry(const SerializerEntry* entry) const
     switch (entry->type) {
     case PropertyEntryType: {
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
-        mqtt->writePayload(AHATOFSTR(entry->property));
+        mqtt->writePayload(entry->property);
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
         return flushEntryValue(entry);
@@ -494,7 +494,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
 
     // property name
     mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
-    mqtt->writePayload(AHATOFSTR(entry->property));
+    mqtt->writePayload(entry->property);
     mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
     // value (escaped)
@@ -506,7 +506,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
     } else {
         const uint16_t length = calculateDataTopicLength(
             _deviceType->uniqueId(),
-            AHATOFSTR(entry->property)
+            entry->property
         );
         if (length == 0) {
             return false;
@@ -516,7 +516,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
         generateDataTopic(
             topic,
             _deviceType->uniqueId(),
-            AHATOFSTR(entry->property)
+            entry->property
         );
 
         mqtt->writePayload(topic, length - 1);

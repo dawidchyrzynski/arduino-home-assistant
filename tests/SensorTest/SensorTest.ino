@@ -8,6 +8,8 @@ static const char* testUniqueId = "uniqueSensor";
 static const char* configTopic = "homeassistant/sensor/testDevice/uniqueSensor/config";
 static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
 
+const char DummyTemplateStr[] PROGMEM = {"dummyTemplate"};
+
 test(SensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
@@ -114,12 +116,12 @@ test(SensorTest, value_template_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
-    sensor.setValueTemplate("abc");
+    sensor.setValueTemplate(AHATOFSTR(DummyTemplateStr));
 
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"abc\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"dummyTemplate\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
     )
 }
 

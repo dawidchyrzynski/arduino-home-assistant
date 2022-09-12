@@ -61,14 +61,14 @@ void HADeviceTrigger::buildSerializer()
 
     _serializer = new HASerializer(this, 5); // 5 - max properties nb
     _serializer->set(
-        HAAutomationTypeProperty,
-        HATrigger,
+        AHATOFSTR(HAAutomationTypeProperty),
+        AHATOFSTR(HATrigger),
         HASerializer::ProgmemPropertyValue
     );
-    _serializer->set(HATypeProperty, _type);
-    _serializer->set(HASubtypeProperty, _subtype);
+    _serializer->set(AHATOFSTR(HATypeProperty), _type);
+    _serializer->set(AHATOFSTR(HASubtypeProperty), _subtype);
     _serializer->set(HASerializer::WithDevice);
-    _serializer->topic(HATopic);
+    _serializer->topic(AHATOFSTR(HATopic));
 }
 
 void HADeviceTrigger::onMqttConnected()

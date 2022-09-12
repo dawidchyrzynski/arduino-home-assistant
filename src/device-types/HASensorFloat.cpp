@@ -59,19 +59,19 @@ void HASensorFloat::initValueTemplate()
 {
     switch (_precision) {
     case PrecisionP1:
-        setValueTemplate(HAValueTemplateFloatP1);
+        setValueTemplate(AHATOFSTR(HAValueTemplateFloatP1));
         break;
 
     case PrecisionP2:
-        setValueTemplate(HAValueTemplateFloatP2);
+        setValueTemplate(AHATOFSTR(HAValueTemplateFloatP2));
         break;
 
     case PrecisionP3:
-        setValueTemplate(HAValueTemplateFloatP3);
+        setValueTemplate(AHATOFSTR(HAValueTemplateFloatP3));
         break;
 
     case PrecisionP4:
-        setValueTemplate(HAValueTemplateFloatP4);
+        setValueTemplate(AHATOFSTR(HAValueTemplateFloatP4));
         break;
 
     default:

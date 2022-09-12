@@ -21,14 +21,14 @@ HADevice::HADevice(const char* uniqueId) :
     _uniqueId(uniqueId),
     HADEVICE_INIT
 {
-    _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
 }
 
 HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
     _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
     HADEVICE_INIT
 {
-    _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
 }
 
 HADevice::~HADevice()
@@ -47,28 +47,31 @@ bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
     }
 
     _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
-    _serializer->set(HADeviceIdentifiersProperty, _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
     return true;
 }
 
 void HADevice::setManufacturer(const char* manufacturer)
 {
-    _serializer->set(HADeviceManufacturerProperty, manufacturer);
+    _serializer->set(AHATOFSTR(HADeviceManufacturerProperty), manufacturer);
 }
 
 void HADevice::setModel(const char* model)
 {
-    _serializer->set(HADeviceModelProperty, model);
+    _serializer->set(AHATOFSTR(HADeviceModelProperty), model);
 }
 
 void HADevice::setName(const char* name)
 {
-    _serializer->set(HANameProperty, name);
+    _serializer->set(AHATOFSTR(HANameProperty), name);
 }
 
 void HADevice::setSoftwareVersion(const char* softwareVersion)
 {
-    _serializer->set(HADeviceSoftwareVersionProperty, softwareVersion);
+    _serializer->set(
+        AHATOFSTR(HADeviceSoftwareVersionProperty),
+        softwareVersion
+    );
 }
 
 void HADevice::setAvailability(bool online)

@@ -49,8 +49,8 @@ public:
         /// Subtype of the entry. It can be `FlagType`, `PropertyValueType` or `TopicType`.
         uint8_t subtype;
 
-        /// Pointer to the property name.
-        const char* property;
+        /// Pointer to the property name (progmem string).
+        const __FlashStringHelper* property;
 
         /// Pointer to the property value. The value type is determined by `subtype`.
         const void* value;
@@ -160,12 +160,12 @@ public:
     /**
      * Adds a new entry to the serialized with a type of `PropertyEntryType`.
      * 
-     * @param propertyP Pointer to the name of the property (progmem string).
+     * @param property Pointer to the name of the property (progmem string).
      * @param value Pointer to the value that's being set.
      * @param valueType The type of the value that's passed to the method.
      */
     void set(
-        const char* propertyP,
+        const __FlashStringHelper* property,
         const void* value,
         PropertyValueType valueType = ConstCharPropertyValue
     );
@@ -180,9 +180,9 @@ public:
     /**
      * Adds a new entry to the serialize with a type of `TopicEntryType`.
      *
-     * @param topicP The topic name to add (progmem string).
+     * @param topic The topic name to add (progmem string).
      */
-    void topic(const char* topicP);
+    void topic(const __FlashStringHelper* topic);
 
     /**
      * Calculates the output size of the serialized JSON object.
