@@ -215,9 +215,9 @@ void HAMqtt::writePayload(const char* data, uint16_t length)
     _mqtt->write((const uint8_t*)(data), length);
 }
 
-void HAMqtt::writePayload_P(const char* src)
+void HAMqtt::writePayload(const __FlashStringHelper* src)
 {
-    _mqtt->print((const __FlashStringHelper*)(src));
+    _mqtt->print(src);
 }
 
 bool HAMqtt::endPublish()

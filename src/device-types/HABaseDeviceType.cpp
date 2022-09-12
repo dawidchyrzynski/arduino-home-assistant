@@ -160,7 +160,7 @@ bool HABaseDeviceType::publishOnDataTopic(
 
     if (mqtt()->beginPublish(topic, valueLength, retained)) {
         if (isProgmemValue) {
-            mqtt()->writePayload_P(value);
+            mqtt()->writePayload(AHATOFSTR(value));
         } else {
             mqtt()->writePayload(value, valueLength);
         }

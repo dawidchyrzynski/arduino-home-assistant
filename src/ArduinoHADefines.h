@@ -29,3 +29,6 @@
     #define ARDUINOHA_DEBUG_PRINT(x)
     #define ARDUINOHA_DEBUG_PRINTF(...)
 #endif
+
+#define AHATOFSTR(x) reinterpret_cast<const __FlashStringHelper*>(x)
+#define AHAFROMFSTR(x) reinterpret_cast<const char*>(x)

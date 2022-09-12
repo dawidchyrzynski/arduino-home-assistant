@@ -225,8 +225,7 @@ public:
 
     /**
      * Begins publishing of a message with the given properties.
-     * When this method returns true the payload can be written using 
-     * HAMqtt::writePayload or HAMqtt::writePayload_P methods.
+     * When this method returns true the payload can be written using HAMqtt::writePayload method.
      * 
      * @param topic Topic of the published message.
      * @param payloadLength Length of the payload (bytes) that's going to be published.
@@ -249,9 +248,9 @@ public:
      * Please note that before writing any data the HAMqtt::beginPublish method
      * needs to be called.
      * 
-     * @param src Progmem region to publish.
+     * @param data Progmem data to publish.
      */
-    void writePayload_P(const char* src);
+    void writePayload(const __FlashStringHelper* data);
 
     /**
      * Finishes publishing of a message.

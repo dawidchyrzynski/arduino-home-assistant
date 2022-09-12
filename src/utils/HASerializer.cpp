@@ -274,11 +274,11 @@ bool HASerializer::flush() const
         return false;
     }
 
-    mqtt->writePayload_P(HASerializerJsonDataPrefix);
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonDataPrefix));
 
     for (uint8_t i = 0; i < _entriesNb; i++) {
         if (i > 0) {
-            mqtt->writePayload_P(HASerializerJsonPropertiesSeparator);
+            mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertiesSeparator));
         }
 
         if (!flushEntry(&_entries[i])) {
@@ -286,7 +286,7 @@ bool HASerializer::flush() const
         }
     }
 
-    mqtt->writePayload_P(HASerializerJsonDataSuffix);
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonDataSuffix));
     return true;
 }
 
@@ -415,9 +415,9 @@ bool HASerializer::flushEntry(const SerializerEntry* entry) const
 
     switch (entry->type) {
     case PropertyEntryType: {
-        mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
-        mqtt->writePayload_P(entry->property);
-        mqtt->writePayload_P(HASerializerJsonPropertySuffix);
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
+        mqtt->writePayload(AHATOFSTR(entry->property));
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
         return flushEntryValue(entry);
     }
@@ -441,21 +441,21 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
     case ConstCharPropertyValue:
     case ProgmemPropertyValue: {
         const char* value = static_cast<const char*>(entry->value);
-        mqtt->writePayload_P(HASerializerJsonEscapeChar);
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
 
         if (entry->subtype == ConstCharPropertyValue) {
             mqtt->writePayload(value, strlen(value));
         } else {
-            mqtt->writePayload_P(value);
+            mqtt->writePayload(AHATOFSTR(value));
         }
 
-        mqtt->writePayload_P(HASerializerJsonEscapeChar);
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
         return true;
     }
 
     case BoolPropertyType: {
         const bool value = *static_cast<const bool*>(entry->value);
-        mqtt->writePayload_P(value ? HATrue : HAFalse);
+        mqtt->writePayload(AHATOFSTR(value ? HATrue : HAFalse));
         return true;
     }
 
@@ -493,12 +493,12 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
     HAMqtt* mqtt = HAMqtt::instance();
 
     // property name
-    mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
-    mqtt->writePayload_P(entry->property);
-    mqtt->writePayload_P(HASerializerJsonPropertySuffix);
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
+    mqtt->writePayload(AHATOFSTR(entry->property));
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
     // value (escaped)
-    mqtt->writePayload_P(HASerializerJsonEscapeChar);
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
     
     if (entry->value) {
         const char* topic = static_cast<const char*>(entry->value);
@@ -522,7 +522,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
         mqtt->writePayload(topic, length - 1);
     }
 
-    mqtt->writePayload_P(HASerializerJsonEscapeChar);
+    mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
     return true;
 }
 
@@ -535,9 +535,9 @@ bool HASerializer::flushFlag(const SerializerEntry* entry) const
     );
 
     if (flag == InternalWithDevice && device) {
-        mqtt->writePayload_P(HASerializerJsonPropertyPrefix);
-        mqtt->writePayload_P(HADeviceProperty);
-        mqtt->writePayload_P(HASerializerJsonPropertySuffix);
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
+        mqtt->writePayload(AHATOFSTR(HADeviceProperty));
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
         return device->getSerializer()->flush();
     }

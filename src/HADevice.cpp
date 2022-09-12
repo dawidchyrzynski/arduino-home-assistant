@@ -130,7 +130,7 @@ void HADevice::publishAvailability() const
     const uint16_t length = strlen_P(payload);
 
     if (mqtt->beginPublish(_availabilityTopic, length, true)) {
-        mqtt->writePayload_P(payload);
+        mqtt->writePayload(AHATOFSTR(payload));
         mqtt->endPublish();
     }
 }
