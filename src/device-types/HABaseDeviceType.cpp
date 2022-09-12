@@ -32,27 +32,27 @@ HAMqtt* HABaseDeviceType::mqtt()
 
 void HABaseDeviceType::subscribeTopic(
     const char* uniqueId,
-    const char* topicP
+    const __FlashStringHelper* topic
 )
 {
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         uniqueId,
-        topicP
+        topic
     );
     if (topicLength == 0) {
         return;
     }
 
-    char topic[topicLength];
+    char fullTopic[topicLength];
     if (!HASerializer::generateDataTopic(
-        topic,
+        fullTopic,
         uniqueId,
-        topicP
+        topic
     )) {
         return;
     }
 
-    HAMqtt::instance()->subscribe(topic);
+    HAMqtt::instance()->subscribe(fullTopic);
 }
 
 void HABaseDeviceType::onMqttMessage(
@@ -117,7 +117,7 @@ void HABaseDeviceType::publishAvailability()
     }
 
     publishOnDataTopic(
-        HAAvailabilityTopic,
+        AHATOFSTR(HAAvailabilityTopic),
         _availability == AvailabilityOnline
             ? HAOnline
             : HAOffline,
@@ -127,7 +127,7 @@ void HABaseDeviceType::publishAvailability()
 }
 
 bool HABaseDeviceType::publishOnDataTopic(
-    const char* topicP,
+    const __FlashStringHelper* topic,
     const char* value,
     bool retained,
     bool isProgmemValue
@@ -139,17 +139,17 @@ bool HABaseDeviceType::publishOnDataTopic(
 
     const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         uniqueId(),
-        topicP
+        topic
     );
     if (topicLength == 0) {
         return false;
     }
 
-    char topic[topicLength];
+    char fullTopic[topicLength];
     if (!HASerializer::generateDataTopic(
-        topic,
+        fullTopic,
         uniqueId(),
-        topicP
+        topic
     )) {
         return false;
     }
@@ -158,7 +158,7 @@ bool HABaseDeviceType::publishOnDataTopic(
         ? strlen_P(value)
         : strlen(value);
 
-    if (mqtt()->beginPublish(topic, valueLength, retained)) {
+    if (mqtt()->beginPublish(fullTopic, valueLength, retained)) {
         if (isProgmemValue) {
             mqtt()->writePayload(AHATOFSTR(value));
         } else {

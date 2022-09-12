@@ -75,7 +75,7 @@ void HALock::onMqttConnected()
         publishState(_currentState);
     }
 
-    subscribeTopic(uniqueId(), HACommandTopic);
+    subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
 }
 
 void HALock::onMqttMessage(
@@ -89,7 +89,7 @@ void HALock::onMqttMessage(
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
-        HACommandTopic
+        AHATOFSTR(HACommandTopic)
     )) {
         handleCommand(reinterpret_cast<const char*>(payload));
     }
@@ -102,7 +102,7 @@ bool HALock::publishState(const LockState state)
     }
 
     return publishOnDataTopic(
-        HAStateTopic,
+        AHATOFSTR(HAStateTopic),
         state == StateLocked ? HAStateLocked : HAStateUnlocked,
         true,
         true

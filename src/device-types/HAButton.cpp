@@ -44,7 +44,7 @@ void HAButton::onMqttConnected()
 
     publishConfig();
     publishAvailability();
-    subscribeTopic(uniqueId(), HACommandTopic);
+    subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
 }
 
 void HAButton::onMqttMessage(
@@ -59,7 +59,7 @@ void HAButton::onMqttMessage(
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
-        HACommandTopic
+        AHATOFSTR(HACommandTopic)
     )) {
         _commandCallback(this);
     }

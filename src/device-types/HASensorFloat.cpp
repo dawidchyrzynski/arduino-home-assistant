@@ -49,7 +49,7 @@ bool HASensorFloat::publishValue(const float value)
     HAUtils::numberToStr(str, number);
 
     return publishOnDataTopic(
-        HAStateTopic,
+        AHATOFSTR(HAStateTopic),
         str,
         true
     );

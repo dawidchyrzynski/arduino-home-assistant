@@ -47,7 +47,7 @@ bool HASensorInteger::publishValue(const int32_t value)
     HAUtils::numberToStr(str, value);
 
     return publishOnDataTopic(
-        HAStateTopic,
+        AHATOFSTR(HAStateTopic),
         str,
         true
     );

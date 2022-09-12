@@ -57,7 +57,7 @@ void HABinarySensor::onMqttConnected()
 bool HABinarySensor::publishState(const bool state)
 {
     return publishOnDataTopic(
-        HAStateTopic,
+        AHATOFSTR(HAStateTopic),
         state ? HAStateOn : HAStateOff,
         true,
         true

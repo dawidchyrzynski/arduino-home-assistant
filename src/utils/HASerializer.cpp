@@ -72,12 +72,12 @@ bool HASerializer::generateConfigTopic(
 
 uint16_t HASerializer::calculateDataTopicLength(
     const char* objectId,
-    const char* topicP
+    const __FlashStringHelper* topic
 )
 {
     const HAMqtt* mqtt = HAMqtt::instance();
     if (
-        !topicP ||
+        !topic ||
         !mqtt ||
         !mqtt->getDataPrefix() ||
         !mqtt->getDevice()
@@ -88,7 +88,7 @@ uint16_t HASerializer::calculateDataTopicLength(
     uint16_t size =
         strlen(mqtt->getDataPrefix()) + 1 + // prefix with slash
         strlen(mqtt->getDevice()->getUniqueId()) + 1 + // device ID with slash
-        strlen_P(topicP);
+        strlen_P(AHAFROMFSTR(topic));
 
     if (objectId) {
         size += strlen(objectId) + 1; // object ID with slash;
@@ -100,13 +100,13 @@ uint16_t HASerializer::calculateDataTopicLength(
 bool HASerializer::generateDataTopic(
     char* output,
     const char* objectId,
-    const char* topicP
+    const __FlashStringHelper* topic
 )
 {
     const HAMqtt* mqtt = HAMqtt::instance();
     if (
         !output ||
-        !topicP ||
+        !topic ||
         !mqtt ||
         !mqtt->getDataPrefix() ||
         !mqtt->getDevice()
@@ -125,31 +125,31 @@ bool HASerializer::generateDataTopic(
         strcat_P(output, HASerializerSlash);
     }
 
-    strcat_P(output, topicP);
+    strcat_P(output, AHAFROMFSTR(topic));
     return true;
 }
 
 bool HASerializer::compareDataTopics(
-    const char* topic,
+    const char* actualTopic,
     const char* objectId,
-    const char* topicP
+    const __FlashStringHelper* topic
 )
 {
-    if (!topic) {
+    if (!actualTopic) {
         return false;
     }
 
-    const uint16_t topicLength = calculateDataTopicLength(objectId, topicP);
+    const uint16_t topicLength = calculateDataTopicLength(objectId, topic);
     if (topicLength == 0) {
         return false;
     }
 
     char expectedTopic[topicLength];
-    if (!generateDataTopic(expectedTopic, objectId, topicP)) {
+    if (!generateDataTopic(expectedTopic, objectId, topic)) {
         return false;
     }
 
-    return strcmp(topic, expectedTopic) == 0;
+    return strcmp(actualTopic, expectedTopic) == 0;
 }
 
 HASerializer::HASerializer(
@@ -340,7 +340,7 @@ uint16_t HASerializer::calculateTopicEntrySize(
 
         size += calculateDataTopicLength(
             _deviceType->uniqueId(),
-            entry->property
+            AHATOFSTR(entry->property)
         ) - 1; // exclude null terminator
     }
 
@@ -506,7 +506,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
     } else {
         const uint16_t length = calculateDataTopicLength(
             _deviceType->uniqueId(),
-            entry->property
+            AHATOFSTR(entry->property)
         );
         if (length == 0) {
             return false;
@@ -516,7 +516,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
         generateDataTopic(
             topic,
             _deviceType->uniqueId(),
-            entry->property
+            AHATOFSTR(entry->property)
         );
 
         mqtt->writePayload(topic, length - 1);

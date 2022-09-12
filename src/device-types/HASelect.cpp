@@ -127,7 +127,7 @@ void HASelect::onMqttConnected()
         publishState(_currentState);
     }
 
-    subscribeTopic(uniqueId(), HACommandTopic);
+    subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
 }
 
 void HASelect::onMqttMessage(
@@ -141,7 +141,7 @@ void HASelect::onMqttMessage(
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
-        HACommandTopic
+        AHATOFSTR(HACommandTopic)
     )) {
         const char* option = reinterpret_cast<const char*>(payload);
         const uint8_t optionsNb = _options->getItemsNb();
@@ -172,7 +172,7 @@ bool HASelect::publishState(const int8_t state)
         return false;
     }
 
-    return publishOnDataTopic(HAStateTopic, item, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), item, true);
 }
 
 uint8_t HASelect::countOptionsInString(const char* options) const

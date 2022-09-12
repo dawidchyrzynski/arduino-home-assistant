@@ -18,7 +18,7 @@ bool HACamera::publishImage(const char* data)
         return false;
     }
 
-    return publishOnDataTopic(HATopic, data, true);
+    return publishOnDataTopic(AHATOFSTR(HATopic), data, true);
 }
 
 void HACamera::buildSerializer()

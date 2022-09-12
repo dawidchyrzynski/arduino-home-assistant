@@ -91,14 +91,14 @@ public:
 
     /**
      * Calculates the size of the given data topic for the given objectId.
-     * The data topic has structure as follows: `[data prefix]/[device ID]_[objectId]/[topicP]`
+     * The data topic has structure as follows: `[data prefix]/[device ID]_[objectId]/[topic]`
      * 
      * @param objectId The unique ID of a device type that's going to publish the data.
-     * @param topicP The topic name (progmem string).
+     * @param topic The topic name (progmem string).
      */
     static uint16_t calculateDataTopicLength(
         const char* objectId,
-        const char* topicP
+        const __FlashStringHelper* topic
     );
 
     /**
@@ -107,12 +107,12 @@ public:
      * 
      * @param output Buffer where the topic will be written.
      * @param objectId The unique ID of a device type that's going to publish the data.
-     * @param topicP The topic name (progmem string).
+     * @param topic The topic name (progmem string).
      */
     static bool generateDataTopic(
         char* output,
         const char* objectId,
-        const char* topicP
+        const __FlashStringHelper* topic
     );
 
     /**
@@ -120,14 +120,14 @@ public:
      * using the given objectId and topicP.
      * This method can be used to check if the received message matches some data topic. 
      * 
-     * @param topic The raw topic to compare.
+     * @param actualTopic The actual topic to compare.
      * @param objectId The unique ID of a device type that may be the owner of the topic.
-     * @param topicP The topic name (progmem string).
+     * @param topic The topic name (progmem string).
      */
     static bool compareDataTopics(
-        const char* topic,
+        const char* actualTopic,
         const char* objectId,
-        const char* topicP
+        const __FlashStringHelper* topic
     );
 
     /**

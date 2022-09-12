@@ -50,7 +50,7 @@ bool HADeviceTrigger::trigger()
         return false;
     }
 
-    return publishOnDataTopic(HATopic, "");
+    return publishOnDataTopic(AHATOFSTR(HATopic), "");
 }
 
 void HADeviceTrigger::buildSerializer()

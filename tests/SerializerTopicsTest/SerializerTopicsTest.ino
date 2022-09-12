@@ -166,7 +166,7 @@ test(SerializerTopicsTest, calculate_data_no_mqtt) {
         (uint16_t)0,
         HASerializer::calculateDataTopicLength(
             "objectId",
-            DummyProgmemStr
+            AHATOFSTR(DummyProgmemStr)
         )
     );
 }
@@ -196,7 +196,7 @@ test(SerializerTopicsTest, calculate_data_invalid_prefix) {
         (uint16_t)0,
         HASerializer::calculateDataTopicLength(
             "objectId",
-            DummyProgmemStr
+            AHATOFSTR(DummyProgmemStr)
         )
     );
 }
@@ -214,7 +214,7 @@ test(SerializerTopicsTest, calculate_data_partial) {
         (uint16_t)strlen(expectedTopic) + 1,
         HASerializer::calculateDataTopicLength(
             objectId,
-            DummyProgmemStr
+            AHATOFSTR(DummyProgmemStr)
         )
     );
 }
@@ -226,7 +226,7 @@ test(SerializerTopicsTest, generate_data_no_mqtt) {
     assertFalse(HASerializer::generateDataTopic(
         tmpBuffer,
         "objectId",
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
@@ -255,7 +255,7 @@ test(SerializerTopicsTest, generate_data_invalid_prefix) {
     assertFalse(HASerializer::generateDataTopic(
         tmpBuffer,
         "objectId",
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
@@ -273,7 +273,7 @@ test(SerializerTopicsTest, generate_data_partial) {
     assertTrue(HASerializer::generateDataTopic(
         tmpBuffer,
         objectId,
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
     assertStringCaseEqual(tmpBuffer, expectedTopic);
 }
@@ -291,7 +291,7 @@ test(SerializerTopicsTest, generate_data_full) {
     assertTrue(HASerializer::generateDataTopic(
         tmpBuffer,
         objectId,
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
     assertStringCaseEqual(tmpBuffer, expectedTopic);
 }
@@ -307,7 +307,7 @@ test(SerializerTopicsTest, compare_invalid_topic) {
     assertFalse(HASerializer::compareDataTopics(
         topic,
         objectId,
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
 }
 
@@ -322,7 +322,7 @@ test(SerializerTopicsTest, compare_matching_topics) {
     assertTrue(HASerializer::compareDataTopics(
         topic,
         objectId,
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
 }
 
@@ -337,7 +337,7 @@ test(SerializerTopicsTest, compare_not_matching_topics) {
     assertFalse(HASerializer::compareDataTopics(
         topic,
         objectId,
-        DummyProgmemStr
+        AHATOFSTR(DummyProgmemStr)
     ));
 }
 

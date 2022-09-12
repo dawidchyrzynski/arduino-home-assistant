@@ -17,7 +17,7 @@ HASensor::HASensor(const char* uniqueId) :
 
 bool HASensor::setValue(const char* value)
 {
-    return publishOnDataTopic(HAStateTopic, value, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), value, true);
 }
 
 void HASensor::buildSerializer()

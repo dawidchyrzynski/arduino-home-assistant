@@ -78,7 +78,7 @@ bool HADeviceTracker::publishState(const TrackerState state)
         return false;
     }
 
-    return publishOnDataTopic(HAStateTopic, stateP, true, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateP, true, true);
 }
 
 const char* HADeviceTracker::getSourceTypeProperty() const

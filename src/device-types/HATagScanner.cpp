@@ -16,7 +16,7 @@ bool HATagScanner::tagScanned(const char* tag)
         return false;
     }
 
-    return publishOnDataTopic(HATopic, tag);
+    return publishOnDataTopic(AHATOFSTR(HATopic), tag);
 }
 
 void HATagScanner::buildSerializer()

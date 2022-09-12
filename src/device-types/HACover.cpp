@@ -96,7 +96,7 @@ void HACover::onMqttConnected()
         publishPosition(_currentPosition);
     }
 
-    subscribeTopic(uniqueId(), HACommandTopic);
+    subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
 }
 
 void HACover::onMqttMessage(
@@ -110,7 +110,7 @@ void HACover::onMqttMessage(
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
-        HACommandTopic
+        AHATOFSTR(HACommandTopic)
     )) {
         handleCommand(reinterpret_cast<const char*>(payload));
     }
@@ -148,7 +148,7 @@ bool HACover::publishState(CoverState state)
         return false;
     }
 
-    return publishOnDataTopic(HAStateTopic, stateP, true, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateP, true, true);
 }
 
 bool HACover::publishPosition(int16_t position)
@@ -166,7 +166,7 @@ bool HACover::publishPosition(int16_t position)
     memset(str, 0, sizeof(str));
     HAUtils::numberToStr(str, position);
 
-    return publishOnDataTopic(HAPositionTopic, str, true);
+    return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);
 }
 
 void HACover::handleCommand(const char* cmd)

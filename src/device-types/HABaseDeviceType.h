@@ -1,7 +1,7 @@
 #ifndef AHA_HABASEDEVICETYPE_H
 #define AHA_HABASEDEVICETYPE_H
 
-#include <stdint.h>
+#include <Arduino.h>
 #include "../ArduinoHADefines.h"
 
 class HAMqtt;
@@ -91,11 +91,11 @@ protected:
      * Subscribes to the given data topic.
      * 
      * @param uniqueId THe unique ID of the device type assigned via the constructor.
-     * @param topicP TOpic to serialize (progmem string).
+     * @param topic Topic to subscribe (progmem string).
      */
     static void subscribeTopic(
         const char* uniqueId,
-        const char* topicP
+        const __FlashStringHelper* topic
     );
 
     /**
@@ -145,13 +145,13 @@ protected:
     /**
      * Publishes the given data on the data topic.
      *
-     * @param topicP The topic to publish on (progmem string).
+     * @param topic The topic to publish on (progmem string).
      * @param value The message's payload.
      * @param retained Specifies whether the message should be retained.
      * @param isProgmemValue Specifies whether the given value is stored in the progmem.
      */
     bool publishOnDataTopic(
-        const char* topicP,
+        const __FlashStringHelper* topic,
         const char* value,
         bool retained = false,
         bool isProgmemValue = false
