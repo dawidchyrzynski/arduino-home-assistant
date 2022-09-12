@@ -15,19 +15,20 @@
 #define assertSerializerMqttMessage(expectedJson) \
     assertSingleMqttMessage(testTopic, expectedJson, false)
 
-class DummyDeviceType : public HABaseDeviceType
-{
-public:
-    DummyDeviceType(): HABaseDeviceType("testComponent", "testId") { }
-
-protected:
-    virtual void onMqttConnected() override { }
-};
-
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testTopic = "testTopic";
+const char TestComponentStr[] PROGMEM = {"dummyProgmem"};
+
+class DummyDeviceType : public HABaseDeviceType
+{
+public:
+    DummyDeviceType(): HABaseDeviceType(AHATOFSTR(TestComponentStr), "testId") { }
+
+protected:
+    virtual void onMqttConnected() override { }
+};
 
 test(SerializerTest, empty_json) {
     prepareTest(0)

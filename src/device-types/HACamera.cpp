@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HACamera::HACamera(const char* uniqueId) :
-    HABaseDeviceType("camera", uniqueId),
+    HABaseDeviceType(AHATOFSTR(HAComponentCamera), uniqueId),
     _encoding(EncodingBinary),
     _icon(nullptr)
 {

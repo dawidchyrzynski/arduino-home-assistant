@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HABaseDeviceType::HABaseDeviceType(
-    const char* componentName,
+    const __FlashStringHelper* componentName,
     const char* uniqueId
 ) :
     _componentName(componentName),

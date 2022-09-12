@@ -3,20 +3,21 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
 
 using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
-static const char* testComponentName = "testComponent";
 static const char* testUniqueId = "uniqueId";
 static const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
 static const char* sharedAvailabilityTopic = "testData/testDevice/avty_t";
 
+const char ComponentNameStr[] PROGMEM = {"componentName"};
+
 class DummyDeviceType : public HABaseDeviceType
 {
 public:
-    DummyDeviceType(const char* componentName, const char* uniqueId) :
+    DummyDeviceType(const __FlashStringHelper* componentName, const char* uniqueId) :
         HABaseDeviceType(componentName, uniqueId) { }
 
 protected:
@@ -26,34 +27,34 @@ protected:
 };
 
 test(BaseDeviceTypeTest, constructor_params) {
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
-    assertStringCaseEqual(testComponentName, deviceType.componentName());
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
+    assertStringCaseEqual(AHATOFSTR(ComponentNameStr), deviceType.componentName());
     assertStringCaseEqual(testUniqueId, deviceType.uniqueId());
 }
 
 test(BaseDeviceTypeTest, register_mqtt_type) {
     HADevice device(testDeviceId);
     HAMqtt mqtt(nullptr, device);
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
 
     assertEqual((uint8_t)1, mqtt.getDevicesTypesNb());
     assertEqual(&deviceType, mqtt.getDevicesTypes()[0]);
 }
 
 test(BaseDeviceTypeTest, default_name) {
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
     assertEqual((const char*)nullptr, deviceType.getName());
 }
 
 test(BaseDeviceTypeTest, name_setter) {
     const char* name = "testName";
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
     deviceType.setName(name);
     assertEqual(name, deviceType.getName());
 }
 
 test(BaseDeviceTypeTest, default_availability) {
-    DummyDeviceType deviceType(testComponentName, testUniqueId);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
     assertFalse(deviceType.isAvailabilityConfigured());
 }
 

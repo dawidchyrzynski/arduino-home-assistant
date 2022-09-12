@@ -1,6 +1,19 @@
 #ifndef AHA_HADICTIONARY_H
 #define AHA_HADICTIONARY_H
 
+// components
+extern const char HAComponentBinarySensor[];
+extern const char HAComponentButton[];
+extern const char HAComponentCamera[];
+extern const char HAComponentCover[];
+extern const char HAComponentDeviceTracker[];
+extern const char HAComponentDeviceAutomation[];
+extern const char HAComponentLock[];
+extern const char HAComponentSelect[];
+extern const char HAComponentSensor[];
+extern const char HAComponentSwitch[];
+extern const char HAComponentTag[];
+
 // decorators
 extern const char HASerializerSlash[];
 extern const char HASerializerJsonDataPrefix[];

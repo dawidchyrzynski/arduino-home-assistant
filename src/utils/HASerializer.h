@@ -67,11 +67,11 @@ public:
      * Calculates the size of a configuration topic for the given component and object ID.
      * The configuration topic has structure as follows: `[discovery prefix]/[component]/[device ID]_[objectId]/config`
      * 
-     * @param component The name of the HA component (e.g. `binary_sensor`)
+     * @param component The name of the HA component (e.g. `binary_sensor`).
      * @param objectId The unique ID of a device type that's going to publish the config.
      */
     static uint16_t calculateConfigTopicLength(
-        const char* component,
+        const __FlashStringHelper* component,
         const char* objectId
     );
 
@@ -80,12 +80,12 @@ public:
      * The topic will be stored in the `output` variable.
      * 
      * @param output Buffer where the topic will be written.
-     * @param component The name of the HA component (e.g. `binary_sensor`)
+     * @param component The name of the HA component (e.g. `binary_sensor`).
      * @param objectId The unique ID of a device type that's going to publish the config.
      */
     static bool generateConfigTopic(
         char* output,
-        const char* component,
+        const __FlashStringHelper* component,
         const char* objectId
     );
 

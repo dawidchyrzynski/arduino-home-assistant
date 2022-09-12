@@ -13,7 +13,7 @@
 #include "../device-types/HABaseDeviceType.h"
 
 uint16_t HASerializer::calculateConfigTopicLength(
-    const char* componentName,
+    const __FlashStringHelper* componentName,
     const char* objectId
 )
 {
@@ -30,7 +30,7 @@ uint16_t HASerializer::calculateConfigTopicLength(
 
     return
         strlen(mqtt->getDiscoveryPrefix()) + 1 + // prefix with slash
-        strlen(componentName) + 1 + // component name with slash
+        strlen_P(AHAFROMFSTR(componentName)) + 1 + // component name with slash
         strlen(mqtt->getDevice()->getUniqueId()) + 1 + // device ID with slash
         strlen(objectId) + 1 + // object ID with slash
         strlen_P(HAConfigTopic) + 1; // including null terminator
@@ -38,7 +38,7 @@ uint16_t HASerializer::calculateConfigTopicLength(
 
 bool HASerializer::generateConfigTopic(
     char* output,
-    const char* componentName,
+    const __FlashStringHelper* componentName,
     const char* objectId
 )
 {
@@ -57,7 +57,7 @@ bool HASerializer::generateConfigTopic(
     strcpy(output, mqtt->getDiscoveryPrefix());
     strcat_P(output, HASerializerSlash);
 
-    strcat(output, componentName);
+    strcat_P(output, AHAFROMFSTR(componentName));
     strcat_P(output, HASerializerSlash);
 
     strcat(output, mqtt->getDevice()->getUniqueId());

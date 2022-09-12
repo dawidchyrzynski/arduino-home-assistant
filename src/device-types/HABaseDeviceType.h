@@ -15,10 +15,11 @@ public:
      * 
      * @param componentName The name of the Home Assistant component (e.g. `binary_sensor`).
      *                      You can find all available component names in the Home Assistant documentation.
+     *                      The component name needs to be stored in the flash memory.
      * @param uniqueId The unique ID of the device type. It needs to be unique in a scope of the HADevice.
      */
     HABaseDeviceType(
-        const char* componentName,
+        const __FlashStringHelper* componentName,
         const char* uniqueId
     );
 
@@ -32,7 +33,7 @@ public:
      * Returns component name defined by the device type.
      * It's used for the MQTT discovery topic.
      */
-    inline const char* componentName() const
+    inline const __FlashStringHelper* componentName() const
         { return _componentName; }
 
     /**
@@ -171,7 +172,7 @@ protected:
     );
 
     /// The component name that was assigned via the constructor.
-    const char* const _componentName;
+    const __FlashStringHelper* const _componentName;
 
     /// The unique ID that was assigned via the constructor.
     const char* _uniqueId;

@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HASensor::HASensor(const char* uniqueId) :
-    HABaseDeviceType("sensor", uniqueId),
+    HABaseDeviceType(AHATOFSTR(HAComponentSensor), uniqueId),
     _deviceClass(nullptr),
     _forceUpdate(false),
     _icon(nullptr),

@@ -1,6 +1,19 @@
 #include <Arduino.h>
 #include "HADictionary.h"
 
+// components
+const char HAComponentBinarySensor[] PROGMEM = {"binary_sensor"};
+const char HAComponentButton[] PROGMEM = {"button"};
+const char HAComponentCamera[] PROGMEM = {"camera"};
+const char HAComponentCover[] PROGMEM = {"cover"};
+const char HAComponentDeviceTracker[] PROGMEM = {"device_tracker"};
+const char HAComponentDeviceAutomation[] PROGMEM = {"device_automation"};
+const char HAComponentLock[] PROGMEM = {"lock"};
+const char HAComponentSelect[] PROGMEM = {"select"};
+const char HAComponentSensor[] PROGMEM = {"sensor"};
+const char HAComponentSwitch[] PROGMEM = {"switch"};
+const char HAComponentTag[] PROGMEM = {"tag"};
+
 // decorators
 const char HASerializerSlash[] PROGMEM = {"/"};
 const char HASerializerJsonDataPrefix[] PROGMEM = {"{"};

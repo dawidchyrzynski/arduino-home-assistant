@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HATagScanner::HATagScanner(const char* uniqueId) :
-    HABaseDeviceType("tag", uniqueId)
+    HABaseDeviceType(AHATOFSTR(HAComponentTag), uniqueId)
 {
 
 }

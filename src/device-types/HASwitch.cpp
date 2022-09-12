@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HASwitch::HASwitch(const char* uniqueId) :
-    HABaseDeviceType("switch", uniqueId),
+    HABaseDeviceType(AHATOFSTR(HAComponentSwitch), uniqueId),
     _class(nullptr),
     _icon(nullptr),
     _retain(false),

@@ -5,7 +5,7 @@
 #include "../utils/HASerializer.h"
 
 HABinarySensor::HABinarySensor(const char* uniqueId) :
-    HABaseDeviceType("binary_sensor", uniqueId),
+    HABaseDeviceType(AHATOFSTR(HAComponentBinarySensor), uniqueId),
     _class(nullptr),
     _icon(nullptr),
     _currentState(false)

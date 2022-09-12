@@ -6,7 +6,10 @@ using aunit::TestRunner;
 const char* deviceId = "testDevice";
 const char* dataPrefix = "dataPrefix";
 const char* discoveryPrefix = "discoveryPrefix";
+
 const char DummyProgmemStr[] PROGMEM = {"dummyProgmem"};
+const char ComponentNameStr[] PROGMEM = {"componentName"};
+
 char tmpBuffer[64];
 
 void clearTmpBuffer() {
@@ -18,7 +21,7 @@ test(SerializerTopicsTest, calculate_config_no_mqtt) {
     assertEqual(
         (uint16_t)0,
         HASerializer::calculateConfigTopicLength(
-            "componentName",
+            AHATOFSTR(ComponentNameStr),
             "objectId"
         )
     );
@@ -46,7 +49,7 @@ test(SerializerTopicsTest, calculate_config_invalid_object) {
     assertEqual(
         (uint16_t)0,
         HASerializer::calculateConfigTopicLength(
-            "componentName",
+            AHATOFSTR(ComponentNameStr),
             nullptr
         )
     );
@@ -61,14 +64,13 @@ test(SerializerTopicsTest, calculate_config_invalid_prefix) {
     assertEqual(
         (uint16_t)0,
         HASerializer::calculateConfigTopicLength(
-            "componentName",
+            AHATOFSTR(ComponentNameStr),
             "objectId"
         )
     );
 }
 
 test(SerializerTopicsTest, calculate_config) {
-    const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
 
@@ -80,7 +82,7 @@ test(SerializerTopicsTest, calculate_config) {
     assertEqual(
         (uint16_t)(strlen(expectedTopic) + 1),
         HASerializer::calculateConfigTopicLength(
-            componentName,
+            AHATOFSTR(ComponentNameStr),
             objectId
         )
     );
@@ -92,7 +94,7 @@ test(SerializerTopicsTest, generate_config_no_mqtt) {
     // it should return false if there is no HAMqtt instance (singleton)
     assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
-        "componentName",
+        AHATOFSTR(ComponentNameStr),
         "objectId"
     ));
     assertTrue(strlen(tmpBuffer) == 0);
@@ -120,7 +122,7 @@ test(SerializerTopicsTest, generate_config_invalid_object) {
     // it should return false if objectId is null
     assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
-        "componentName",
+        AHATOFSTR(ComponentNameStr),
         nullptr
     ));
     assertTrue(strlen(tmpBuffer) == 0);
@@ -135,14 +137,13 @@ test(SerializerTopicsTest, generate_config_invalid_prefix) {
     // it should return false if discovery prefix is null
     assertFalse(HASerializer::generateConfigTopic(
         tmpBuffer,
-        "componentName",
+        AHATOFSTR(ComponentNameStr),
         "objectId"
     ));
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
 test(SerializerTopicsTest, generate_config) {
-    const char* componentName = "componentName";
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
 
@@ -154,7 +155,7 @@ test(SerializerTopicsTest, generate_config) {
     // it should generate valid topic
     assertTrue(HASerializer::generateConfigTopic(
         tmpBuffer,
-        componentName,
+        AHATOFSTR(ComponentNameStr),
         objectId
     ));
     assertStringCaseEqual(expectedTopic, tmpBuffer);
