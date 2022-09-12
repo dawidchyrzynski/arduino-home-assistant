@@ -199,7 +199,7 @@ void HASerializer::set(const FlagType flag)
         }
 
         entry->type = FlagEntryType;
-        entry->subtype = static_cast<uint8_t>(InternalWithDevice);
+        entry->subtype = static_cast<uint8_t>(WithDevice);
         entry->property = nullptr;
         entry->value = nullptr;
     } else if (flag == WithAvailability) {
@@ -307,7 +307,7 @@ uint16_t HASerializer::calculateEntrySize(const SerializerEntry* entry) const
 
     case FlagEntryType:
         return calculateFlagSize(
-            static_cast<FlagInternalType>(entry->subtype)
+            static_cast<FlagType>(entry->subtype)
         );
 
     default:
@@ -347,12 +347,12 @@ uint16_t HASerializer::calculateTopicEntrySize(
     return size;
 }
 
-uint16_t HASerializer::calculateFlagSize(const FlagInternalType flag) const
+uint16_t HASerializer::calculateFlagSize(const FlagType flag) const
 {
     const HAMqtt* mqtt = HAMqtt::instance();
     const HADevice* device = mqtt->getDevice();
 
-    if (flag == InternalWithDevice && device->getSerializer()) {
+    if (flag == WithDevice && device->getSerializer()) {
         const uint16_t deviceLength = device->getSerializer()->calculateSize();
         if (deviceLength == 0) {
             return 0;
@@ -530,11 +530,9 @@ bool HASerializer::flushFlag(const SerializerEntry* entry) const
 {
     HAMqtt* mqtt = HAMqtt::instance();
     const HADevice* device = mqtt->getDevice();
-    const FlagInternalType flag = static_cast<FlagInternalType>(
-        entry->subtype
-    );
+    const FlagType flag = static_cast<FlagType>(entry->subtype);
 
-    if (flag == InternalWithDevice && device) {
+    if (flag == WithDevice && device) {
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
         mqtt->writePayload(AHATOFSTR(HADeviceProperty));
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));

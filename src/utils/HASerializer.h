@@ -46,7 +46,7 @@ public:
         /// Type of the entry.
         EntryType type;
 
-        /// Subtype of the entry. It can be `FlagInternalType`, `PropertyValueType` or `TopicType`. 
+        /// Subtype of the entry. It can be `FlagType`, `PropertyValueType` or `TopicType`.
         uint8_t subtype;
 
         /// Pointer to the property name.
@@ -197,13 +197,6 @@ public:
     bool flush() const;
 
 private:
-    /// Internal representation of the flag entry.
-    enum FlagInternalType {
-        InternalWithDevice = 1,
-        InternalWithSharedAvailability,
-        InternalWithSeparateAvailability
-    };
-
     /// Pointer to the device type that owns the serializer.
     HABaseDeviceType* _deviceType;
 
@@ -237,7 +230,7 @@ private:
     /**
      * Calculates the size of the entry of type `FlagEntryType`.
      */
-    uint16_t calculateFlagSize(const FlagInternalType flag) const;
+    uint16_t calculateFlagSize(const FlagType flag) const;
 
     /**
      * Calculates the size of the entry's value if the entry is `PropertyEntryType`.
