@@ -81,15 +81,18 @@ bool HAMqtt::begin(
     const char* password
 )
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", String(serverIp).c_str(), serverPort);
+    ARDUINOHA_DEBUG_PRINT(F("AHA: init server "))
+    ARDUINOHA_DEBUG_PRINT(serverIp)
+    ARDUINOHA_DEBUG_PRINT(F(":"))
+    ARDUINOHA_DEBUG_PRINTLN(serverPort)
 
     if (_device.getUniqueId() == nullptr) {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: init failed. Missing device unique ID");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: init failed. Missing device unique ID"))
         return false;
     }
 
     if (_initialized) {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: already initialized");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: already initialized"))
         return false;
     }
 
@@ -119,15 +122,18 @@ bool HAMqtt::begin(
     const char* password
 )
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: init server %s:%d\n", serverHostname, serverPort);
+    ARDUINOHA_DEBUG_PRINT(F("AHA: init server "))
+    ARDUINOHA_DEBUG_PRINT(serverHostname)
+    ARDUINOHA_DEBUG_PRINT(F(":"))
+    ARDUINOHA_DEBUG_PRINTLN(serverPort)
 
     if (_device.getUniqueId() == nullptr) {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: init failed. Missing device unique ID");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: init failed. Missing device unique ID"))
         return false;
     }
 
     if (_initialized) {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: already initialized");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: already initialized"))
         return false;
     }
 
@@ -156,7 +162,7 @@ bool HAMqtt::disconnect()
         return false;
     }
 
-    ARDUINOHA_DEBUG_PRINTLN("AHA: disconnecting");
+    ARDUINOHA_DEBUG_PRINTLN(F("AHA: disconnecting"))
 
     _initialized = false;
     _lastConnectionAttemptAt = 0;
@@ -192,7 +198,10 @@ bool HAMqtt::publish(const char* topic, const char* payload, bool retained)
         return false;
     }
 
-    ARDUINOHA_DEBUG_PRINTF("AHA: publishing %s, len: %d\n", topic, strlen(payload));
+    ARDUINOHA_DEBUG_PRINT(F("AHA: publishing "))
+    ARDUINOHA_DEBUG_PRINT(topic)
+    ARDUINOHA_DEBUG_PRINT(F(", len: "))
+    ARDUINOHA_DEBUG_PRINTLN(strlen(payload))
 
     _mqtt->beginPublish(topic, strlen(payload), retained);
     _mqtt->write((const uint8_t*)(payload), strlen(payload));
@@ -205,7 +214,10 @@ bool HAMqtt::beginPublish(
     bool retained
 )
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: being publish %s, len: %d\n", topic, payloadLength);
+    ARDUINOHA_DEBUG_PRINT(F("AHA: begin publish "))
+    ARDUINOHA_DEBUG_PRINT(topic)
+    ARDUINOHA_DEBUG_PRINT(F(", len: "))
+    ARDUINOHA_DEBUG_PRINTLN(payloadLength)
 
     return _mqtt->beginPublish(topic, payloadLength, retained);
 }
@@ -227,13 +239,18 @@ bool HAMqtt::endPublish()
 
 bool HAMqtt::subscribe(const char* topic)
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: subscribing %s\n", topic);
+    ARDUINOHA_DEBUG_PRINT(F("AHA: subscribing "))
+    ARDUINOHA_DEBUG_PRINTLN(topic)
+
     return _mqtt->subscribe(topic);
 }
 
 void HAMqtt::processMessage(const char* topic, const uint8_t* payload, uint16_t length)
 {
-    ARDUINOHA_DEBUG_PRINTF("AHA: received call %s, len: %d\n", topic, length);
+    ARDUINOHA_DEBUG_PRINT(F("AHA: received call "))
+    ARDUINOHA_DEBUG_PRINT(topic)
+    ARDUINOHA_DEBUG_PRINT(F(", len: "))
+    ARDUINOHA_DEBUG_PRINTLN(length)
 
     if (_messageCallback) {
         _messageCallback(topic, payload, length);
@@ -252,7 +269,9 @@ void HAMqtt::connectToServer()
     }
 
     _lastConnectionAttemptAt = millis();
-    ARDUINOHA_DEBUG_PRINTF("AHA: connecting, client ID %s\n", _device.getUniqueId());
+
+    ARDUINOHA_DEBUG_PRINT(F("AHA: connecting, client ID: "))
+    ARDUINOHA_DEBUG_PRINTLN(_device.getUniqueId())
 
     _mqtt->connect(
         _device.getUniqueId(),
@@ -266,10 +285,10 @@ void HAMqtt::connectToServer()
     );
 
     if (isConnected()) {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: connected");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: connected"))
         onConnectedLogic();
     } else {
-        ARDUINOHA_DEBUG_PRINTLN("AHA: failed to connect");
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: failed to connect"))
     }
 }
 

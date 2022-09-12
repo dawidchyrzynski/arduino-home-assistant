@@ -20,14 +20,12 @@
     #include <Arduino.h>
 
     #define ARDUINOHA_DEBUG_INIT() Serial.begin(115200);
-    #define ARDUINOHA_DEBUG_PRINTLN(x) Serial.println(F(x));
-    #define ARDUINOHA_DEBUG_PRINT(x) Serial.print(F(x));
-    #define ARDUINOHA_DEBUG_PRINTF(x, ...) Serial.printf(x, __VA_ARGS__);
+    #define ARDUINOHA_DEBUG_PRINTLN(x) Serial.println(x);
+    #define ARDUINOHA_DEBUG_PRINT(x) Serial.print(x);
 #else
     #define ARDUINOHA_DEBUG_INIT()
     #define ARDUINOHA_DEBUG_PRINTLN(x)
     #define ARDUINOHA_DEBUG_PRINT(x)
-    #define ARDUINOHA_DEBUG_PRINTF(...)
 #endif
 
 #define AHATOFSTR(x) reinterpret_cast<const __FlashStringHelper*>(x)
