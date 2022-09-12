@@ -128,6 +128,15 @@ void HABaseDeviceType::publishAvailability()
 
 bool HABaseDeviceType::publishOnDataTopic(
     const __FlashStringHelper* topic,
+    const __FlashStringHelper* value,
+    bool retained
+)
+{
+    return publishOnDataTopic(topic, AHAFROMFSTR(value), retained, true);
+}
+
+bool HABaseDeviceType::publishOnDataTopic(
+    const __FlashStringHelper* topic,
     const char* value,
     bool retained,
     bool isProgmemValue

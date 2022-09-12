@@ -122,33 +122,33 @@ bool HACover::publishState(CoverState state)
         return false;
     }
 
-    const char *stateP = nullptr;
+    const __FlashStringHelper *stateStr = nullptr;
     switch (state) {
     case StateClosed:
-        stateP = HAClosedState;
+        stateStr = AHATOFSTR(HAClosedState);
         break;
 
     case StateClosing:
-        stateP = HAClosingState;
+        stateStr = AHATOFSTR(HAClosingState);
         break;
 
     case StateOpen:
-        stateP = HAOpenState;
+        stateStr = AHATOFSTR(HAOpenState);
         break;
 
     case StateOpening:
-        stateP = HAOpeningState;
+        stateStr = AHATOFSTR(HAOpeningState);
         break;
 
     case StateStopped:
-        stateP = HAStoppedState;
+        stateStr = AHATOFSTR(HAStoppedState);
         break;
 
     default:
         return false;
     }
 
-    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateP, true, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateStr, true);
 }
 
 bool HACover::publishPosition(int16_t position)

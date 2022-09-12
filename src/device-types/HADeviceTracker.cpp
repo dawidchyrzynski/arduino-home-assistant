@@ -60,25 +60,25 @@ void HADeviceTracker::onMqttConnected()
 
 bool HADeviceTracker::publishState(const TrackerState state)
 {
-    const char *stateP = nullptr;
+    const __FlashStringHelper *stateStr = nullptr;
     switch (state) {
     case StateHome:
-        stateP = HAHome;
+        stateStr = AHATOFSTR(HAHome);
         break;
 
     case StateNotHome:
-        stateP = HANotHome;
+        stateStr = AHATOFSTR(HANotHome);
         break;
 
     case StateNotAvailable:
-        stateP = HAOffline;
+        stateStr = AHATOFSTR(HAOffline);
         break;
 
     default:
         return false;
     }
 
-    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateP, true, true);
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateStr, true);
 }
 
 const __FlashStringHelper* HADeviceTracker::getSourceTypeProperty() const

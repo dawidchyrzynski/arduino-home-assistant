@@ -103,8 +103,7 @@ bool HALock::publishState(const LockState state)
 
     return publishOnDataTopic(
         AHATOFSTR(HAStateTopic),
-        state == StateLocked ? HAStateLocked : HAStateUnlocked,
-        true,
+        AHATOFSTR(state == StateLocked ? HAStateLocked : HAStateUnlocked),
         true
     );
 }

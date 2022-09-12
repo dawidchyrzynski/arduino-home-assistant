@@ -58,8 +58,7 @@ bool HABinarySensor::publishState(const bool state)
 {
     return publishOnDataTopic(
         AHATOFSTR(HAStateTopic),
-        state ? HAStateOn : HAStateOff,
-        true,
+        AHATOFSTR(state ? HAStateOn : HAStateOff),
         true
     );
 }
