@@ -32,7 +32,11 @@ void HASensor::buildSerializer()
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
-    _serializer->set(AHATOFSTR(HAValueTemplateProperty), _valueTemplate);
+    _serializer->set(
+        AHATOFSTR(HAValueTemplateProperty),
+        _valueTemplate,
+        HASerializer::ProgmemPropertyValue
+    );
 
     // optional property
     if (_forceUpdate) {
