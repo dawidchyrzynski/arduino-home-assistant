@@ -19,6 +19,13 @@ HASelect::HASelect(const char* uniqueId) :
 HASelect::~HASelect()
 {
     if (_options) {
+        const uint8_t optionsNb = _options->getItemsNb();
+        const HASerializerArray::ItemType* options = _options->getItems();
+
+        for (uint8_t i = 0; i < optionsNb; i++) {
+            delete options[i];
+        }
+
         delete _options;
     }
 }
