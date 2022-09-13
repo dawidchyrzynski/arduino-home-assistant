@@ -6,8 +6,8 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* triggerType = "myType";
 static const char* triggerSubtype = "mySubtype";
-static const char* configTopic = "homeassistant/device_automation/testDevice/myType_mySubtype/config";
-static const char* triggerTopic = "testData/testDevice/myType_mySubtype/t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/device_automation/testDevice/myType_mySubtype/config"};
 
 AHA_TEST(DeviceTriggerTest, invalid_type) {
     initMqttTest(testDeviceId)
@@ -84,7 +84,11 @@ AHA_TEST(DeviceTriggerTest, trigger) {
     HADeviceTrigger trigger(triggerType, triggerSubtype);
     bool result = trigger.trigger();
 
-    assertSingleMqttMessage(triggerTopic, "", false)
+    assertSingleMqttMessage(
+        F("testData/testDevice/myType_mySubtype/t"),
+        "",
+        false
+    )
     assertTrue(result);
 }
 
@@ -96,7 +100,7 @@ AHA_TEST(DeviceTriggerTest, trigger_progmem_type) {
     bool result = trigger.trigger();
 
     assertSingleMqttMessage(
-        "testData/testDevice/button_short_press_mySubtype/t",
+        F("testData/testDevice/button_short_press_mySubtype/t"),
         "",
         false
     )
@@ -111,7 +115,7 @@ AHA_TEST(DeviceTriggerTest, trigger_progmem_subtype) {
     bool result = trigger.trigger();
 
     assertSingleMqttMessage(
-        "testData/testDevice/myType_turn_on/t",
+        F("testData/testDevice/myType_turn_on/t"),
         "",
         false
     )
@@ -129,7 +133,7 @@ AHA_TEST(DeviceTriggerTest, trigger_progmem_type_subtype) {
     bool result = trigger.trigger();
 
     assertSingleMqttMessage(
-        "testData/testDevice/button_short_press_turn_on/t",
+        F("testData/testDevice/button_short_press_turn_on/t"),
         "",
         false
     )

@@ -5,7 +5,8 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueScanner";
-static const char* configTopic = "homeassistant/tag/testDevice/uniqueScanner/config";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/tag/testDevice/uniqueScanner/config"};
 
 AHA_TEST(TagScannerTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
@@ -58,7 +59,7 @@ AHA_TEST(TagScannerTest, tag_scanned) {
     bool result = scanner.tagScanned("helloTag");
 
     assertSingleMqttMessage(
-        "testData/testDevice/uniqueScanner/t",
+        F("testData/testDevice/uniqueScanner/t"),
         "helloTag",
         false
     )

@@ -31,7 +31,7 @@
 #define assertEntityConfig(mock, entity, expectedJson) \
 { \
     mqtt.loop(); \
-    assertMqttMessage(0, configTopic, expectedJson, true) \
+    assertMqttMessage(0, AHATOFSTR(ConfigTopic), expectedJson, true) \
     assertTrue(entity.getSerializer() == nullptr); \
 }
 

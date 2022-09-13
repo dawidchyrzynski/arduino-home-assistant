@@ -5,9 +5,8 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
-static const char* configTopic = "homeassistant/sensor/testDevice/uniqueSensor/config";
-static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
-
+const char ConfigTopic[] PROGMEM = {"homeassistant/sensor/testDevice/uniqueSensor/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSensor/stat_t"};
 const char DummyTemplateStr[] PROGMEM = {"dummyTemplate"};
 
 AHA_TEST(SensorTest, invalid_unique_id) {
@@ -41,7 +40,7 @@ AHA_TEST(SensorTest, availability) {
     // availability is published after config in HASensor
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueSensor/avty_t",
+        F("testData/testDevice/uniqueSensor/avty_t"),
         "online",
         true
     )
@@ -132,7 +131,7 @@ AHA_TEST(SensorTest, publish_value) {
     HASensor sensor(testUniqueId);
     bool result = sensor.setValue("test123");
 
-    assertSingleMqttMessage(stateTopic, "test123", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "test123", true)
     assertTrue(result);
 }
 
@@ -160,7 +159,7 @@ test(SensorIntegerTest, publish_int8) {
 
     bool result = sensor.setValue(value);
 
-    assertSingleMqttMessage(stateTopic, "127", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "127", true)
     assertTrue(result);
 }
 
@@ -173,7 +172,7 @@ test(SensorIntegerTest, publish_uint8) {
 
     bool result = sensor.setValue(value);
 
-    assertSingleMqttMessage(stateTopic, "50", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "50", true)
     assertTrue(result);
 }
 
@@ -186,7 +185,7 @@ test(SensorIntegerTest, publish_int16) {
 
     bool result = sensor.setValue(value);
 
-    assertSingleMqttMessage(stateTopic, "32766", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "32766", true)
     assertTrue(result);
 }
 
@@ -199,7 +198,7 @@ test(SensorIntegerTest, publish_uint16) {
 
     bool result = sensor.setValue(value);
 
-    assertSingleMqttMessage(stateTopic, "65534", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "65534", true)
     assertTrue(result);
 }
 
@@ -212,7 +211,7 @@ test(SensorIntegerTest, publish_int32) {
 
     bool result = sensor.setValue(value);
 
-    assertSingleMqttMessage(stateTopic, "2147483646", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "2147483646", true)
     assertTrue(result);
 }
 
@@ -240,7 +239,7 @@ test(SensorIntegerTest, publish_force) {
     sensor.setCurrentValue(value);
     bool result = sensor.setValue(value, true);
 
-    assertSingleMqttMessage(stateTopic, "50", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "50", true)
     assertTrue(result);
 }
 
@@ -251,12 +250,7 @@ test(SensorFloatTest, publish_value_on_connect) {
     sensor.setCurrentValue(520.5235);
     mqtt.loop();
 
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueSensor/stat_t",
-        "52052",
-        true
-    )
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "52052", true)
 }
 
 test(SensorFloatTest, config_p0) {
@@ -321,7 +315,7 @@ test(SensorFloatTest, publish_p0) {
     HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP0);
     bool result = sensor.setValue(173.5426);
 
-    assertSingleMqttMessage(stateTopic, "173", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173", true)
     assertTrue(result);
 }
 
@@ -332,7 +326,7 @@ test(SensorFloatTest, publish_p1) {
     HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP1);
     bool result = sensor.setValue(173.5426);
 
-    assertSingleMqttMessage(stateTopic, "1735", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "1735", true)
     assertTrue(result);
 }
 
@@ -343,7 +337,7 @@ test(SensorFloatTest, publish_p2) {
     HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP2);
     bool result = sensor.setValue(173.1534);
 
-    assertSingleMqttMessage(stateTopic, "17315", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "17315", true)
     assertTrue(result);
 }
 
@@ -354,7 +348,7 @@ test(SensorFloatTest, publish_p3) {
     HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP3);
     bool result = sensor.setValue(173.333);
 
-    assertSingleMqttMessage(stateTopic, "173333", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173333", true)
     assertTrue(result);
 }
 
@@ -365,7 +359,7 @@ test(SensorFloatTest, publish_p4) {
     HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP4);
     bool result = sensor.setValue(173.33356);
 
-    assertSingleMqttMessage(stateTopic, "1733335", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "1733335", true)
     assertTrue(result);
 }
 
@@ -389,7 +383,7 @@ test(SensorFloatTest, publish_force) {
     sensor.setCurrentValue(1555.555);
     bool result = sensor.setValue(1555.555, true);
 
-    assertSingleMqttMessage(stateTopic, "155555", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "155555", true)
     assertTrue(result);
 }
 

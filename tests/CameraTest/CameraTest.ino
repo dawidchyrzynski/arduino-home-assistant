@@ -5,8 +5,9 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueCamera";
-static const char* configTopic = "homeassistant/camera/testDevice/uniqueCamera/config";
-static const char* dataTopic = "testData/testDevice/uniqueCamera/t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/camera/testDevice/uniqueCamera/config"};
+const char DataTopic[] PROGMEM = {"testData/testDevice/uniqueCamera/t"};
 
 AHA_TEST(CameraTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
@@ -39,7 +40,7 @@ AHA_TEST(CameraTest, availability) {
     // availability is published after config in HACamera
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueCamera/avty_t",
+        F("testData/testDevice/uniqueCamera/avty_t"),
         "online",
         true
     )
@@ -91,7 +92,7 @@ AHA_TEST(CameraTest, publish_image) {
 
     bool result = camera.publishImage("IMAGE CONTENT");
 
-    assertSingleMqttMessage(dataTopic, "IMAGE CONTENT", true)
+    assertSingleMqttMessage(AHATOFSTR(DataTopic), "IMAGE CONTENT", true)
     assertTrue(result);
 }
 

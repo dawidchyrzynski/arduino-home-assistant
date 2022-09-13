@@ -16,9 +16,10 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSelect";
-static const char* configTopic = "homeassistant/select/testDevice/uniqueSelect/config";
-static const char* stateTopic = "testData/testDevice/uniqueSelect/stat_t";
-static const char* commandTopic = "testData/testDevice/uniqueSelect/cmd_t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/select/testDevice/uniqueSelect/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSelect/stat_t"};
+const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueSelect/cmd_t"};
 
 static bool commandCallbackCalled = false;
 static int8_t commandCallbackIndex = -1;
@@ -109,7 +110,7 @@ AHA_TEST(SelectTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
+    assertEqual(AHATOFSTR(CommandTopic), mock->getSubscriptions()[0]->topic);
 }
 
 AHA_TEST(SelectTest, availability) {
@@ -138,7 +139,7 @@ AHA_TEST(SelectTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, stateTopic, "B", true)
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "B", true)
 }
 
 AHA_TEST(SelectTest, publish_nothing_if_retained) {
@@ -228,7 +229,7 @@ AHA_TEST(SelectTest, publish_state_first) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(0);
 
-    assertSingleMqttMessage(stateTopic, "Option A", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
     assertTrue(result);
 }
 
@@ -240,7 +241,7 @@ AHA_TEST(SelectTest, publish_state_last) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(2);
 
-    assertSingleMqttMessage(stateTopic, "C", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "C", true)
     assertTrue(result);
 }
 
@@ -252,7 +253,7 @@ AHA_TEST(SelectTest, publish_state_only) {
     select.setOptions("Option A");
     bool result = select.setState(0);
 
-    assertSingleMqttMessage(stateTopic, "Option A", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
     assertTrue(result);
 }
 
@@ -279,7 +280,7 @@ AHA_TEST(SelectTest, publish_state_debounce_skip) {
     select.setCurrentState(0);
     bool result = select.setState(0, true);
 
-    assertSingleMqttMessage(stateTopic, "Option A", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
     assertTrue(result);
 }
 
@@ -289,7 +290,7 @@ AHA_TEST(SelectTest, command_option_first) {
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
     select.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "Option A");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("Option A"));
 
     assertCallback(true, 0, &select)
 }
@@ -300,7 +301,7 @@ AHA_TEST(SelectTest, command_option_last) {
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
     select.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "C");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("C"));
 
     assertCallback(true, 2, &select)
 }
@@ -311,7 +312,7 @@ AHA_TEST(SelectTest, command_option_non_existing) {
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
     select.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "DoesNotExist");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("DoesNotExist"));
 
     assertCallback(false, -1, nullptr)
 }
@@ -323,8 +324,8 @@ AHA_TEST(SelectTest, different_select_command) {
     select.setOptions("Option A;B;C");
     select.onCommand(onCommandReceived);
     mock->fakeMessage(
-        "testData/testDevice/uniqueDifferentSelect/cmd_t",
-        "Option A"
+        F("testData/testDevice/uniqueDifferentSelect/cmd_t"),
+        F("Option A")
     );
 
     assertCallback(false, -1, nullptr)

@@ -1,6 +1,8 @@
 #include "PubSubClientMock.h"
 #ifdef ARDUINOHA_TEST
 
+#include "../ArduinoHADefines.h"
+
 PubSubClientMock::PubSubClientMock() :
     _pendingMessage(nullptr),
     _flushedMessages(nullptr),
@@ -233,6 +235,34 @@ void PubSubClientMock::fakeMessage(const char* topic, const char* message)
         const_cast<uint8_t*>(reinterpret_cast<const uint8_t*>(message)), // hack
         strlen(message)
     );
+}
+
+void PubSubClientMock::fakeMessage(
+    const __FlashStringHelper* topic,
+    const char* message
+)
+{
+    char topicStr[strlen_P(AHAFROMFSTR(topic)) + 1];
+    topicStr[0] = 0;
+    strcpy_P(topicStr, AHAFROMFSTR(topic));
+
+    fakeMessage(topicStr, message);
+}
+
+void PubSubClientMock::fakeMessage(
+    const __FlashStringHelper* topic,
+    const __FlashStringHelper* message
+)
+{
+    char topicStr[strlen_P(AHAFROMFSTR(topic)) + 1];
+    topicStr[0] = 0;
+    strcpy_P(topicStr, AHAFROMFSTR(topic));
+
+    char messageStr[strlen_P(AHAFROMFSTR(message)) + 1];
+    messageStr[0] = 0;
+    strcpy_P(messageStr, AHAFROMFSTR(message));
+
+    fakeMessage(topicStr, messageStr);
 }
 
 #endif

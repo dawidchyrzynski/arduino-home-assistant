@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include "HAUtils.h"
+#include "HADictionary.h"
 
 bool HAUtils::endsWith(const char* str, const char* suffix)
 {
@@ -27,10 +28,9 @@ void HAUtils::byteArrayToStr(
     const uint16_t length
 )
 {
-    static const char map[] PROGMEM = {"0123456789abcdef"};
     for (uint8_t i = 0; i < length; i++) {
-        dst[i*2] = pgm_read_byte(&map[((char)src[i] & 0XF0) >> 4]);
-        dst[i*2+1] = pgm_read_byte(&map[((char)src[i] & 0x0F)]);
+        dst[i*2] = pgm_read_byte(&HAHexMap[((char)src[i] & 0XF0) >> 4]);
+        dst[i*2+1] = pgm_read_byte(&HAHexMap[((char)src[i] & 0x0F)]);
     }
 
     dst[length * 2] = 0;

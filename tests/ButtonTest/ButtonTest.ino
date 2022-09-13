@@ -14,11 +14,12 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueButton";
-static const char* configTopic = "homeassistant/button/testDevice/uniqueButton/config";
-static const char* commandTopic = "testData/testDevice/uniqueButton/cmd_t";
-static const char* commandMessage = "PRESS";
 static bool commandCallbackCalled = false;
 static HAButton* commandCallbackButtonPtr = nullptr;
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/button/testDevice/uniqueButton/config"};
+const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueButton/cmd_t"};
+const char CommandMessage[] PROGMEM = {"PRESS"};
 
 void onCommandReceived(HAButton* button)
 {
@@ -54,7 +55,7 @@ AHA_TEST(ButtonTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
+    assertEqual(AHATOFSTR(CommandTopic), mock->getSubscriptions()[0]->topic);
 }
 
 AHA_TEST(ButtonTest, availability) {
@@ -67,7 +68,7 @@ AHA_TEST(ButtonTest, availability) {
     // availability is published after config in HAButton
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueButton/avty_t",
+        F("testData/testDevice/uniqueButton/avty_t"),
         "online",
         true
     )
@@ -130,7 +131,7 @@ AHA_TEST(ButtonTest, command_callback) {
 
     HAButton button(testUniqueId);
     button.onPress(onCommandReceived);
-    mock->fakeMessage(commandTopic, commandMessage);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
     assertCallback(true, &button)
 }
@@ -139,7 +140,7 @@ AHA_TEST(ButtonTest, no_command_callback) {
     prepareTest
 
     HAButton button(testUniqueId);
-    mock->fakeMessage(commandTopic, commandMessage);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
     assertCallback(false, nullptr)
 }
@@ -150,8 +151,8 @@ AHA_TEST(ButtonTest, different_button_command) {
     HAButton button(testUniqueId);
     button.onPress(onCommandReceived);
     mock->fakeMessage(
-        "testData/testDevice/uniqueButtonDifferent/cmd_t",
-        commandMessage
+        F("testData/testDevice/uniqueButtonDifferent/cmd_t"),
+        AHATOFSTR(CommandMessage)
     );
 
     assertCallback(false, nullptr)

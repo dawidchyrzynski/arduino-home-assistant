@@ -9,9 +9,9 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueId";
-static const char* availabilityTopic = "testData/testDevice/uniqueId/avty_t";
-static const char* sharedAvailabilityTopic = "testData/testDevice/avty_t";
 
+const char AvailabilityTopic[] PROGMEM = {"testData/testDevice/uniqueId/avty_t"};
+const char SharedAvailabilityTopic[] PROGMEM = {"testData/testDevice/avty_t"};
 const char ComponentNameStr[] PROGMEM = {"componentName"};
 
 class DummyDeviceType : public HABaseDeviceType
@@ -70,7 +70,7 @@ AHA_TEST(BaseDeviceTypeTest, publish_availability_online_runtime) {
 
     mock->connectDummy();
     deviceType.setAvailability(true);
-    assertSingleMqttMessage(availabilityTopic, "online", true)
+    assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "online", true)
 }
 
 AHA_TEST(BaseDeviceTypeTest, publish_availability_offline_runtime) {
@@ -78,7 +78,7 @@ AHA_TEST(BaseDeviceTypeTest, publish_availability_offline_runtime) {
 
     mock->connectDummy();
     deviceType.setAvailability(false);
-    assertSingleMqttMessage(availabilityTopic, "offline", true)
+    assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "offline", true)
 }
 
 AHA_TEST(BaseDeviceTypeTest, publish_shared_availability_on_connect) {
@@ -86,7 +86,7 @@ AHA_TEST(BaseDeviceTypeTest, publish_shared_availability_on_connect) {
 
     device.enableSharedAvailability();
     mqtt.loop();
-    assertSingleMqttMessage(sharedAvailabilityTopic, "online", true)
+    assertSingleMqttMessage(AHATOFSTR(SharedAvailabilityTopic), "online", true)
 }
 
 AHA_TEST(BaseDeviceTypeTest, publish_shared_availability_runtime) {
@@ -96,7 +96,7 @@ AHA_TEST(BaseDeviceTypeTest, publish_shared_availability_runtime) {
     mock->connectDummy();
     device.setAvailability(false);
 
-    assertSingleMqttMessage(sharedAvailabilityTopic, "offline", true)
+    assertSingleMqttMessage(AHATOFSTR(SharedAvailabilityTopic), "offline", true)
 }
 
 void setup()

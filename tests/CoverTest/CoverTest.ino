@@ -16,15 +16,15 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueCover";
-static const char* configTopic = "homeassistant/cover/testDevice/uniqueCover/config";
-static const char* stateTopic = "testData/testDevice/uniqueCover/stat_t";
-static const char* positionTopic = "testData/testDevice/uniqueCover/pos_t";
-static const char* commandTopic = "testData/testDevice/uniqueCover/cmd_t";
 static const HACover::CoverCommand unknownCommand = static_cast<HACover::CoverCommand>(0);
-
 static bool commandCallbackCalled = false;
 static HACover::CoverCommand commandCallbackCommand = unknownCommand;
 static HACover* commandCallbackCoverPtr = nullptr;
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/cover/testDevice/uniqueCover/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueCover/stat_t"};
+const char PositionTopic[] PROGMEM = {"testData/testDevice/uniqueCover/pos_t"};
+const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueCover/cmd_t"};
 
 void onCommandReceived(HACover::CoverCommand command, HACover* cover)
 {
@@ -62,7 +62,7 @@ AHA_TEST(CoverTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
+    assertEqual(AHATOFSTR(CommandTopic), mock->getSubscriptions()[0]->topic);
 }
 
 AHA_TEST(CoverTest, availability) {
@@ -75,7 +75,7 @@ AHA_TEST(CoverTest, availability) {
     // availability is published after config in HACover
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueCover/avty_t",
+        F("testData/testDevice/uniqueCover/avty_t"),
         "online",
         true
     )
@@ -90,8 +90,8 @@ AHA_TEST(CoverTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(3, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, stateTopic, "closed", true)
-    assertMqttMessage(2, positionTopic, "100", true)
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "closed", true)
+    assertMqttMessage(2, AHATOFSTR(PositionTopic), "100", true)
 }
 
 AHA_TEST(CoverTest, publish_nothing_if_retained) {
@@ -198,7 +198,7 @@ AHA_TEST(CoverTest, publish_state_closed) {
     HACover cover(testUniqueId);
     bool result = cover.setState(HACover::StateClosed);
 
-    assertSingleMqttMessage(stateTopic, "closed", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "closed", true)
     assertTrue(result);
 }
 
@@ -209,7 +209,7 @@ AHA_TEST(CoverTest, publish_state_closing) {
     HACover cover(testUniqueId);
     bool result = cover.setState(HACover::StateClosing);
 
-    assertSingleMqttMessage(stateTopic, "closing", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "closing", true)
     assertTrue(result);
 }
 
@@ -220,7 +220,7 @@ AHA_TEST(CoverTest, publish_state_open) {
     HACover cover(testUniqueId);
     bool result = cover.setState(HACover::StateOpen);
 
-    assertSingleMqttMessage(stateTopic, "open", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "open", true)
     assertTrue(result);
 }
 
@@ -231,7 +231,7 @@ AHA_TEST(CoverTest, publish_state_opening) {
     HACover cover(testUniqueId);
     bool result = cover.setState(HACover::StateOpening);
 
-    assertSingleMqttMessage(stateTopic, "opening", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "opening", true)
     assertTrue(result);
 }
 
@@ -242,7 +242,7 @@ AHA_TEST(CoverTest, publish_state_stopped) {
     HACover cover(testUniqueId);
     bool result = cover.setState(HACover::StateStopped);
 
-    assertSingleMqttMessage(stateTopic, "stopped", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "stopped", true)
     assertTrue(result);
 }
 
@@ -267,7 +267,7 @@ AHA_TEST(CoverTest, publish_state_debounce_skip) {
     cover.setCurrentState(HACover::StateStopped);
     bool result = cover.setState(HACover::StateStopped, true);
 
-    assertSingleMqttMessage(stateTopic, "stopped", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "stopped", true)
     assertTrue(result);
 }
 
@@ -278,7 +278,7 @@ AHA_TEST(CoverTest, publish_position) {
     HACover cover(testUniqueId);
     bool result = cover.setPosition(250);
 
-    assertSingleMqttMessage(positionTopic, "250", true)
+    assertSingleMqttMessage(AHATOFSTR(PositionTopic), "250", true)
     assertTrue(result);
 }
 
@@ -303,7 +303,7 @@ AHA_TEST(CoverTest, publish_position_debounce_skip) {
     cover.setCurrentPosition(250);
     bool result = cover.setPosition(250, true);
 
-    assertSingleMqttMessage(positionTopic, "250", true)
+    assertSingleMqttMessage(AHATOFSTR(PositionTopic), "250", true)
     assertTrue(result);
 }
 
@@ -312,7 +312,7 @@ AHA_TEST(CoverTest, command_open) {
 
     HACover cover(testUniqueId);
     cover.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "OPEN");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("OPEN"));
 
     assertCallback(true, HACover::CommandOpen, &cover)
 }
@@ -322,7 +322,7 @@ AHA_TEST(CoverTest, command_close) {
 
     HACover cover(testUniqueId);
     cover.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "CLOSE");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("CLOSE"));
 
     assertCallback(true, HACover::CommandClose, &cover)
 }
@@ -332,7 +332,7 @@ AHA_TEST(CoverTest, command_stop) {
 
     HACover cover(testUniqueId);
     cover.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "STOP");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("STOP"));
 
     assertCallback(true, HACover::CommandStop, &cover)
 }
@@ -342,7 +342,7 @@ AHA_TEST(CoverTest, command_invalid) {
 
     HACover cover(testUniqueId);
     cover.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "NOT_SUPPORTED");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("NOT_SUPPORTED"));
 
     assertCallback(false, unknownCommand, nullptr)
 }
@@ -353,8 +353,8 @@ AHA_TEST(CoverTest, different_cover_command) {
     HACover cover(testUniqueId);
     cover.onCommand(onCommandReceived);
     mock->fakeMessage(
-        "testData/testDevice/uniqueCoverDifferent/cmd_t",
-        "CLOSE"
+        F("testData/testDevice/uniqueCoverDifferent/cmd_t"),
+        F("CLOSE")
     );
 
     assertCallback(false, unknownCommand, nullptr)

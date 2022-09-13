@@ -5,8 +5,9 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
-static const char* configTopic = "homeassistant/binary_sensor/testDevice/uniqueSensor/config";
-static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/binary_sensor/testDevice/uniqueSensor/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSensor/stat_t"};
 
 AHA_TEST(BinarySensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
@@ -39,7 +40,7 @@ AHA_TEST(BinarySensorTest, availability) {
     // availability is published after config in HABinarySensor
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueSensor/avty_t",
+        F("testData/testDevice/uniqueSensor/avty_t"),
         "online",
         true
     )
@@ -52,7 +53,7 @@ AHA_TEST(BinarySensorTest, publish_initial_state) {
     sensor.setCurrentState(true);
     mqtt.loop();
 
-    assertMqttMessage(1, stateTopic, "ON", true)
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(BinarySensorTest, name_setter) {
@@ -116,7 +117,7 @@ AHA_TEST(BinarySensorTest, publish_state_on) {
     HABinarySensor sensor(testUniqueId);
     bool result = sensor.setState(!sensor.getCurrentState());
 
-    assertSingleMqttMessage(stateTopic, "ON", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
     assertTrue(result);
 }
 
@@ -128,7 +129,7 @@ AHA_TEST(BinarySensorTest, publish_state_off) {
     sensor.setCurrentState(true);
     bool result = sensor.setState(!sensor.getCurrentState());
 
-    assertSingleMqttMessage(stateTopic, "OFF", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "OFF", true)
     assertTrue(result);
 }
 
@@ -153,7 +154,7 @@ AHA_TEST(BinarySensorTest, publish_state_debounce_skip) {
     sensor.setCurrentState(true);
     bool result = sensor.setState(true, true);
 
-    assertSingleMqttMessage(stateTopic, "ON", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
     assertTrue(result);
 }
 

@@ -5,8 +5,9 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueTracker";
-static const char* configTopic = "homeassistant/device_tracker/testDevice/uniqueTracker/config";
-static const char* stateTopic = "testData/testDevice/uniqueTracker/stat_t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/device_tracker/testDevice/uniqueTracker/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueTracker/stat_t"};
 
 AHA_TEST(DeviceTrackerTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
@@ -87,7 +88,7 @@ AHA_TEST(DeviceTrackerTest, availability) {
     // availability is published after config in HADeviceTracker
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueTracker/avty_t",
+        F("testData/testDevice/uniqueTracker/avty_t"),
         "online",
         true
     )
@@ -100,12 +101,7 @@ AHA_TEST(DeviceTrackerTest, publish_initial_state) {
     tracker.setCurrentState(HADeviceTracker::StateHome);
     mqtt.loop();
 
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueTracker/stat_t",
-        "home",
-        true
-    )
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "home", true)
 }
 
 AHA_TEST(DeviceTrackerTest, name_setter) {
@@ -156,7 +152,7 @@ AHA_TEST(DeviceTrackerTest, publish_state_home) {
     HADeviceTracker tracker(testUniqueId);
     bool result = tracker.setState(HADeviceTracker::StateHome);
 
-    assertSingleMqttMessage(stateTopic, "home", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "home", true)
     assertTrue(result);
 }
 
@@ -167,7 +163,7 @@ AHA_TEST(DeviceTrackerTest, publish_state_not_home) {
     HADeviceTracker tracker(testUniqueId);
     bool result = tracker.setState(HADeviceTracker::StateNotHome);
 
-    assertSingleMqttMessage(stateTopic, "not_home", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "not_home", true)
     assertTrue(result);
 }
 
@@ -178,7 +174,7 @@ AHA_TEST(DeviceTrackerTest, publish_state_not_available) {
     HADeviceTracker tracker(testUniqueId);
     bool result = tracker.setState(HADeviceTracker::StateNotAvailable);
 
-    assertSingleMqttMessage(stateTopic, "offline", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "offline", true)
     assertTrue(result);
 }
 
@@ -203,7 +199,7 @@ AHA_TEST(DeviceTrackerTest, publish_state_debounce_skip) {
     tracker.setCurrentState(HADeviceTracker::StateHome);
     bool result = tracker.setState(HADeviceTracker::StateHome, true);
 
-    assertSingleMqttMessage(stateTopic, "home", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "home", true)
     assertTrue(result);
 }
 

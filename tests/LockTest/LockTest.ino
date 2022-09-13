@@ -16,12 +16,12 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueLock";
-static const char* configTopic = "homeassistant/lock/testDevice/uniqueLock/config";
-static const char* commandTopicDifferent = "testData/testDevice/uniqueLockDifferent/cmd_t";
-static const char* commandTopic = "testData/testDevice/uniqueLock/cmd_t";
-static const char* stateTopic = "testData/testDevice/uniqueLock/stat_t";
-static const HALock::LockCommand unknownCommand = static_cast<HALock::LockCommand>(0);
 
+const char ConfigTopic[] PROGMEM = {"homeassistant/lock/testDevice/uniqueLock/config"};
+const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueLock/cmd_t"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueLock/stat_t"};
+
+static const HALock::LockCommand unknownCommand = static_cast<HALock::LockCommand>(0);
 static bool commandCallbackCalled = false;
 static HALock::LockCommand commandCallbackCommand = unknownCommand;
 static HALock* commandCallbackLockPtr = nullptr;
@@ -62,7 +62,7 @@ AHA_TEST(LockTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
+    assertEqual(AHATOFSTR(CommandTopic), mock->getSubscriptions()[0]->topic);
 }
 
 AHA_TEST(LockTest, availability) {
@@ -89,7 +89,7 @@ AHA_TEST(LockTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, stateTopic, "unlocked", true)
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "unlocked", true)
 }
 
 AHA_TEST(LockTest, publish_nothing_if_retained) {
@@ -172,7 +172,7 @@ AHA_TEST(LockTest, publish_state_locked) {
     HALock lock(testUniqueId);
     bool result = lock.setState(HALock::StateLocked);
 
-    assertSingleMqttMessage(stateTopic, "locked", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "locked", true)
     assertTrue(result);
 }
 
@@ -183,7 +183,7 @@ AHA_TEST(LockTest, publish_state_unlocked) {
     HALock lock(testUniqueId);
     bool result = lock.setState(HALock::StateUnlocked);
 
-    assertSingleMqttMessage(stateTopic, "unlocked", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "unlocked", true)
     assertTrue(result);
 }
 
@@ -192,7 +192,7 @@ AHA_TEST(LockTest, command_lock) {
 
     HALock lock(testUniqueId);
     lock.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "LOCK");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("LOCK"));
 
     assertCallback(true, HALock::CommandLock, &lock)
 }
@@ -202,7 +202,7 @@ AHA_TEST(LockTest, command_unlock) {
 
     HALock lock(testUniqueId);
     lock.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "UNLOCK");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("UNLOCK"));
 
     assertCallback(true, HALock::CommandUnlock, &lock)
 }
@@ -212,7 +212,7 @@ AHA_TEST(LockTest, command_open) {
 
     HALock lock(testUniqueId);
     lock.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "OPEN");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("OPEN"));
 
     assertCallback(true, HALock::CommandOpen, &lock)
 }
@@ -222,7 +222,7 @@ AHA_TEST(LockTest, command_invalid) {
 
     HALock lock(testUniqueId);
     lock.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "NOT_SUPPORTED");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("NOT_SUPPORTED"));
 
     assertCallback(false, unknownCommand, nullptr)
 }
@@ -233,8 +233,8 @@ AHA_TEST(LockTest, different_lock_command) {
     HALock lock(testUniqueId);
     lock.onCommand(onCommandReceived);
     mock->fakeMessage(
-        commandTopicDifferent,
-        "CLOSE"
+        F("testData/testDevice/uniqueLockDifferent/cmd_t"),
+        F("CLOSE")
     );
 
     assertCallback(false, unknownCommand, nullptr)

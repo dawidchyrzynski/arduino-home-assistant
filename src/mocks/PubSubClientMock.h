@@ -148,6 +148,8 @@ public:
     void clearFlushedMessages();
     void clearSubscriptions();
     void fakeMessage(const char* topic, const char* message);
+    void fakeMessage(const __FlashStringHelper* topic, const char* message);
+    void fakeMessage(const __FlashStringHelper* topic, const __FlashStringHelper* message);
 
 private:
     MqttMessage* _pendingMessage;

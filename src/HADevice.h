@@ -141,6 +141,9 @@ private:
     /// The unique ID of the device. It can be a memory allocated by HADevice::setUniqueId method.
     const char* _uniqueId;
 
+    /// Specifies whether HADevice class owns the _uniqueId pointer.
+    bool _ownsUniqueId;
+
     /// JSON serializer of the HADevice class. It's allocated in the constructor.
     HASerializer* _serializer;
 

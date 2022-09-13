@@ -6,8 +6,9 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static byte testDeviceByteId[] = {0x11, 0x22, 0x33, 0x44, 0xaa, 0xbb};
 static const char* testDeviceByteIdChar = "11223344aabb";
-static const char* availabilityTopic = "testData/testDevice/avty_t";
 static const char* dummyTopic = "dummyTopic";
+
+const char AvailabilityTopic[] PROGMEM = {"testData/testDevice/avty_t"};
 
 #define prepareMqttTest \
     initMqttTest(testDeviceId) \
@@ -228,7 +229,7 @@ AHA_TEST(DeviceTest, enable_availability) {
 
     assertTrue(device.enableSharedAvailability());
     assertTrue(device.isSharedAvailabilityEnabled());
-    assertEqual(availabilityTopic, device.getAvailabilityTopic());
+    assertEqual(AHATOFSTR(AvailabilityTopic), device.getAvailabilityTopic());
     assertNoMqttMessage()
 }
 
@@ -247,7 +248,7 @@ AHA_TEST(DeviceTest, availability_publish_offline) {
     device.enableSharedAvailability();
     device.setAvailability(false);
 
-    assertSingleMqttMessage(availabilityTopic, "offline", true)
+    assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "offline", true)
 }
 
 AHA_TEST(DeviceTest, availability_publish_online) {
@@ -256,7 +257,7 @@ AHA_TEST(DeviceTest, availability_publish_online) {
     device.enableSharedAvailability();
     device.setAvailability(true);
 
-    assertSingleMqttMessage(availabilityTopic, "online", true)
+    assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "online", true)
 }
 
 AHA_TEST(DeviceTest, lwt_disabled) {
@@ -273,7 +274,7 @@ AHA_TEST(DeviceTest, lwt_enabled) {
     device.enableLastWill();
     mqtt.loop();
 
-    assertEqual(availabilityTopic, mock->getLastWill().topic);
+    assertEqual(AHATOFSTR(AvailabilityTopic), mock->getLastWill().topic);
     assertEqual("offline", mock->getLastWill().message);
     assertEqual(true, mock->getLastWill().retain);
 }

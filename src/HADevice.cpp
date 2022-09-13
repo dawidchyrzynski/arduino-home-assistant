@@ -5,6 +5,7 @@
 #include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
+    _ownsUniqueId(false), \
     _serializer(new HASerializer(nullptr, 5)), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
@@ -38,6 +39,10 @@ HADevice::~HADevice()
     if (_availabilityTopic) {
         delete _availabilityTopic;
     }
+
+    if (_ownsUniqueId) {
+        delete _uniqueId;
+    }
 }
 
 bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
@@ -47,6 +52,7 @@ bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
     }
 
     _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
+    _ownsUniqueId = true;
     _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
     return true;
 }

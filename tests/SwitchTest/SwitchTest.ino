@@ -16,8 +16,10 @@ using aunit::TestRunner;
 
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSwitch";
-static const char* configTopic = "homeassistant/switch/testDevice/uniqueSwitch/config";
-static const char* commandTopic = "testData/testDevice/uniqueSwitch/cmd_t";
+
+const char ConfigTopic[] PROGMEM = {"homeassistant/switch/testDevice/uniqueSwitch/config"};
+const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSwitch/stat_t"};
+const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueSwitch/cmd_t"};
 
 static bool commandCallbackCalled = false;
 static bool commandCallbackState = false;
@@ -59,7 +61,7 @@ AHA_TEST(SwitchTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
+    assertEqual(AHATOFSTR(CommandTopic), mock->getSubscriptions()[0]->topic);
 }
 
 AHA_TEST(SwitchTest, availability) {
@@ -72,7 +74,7 @@ AHA_TEST(SwitchTest, availability) {
     // availability is published after config in HASwitch
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueSwitch/avty_t",
+        F("testData/testDevice/uniqueSwitch/avty_t"),
         "online",
         true
     )
@@ -86,12 +88,7 @@ AHA_TEST(SwitchTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueSwitch/stat_t",
-        "ON",
-        true
-    )
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(SwitchTest, publish_nothing_if_retained) {
@@ -187,11 +184,7 @@ AHA_TEST(SwitchTest, publish_state_on) {
     HASwitch testSwitch(testUniqueId);
     bool result = testSwitch.setState(true);
 
-    assertSingleMqttMessage(
-        "testData/testDevice/uniqueSwitch/stat_t",
-        "ON",
-        true
-    )
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
     assertTrue(result);
 }
 
@@ -203,11 +196,7 @@ AHA_TEST(SwitchTest, publish_state_off) {
     testSwitch.setCurrentState(true);
     bool result = testSwitch.setState(false);
 
-    assertSingleMqttMessage(
-        "testData/testDevice/uniqueSwitch/stat_t",
-        "OFF",
-        true
-    )
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "OFF", true)
     assertTrue(result);
 }
 
@@ -216,7 +205,7 @@ AHA_TEST(SwitchTest, command_on) {
 
     HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "ON");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("ON"));
 
     assertCallback(true, true, &testSwitch)
 }
@@ -226,7 +215,7 @@ AHA_TEST(SwitchTest, command_off) {
 
     HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
-    mock->fakeMessage(commandTopic, "OFF");
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("OFF"));
 
     assertCallback(true, false, &testSwitch)
 }
@@ -237,8 +226,8 @@ AHA_TEST(SwitchTest, different_switch_command) {
     HASwitch testSwitch(testUniqueId);
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(
-        "testData/testDevice/uniqueSwitchDifferent/cmd_t",
-        "CLOSE"
+        F("testData/testDevice/uniqueSwitchDifferent/cmd_t"),
+        F("CLOSE")
     );
 
     assertCallback(false, false, nullptr)
