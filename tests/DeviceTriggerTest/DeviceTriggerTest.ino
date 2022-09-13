@@ -9,7 +9,7 @@ static const char* triggerSubtype = "mySubtype";
 static const char* configTopic = "homeassistant/device_automation/testDevice/myType_mySubtype/config";
 static const char* triggerTopic = "testData/testDevice/myType_mySubtype/t";
 
-test(DeviceTriggerTest, invalid_type) {
+AHA_TEST(DeviceTriggerTest, invalid_type) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(nullptr, triggerSubtype);
@@ -19,7 +19,7 @@ test(DeviceTriggerTest, invalid_type) {
     assertTrue(serializer == nullptr);
 }
 
-test(DeviceTriggerTest, invalid_type_progmem) {
+AHA_TEST(DeviceTriggerTest, invalid_type_progmem) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(
@@ -34,7 +34,7 @@ test(DeviceTriggerTest, invalid_type_progmem) {
     assertTrue(trigger.isProgmemType());
 }
 
-test(DeviceTriggerTest, invalid_subtype) {
+AHA_TEST(DeviceTriggerTest, invalid_subtype) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(triggerType, nullptr);
@@ -44,7 +44,7 @@ test(DeviceTriggerTest, invalid_subtype) {
     assertTrue(serializer == nullptr);
 }
 
-test(DeviceTriggerTest, invalid_subtype_progmem) {
+AHA_TEST(DeviceTriggerTest, invalid_subtype_progmem) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(
@@ -59,14 +59,14 @@ test(DeviceTriggerTest, invalid_subtype_progmem) {
     assertTrue(trigger.isProgmemSubtype());
 }
 
-test(DeviceTriggerTest, unique_id_generator) {
+AHA_TEST(DeviceTriggerTest, unique_id_generator) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(triggerType, triggerSubtype);
-    assertStringCaseEqual(trigger.uniqueId(), "myType_mySubtype");
+    assertEqual(trigger.uniqueId(), "myType_mySubtype");
 }
 
-test(DeviceTriggerTest, default_params) {
+AHA_TEST(DeviceTriggerTest, default_params) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(triggerType, triggerSubtype);
@@ -77,7 +77,7 @@ test(DeviceTriggerTest, default_params) {
     )
 }
 
-test(DeviceTriggerTest, trigger) {
+AHA_TEST(DeviceTriggerTest, trigger) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -88,7 +88,7 @@ test(DeviceTriggerTest, trigger) {
     assertTrue(result);
 }
 
-test(DeviceTriggerTest, trigger_progmem_type) {
+AHA_TEST(DeviceTriggerTest, trigger_progmem_type) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -103,7 +103,7 @@ test(DeviceTriggerTest, trigger_progmem_type) {
     assertTrue(result);
 }
 
-test(DeviceTriggerTest, trigger_progmem_subtype) {
+AHA_TEST(DeviceTriggerTest, trigger_progmem_subtype) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -118,7 +118,7 @@ test(DeviceTriggerTest, trigger_progmem_subtype) {
     assertTrue(result);
 }
 
-test(DeviceTriggerTest, trigger_progmem_type_subtype) {
+AHA_TEST(DeviceTriggerTest, trigger_progmem_type_subtype) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -136,7 +136,7 @@ test(DeviceTriggerTest, trigger_progmem_type_subtype) {
     assertTrue(result);
 }
 
-test(DeviceTriggerTest, type_progmem_button_short_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_short_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonShortPressType,
         nullptr
@@ -147,7 +147,7 @@ test(DeviceTriggerTest, type_progmem_button_short_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_short_release) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_short_release) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonShortReleaseType,
         nullptr
@@ -158,7 +158,7 @@ test(DeviceTriggerTest, type_progmem_button_short_release) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_long_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_long_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonLongPressType,
         nullptr
@@ -169,7 +169,7 @@ test(DeviceTriggerTest, type_progmem_button_long_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_long_release) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_long_release) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonLongReleaseType,
         nullptr
@@ -180,7 +180,7 @@ test(DeviceTriggerTest, type_progmem_button_long_release) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_double_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_double_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonDoublePressType,
         nullptr
@@ -191,7 +191,7 @@ test(DeviceTriggerTest, type_progmem_button_double_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_triple_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_triple_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonTriplePressType,
         nullptr
@@ -202,7 +202,7 @@ test(DeviceTriggerTest, type_progmem_button_triple_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_quadruple_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_quadruple_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonQuadruplePressType,
         nullptr
@@ -213,7 +213,7 @@ test(DeviceTriggerTest, type_progmem_button_quadruple_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, type_progmem_button_quintuple_press) {
+AHA_TEST(DeviceTriggerTest, type_progmem_button_quintuple_press) {
     HADeviceTrigger trigger(
         HADeviceTrigger::ButtonQuintuplePressType,
         nullptr
@@ -224,7 +224,7 @@ test(DeviceTriggerTest, type_progmem_button_quintuple_press) {
     assertTrue(trigger.getSubtype() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_turn_on) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_turn_on) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::TurnOnSubtype
@@ -235,7 +235,7 @@ test(DeviceTriggerTest, subtype_progmem_turn_on) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_turn_off) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_turn_off) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::TurnOffSubtype
@@ -246,7 +246,7 @@ test(DeviceTriggerTest, subtype_progmem_turn_off) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_1) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_1) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button1Subtype
@@ -257,7 +257,7 @@ test(DeviceTriggerTest, subtype_progmem_button_1) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_2) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_2) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button2Subtype
@@ -268,7 +268,7 @@ test(DeviceTriggerTest, subtype_progmem_button_2) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_3) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_3) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button3Subtype
@@ -279,7 +279,7 @@ test(DeviceTriggerTest, subtype_progmem_button_3) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_4) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_4) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button4Subtype
@@ -290,7 +290,7 @@ test(DeviceTriggerTest, subtype_progmem_button_4) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_5) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_5) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button5Subtype
@@ -301,7 +301,7 @@ test(DeviceTriggerTest, subtype_progmem_button_5) {
     assertTrue(trigger.getType() == nullptr);
 }
 
-test(DeviceTriggerTest, subtype_progmem_button_6) {
+AHA_TEST(DeviceTriggerTest, subtype_progmem_button_6) {
     HADeviceTrigger trigger(
         nullptr,
         HADeviceTrigger::Button6Subtype

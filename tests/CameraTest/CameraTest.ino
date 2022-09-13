@@ -8,7 +8,7 @@ static const char* testUniqueId = "uniqueCamera";
 static const char* configTopic = "homeassistant/camera/testDevice/uniqueCamera/config";
 static const char* dataTopic = "testData/testDevice/uniqueCamera/t";
 
-test(CameraTest, invalid_unique_id) {
+AHA_TEST(CameraTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
     HACamera camera(nullptr);
@@ -18,7 +18,7 @@ test(CameraTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(CameraTest, default_params) {
+AHA_TEST(CameraTest, default_params) {
     initMqttTest(testDeviceId)
 
     HACamera camera(testUniqueId);
@@ -29,7 +29,7 @@ test(CameraTest, default_params) {
     )
 }
 
-test(CameraTest, availability) {
+AHA_TEST(CameraTest, availability) {
     initMqttTest(testDeviceId)
 
     HACamera camera(testUniqueId);
@@ -45,7 +45,7 @@ test(CameraTest, availability) {
     )
 }
 
-test(CameraTest, icon_setter) {
+AHA_TEST(CameraTest, icon_setter) {
     initMqttTest(testDeviceId)
 
     HACamera camera(testUniqueId);
@@ -58,7 +58,7 @@ test(CameraTest, icon_setter) {
     )
 }
 
-test(CameraTest, encoding_base64) {
+AHA_TEST(CameraTest, encoding_base64) {
     initMqttTest(testDeviceId)
 
     HACamera camera(testUniqueId);
@@ -71,7 +71,7 @@ test(CameraTest, encoding_base64) {
     )
 }
 
-test(CameraTest, publish_nullptr) {
+AHA_TEST(CameraTest, publish_nullptr) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -83,7 +83,7 @@ test(CameraTest, publish_nullptr) {
     assertFalse(result);
 }
 
-test(CameraTest, publish_image) {
+AHA_TEST(CameraTest, publish_image) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();

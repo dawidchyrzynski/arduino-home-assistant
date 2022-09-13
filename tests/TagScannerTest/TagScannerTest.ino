@@ -7,7 +7,7 @@ static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueScanner";
 static const char* configTopic = "homeassistant/tag/testDevice/uniqueScanner/config";
 
-test(TagScannerTest, invalid_unique_id) {
+AHA_TEST(TagScannerTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
     HATagScanner scanner(nullptr);
@@ -17,7 +17,7 @@ test(TagScannerTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(TagScannerTest, default_params) {
+AHA_TEST(TagScannerTest, default_params) {
     initMqttTest(testDeviceId)
 
     HATagScanner scanner(testUniqueId);
@@ -28,7 +28,7 @@ test(TagScannerTest, default_params) {
     )
 }
 
-test(TagScannerTest, nullptr_tag_scanned) {
+AHA_TEST(TagScannerTest, nullptr_tag_scanned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -39,7 +39,7 @@ test(TagScannerTest, nullptr_tag_scanned) {
     assertFalse(result);
 }
 
-test(TagScannerTest, empty_tag_scanned) {
+AHA_TEST(TagScannerTest, empty_tag_scanned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -50,7 +50,7 @@ test(TagScannerTest, empty_tag_scanned) {
     assertFalse(result);
 }
 
-test(TagScannerTest, tag_scanned) {
+AHA_TEST(TagScannerTest, tag_scanned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();

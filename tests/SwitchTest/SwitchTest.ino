@@ -30,7 +30,7 @@ void onCommandReceived(bool state, HASwitch* sender)
     commandCallbackSwitchPtr = sender;
 }
 
-test(SwitchTest, invalid_unique_id) {
+AHA_TEST(SwitchTest, invalid_unique_id) {
     prepareTest
 
     HASwitch testSwitch(nullptr);
@@ -40,7 +40,7 @@ test(SwitchTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(SwitchTest, default_params) {
+AHA_TEST(SwitchTest, default_params) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -52,17 +52,17 @@ test(SwitchTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb());
 }
 
-test(SwitchTest, command_subscription) {
+AHA_TEST(SwitchTest, command_subscription) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertStringCaseEqual(commandTopic, mock->getSubscriptions()[0].topic);
+    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
 }
 
-test(SwitchTest, availability) {
+AHA_TEST(SwitchTest, availability) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -78,7 +78,7 @@ test(SwitchTest, availability) {
     )
 }
 
-test(SwitchTest, publish_last_known_state) {
+AHA_TEST(SwitchTest, publish_last_known_state) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -94,7 +94,7 @@ test(SwitchTest, publish_last_known_state) {
     )
 }
 
-test(SwitchTest, publish_nothing_if_retained) {
+AHA_TEST(SwitchTest, publish_nothing_if_retained) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -105,7 +105,7 @@ test(SwitchTest, publish_nothing_if_retained) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(SwitchTest, name_setter) {
+AHA_TEST(SwitchTest, name_setter) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -118,7 +118,7 @@ test(SwitchTest, name_setter) {
     )
 }
 
-test(SwitchTest, device_class) {
+AHA_TEST(SwitchTest, device_class) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -131,7 +131,7 @@ test(SwitchTest, device_class) {
     )
 }
 
-test(SwitchTest, icon_setter) {
+AHA_TEST(SwitchTest, icon_setter) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -144,7 +144,7 @@ test(SwitchTest, icon_setter) {
     )
 }
 
-test(SwitchTest, retain_setter) {
+AHA_TEST(SwitchTest, retain_setter) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -157,7 +157,7 @@ test(SwitchTest, retain_setter) {
     )
 }
 
-test(SwitchTest, optimistic_setter) {
+AHA_TEST(SwitchTest, optimistic_setter) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -170,7 +170,7 @@ test(SwitchTest, optimistic_setter) {
     )
 }
 
-test(SwitchTest, current_state_setter) {
+AHA_TEST(SwitchTest, current_state_setter) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -180,7 +180,7 @@ test(SwitchTest, current_state_setter) {
     assertEqual(true, testSwitch.getCurrentState());
 }
 
-test(SwitchTest, publish_state_on) {
+AHA_TEST(SwitchTest, publish_state_on) {
     prepareTest
 
     mock->connectDummy();
@@ -195,7 +195,7 @@ test(SwitchTest, publish_state_on) {
     assertTrue(result);
 }
 
-test(SwitchTest, publish_state_off) {
+AHA_TEST(SwitchTest, publish_state_off) {
     prepareTest
 
     mock->connectDummy();
@@ -211,7 +211,7 @@ test(SwitchTest, publish_state_off) {
     assertTrue(result);
 }
 
-test(SwitchTest, command_on) {
+AHA_TEST(SwitchTest, command_on) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -221,7 +221,7 @@ test(SwitchTest, command_on) {
     assertCallback(true, true, &testSwitch)
 }
 
-test(SwitchTest, command_off) {
+AHA_TEST(SwitchTest, command_off) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);
@@ -231,7 +231,7 @@ test(SwitchTest, command_off) {
     assertCallback(true, false, &testSwitch)
 }
 
-test(SwitchTest, different_switch_command) {
+AHA_TEST(SwitchTest, different_switch_command) {
     prepareTest
 
     HASwitch testSwitch(testUniqueId);

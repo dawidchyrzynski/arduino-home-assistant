@@ -8,7 +8,7 @@ static const char* testUniqueId = "uniqueSensor";
 static const char* configTopic = "homeassistant/binary_sensor/testDevice/uniqueSensor/config";
 static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
 
-test(BinarySensorTest, invalid_unique_id) {
+AHA_TEST(BinarySensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(nullptr);
@@ -18,7 +18,7 @@ test(BinarySensorTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(BinarySensorTest, default_params) {
+AHA_TEST(BinarySensorTest, default_params) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -29,7 +29,7 @@ test(BinarySensorTest, default_params) {
     )
 }
 
-test(BinarySensorTest, availability) {
+AHA_TEST(BinarySensorTest, availability) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -45,7 +45,7 @@ test(BinarySensorTest, availability) {
     )
 }
 
-test(BinarySensorTest, publish_initial_state) {
+AHA_TEST(BinarySensorTest, publish_initial_state) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -55,7 +55,7 @@ test(BinarySensorTest, publish_initial_state) {
     assertMqttMessage(1, stateTopic, "ON", true)
 }
 
-test(BinarySensorTest, name_setter) {
+AHA_TEST(BinarySensorTest, name_setter) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -68,7 +68,7 @@ test(BinarySensorTest, name_setter) {
     )
 }
 
-test(BinarySensorTest, device_class) {
+AHA_TEST(BinarySensorTest, device_class) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -81,7 +81,7 @@ test(BinarySensorTest, device_class) {
     )
 }
 
-test(BinarySensorTest, icon_setter) {
+AHA_TEST(BinarySensorTest, icon_setter) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -94,14 +94,14 @@ test(BinarySensorTest, icon_setter) {
     )
 }
 
-test(BinarySensorTest, default_state_false) {
+AHA_TEST(BinarySensorTest, default_state_false) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
     assertEqual(false, sensor.getCurrentState());
 }
 
-test(BinarySensorTest, default_state_true) {
+AHA_TEST(BinarySensorTest, default_state_true) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
@@ -109,7 +109,7 @@ test(BinarySensorTest, default_state_true) {
     assertEqual(true, sensor.getCurrentState());
 }
 
-test(BinarySensorTest, publish_state_on) {
+AHA_TEST(BinarySensorTest, publish_state_on) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -120,7 +120,7 @@ test(BinarySensorTest, publish_state_on) {
     assertTrue(result);
 }
 
-test(BinarySensorTest, publish_state_off) {
+AHA_TEST(BinarySensorTest, publish_state_off) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -132,7 +132,7 @@ test(BinarySensorTest, publish_state_off) {
     assertTrue(result);
 }
 
-test(BinarySensorTest, publish_state_debounce) {
+AHA_TEST(BinarySensorTest, publish_state_debounce) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -145,7 +145,7 @@ test(BinarySensorTest, publish_state_debounce) {
     assertTrue(result);
 }
 
-test(BinarySensorTest, publish_state_debounce_skip) {
+AHA_TEST(BinarySensorTest, publish_state_debounce_skip) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();

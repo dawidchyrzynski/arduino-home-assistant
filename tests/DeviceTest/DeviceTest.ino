@@ -28,48 +28,48 @@ static const char* dummyTopic = "dummyTopic";
 #define assertSerializerMqttMessage(expectedJson) \
     assertSingleMqttMessage(dummyTopic, expectedJson, false)
 
-test(DeviceTest, default_unique_id) {
+AHA_TEST(DeviceTest, default_unique_id) {
     HADevice device;
     assertEqual((const char*)nullptr, device.getUniqueId());
 }
 
-test(DeviceTest, unique_id_constructor_char) {
+AHA_TEST(DeviceTest, unique_id_constructor_char) {
     HADevice device(testDeviceId);
-    assertStringCaseEqual(testDeviceId, device.getUniqueId());
+    assertEqual(testDeviceId, device.getUniqueId());
 }
 
-test(DeviceTest, unique_id_constructor_byte_array) {
+AHA_TEST(DeviceTest, unique_id_constructor_byte_array) {
     HADevice device(testDeviceByteId, sizeof(testDeviceByteId));
-    assertStringCaseEqual(testDeviceByteIdChar, device.getUniqueId());
+    assertEqual(testDeviceByteIdChar, device.getUniqueId());
 }
 
-test(DeviceTest, unique_id_setter) {
+AHA_TEST(DeviceTest, unique_id_setter) {
     HADevice device;
     assertEqual((const char*)nullptr, device.getUniqueId());
 
     bool result = device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     assertTrue(result);
-    assertStringCaseEqual(testDeviceByteIdChar, device.getUniqueId());
+    assertEqual(testDeviceByteIdChar, device.getUniqueId());
 }
 
-test(DeviceTest, unique_id_setter_runtime) {
+AHA_TEST(DeviceTest, unique_id_setter_runtime) {
     HADevice device(testDeviceId);
-    assertStringCaseEqual(testDeviceId, device.getUniqueId());
+    assertEqual(testDeviceId, device.getUniqueId());
 
     // unique ID cannot be changed if it's already set
     bool result = device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     assertFalse(result);
-    assertStringCaseEqual(testDeviceId, device.getUniqueId());
+    assertEqual(testDeviceId, device.getUniqueId());
 }
 
-test(DeviceTest, serializer_no_unique_id) {
+AHA_TEST(DeviceTest, serializer_no_unique_id) {
     HADevice device;
     const HASerializer* serializer = device.getSerializer();
 
     assertEqual((uint8_t)0, serializer->getEntriesNb());
 }
 
-test(DeviceTest, serializer_unique_id_constructor_char) {
+AHA_TEST(DeviceTest, serializer_unique_id_constructor_char) {
     HADevice device(testDeviceId);
     const HASerializer* serializer = device.getSerializer();
 
@@ -88,7 +88,7 @@ test(DeviceTest, serializer_unique_id_constructor_char) {
     )
 }
 
-test(DeviceTest, serializer_unique_id_constructor_byte_array) {
+AHA_TEST(DeviceTest, serializer_unique_id_constructor_byte_array) {
     HADevice device(testDeviceId);
     const HASerializer* serializer = device.getSerializer();
 
@@ -107,7 +107,7 @@ test(DeviceTest, serializer_unique_id_constructor_byte_array) {
     )
 }
 
-test(DeviceTest, serializer_unique_id_setter) {
+AHA_TEST(DeviceTest, serializer_unique_id_setter) {
     HADevice device;
     device.setUniqueId(testDeviceByteId, sizeof(testDeviceByteId));
     const HASerializer* serializer = device.getSerializer();
@@ -127,7 +127,7 @@ test(DeviceTest, serializer_unique_id_setter) {
     )
 }
 
-test(DeviceTest, serializer_manufacturer) {
+AHA_TEST(DeviceTest, serializer_manufacturer) {
     const char* manufacturer = "testManufacturer";
     HADevice device;
     const HASerializer* serializer = device.getSerializer();
@@ -149,7 +149,7 @@ test(DeviceTest, serializer_manufacturer) {
     )
 }
 
-test(DeviceTest, serializer_model) {
+AHA_TEST(DeviceTest, serializer_model) {
     const char* model = "testModel";
     HADevice device;
     const HASerializer* serializer = device.getSerializer();
@@ -171,7 +171,7 @@ test(DeviceTest, serializer_model) {
     )
 }
 
-test(DeviceTest, serializer_name) {
+AHA_TEST(DeviceTest, serializer_name) {
     const char* name = "testName";
     HADevice device;
     const HASerializer* serializer = device.getSerializer();
@@ -193,7 +193,7 @@ test(DeviceTest, serializer_name) {
     )
 }
 
-test(DeviceTest, serializer_software_version) {
+AHA_TEST(DeviceTest, serializer_software_version) {
     const char* softwareVersion = "softwareVersion";
     HADevice device;
     const HASerializer* serializer = device.getSerializer();
@@ -215,7 +215,7 @@ test(DeviceTest, serializer_software_version) {
     )
 }
 
-test(DeviceTest, default_availability) {
+AHA_TEST(DeviceTest, default_availability) {
     HADevice device(testDeviceId);
 
     assertTrue(device.isAvailable());
@@ -223,16 +223,16 @@ test(DeviceTest, default_availability) {
     assertEqual((const char*)nullptr, device.getAvailabilityTopic());
 }
 
-test(DeviceTest, enable_availability) {
+AHA_TEST(DeviceTest, enable_availability) {
     prepareMqttTest
 
     assertTrue(device.enableSharedAvailability());
     assertTrue(device.isSharedAvailabilityEnabled());
-    assertStringCaseEqual(availabilityTopic, device.getAvailabilityTopic());
+    assertEqual(availabilityTopic, device.getAvailabilityTopic());
     assertNoMqttMessage()
 }
 
-test(DeviceTest, enable_availability_no_unique_id) {
+AHA_TEST(DeviceTest, enable_availability_no_unique_id) {
     HADevice device;
     bool result = device.enableSharedAvailability();
 
@@ -241,7 +241,7 @@ test(DeviceTest, enable_availability_no_unique_id) {
     assertEqual((const char*)nullptr, device.getAvailabilityTopic());
 }
 
-test(DeviceTest, availability_publish_offline) {
+AHA_TEST(DeviceTest, availability_publish_offline) {
     prepareMqttTest
 
     device.enableSharedAvailability();
@@ -250,7 +250,7 @@ test(DeviceTest, availability_publish_offline) {
     assertSingleMqttMessage(availabilityTopic, "offline", true)
 }
 
-test(DeviceTest, availability_publish_online) {
+AHA_TEST(DeviceTest, availability_publish_online) {
     prepareMqttTest
 
     device.enableSharedAvailability();
@@ -259,14 +259,14 @@ test(DeviceTest, availability_publish_online) {
     assertSingleMqttMessage(availabilityTopic, "online", true)
 }
 
-test(DeviceTest, lwt_disabled) {
+AHA_TEST(DeviceTest, lwt_disabled) {
     prepareMqttTest
 
     assertEqual((const char*)nullptr, mock->getLastWill().topic);
     assertEqual((const char*)nullptr, mock->getLastWill().message);
 }
 
-test(DeviceTest, lwt_enabled) {
+AHA_TEST(DeviceTest, lwt_enabled) {
     initMqttTest(testDeviceId)
 
     device.enableSharedAvailability();
@@ -278,7 +278,7 @@ test(DeviceTest, lwt_enabled) {
     assertEqual(true, mock->getLastWill().retain);
 }
 
-test(DeviceTest, full_serialization) {
+AHA_TEST(DeviceTest, full_serialization) {
     initMqttTest("myDeviceId");
     
     device.setManufacturer("myManufacturer");

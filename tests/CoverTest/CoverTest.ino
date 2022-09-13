@@ -33,7 +33,7 @@ void onCommandReceived(HACover::CoverCommand command, HACover* cover)
     commandCallbackCoverPtr = cover;
 }
 
-test(CoverTest, invalid_unique_id) {
+AHA_TEST(CoverTest, invalid_unique_id) {
     prepareTest
 
     HACover cover(nullptr);
@@ -43,7 +43,7 @@ test(CoverTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(CoverTest, default_params) {
+AHA_TEST(CoverTest, default_params) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -55,17 +55,17 @@ test(CoverTest, default_params) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(CoverTest, command_subscription) {
+AHA_TEST(CoverTest, command_subscription) {
     prepareTest
 
     HACover cover(testUniqueId);
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertStringCaseEqual(commandTopic, mock->getSubscriptions()[0].topic);
+    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
 }
 
-test(CoverTest, availability) {
+AHA_TEST(CoverTest, availability) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -81,7 +81,7 @@ test(CoverTest, availability) {
     )
 }
 
-test(CoverTest, publish_last_known_state) {
+AHA_TEST(CoverTest, publish_last_known_state) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -94,7 +94,7 @@ test(CoverTest, publish_last_known_state) {
     assertMqttMessage(2, positionTopic, "100", true)
 }
 
-test(CoverTest, publish_nothing_if_retained) {
+AHA_TEST(CoverTest, publish_nothing_if_retained) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -106,7 +106,7 @@ test(CoverTest, publish_nothing_if_retained) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(CoverTest, name_setter) {
+AHA_TEST(CoverTest, name_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -119,7 +119,7 @@ test(CoverTest, name_setter) {
     )
 }
 
-test(CoverTest, device_class) {
+AHA_TEST(CoverTest, device_class) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -132,7 +132,7 @@ test(CoverTest, device_class) {
     )
 }
 
-test(CoverTest, icon_setter) {
+AHA_TEST(CoverTest, icon_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -145,7 +145,7 @@ test(CoverTest, icon_setter) {
     )
 }
 
-test(CoverTest, retain_setter) {
+AHA_TEST(CoverTest, retain_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -158,7 +158,7 @@ test(CoverTest, retain_setter) {
     )
 }
 
-test(CoverTest, optimistic_setter) {
+AHA_TEST(CoverTest, optimistic_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -171,7 +171,7 @@ test(CoverTest, optimistic_setter) {
     )
 }
 
-test(CoverTest, current_state_setter) {
+AHA_TEST(CoverTest, current_state_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -181,7 +181,7 @@ test(CoverTest, current_state_setter) {
     assertEqual(HACover::StateStopped, cover.getCurrentState());
 }
 
-test(CoverTest, current_position_setter) {
+AHA_TEST(CoverTest, current_position_setter) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -191,7 +191,7 @@ test(CoverTest, current_position_setter) {
     assertEqual(500, cover.getCurrentPosition());
 }
 
-test(CoverTest, publish_state_closed) {
+AHA_TEST(CoverTest, publish_state_closed) {
     prepareTest
 
     mock->connectDummy();
@@ -202,7 +202,7 @@ test(CoverTest, publish_state_closed) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_closing) {
+AHA_TEST(CoverTest, publish_state_closing) {
     prepareTest
 
     mock->connectDummy();
@@ -213,7 +213,7 @@ test(CoverTest, publish_state_closing) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_open) {
+AHA_TEST(CoverTest, publish_state_open) {
     prepareTest
 
     mock->connectDummy();
@@ -224,7 +224,7 @@ test(CoverTest, publish_state_open) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_opening) {
+AHA_TEST(CoverTest, publish_state_opening) {
     prepareTest
 
     mock->connectDummy();
@@ -235,7 +235,7 @@ test(CoverTest, publish_state_opening) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_stopped) {
+AHA_TEST(CoverTest, publish_state_stopped) {
     prepareTest
 
     mock->connectDummy();
@@ -246,7 +246,7 @@ test(CoverTest, publish_state_stopped) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_debounce) {
+AHA_TEST(CoverTest, publish_state_debounce) {
     prepareTest
 
     mock->connectDummy();
@@ -259,7 +259,7 @@ test(CoverTest, publish_state_debounce) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_state_debounce_skip) {
+AHA_TEST(CoverTest, publish_state_debounce_skip) {
     prepareTest
 
     mock->connectDummy();
@@ -271,7 +271,7 @@ test(CoverTest, publish_state_debounce_skip) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_position) {
+AHA_TEST(CoverTest, publish_position) {
     prepareTest
 
     mock->connectDummy();
@@ -282,7 +282,7 @@ test(CoverTest, publish_position) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_position_debounce) {
+AHA_TEST(CoverTest, publish_position_debounce) {
     prepareTest
 
     mock->connectDummy();
@@ -295,7 +295,7 @@ test(CoverTest, publish_position_debounce) {
     assertTrue(result);
 }
 
-test(CoverTest, publish_position_debounce_skip) {
+AHA_TEST(CoverTest, publish_position_debounce_skip) {
     prepareTest
 
     mock->connectDummy();
@@ -307,7 +307,7 @@ test(CoverTest, publish_position_debounce_skip) {
     assertTrue(result);
 }
 
-test(CoverTest, command_open) {
+AHA_TEST(CoverTest, command_open) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -317,7 +317,7 @@ test(CoverTest, command_open) {
     assertCallback(true, HACover::CommandOpen, &cover)
 }
 
-test(CoverTest, command_close) {
+AHA_TEST(CoverTest, command_close) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -327,7 +327,7 @@ test(CoverTest, command_close) {
     assertCallback(true, HACover::CommandClose, &cover)
 }
 
-test(CoverTest, command_stop) {
+AHA_TEST(CoverTest, command_stop) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -337,7 +337,7 @@ test(CoverTest, command_stop) {
     assertCallback(true, HACover::CommandStop, &cover)
 }
 
-test(CoverTest, command_invalid) {
+AHA_TEST(CoverTest, command_invalid) {
     prepareTest
 
     HACover cover(testUniqueId);
@@ -347,7 +347,7 @@ test(CoverTest, command_invalid) {
     assertCallback(false, unknownCommand, nullptr)
 }
 
-test(CoverTest, different_cover_command) {
+AHA_TEST(CoverTest, different_cover_command) {
     prepareTest
 
     HACover cover(testUniqueId);

@@ -30,13 +30,13 @@ protected:
     virtual void onMqttConnected() override { }
 };
 
-test(SerializerTest, empty_json) {
+AHA_TEST(SerializerTest, empty_json) {
     prepareTest(0)
     flushSerializer(mock, serializer);
     assertSerializerMqttMessage("{}")
 }
 
-test(SerializerTest, skip_null_fields) {
+AHA_TEST(SerializerTest, skip_null_fields) {
     prepareTest(2)
 
     serializer.set(AHATOFSTR(HADeviceClassProperty), "Class");
@@ -46,7 +46,7 @@ test(SerializerTest, skip_null_fields) {
     assertSerializerMqttMessage("{\"dev_cla\":\"Class\"}")
 }
 
-test(SerializerTest, char_field) {
+AHA_TEST(SerializerTest, char_field) {
     prepareTest(1)
 
     serializer.set(AHATOFSTR(HANameProperty), "XYZ");
@@ -55,7 +55,7 @@ test(SerializerTest, char_field) {
     assertSerializerMqttMessage("{\"name\":\"XYZ\"}")
 }
 
-test(SerializerTest, bool_false_field) {
+AHA_TEST(SerializerTest, bool_false_field) {
     prepareTest(1)
 
     bool value = false;
@@ -69,7 +69,7 @@ test(SerializerTest, bool_false_field) {
     assertSerializerMqttMessage("{\"name\":false}")
 }
 
-test(SerializerTest, bool_true_field) {
+AHA_TEST(SerializerTest, bool_true_field) {
     prepareTest(1)
 
     bool value = true;
@@ -83,7 +83,7 @@ test(SerializerTest, bool_true_field) {
     assertSerializerMqttMessage("{\"name\":true}")
 }
 
-test(SerializerTest, number_zero_field) {
+AHA_TEST(SerializerTest, number_zero_field) {
     prepareTest(1)
 
     int32_t value = 0;
@@ -97,7 +97,7 @@ test(SerializerTest, number_zero_field) {
     assertSerializerMqttMessage("{\"name\":0}")
 }
 
-test(SerializerTest, number_signed_field) {
+AHA_TEST(SerializerTest, number_signed_field) {
     prepareTest(1)
 
     int32_t value = -12346756;
@@ -111,7 +111,7 @@ test(SerializerTest, number_signed_field) {
     assertSerializerMqttMessage("{\"name\":-12346756}")
 }
 
-test(SerializerTest, number_unsigned_field) {
+AHA_TEST(SerializerTest, number_unsigned_field) {
     prepareTest(1)
 
     int32_t value = 312346733;
@@ -125,7 +125,7 @@ test(SerializerTest, number_unsigned_field) {
     assertSerializerMqttMessage("{\"name\":312346733}");
 }
 
-test(SerializerTest, progmem_field) {
+AHA_TEST(SerializerTest, progmem_field) {
     prepareTest(1)
 
     serializer.set(
@@ -138,7 +138,7 @@ test(SerializerTest, progmem_field) {
     assertSerializerMqttMessage("{\"name\":\"offline\"}")
 }
 
-test(SerializerTest, topic_field) {
+AHA_TEST(SerializerTest, topic_field) {
     prepareTest(1)
 
     serializer.topic(AHATOFSTR(HAStateTopic));
@@ -147,7 +147,7 @@ test(SerializerTest, topic_field) {
     assertSerializerMqttMessage("{\"stat_t\":\"testData/testDevice/testId/stat_t\"}")
 }
 
-test(SerializerTest, topics_field) {
+AHA_TEST(SerializerTest, topics_field) {
     prepareTest(2)
 
     serializer.topic(AHATOFSTR(HAStateTopic));
@@ -157,7 +157,7 @@ test(SerializerTest, topics_field) {
     assertSerializerMqttMessage("{\"stat_t\":\"testData/testDevice/testId/stat_t\",\"avty_t\":\"testData/testDevice/testId/avty_t\"}")
 }
 
-test(SerializerTest, device_serialization) {
+AHA_TEST(SerializerTest, device_serialization) {
     prepareTest(1)
 
     serializer.set(HASerializer::WithDevice);
@@ -166,7 +166,7 @@ test(SerializerTest, device_serialization) {
     assertSerializerMqttMessage("{\"dev\":{\"ids\":\"testDevice\"}}")
 }
 
-test(SerializerTest, device_mixed_serialization) {
+AHA_TEST(SerializerTest, device_mixed_serialization) {
     prepareTest(2)
 
     serializer.set(HASerializer::WithDevice);
@@ -176,7 +176,7 @@ test(SerializerTest, device_mixed_serialization) {
     assertSerializerMqttMessage("{\"dev\":{\"ids\":\"testDevice\"},\"dev_cla\":\"Class1\"}")
 }
 
-test(SerializerTest, device_type_availability) {
+AHA_TEST(SerializerTest, device_type_availability) {
     prepareTest(1)
 
     dummyDeviceType.setAvailability(false);
@@ -186,7 +186,7 @@ test(SerializerTest, device_type_availability) {
     assertSerializerMqttMessage("{\"avty_t\":\"testData/testDevice/testId/avty_t\"}")
 }
 
-test(SerializerTest, device_type_availability_mixed) {
+AHA_TEST(SerializerTest, device_type_availability_mixed) {
     prepareTest(2)
 
     dummyDeviceType.setAvailability(false);
@@ -197,7 +197,7 @@ test(SerializerTest, device_type_availability_mixed) {
     assertSerializerMqttMessage("{\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev_cla\":\"Class1\"}")
 }
 
-test(SerializerTest, shared_availability) {
+AHA_TEST(SerializerTest, shared_availability) {
     prepareTest(1)
 
     device.enableSharedAvailability();
@@ -207,7 +207,7 @@ test(SerializerTest, shared_availability) {
     assertSerializerMqttMessage("{\"avty_t\":\"testData/testDevice/avty_t\"}")
 }
 
-test(SerializerTest, empty_array) {
+AHA_TEST(SerializerTest, empty_array) {
     prepareTest(1)
 
     HASerializerArray array(0);
@@ -221,7 +221,7 @@ test(SerializerTest, empty_array) {
     assertSerializerMqttMessage("{\"dev_cla\":[]}")
 }
 
-test(SerializerTest, two_element_array) {
+AHA_TEST(SerializerTest, two_element_array) {
     prepareTest(1)
 
     HASerializerArray array(2);
@@ -237,7 +237,7 @@ test(SerializerTest, two_element_array) {
     assertSerializerMqttMessage("{\"dev_cla\":[\"dev\",\"ic\"]}")
 }
 
-test(SerializerTest, mixed_elements) {
+AHA_TEST(SerializerTest, mixed_elements) {
     prepareTest(6)
 
     HASerializerArray array(2);

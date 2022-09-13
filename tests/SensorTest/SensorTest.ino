@@ -10,7 +10,7 @@ static const char* stateTopic = "testData/testDevice/uniqueSensor/stat_t";
 
 const char DummyTemplateStr[] PROGMEM = {"dummyTemplate"};
 
-test(SensorTest, invalid_unique_id) {
+AHA_TEST(SensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(nullptr);
@@ -20,7 +20,7 @@ test(SensorTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(SensorTest, default_params) {
+AHA_TEST(SensorTest, default_params) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -31,7 +31,7 @@ test(SensorTest, default_params) {
     )
 }
 
-test(SensorTest, availability) {
+AHA_TEST(SensorTest, availability) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -47,7 +47,7 @@ test(SensorTest, availability) {
     )
 }
 
-test(SensorTest, name_setter) {
+AHA_TEST(SensorTest, name_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -60,7 +60,7 @@ test(SensorTest, name_setter) {
     )
 }
 
-test(SensorTest, device_class_setter) {
+AHA_TEST(SensorTest, device_class_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -73,7 +73,7 @@ test(SensorTest, device_class_setter) {
     )
 }
 
-test(SensorTest, force_update_setter) {
+AHA_TEST(SensorTest, force_update_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -86,7 +86,7 @@ test(SensorTest, force_update_setter) {
     )
 }
 
-test(SensorTest, icon_setter) {
+AHA_TEST(SensorTest, icon_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -99,7 +99,7 @@ test(SensorTest, icon_setter) {
     )
 }
 
-test(SensorTest, unit_of_measurement_setter) {
+AHA_TEST(SensorTest, unit_of_measurement_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -112,7 +112,7 @@ test(SensorTest, unit_of_measurement_setter) {
     )
 }
 
-test(SensorTest, value_template_setter) {
+AHA_TEST(SensorTest, value_template_setter) {
     initMqttTest(testDeviceId)
 
     HASensor sensor(testUniqueId);
@@ -125,7 +125,7 @@ test(SensorTest, value_template_setter) {
     )
 }
 
-test(SensorTest, publish_value) {
+AHA_TEST(SensorTest, publish_value) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();

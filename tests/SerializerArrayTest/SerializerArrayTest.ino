@@ -5,21 +5,21 @@
     const __FlashStringHelper* expectedJsonP = F(expectedJson); \
     memset(tmpBuffer, 0, sizeof(tmpBuffer)); \
     assertTrue(array.serialize(tmpBuffer)); \
-    assertStringCaseEqual(tmpBuffer, expectedJsonP); \
+    assertEqual(tmpBuffer, expectedJsonP); \
     assertEqual((uint16_t)strlen_P(reinterpret_cast<const char *>(expectedJsonP)), array.calculateSize());
 
 using aunit::TestRunner;
 
 char tmpBuffer[32];
 
-test(SerializerArrayTest, empty_array) {
+AHA_TEST(SerializerArrayTest, empty_array) {
     HASerializerArray array(0);
 
     assertEqual(0, array.getItemsNb());
     assertJson("[]", array);
 }
 
-test(SerializerArrayTest, single_element_progmem) {
+AHA_TEST(SerializerArrayTest, single_element_progmem) {
     HASerializerArray array(1);
     bool result = array.add(HANameProperty);
 
@@ -29,7 +29,7 @@ test(SerializerArrayTest, single_element_progmem) {
     assertJson("[\"name\"]", array);
 }
 
-test(SerializerArrayTest, multiple_elements_progmem) {
+AHA_TEST(SerializerArrayTest, multiple_elements_progmem) {
     HASerializerArray array(3);
 
     assertTrue(array.add(HANameProperty));
@@ -44,7 +44,7 @@ test(SerializerArrayTest, multiple_elements_progmem) {
     assertJson("[\"name\",\"mf\",\"uniq_id\"]", array);
 }
 
-test(SerializerArrayTest, size_overflow_progmem) {
+AHA_TEST(SerializerArrayTest, size_overflow_progmem) {
     HASerializerArray array(1);
 
     assertTrue(array.add(HANameProperty));
@@ -54,7 +54,7 @@ test(SerializerArrayTest, size_overflow_progmem) {
     assertJson("[\"name\"]", array);
 }
 
-test(SerializerArrayTest, single_element_ram) {
+AHA_TEST(SerializerArrayTest, single_element_ram) {
     const char* item = "test";
     HASerializerArray array(1, false);
     bool result = array.add(item);
@@ -65,7 +65,7 @@ test(SerializerArrayTest, single_element_ram) {
     assertJson("[\"test\"]", array);
 }
 
-test(SerializerArrayTest, multiple_elements_ram) {
+AHA_TEST(SerializerArrayTest, multiple_elements_ram) {
     const char* item0 = "item0";
     const char* item1 = "item1";
     const char* item2 = "item2";

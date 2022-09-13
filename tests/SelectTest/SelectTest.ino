@@ -31,7 +31,7 @@ void onCommandReceived(int8_t index, HASelect* select)
     commandCallbackSelectPtr = select;
 }
 
-test(SelectTest, invalid_unique_id) {
+AHA_TEST(SelectTest, invalid_unique_id) {
     prepareTest
 
     HASelect select(nullptr);
@@ -41,7 +41,7 @@ test(SelectTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(SelectTest, no_options) {
+AHA_TEST(SelectTest, no_options) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -51,7 +51,7 @@ test(SelectTest, no_options) {
     assertTrue(serializer == nullptr);
 }
 
-test(SelectTest, invalid_options_nullptr) {
+AHA_TEST(SelectTest, invalid_options_nullptr) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -62,7 +62,7 @@ test(SelectTest, invalid_options_nullptr) {
     assertTrue(serializer == nullptr);
 }
 
-test(SelectTest, invalid_options_empty) {
+AHA_TEST(SelectTest, invalid_options_empty) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -73,7 +73,7 @@ test(SelectTest, invalid_options_empty) {
     assertTrue(serializer == nullptr);
 }
 
-test(SelectTest, single_option) {
+AHA_TEST(SelectTest, single_option) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -87,7 +87,7 @@ test(SelectTest, single_option) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(SelectTest, multiple_options) {
+AHA_TEST(SelectTest, multiple_options) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -101,7 +101,7 @@ test(SelectTest, multiple_options) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(SelectTest, command_subscription) {
+AHA_TEST(SelectTest, command_subscription) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -109,10 +109,10 @@ test(SelectTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertStringCaseEqual(commandTopic, mock->getSubscriptions()[0].topic);
+    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
 }
 
-test(SelectTest, availability) {
+AHA_TEST(SelectTest, availability) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -129,7 +129,7 @@ test(SelectTest, availability) {
     )
 }
 
-test(SelectTest, publish_last_known_state) {
+AHA_TEST(SelectTest, publish_last_known_state) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -141,7 +141,7 @@ test(SelectTest, publish_last_known_state) {
     assertMqttMessage(1, stateTopic, "B", true)
 }
 
-test(SelectTest, publish_nothing_if_retained) {
+AHA_TEST(SelectTest, publish_nothing_if_retained) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -153,7 +153,7 @@ test(SelectTest, publish_nothing_if_retained) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
-test(SelectTest, name_setter) {
+AHA_TEST(SelectTest, name_setter) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -167,7 +167,7 @@ test(SelectTest, name_setter) {
     )
 }
 
-test(SelectTest, icon_setter) {
+AHA_TEST(SelectTest, icon_setter) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -181,7 +181,7 @@ test(SelectTest, icon_setter) {
     )
 }
 
-test(SelectTest, retain_setter) {
+AHA_TEST(SelectTest, retain_setter) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -195,7 +195,7 @@ test(SelectTest, retain_setter) {
     )
 }
 
-test(SelectTest, optimistic_setter) {
+AHA_TEST(SelectTest, optimistic_setter) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -209,7 +209,7 @@ test(SelectTest, optimistic_setter) {
     )
 }
 
-test(SelectTest, current_state_getter) {
+AHA_TEST(SelectTest, current_state_getter) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -220,7 +220,7 @@ test(SelectTest, current_state_getter) {
     assertEqual(1, select.getCurrentState());
 }
 
-test(SelectTest, publish_state_first) {
+AHA_TEST(SelectTest, publish_state_first) {
     prepareTest
 
     mock->connectDummy();
@@ -232,7 +232,7 @@ test(SelectTest, publish_state_first) {
     assertTrue(result);
 }
 
-test(SelectTest, publish_state_last) {
+AHA_TEST(SelectTest, publish_state_last) {
     prepareTest
 
     mock->connectDummy();
@@ -244,7 +244,7 @@ test(SelectTest, publish_state_last) {
     assertTrue(result);
 }
 
-test(SelectTest, publish_state_only) {
+AHA_TEST(SelectTest, publish_state_only) {
     prepareTest
 
     mock->connectDummy();
@@ -256,7 +256,7 @@ test(SelectTest, publish_state_only) {
     assertTrue(result);
 }
 
-test(SelectTest, publish_state_debounce) {
+AHA_TEST(SelectTest, publish_state_debounce) {
     prepareTest
 
     mock->connectDummy();
@@ -270,7 +270,7 @@ test(SelectTest, publish_state_debounce) {
     assertTrue(result);
 }
 
-test(SelectTest, publish_state_debounce_skip) {
+AHA_TEST(SelectTest, publish_state_debounce_skip) {
     prepareTest
 
     mock->connectDummy();
@@ -283,7 +283,7 @@ test(SelectTest, publish_state_debounce_skip) {
     assertTrue(result);
 }
 
-test(SelectTest, command_option_first) {
+AHA_TEST(SelectTest, command_option_first) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -294,7 +294,7 @@ test(SelectTest, command_option_first) {
     assertCallback(true, 0, &select)
 }
 
-test(SelectTest, command_option_last) {
+AHA_TEST(SelectTest, command_option_last) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -305,7 +305,7 @@ test(SelectTest, command_option_last) {
     assertCallback(true, 2, &select)
 }
 
-test(SelectTest, command_option_non_existing) {
+AHA_TEST(SelectTest, command_option_non_existing) {
     prepareTest
 
     HASelect select(testUniqueId);
@@ -316,7 +316,7 @@ test(SelectTest, command_option_non_existing) {
     assertCallback(false, -1, nullptr)
 }
 
-test(SelectTest, different_select_command) {
+AHA_TEST(SelectTest, different_select_command) {
     prepareTest
 
     HASelect select(testUniqueId);

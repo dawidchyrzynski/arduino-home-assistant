@@ -8,7 +8,7 @@ static const char* testUniqueId = "uniqueTracker";
 static const char* configTopic = "homeassistant/device_tracker/testDevice/uniqueTracker/config";
 static const char* stateTopic = "testData/testDevice/uniqueTracker/stat_t";
 
-test(DeviceTrackerTest, invalid_unique_id) {
+AHA_TEST(DeviceTrackerTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(nullptr);
@@ -18,7 +18,7 @@ test(DeviceTrackerTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(DeviceTrackerTest, default_params) {
+AHA_TEST(DeviceTrackerTest, default_params) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -29,7 +29,7 @@ test(DeviceTrackerTest, default_params) {
     )
 }
 
-test(DeviceTrackerTest, source_type_gps) {
+AHA_TEST(DeviceTrackerTest, source_type_gps) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -41,7 +41,7 @@ test(DeviceTrackerTest, source_type_gps) {
     )
 }
 
-test(DeviceTrackerTest, source_type_router) {
+AHA_TEST(DeviceTrackerTest, source_type_router) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -53,7 +53,7 @@ test(DeviceTrackerTest, source_type_router) {
     )
 }
 
-test(DeviceTrackerTest, source_type_bluetooth) {
+AHA_TEST(DeviceTrackerTest, source_type_bluetooth) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -65,7 +65,7 @@ test(DeviceTrackerTest, source_type_bluetooth) {
     )
 }
 
-test(DeviceTrackerTest, source_type_bluetooth_le) {
+AHA_TEST(DeviceTrackerTest, source_type_bluetooth_le) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -77,7 +77,7 @@ test(DeviceTrackerTest, source_type_bluetooth_le) {
     )
 }
 
-test(DeviceTrackerTest, availability) {
+AHA_TEST(DeviceTrackerTest, availability) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -93,7 +93,7 @@ test(DeviceTrackerTest, availability) {
     )
 }
 
-test(DeviceTrackerTest, publish_initial_state) {
+AHA_TEST(DeviceTrackerTest, publish_initial_state) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -108,7 +108,7 @@ test(DeviceTrackerTest, publish_initial_state) {
     )
 }
 
-test(DeviceTrackerTest, name_setter) {
+AHA_TEST(DeviceTrackerTest, name_setter) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -121,7 +121,7 @@ test(DeviceTrackerTest, name_setter) {
     )
 }
 
-test(DeviceTrackerTest, icon_setter) {
+AHA_TEST(DeviceTrackerTest, icon_setter) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -134,14 +134,14 @@ test(DeviceTrackerTest, icon_setter) {
     )
 }
 
-test(DeviceTrackerTest, default_state_unknown) {
+AHA_TEST(DeviceTrackerTest, default_state_unknown) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
     assertEqual(HADeviceTracker::StateUnknown, tracker.getState());
 }
 
-test(DeviceTrackerTest, default_state) {
+AHA_TEST(DeviceTrackerTest, default_state) {
     initMqttTest(testDeviceId)
 
     HADeviceTracker tracker(testUniqueId);
@@ -149,7 +149,7 @@ test(DeviceTrackerTest, default_state) {
     assertEqual(HADeviceTracker::StateNotAvailable, tracker.getState());
 }
 
-test(DeviceTrackerTest, publish_state_home) {
+AHA_TEST(DeviceTrackerTest, publish_state_home) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -160,7 +160,7 @@ test(DeviceTrackerTest, publish_state_home) {
     assertTrue(result);
 }
 
-test(DeviceTrackerTest, publish_state_not_home) {
+AHA_TEST(DeviceTrackerTest, publish_state_not_home) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -171,7 +171,7 @@ test(DeviceTrackerTest, publish_state_not_home) {
     assertTrue(result);
 }
 
-test(DeviceTrackerTest, publish_state_not_available) {
+AHA_TEST(DeviceTrackerTest, publish_state_not_available) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -182,7 +182,7 @@ test(DeviceTrackerTest, publish_state_not_available) {
     assertTrue(result);
 }
 
-test(DeviceTrackerTest, publish_state_debounce) {
+AHA_TEST(DeviceTrackerTest, publish_state_debounce) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
@@ -195,7 +195,7 @@ test(DeviceTrackerTest, publish_state_debounce) {
     assertTrue(result);
 }
 
-test(DeviceTrackerTest, publish_state_debounce_skip) {
+AHA_TEST(DeviceTrackerTest, publish_state_debounce_skip) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();

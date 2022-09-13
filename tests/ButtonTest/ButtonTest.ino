@@ -1,6 +1,5 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
-#include <MemoryUsage.h>
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
@@ -27,7 +26,7 @@ void onCommandReceived(HAButton* button)
     commandCallbackButtonPtr = button;
 }
 
-test(ButtonTest, invalid_unique_id) {
+AHA_TEST(ButtonTest, invalid_unique_id) {
     prepareTest
 
     HAButton button(nullptr);
@@ -37,7 +36,7 @@ test(ButtonTest, invalid_unique_id) {
     assertTrue(serializer == nullptr);
 }
 
-test(ButtonTest, default_params) {
+AHA_TEST(ButtonTest, default_params) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -48,7 +47,7 @@ test(ButtonTest, default_params) {
     )
 }
 
-test(ButtonTest, command_subscription) {
+AHA_TEST(ButtonTest, command_subscription) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -58,7 +57,7 @@ test(ButtonTest, command_subscription) {
     assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
 }
 
-test(ButtonTest, availability) {
+AHA_TEST(ButtonTest, availability) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -74,7 +73,7 @@ test(ButtonTest, availability) {
     )
 }
 
-test(ButtonTest, name_setter) {
+AHA_TEST(ButtonTest, name_setter) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -87,7 +86,7 @@ test(ButtonTest, name_setter) {
     )
 }
 
-test(ButtonTest, device_class) {
+AHA_TEST(ButtonTest, device_class) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -100,7 +99,7 @@ test(ButtonTest, device_class) {
     )
 }
 
-test(ButtonTest, icon_setter) {
+AHA_TEST(ButtonTest, icon_setter) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -113,7 +112,7 @@ test(ButtonTest, icon_setter) {
     )
 }
 
-test(ButtonTest, retain_setter) {
+AHA_TEST(ButtonTest, retain_setter) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -126,7 +125,7 @@ test(ButtonTest, retain_setter) {
     )
 }
 
-test(ButtonTest, command_callback) {
+AHA_TEST(ButtonTest, command_callback) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -136,7 +135,7 @@ test(ButtonTest, command_callback) {
     assertCallback(true, &button)
 }
 
-test(ButtonTest, no_command_callback) {
+AHA_TEST(ButtonTest, no_command_callback) {
     prepareTest
 
     HAButton button(testUniqueId);
@@ -145,7 +144,7 @@ test(ButtonTest, no_command_callback) {
     assertCallback(false, nullptr)
 }
 
-test(ButtonTest, different_button_command) {
+AHA_TEST(ButtonTest, different_button_command) {
     prepareTest
 
     HAButton button(testUniqueId);

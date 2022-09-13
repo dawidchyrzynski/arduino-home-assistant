@@ -16,7 +16,7 @@ void clearTmpBuffer() {
     memset(tmpBuffer, 0, sizeof(tmpBuffer));
 }
 
-test(SerializerTopicsTest, calculate_config_no_mqtt) {
+AHA_TEST(SerializerTopicsTest, calculate_config_no_mqtt) {
     // it should return 0 if there is no HAMqtt instance (singleton)
     assertEqual(
         (uint16_t)0,
@@ -27,7 +27,7 @@ test(SerializerTopicsTest, calculate_config_no_mqtt) {
     );
 }
 
-test(SerializerTopicsTest, calculate_config_invalid_component) {
+AHA_TEST(SerializerTopicsTest, calculate_config_invalid_component) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
 
@@ -41,7 +41,7 @@ test(SerializerTopicsTest, calculate_config_invalid_component) {
     );
 }
 
-test(SerializerTopicsTest, calculate_config_invalid_object) {
+AHA_TEST(SerializerTopicsTest, calculate_config_invalid_object) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
 
@@ -55,7 +55,7 @@ test(SerializerTopicsTest, calculate_config_invalid_object) {
     );
 }
 
-test(SerializerTopicsTest, calculate_config_invalid_prefix) {
+AHA_TEST(SerializerTopicsTest, calculate_config_invalid_prefix) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDiscoveryPrefix(nullptr);
@@ -70,7 +70,7 @@ test(SerializerTopicsTest, calculate_config_invalid_prefix) {
     );
 }
 
-test(SerializerTopicsTest, calculate_config) {
+AHA_TEST(SerializerTopicsTest, calculate_config) {
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
 
@@ -88,7 +88,7 @@ test(SerializerTopicsTest, calculate_config) {
     );
 }
 
-test(SerializerTopicsTest, generate_config_no_mqtt) {
+AHA_TEST(SerializerTopicsTest, generate_config_no_mqtt) {
     clearTmpBuffer();
 
     // it should return false if there is no HAMqtt instance (singleton)
@@ -100,7 +100,7 @@ test(SerializerTopicsTest, generate_config_no_mqtt) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_config_invalid_component) {
+AHA_TEST(SerializerTopicsTest, generate_config_invalid_component) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
@@ -114,7 +114,7 @@ test(SerializerTopicsTest, generate_config_invalid_component) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_config_invalid_object) {
+AHA_TEST(SerializerTopicsTest, generate_config_invalid_object) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
@@ -128,7 +128,7 @@ test(SerializerTopicsTest, generate_config_invalid_object) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_config_invalid_prefix) {
+AHA_TEST(SerializerTopicsTest, generate_config_invalid_prefix) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDiscoveryPrefix(nullptr);
@@ -143,7 +143,7 @@ test(SerializerTopicsTest, generate_config_invalid_prefix) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_config) {
+AHA_TEST(SerializerTopicsTest, generate_config) {
     const char* objectId = "objectId";
     const char* expectedTopic = "discoveryPrefix/componentName/testDevice/objectId/config";
 
@@ -158,10 +158,10 @@ test(SerializerTopicsTest, generate_config) {
         AHATOFSTR(ComponentNameStr),
         objectId
     ));
-    assertStringCaseEqual(expectedTopic, tmpBuffer);
+    assertEqual(expectedTopic, tmpBuffer);
 }
 
-test(SerializerTopicsTest, calculate_data_no_mqtt) {
+AHA_TEST(SerializerTopicsTest, calculate_data_no_mqtt) {
     // it should return 0 if there is no HAMqtt instance (singleton)
     assertEqual(
         (uint16_t)0,
@@ -172,7 +172,7 @@ test(SerializerTopicsTest, calculate_data_no_mqtt) {
     );
 }
 
-test(SerializerTopicsTest, calculate_data_invalid_topic) {
+AHA_TEST(SerializerTopicsTest, calculate_data_invalid_topic) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDataPrefix(dataPrefix);
@@ -187,7 +187,7 @@ test(SerializerTopicsTest, calculate_data_invalid_topic) {
     );
 }
 
-test(SerializerTopicsTest, calculate_data_invalid_prefix) {
+AHA_TEST(SerializerTopicsTest, calculate_data_invalid_prefix) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDataPrefix(nullptr);
@@ -202,7 +202,7 @@ test(SerializerTopicsTest, calculate_data_invalid_prefix) {
     );
 }
 
-test(SerializerTopicsTest, calculate_data_partial) {
+AHA_TEST(SerializerTopicsTest, calculate_data_partial) {
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -220,7 +220,7 @@ test(SerializerTopicsTest, calculate_data_partial) {
     );
 }
 
-test(SerializerTopicsTest, generate_data_no_mqtt) {
+AHA_TEST(SerializerTopicsTest, generate_data_no_mqtt) {
     clearTmpBuffer();
 
     // it should return false if there is no HAMqtt instance (singleton)
@@ -232,7 +232,7 @@ test(SerializerTopicsTest, generate_data_no_mqtt) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_data_invalid_topic) {
+AHA_TEST(SerializerTopicsTest, generate_data_invalid_topic) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     clearTmpBuffer();
@@ -246,7 +246,7 @@ test(SerializerTopicsTest, generate_data_invalid_topic) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_data_invalid_prefix) {
+AHA_TEST(SerializerTopicsTest, generate_data_invalid_prefix) {
     HADevice device(deviceId);
     HAMqtt mqtt(nullptr, device);
     mqtt.setDataPrefix(nullptr);
@@ -261,7 +261,7 @@ test(SerializerTopicsTest, generate_data_invalid_prefix) {
     assertTrue(strlen(tmpBuffer) == 0);
 }
 
-test(SerializerTopicsTest, generate_data_partial) {
+AHA_TEST(SerializerTopicsTest, generate_data_partial) {
     const char* objectId = nullptr;
     const char* expectedTopic = "dataPrefix/testDevice/dummyProgmem";
 
@@ -276,10 +276,10 @@ test(SerializerTopicsTest, generate_data_partial) {
         objectId,
         AHATOFSTR(DummyProgmemStr)
     ));
-    assertStringCaseEqual(tmpBuffer, expectedTopic);
+    assertEqual(tmpBuffer, expectedTopic);
 }
 
-test(SerializerTopicsTest, generate_data_full) {
+AHA_TEST(SerializerTopicsTest, generate_data_full) {
     const char* objectId = "objectId";
     const char* expectedTopic = "dataPrefix/testDevice/objectId/dummyProgmem";
 
@@ -294,10 +294,10 @@ test(SerializerTopicsTest, generate_data_full) {
         objectId,
         AHATOFSTR(DummyProgmemStr)
     ));
-    assertStringCaseEqual(tmpBuffer, expectedTopic);
+    assertEqual(tmpBuffer, expectedTopic);
 }
 
-test(SerializerTopicsTest, compare_invalid_topic) {
+AHA_TEST(SerializerTopicsTest, compare_invalid_topic) {
     const char* topic = nullptr;
     const char* objectId = "objectId";
 
@@ -312,7 +312,7 @@ test(SerializerTopicsTest, compare_invalid_topic) {
     ));
 }
 
-test(SerializerTopicsTest, compare_matching_topics) {
+AHA_TEST(SerializerTopicsTest, compare_matching_topics) {
     const char* topic = "dataPrefix/testDevice/objectId/dummyProgmem";
     const char* objectId = "objectId";
 
@@ -327,7 +327,7 @@ test(SerializerTopicsTest, compare_matching_topics) {
     ));
 }
 
-test(SerializerTopicsTest, compare_not_matching_topics) {
+AHA_TEST(SerializerTopicsTest, compare_not_matching_topics) {
     const char* topic = "dataPrefix/testDevice/objectId/Progmem";
     const char* objectId = "objectId";
 

@@ -35,4 +35,43 @@
     assertTrue(entity.getSerializer() == nullptr); \
 }
 
+#ifdef AUNITER
+#include <MemoryUsage.h>
+
+#define AHA_LEAKTRACKSTART \
+    int freeRam = mu_freeRam();
+
+#define AHA_LEAKTRACKEND \
+    int diff = freeRam - mu_freeRam(); \
+    if (diff < 0) { diff *= -1; } \
+    if (diff != 0) { \
+        Serial.print(Test::getName().getFString()); \
+        Serial.print(F(" memory leak: ")); \
+        Serial.print(diff); \
+        Serial.println(F("b")); \
+        Test::fail(); \
+    }
+#else
+// EpoxyDuino doesn't support memory tracking
+#define AHA_LEAKTRACKSTART
+#define AHA_LEAKTRACKEND
+#endif
+
+#define AHA_TEST(suiteName, name) \
+class suiteName##_##name : public aunit::TestOnce { \
+public: \
+    suiteName##_##name(); \
+    void once() override; \
+    void loop() override { \
+        AHA_LEAKTRACKSTART \
+        once(); \
+        if (isNotDone()) { pass(); } \
+        AHA_LEAKTRACKEND \
+    } \
+} suiteName##_##name##_instance; \
+suiteName##_##name :: suiteName##_##name() { \
+  init(AUNIT_F(#suiteName "_" #name)); \
+} \
+void suiteName##_##name :: once()
+
 #endif
