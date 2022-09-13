@@ -30,7 +30,7 @@ test(SerializerArrayTest, single_element_progmem) {
 }
 
 test(SerializerArrayTest, multiple_elements_progmem) {
-    HASerializerArray array(3, false);
+    HASerializerArray array(3);
 
     assertTrue(array.add(HANameProperty));
     assertTrue(array.add(HADeviceManufacturerProperty));

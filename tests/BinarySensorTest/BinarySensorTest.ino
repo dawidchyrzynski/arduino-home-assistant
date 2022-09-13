@@ -52,12 +52,7 @@ test(BinarySensorTest, publish_initial_state) {
     sensor.setCurrentState(true);
     mqtt.loop();
 
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueSensor/stat_t",
-        "ON",
-        true
-    )
+    assertMqttMessage(1, stateTopic, "ON", true)
 }
 
 test(BinarySensorTest, name_setter) {

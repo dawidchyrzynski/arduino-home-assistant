@@ -15,9 +15,10 @@
     const __FlashStringHelper* messageP = F(eMessage); \
     size_t messageLen = strlen_P(reinterpret_cast<const char *>(messageP)); \
     assertTrue(mock->getFlushedMessagesNb() > 0); \
-    MqttMessage* publishedMessage = &mock->getFlushedMessages()[index]; \
-    assertStringCaseEqual(F(eTopic), publishedMessage->topic); \
-    assertStringCaseEqual(messageP, publishedMessage->buffer); \
+    assertTrue(mock->getFlushedMessagesNb() > index); \
+    MqttMessage* publishedMessage = mock->getFlushedMessages()[index]; \
+    assertEqual(eTopic, publishedMessage->topic); \
+    assertEqual(messageP, publishedMessage->buffer); \
     assertEqual(messageLen, publishedMessage->bufferSize - 1); \
     assertEqual(eRetained, publishedMessage->retained); \
 }

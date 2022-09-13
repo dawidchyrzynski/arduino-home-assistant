@@ -67,6 +67,8 @@ HAMqtt::HAMqtt(
 
 HAMqtt::~HAMqtt()
 {
+    delete[] _devicesTypes;
+
     if (_mqtt) {
         delete _mqtt;
     }

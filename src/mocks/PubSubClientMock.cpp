@@ -18,11 +18,8 @@ PubSubClientMock::~PubSubClientMock()
         delete _pendingMessage;
     }
 
-    if (_subscriptions) {
-        delete _subscriptions;
-    }
-
     clearFlushedMessages();
+    clearSubscriptions();
 }
 
 bool PubSubClientMock::loop()
@@ -155,7 +152,7 @@ size_t PubSubClientMock::write(const uint8_t *buffer, size_t size)
 size_t PubSubClientMock::print(const __FlashStringHelper* buffer)
 {
     const size_t len = strlen_P(reinterpret_cast<const char*>(buffer));
-    char data[len];
+    char data[len + 1]; // including null terminator
     strcpy_P(data, reinterpret_cast<const char*>(buffer));
 
     return write((const uint8_t*)(data), len);
@@ -171,11 +168,11 @@ int PubSubClientMock::endPublish()
     uint8_t index = _flushedMessagesNb;
 
     _flushedMessagesNb++;
-    _flushedMessages = static_cast<MqttMessage*>(
-        realloc(_flushedMessages, _flushedMessagesNb * sizeof(MqttMessage))
+    _flushedMessages = static_cast<MqttMessage**>(
+        realloc(_flushedMessages, _flushedMessagesNb * sizeof(MqttMessage*))
     );
 
-    _flushedMessages[index] = *_pendingMessage; // handover memory responsibility
+    _flushedMessages[index] = _pendingMessage; // handover memory responsibility
     _pendingMessage = nullptr; // do not call destructor
 
     return messageSize;
@@ -186,25 +183,43 @@ bool PubSubClientMock::subscribe(const char* topic)
     uint8_t index = _subscriptionsNb;
 
     _subscriptionsNb++;
-    _subscriptions = static_cast<MqttSubscription*>(
-        realloc(_subscriptions, _subscriptionsNb * sizeof(MqttSubscription))
+    _subscriptions = static_cast<MqttSubscription**>(
+        realloc(_subscriptions, _subscriptionsNb * sizeof(MqttSubscription*))
     );
 
     size_t topicSize = strlen(topic) + 1;
-    MqttSubscription* subscription = &_subscriptions[index];
+    MqttSubscription* subscription = new MqttSubscription();
     subscription->topic = new char[topicSize];
-
     memcpy(subscription->topic, topic, topicSize);
+
+    _subscriptions[index] = subscription;
     return true;
 }
 
 void PubSubClientMock::clearFlushedMessages()
 {
     if (_flushedMessages) {
+        for (uint8_t i = 0; i < _flushedMessagesNb; i++) {
+            delete _flushedMessages[i];
+        }
+
         delete _flushedMessages;
     }
 
     _flushedMessagesNb = 0;
+}
+
+void PubSubClientMock::clearSubscriptions()
+{
+    if (_subscriptions) {
+        for (uint8_t i = 0; i < _subscriptionsNb; i++) {
+            delete _subscriptions[i];
+        }
+
+        delete _subscriptions;
+    }
+
+    _subscriptionsNb = 0;
 }
 
 void PubSubClientMock::fakeMessage(const char* topic, const char* message)

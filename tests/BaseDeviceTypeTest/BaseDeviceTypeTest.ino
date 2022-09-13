@@ -28,8 +28,8 @@ protected:
 
 test(BaseDeviceTypeTest, constructor_params) {
     DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
-    assertStringCaseEqual(AHATOFSTR(ComponentNameStr), deviceType.componentName());
-    assertStringCaseEqual(testUniqueId, deviceType.uniqueId());
+    assertEqual(AHATOFSTR(ComponentNameStr), deviceType.componentName());
+    assertEqual(testUniqueId, deviceType.uniqueId());
 }
 
 test(BaseDeviceTypeTest, register_mqtt_type) {

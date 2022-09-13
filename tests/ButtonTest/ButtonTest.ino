@@ -1,5 +1,6 @@
 #include <AUnit.h>
 #include <ArduinoHA.h>
+#include <MemoryUsage.h>
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
@@ -54,7 +55,7 @@ test(ButtonTest, command_subscription) {
     mqtt.loop();
 
     assertEqual(1, mock->getSubscriptionsNb());
-    assertStringCaseEqual(commandTopic, mock->getSubscriptions()[0].topic);
+    assertEqual(commandTopic, mock->getSubscriptions()[0]->topic);
 }
 
 test(ButtonTest, availability) {

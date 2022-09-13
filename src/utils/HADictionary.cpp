@@ -59,8 +59,8 @@ const char HAPositionTopic[] PROGMEM = {"pos_t"};
 // misc
 const char HAOnline[] PROGMEM = {"online"};
 const char HAOffline[] PROGMEM = {"offline"};
-const char HAStateOn[] PROGMEM = {"on"};
-const char HAStateOff[] PROGMEM = {"off"};
+const char HAStateOn[] PROGMEM = {"ON"};
+const char HAStateOff[] PROGMEM = {"OFF"};
 const char HAStateLocked[] PROGMEM = {"locked"};
 const char HAStateUnlocked[] PROGMEM = {"unlocked"};
 const char HATrue[] PROGMEM = {"true"};

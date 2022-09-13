@@ -130,13 +130,13 @@ public:
     inline uint8_t getFlushedMessagesNb() const
         { return _flushedMessagesNb; }
 
-    inline MqttMessage* getFlushedMessages() const
+    inline MqttMessage** getFlushedMessages() const
         { return _flushedMessages; }
 
     inline uint8_t getSubscriptionsNb() const
         { return _subscriptionsNb; }
 
-    inline MqttSubscription* getSubscriptions() const
+    inline MqttSubscription** getSubscriptions() const
         { return _subscriptions; }      
 
     inline const MqttConnection& getConnection() const
@@ -146,13 +146,14 @@ public:
         { return _lastWill; }
 
     void clearFlushedMessages();
+    void clearSubscriptions();
     void fakeMessage(const char* topic, const char* message);
 
 private:
     MqttMessage* _pendingMessage;
-    MqttMessage* _flushedMessages;
+    MqttMessage** _flushedMessages;
     uint8_t _flushedMessagesNb;
-    MqttSubscription* _subscriptions;
+    MqttSubscription** _subscriptions;
     uint8_t _subscriptionsNb;
     MqttConnection _connection;
     MqttWill _lastWill;

@@ -475,7 +475,7 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
             entry->value
         );
         const uint16_t size = array->calculateSize();
-        char tmp[size];
+        char tmp[size + 1]; // including null terminator
         tmp[0] = 0;
         array->serialize(tmp);
         mqtt->writePayload(tmp, size);
