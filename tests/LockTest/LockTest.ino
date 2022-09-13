@@ -75,7 +75,7 @@ AHA_TEST(LockTest, availability) {
     // availability is published after config in HALock
     assertMqttMessage(
         1,
-        "testData/testDevice/uniqueLock/avty_t",
+        F("testData/testDevice/uniqueLock/avty_t"),
         "online",
         true
     )
@@ -89,7 +89,7 @@ AHA_TEST(LockTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "unlocked", true)
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "UNLOCKED", true)
 }
 
 AHA_TEST(LockTest, publish_nothing_if_retained) {
@@ -172,7 +172,7 @@ AHA_TEST(LockTest, publish_state_locked) {
     HALock lock(testUniqueId);
     bool result = lock.setState(HALock::StateLocked);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "locked", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "LOCKED", true)
     assertTrue(result);
 }
 
@@ -183,7 +183,7 @@ AHA_TEST(LockTest, publish_state_unlocked) {
     HALock lock(testUniqueId);
     bool result = lock.setState(HALock::StateUnlocked);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "unlocked", true)
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "UNLOCKED", true)
     assertTrue(result);
 }
 
