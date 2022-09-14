@@ -50,6 +50,7 @@ AHA_TEST(SelectTest, no_options) {
     HASerializer* serializer = select.getSerializer();
 
     assertTrue(serializer == nullptr);
+    assertTrue(select.getOptions() == nullptr);
 }
 
 AHA_TEST(SelectTest, invalid_options_nullptr) {
@@ -61,6 +62,7 @@ AHA_TEST(SelectTest, invalid_options_nullptr) {
     HASerializer* serializer = select.getSerializer();
 
     assertTrue(serializer == nullptr);
+    assertTrue(select.getOptions() == nullptr);
 }
 
 AHA_TEST(SelectTest, invalid_options_empty) {
@@ -72,6 +74,7 @@ AHA_TEST(SelectTest, invalid_options_empty) {
     HASerializer* serializer = select.getSerializer();
 
     assertTrue(serializer == nullptr);
+    assertTrue(select.getOptions() == nullptr);
 }
 
 AHA_TEST(SelectTest, single_option) {
@@ -80,6 +83,7 @@ AHA_TEST(SelectTest, single_option) {
     HASelect select(testUniqueId);
     select.setOptions("Option A");
 
+    assertEqual(1, select.getOptions()->getItemsNb());
     assertEntityConfig(
         mock,
         select,
@@ -94,6 +98,7 @@ AHA_TEST(SelectTest, multiple_options) {
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
 
+    assertEqual(3, select.getOptions()->getItemsNb());
     assertEntityConfig(
         mock,
         select,
@@ -229,6 +234,8 @@ AHA_TEST(SelectTest, publish_state_first) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(0);
 
+    assertTrue(select.getOptions() != nullptr);
+    assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
     assertTrue(result);
 }
@@ -241,6 +248,8 @@ AHA_TEST(SelectTest, publish_state_last) {
     select.setOptions("Option A;B;C");
     bool result = select.setState(2);
 
+    assertTrue(select.getOptions() != nullptr);
+    assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "C", true)
     assertTrue(result);
 }
@@ -253,6 +262,8 @@ AHA_TEST(SelectTest, publish_state_only) {
     select.setOptions("Option A");
     bool result = select.setState(0);
 
+    assertTrue(select.getOptions() != nullptr);
+    assertEqual(1, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
     assertTrue(result);
 }
@@ -293,6 +304,17 @@ AHA_TEST(SelectTest, command_option_first) {
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("Option A"));
 
     assertCallback(true, 0, &select)
+}
+
+AHA_TEST(SelectTest, command_option_middle) {
+    prepareTest
+
+    HASelect select(testUniqueId);
+    select.setOptions("Option A;B;C");
+    select.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("B"));
+
+    assertCallback(true, 1, &select)
 }
 
 AHA_TEST(SelectTest, command_option_last) {
