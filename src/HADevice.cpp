@@ -29,6 +29,7 @@ HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
     _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
     HADEVICE_INIT
 {
+    _ownsUniqueId = true;
     _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
 }
 
