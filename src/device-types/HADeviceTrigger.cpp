@@ -44,6 +44,13 @@ HADeviceTrigger::HADeviceTrigger(TriggerType type, TriggerSubtype subtype) :
     buildUniqueId();
 }
 
+HADeviceTrigger::~HADeviceTrigger()
+{
+    if (_uniqueId) {
+        delete _uniqueId;
+    }
+}
+
 bool HADeviceTrigger::trigger()
 {
     if (!_type || !_subtype) {
@@ -110,7 +117,7 @@ void HADeviceTrigger::buildUniqueId()
         strcpy(id, _type);
     }
 
-    strcat(id, HASerializerUnderscore);
+    strcat_P(id, HASerializerUnderscore);
 
     if (_isProgmemSubtype) {
         strcat_P(id, _subtype);
