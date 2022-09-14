@@ -344,6 +344,7 @@ AHA_TEST(SerializerTopicsTest, compare_not_matching_topics) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

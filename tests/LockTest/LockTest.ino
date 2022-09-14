@@ -242,6 +242,7 @@ AHA_TEST(LockTest, different_lock_command) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

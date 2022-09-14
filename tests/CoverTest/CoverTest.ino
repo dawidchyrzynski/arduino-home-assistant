@@ -362,6 +362,7 @@ AHA_TEST(CoverTest, different_cover_command) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

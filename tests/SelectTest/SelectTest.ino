@@ -356,6 +356,7 @@ AHA_TEST(SelectTest, different_select_command) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

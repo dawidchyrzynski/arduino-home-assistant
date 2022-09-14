@@ -294,6 +294,7 @@ AHA_TEST(DeviceTest, full_serialization) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

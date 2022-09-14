@@ -98,6 +98,7 @@ AHA_TEST(CameraTest, publish_image) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

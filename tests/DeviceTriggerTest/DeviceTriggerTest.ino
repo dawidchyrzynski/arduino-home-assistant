@@ -318,6 +318,7 @@ AHA_TEST(DeviceTriggerTest, subtype_progmem_button_6) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

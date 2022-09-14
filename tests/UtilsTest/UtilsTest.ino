@@ -95,6 +95,7 @@ AHA_TEST(UtilsTest, number_to_str_unsigned_large) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }

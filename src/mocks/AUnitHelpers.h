@@ -1,6 +1,14 @@
 #ifndef AHA_AUNITHELPERS_H
 #define AHA_AUNITHELPERS_H
 
+#ifdef AUNITER
+#include <Arduino.h>
+
+#if defined(__AVR__)
+#include <MemoryUsage.h>
+#endif
+#endif
+
 #define initMqttTest(testDeviceId) \
     PubSubClientMock* mock = new PubSubClientMock(); \
     HADevice device(testDeviceId); \
@@ -36,13 +44,20 @@
 }
 
 #ifdef AUNITER
-#include <MemoryUsage.h>
+
+#if defined(__AVR__)
+#define AHA_FREERAM mu_freeRam()
+#elif defined(ESP8266) || defined(ESP32)
+#define AHA_FREERAM ESP.getFreeHeap()
+#else
+#define AHA_FREERAM 0
+#endif
 
 #define AHA_LEAKTRACKSTART \
-    int freeRam = mu_freeRam();
+    int freeRam = AHA_FREERAM;
 
 #define AHA_LEAKTRACKEND \
-    int diff = freeRam - mu_freeRam(); \
+    int diff = freeRam - AHA_FREERAM; \
     if (diff < 0) { diff *= -1; } \
     if (diff != 0) { \
         Serial.print(Test::getName().getFString()); \

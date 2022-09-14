@@ -101,6 +101,7 @@ AHA_TEST(BaseDeviceTypeTest, publish_shared_availability_runtime) {
 
 void setup()
 {
+    delay(1000);
     Serial.begin(115200);
     while (!Serial);
 }
