@@ -37,7 +37,10 @@ public:
         ConstCharPropertyValue = 1,
         ProgmemPropertyValue,
         BoolPropertyType,
-        Int32PropertyType,
+        NumberP0PropertyType,
+        NumberP1PropertyType,
+        NumberP2PropertyType,
+        NumberP3PropertyType,
         ArrayPropertyType
     };
 

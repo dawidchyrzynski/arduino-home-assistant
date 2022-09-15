@@ -118,11 +118,5 @@ const char HAButton4Subtype[] PROGMEM = {"button_4"};
 const char HAButton5Subtype[] PROGMEM = {"button_5"};
 const char HAButton6Subtype[] PROGMEM = {"button_6"};
 
-// value templates
-const char HAValueTemplateFloatP1[] PROGMEM = {"{{float(value)/10**1}}"};
-const char HAValueTemplateFloatP2[] PROGMEM = {"{{float(value)/10**2}}"};
-const char HAValueTemplateFloatP3[] PROGMEM = {"{{float(value)/10**3}}"};
-const char HAValueTemplateFloatP4[] PROGMEM = {"{{float(value)/10**4}}"};
-
 // other
 const char HAHexMap[] PROGMEM = {"0123456789abcdef"};

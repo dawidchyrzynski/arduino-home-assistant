@@ -1,10 +1,12 @@
 #include "HANumber.h"
 #ifndef EX_ARDUINOHA_NUMBER
 
+#include <float.h>
+
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-const float HANumber::StateNone = 0;
+const float HANumber::StateNone = FLT_MAX;
 
 HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),
@@ -26,12 +28,13 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
 
 bool HANumber::setState(const float state, const bool force)
 {
-    if (!force && state == _currentState) {
+    const int32_t realState = HAUtils::processFloatValue(state, _precision);
+    if (!force && realState == _currentState) {
         return true;
     }
 
-    if (publishState(state)) {
-        _currentState = state;
+    if (publishState(realState)) {
+        _currentState = realState;
         return true;
     }
 

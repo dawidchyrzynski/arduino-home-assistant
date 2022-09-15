@@ -90,7 +90,7 @@ AHA_TEST(SerializerTest, number_zero_field) {
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::Int32PropertyType
+        HASerializer::NumberP0PropertyType
     );
 
     flushSerializer(mock, serializer)
@@ -104,7 +104,7 @@ AHA_TEST(SerializerTest, number_signed_field) {
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::Int32PropertyType
+        HASerializer::NumberP0PropertyType
     );
 
     flushSerializer(mock, serializer)
@@ -118,7 +118,7 @@ AHA_TEST(SerializerTest, number_unsigned_field) {
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::Int32PropertyType
+        HASerializer::NumberP0PropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -259,7 +259,7 @@ AHA_TEST(SerializerTest, mixed_elements) {
     serializer.set(
         AHATOFSTR(HAIconProperty),
         &intValue,
-        HASerializer::Int32PropertyType
+        HASerializer::NumberP0PropertyType
     );
 
     flushSerializer(mock, serializer)
