@@ -88,14 +88,14 @@ Supported device types
      - ✅
      - :doc:`HALock </documents/api/device-types/ha-lock>`
    * - Number
-     - ❌
-     - --
+     - ✅
+     - :doc:`HANumber </documents/api/device-types/ha-number>`
    * - Scene
      - ❌
      - --
    * - Select
-     - ❌
-     - --
+     - ✅
+     - :doc:`HASelect </documents/api/device-types/ha-select>`
    * - | Sensor
        | (text)
      - ✅
@@ -114,48 +114,19 @@ Supported device types
    * - Tag scanner
      - ✅
      - :doc:`HATagScanner </documents/api/device-types/ha-tag-scanner>`
+   * - Vacuum
+     - ❌
+     - --
 
-Example
--------
+SensorFloat vs SensorInteger
+----------------------------
 
-::
+As you may notice, two sensor classes are available to handle numeric sensors.
+The `SensorFloat` allows publishing floating point numbers to the HA panel
+whereas the `SensorInteger` allows publishing only integer values. 
 
-    #include <Ethernet.h>
-    #include <ArduinoHA.h>
+The `SensorFloat` can also be used to publish integer values if you set its precision to P0
+but has a bigger resource overhead compared to the `HASensorInteger`.
 
-    byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
-    EthernetClient client;
-    HADevice device(mac, sizeof(mac));
-    HAMqtt mqtt(client, device);
-
-    // devices types go here
-    HASwitch switch1("mySwitch1");
-    HASwitch switch2("mySwitch2");
-    
-    void onSwitchStateChanged(bool state, HASwitch* s)
-    {
-        if (s == &switch1) {
-            digitalWrite(9, (state ? HIGH : LOW));
-        } else if (s == &switch2) {
-            digitalWrite(10, (state ? HIGH : LOW));
-        }
-    }
-
-    void setup() {
-        Ethernet.begin(mac);
-
-        switch1.setName("Pretty label 1");
-        switch1.setIcon("mdi:lightbulb");
-        switch1.onStateChanged(onSwitchStateChanged);
-
-        switch2.setName("Pretty label 2");
-        switch2.setIcon("mdi:lightbulb");
-        switch2.onStateChanged(onSwitchStateChanged);    
-
-        mqtt.begin("192.168.1.2");
-    }
-
-    void loop() {
-        Ethernet.maintain();
-        mqtt.loop();
-    }
+In most cases, you should use `HASensorFloat` to publish decimal or integer numbers.
+If you're limited by flash or RAM and you only need integer numbers then the `HASensorInteger` should be your choice.

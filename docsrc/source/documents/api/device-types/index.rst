@@ -11,6 +11,8 @@ Device types API
     ha-device-tracker
     ha-device-trigger
     ha-lock
+    ha-number
+    ha-select
     ha-sensor
     ha-sensor-float
     ha-sensor-integer

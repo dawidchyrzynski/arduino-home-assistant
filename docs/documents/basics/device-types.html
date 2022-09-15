@@ -242,16 +242,16 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <td><p><a class="reference internal" href="../api/device-types/ha-lock.html"><span class="doc">HALock</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><p>Number</p></td>
-<td><p>❌</p></td>
-<td><p>–</p></td>
+<td><p>✅</p></td>
+<td><p><a class="reference internal" href="../api/device-types/ha-number.html"><span class="doc">HANumber</span></a></p></td>
 </tr>
 <tr class="row-even"><td><p>Scene</p></td>
 <td><p>❌</p></td>
 <td><p>–</p></td>
 </tr>
 <tr class="row-odd"><td><p>Select</p></td>
-<td><p>❌</p></td>
-<td><p>–</p></td>
+<td><p>✅</p></td>
+<td><p><a class="reference internal" href="../api/device-types/ha-select.html"><span class="doc">HASelect</span></a></p></td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
 <div class="line">Sensor</div>
@@ -285,52 +285,22 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-tag-scanner.html"><span class="doc">HATagScanner</span></a></p></td>
 </tr>
+<tr class="row-odd"><td><p>Vacuum</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
 </tbody>
 </table>
 </section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
-
-<span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFA</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6E</span><span class="p">,</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4A</span><span class="p">};</span><span class="w"></span>
-<span class="n">EthernetClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
-<span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
-<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">);</span><span class="w"></span>
-
-<span class="c1">// devices types go here</span>
-<span class="n">HASwitch</span><span class="w"> </span><span class="nf">switch1</span><span class="p">(</span><span class="s">&quot;mySwitch1&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="n">HASwitch</span><span class="w"> </span><span class="nf">switch2</span><span class="p">(</span><span class="s">&quot;mySwitch2&quot;</span><span class="p">);</span><span class="w"></span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">onSwitchStateChanged</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">state</span><span class="p">,</span><span class="w"> </span><span class="n">HASwitch</span><span class="o">*</span><span class="w"> </span><span class="n">s</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">&amp;</span><span class="n">switch1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">HIGH</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">LOW</span><span class="p">));</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="o">&amp;</span><span class="n">switch2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">digitalWrite</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">HIGH</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">LOW</span><span class="p">));</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">    </span><span class="n">switch1</span><span class="p">.</span><span class="n">setName</span><span class="p">(</span><span class="s">&quot;Pretty label 1&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">switch1</span><span class="p">.</span><span class="n">setIcon</span><span class="p">(</span><span class="s">&quot;mdi:lightbulb&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">switch1</span><span class="p">.</span><span class="n">onStateChanged</span><span class="p">(</span><span class="n">onSwitchStateChanged</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">    </span><span class="n">switch2</span><span class="p">.</span><span class="n">setName</span><span class="p">(</span><span class="s">&quot;Pretty label 2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">switch2</span><span class="p">.</span><span class="n">setIcon</span><span class="p">(</span><span class="s">&quot;mdi:lightbulb&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">    </span><span class="n">switch2</span><span class="p">.</span><span class="n">onStateChanged</span><span class="p">(</span><span class="n">onSwitchStateChanged</span><span class="p">);</span><span class="w"></span>
-
-<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;192.168.1.2&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-
-<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">maintain</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</pre></div>
-</div>
+<section id="sensorfloat-vs-sensorinteger">
+<h2>SensorFloat vs SensorInteger<a class="headerlink" href="#sensorfloat-vs-sensorinteger" title="Permalink to this headline">¶</a></h2>
+<p>As you may notice, two sensor classes are available to handle numeric sensors.
+The <cite>SensorFloat</cite> allows publishing floating point numbers to the HA panel
+whereas the <cite>SensorInteger</cite> allows publishing only integer values.</p>
+<p>The <cite>SensorFloat</cite> can also be used to publish integer values if you set its precision to P0
+but has a bigger resource overhead compared to the <cite>HASensorInteger</cite>.</p>
+<p>In most cases, you should use <cite>HASensorFloat</cite> to publish decimal or integer numbers.
+If you’re limited by flash or RAM and you only need integer numbers then the <cite>HASensorInteger</cite> should be your choice.</p>
 </section>
 </section>
 

@@ -32,6 +32,8 @@ Examples
      - Reporting the device's uptime to the Home Assistant.
    * - :example:`Switch <led-switch/led-switch.ino>`
      - The LED that's controlled by the Home Assistant.
+   * - :example:`Multi-switch <multi-switch/multi-switch.ino>`
+     - Multiple switches controlled by the Home Assistant.
    * - :example:`Tag scanner <tag-scanner/tag-scanner.ino>`
      - Scanning RFID tags using the MFRC522 module.
    * - :example:`Availability <availability/availability.ino>`
