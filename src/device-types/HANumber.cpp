@@ -6,7 +6,7 @@
 
 const float HANumber::StateNone = 0;
 
-HANumber::HANumber(const char* uniqueId, const Precision precision) :
+HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),
     _precision(precision),
     _class(nullptr),

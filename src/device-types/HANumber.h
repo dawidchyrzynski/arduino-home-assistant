@@ -2,6 +2,7 @@
 #define AHA_HANUMBER_H
 
 #include "HABaseDeviceType.h"
+#include "../utils/HAUtils.h"
 
 #ifndef EX_ARDUINOHA_NUMBER
 
@@ -21,21 +22,6 @@ public:
     /// Represents "None" state of the number.
     static const float StateNone;
 
-    /// Represents precision of the number.
-    enum Precision {
-        /// No digits after the decimal point.
-        PrecisionP0,
-
-        /// One digit after the decimal point.
-        PrecisionP1,
-        
-        /// Two digits after the decimal point.
-        PrecisionP2,
-
-        /// Three digits after the decimal point.
-        PrecisionP3
-    };
-
     /// Represents mode of the number.
     enum Mode {
         ModeAuto = 0,
@@ -47,7 +33,7 @@ public:
      * @param uniqueId The unique ID of the number. It needs to be unique in a scope of your device.
      * @param precision Precision of the floating point number that will be displayed in the HA panel.
      */
-    HANumber(const char* uniqueId, const Precision precision = PrecisionP0);
+    HANumber(const char* uniqueId, const NumberPrecision precision = PrecisionP0);
 
     /**
      * Sets class of the device.
@@ -110,7 +96,7 @@ public:
      * @param min The minimal value. By default it's `1`.
      */
     inline void setMin(const float min)
-        { _minValue = min; }
+        { _minValue = HAUtils::processFloatValue(min, _precision); }
 
     /**
      * Sets the maximum value that can be set from the Home Assistant panel.
@@ -118,7 +104,7 @@ public:
      * @param min The maximum value. By default it's `100`.
      */
     inline void setMax(const float max)
-        { _maxValue = max; }
+        { _maxValue = HAUtils::processFloatValue(max, _precision);; }
 
     /**
      * Sets step of the slider's movement in the Home Assistant panel.
@@ -126,7 +112,7 @@ public:
      * @param step The step value. Smallest value `0.001`. By default it's `1`.
      */
     inline void setStep(const float step)
-        { _step = step; }
+        { _step = HAUtils::processFloatValue(step, _precision);; }
 
     /**
      * Changes state of the number and publishes MQTT message.
@@ -147,14 +133,14 @@ public:
      * @param state New state of the number.
      */
     inline void setCurrentState(const float state)
-        { _currentState = state; }
+        { _currentState = HAUtils::processFloatValue(state, _precision); }
 
     /**
      * Returns last known state of the number.
      * If setState method wasn't called the initial value will be returned.
      */
     inline float getCurrentState() const
-        { return _currentState; }
+        { return HAUtils::getFloatValue(_currentState, _precision); }
 
     /**
      * Registers callback that will be called each time the number is changed in the HA panel.
@@ -191,7 +177,7 @@ private:
     void handleCommand(const char* cmd);
 
     /// The precision of the number. By default it's `HANumber::PrecisionP0`.
-    const Precision _precision;
+    const NumberPrecision _precision;
 
     /// The device class. It can be nullptr.
     const char* _class;
