@@ -216,11 +216,14 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8HANumberEPKc">
-<span id="_CPPv3N8HANumber8HANumberEPKc"></span><span id="_CPPv2N8HANumber8HANumberEPKc"></span><span id="HANumber::HANumber__cCP"></span><span class="target" id="class_h_a_number_1aed99d1bb09b78dab4d33ce89ea1347de"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8HANumberEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8HANumberEPKcK9Precision">
+<span id="_CPPv3N8HANumber8HANumberEPKcK9Precision"></span><span id="_CPPv2N8HANumber8HANumberEPKcK9Precision"></span><span id="HANumber::HANumber__cCP.PrecisionC"></span><span class="target" id="class_h_a_number_1adc730343e3defd6d0ad9f5c702a040ca"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HANumber9PrecisionE" title="HANumber::Precision"><span class="n"><span class="pre">Precision</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HANumber9Precision11PrecisionP0E" title="HANumber::PrecisionP0"><span class="n"><span class="pre">PrecisionP0</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8HANumberEPKcK9Precision" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the number. It needs to be unique in a scope of your device. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the number. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>precision</strong> – Precision of the floating point number that will be displayed in the HA panel. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -428,6 +431,12 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
 <dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber10_precisionE">
+<span id="_CPPv3N8HANumber10_precisionE"></span><span id="_CPPv2N8HANumber10_precisionE"></span><span id="HANumber::_precision__PrecisionC"></span><span class="target" id="class_h_a_number_1ae0a4ba915765975568b4fe6c2652ef9a"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HANumber9PrecisionE" title="HANumber::Precision"><span class="n"><span class="pre">Precision</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_precision</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber10_precisionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The precision of the number. By default it’s <code class="docutils literal notranslate"><a class="reference internal" href="#class_h_a_number_1a7aeefae74a381fda653d27477d1a8262a67e73fae9e16aa4d8e7039073e579ab8"><span class="std std-ref"><span class="pre">HANumber::PrecisionP0</span></span></a></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber6_classE">
 <span id="_CPPv3N8HANumber6_classE"></span><span id="_CPPv2N8HANumber6_classE"></span><span id="HANumber::_class__cCP"></span><span class="target" id="class_h_a_number_1a6d695fe42f07e43a4fe4fbad5777be5f"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_class</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber6_classE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The device class. It can be nullptr. </p>
@@ -465,25 +474,25 @@
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber9_minValueE">
-<span id="_CPPv3N8HANumber9_minValueE"></span><span id="_CPPv2N8HANumber9_minValueE"></span><span id="HANumber::_minValue__float"></span><span class="target" id="class_h_a_number_1a64d81f39f5a51a18b02d6369481d0e3e"></span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_minValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_minValueE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8HANumber9_minValueE"></span><span id="_CPPv2N8HANumber9_minValueE"></span><span id="HANumber::_minValue__int32_t"></span><span class="target" id="class_h_a_number_1add1a78f646bd584bc609a67d84e20e01"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_minValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_minValueE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The minimal value that can be set from the HA panel. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber9_maxValueE">
-<span id="_CPPv3N8HANumber9_maxValueE"></span><span id="_CPPv2N8HANumber9_maxValueE"></span><span id="HANumber::_maxValue__float"></span><span class="target" id="class_h_a_number_1ab0205593b361b98daa6b0e66593c7f3e"></span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_maxValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_maxValueE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8HANumber9_maxValueE"></span><span id="_CPPv2N8HANumber9_maxValueE"></span><span id="HANumber::_maxValue__int32_t"></span><span class="target" id="class_h_a_number_1a505f08a6d5230ca792f872a5d241614f"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_maxValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_maxValueE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The maximum value that can be set from the HA panel. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber5_stepE">
-<span id="_CPPv3N8HANumber5_stepE"></span><span id="_CPPv2N8HANumber5_stepE"></span><span id="HANumber::_step__float"></span><span class="target" id="class_h_a_number_1a5ab13877d953c4bb660f3ebd13bf8617"></span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_step</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber5_stepE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8HANumber5_stepE"></span><span id="_CPPv2N8HANumber5_stepE"></span><span id="HANumber::_step__int32_t"></span><span class="target" id="class_h_a_number_1a501f45b7b81a22698e4662c9ec93591f"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_step</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber5_stepE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The step of the slider’s movement. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber13_currentStateE">
-<span id="_CPPv3N8HANumber13_currentStateE"></span><span id="_CPPv2N8HANumber13_currentStateE"></span><span id="HANumber::_currentState__float"></span><span class="target" id="class_h_a_number_1afa7d4b1719c6beaec730f3e1e883919f"></span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N8HANumber13_currentStateE"></span><span id="_CPPv2N8HANumber13_currentStateE"></span><span id="HANumber::_currentState__int32_t"></span><span class="target" id="class_h_a_number_1a2591198821057e40f14e737cbaa7ccdd"></span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The current state of the number. By default it’s <code class="docutils literal notranslate"><a class="reference internal" href="#class_h_a_number_1a31ce19a9f414fa840cda376a84d24e28"><span class="std std-ref"><span class="pre">HANumber::StateNone</span></span></a></code>. </p>
 </dd></dl>
 

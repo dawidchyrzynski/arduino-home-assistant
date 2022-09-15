@@ -254,53 +254,33 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <td><p><a class="reference internal" href="../api/device-types/ha-select.html"><span class="doc">HASelect</span></a></p></td>
 </tr>
 <tr class="row-even"><td><div class="line-block">
-<div class="line">Sensor</div>
-<div class="line">(text)</div>
+<div class="line">Sensor (text)</div>
 </div>
 </td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-sensor.html"><span class="doc">HASensor</span></a></p></td>
 </tr>
 <tr class="row-odd"><td><div class="line-block">
-<div class="line">Sensor</div>
-<div class="line">(decimal number)</div>
+<div class="line">Sensor (number)</div>
 </div>
 </td>
 <td><p>✅</p></td>
-<td><p><a class="reference internal" href="../api/device-types/ha-sensor-float.html"><span class="doc">HASensorFloat</span></a></p></td>
+<td><p><a class="reference internal" href="../api/device-types/ha-sensor-number.html"><span class="doc">HASensorNumber</span></a></p></td>
 </tr>
-<tr class="row-even"><td><div class="line-block">
-<div class="line">Sensor</div>
-<div class="line">(integer number)</div>
-</div>
-</td>
-<td><p>✅</p></td>
-<td><p><a class="reference internal" href="../api/device-types/ha-sensor-integer.html"><span class="doc">HASensorInteger</span></a></p></td>
-</tr>
-<tr class="row-odd"><td><p>Switch</p></td>
+<tr class="row-even"><td><p>Switch</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-switch.html"><span class="doc">HASwitch</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>Tag scanner</p></td>
+<tr class="row-odd"><td><p>Tag scanner</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-tag-scanner.html"><span class="doc">HATagScanner</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Vacuum</p></td>
+<tr class="row-even"><td><p>Vacuum</p></td>
 <td><p>❌</p></td>
 <td><p>–</p></td>
 </tr>
 </tbody>
 </table>
-</section>
-<section id="sensorfloat-vs-sensorinteger">
-<h2>SensorFloat vs SensorInteger<a class="headerlink" href="#sensorfloat-vs-sensorinteger" title="Permalink to this headline">¶</a></h2>
-<p>As you may notice, two sensor classes are available to handle numeric sensors.
-The <cite>SensorFloat</cite> allows publishing floating point numbers to the HA panel
-whereas the <cite>SensorInteger</cite> allows publishing only integer values.</p>
-<p>The <cite>SensorFloat</cite> can also be used to publish integer values if you set its precision to P0
-but has a bigger resource overhead compared to the <cite>HASensorInteger</cite>.</p>
-<p>In most cases, you should use <cite>HASensorFloat</cite> to publish decimal or integer numbers.
-If you’re limited by flash or RAM and you only need integer numbers then the <cite>HASensorInteger</cite> should be your choice.</p>
 </section>
 </section>
 

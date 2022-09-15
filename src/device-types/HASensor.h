@@ -6,16 +6,10 @@
 #ifndef EX_ARDUINOHA_SENSOR
 
 /**
- * HASensor allows to publish sensor values that will be displayed in the HA panel.
- * Unlike other device types, it's divided into three separate classes.
- * Each class allows to publish different data types as follows:
- * * HASensor - allows to publish string value (e.g. `closed`, `open`, etc.).
- * * HASensorFloat - allows to publish floating point numbers (e.g. `12.5`).
- *                   It can be also used to publish integer values (e.g. `123`) but it has lower maximum value than HASensorInteger.
- * * HASensorInteger - allows to publish integer values (e.g. `123`, `-50`);
+ * HASensor allows to publish textual sensor values that will be displayed in the HA panel.
+ * If you need to publish numbers then HASensorNumber is what you're looking for.
  * 
  * @note It's not possible to define a sensor that publishes mixed values (e.g. string + integer values).
- *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
  * https://www.home-assistant.io/integrations/sensor.mqtt/

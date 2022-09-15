@@ -14,7 +14,6 @@ Device types API
     ha-number
     ha-select
     ha-sensor
-    ha-sensor-float
-    ha-sensor-integer
+    ha-sensor-number
     ha-switch
     ha-tag-scanner

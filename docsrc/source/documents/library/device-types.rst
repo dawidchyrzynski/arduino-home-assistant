@@ -96,18 +96,12 @@ Supported device types
    * - Select
      - ✅
      - :doc:`HASelect </documents/api/device-types/ha-select>`
-   * - | Sensor
-       | (text)
+   * - | Sensor (text)
      - ✅
      - :doc:`HASensor </documents/api/device-types/ha-sensor>`
-   * - | Sensor
-       | (decimal number)
+   * - | Sensor (number)
      - ✅
-     - :doc:`HASensorFloat </documents/api/device-types/ha-sensor-float>`
-   * - | Sensor
-       | (integer number)
-     - ✅
-     - :doc:`HASensorInteger </documents/api/device-types/ha-sensor-integer>`
+     - :doc:`HASensorNumber </documents/api/device-types/ha-sensor-number>`
    * - Switch
      - ✅
      - :doc:`HASwitch </documents/api/device-types/ha-switch>`
@@ -117,16 +111,3 @@ Supported device types
    * - Vacuum
      - ❌
      - --
-
-SensorFloat vs SensorInteger
-----------------------------
-
-As you may notice, two sensor classes are available to handle numeric sensors.
-The `SensorFloat` allows publishing floating point numbers to the HA panel
-whereas the `SensorInteger` allows publishing only integer values. 
-
-The `SensorFloat` can also be used to publish integer values if you set its precision to P0
-but has a bigger resource overhead compared to the `HASensorInteger`.
-
-In most cases, you should use `HASensorFloat` to publish decimal or integer numbers.
-If you're limited by flash or RAM and you only need integer numbers then the `HASensorInteger` should be your choice.

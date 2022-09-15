@@ -200,12 +200,54 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils19calculateNumberSizeE7int32_t">
-<span id="_CPPv3N7HAUtils19calculateNumberSizeE7int32_t"></span><span id="_CPPv2N7HAUtils19calculateNumberSizeE7int32_t"></span><span id="HAUtils::calculateNumberSize__int32_t"></span><span class="target" id="class_h_a_utils_1a89d559ac51e17317111b2ff67041d7a9"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateNumberSize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils19calculateNumberSizeE7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils16getPrecisionBaseEK7uint8_t">
+<span id="_CPPv3N7HAUtils16getPrecisionBaseEK7uint8_t"></span><span id="_CPPv2N7HAUtils16getPrecisionBaseEK7uint8_t"></span><span id="HAUtils::getPrecisionBase__uint8_tC"></span><span class="target" id="class_h_a_utils_1af788b7dc23bd8ded7b07c4173e0c1d5c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPrecisionBase</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils16getPrecisionBaseEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns divider for the given precision. The maximum precision is 3.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>precision</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils17processFloatValueEfK7uint8_t">
+<span id="_CPPv3N7HAUtils17processFloatValueEfK7uint8_t"></span><span id="_CPPv2N7HAUtils17processFloatValueEfK7uint8_t"></span><span id="HAUtils::processFloatValue__float.uint8_tC"></span><span class="target" id="class_h_a_utils_1a44ba86ef5ced10452eae5724fd71c15b"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">processFloatValue</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils17processFloatValueEfK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given float to the int32_t representation. The input float is multiped by pow(value, precision).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The input number. </p></li>
+<li><p><strong>precision</strong> – The precision to use (amount of digits in the decimal part). Maximum value is 3. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils13getFloatValueE7int32_tK7uint8_t">
+<span id="_CPPv3N7HAUtils13getFloatValueE7int32_tK7uint8_t"></span><span id="_CPPv2N7HAUtils13getFloatValueE7int32_tK7uint8_t"></span><span id="HAUtils::getFloatValue__int32_t.uint8_tC"></span><span class="target" id="class_h_a_utils_1a40a71f28e2338d2e1d75cbe32eee2466"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getFloatValue</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils13getFloatValueE7int32_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given int32_t value into float representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The input number. </p></li>
+<li><p><strong>precision</strong> – The precision to use (amount of digits in the decimal part). Maximum value is 3. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils19calculateNumberSizeE7int32_tK7uint8_t">
+<span id="_CPPv3N7HAUtils19calculateNumberSizeE7int32_tK7uint8_t"></span><span id="_CPPv2N7HAUtils19calculateNumberSizeE7int32_tK7uint8_t"></span><span id="HAUtils::calculateNumberSize__int32_t.uint8_tC"></span><span class="target" id="class_h_a_utils_1a295b8d7b6af00d60838f1078ca673946"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateNumberSize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils19calculateNumberSizeE7int32_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Calculates the number of digits in the given number.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>value</strong> – Input number. It can be signed value. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – Input number. It can be signed value. </p></li>
+<li><p><strong>precision</strong> – Number of decimal digits in the number. </p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Number of digits (including the sign if the value is signed). </p>
@@ -214,18 +256,19 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils11numberToStrEPc7int32_t">
-<span id="_CPPv3N7HAUtils11numberToStrEPc7int32_t"></span><span id="_CPPv2N7HAUtils11numberToStrEPc7int32_t"></span><span id="HAUtils::numberToStr__cP.int32_t"></span><span class="target" id="class_h_a_utils_1a446d3a4366e3127b329f1931312d0013"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numberToStr</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11numberToStrEPc7int32_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Converts the given number to the string.</p>
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils11numberToStrEPc7int32_tK7uint8_t">
+<span id="_CPPv3N7HAUtils11numberToStrEPc7int32_tK7uint8_t"></span><span id="_CPPv2N7HAUtils11numberToStrEPc7int32_tK7uint8_t"></span><span id="HAUtils::numberToStr__cP.int32_t.uint8_tC"></span><span class="target" id="class_h_a_utils_1a73c2cd792e7588a60731aa6ba9d17c80"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numberToStr</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11numberToStrEPc7int32_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given number to the string. It can be integer or floating point number. In a case of float the input value needs to be multiped by <code class="docutils literal notranslate"><span class="pre">pow(10,</span> <span class="pre">precision)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">dst</span></code> size should be calculated using <a class="reference internal" href="#class_h_a_utils_1a89d559ac51e17317111b2ff67041d7a9"><span class="std std-ref">HAUtils::calculateNumberSize</span></a> method plus 1 extra byte for the null terminator. </p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dst</span></code> size should be calculated using <a class="reference internal" href="#class_h_a_utils_1a295b8d7b6af00d60838f1078ca673946"><span class="std std-ref">HAUtils::calculateNumberSize</span></a> method plus 1 extra byte for the null terminator. </p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dst</strong> – Destination where the number will be saved. </p></li>
 <li><p><strong>value</strong> – Number to convert. </p></li>
+<li><p><strong>precision</strong> – Number of decimal digits in the number. </p></li>
 </ul>
 </dd>
 </dl>

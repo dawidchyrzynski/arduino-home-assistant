@@ -1,7 +1,7 @@
-HASensorFloat class
-===================
+HASensorNumber class
+====================
 
-.. doxygenclass:: HASensorFloat
+.. doxygenclass:: HASensorNumber
    :project: ArduinoHA
    :members:
    :protected-members:
