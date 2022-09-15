@@ -42,7 +42,7 @@ HADevice::~HADevice()
     }
 
     if (_ownsUniqueId) {
-        delete _uniqueId;
+        delete[] _uniqueId;
     }
 }
 
