@@ -25,16 +25,11 @@ Please take a look at the example below.
         // this method will be called when connection to MQTT broker is established
     }
 
-    void onConnectionFailed() {
-        // this method will be called when connection to MQTT broker fails
-    }
-
     void setup() {
         Ethernet.begin(mac);
 
         mqtt.onMessage(onMessage);
         mqtt.onConnected(onConnected);
-        mqtt.onConnectionFailed(onConnectionFailed);
         mqtt.begin("192.168.1.50", "username", "password");
     }
 
