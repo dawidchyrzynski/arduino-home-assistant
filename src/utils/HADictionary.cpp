@@ -9,6 +9,7 @@ const char HAComponentCover[] PROGMEM = {"cover"};
 const char HAComponentDeviceTracker[] PROGMEM = {"device_tracker"};
 const char HAComponentDeviceAutomation[] PROGMEM = {"device_automation"};
 const char HAComponentLock[] PROGMEM = {"lock"};
+const char HAComponentNumber[] PROGMEM = {"number"};
 const char HAComponentSelect[] PROGMEM = {"select"};
 const char HAComponentSensor[] PROGMEM = {"sensor"};
 const char HAComponentSwitch[] PROGMEM = {"switch"};
@@ -47,6 +48,10 @@ const char HAForceUpdateProperty[] PROGMEM = {"frc_upd"};
 const char HAUnitOfMeasurementProperty[] PROGMEM = {"unit_of_meas"};
 const char HAValueTemplateProperty[] PROGMEM = {"val_tpl"};
 const char HAOptionsProperty[] PROGMEM = {"options"};
+const char HAMinProperty[] PROGMEM = {"min"};
+const char HAMaxProperty[] PROGMEM = {"max"};
+const char HAStepProperty[] PROGMEM = {"step"};
+const char HAModeProperty[] PROGMEM = {"mode"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -63,11 +68,14 @@ const char HAStateOn[] PROGMEM = {"ON"};
 const char HAStateOff[] PROGMEM = {"OFF"};
 const char HAStateLocked[] PROGMEM = {"LOCKED"};
 const char HAStateUnlocked[] PROGMEM = {"UNLOCKED"};
+const char HAStateNode[] PROGMEM = {"None"};
 const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
 const char HAHome[] PROGMEM = {"home"};
 const char HANotHome[] PROGMEM = {"not_home"};
 const char HATrigger[] PROGMEM = {"trigger"};
+const char HAModeBox[] PROGMEM = {"box"};
+const char HAModeSlider[] PROGMEM = {"slider"};
 
 // covers
 const char HAClosedState[] PROGMEM = {"closed"};

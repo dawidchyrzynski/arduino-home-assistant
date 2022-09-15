@@ -9,6 +9,7 @@ extern const char HAComponentCover[];
 extern const char HAComponentDeviceTracker[];
 extern const char HAComponentDeviceAutomation[];
 extern const char HAComponentLock[];
+extern const char HAComponentNumber[];
 extern const char HAComponentSelect[];
 extern const char HAComponentSensor[];
 extern const char HAComponentSwitch[];
@@ -47,6 +48,10 @@ extern const char HAForceUpdateProperty[];
 extern const char HAUnitOfMeasurementProperty[];
 extern const char HAValueTemplateProperty[];
 extern const char HAOptionsProperty[];
+extern const char HAMinProperty[];
+extern const char HAMaxProperty[];
+extern const char HAStepProperty[];
+extern const char HAModeProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -63,11 +68,14 @@ extern const char HAStateOn[];
 extern const char HAStateOff[];
 extern const char HAStateLocked[];
 extern const char HAStateUnlocked[];
+extern const char HAStateNode[];
 extern const char HATrue[];
 extern const char HAFalse[];
 extern const char HAHome[];
 extern const char HANotHome[];
 extern const char HATrigger[];
+extern const char HAModeBox[];
+extern const char HAModeSlider[];
 
 // covers
 extern const char HAClosedState[];
