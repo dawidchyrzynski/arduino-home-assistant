@@ -12,11 +12,11 @@ HAMqtt mqtt(client, device);
 unsigned long lastUpdateAt = 0;
 
 // "myAnalogInput" is unique ID of the sensor. You should define your own ID.
-HASensorFloat analogSensor("myAnalogInput");
+HASensorNumber analogSensor("myAnalogInput", HASensorNumber::PrecisionP1);
 
 // You can also specify the precision of the sensor by providing the second argument to the constructor as follows:
-// HASensorFloat analogSensor("myAnalogInput", HASensorFloat::PrecisionP1);
-// HASensorFloat analogSensor("myAnalogInput", HASensorFloat::PrecisionP3);
+// HASensorNumber analogSensor("myAnalogInput", HASensorNumber::PrecisionP2);
+// HASensorNumber analogSensor("myAnalogInput", HASensorNumber::PrecisionP3);
 
 void setup() {
     // you don't need to verify return status
@@ -41,7 +41,7 @@ void loop() {
         uint16_t reading = analogRead(ANALOG_PIN);
         float voltage = reading * 5.f / 1023.f; // 0.0V - 5.0V
 
-        analogSensor.setValue(voltage);
+        analogSensor.setValueFloat(voltage);
         lastUpdateAt = millis();
     }
 }

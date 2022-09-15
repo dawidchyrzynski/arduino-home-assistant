@@ -37,7 +37,7 @@
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 * Renamed `HASwitch::onStateChanged` method to `HASwitch::onCommand`.
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
-* Refactored `HASensor` logic. It's now divided into three different classes: `HASensor`, `HASensorInteger` and `HASensorFloat`. This approach reduces flash size by ~2k
+* Refactored `HASensor` logic. It's now divided into two different classes: `HASensor` and `HASensorNumber`.
 * Removed all legacy constructors with `HAMqtt` argument
 * Removed `onConnectionFailed` callback from the `HAMqtt` class
 

@@ -47,7 +47,34 @@ char* HAUtils::byteArrayToStr(
     return dst;
 }
 
-uint8_t HAUtils::calculateNumberSize(int32_t value)
+int32_t HAUtils::getPrecisionBase(const uint8_t precision)
+{
+    switch (precision) {
+    case 1:
+        return 10;
+
+    case 2:
+        return 100;
+
+    case 3:
+        return 1000;
+
+    default:
+        return 1;
+    }
+}
+
+int32_t HAUtils::processFloatValue(float value, const uint8_t precision)
+{
+    return static_cast<int32_t>(value * getPrecisionBase(precision));
+}
+
+float HAUtils::getFloatValue(int32_t value, const uint8_t precision)
+{
+    return (float)value / (float)getPrecisionBase(precision);
+}
+
+uint8_t HAUtils::calculateNumberSize(int32_t value, const uint8_t precision)
 {
     const bool isSigned = value < 0;
     if (isSigned) {
@@ -64,26 +91,52 @@ uint8_t HAUtils::calculateNumberSize(int32_t value)
         digitsNb++; // sign
     }
 
+    if (precision > 0) {
+        if (value == 0) {
+            return 1;
+        }
+
+        // one digit + dot + decimal digits (+ sign)
+        const uint8_t minValue = isSigned ? precision + 3 : precision + 2;
+        return digitsNb > minValue ? digitsNb + 1 : minValue;
+    }
+
     return digitsNb;
 }
 
-void HAUtils::numberToStr(char* dst, int32_t value)
+void HAUtils::numberToStr(char* dst, int32_t value, const uint8_t precision)
 {
+    char* prefixCh = &dst[0];
     if (value == 0) {
-        dst[0] = 0x30; // digit 0
+        *prefixCh = '0';
         return;
     }
 
-    const uint8_t digitsNb = calculateNumberSize(value);
+    const uint8_t digitsNb = calculateNumberSize(value, precision);
     if (value < 0) {
         value *= -1;
-        dst[0] = 0x2D; // hyphen
+        *prefixCh = '-';
+        prefixCh++;
+    }
+
+    if (precision > 0 && value < getPrecisionBase(precision)) {
+        *prefixCh = '0';
+        prefixCh++;
+        *prefixCh = '.';
     }
 
     char* ch = &dst[digitsNb - 1];
+    char* dotPos = precision > 0 ? &dst[digitsNb - 1 - precision] : nullptr;
+
     while (value != 0) {
-       *ch = (value % 10) + '0';
-       value /= 10;
-       ch--;
+        if (ch == dotPos) {
+            *dotPos = '.';
+            ch--;
+            continue;
+        }
+
+        *ch = (value % 10) + '0';
+        value /= 10;
+        ch--;
     }
 }

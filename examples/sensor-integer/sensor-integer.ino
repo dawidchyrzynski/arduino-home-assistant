@@ -11,7 +11,7 @@ HAMqtt mqtt(client, device);
 unsigned long lastUpdateAt = 0;
 
 // "myUptime" is unique ID of the sensor. You should define your own ID.
-HASensorInteger uptimeSensor("myUptime");
+HASensorNumber uptimeSensor("myUptime");
 
 void setup() {
     // you don't need to verify return status

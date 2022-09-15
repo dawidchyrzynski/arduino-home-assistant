@@ -64,15 +64,6 @@ public:
         { _unitOfMeasurement = unitOfMeasurement; }
 
     /**
-     * Defines a template to extract the value of the sensor.
-     * By default, HA expects value to be a string.
-     *
-     * @param template
-     */
-    inline void setValueTemplate(const __FlashStringHelper* valueTemplate)
-        { _valueTemplate = valueTemplate; }   
-
-    /**
      * Publishes the MQTT message with the given value.
      * Unlike the other device types, the HASensor doesn't store the previous value that was set.
      * It means that the MQTT message is produced each time the setValue method is called.
@@ -98,9 +89,6 @@ private:
 
     /// The unit of measurement for the sensor. It can be nullptr.
     const char* _unitOfMeasurement;
-    
-    /// The template for the sensor's value. It can be nullptr.
-    const __FlashStringHelper* _valueTemplate;
 };
 
 #endif

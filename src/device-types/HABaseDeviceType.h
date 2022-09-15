@@ -10,6 +10,20 @@ class HASerializer;
 class HABaseDeviceType
 {
 public:
+    enum NumberPrecision {
+        /// No digits after the decimal point.
+        PrecisionP0 = 0,
+
+        /// One digit after the decimal point.
+        PrecisionP1,
+
+        /// Two digits after the decimal point.
+        PrecisionP2,
+
+        /// Three digits after the decimal point.
+        PrecisionP3
+    };
+
     /**
      * Creates a new device type instance and registers it in the HAMqtt class.
      * 

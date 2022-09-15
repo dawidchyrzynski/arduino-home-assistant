@@ -111,280 +111,277 @@ AHA_TEST(SensorTest, unit_of_measurement_setter) {
     )
 }
 
-AHA_TEST(SensorTest, value_template_setter) {
-    initMqttTest(testDeviceId)
-
-    HASensor sensor(testUniqueId);
-    sensor.setValueTemplate(AHATOFSTR(DummyTemplateStr));
-
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"dummyTemplate\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
 AHA_TEST(SensorTest, publish_value) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
     HASensor sensor(testUniqueId);
-    bool result = sensor.setValue("test123");
 
+    assertTrue(sensor.setValue("test123"));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "test123", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_value_on_connect) {
+test(SensorNumberTest, publish_value_on_connect) {
     initMqttTest(testDeviceId)
 
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
     sensor.setCurrentValue(520);
     mqtt.loop();
 
-    assertMqttMessage(
-        1,
-        "testData/testDevice/uniqueSensor/stat_t",
-        "520",
-        true
-    )
+    assertEqual(520, sensor.getCurrentValue());
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "520", true)
 }
 
-test(SensorIntegerTest, publish_int8) {
+test(SensorNumberTest, publish_debounce) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
+    sensor.setCurrentValue(1555);
+
+    assertTrue(sensor.setValue(1555));
+    assertEqual(1555, sensor.getCurrentValue());
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+test(SensorNumberTest, publish_force) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId);
+    sensor.setCurrentValue(1555);
+
+    assertTrue(sensor.setValue(1555, true));
+    assertEqual(1555, sensor.getCurrentValue());
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "1555", true)
+}
+
+test(SensorNumberTest, publish_int_zero) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId);
+    sensor.setCurrentValue(50);
+    int8_t value = 0;
+
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true)
+}
+
+test(SensorNumberTest, publish_int8) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId);
     int8_t value = 127;
 
-    bool result = sensor.setValue(value);
-
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "127", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_uint8) {
+test(SensorNumberTest, publish_uint8) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
     uint8_t value = 50;
 
-    bool result = sensor.setValue(value);
-
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "50", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_int16) {
+test(SensorNumberTest, publish_int16) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
     int16_t value = 32766;
 
-    bool result = sensor.setValue(value);
-
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "32766", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_uint16) {
+test(SensorNumberTest, publish_uint16) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
     uint16_t value = 65534;
 
-    bool result = sensor.setValue(value);
-
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "65534", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_int32) {
+test(SensorNumberTest, publish_int32) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
+    HASensorNumber sensor(testUniqueId);
     int32_t value = 2147483646;
 
-    bool result = sensor.setValue(value);
-
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "2147483646", true)
-    assertTrue(result);
 }
 
-test(SensorIntegerTest, publish_debounce) {
+test(SensorNumberTest, publish_int32_signed) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
-    uint8_t value = 50;
+    HASensorNumber sensor(testUniqueId);
+    int32_t value = -2147483646;
 
-    sensor.setCurrentValue(value);
-    bool result = sensor.setValue(value);
-
-    assertEqual(mock->getFlushedMessagesNb(), 0);
-    assertTrue(result);
+    assertTrue(sensor.setValue(value));
+    assertEqual(value, sensor.getCurrentValue());
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-2147483646", true)
 }
 
-test(SensorIntegerTest, publish_force) {
+test(SensorNumberTest, publish_p0) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorInteger sensor(testUniqueId);
-    uint8_t value = 50;
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
-    sensor.setCurrentValue(value);
-    bool result = sensor.setValue(value, true);
-
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "50", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(173.5426));
+    assertNear((float)173, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173", true) 
 }
 
-test(SensorFloatTest, publish_value_on_connect) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId);
-    sensor.setCurrentValue(520.5235);
-    mqtt.loop();
-
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "52052", true)
-}
-
-test(SensorFloatTest, config_p0) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP0);
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
-test(SensorFloatTest, config_p1) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP1);
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**1}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
-test(SensorFloatTest, config_p2) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP2);
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**2}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
-test(SensorFloatTest, config_p3) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP3);
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**3}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
-test(SensorFloatTest, config_p4) {
-    initMqttTest(testDeviceId)
-
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP4);
-    assertEntityConfig(
-        mock,
-        sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"val_tpl\":\"{{float(value)/10**4}}\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
-    )
-}
-
-test(SensorFloatTest, publish_p0) {
+test(SensorNumberTest, publish_p0_zero_unsigned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP0);
-    bool result = sensor.setValue(173.5426);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(0.050, true));
+    assertNear((float)0, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true) 
 }
 
-test(SensorFloatTest, publish_p1) {
+test(SensorNumberTest, publish_p0_zero_signed) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP1);
-    bool result = sensor.setValue(173.5426);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "1735", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(-0.050, true));
+    assertNear((float)0, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true) 
 }
 
-test(SensorFloatTest, publish_p2) {
+test(SensorNumberTest, publish_p1) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP2);
-    bool result = sensor.setValue(173.1534);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "17315", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(173.5426));
+    assertNear(173.5, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.5", true)
 }
 
-test(SensorFloatTest, publish_p3) {
+test(SensorNumberTest, publish_p1_zero_unsigned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP3);
-    bool result = sensor.setValue(173.333);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173333", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(0.123, true));
+    assertNear(0.1, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.1", true) 
 }
 
-test(SensorFloatTest, publish_p4) {
+test(SensorNumberTest, publish_p1_zero_signed) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId, HASensorFloat::PrecisionP4);
-    bool result = sensor.setValue(173.33356);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "1733335", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(-0.123, true));
+    assertNear(-0.1, sensor.getCurrentValueAsFloat(), 0.1);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.1", true) 
 }
 
-test(SensorFloatTest, publish_debounce) {
+test(SensorNumberTest, publish_p2) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId);
-    sensor.setCurrentValue(1555.555);
-    bool result = sensor.setValue(1555.555);
-
-    assertEqual(mock->getFlushedMessagesNb(), 0);
-    assertTrue(result);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
+ 
+    assertTrue(sensor.setValueFloat(173.1534));
+    assertNear(173.15, sensor.getCurrentValueAsFloat(), 0.01);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.15", true)
 }
 
-test(SensorFloatTest, publish_force) {
+test(SensorNumberTest, publish_p2_zero_unsigned) {
     initMqttTest(testDeviceId)
 
     mock->connectDummy();
-    HASensorFloat sensor(testUniqueId);
-    sensor.setCurrentValue(1555.555);
-    bool result = sensor.setValue(1555.555, true);
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "155555", true)
-    assertTrue(result);
+    assertTrue(sensor.setValueFloat(0.123, true));
+    assertNear(0.12, sensor.getCurrentValueAsFloat(), 0.01);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.12", true) 
+}
+
+test(SensorNumberTest, publish_p2_zero_signed) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
+
+    assertTrue(sensor.setValueFloat(-0.123, true));
+    assertNear(-0.12, sensor.getCurrentValueAsFloat(), 0.01);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.12", true) 
+}
+
+test(SensorNumberTest, publish_p3) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
+
+    assertTrue(sensor.setValueFloat(173.333));
+    assertNear(173.333, sensor.getCurrentValueAsFloat(), 0.001);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.333", true)
+}
+
+test(SensorNumberTest, publish_p3_zero_unsigned) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
+
+    assertTrue(sensor.setValueFloat(0.123, true));
+    assertNear(0.123, sensor.getCurrentValueAsFloat(), 0.001);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.123", true) 
+}
+
+test(SensorNumberTest, publish_p3_zero_signed) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
+
+    assertTrue(sensor.setValueFloat(-0.123, true));
+    assertNear(-0.123, sensor.getCurrentValueAsFloat(), 0.001);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.123", true) 
+}
+
+test(SensorNumberTest, publish_p3_smaller) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
+
+    assertTrue(sensor.setValueFloat(173.3));
+    assertNear(173.3, sensor.getCurrentValueAsFloat(), 0.001);
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.300", true)
 }
 
 void setup()
