@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-      <title>Basics - ArduinoHA</title>
+      <title>MQTT security - ArduinoHA</title>
     
           <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
           <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
@@ -24,8 +24,8 @@
     
   <link rel="index" title="Index" href="../../genindex.html" />
   <link rel="search" title="Search" href="../../search.html" />
-  <link rel="next" title="Introduction" href="introduction.html" />
-  <link rel="prev" title="Examples" href="../getting-started/examples.html" /> 
+  <link rel="next" title="MQTT advanced features" href="mqtt-advanced.html" />
+  <link rel="prev" title="Device types" href="device-types.html" /> 
   </head>
 
   <body>
@@ -96,14 +96,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../getting-started/examples.html">Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Basics</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="device-configuration.html">Device configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
 </ul>
 </li>
@@ -124,18 +124,20 @@
   <ul class="breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
     
-    <li>Basics</li>
+      <li><a href="index.html">Library</a> &raquo;</li>
+    
+    <li>MQTT security</li>
   </ul>
   
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="../getting-started/examples.html"
-       title="previous chapter">← Examples</a>
+    <a href="device-types.html"
+       title="previous chapter">← Device types</a>
   </li>
   <li class="next">
-    <a href="introduction.html"
-       title="next chapter">Introduction →</a>
+    <a href="mqtt-advanced.html"
+       title="next chapter">MQTT advanced features →</a>
   </li>
 </ul>
   
@@ -143,51 +145,42 @@
 <hr>
           <div class="content" role="main" v-pre>
             
-  <section id="basics">
-<h1>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h1>
-<p>This chapter describes basic concepts of the library’s core.
-Solid understanding of foundations will allow you to utilize full potential of the library.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#arduino-boilerplate">Arduino Boilerplate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="introduction.html#esp32-esp8266-boilerplate">ESP32/ESP8266 Boilerplate</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="device-configuration.html">Device configuration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="device-configuration.html#unique-id">Unique ID</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-configuration.html#device-properties">Device properties</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="availability-reporting.html">Availability reporting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="availability-reporting.html#shared-availability">Shared availability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="availability-reporting.html#mqtt-lwt">MQTT LWT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="availability-reporting.html#device-type-s-availability">Device type’s availability</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="discovery.html">Discovery</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="discovery.html#topics-prefix">Topics prefix</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="device-types.html">Device types</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html#limitations">Limitations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html#supported-device-types">Supported device types</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html#sensorfloat-vs-sensorinteger">SensorFloat vs SensorInteger</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mqtt-security.html">MQTT security</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mqtt-security.html#ssl-connection">SSL connection</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html#callbacks">Callbacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html#subscriptions">Subscriptions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html#publishing-a-message">Publishing a message</a></li>
-</ul>
-</li>
-</ul>
+  <section id="mqtt-security">
+<h1>MQTT security<a class="headerlink" href="#mqtt-security" title="Permalink to this headline">¶</a></h1>
+<p>The library allows you to use credentials for acquiring a TCP connection with the MQTT broker.
+By default you can use the same credentials you use for login in the Home Assistant panel but you can also configure custom credentials in the Mosquitto broker.</p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>This solution is not 100% secure because communication between Arduino and Home Assistant is not encrypted.
+Username and password can be easily discovered by analyzing your local network traffic.
+However, that’s fine as long as your local network is secured against unattended access.
+On more powerful devices (like ESP), you should consider using SSL.</p>
 </div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
+
+<span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFA</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6E</span><span class="p">,</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4A</span><span class="p">};</span><span class="w"></span>
+<span class="n">EthernetClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
+<span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
+<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ...</span>
+
+<span class="w">    </span><span class="c1">// replace username and password with your credentials</span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;192.168.1.50&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// ...</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="ssl-connection">
+<h2>SSL connection<a class="headerlink" href="#ssl-connection" title="Permalink to this headline">¶</a></h2>
+<p>On ESP32/ESP8266 you can use <code class="docutils literal notranslate"><span class="pre">WiFiClientSecure</span></code> client to establish encrypted connection between your device and Home Assistant.
+Please take a look at <a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/mqtt-with-ssl/mqtt-with-ssl.ino">this example</a>.</p>
+</section>
 </section>
 
 
@@ -195,12 +188,12 @@ Solid understanding of foundations will allow you to utilize full potential of t
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="../getting-started/examples.html"
-       title="previous chapter">← Examples</a>
+    <a href="device-types.html"
+       title="previous chapter">← Device types</a>
   </li>
   <li class="next">
-    <a href="introduction.html"
-       title="next chapter">Introduction →</a>
+    <a href="mqtt-advanced.html"
+       title="next chapter">MQTT advanced features →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2022, Dawid Chyrzynski.

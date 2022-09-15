@@ -23,5 +23,5 @@ Features
    :maxdepth: 3
 
    documents/getting-started/index
-   documents/basics/index
+   documents/library/index
    documents/api/index
