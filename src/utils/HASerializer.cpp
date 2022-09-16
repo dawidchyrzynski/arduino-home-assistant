@@ -435,10 +435,14 @@ uint16_t HASerializer::calculatePropertyValueSize(
     case NumberP1PropertyType:
     case NumberP2PropertyType:
     case NumberP3PropertyType: {
-        const int32_t value = *static_cast<const int32_t*>(entry->value);
+        const HAUtils::Number value = *static_cast<const HAUtils::Number*>(
+            entry->value
+        );
         return HAUtils::calculateNumberSize(
             value,
-            getNumberPropertyPrecision(static_cast<PropertyValueType>(entry->subtype))
+            getNumberPropertyPrecision(
+                static_cast<PropertyValueType>(entry->subtype)
+            )
         );
     }
 
@@ -508,8 +512,12 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
     case NumberP1PropertyType:
     case NumberP2PropertyType:
     case NumberP3PropertyType: {
-        const int32_t value = *static_cast<const int32_t*>(entry->value);
-        const uint8_t precision = getNumberPropertyPrecision(static_cast<PropertyValueType>(entry->subtype));
+        const HAUtils::Number value = *static_cast<const HAUtils::Number*>(
+            entry->value
+        );
+        const uint8_t precision = getNumberPropertyPrecision(
+            static_cast<PropertyValueType>(entry->subtype)
+        );
         const uint8_t digitsNb = HAUtils::calculateNumberSize(
             value,
             precision

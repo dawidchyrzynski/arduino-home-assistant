@@ -6,7 +6,7 @@
 
 #ifndef EX_ARDUINOHA_NUMBER
 
-#define HANUMBER_CALLBACK(name) void (*name)(float number, HANumber* sender)
+#define HANUMBER_CALLBACK(name) void (*name)(HAUtils::Number number, uint8_t precision, HANumber* sender)
 
 /**
  * HANumber adds a slider or a box in the Home Assistant panel
@@ -20,7 +20,7 @@ class HANumber : public HABaseDeviceType
 {
 public:
     /// Represents "None" state of the number.
-    static const float StateNone;
+    static const HAUtils::Number StateNone;
 
     /// Represents mode of the number.
     enum Mode {
@@ -30,6 +30,9 @@ public:
     };
 
     /**
+     * Creates instance of the HANumber entity with the given numbers precision.
+     * The given precision applies to the state, min, max and step values.
+     *
      * @param uniqueId The unique ID of the number. It needs to be unique in a scope of your device.
      * @param precision Precision of the floating point number that will be displayed in the HA panel.
      */
@@ -104,7 +107,7 @@ public:
      * @param min The maximum value. By default it's `100`.
      */
     inline void setMax(const float max)
-        { _maxValue = HAUtils::processFloatValue(max, _precision);; }
+        { _maxValue = HAUtils::processFloatValue(max, _precision); }
 
     /**
      * Sets step of the slider's movement in the Home Assistant panel.
@@ -167,7 +170,7 @@ private:
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishState(const int32_t state);
+    bool publishState(const HAUtils::Number state);
 
     /**
      * Parses the given command and executes the number's callback with proper value.
@@ -203,16 +206,16 @@ private:
     const char* _unitOfMeasurement;
 
     /// The minimal value that can be set from the HA panel.
-    int32_t _minValue;
+    HAUtils::Number _minValue;
 
     /// The maximum value that can be set from the HA panel.
-    int32_t _maxValue;
+    HAUtils::Number _maxValue;
 
     /// The step of the slider's movement.
-    int32_t _step;
+    HAUtils::Number _step;
 
     /// The current state of the number. By default it's `HANumber::StateNone`.
-    int32_t _currentState;
+    HAUtils::Number _currentState;
 
     /// The callback that will be called when the command is received from the HA.
     HANUMBER_CALLBACK(_commandCallback);

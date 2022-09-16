@@ -31,7 +31,7 @@ public:
      * @param force Forces to update the value without comparing it to a previous known value.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool setValue(const int32_t value, const bool force = false);
+    bool setValue(const HAUtils::Number value, const bool force = false);
 
     /**
      * Changes value of the sensor using the float value.
@@ -50,7 +50,7 @@ public:
      *
      * @param value New value of the sensor.
      */
-    inline void setCurrentValue(const int32_t value)
+    inline void setCurrentValue(const HAUtils::Number value)
         { _currentValue = value; }
 
     /**
@@ -65,7 +65,7 @@ public:
      * Returns the last known value of the sensor.
      * By default it's zero.
      */
-    inline int32_t getCurrentValue() const
+    inline HAUtils::Number getCurrentValue() const
         { return _currentValue; }
 
     /**
@@ -85,13 +85,13 @@ private:
      * @param state The value to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishValue(const int32_t value);
+    bool publishValue(const HAUtils::Number value);
 
     /// The precision of the sensor. By default it's `HASensorNumber::PrecisionP2`.
     const NumberPrecision _precision;
 
     /// The current value of the sensor. By defaults it's zero.
-    int32_t _currentValue;
+    HAUtils::Number _currentValue;
 };
 
 #endif

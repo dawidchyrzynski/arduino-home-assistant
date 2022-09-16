@@ -9,6 +9,8 @@
 class HAUtils
 {
 public:
+    typedef int32_t Number;
+
     /**
      * Checks whether the given `str` ends with the given `suffix`.
      * 
@@ -54,7 +56,7 @@ public:
      *
      * @param precision
      */
-    static int32_t getPrecisionBase(const uint8_t precision);
+    static Number getPrecisionBase(const uint8_t precision);
 
     /**
      * Returns amount of zeroes that need to be added at the beginning of the given number.
@@ -63,26 +65,26 @@ public:
      * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
      */
     static uint8_t getFloatZeroPaddingSize(
-        const int32_t value,
+        const Number value,
         const uint8_t precision
     );
 
     /**
-     * Converts the given float to the int32_t representation.
+     * Converts the given float to the Number representation.
      * The input float is multiped by pow(value, precision).
      *
      * @param value The input number.
      * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
      */
-    static int32_t processFloatValue(float value, const uint8_t precision);
+    static Number processFloatValue(float value, const uint8_t precision);
 
     /**
-     * Converts the given int32_t value into float representation.
+     * Converts the given number into float representation.
      *
      * @param value The input number.
      * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
      */
-    static float getFloatValue(int32_t value, const uint8_t precision);
+    static float getFloatValue(Number value, const uint8_t precision);
 
     /**
      * Calculates the number of digits in the given number.
@@ -91,7 +93,7 @@ public:
      * @param precision Number of decimal digits in the number.
      * @returns Number of digits (including the sign if the value is signed).
      */
-    static uint8_t calculateNumberSize(int32_t value, const uint8_t precision = 0);
+    static uint8_t calculateNumberSize(Number value, const uint8_t precision = 0);
 
     /**
      * Converts the given number to the string.
@@ -103,7 +105,7 @@ public:
      * @param precision Number of decimal digits in the number.
      * @note The `dst` size should be calculated using HAUtils::calculateNumberSize method plus 1 extra byte for the null terminator.
      */
-    static void numberToStr(char* dst, int32_t value, const uint8_t precision = 0);
+    static void numberToStr(char* dst, Number value, const uint8_t precision = 0);
 };
 
 #endif

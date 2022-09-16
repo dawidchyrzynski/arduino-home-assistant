@@ -4,7 +4,10 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
-HASensorNumber::HASensorNumber(const char* uniqueId, const NumberPrecision precision) :
+HASensorNumber::HASensorNumber(
+    const char* uniqueId,
+    const NumberPrecision precision
+) :
     HASensor(uniqueId),
     _precision(precision),
     _currentValue(0)
@@ -12,7 +15,7 @@ HASensorNumber::HASensorNumber(const char* uniqueId, const NumberPrecision preci
 
 }
 
-bool HASensorNumber::setValue(const int32_t value, const bool force)
+bool HASensorNumber::setValue(const HAUtils::Number value, const bool force)
 {
     if (!force && value == _currentValue) {
         return true;
@@ -36,7 +39,7 @@ void HASensorNumber::onMqttConnected()
     publishValue(_currentValue);
 }
 
-bool HASensorNumber::publishValue(const int32_t value)
+bool HASensorNumber::publishValue(const HAUtils::Number value)
 {
     uint8_t size = HAUtils::calculateNumberSize(value, _precision);
     if (size == 0) {

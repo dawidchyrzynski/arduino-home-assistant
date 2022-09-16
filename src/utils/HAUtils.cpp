@@ -47,7 +47,7 @@ char* HAUtils::byteArrayToStr(
     return dst;
 }
 
-int32_t HAUtils::getPrecisionBase(const uint8_t precision)
+HAUtils::Number HAUtils::getPrecisionBase(const uint8_t precision)
 {
     switch (precision) {
     case 1:
@@ -65,7 +65,7 @@ int32_t HAUtils::getPrecisionBase(const uint8_t precision)
 }
 
 uint8_t HAUtils::getFloatZeroPaddingSize(
-    const int32_t value,
+    const Number value,
     const uint8_t precision
 )
 {
@@ -83,17 +83,17 @@ uint8_t HAUtils::getFloatZeroPaddingSize(
         : precisionBaseDigitsDb - valueDigitsNb;
 }
 
-int32_t HAUtils::processFloatValue(float value, const uint8_t precision)
+HAUtils::Number HAUtils::processFloatValue(float value, const uint8_t precision)
 {
-    return static_cast<int32_t>(value * getPrecisionBase(precision));
+    return static_cast<Number>(value * getPrecisionBase(precision));
 }
 
-float HAUtils::getFloatValue(int32_t value, const uint8_t precision)
+float HAUtils::getFloatValue(Number value, const uint8_t precision)
 {
     return (float)value / (float)getPrecisionBase(precision);
 }
 
-uint8_t HAUtils::calculateNumberSize(int32_t value, const uint8_t precision)
+uint8_t HAUtils::calculateNumberSize(Number value, const uint8_t precision)
 {
     const bool isSigned = value < 0;
     if (isSigned) {
@@ -123,7 +123,7 @@ uint8_t HAUtils::calculateNumberSize(int32_t value, const uint8_t precision)
     return digitsNb;
 }
 
-void HAUtils::numberToStr(char* dst, int32_t value, const uint8_t precision)
+void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
 {
     char* prefixCh = &dst[0];
     if (value == 0) {
