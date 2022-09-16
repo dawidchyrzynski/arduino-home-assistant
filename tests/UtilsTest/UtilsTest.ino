@@ -30,6 +30,9 @@
     assertEqual(F(expectedStr), tmpBuffer); \
 }
 
+#define assertStrToNumber(expected, str) \
+    assertEqual((HAUtils::Number)expected, HAUtils::strToNumber(str));
+
 using aunit::TestRunner;
 
 char tmpBuffer[32];
@@ -400,6 +403,158 @@ AHA_TEST(UtilsTest, float_to_str_p3_large) {
 
 AHA_TEST(UtilsTest, float_to_str_p3_signed) {
     floatToStrAssert(-5526.12456456, HABaseDeviceType::PrecisionP3, "-5526.124");
+}
+
+AHA_TEST(UtilsTest, str_to_number_null) {
+    assertStrToNumber(HAUtils::NumberMax, nullptr);
+}
+
+AHA_TEST(UtilsTest, str_to_number_zero) {
+    assertStrToNumber(0, "0");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_0) {
+    assertStrToNumber(-1, "-1");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_1) {
+    assertStrToNumber(-12, "-12");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_2) {
+    assertStrToNumber(-123, "-123");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_3) {
+    assertStrToNumber(-1234, "-1234");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_4) {
+    assertStrToNumber(-1234, "-1234");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_5) {
+    assertStrToNumber(-12345, "-12345");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_6) {
+    assertStrToNumber(-123456, "-123456");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_7) {
+    assertStrToNumber(-1234567, "-1234567");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_8) {
+    assertStrToNumber(-12345678, "-12345678");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_9) {
+    assertStrToNumber(-123456789, "-123456789");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_10) {
+    assertStrToNumber(-1234567890, "-1234567890");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_11) {
+    assertStrToNumber(-12345678901, "-12345678901");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_12) {
+    assertStrToNumber(-123456789012, "-123456789012");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_13) {
+    assertStrToNumber(-1234567890123, "-1234567890123");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_14) {
+    assertStrToNumber(-123456789012345, "-123456789012345");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_15) {
+    assertStrToNumber(-1234567890123456, "-1234567890123456");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_0) {
+    assertStrToNumber(1, "1");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_1) {
+    assertStrToNumber(12, "12");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_2) {
+    assertStrToNumber(123, "123");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_3) {
+    assertStrToNumber(1234, "1234");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_4) {
+    assertStrToNumber(1234, "1234");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_5) {
+    assertStrToNumber(12345, "12345");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_6) { 
+    assertStrToNumber(123456, "123456");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_7) {
+    assertStrToNumber(1234567, "1234567");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_8) {
+    assertStrToNumber(12345678, "12345678");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_9) {
+    assertStrToNumber(123456789, "123456789");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_10) {
+    assertStrToNumber(1234567890, "1234567890");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_11) {
+    assertStrToNumber(12345678901, "12345678901");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_12) {
+    assertStrToNumber(123456789012, "123456789012");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_13) {
+    assertStrToNumber(1234567890123, "1234567890123");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_14) {
+    assertStrToNumber(123456789012345, "123456789012345");
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_15) {
+    assertStrToNumber(1234567890123456, "1234567890123456");
+}
+
+AHA_TEST(UtilsTest, str_to_number_invalid_0) {
+    assertStrToNumber(HAUtils::NumberMax, "--12");
+}
+
+AHA_TEST(UtilsTest, str_to_number_invalid_1) {
+    assertStrToNumber(HAUtils::NumberMax, "a1");
+}
+
+AHA_TEST(UtilsTest, str_to_number_invalid_2) {
+    assertStrToNumber(HAUtils::NumberMax, "567a32");
+}
+
+AHA_TEST(UtilsTest, str_to_number_invalid_3) {
+    assertStrToNumber(HAUtils::NumberMax, "15.334");
 }
 
 void setup()

@@ -160,3 +160,36 @@ void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
         ch--;
     }
 }
+
+HAUtils::Number HAUtils::strToNumber(const char* src)
+{
+    const uint16_t len = src ? strlen(src) : 0;
+    if (len == 0) {
+        return NumberMax;
+    }
+
+    const char* firstCh = &src[0];
+    int64_t out = 0;
+    bool isSigned = false;
+
+    if (*firstCh == '-') {
+        isSigned = true;
+        firstCh++;
+    }
+
+    uint64_t base = 1;
+    const char* ptr = &src[len - 1];
+
+    while (ptr >= firstCh) {
+        uint8_t digit = *ptr - '0';
+        if (digit > 9) {
+            return NumberMax;
+        }
+
+        out += digit * base;
+        ptr--;
+        base *= 10;
+    }
+
+    return isSigned ? out * -1 : out;
+}

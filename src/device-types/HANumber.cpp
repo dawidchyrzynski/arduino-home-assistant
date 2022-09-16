@@ -6,7 +6,7 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-const HAUtils::Number HANumber::StateNone = INT32_MAX;
+const HAUtils::Number HANumber::StateNone = HAUtils::NumberMax;
 
 HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),

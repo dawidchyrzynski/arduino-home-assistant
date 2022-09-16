@@ -10,6 +10,7 @@ class HAUtils
 {
 public:
     typedef int64_t Number;
+    static const Number NumberMax = INT64_MAX;
 
     /**
      * Checks whether the given `str` ends with the given `suffix`.
@@ -106,6 +107,14 @@ public:
      * @note The `dst` size should be calculated using HAUtils::calculateNumberSize method plus 1 extra byte for the null terminator.
      */
     static void numberToStr(char* dst, Number value, const uint8_t precision = 0);
+
+    /**
+     * Converts the given string into number.
+     * If the given string doesn't contain a valid number the `HAUtils::NumberMax` is returned.
+     *
+     * @param src A string containing the number.
+     */
+    static HAUtils::Number strToNumber(const char* src);
 };
 
 #endif
