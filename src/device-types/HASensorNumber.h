@@ -88,7 +88,7 @@ private:
     bool publishValue(const int32_t value);
 
     /// The precision of the sensor. By default it's `HASensorNumber::PrecisionP2`.
-    NumberPrecision _precision;
+    const NumberPrecision _precision;
 
     /// The current value of the sensor. By defaults it's zero.
     int32_t _currentValue;

@@ -68,7 +68,7 @@ public:
     bool setValue(const char* value);
 
 protected:
-    virtual void buildSerializer() override;
+    virtual void buildSerializer() override final;
     virtual void onMqttConnected() override;
 
 private:
