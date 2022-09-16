@@ -22,6 +22,8 @@ Examples
      - Implementation of a simple wall switch that reports press and hold states.
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
+   * - :example:`Number <number/number.ino>`
+     - Adding an interactive numeric slider in the Home Assistant panel.
    * - :example:`Select <select/select.ino>`
      - A dropdown selector that's displayed in the Home Assistant panel.
    * - :example:`Sensor <sensor/sensor.ino>`
