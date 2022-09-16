@@ -125,6 +125,76 @@ AHA_TEST(SerializerTest, number_unsigned_field) {
     assertSerializerMqttMessage("{\"name\":312346733}");
 }
 
+AHA_TEST(SerializerTest, float_p1_field) {
+    prepareTest(1)
+
+    int32_t value = HAUtils::processFloatValue(250.5235, 1);
+    serializer.set(
+        AHATOFSTR(HANameProperty),
+        &value,
+        HASerializer::NumberP1PropertyType
+    );
+
+    flushSerializer(mock, serializer);
+    assertSerializerMqttMessage("{\"name\":250.5}");
+}
+
+AHA_TEST(SerializerTest, float_p2_field) {
+    prepareTest(1)
+
+    int32_t value = HAUtils::processFloatValue(250.5235, 2);
+    serializer.set(
+        AHATOFSTR(HANameProperty),
+        &value,
+        HASerializer::NumberP2PropertyType
+    );
+
+    flushSerializer(mock, serializer);
+    assertSerializerMqttMessage("{\"name\":250.52}");
+}
+
+AHA_TEST(SerializerTest, float_p3_field) {
+    prepareTest(1)
+
+    int32_t value = HAUtils::processFloatValue(250.5235, 3);
+    serializer.set(
+        AHATOFSTR(HANameProperty),
+        &value,
+        HASerializer::NumberP3PropertyType
+    );
+
+    flushSerializer(mock, serializer);
+    assertSerializerMqttMessage("{\"name\":250.523}");
+}
+
+AHA_TEST(SerializerTest, float_p3_zero_signed_field) {
+    prepareTest(1)
+
+    int32_t value = HAUtils::processFloatValue(-0.243, 3);
+    serializer.set(
+        AHATOFSTR(HANameProperty),
+        &value,
+        HASerializer::NumberP3PropertyType
+    );
+
+    flushSerializer(mock, serializer);
+    assertSerializerMqttMessage("{\"name\":-0.243}");
+}
+
+AHA_TEST(SerializerTest, float_p3_zero_unsigned_field) {
+    prepareTest(1)
+
+    int32_t value = HAUtils::processFloatValue(0.243, 3);
+    serializer.set(
+        AHATOFSTR(HANameProperty),
+        &value,
+        HASerializer::NumberP3PropertyType
+    );
+
+    flushSerializer(mock, serializer);
+    assertSerializerMqttMessage("{\"name\":0.243}");
+}
+
 AHA_TEST(SerializerTest, progmem_field) {
     prepareTest(1)
 

@@ -34,7 +34,8 @@ public:
 
     /// Available data types of entries.
     enum PropertyValueType {
-        ConstCharPropertyValue = 1,
+        UnknownPropertyValueType = 0,
+        ConstCharPropertyValue,
         ProgmemPropertyValue,
         BoolPropertyType,
         NumberP0PropertyType,
@@ -81,7 +82,7 @@ public:
     /**
      * Generates the configuration topic for the given component and object ID.
      * The topic will be stored in the `output` variable.
-     * 
+     *
      * @param output Buffer where the topic will be written.
      * @param component The name of the HA component (e.g. `binary_sensor`).
      * @param objectId The unique ID of a device type that's going to publish the config.
@@ -95,7 +96,7 @@ public:
     /**
      * Calculates the size of the given data topic for the given objectId.
      * The data topic has structure as follows: `[data prefix]/[device ID]_[objectId]/[topic]`
-     * 
+     *
      * @param objectId The unique ID of a device type that's going to publish the data.
      * @param topic The topic name (progmem string).
      */
@@ -107,7 +108,7 @@ public:
     /**
      * Generates the data topic for the given object ID.
      * The topic will be stored in the `output` variable.
-     * 
+     *
      * @param output Buffer where the topic will be written.
      * @param objectId The unique ID of a device type that's going to publish the data.
      * @param topic The topic name (progmem string).
@@ -122,7 +123,7 @@ public:
      * Checks whether the given topic matches the data topic that can be generated
      * using the given objectId and topicP.
      * This method can be used to check if the received message matches some data topic. 
-     * 
+     *
      * @param actualTopic The actual topic to compare.
      * @param objectId The unique ID of a device type that may be the owner of the topic.
      * @param topic The topic name (progmem string).
@@ -132,6 +133,20 @@ public:
         const char* objectId,
         const __FlashStringHelper* topic
     );
+
+    /**
+     * Returns number's precision of the given property type.
+     *
+     * @param type Number property type.
+     */
+    static uint8_t getNumberPropertyPrecision(PropertyValueType type);
+
+    /**
+     * Returns number property type based on the given precision.
+     *
+     *  @param precision Precision to use as a base.
+     */
+    static PropertyValueType precisionToPropertyType(uint8_t precision);
 
     /**
      * Creates instance of the serializer for the given device type.

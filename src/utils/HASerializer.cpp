@@ -152,6 +152,45 @@ bool HASerializer::compareDataTopics(
     return strcmp(actualTopic, expectedTopic) == 0;
 }
 
+uint8_t HASerializer::getNumberPropertyPrecision(PropertyValueType type)
+{
+    switch (type) {
+    case NumberP1PropertyType:
+        return 1;
+
+    case NumberP2PropertyType:
+        return 2;
+
+    case NumberP3PropertyType:
+        return 3;
+
+    default:
+        return 0;
+    }
+}
+
+HASerializer::PropertyValueType HASerializer::precisionToPropertyType(
+    uint8_t precision
+)
+{
+    switch (precision) {
+    case 0:
+        return NumberP0PropertyType;
+
+    case 1:
+        return NumberP1PropertyType;
+
+    case 2:
+        return NumberP2PropertyType;
+
+    case 3:
+        return NumberP3PropertyType;
+
+    default:
+        return UnknownPropertyValueType;
+    }
+}
+
 HASerializer::HASerializer(
     HABaseDeviceType* deviceType,
     const uint8_t maxEntriesNb
@@ -397,7 +436,10 @@ uint16_t HASerializer::calculatePropertyValueSize(
     case NumberP2PropertyType:
     case NumberP3PropertyType: {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
-        return HAUtils::calculateNumberSize(value);
+        return HAUtils::calculateNumberSize(
+            value,
+            getNumberPropertyPrecision(static_cast<PropertyValueType>(entry->subtype))
+        );
     }
 
     case ArrayPropertyType: {
@@ -467,10 +509,14 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
     case NumberP2PropertyType:
     case NumberP3PropertyType: {
         const int32_t value = *static_cast<const int32_t*>(entry->value);
-        const uint8_t digitsNb = HAUtils::calculateNumberSize(value);
+        const uint8_t precision = getNumberPropertyPrecision(static_cast<PropertyValueType>(entry->subtype));
+        const uint8_t digitsNb = HAUtils::calculateNumberSize(
+            value,
+            precision
+        );
 
         char tmp[digitsNb];
-        HAUtils::numberToStr(tmp, value);
+        HAUtils::numberToStr(tmp, value, precision);
         mqtt->writePayload(tmp, digitsNb);
 
         return true;
