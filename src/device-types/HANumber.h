@@ -184,6 +184,11 @@ private:
      */
     const __FlashStringHelper* getModeProperty() const;
 
+    /**
+     * Returns progmem string representing value template for the command.
+     */
+    const __FlashStringHelper* getCommandTemplate();
+
     /// The precision of the number. By default it's `HANumber::PrecisionP0`.
     const NumberPrecision _precision;
 

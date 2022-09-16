@@ -52,6 +52,7 @@ extern const char HAMinProperty[];
 extern const char HAMaxProperty[];
 extern const char HAStepProperty[];
 extern const char HAModeProperty[];
+extern const char HACommandTemplateProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -120,5 +121,10 @@ extern const char HAButton6Subtype[];
 
 // other
 extern const char HAHexMap[];
+
+// value templates
+extern const char HAValueTemplateFloatP1[];
+extern const char HAValueTemplateFloatP2[];
+extern const char HAValueTemplateFloatP3[];
 
 #endif

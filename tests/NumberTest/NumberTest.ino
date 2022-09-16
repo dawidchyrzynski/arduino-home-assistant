@@ -5,11 +5,13 @@
     initMqttTest(testDeviceId) \
     commandCallbackCalled = false; \
     commandCallbackNumber = HANumber::StateNone; \
+    commandCallbackPrecision = 0; \
     commandCallbackNumberPtr = nullptr;
 
-#define assertCallback(shouldBeCalled, expectedNumber, callerPtr) \
+#define assertCallback(shouldBeCalled, expectedNumber, expectedPrecision, callerPtr) \
     assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedNumber, commandCallbackNumber); \
+    assertEqual((HAUtils::Number)expectedNumber, commandCallbackNumber); \
+    assertEqual(expectedPrecision, commandCallbackPrecision); \
     assertEqual(callerPtr, commandCallbackNumberPtr);
 
 using aunit::TestRunner;
@@ -22,13 +24,15 @@ const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/cmd_t"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/stat_t"};
 
 static bool commandCallbackCalled = false;
-static float commandCallbackNumber = HANumber::StateNone;
+static HAUtils::Number commandCallbackNumber = HANumber::StateNone;
+static uint8_t commandCallbackPrecision = 0;
 static HANumber* commandCallbackNumberPtr = nullptr;
 
-void onCommandReceived(float number, HANumber* sender)
+void onCommandReceived(HAUtils::Number number, uint8_t precision, HANumber* sender)
 {
     commandCallbackCalled = true;
     commandCallbackNumber = number;
+    commandCallbackPrecision = precision;
     commandCallbackNumberPtr = sender;
 }
 
@@ -271,7 +275,7 @@ AHA_TEST(NumberTest, min_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"min\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"min\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -284,7 +288,7 @@ AHA_TEST(NumberTest, min_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"min\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"min\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -297,7 +301,7 @@ AHA_TEST(NumberTest, min_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"min\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"min\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -323,7 +327,7 @@ AHA_TEST(NumberTest, max_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"max\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"max\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -336,7 +340,7 @@ AHA_TEST(NumberTest, max_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"max\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"max\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -349,7 +353,7 @@ AHA_TEST(NumberTest, max_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"max\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"max\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -375,7 +379,7 @@ AHA_TEST(NumberTest, step_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"step\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"step\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -388,7 +392,7 @@ AHA_TEST(NumberTest, step_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"step\":0.01,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"step\":0.01,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
 }
 
@@ -401,8 +405,101 @@ AHA_TEST(NumberTest, step_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"step\":0.001,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"step\":0.001,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
     )
+}
+
+AHA_TEST(NumberTest, command_none_p0) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
+
+    assertCallback(true, HANumber::StateNone, 0, &number)
+}
+
+AHA_TEST(NumberTest, command_none_p1) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP1);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
+
+    assertCallback(true, HANumber::StateNone, 1, &number)
+}
+
+AHA_TEST(NumberTest, command_none_p2) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP2);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
+
+    assertCallback(true, HANumber::StateNone, 2, &number)
+}
+
+AHA_TEST(NumberTest, command_none_p3) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP3);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
+
+    assertCallback(true, HANumber::StateNone, 3, &number)
+}
+
+AHA_TEST(NumberTest, command_number_zero) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("0"));
+
+    assertCallback(true, 0, 0, &number)
+}
+
+AHA_TEST(NumberTest, command_number_unsigned) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("1234"));
+
+    assertCallback(true, 1234, 0, &number)
+}
+
+AHA_TEST(NumberTest, command_number_signed) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
+
+    assertCallback(true, -1234, 0, &number)
+}
+
+AHA_TEST(NumberTest, command_number_invalid) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("abc"));
+
+    assertCallback(false, HANumber::StateNone, 0, nullptr)
+}
+
+AHA_TEST(NumberTest, different_number_command) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueCoverDifferent/cmd_t"),
+        F("123")
+    );
+
+    assertCallback(false, HANumber::StateNone, 0, nullptr)
 }
 
 void setup()

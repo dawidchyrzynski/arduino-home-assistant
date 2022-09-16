@@ -52,6 +52,7 @@ const char HAMinProperty[] PROGMEM = {"min"};
 const char HAMaxProperty[] PROGMEM = {"max"};
 const char HAStepProperty[] PROGMEM = {"step"};
 const char HAModeProperty[] PROGMEM = {"mode"};
+const char HACommandTemplateProperty[] PROGMEM = {"cmd_tpl"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -120,3 +121,8 @@ const char HAButton6Subtype[] PROGMEM = {"button_6"};
 
 // other
 const char HAHexMap[] PROGMEM = {"0123456789abcdef"};
+
+// value templates
+const char HAValueTemplateFloatP1[] PROGMEM = {"{{float(value)/10**1}}"};
+const char HAValueTemplateFloatP2[] PROGMEM = {"{{float(value)/10**2}}"};
+const char HAValueTemplateFloatP3[] PROGMEM = {"{{float(value)/10**3}}"};

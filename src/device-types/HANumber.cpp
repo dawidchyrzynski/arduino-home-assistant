@@ -62,6 +62,11 @@ void HANumber::buildSerializer()
         getModeProperty(),
         HASerializer::ProgmemPropertyValue
     );
+    _serializer->set(
+        AHATOFSTR(HACommandTemplateProperty),
+        getCommandTemplate(),
+        HASerializer::ProgmemPropertyValue
+    );
 
     if (_minValue != HANUMBER_PROCESS_FLOAT(1)) {
         _serializer->set(AHATOFSTR(HAMinProperty), &_minValue, numberProperty);
@@ -163,7 +168,7 @@ void HANumber::handleCommand(const char* cmd)
     }
 
     if (strcmp_P(cmd, HAStateNone) == 0) {
-        _commandCallback(HAUtils::NumberMax, _precision, this);
+        _commandCallback(StateNone, _precision, this);
     } else {
         HAUtils::Number number = HAUtils::strToNumber(cmd);
         if (number != HAUtils::NumberMax) {
@@ -180,6 +185,23 @@ const __FlashStringHelper* HANumber::getModeProperty() const
 
     case ModeSlider:
         return AHATOFSTR(HAModeSlider);
+
+    default:
+        return nullptr;
+    }
+}
+
+const __FlashStringHelper* HANumber::getCommandTemplate()
+{
+    switch (_precision) {
+    case PrecisionP1:
+        return AHATOFSTR(HAValueTemplateFloatP1);
+
+    case PrecisionP2:
+        return AHATOFSTR(HAValueTemplateFloatP2);
+
+    case PrecisionP3:
+        return AHATOFSTR(HAValueTemplateFloatP3);
 
     default:
         return nullptr;
