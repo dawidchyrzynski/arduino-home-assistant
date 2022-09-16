@@ -167,7 +167,7 @@ private:
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishState(const float state);
+    bool publishState(const int32_t state);
 
     /**
      * Parses the given command and executes the number's callback with proper value.
@@ -175,6 +175,11 @@ private:
      * @param cmd The string representation of the command.
      */
     void handleCommand(const char* cmd);
+
+    /**
+     * Returns progmem string representing mode of the number
+     */
+    const __FlashStringHelper* getModeProperty() const;
 
     /// The precision of the number. By default it's `HANumber::PrecisionP0`.
     const NumberPrecision _precision;

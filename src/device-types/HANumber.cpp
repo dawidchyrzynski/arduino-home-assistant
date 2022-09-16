@@ -1,12 +1,10 @@
 #include "HANumber.h"
 #ifndef EX_ARDUINOHA_NUMBER
 
-#include <float.h>
-
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-const float HANumber::StateNone = FLT_MAX;
+const float HANumber::StateNone = INT32_MAX;
 
 HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),
@@ -47,24 +45,32 @@ void HANumber::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 11); // 11 - max properties nb
+    const HASerializer::PropertyValueType numberProperty =
+        HASerializer::precisionToPropertyType(_precision);
+
+    _serializer = new HASerializer(this, 15); // 15 - max properties nb
 
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
+    _serializer->set(
+        AHATOFSTR(HAModeProperty),
+        getModeProperty(),
+        HASerializer::ProgmemPropertyValue
+    );
 
     if (_minValue != 1) {
-        // to do
+        _serializer->set(AHATOFSTR(HAMinProperty), &_minValue, numberProperty);
     }
 
     if (_maxValue != 100) {
-        // to do
+        _serializer->set(AHATOFSTR(HAMaxProperty), &_minValue, numberProperty);
     }
 
     if (_step != 1) {
-        // to do
+        _serializer->set(AHATOFSTR(HAStepProperty), &_minValue, numberProperty);
     }
 
     if (_retain) {
@@ -122,19 +128,30 @@ void HANumber::onMqttMessage(
     }
 }
 
-bool HANumber::publishState(const float state)
+bool HANumber::publishState(const int32_t state)
 {
-    /* if (state == StateNone) {
+    if (state == StateNone) {
+        return publishOnDataTopic(
+            AHATOFSTR(HAStateTopic),
+            AHATOFSTR(HAStateNode),
+            true
+        );
+    }
+
+    uint8_t size = HAUtils::calculateNumberSize(state, _precision);
+    if (size == 0) {
         return false;
     }
 
+    char str[size + 1]; // with null terminator
+    memset(str, 0, sizeof(str));
+    HAUtils::numberToStr(str, state, _precision);
+
     return publishOnDataTopic(
         AHATOFSTR(HAStateTopic),
-        AHATOFSTR(state == StateLocked ? HAStateLocked : HAStateUnlocked),
+        str,
         true
-    ); */
-
-    return false;
+    );
 }
 
 void HANumber::handleCommand(const char* cmd)
@@ -144,6 +161,20 @@ void HANumber::handleCommand(const char* cmd)
     }
 
     // to do
+}
+
+const __FlashStringHelper* HANumber::getModeProperty() const
+{
+    switch (_mode) {
+    case ModeBox:
+        return AHATOFSTR(HAModeBox);
+
+    case ModeSlider:
+        return AHATOFSTR(HAModeSlider);
+
+    default:
+        return nullptr;
+    }
 }
 
 #endif
