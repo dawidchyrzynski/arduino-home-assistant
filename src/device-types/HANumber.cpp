@@ -135,7 +135,7 @@ bool HANumber::publishState(const HAUtils::Number state)
     if (state == StateNone) {
         return publishOnDataTopic(
             AHATOFSTR(HAStateTopic),
-            AHATOFSTR(HAStateNode),
+            AHATOFSTR(HAStateNone),
             true
         );
     }
@@ -162,7 +162,14 @@ void HANumber::handleCommand(const char* cmd)
         return;
     }
 
-    // to do
+    if (strcmp_P(cmd, HAStateNone) == 0) {
+        _commandCallback(HAUtils::NumberMax, _precision, this);
+    } else {
+        HAUtils::Number number = HAUtils::strToNumber(cmd);
+        if (number != HAUtils::NumberMax) {
+            _commandCallback(number, _precision, this);
+        }
+    }
 }
 
 const __FlashStringHelper* HANumber::getModeProperty() const

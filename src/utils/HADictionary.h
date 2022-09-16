@@ -68,7 +68,7 @@ extern const char HAStateOn[];
 extern const char HAStateOff[];
 extern const char HAStateLocked[];
 extern const char HAStateUnlocked[];
-extern const char HAStateNode[];
+extern const char HAStateNone[];
 extern const char HATrue[];
 extern const char HAFalse[];
 extern const char HAHome[];
