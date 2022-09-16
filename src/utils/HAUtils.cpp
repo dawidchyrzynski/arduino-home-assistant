@@ -98,7 +98,7 @@ uint8_t HAUtils::calculateNumberSize(int32_t value, const uint8_t precision)
 
         // one digit + dot + decimal digits (+ sign)
         const uint8_t minValue = isSigned ? precision + 3 : precision + 2;
-        return digitsNb > minValue ? digitsNb + 1 : minValue;
+        return digitsNb >= minValue ? digitsNb + 1 : minValue;
     }
 
     return digitsNb;

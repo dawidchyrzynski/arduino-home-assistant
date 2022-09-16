@@ -122,6 +122,14 @@ AHA_TEST(UtilsTest, calculate_float_p1_small) {
     )
 }
 
+AHA_TEST(UtilsTest, calculate_float_p1_medium) {
+    calculateFloatWithPrecisionAssert(
+        50.5,
+        HABaseDeviceType::PrecisionP1,
+        4
+    )
+}
+
 AHA_TEST(UtilsTest, calculate_float_p1_large) {
     calculateFloatWithPrecisionAssert(
         5526.02,
@@ -154,6 +162,14 @@ AHA_TEST(UtilsTest, calculate_float_p2_small) {
     )
 }
 
+AHA_TEST(UtilsTest, calculate_float_p2_medium) {
+    calculateFloatWithPrecisionAssert(
+        50.5,
+        HABaseDeviceType::PrecisionP2,
+        5
+    )
+}
+
 AHA_TEST(UtilsTest, calculate_float_p2_large) {
     calculateFloatWithPrecisionAssert(
         5526.5,
@@ -183,6 +199,14 @@ AHA_TEST(UtilsTest, calculate_float_p3_small) {
         1.0,
         HABaseDeviceType::PrecisionP3,
         5
+    )
+}
+
+AHA_TEST(UtilsTest, calculate_float_p3_medium) {
+    calculateFloatWithPrecisionAssert(
+        50.5,
+        HABaseDeviceType::PrecisionP3,
+        6
     )
 }
 
@@ -254,6 +278,10 @@ AHA_TEST(UtilsTest, float_to_str_p1_small) {
     floatToStrAssert(1.0, HABaseDeviceType::PrecisionP1, "1.0");
 }
 
+AHA_TEST(UtilsTest, float_to_str_p1_medium) {
+    floatToStrAssert(50.5, HABaseDeviceType::PrecisionP1, "50.5");
+}
+
 AHA_TEST(UtilsTest, float_to_str_p1_large) {
     floatToStrAssert(5526.5, HABaseDeviceType::PrecisionP1, "5526.5");
 }
@@ -278,6 +306,10 @@ AHA_TEST(UtilsTest, float_to_str_p2_small) {
     floatToStrAssert(1.0, HABaseDeviceType::PrecisionP2, "1.00");
 }
 
+AHA_TEST(UtilsTest, float_to_str_p2_medium) {
+    floatToStrAssert(50.50, HABaseDeviceType::PrecisionP2, "50.50");
+}
+
 AHA_TEST(UtilsTest, float_to_str_p2_large) {
     floatToStrAssert(5526.5, HABaseDeviceType::PrecisionP2, "5526.50");
 }
@@ -300,6 +332,10 @@ AHA_TEST(UtilsTest, float_to_str_p3_zero_decimal_signed) {
 
 AHA_TEST(UtilsTest, float_to_str_p3_small) {
     floatToStrAssert(1.123, HABaseDeviceType::PrecisionP3, "1.123");
+}
+
+AHA_TEST(UtilsTest, float_to_str_p3_medium) {
+    floatToStrAssert(50.555, HABaseDeviceType::PrecisionP3, "50.555");
 }
 
 AHA_TEST(UtilsTest, float_to_str_p3_large) {
