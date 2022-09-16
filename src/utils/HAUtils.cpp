@@ -64,6 +64,25 @@ int32_t HAUtils::getPrecisionBase(const uint8_t precision)
     }
 }
 
+uint8_t HAUtils::getFloatZeroPaddingSize(
+    const int32_t value,
+    const uint8_t precision
+)
+{
+    if (precision == 0) {
+        return 0;
+    }
+
+    const uint8_t valueDigitsNb = calculateNumberSize(value);
+    const uint8_t precisionBaseDigitsDb = calculateNumberSize(
+        getPrecisionBase(precision)
+    );
+
+    return valueDigitsNb > precisionBaseDigitsDb
+        ? 0
+        : precisionBaseDigitsDb - valueDigitsNb;
+}
+
 int32_t HAUtils::processFloatValue(float value, const uint8_t precision)
 {
     return static_cast<int32_t>(value * getPrecisionBase(precision));
@@ -119,8 +138,9 @@ void HAUtils::numberToStr(char* dst, int32_t value, const uint8_t precision)
         prefixCh++;
     }
 
-    if (precision > 0 && value < getPrecisionBase(precision)) {
-        *prefixCh = '0';
+    uint8_t zeroPadding = getFloatZeroPaddingSize(digitsNb, precision);
+    if (zeroPadding > 0) {
+        memset(prefixCh, '0', zeroPadding + 1);
         prefixCh++;
         *prefixCh = '.';
     }

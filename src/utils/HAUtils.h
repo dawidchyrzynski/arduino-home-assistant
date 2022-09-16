@@ -57,6 +57,17 @@ public:
     static int32_t getPrecisionBase(const uint8_t precision);
 
     /**
+     * Returns amount of zeroes that need to be added at the beginning of the given number.
+     *
+     * @param value The value to check.
+     * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
+     */
+    static uint8_t getFloatZeroPaddingSize(
+        const int32_t value,
+        const uint8_t precision
+    );
+
+    /**
      * Converts the given float to the int32_t representation.
      * The input float is multiped by pow(value, precision).
      *
