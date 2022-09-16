@@ -9,7 +9,7 @@
 class HAUtils
 {
 public:
-    typedef int32_t Number;
+    typedef int64_t Number;
 
     /**
      * Checks whether the given `str` ends with the given `suffix`.

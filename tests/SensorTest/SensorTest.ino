@@ -128,7 +128,7 @@ test(SensorNumberTest, publish_value_on_connect) {
     sensor.setCurrentValue(520);
     mqtt.loop();
 
-    assertEqual((int32_t)520, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)520, sensor.getCurrentValue());
     assertMqttMessage(1, AHATOFSTR(StateTopic), "520", true)
 }
 
@@ -140,7 +140,7 @@ test(SensorNumberTest, publish_debounce) {
     sensor.setCurrentValue(1555);
 
     assertTrue(sensor.setValue(1555));
-    assertEqual((int32_t)1555, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)1555, sensor.getCurrentValue());
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
 
@@ -152,7 +152,7 @@ test(SensorNumberTest, publish_force) {
     sensor.setCurrentValue(1555);
 
     assertTrue(sensor.setValue(1555, true));
-    assertEqual((int32_t)1555, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)1555, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "1555", true)
 }
 
@@ -165,7 +165,7 @@ test(SensorNumberTest, publish_int_zero) {
     int8_t value = 0;
 
     assertTrue(sensor.setValue(value));
-    assertEqual((int32_t)value, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true)
 }
 
@@ -177,7 +177,7 @@ test(SensorNumberTest, publish_int8) {
     int8_t value = 127;
 
     assertTrue(sensor.setValue(value));
-    assertEqual((int32_t)value, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "127", true)
 }
 
@@ -189,7 +189,7 @@ test(SensorNumberTest, publish_uint8) {
     uint8_t value = 50;
 
     assertTrue(sensor.setValue(value));
-    assertEqual((int32_t)value, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "50", true)
 }
 
@@ -201,7 +201,7 @@ test(SensorNumberTest, publish_int16) {
     int16_t value = 32766;
 
     assertTrue(sensor.setValue(value));
-    assertEqual((int32_t)value, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "32766", true)
 }
 
@@ -213,7 +213,7 @@ test(SensorNumberTest, publish_uint16) {
     uint16_t value = 65534;
 
     assertTrue(sensor.setValue(value));
-    assertEqual((int32_t)value, sensor.getCurrentValue());
+    assertEqual((HAUtils::Number)value, sensor.getCurrentValue());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "65534", true)
 }
 
@@ -222,7 +222,7 @@ test(SensorNumberTest, publish_int32) {
 
     mock->connectDummy();
     HASensorNumber sensor(testUniqueId);
-    int32_t value = 2147483646;
+    HAUtils::Number value = 2147483646;
 
     assertTrue(sensor.setValue(value));
     assertEqual(value, sensor.getCurrentValue());
@@ -234,7 +234,7 @@ test(SensorNumberTest, publish_int32_signed) {
 
     mock->connectDummy();
     HASensorNumber sensor(testUniqueId);
-    int32_t value = -2147483646;
+    HAUtils::Number value = -2147483646;
 
     assertTrue(sensor.setValue(value));
     assertEqual(value, sensor.getCurrentValue());
