@@ -98,7 +98,7 @@ public:
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/cover/
-     * 
+     *
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
@@ -153,7 +153,7 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given state.
-     * 
+     *
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
@@ -161,7 +161,7 @@ private:
 
     /**
      * Publishes the MQTT message with the given position.
-     * 
+     *
      * @param position The position to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
@@ -169,7 +169,7 @@ private:
 
     /**
      * Parses the given command and executes the cover's callback with proper enum's property.
-     * 
+     *
      * @param cmd The string representation of the command.
      */
     void handleCommand(const char* cmd);

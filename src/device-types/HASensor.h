@@ -8,7 +8,7 @@
 /**
  * HASensor allows to publish textual sensor values that will be displayed in the HA panel.
  * If you need to publish numbers then HASensorNumber is what you're looking for.
- * 
+ *
  * @note It's not possible to define a sensor that publishes mixed values (e.g. string + integer values).
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
@@ -25,7 +25,7 @@ public:
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/sensor/#device-class
-     * 
+     *
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
@@ -61,7 +61,7 @@ public:
      * Publishes the MQTT message with the given value.
      * Unlike the other device types, the HASensor doesn't store the previous value that was set.
      * It means that the MQTT message is produced each time the setValue method is called.
-     * 
+     *
      * @param value String representation of the sensor's value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */

@@ -14,7 +14,7 @@ class HADevice
 public:
     /**
      * Constructs HADevice without the unique ID.
-     * 
+     *
      * @note You will need to set the ID using HADevice::setUniqueId method. Otherwise none of the entities will work.
      */
     HADevice();
@@ -22,7 +22,7 @@ public:
     /**
      * Constructs HADevice with the given unique ID (string).
      * Keep the unique ID short to save the memory.
-     * 
+     *
      * @param uniqueId String with the null terminator.
      */
     HADevice(const char* uniqueId);
@@ -30,7 +30,7 @@ public:
     /**
      * Constructs HADevice using the given byte array as the unique ID.
      * It works in the same way as HADevice::setUniqueId method.
-     * 
+     *
      * @param uniqueId Bytes array that's going to be converted into the string.
      * @param length Number of bytes in the array.
      */
@@ -76,7 +76,7 @@ public:
     /**
      * Sets unique ID of the device based on the given byte array.
      * Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.
-     * 
+     *
      * @param uniqueId Bytes array that's going to be converted into the string.
      * @param length Number of bytes in the array.
      * @note The unique ID can be set only once (via constructor or using this method).
@@ -85,28 +85,28 @@ public:
 
     /**
      * Sets the "manufacturer" property that's going to be displayed in the Home Assistant.
-     * 
+     *
      * @param manufacturer Any string. Keep it short to save the memory.
      */
     void setManufacturer(const char* manufacturer);
 
     /**
      * Sets the "model" property that's going to be displayed in the Home Assistant.
-     * 
+     *
      * @param model Any string. Keep it short to save the memory.
      */
     void setModel(const char* model);
 
     /**
      * Sets the "name" property that's going to be displayed in the Home Assistant.
-     * 
+     *
      * @param name Any string. Keep it short to save the memory.
      */
     void setName(const char* name);
 
     /**
      * Sets the "software version" property that's going to be displayed in the Home Assistant.
-     * 
+     *
      * @param softwareVersion Any string. Keep it short to save the memory.
      */
     void setSoftwareVersion(const char* softwareVersion);
@@ -114,7 +114,7 @@ public:
     /**
      * Sets device's availability and publishes MQTT message on the availability topic.
      * If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens.
-     * 
+     *
      * @param online Set to true if the device should be displayed as available in the HA panel.
      */
     void setAvailability(bool online);

@@ -44,7 +44,7 @@ public:
      * Creates the device trigger with a custom type and subtype.
      * For example, it can be `click` as the type and `btn0` as the subtype.
      * Please note that combination of the type and subtype needs to be unique in a scope of your device.
-     * 
+     *
      * @param type String representation of the type.
      * @param subtype String representation of the subtype.
      */
@@ -54,7 +54,7 @@ public:
      * Creates the device trigger with a built-in type and a custom subtype.
      * For example, it can be `HADeviceTrigger::ButtonShortPressType` as the type and `btn0` as the subtype.
      * Please note that combination of the type and subtype needs to be unique in a scope of your device.
-     * 
+     *
      * @param type Built-in type of the trigger.
      * @param subtype String representation of the subtype.
      */
@@ -64,7 +64,7 @@ public:
      * Creates the device trigger with a custom type and a built-in subtype.
      * For example, it can be `click` as the type and `HADeviceTrigger::Button1Subtype` as the subtype.
      * Please note that combination of the type and subtype needs to be unique in a scope of your device.
-     * 
+     *
      * @param type String representation of the subtype.
      * @param subtype Built-in subtype of the trigger.
      */
@@ -74,7 +74,7 @@ public:
      * Creates the device trigger with a built-in type and built-in subtype.
      * For example, it can be `HADeviceTrigger::ButtonShortPressType` as the type and `HADeviceTrigger::Button1Subtype` as the subtype.
      * Please note that combination of the type and subtype needs to be unique in a scope of your device.
-     * 
+     *
      * @param type Built-in type of the trigger.
      * @param subtype Built-in subtype of the trigger.
      */

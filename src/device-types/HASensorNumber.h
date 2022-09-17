@@ -8,7 +8,7 @@
 
 /**
  * HASensorInteger allows to publish numeric values of a sensor that will be displayed in the HA panel.
- * 
+ *
  * @note You can find more information about this class in HASensor documentation.
  */
 class HASensorNumber : public HASensor
@@ -81,7 +81,7 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given value.
-     * 
+     *
      * @param state The value to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */

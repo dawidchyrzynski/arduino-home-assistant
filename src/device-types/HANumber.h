@@ -41,7 +41,7 @@ public:
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/number/#device-class
-     * 
+     *
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
@@ -59,7 +59,7 @@ public:
     /**
      * Sets retain flag for the number's command.
      * If set to `true` the command produced by Home Assistant will be retained.
-     * 
+     *
      * @param retain
      */
     inline void setRetain(const bool retain)
@@ -79,7 +79,7 @@ public:
      * Sets mode of the number.
      * It controls how the number should be displayed in the UI.
      * By default it's `HANumber::ModeAuto`.
-     * 
+     *
      * @param mode Mode to set.
      */
     inline void setMode(const Mode mode)
@@ -95,7 +95,7 @@ public:
 
     /**
      * Sets the minimum value that can be set from the Home Assistant panel.
-     * 
+     *
      * @param min The minimal value. By default it's `1`.
      */
     inline void setMin(const float min)
@@ -103,7 +103,7 @@ public:
 
     /**
      * Sets the maximum value that can be set from the Home Assistant panel.
-     * 
+     *
      * @param min The maximum value. By default it's `100`.
      */
     inline void setMax(const float max)
@@ -111,7 +111,7 @@ public:
 
     /**
      * Sets step of the slider's movement in the Home Assistant panel.
-     * 
+     *
      * @param step The step value. Smallest value `0.001`. By default it's `1`.
      */
     inline void setStep(const float step)

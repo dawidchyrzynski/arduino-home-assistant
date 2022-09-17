@@ -30,7 +30,7 @@ public:
     /**
      * Sets encoding of the image content.
      * Bu default Home Assistant expects raw binary data (e.g. JPEG binary data).
-     * 
+     *
      * @param encoding The image's data encoding.
      */
     inline void setEncoding(const ImageEncoding encoding)

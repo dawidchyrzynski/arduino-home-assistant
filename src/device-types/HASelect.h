@@ -10,7 +10,7 @@ class HASerializerArray;
 #define HASELECT_CALLBACK(name) void (*name)(int8_t index, HASelect* sender)
 
 /**
- * TO DO
+ * HASelect adds a dropdown with options in the Home Assistant panel.
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
@@ -29,7 +29,7 @@ public:
      * Sets the list of available options that will be listed in the dropdown.
      * The input string should contain options separated using semicolons.
      * For example: `setOptions("Option A;Option B;Option C");
-     * 
+     *
      * @param options The list of options that are separated by semicolons.
      * @note The options list can be set only once.
      */
@@ -78,7 +78,7 @@ public:
     /**
      * Sets retain flag for the select's command.
      * If set to `true` the command produced by Home Assistant will be retained.
-     * 
+     *
      * @param retain
      */
     inline void setRetain(const bool retain)

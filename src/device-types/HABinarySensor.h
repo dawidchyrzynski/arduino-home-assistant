@@ -23,7 +23,7 @@ public:
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
-     * 
+     *
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
@@ -70,7 +70,7 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given state.
-     * 
+     *
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */

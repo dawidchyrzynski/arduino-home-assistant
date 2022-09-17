@@ -46,7 +46,7 @@ public:
     /**
      * Creates a new instance of the HAMqtt class.
      * Please note that only one instance of the class can be initialized at the same time.
-     * 
+     *
      * @param netClient The EthernetClient or WiFiClient that's going to be used for the network communication.
      * @param device An instance of the HADevice class representing your device.
      * @param maxDevicesTypesNb The maximum number of device types (sensors, switches, etc.) that you're going to implement.
@@ -226,7 +226,7 @@ public:
     /**
      * Begins publishing of a message with the given properties.
      * When this method returns true the payload can be written using HAMqtt::writePayload method.
-     * 
+     *
      * @param topic Topic of the published message.
      * @param payloadLength Length of the payload (bytes) that's going to be published.
      * @param retained Specifies whether the published message should be retained.
@@ -237,7 +237,7 @@ public:
      * Writes given data to the TCP stream.
      * Please note that before writing any data the HAMqtt::beginPublish method
      * needs to be called.
-     * 
+     *
      * @param data Data to publish.
      * @param length Length of the data (bytes).
      */
@@ -247,7 +247,7 @@ public:
      * Writes given progmem data to the TCP stream.
      * Please note that before writing any data the HAMqtt::beginPublish method
      * needs to be called.
-     * 
+     *
      * @param data Progmem data to publish.
      */
     void writePayload(const __FlashStringHelper* data);

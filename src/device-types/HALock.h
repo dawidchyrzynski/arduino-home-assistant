@@ -49,7 +49,7 @@ public:
     /**
      * Sets retain flag for the lock's command.
      * If set to `true` the command produced by Home Assistant will be retained.
-     * 
+     *
      * @param retain
      */
     inline void setRetain(const bool retain)

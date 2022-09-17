@@ -48,7 +48,7 @@ public:
 
     /**
      * Sets the source type of the tracker.
-     * 
+     *
      * @param type The source type (gps, router, bluetooth, bluetooth LE).
      */
     inline void setSourceType(const SourceType type)

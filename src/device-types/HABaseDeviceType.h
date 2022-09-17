@@ -26,7 +26,7 @@ public:
 
     /**
      * Creates a new device type instance and registers it in the HAMqtt class.
-     * 
+     *
      * @param componentName The name of the Home Assistant component (e.g. `binary_sensor`).
      *                      You can find all available component names in the Home Assistant documentation.
      *                      The component name needs to be stored in the flash memory.
@@ -65,7 +65,7 @@ public:
     /**
      * Sets name of the device type that will be used as a label in the HA panel.
      * Keep the name short to save the resources.
-     * 
+     *
      * @param name The device type name.
      */
     inline void setName(const char* name)
@@ -83,7 +83,7 @@ public:
      * Setting the initial availability enables availability reporting for this device type.
      * Please note that not all device types support this feature.
      * Follow HA documentation of a specific device type to get more information.
-     * 
+     *
      * @param online Specifies whether the device type is online.
      */
     virtual void setAvailability(bool online);
@@ -104,7 +104,7 @@ protected:
 
     /**
      * Subscribes to the given data topic.
-     * 
+     *
      * @param uniqueId THe unique ID of the device type assigned via the constructor.
      * @param topic Topic to subscribe (progmem string).
      */
@@ -130,7 +130,7 @@ protected:
     /**
      * This method is called each time the device receives a MQTT message.
      * It can be any MQTT message so the method should always verify the topic.
-     * 
+     *
      * @param topic The topic on which the message was produced.
      * @param payload The payload of the message. It can be nullptr.
      * @param length The length of the payload.

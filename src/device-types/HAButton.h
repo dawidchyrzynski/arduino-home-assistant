@@ -26,7 +26,7 @@ public:
     /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/button/#device-class
-     * 
+     *
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
@@ -44,7 +44,7 @@ public:
     /**
      * Sets retain flag for the button's command.
      * If set to `true` the command produced by Home Assistant will be retained.
-     * 
+     *
      * @param retain
      */
     inline void setRetain(const bool retain)
