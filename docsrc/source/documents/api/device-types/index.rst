@@ -12,6 +12,7 @@ Device types API
     ha-device-trigger
     ha-lock
     ha-number
+    ha-scene
     ha-select
     ha-sensor
     ha-sensor-number

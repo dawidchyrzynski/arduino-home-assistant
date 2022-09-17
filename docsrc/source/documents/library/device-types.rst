@@ -91,8 +91,8 @@ Supported device types
      - ✅
      - :doc:`HANumber </documents/api/device-types/ha-number>`
    * - Scene
-     - ❌
-     - --
+     - ✅
+     - :doc:`HAScene </documents/api/device-types/ha-scene>`
    * - Select
      - ✅
      - :doc:`HASelect </documents/api/device-types/ha-select>`
