@@ -11,6 +11,7 @@
 #include "device-types/HADeviceTrigger.h"
 #include "device-types/HALock.h"
 #include "device-types/HANumber.h"
+#include "device-types/HAScene.h"
 #include "device-types/HASelect.h"
 #include "device-types/HASensor.h"
 #include "device-types/HASensorNumber.h"
