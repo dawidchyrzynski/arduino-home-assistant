@@ -163,7 +163,7 @@ bool HACover::publishPosition(int16_t position)
     }
 
     char str[size + 1]; // with null terminator
-    memset(str, 0, sizeof(str));
+    str[size] = 0;
     HAUtils::numberToStr(str, position);
 
     return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);

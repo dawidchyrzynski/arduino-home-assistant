@@ -49,7 +49,6 @@ HAMqtt::HAMqtt(
     HAMQTT_INIT
 {
     _instance = this;
-    memset(_devicesTypes, 0, sizeof(HABaseDeviceType*) * maxDevicesTypesNb);
 }
 #else
 HAMqtt::HAMqtt(
@@ -61,7 +60,6 @@ HAMqtt::HAMqtt(
     HAMQTT_INIT
 {
     _instance = this;
-    memset(_devicesTypes, 0, sizeof(HABaseDeviceType*) * maxDevicesTypesNb);
 }
 #endif
 

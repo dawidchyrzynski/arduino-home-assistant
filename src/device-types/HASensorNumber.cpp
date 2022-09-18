@@ -47,7 +47,7 @@ bool HASensorNumber::publishValue(const HAUtils::Number value)
     }
 
     char str[size + 1]; // with null terminator
-    memset(str, 0, sizeof(str));
+    str[size] = 0;
     HAUtils::numberToStr(str, value, _precision);
 
     return publishOnDataTopic(

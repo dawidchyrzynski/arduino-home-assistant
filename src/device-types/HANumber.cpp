@@ -151,7 +151,7 @@ bool HANumber::publishState(const HAUtils::Number state)
     }
 
     char str[size + 1]; // with null terminator
-    memset(str, 0, sizeof(str));
+    str[size] = 0;
     HAUtils::numberToStr(str, state, _precision);
 
     return publishOnDataTopic(

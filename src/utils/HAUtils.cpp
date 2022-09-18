@@ -140,9 +140,13 @@ void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
 
     uint8_t zeroPadding = getFloatZeroPaddingSize(digitsNb, precision);
     if (zeroPadding > 0) {
-        memset(prefixCh, '0', zeroPadding + 1);
-        prefixCh++;
-        *prefixCh = '.';
+        char* dotPtr = prefixCh + 1;
+        do {
+            *prefixCh = '0';
+            prefixCh++;
+        } while(zeroPadding-- > 0);
+
+        *dotPtr = '.';
     }
 
     char* ch = &dst[digitsNb - 1];
