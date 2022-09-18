@@ -51,6 +51,17 @@ public:
     bool setState(const CoverState state, const bool force = false);
 
     /**
+     * Changes the position of the cover and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param position The new position of the cover.
+     * @param force Forces to update the state without comparing it to a previous known state.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setPosition(const int16_t position, const bool force = false);
+
+    /**
      * Sets the current state of the cover without publishing it to Home Assistant.
      * This method may be useful if you want to change the state before the connection
      * with the MQTT broker is acquired.
@@ -66,17 +77,6 @@ public:
      */
     inline CoverState getCurrentState() const
         { return _currentState; }
-
-    /**
-     * Changes the position of the cover and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param position The new position of the cover.
-     * @param force Forces to update the state without comparing it to a previous known state.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setPosition(const int16_t position, const bool force = false);
 
     /**
      * Sets the current position of the cover without pushing the value to Home Assistant.
@@ -175,9 +175,6 @@ private:
      */
     void handleCommand(const char* cmd, const uint16_t length);
 
-    /// The command callback that will be called when clicking the cover's button in the HA panel.
-    HACOVER_CALLBACK(_commandCallback);
-
     /// The current state of the cover. By default it's `HACover::StateUnknown`.
     CoverState _currentState;
 
@@ -195,6 +192,9 @@ private:
 
     /// The optimistic mode of the cover (`true` - enabled, `false` - disabled).
     bool _optimistic;
+
+    /// The command callback that will be called when clicking the cover's button in the HA panel.
+    HACOVER_CALLBACK(_commandCallback);
 };
 
 #endif

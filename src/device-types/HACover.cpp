@@ -7,13 +7,13 @@
 
 HACover::HACover(const char* uniqueId) :
     HABaseDeviceType(AHATOFSTR(HAComponentCover), uniqueId),
-    _commandCallback(nullptr),
     _currentState(StateUnknown),
     _currentPosition(DefaultPosition),
     _class(nullptr),
     _icon(nullptr),
     _retain(false),
-    _optimistic(false)
+    _optimistic(false),
+    _commandCallback(nullptr)
 {
 
 }
@@ -45,7 +45,6 @@ bool HACover::setPosition(const int16_t position, const bool force)
 
     return false;
 }
-
 
 void HACover::buildSerializer()
 {
