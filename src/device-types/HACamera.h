@@ -28,6 +28,15 @@ public:
     HACamera(const char* uniqueId);
 
     /**
+     * Publishes MQTT message with the given image data as a message content.
+     * It updates image displayed in the Home Assistant panel.
+     *
+     * @param data Image data (raw binary data or base64)
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool publishImage(const char* data);
+
+    /**
      * Sets encoding of the image content.
      * Bu default Home Assistant expects raw binary data (e.g. JPEG binary data).
      *
@@ -44,15 +53,6 @@ public:
      */
     inline void setIcon(const char* icon)
         { _icon = icon; }
-
-    /**
-     * Publishes MQTT message with the given image data as a message content.
-     * It updates image displayed in the Home Assistant panel.
-     *
-     * @param data Image data (raw binary data or base64)
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool publishImage(const char* data);
 
 protected:
     virtual void buildSerializer() override;

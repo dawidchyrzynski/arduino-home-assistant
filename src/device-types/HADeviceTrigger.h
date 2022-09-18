@@ -86,6 +86,14 @@ public:
     ~HADeviceTrigger();
 
     /**
+     * Publishes MQTT message with the trigger event.
+     * The published message is not retained.
+     *
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool trigger();
+
+    /**
      * Returns the type of the trigger.
      * If the built-in type is used the returned value points to the flash memory.
      * Use `HADeviceTrigger::isProgmemType` to verify if the returned value is the progmem pointer.
@@ -116,14 +124,6 @@ public:
      */
     inline bool isProgmemSubtype() const
         { return _isProgmemSubtype; }
-
-    /**
-     * Publishes MQTT message with the trigger event.
-     * The published message is not retained.
-     *
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool trigger();
 
 protected:
     virtual void buildSerializer() override;

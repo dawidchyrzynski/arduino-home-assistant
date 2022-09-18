@@ -38,34 +38,6 @@ public:
     HALock(const char* uniqueId);
 
     /**
-     * Sets icon of the lock.
-     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
-     *
-     * @param icon The icon name.
-     */
-    inline void setIcon(const char* icon)
-        { _icon = icon; }
-
-    /**
-     * Sets retain flag for the lock's command.
-     * If set to `true` the command produced by Home Assistant will be retained.
-     *
-     * @param retain
-     */
-    inline void setRetain(const bool retain)
-        { _retain = retain; }
-
-    /**
-     * Sets optimistic flag for the lock state.
-     * In this mode the lock state doesn't need to be reported back to the HA panel when a command is received.
-     * By default the optimistic mode is disabled.
-     *
-     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
-     */
-    inline void setOptimistic(const bool optimistic)
-        { _optimistic = optimistic; }
-
-    /**
      * Changes state of the lock and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
@@ -92,6 +64,34 @@ public:
      */
     inline LockState getCurrentState() const
         { return _currentState; }
+
+    /**
+     * Sets icon of the lock.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
+     *
+     * @param icon The icon name.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
+    /**
+     * Sets retain flag for the lock's command.
+     * If set to `true` the command produced by Home Assistant will be retained.
+     *
+     * @param retain
+     */
+    inline void setRetain(const bool retain)
+        { _retain = retain; }
+
+    /**
+     * Sets optimistic flag for the lock state.
+     * In this mode the lock state doesn't need to be reported back to the HA panel when a command is received.
+     * By default the optimistic mode is disabled.
+     *
+     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
+     */
+    inline void setOptimistic(const bool optimistic)
+        { _optimistic = optimistic; }
 
     /**
      * Registers callback that will be called each time the lock/unlock/open command from the HA is received.

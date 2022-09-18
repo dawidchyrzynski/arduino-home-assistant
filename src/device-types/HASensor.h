@@ -23,6 +23,16 @@ public:
     HASensor(const char* uniqueId);
 
     /**
+     * Publishes the MQTT message with the given value.
+     * Unlike the other device types, the HASensor doesn't store the previous value that was set.
+     * It means that the MQTT message is produced each time the setValue method is called.
+     *
+     * @param value String representation of the sensor's value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setValue(const char* value);
+
+    /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/sensor/#device-class
      *
@@ -56,16 +66,6 @@ public:
      */
     inline void setUnitOfMeasurement(const char* unitOfMeasurement)
         { _unitOfMeasurement = unitOfMeasurement; }
-
-    /**
-     * Publishes the MQTT message with the given value.
-     * Unlike the other device types, the HASensor doesn't store the previous value that was set.
-     * It means that the MQTT message is produced each time the setValue method is called.
-     *
-     * @param value String representation of the sensor's value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setValue(const char* value);
 
 protected:
     virtual void buildSerializer() override final;

@@ -38,23 +38,6 @@ public:
     HADeviceTracker(const char* uniqueId);
 
     /**
-     * Sets icon of the tracker.
-     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
-     *
-     * @param icon The icon name.
-     */
-    inline void setIcon(const char* icon)
-        { _icon = icon; }
-
-    /**
-     * Sets the source type of the tracker.
-     *
-     * @param type The source type (gps, router, bluetooth, bluetooth LE).
-     */
-    inline void setSourceType(const SourceType type)
-        { _sourceType = type; }
-
-    /**
      * Changes the state of the tracker and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
@@ -81,6 +64,23 @@ public:
      */
     inline TrackerState getState() const
         { return _currentState; }
+
+    /**
+     * Sets icon of the tracker.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
+     *
+     * @param icon The icon name.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
+    /**
+     * Sets the source type of the tracker.
+     *
+     * @param type The source type (gps, router, bluetooth, bluetooth LE).
+     */
+    inline void setSourceType(const SourceType type)
+        { _sourceType = type; }
 
 protected:
     virtual void buildSerializer() override;

@@ -39,6 +39,34 @@ public:
     HANumber(const char* uniqueId, const NumberPrecision precision = PrecisionP0);
 
     /**
+     * Changes state of the number and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param state New state of the number.
+     * @param force Forces to update state without comparing it to a previous known state.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setState(const float state, const bool force = false);
+
+    /**
+     * Sets current state of the number without publishing it to Home Assistant.
+     * This method may be useful if you want to change state before connection
+     * with MQTT broker is acquired.
+     *
+     * @param state New state of the number.
+     */
+    inline void setCurrentState(const float state)
+        { _currentState = HAUtils::processFloatValue(state, _precision); }
+
+    /**
+     * Returns last known state of the number.
+     * If setState method wasn't called the initial value will be returned.
+     */
+    inline float getCurrentState() const
+        { return HAUtils::getFloatValue(_currentState, _precision); }
+
+    /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/number/#device-class
      *
@@ -116,34 +144,6 @@ public:
      */
     inline void setStep(const float step)
         { _step = HAUtils::processFloatValue(step, _precision);; }
-
-    /**
-     * Changes state of the number and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param state New state of the number.
-     * @param force Forces to update state without comparing it to a previous known state.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setState(const float state, const bool force = false);
-
-    /**
-     * Sets current state of the number without publishing it to Home Assistant.
-     * This method may be useful if you want to change state before connection
-     * with MQTT broker is acquired.
-     *
-     * @param state New state of the number.
-     */
-    inline void setCurrentState(const float state)
-        { _currentState = HAUtils::processFloatValue(state, _precision); }
-
-    /**
-     * Returns last known state of the number.
-     * If setState method wasn't called the initial value will be returned.
-     */
-    inline float getCurrentState() const
-        { return HAUtils::getFloatValue(_currentState, _precision); }
 
     /**
      * Registers callback that will be called each time the number is changed in the HA panel.

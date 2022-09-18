@@ -21,24 +21,6 @@ public:
     HABinarySensor(const char* uniqueId);
 
     /**
-     * Sets class of the device.
-     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
-     *
-     * @param deviceClass The class name.
-     */
-    inline void setDeviceClass(const char* deviceClass)
-        { _class = deviceClass; }
-
-    /**
-     * Sets icon of the sensor.
-     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
-     *
-     * @param icon The icon name.
-     */
-    inline void setIcon(const char* icon)
-        { _icon = icon; }
-
-    /**
      * Changes state of the sensor and publish MQTT message.
      * Please note that if a new value is the same as the previous one the MQTT message won't be published.
      *
@@ -62,6 +44,24 @@ public:
      */
     inline bool getCurrentState() const
         { return _currentState; }
+
+    /**
+     * Sets class of the device.
+     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
+     *
+     * @param deviceClass The class name.
+     */
+    inline void setDeviceClass(const char* deviceClass)
+        { _class = deviceClass; }
+
+    /**
+     * Sets icon of the sensor.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
+     *
+     * @param icon The icon name.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
 
 protected:
     virtual void buildSerializer() override;
