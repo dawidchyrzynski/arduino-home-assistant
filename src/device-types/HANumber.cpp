@@ -124,14 +124,12 @@ void HANumber::onMqttMessage(
     const uint16_t length
 )
 {
-    (void)length;
-
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleCommand(reinterpret_cast<const char*>(payload));
+        handleCommand(reinterpret_cast<const char*>(payload), length);
     }
 }
 
@@ -161,13 +159,13 @@ bool HANumber::publishState(const HAUtils::Number state)
     );
 }
 
-void HANumber::handleCommand(const char* cmd)
+void HANumber::handleCommand(const char* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
         return;
     }
 
-    if (strcmp_P(cmd, HAStateNone) == 0) {
+    if (memcmp_P(cmd, HAStateNone, length) == 0) {
         _commandCallback(StateNone, _precision, this);
     } else {
         HAUtils::Number number = HAUtils::strToNumber(cmd);

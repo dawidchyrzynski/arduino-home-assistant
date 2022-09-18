@@ -84,14 +84,12 @@ void HALock::onMqttMessage(
     const uint16_t length
 )
 {
-    (void)length;
-
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleCommand(reinterpret_cast<const char*>(payload));
+        handleCommand(reinterpret_cast<const char*>(payload), length);
     }
 }
 
@@ -108,17 +106,17 @@ bool HALock::publishState(const LockState state)
     );
 }
 
-void HALock::handleCommand(const char* cmd)
+void HALock::handleCommand(const char* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
         return;
     }
 
-    if (strcmp_P(cmd, HALockCommand) == 0) {
+    if (memcmp_P(cmd, HALockCommand, length) == 0) {
         _commandCallback(CommandLock, this);
-    } else if (strcmp_P(cmd, HAUnlockCommand) == 0) {
+    } else if (memcmp_P(cmd, HAUnlockCommand, length) == 0) {
         _commandCallback(CommandUnlock, this);
-    } else if (strcmp_P(cmd, HAOpenCommand) == 0) {
+    } else if (memcmp_P(cmd, HAOpenCommand, length) == 0) {
         _commandCallback(CommandOpen, this);
     }
 }

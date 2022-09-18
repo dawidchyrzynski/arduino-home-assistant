@@ -145,8 +145,6 @@ void HASelect::onMqttMessage(
     const uint16_t length
 )
 {
-    (void)length;
-
     if (_commandCallback && HASerializer::compareDataTopics(
         topic,
         uniqueId(),
@@ -157,7 +155,7 @@ void HASelect::onMqttMessage(
         const HASerializerArray::ItemType* options = _options->getItems();
 
         for (uint8_t i = 0; i < optionsNb; i++) {
-            if (strcmp(option, options[i]) == 0) {
+            if (memcmp(option, options[i], length) == 0) {
                 _commandCallback(i, this);
                 return;
             }

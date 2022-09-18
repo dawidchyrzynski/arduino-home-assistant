@@ -124,8 +124,9 @@ private:
      * Parses the given command and executes the lock's callback with proper enum's property.
      * 
      * @param cmd The string representation of the command.
+     * @param length Length of the command.
      */
-    void handleCommand(const char* cmd);
+    void handleCommand(const char* cmd, const uint16_t length);
 
     /// The icon of the lock. It can be nullptr.
     const char* _icon;

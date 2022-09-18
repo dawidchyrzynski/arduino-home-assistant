@@ -149,7 +149,7 @@ bool HASerializer::compareDataTopics(
         return false;
     }
 
-    return strcmp(actualTopic, expectedTopic) == 0;
+    return memcmp(actualTopic, expectedTopic, topicLength) == 0;
 }
 
 uint8_t HASerializer::getNumberPropertyPrecision(PropertyValueType type)

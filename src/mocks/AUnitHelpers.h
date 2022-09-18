@@ -1,6 +1,8 @@
 #ifndef AHA_AUNITHELPERS_H
 #define AHA_AUNITHELPERS_H
 
+#ifdef ARDUINOHA_TEST
+
 #ifdef AUNITER
 #include <Arduino.h>
 
@@ -89,4 +91,5 @@ suiteName##_##name :: suiteName##_##name() { \
 } \
 void suiteName##_##name :: once()
 
+#endif
 #endif
