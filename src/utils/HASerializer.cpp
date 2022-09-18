@@ -219,10 +219,6 @@ void HASerializer::set(
     }
 
     SerializerEntry* entry = addEntry();
-    if (!entry) {
-        return;
-    }
-
     entry->type = PropertyEntryType;
     entry->subtype = static_cast<uint8_t>(valueType);
     entry->property = property;
@@ -233,10 +229,6 @@ void HASerializer::set(const FlagType flag)
 {
     if (flag == WithDevice) {
         SerializerEntry* entry = addEntry();
-        if (!entry) {
-            return;
-        }
-
         entry->type = FlagEntryType;
         entry->subtype = static_cast<uint8_t>(WithDevice);
         entry->property = nullptr;
@@ -251,10 +243,6 @@ void HASerializer::set(const FlagType flag)
         }
 
         SerializerEntry* entry = addEntry();
-        if (!entry) {
-            return;
-        }
-
         entry->type = TopicEntryType;
         entry->property = AHATOFSTR(HAAvailabilityTopic);
         entry->value = isSharedAvailability
@@ -270,10 +258,6 @@ void HASerializer::topic(const __FlashStringHelper* topic)
     }
 
     SerializerEntry* entry = addEntry();
-    if (!entry) {
-        return;
-    }
-
     entry->type = TopicEntryType;
     entry->property = topic;
 }
@@ -412,23 +396,17 @@ uint16_t HASerializer::calculatePropertyValueSize(
 ) const
 {
     switch (entry->subtype) {
-    case ConstCharPropertyValue: {
-        const char* value = static_cast<const char*>(entry->value);
-        return 
-            2 * strlen_P(HASerializerJsonEscapeChar) +
-            strlen(value);
-    }
-
+    case ConstCharPropertyValue:
     case ProgmemPropertyValue: {
         const char* value = static_cast<const char*>(entry->value);
-        return 
-            2 * strlen_P(HASerializerJsonEscapeChar) +
-            strlen_P(value);
+        const uint16_t len =
+            entry->subtype == ConstCharPropertyValue ? strlen(value) : strlen_P(value);
+        return 2 * strlen_P(HASerializerJsonEscapeChar) + len;
     }
 
     case BoolPropertyType: {
         const bool value = *static_cast<const bool*>(entry->value);
-        return value ? 4 : 5; // "true" or "false"
+        return value ? strlen_P(HATrue) : strlen_P(HAFalse);
     }
 
     case NumberP0PropertyType:
