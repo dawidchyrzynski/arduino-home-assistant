@@ -9,6 +9,7 @@
 #include "device-types/HACover.h"
 #include "device-types/HADeviceTracker.h"
 #include "device-types/HADeviceTrigger.h"
+#include "device-types/HAFan.h"
 #include "device-types/HALock.h"
 #include "device-types/HANumber.h"
 #include "device-types/HAScene.h"

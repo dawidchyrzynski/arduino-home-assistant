@@ -15,6 +15,7 @@ const char HAComponentSensor[] PROGMEM = {"sensor"};
 const char HAComponentSwitch[] PROGMEM = {"switch"};
 const char HAComponentTag[] PROGMEM = {"tag"};
 const char HAComponentScene[] PROGMEM = {"scene"};
+const char HAComponentFan[] PROGMEM = {"fan"};
 
 // decorators
 const char HASerializerSlash[] PROGMEM = {"/"};
@@ -54,6 +55,8 @@ const char HAMaxProperty[] PROGMEM = {"max"};
 const char HAStepProperty[] PROGMEM = {"step"};
 const char HAModeProperty[] PROGMEM = {"mode"};
 const char HACommandTemplateProperty[] PROGMEM = {"cmd_tpl"};
+const char HASpeedRangeMaxProperty[] PROGMEM = {"spd_rng_max"};
+const char HASpeedRangeMinProperty[] PROGMEM = {"spd_rng_min"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -62,6 +65,8 @@ const char HATopic[] PROGMEM = {"t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
 const char HACommandTopic[] PROGMEM = {"cmd_t"};
 const char HAPositionTopic[] PROGMEM = {"pos_t"};
+const char HAPercentageStateTopic[] PROGMEM = {"pct_stat_t"};
+const char HAPercentageCommandTopic[] PROGMEM = {"pct_cmd_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

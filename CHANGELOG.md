@@ -20,6 +20,8 @@
 * Added support for the `HACamera` device type
 * Added support for the `HALock` device type
 * Added support for the `HASelect` device type
+* Added support for the `HANumber` device type
+* Added support for the `HAScene` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
@@ -36,6 +38,8 @@
 * Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check updated example of the `multi-state-button`.
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 * Renamed `HASwitch::onStateChanged` method to `HASwitch::onCommand`.
+* Renamed `HAFan::onStateChanged` method to `HAFan::onStateCommand`.
+* Renamed `HAFan::onSpeedChanged` method to `HAFan::onSpeedCommand`.
 * Changed logic of the `HASwitch` callback. Please check the `led-switch` example.
 * Refactored `HASensor` logic. It's now divided into two different classes: `HASensor` and `HASensorNumber`.
 * Removed all legacy constructors with `HAMqtt` argument
