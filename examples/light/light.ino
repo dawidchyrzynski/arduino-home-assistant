@@ -10,9 +10,10 @@ HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
 // HALight::BrightnessFeature enables support for setting brightness of the light.
-// You can skip this argument if you don't need brightness management.
+// HALight::ColorTemperatureFeature enables support for setting color temperature of the light.
+// Both features are optional and you can remove them if they're not needed.
 // "prettyLight" is unique ID of the light. You should define your own ID.
-HALight light("prettyLight", HALight::BrightnessFeature);
+HALight light("prettyLight", HALight::BrightnessFeature | HALight::ColorTemperatureFeature);
 
 void onStateCommand(bool state, HALight* light) {
     Serial.print("State: ");
@@ -26,6 +27,13 @@ void onBrightnessCommand(uint8_t brightness, HALight* light) {
     Serial.println(brightness);
 
     light->setBrightness(brightness); // report brightness back to the Home Assistant
+}
+
+void onColorTemperatureCommand(uint16_t temperature, HALight* light) {
+    Serial.print("Color temperature: ");
+    Serial.println(temperature);
+
+    light->setColorTemperature(temperature); // report color temperature back to the Home Assistant
 }
 
 void setup() {
@@ -51,9 +59,14 @@ void setup() {
     // In this mode you won't need to report state back to the HA when commands are executed.
     // light.setOptimistic(true);
 
+    // Color temperature range (optional)
+    // light.setMinMireds(50);
+    // light.setMaxMireds(200);
+
     // handle light states
     light.onStateCommand(onStateCommand);
-    light.onBrightnessCommand(onBrightnessCommand);
+    light.onBrightnessCommand(onBrightnessCommand); // optional
+    light.onColorTemperatureCommand(onColorTemperatureCommand); // optional
 
     mqtt.begin(BROKER_ADDR);
 }
