@@ -5,14 +5,17 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
+const uint8_t HAFan::DefaultSpeedRangeMin = 1;
+const uint8_t HAFan::DefaultSpeedRangeMax = 100;
+
 HAFan::HAFan(const char* uniqueId, const Features features) :
     HABaseDeviceType(AHATOFSTR(HAComponentFan), uniqueId),
     _features(features),
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _speedRangeMax(100),
-    _speedRangeMin(1),
+    _speedRangeMax(DefaultSpeedRangeMax),
+    _speedRangeMin(DefaultSpeedRangeMin),
     _currentState(false),
     _currentSpeedPercentage(0),
     _stateCallback(nullptr),
@@ -80,7 +83,7 @@ void HAFan::buildSerializer()
         _serializer->topic(AHATOFSTR(HAPercentageStateTopic));
         _serializer->topic(AHATOFSTR(HAPercentageCommandTopic));
 
-        if (_speedRangeMax != 100) {
+        if (_speedRangeMax != DefaultSpeedRangeMax) {
             _serializer->set(
                 AHATOFSTR(HASpeedRangeMaxProperty),
                 &_speedRangeMax,
@@ -88,7 +91,7 @@ void HAFan::buildSerializer()
             );
         }
 
-        if (_speedRangeMin != 1) {
+        if (_speedRangeMin != DefaultSpeedRangeMin) {
             _serializer->set(
                 AHATOFSTR(HASpeedRangeMinProperty),
                 &_speedRangeMin,
@@ -191,7 +194,7 @@ void HAFan::handleSpeedCommand(const char* cmd, const uint16_t length)
     }
 
     HAUtils::Number number = HAUtils::strToNumber(cmd);
-    if (number != HAUtils::NumberMax && number >= 0 && number <= 255) {
+    if (number != HAUtils::NumberMax && number >= 0 && number <= 100) { // 0-100%
         _speedCallback(static_cast<uint8_t>(number), this);
     }
 }

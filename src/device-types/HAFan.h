@@ -21,6 +21,9 @@
 class HAFan : public HABaseDeviceType
 {
 public:
+    static const uint8_t DefaultSpeedRangeMin;
+    static const uint8_t DefaultSpeedRangeMax;
+
     enum Features {
         DefaultFeatures = 0,
         SpeedsFeature = 1
