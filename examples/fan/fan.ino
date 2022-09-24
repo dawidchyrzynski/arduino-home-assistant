@@ -48,7 +48,7 @@ void setup() {
 
     // Optionally you can enable optimistic mode for the HAFan.
     // In this mode you won't need to report state back to the HA when commands are executed.
-    // fa.setOptimistic(true);
+    // fan.setOptimistic(true);
 
     // handle fan states
     fan.onStateCommand(onStateCommand);

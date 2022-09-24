@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HALight class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HALock class" href="ha-lock.html" />
+  <link rel="prev" title="HAFan class" href="ha-fan.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HALight class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-fan.html"
+       title="previous chapter">← HAFan class</a>
+  </li>
+  <li class="next">
+    <a href="ha-lock.html"
+       title="next chapter">HALock class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="halight-class">
+<h1>HALight class<a class="headerlink" href="#halight-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv47HALight">
+<span id="_CPPv37HALight"></span><span id="_CPPv27HALight"></span><span id="HALight"></span><span class="target" id="class_h_a_light"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HALight</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv47HALight" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_light"><span class="std std-ref">HALight</span></a> allows adding a controllable light in the Home Assistant panel. The library supports only the state, brightness and color temperature. If you want more features please open a new GitHub issue.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/light.mqtt/">https://www.home-assistant.io/integrations/light.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8FeaturesE">
+<span id="_CPPv3N7HALight8FeaturesE"></span><span id="_CPPv2N7HALight8FeaturesE"></span><span class="target" id="class_h_a_light_1aacae5a7d42203d2fcc1b3a7307644e04"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Features</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8FeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8Features15DefaultFeaturesE">
+<span id="_CPPv3N7HALight8Features15DefaultFeaturesE"></span><span id="_CPPv2N7HALight8Features15DefaultFeaturesE"></span><span class="target" id="class_h_a_light_1aacae5a7d42203d2fcc1b3a7307644e04a8461e6240acbfee73d608adc189247a9"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFeatures</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8Features15DefaultFeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8Features17BrightnessFeatureE">
+<span id="_CPPv3N7HALight8Features17BrightnessFeatureE"></span><span id="_CPPv2N7HALight8Features17BrightnessFeatureE"></span><span class="target" id="class_h_a_light_1aacae5a7d42203d2fcc1b3a7307644e04a278ccd60b0f03bc1e0dcfb80250d3fca"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BrightnessFeature</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8Features17BrightnessFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight7HALightEPKcK8Features">
+<span id="_CPPv3N7HALight7HALightEPKcK8Features"></span><span id="_CPPv2N7HALight7HALightEPKcK8Features"></span><span id="HALight::HALight__cCP.FeaturesC"></span><span class="target" id="class_h_a_light_1af7a1ab911e8c6cd9f19e3dc1d90ba54e"></span><span class="sig-name descname"><span class="n"><span class="pre">HALight</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HALight8FeaturesE" title="HALight::Features"><span class="n"><span class="pre">Features</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">features</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HALight8Features15DefaultFeaturesE" title="HALight::DefaultFeatures"><span class="n"><span class="pre">DefaultFeatures</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight7HALightEPKcK8Features" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the light. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>features</strong> – Features that should be enabled for the light. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8setStateEKbKb">
+<span id="_CPPv3N7HALight8setStateEKbKb"></span><span id="_CPPv2N7HALight8setStateEKbKb"></span><span id="HALight::setState__bC.bC"></span><span class="target" id="class_h_a_light_1a5e84fdff0a3b437041d2bd485e90df5f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight8setStateEKbKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the light and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the light. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight13setBrightnessEK7uint8_tKb">
+<span id="_CPPv3N7HALight13setBrightnessEK7uint8_tKb"></span><span id="_CPPv2N7HALight13setBrightnessEK7uint8_tKb"></span><span id="HALight::setBrightness__uint8_tC.bC"></span><span class="target" id="class_h_a_light_1a21dfe94eec97d858cba1b057033d5124"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setBrightness</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">brightness</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight13setBrightnessEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes the brightness of the light and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>brightness</strong> – The new brightness of the light. </p></li>
+<li><p><strong>force</strong> – Forces to update the state without comparing it to a previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight6turnOnEv">
+<span id="_CPPv3N7HALight6turnOnEv"></span><span id="_CPPv2N7HALight6turnOnEv"></span><span id="HALight::turnOn"></span><span class="target" id="class_h_a_light_1a7303eb816afd2b8533aa3911a4a65d45"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOn</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight6turnOnEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(true)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight7turnOffEv">
+<span id="_CPPv3N7HALight7turnOffEv"></span><span id="_CPPv2N7HALight7turnOffEv"></span><span id="HALight::turnOff"></span><span class="target" id="class_h_a_light_1a1ad06f7f15305d560c0b020b56b7c459"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOff</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight7turnOffEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(false)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight15setCurrentStateEKb">
+<span id="_CPPv3N7HALight15setCurrentStateEKb"></span><span id="_CPPv2N7HALight15setCurrentStateEKb"></span><span id="HALight::setCurrentState__bC"></span><span class="target" id="class_h_a_light_1a2c98c9bdc1ffd821b84eac8093b713ce"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight15setCurrentStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the light without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the light. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7HALight15getCurrentStateEv">
+<span id="_CPPv3NK7HALight15getCurrentStateEv"></span><span id="_CPPv2NK7HALight15getCurrentStateEv"></span><span id="HALight::getCurrentStateC"></span><span class="target" id="class_h_a_light_1a0bab1803652832730b2c055036ce1688"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HALight15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the light. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight20setCurrentBrightnessEK7uint8_t">
+<span id="_CPPv3N7HALight20setCurrentBrightnessEK7uint8_t"></span><span id="_CPPv2N7HALight20setCurrentBrightnessEK7uint8_t"></span><span id="HALight::setCurrentBrightness__uint8_tC"></span><span class="target" id="class_h_a_light_1ac4cb2771682305b8ecba6faf57cb97c1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentBrightness</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">brightness</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight20setCurrentBrightnessEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current brightness of the light without pushing the value to Home Assistant. This method may be useful if you want to change the brightness before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>brightness</strong> – The new brightness of the light. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7HALight20getCurrentBrightnessEv">
+<span id="_CPPv3NK7HALight20getCurrentBrightnessEv"></span><span id="_CPPv2NK7HALight20getCurrentBrightnessEv"></span><span id="HALight::getCurrentBrightnessC"></span><span class="target" id="class_h_a_light_1a5da5ff85a780d7a30eb7ac9ffd1b8aff"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentBrightness</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HALight20getCurrentBrightnessEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the last known brightness of the light. By default brightness is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight7setIconEPKc">
+<span id="_CPPv3N7HALight7setIconEPKc"></span><span id="_CPPv2N7HALight7setIconEPKc"></span><span id="HALight::setIcon__cCP"></span><span class="target" id="class_h_a_light_1af68c2caf4cdfeaeb382868800e1f5545"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the light. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight9setRetainEKb">
+<span id="_CPPv3N7HALight9setRetainEKb"></span><span id="_CPPv2N7HALight9setRetainEKb"></span><span id="HALight::setRetain__bC"></span><span class="target" id="class_h_a_light_1ad141999630bff120289680150e960601"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the light’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight13setOptimisticEKb">
+<span id="_CPPv3N7HALight13setOptimisticEKb"></span><span id="_CPPv2N7HALight13setOptimisticEKb"></span><span id="HALight::setOptimistic__bC"></span><span class="target" id="class_h_a_light_1a0cff71d00dee8da9cef6a435ab5e496d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the light state. In this mode the light state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight18setBrightnessScaleEK7uint8_t">
+<span id="_CPPv3N7HALight18setBrightnessScaleEK7uint8_t"></span><span id="_CPPv2N7HALight18setBrightnessScaleEK7uint8_t"></span><span id="HALight::setBrightnessScale__uint8_tC"></span><span class="target" id="class_h_a_light_1a851b377064ebafbc75f0276315d9a4fb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setBrightnessScale</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">scale</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight18setBrightnessScaleEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the maximum brightness value that can be set via HA panel. By default it’s <code class="docutils literal notranslate"><span class="pre">255</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scale</strong> – The maximum value of the brightness. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight14onStateCommandEPFvbP7HALightE">
+<span id="_CPPv3N7HALight14onStateCommandEPFvbP7HALightE"></span><span id="_CPPv2N7HALight14onStateCommandEPFvbP7HALightE"></span><span class="target" id="class_h_a_light_1a5801c5d28183e4d6a71abf812f0e7a68"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onStateCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight14onStateCommandEPFvbP7HALightE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the state command from HA is received. Please note that it’s not possible to register multiple callbacks for the same light.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight19onBrightnessCommandEPFv7uint8_tP7HALightE">
+<span id="_CPPv3N7HALight19onBrightnessCommandEPFv7uint8_tP7HALightE"></span><span id="_CPPv2N7HALight19onBrightnessCommandEPFv7uint8_tP7HALightE"></span><span class="target" id="class_h_a_light_1ab8223daf6d165b9e98936896431c086f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onBrightnessCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">brightness</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight19onBrightnessCommandEPFv7uint8_tP7HALightE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the brightness command from HA is received. Please note that it’s not possible to register multiple callbacks for the same light.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight22DefaultBrightnessScaleE">
+<span id="_CPPv3N7HALight22DefaultBrightnessScaleE"></span><span id="_CPPv2N7HALight22DefaultBrightnessScaleE"></span><span id="HALight::DefaultBrightnessScale__uint8_tC"></span><span class="target" id="class_h_a_light_1a1aa9587ea7ffd881b8021e267887d56c"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultBrightnessScale</span></span></span><a class="headerlink" href="#_CPPv4N7HALight22DefaultBrightnessScaleE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight15buildSerializerEv">
+<span id="_CPPv3N7HALight15buildSerializerEv"></span><span id="_CPPv2N7HALight15buildSerializerEv"></span><span id="HALight::buildSerializer"></span><span class="target" id="class_h_a_light_1a85a21bd750c99d5b67809ad982cccd91"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N7HALight15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight15onMqttConnectedEv">
+<span id="_CPPv3N7HALight15onMqttConnectedEv"></span><span id="_CPPv2N7HALight15onMqttConnectedEv"></span><span id="HALight::onMqttConnected"></span><span class="target" id="class_h_a_light_1a595e4b9b9b7e6204a222b4fe11cdea96"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N7HALight15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N7HALight13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N7HALight13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HALight::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_light_1a9f9836f5420732e5c97b6b77d6334320"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N7HALight13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight12publishStateEKb">
+<span id="_CPPv3N7HALight12publishStateEKb"></span><span id="_CPPv2N7HALight12publishStateEKb"></span><span id="HALight::publishState__bC"></span><span class="target" id="class_h_a_light_1a54b5424f3e5e82462358b3e0578e4122"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight12publishStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The state to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight17publishBrightnessEK7uint8_t">
+<span id="_CPPv3N7HALight17publishBrightnessEK7uint8_t"></span><span id="_CPPv2N7HALight17publishBrightnessEK7uint8_t"></span><span id="HALight::publishBrightness__uint8_tC"></span><span class="target" id="class_h_a_light_1a8ac981bd408b598523f0792f1b0f229d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishBrightness</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">brightness</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight17publishBrightnessEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given brightness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>brightness</strong> – The brightness to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight18handleStateCommandEPKcK8uint16_t">
+<span id="_CPPv3N7HALight18handleStateCommandEPKcK8uint16_t"></span><span id="_CPPv2N7HALight18handleStateCommandEPKcK8uint16_t"></span><span id="HALight::handleStateCommand__cCP.uint16_tC"></span><span class="target" id="class_h_a_light_1affe4fa7b627fa9bc48ce3e5265f6e1fc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleStateCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight18handleStateCommandEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given state command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The string representation of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight23handleBrightnessCommandEPKcK8uint16_t">
+<span id="_CPPv3N7HALight23handleBrightnessCommandEPKcK8uint16_t"></span><span id="_CPPv2N7HALight23handleBrightnessCommandEPKcK8uint16_t"></span><span id="HALight::handleBrightnessCommand__cCP.uint16_tC"></span><span class="target" id="class_h_a_light_1a01371deaacbdc4a237319c11d1ceece4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleBrightnessCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight23handleBrightnessCommandEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given brightness command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The string representation of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight9_featuresE">
+<span id="_CPPv3N7HALight9_featuresE"></span><span id="_CPPv2N7HALight9_featuresE"></span><span id="HALight::_features__uint8_tC"></span><span class="target" id="class_h_a_light_1a2256aa2b53963e00bff24c47a63e444b"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_features</span></span></span><a class="headerlink" href="#_CPPv4N7HALight9_featuresE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Features enabled for the light. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight5_iconE">
+<span id="_CPPv3N7HALight5_iconE"></span><span id="_CPPv2N7HALight5_iconE"></span><span id="HALight::_icon__cCP"></span><span class="target" id="class_h_a_light_1a7539188e9dd6c7386d113e8a8678f708"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N7HALight5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the button. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight7_retainE">
+<span id="_CPPv3N7HALight7_retainE"></span><span id="_CPPv2N7HALight7_retainE"></span><span id="HALight::_retain__b"></span><span class="target" id="class_h_a_light_1abd06493cdb7682adefa85972b68abec6"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_retain</span></span></span><a class="headerlink" href="#_CPPv4N7HALight7_retainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The retain flag for the HA commands. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight11_optimisticE">
+<span id="_CPPv3N7HALight11_optimisticE"></span><span id="_CPPv2N7HALight11_optimisticE"></span><span id="HALight::_optimistic__b"></span><span class="target" id="class_h_a_light_1af692ba47b500e06e4acfb5898da57c3d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N7HALight11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The optimistic mode of the light (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight16_brightnessScaleE">
+<span id="_CPPv3N7HALight16_brightnessScaleE"></span><span id="_CPPv2N7HALight16_brightnessScaleE"></span><span id="HALight::_brightnessScale__uint8_t"></span><span class="target" id="class_h_a_light_1a065e90cc63fe34cdab4a7bfff932f418"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_brightnessScale</span></span></span><a class="headerlink" href="#_CPPv4N7HALight16_brightnessScaleE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The maximum value of the brightness. By default it’s 255. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight13_currentStateE">
+<span id="_CPPv3N7HALight13_currentStateE"></span><span id="_CPPv2N7HALight13_currentStateE"></span><span id="HALight::_currentState__b"></span><span class="target" id="class_h_a_light_1abbbcb8c8705c3c79cdb06e79c813e0e9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N7HALight13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current state of the light. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight18_currentBrightnessE">
+<span id="_CPPv3N7HALight18_currentBrightnessE"></span><span id="_CPPv2N7HALight18_currentBrightnessE"></span><span id="HALight::_currentBrightness__uint8_t"></span><span class="target" id="class_h_a_light_1a812b7f21b85cf089c6c2f1ccbf93edd9"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentBrightness</span></span></span><a class="headerlink" href="#_CPPv4N7HALight18_currentBrightnessE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current brightness of the light. By default it’s <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight14_stateCallbackE">
+<span id="_CPPv3N7HALight14_stateCallbackE"></span><span id="_CPPv2N7HALight14_stateCallbackE"></span><span class="target" id="class_h_a_light_1a05bab537923c6e1d4d1eaba71ef3d668"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HALight14_stateCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the state command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight19_brightnessCallbackE">
+<span id="_CPPv3N7HALight19_brightnessCallbackE"></span><span id="_CPPv2N7HALight19_brightnessCallbackE"></span><span class="target" id="class_h_a_light_1a190c683e2c43e3138537a1daa90eb35a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_brightnessCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">brightness</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HALight19_brightnessCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the brightness command is received from the HA. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-fan.html"
+       title="previous chapter">← HAFan class</a>
+  </li>
+  <li class="next">
+    <a href="ha-lock.html"
+       title="next chapter">HALock class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

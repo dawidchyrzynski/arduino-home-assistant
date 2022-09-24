@@ -82,8 +82,8 @@ Supported device types
      - ❌
      - --
    * - Light
-     - ❌
-     - --
+     - ✅
+     - :doc:`HALight </documents/api/device-types/ha-light>`
    * - Lock
      - ✅
      - :doc:`HALock </documents/api/device-types/ha-lock>`

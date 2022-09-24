@@ -29,7 +29,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Fan                 |     ✅     |     -    |
 | Humidifier          |     ❌     |     -    |
 | HVAC\*              |     ❌     |     -    |
-| Light               |     ❌     |     -    |
+| Light               |     ✅     |     -    |
 | Lock                |     ✅     |     -    |
 | Number              |     ✅     |     -    |
 | Scene               |     ✅     |     -    |

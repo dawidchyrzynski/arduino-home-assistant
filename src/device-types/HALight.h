@@ -10,7 +10,9 @@
 #define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
 
 /**
- * 
+ * HALight allows adding a controllable light in the Home Assistant panel.
+ * The library supports only the state, brightness and color temperature.
+ * If you want more features please open a new GitHub issue.
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:

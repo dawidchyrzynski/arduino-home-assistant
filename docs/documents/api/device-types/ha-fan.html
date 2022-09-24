@@ -24,7 +24,7 @@
     
   <link rel="index" title="Index" href="../../../genindex.html" />
   <link rel="search" title="Search" href="../../../search.html" />
-  <link rel="next" title="HALock class" href="ha-lock.html" />
+  <link rel="next" title="HALight class" href="ha-light.html" />
   <link rel="prev" title="HADeviceTrigger class" href="ha-device-trigger.html" /> 
   </head>
 
@@ -138,8 +138,8 @@
        title="previous chapter">← HADeviceTrigger class</a>
   </li>
   <li class="next">
-    <a href="ha-lock.html"
-       title="next chapter">HALock class →</a>
+    <a href="ha-light.html"
+       title="next chapter">HALight class →</a>
   </li>
 </ul>
   
@@ -329,7 +329,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onStateCommandEPFvbP5HAFanE">
 <span id="_CPPv3N5HAFan14onStateCommandEPFvbP5HAFanE"></span><span id="_CPPv2N5HAFan14onStateCommandEPFvbP5HAFanE"></span><span class="target" id="class_h_a_fan_1abe03e2ddf7aa3e4dd539a87a04289ee8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onStateCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onStateCommandEPFvbP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Registers callback that will be called each time the state command from HA is received. Please note that it’s not possible to register multiple callbacks for the same cover.</p>
+<dd><p>Registers callback that will be called each time the state command from HA is received. Please note that it’s not possible to register multiple callbacks for the same fan.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>callback</strong> – </p>
@@ -340,13 +340,26 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE">
 <span id="_CPPv3N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE"></span><span id="_CPPv2N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE"></span><span class="target" id="class_h_a_fan_1a68cbbeb3b2ad835c2860e2d0099516f7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onSpeedCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">speedPercentage</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Registers callback that will be called each time the speed command from HA is received. Please note that it’s not possible to register multiple callbacks for the same cover.</p>
+<dd><p>Registers callback that will be called each time the speed command from HA is received. Please note that it’s not possible to register multiple callbacks for the same fan.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>callback</strong> – </p>
 </dd>
 </dl>
 </dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan20DefaultSpeedRangeMinE">
+<span id="_CPPv3N5HAFan20DefaultSpeedRangeMinE"></span><span id="_CPPv2N5HAFan20DefaultSpeedRangeMinE"></span><span id="HAFan::DefaultSpeedRangeMin__uint8_tC"></span><span class="target" id="class_h_a_fan_1a00527450ce47ff31544ddaf3cafb1290"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultSpeedRangeMin</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan20DefaultSpeedRangeMinE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan20DefaultSpeedRangeMaxE">
+<span id="_CPPv3N5HAFan20DefaultSpeedRangeMaxE"></span><span id="_CPPv2N5HAFan20DefaultSpeedRangeMaxE"></span><span id="HAFan::DefaultSpeedRangeMax__uint8_tC"></span><span class="target" id="class_h_a_fan_1aeb03185235800985973f6d7ca1724220"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultSpeedRangeMax</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan20DefaultSpeedRangeMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
@@ -502,8 +515,8 @@
        title="previous chapter">← HADeviceTrigger class</a>
   </li>
   <li class="next">
-    <a href="ha-lock.html"
-       title="next chapter">HALock class →</a>
+    <a href="ha-light.html"
+       title="next chapter">HALight class →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2022, Dawid Chyrzynski.
