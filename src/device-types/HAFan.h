@@ -10,7 +10,9 @@
 #define HAFAN_SPEED_CALLBACK(name) void (*name)(uint8_t speedPercentage, HAFan* sender)
 
 /**
- * 
+ * HAFan allows adding a controllable fan in the Home Assistant panel.
+ * The library supports only the state and speed of the fan.
+ * If you want more features please open a new GitHub issue.
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:

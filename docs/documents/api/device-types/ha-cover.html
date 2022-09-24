@@ -216,15 +216,34 @@
 
 </dd></dl>
 
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover8FeaturesE">
+<span id="_CPPv3N7HACover8FeaturesE"></span><span id="_CPPv2N7HACover8FeaturesE"></span><span class="target" id="class_h_a_cover_1ab349728070a8155b5e324e262164bdcc"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Features</span></span></span><a class="headerlink" href="#_CPPv4N7HACover8FeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover8Features15DefaultFeaturesE">
+<span id="_CPPv3N7HACover8Features15DefaultFeaturesE"></span><span id="_CPPv2N7HACover8Features15DefaultFeaturesE"></span><span class="target" id="class_h_a_cover_1ab349728070a8155b5e324e262164bdcca842f269795f95b472dd650e681aa9d52"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFeatures</span></span></span><a class="headerlink" href="#_CPPv4N7HACover8Features15DefaultFeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover8Features15PositionFeatureE">
+<span id="_CPPv3N7HACover8Features15PositionFeatureE"></span><span id="_CPPv2N7HACover8Features15PositionFeatureE"></span><span class="target" id="class_h_a_cover_1ab349728070a8155b5e324e262164bdccad9486dafd6b99659a46aea97bfef3ce6"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PositionFeature</span></span></span><a class="headerlink" href="#_CPPv4N7HACover8Features15PositionFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HACover7HACoverEPKc">
-<span id="_CPPv3N7HACover7HACoverEPKc"></span><span id="_CPPv2N7HACover7HACoverEPKc"></span><span id="HACover::HACover__cCP"></span><span class="target" id="class_h_a_cover_1a46470c2ac8df23cc58f6da44fee9a09b"></span><span class="sig-name descname"><span class="n"><span class="pre">HACover</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover7HACoverEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover7HACoverEPKcK8Features">
+<span id="_CPPv3N7HACover7HACoverEPKcK8Features"></span><span id="_CPPv2N7HACover7HACoverEPKcK8Features"></span><span id="HACover::HACover__cCP.FeaturesC"></span><span class="target" id="class_h_a_cover_1a734701c0938c9e8853f87645ba8a6278"></span><span class="sig-name descname"><span class="n"><span class="pre">HACover</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover8FeaturesE" title="HACover::Features"><span class="n"><span class="pre">Features</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">features</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover8Features15DefaultFeaturesE" title="HACover::DefaultFeatures"><span class="n"><span class="pre">DefaultFeatures</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover7HACoverEPKcK8Features" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the cover. It needs to be unique in a scope of your device. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the cover. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>features</strong> – Features that should be enabled for the fan. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -426,6 +445,12 @@
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover9_featuresE">
+<span id="_CPPv3N7HACover9_featuresE"></span><span id="_CPPv2N7HACover9_featuresE"></span><span id="HACover::_features__uint8_tC"></span><span class="target" id="class_h_a_cover_1a3e458afa9f7be9a312a5a7e22679ea18"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_features</span></span></span><a class="headerlink" href="#_CPPv4N7HACover9_featuresE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Features enabled for the cover. </p>
+</dd></dl>
+
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7HACover13_currentStateE">
 <span id="_CPPv3N7HACover13_currentStateE"></span><span id="_CPPv2N7HACover13_currentStateE"></span><span id="HACover::_currentState__CoverState"></span><span class="target" id="class_h_a_cover_1a1ebddaf7dc9e916708c7db64d4db5b47"></span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N7HACover13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
