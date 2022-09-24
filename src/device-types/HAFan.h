@@ -33,7 +33,7 @@ public:
      * @param uniqueId The unique ID of the fan. It needs to be unique in a scope of your device.
      * @param features Features that should be enabled for the fan.
      */
-    HAFan(const char* uniqueId, const Features features = DefaultFeatures);
+    HAFan(const char* uniqueId, const uint8_t features = DefaultFeatures);
 
     /**
      * Changes state of the fan and publishes MQTT message.
@@ -52,7 +52,7 @@ public:
      * the MQTT message won't be published.
      *
      * @param speedPercentage The new speed percentage of the fan.
-     * @param force Forces to update the state without comparing it to a previous known state.
+     * @param force Forces to update the value without comparing it to a previous known value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setSpeed(const uint8_t speedPercentage, const bool force = false);

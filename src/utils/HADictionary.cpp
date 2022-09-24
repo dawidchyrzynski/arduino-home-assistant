@@ -59,6 +59,8 @@ const char HACommandTemplateProperty[] PROGMEM = {"cmd_tpl"};
 const char HASpeedRangeMaxProperty[] PROGMEM = {"spd_rng_max"};
 const char HASpeedRangeMinProperty[] PROGMEM = {"spd_rng_min"};
 const char HABrightnessScaleProperty[] PROGMEM = {"bri_scl"};
+const char HAMinMiredsProperty[] PROGMEM = {"min_mirs"};
+const char HAMaxMiredsProperty[] PROGMEM = {"max_mirs"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -71,6 +73,8 @@ const char HAPercentageStateTopic[] PROGMEM = {"pct_stat_t"};
 const char HAPercentageCommandTopic[] PROGMEM = {"pct_cmd_t"};
 const char HABrightnessCommandTopic[] PROGMEM = {"bri_cmd_t"};
 const char HABrightnessStateTopic[] PROGMEM = {"bri_stat_t"};
+const char HAColorTemperatureCommandTopic[] PROGMEM = {"clr_temp_cmd_t"};
+const char HAColorTemperatureStateTopic[] PROGMEM = {"clr_temp_stat_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

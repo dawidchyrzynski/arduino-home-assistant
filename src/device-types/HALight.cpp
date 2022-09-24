@@ -6,8 +6,10 @@
 #include "../utils/HASerializer.h"
 
 const uint8_t HALight::DefaultBrightnessScale = 255;
+const uint16_t HALight::DefaultMinMireds = 153;
+const uint16_t HALight::DefaultMaxMireds = 500;
 
-HALight::HALight(const char* uniqueId, const Features features) :
+HALight::HALight(const char* uniqueId, const uint8_t features) :
     HABaseDeviceType(AHATOFSTR(HAComponentLight), uniqueId),
     _features(features),
     _icon(nullptr),
@@ -16,8 +18,12 @@ HALight::HALight(const char* uniqueId, const Features features) :
     _brightnessScale(DefaultBrightnessScale),
     _currentState(false),
     _currentBrightness(0),
+    _minMireds(DefaultMinMireds),
+    _maxMireds(DefaultMaxMireds),
+    _currentColorTemperature(0),
     _stateCallback(nullptr),
-    _brightnessCallback(nullptr)
+    _brightnessCallback(nullptr),
+    _colorTemperatureCallback(nullptr)
 {
 
 }
@@ -50,13 +56,27 @@ bool HALight::setBrightness(const uint8_t brightness, const bool force)
     return false;
 }
 
+bool HALight::setColorTemperature(const uint16_t temperature, const bool force)
+{
+    if (!force && temperature == _currentColorTemperature) {
+        return true;
+    }
+
+    if (publishColorTemperature(temperature)) {
+        _currentColorTemperature = temperature;
+        return true;
+    }
+
+    return false;
+}
+
 void HALight::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
         return;
     }
 
-    _serializer = new HASerializer(this, 12); // 12 - max properties nb
+    _serializer = new HASerializer(this, 16); // 16 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -90,6 +110,27 @@ void HALight::buildSerializer()
         }
     }
 
+    if (_features & ColorTemperatureFeature) {
+        _serializer->topic(AHATOFSTR(HAColorTemperatureStateTopic));
+        _serializer->topic(AHATOFSTR(HAColorTemperatureCommandTopic));
+
+        if (_minMireds != DefaultMinMireds) {
+            _serializer->set(
+                AHATOFSTR(HAMinMiredsProperty),
+                &_minMireds,
+                HASerializer::NumberP0PropertyType
+            );
+        }
+
+        if (_maxMireds != DefaultMaxMireds) {
+            _serializer->set(
+                AHATOFSTR(HAMaxMiredsProperty),
+                &_maxMireds,
+                HASerializer::NumberP0PropertyType
+            );
+        }
+    }
+
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HAStateTopic));
@@ -108,12 +149,17 @@ void HALight::onMqttConnected()
     if (!_retain) {
         publishState(_currentState);
         publishBrightness(_currentBrightness);
+        publishColorTemperature(_currentColorTemperature);
     }
 
     subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
 
     if (_features & BrightnessFeature) {
         subscribeTopic(uniqueId(), AHATOFSTR(HABrightnessCommandTopic));
+    }
+
+    if (_features & ColorTemperatureFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAColorTemperatureCommandTopic));
     }
 }
 
@@ -135,6 +181,15 @@ void HALight::onMqttMessage(
         AHATOFSTR(HABrightnessCommandTopic)
     )) {
         handleBrightnessCommand(reinterpret_cast<const char*>(payload), length);
+    }  else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HAColorTemperatureCommandTopic)
+    )) {
+        handleColorTemperatureCommand(
+            reinterpret_cast<const char*>(payload),
+            length
+        );
     }
 }
 
@@ -165,6 +220,29 @@ bool HALight::publishBrightness(const uint8_t brightness)
     return publishOnDataTopic(AHATOFSTR(HABrightnessStateTopic), str, true);
 }
 
+bool HALight::publishColorTemperature(const uint16_t temperature)
+{
+    if (
+        !uniqueId() ||
+        !(_features & ColorTemperatureFeature) ||
+        temperature < _minMireds ||
+        temperature > _maxMireds
+    ) {
+        return false;
+    }
+
+    uint8_t size = HAUtils::calculateNumberSize(temperature);
+    if (size == 0) {
+        return false;
+    }
+
+    char str[size + 1]; // with null terminator
+    str[size] = 0;
+    HAUtils::numberToStr(str, temperature);
+
+    return publishOnDataTopic(AHATOFSTR(HAColorTemperatureStateTopic), str, true);
+}
+
 void HALight::handleStateCommand(const char* cmd, const uint16_t length)
 {
     (void)cmd;
@@ -190,6 +268,25 @@ void HALight::handleBrightnessCommand(const char* cmd, const uint16_t length)
         number <= _brightnessScale
     ) {
         _brightnessCallback(static_cast<uint8_t>(number), this);
+    }
+}
+
+void HALight::handleColorTemperatureCommand(
+    const char* cmd,
+    const uint16_t length
+)
+{
+    if (!_colorTemperatureCallback) {
+        return;
+    }
+
+    HAUtils::Number number = HAUtils::strToNumber(cmd);
+    if (
+        number != HAUtils::NumberMax &&
+        number >= _minMireds &&
+        number <= _maxMireds
+    ) {
+        _colorTemperatureCallback(static_cast<uint16_t>(number), this);
     }
 }
 

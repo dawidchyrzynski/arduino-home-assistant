@@ -8,6 +8,7 @@
 
 #define HALIGHT_STATE_CALLBACK(name) void (*name)(bool state, HALight* sender)
 #define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
+#define HALIGHT_COLOR_TEMP_CALLBACK(name) void (*name)(uint16_t temperature, HALight* sender)
 
 /**
  * HALight allows adding a controllable light in the Home Assistant panel.
@@ -22,17 +23,22 @@ class HALight : public HABaseDeviceType
 {
 public:
     static const uint8_t DefaultBrightnessScale;
+    static const uint16_t DefaultMinMireds;
+    static const uint16_t DefaultMaxMireds;
 
     enum Features {
         DefaultFeatures = 0,
-        BrightnessFeature = 1
+        BrightnessFeature = 1,
+        ColorTemperatureFeature = 2
     };
 
     /**
      * @param uniqueId The unique ID of the light. It needs to be unique in a scope of your device.
      * @param features Features that should be enabled for the light.
+     *                 You can enable multiple features by using OR bitwise operator, for example:
+     *                 `HALight::BrightnessFeature | HALight::ColorTemperatureFeature`
      */
-    HALight(const char* uniqueId, const Features features = DefaultFeatures);
+    HALight(const char* uniqueId, const uint8_t features = DefaultFeatures);
 
     /**
      * Changes state of the light and publishes MQTT message.
@@ -51,10 +57,21 @@ public:
      * the MQTT message won't be published.
      *
      * @param brightness The new brightness of the light.
-     * @param force Forces to update the state without comparing it to a previous known state.
+     * @param force Forces to update the value without comparing it to a previous known value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setBrightness(const uint8_t brightness, const bool force = false);
+
+    /**
+     * Changes the color temperature of the light and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param temperature The new color temperature of the light.
+     * @param force Forces to update the value without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setColorTemperature(const uint16_t temperature, const bool force = false);
 
     /**
      * Alias for `setState(true)`.
@@ -100,7 +117,24 @@ public:
      * By default brightness is set to `0`.
      */
     inline uint8_t getCurrentBrightness() const
-        { return _currentBrightness; }  
+        { return _currentBrightness; }
+
+    /**
+     * Sets the current color temperature of the light without pushing the value to Home Assistant.
+     * This method may be useful if you want to change the color temperature before the connection
+     * with the MQTT broker is acquired.
+     *
+     * @param colorTemp The new color temperature (mireds).
+     */
+    inline void setCurrentColorTemperature(const uint16_t temperature)
+        { _currentColorTemperature = temperature; }
+
+    /**
+     * Returns the last known color temperature of the light.
+     * By default temperature is set to `0`.
+     */
+    inline uint16_t getCurrentColorTemperature() const
+        { return _currentColorTemperature; }
 
     /**
      * Sets icon of the light.
@@ -140,6 +174,24 @@ public:
         { _brightnessScale = scale; }
 
     /**
+     * Sets the minimum color temperature (mireds) value that can be set via HA panel.
+     * By default it's `153`.
+     *
+     * @param mireds The minimum value of the brightness.
+     */
+    inline void setMinMireds(const uint16_t mireds)
+        { _minMireds = mireds; }
+
+    /**
+     * Sets the maximum color temperature (mireds) value that can be set via HA panel.
+     * By default it's `500`.
+     *
+     * @param mireds The maximum value of the brightness.
+     */
+    inline void setMaxMireds(const uint16_t mireds)
+        { _maxMireds = mireds; }
+
+    /**
      * Registers callback that will be called each time the state command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
@@ -156,6 +208,15 @@ public:
      */
     inline void onBrightnessCommand(HALIGHT_BRIGHTNESS_CALLBACK(callback))
         { _brightnessCallback = callback; }
+
+    /**
+     * Registers callback that will be called each time the color temperature command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same light.
+     *
+     * @param callback
+     */
+    inline void onColorTemperatureCommand(HALIGHT_COLOR_TEMP_CALLBACK(callback))
+        { _colorTemperatureCallback = callback; }
 
 protected:
     virtual void buildSerializer() override;
@@ -184,8 +245,16 @@ private:
     bool publishBrightness(const uint8_t brightness);
 
     /**
+     * Publishes the MQTT message with the given color temperature (mireds).
+     *
+     * @param temperature The color temperature to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishColorTemperature(const uint16_t temperature);
+
+    /**
      * Parses the given state command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The string representation of the command.
      * @param length Length of the command.
      */
@@ -193,11 +262,19 @@ private:
 
     /**
      * Parses the given brightness command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The string representation of the command.
      * @param length Length of the command.
      */
     void handleBrightnessCommand(const char* cmd, const uint16_t length);
+
+    /**
+     * Parses the given color temperature command and executes the callback with proper value.
+     *
+     * @param cmd The string representation of the command.
+     * @param length Length of the command.
+     */
+    void handleColorTemperatureCommand(const char* cmd, const uint16_t length);
 
     /// Features enabled for the light.
     const uint8_t _features;
@@ -212,7 +289,7 @@ private:
     bool _optimistic;
 
     /// The maximum value of the brightness. By default it's 255.
-    uint8_t _brightnessScale;
+    HAUtils::Number _brightnessScale;
 
     /// The current state of the light. By default it's `false`.
     bool _currentState;
@@ -220,11 +297,23 @@ private:
     /// The current brightness of the light. By default it's `0`.
     uint8_t _currentBrightness;
 
+    /// The minimum color temperature (mireds). By default it's `153`.
+    HAUtils::Number _minMireds;
+
+    /// The maximum color temperature (mireds). By default it's `500`.
+    HAUtils::Number _maxMireds;
+
+    /// The current color temperature (mireds). Bu default it's `0`.
+    uint16_t _currentColorTemperature;
+
     /// The callback that will be called when the state command is received from the HA.
     HALIGHT_STATE_CALLBACK(_stateCallback);
 
     /// The callback that will be called when the brightness command is received from the HA.
-    HALIGHT_BRIGHTNESS_CALLBACK(_brightnessCallback);  
+    HALIGHT_BRIGHTNESS_CALLBACK(_brightnessCallback);
+
+    /// The callback that will be called when the color temperature command is received from the HA.
+    HALIGHT_COLOR_TEMP_CALLBACK(_colorTemperatureCallback);
 };
 
 #endif

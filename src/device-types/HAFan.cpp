@@ -8,7 +8,7 @@
 const uint8_t HAFan::DefaultSpeedRangeMin = 1;
 const uint8_t HAFan::DefaultSpeedRangeMax = 100;
 
-HAFan::HAFan(const char* uniqueId, const Features features) :
+HAFan::HAFan(const char* uniqueId, const uint8_t features) :
     HABaseDeviceType(AHATOFSTR(HAComponentFan), uniqueId),
     _features(features),
     _icon(nullptr),
