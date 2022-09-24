@@ -199,6 +199,40 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEKfKb">
+<span id="_CPPv3N8HANumber8setStateEKfKb"></span><span id="_CPPv2N8HANumber8setStateEKfKb"></span><span id="HANumber::setState__floatC.bC"></span><span class="target" id="class_h_a_number_1afd5c53d3a498b0828ba2adcb9a1ed97c"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEKfKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the number and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the number. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to a previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEKf">
+<span id="_CPPv3N8HANumber15setCurrentStateEKf"></span><span id="_CPPv2N8HANumber15setCurrentStateEKf"></span><span id="HANumber::setCurrentState__floatC"></span><span class="target" id="class_h_a_number_1a27ea5ab263e20107eaca4529fb68d123"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the number without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the number. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HANumber15getCurrentStateEv">
+<span id="_CPPv3NK8HANumber15getCurrentStateEv"></span><span id="_CPPv2NK8HANumber15getCurrentStateEv"></span><span id="HANumber::getCurrentStateC"></span><span class="target" id="class_h_a_number_1aaebd5498cdee9ee6bac60444752a3ac0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HANumber15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the number. If setState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber14setDeviceClassEPKc">
 <span id="_CPPv3N8HANumber14setDeviceClassEPKc"></span><span id="_CPPv2N8HANumber14setDeviceClassEPKc"></span><span id="HANumber::setDeviceClass__cCP"></span><span class="target" id="class_h_a_number_1ac6fa6da05a2c9689f1e1acb490e0215a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/number/#device-class">https://www.home-assistant.io/integrations/number/#device-class</a></p>
@@ -298,40 +332,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEKfKb">
-<span id="_CPPv3N8HANumber8setStateEKfKb"></span><span id="_CPPv2N8HANumber8setStateEKfKb"></span><span id="HANumber::setState__floatC.bC"></span><span class="target" id="class_h_a_number_1afd5c53d3a498b0828ba2adcb9a1ed97c"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEKfKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Changes state of the number and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> – New state of the number. </p></li>
-<li><p><strong>force</strong> – Forces to update state without comparing it to a previous known state. </p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEKf">
-<span id="_CPPv3N8HANumber15setCurrentStateEKf"></span><span id="_CPPv2N8HANumber15setCurrentStateEKf"></span><span id="HANumber::setCurrentState__floatC"></span><span class="target" id="class_h_a_number_1a27ea5ab263e20107eaca4529fb68d123"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEKf" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets current state of the number without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> – New state of the number. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK8HANumber15getCurrentStateEv">
-<span id="_CPPv3NK8HANumber15getCurrentStateEv"></span><span id="_CPPv2NK8HANumber15getCurrentStateEv"></span><span id="HANumber::getCurrentStateC"></span><span class="target" id="class_h_a_number_1aaebd5498cdee9ee6bac60444752a3ac0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HANumber15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known state of the number. If setState method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HANumber9onCommandEPFvN7HAUtils6NumberE7uint8_tP8HANumberE">
 <span id="_CPPv3N8HANumber9onCommandEPFvN7HAUtils6NumberE7uint8_tP8HANumberE"></span><span id="_CPPv2N8HANumber9onCommandEPFvN7HAUtils6NumberE7uint8_tP8HANumberE"></span><span class="target" id="class_h_a_number_1ad971bcb57473e161790a2ec9f10349ad"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv47HAUtils" title="HAUtils"><span class="n"><span class="pre">HAUtils</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HANumber" title="HANumber"><span class="n"><span class="pre">HANumber</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber9onCommandEPFvN7HAUtils6NumberE7uint8_tP8HANumberE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Registers callback that will be called each time the number is changed in the HA panel. Please note that it’s not possible to register multiple callbacks for the same number.</p>
@@ -387,12 +387,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13handleCommandEPKc">
-<span id="_CPPv3N8HANumber13handleCommandEPKc"></span><span id="_CPPv2N8HANumber13handleCommandEPKc"></span><span id="HANumber::handleCommand__cCP"></span><span class="target" id="class_h_a_number_1aebe9f82bc65003098c32e55d9d3967fc"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber13handleCommandEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13handleCommandEPKcK8uint16_t">
+<span id="_CPPv3N8HANumber13handleCommandEPKcK8uint16_t"></span><span id="_CPPv2N8HANumber13handleCommandEPKcK8uint16_t"></span><span id="HANumber::handleCommand__cCP.uint16_tC"></span><span class="target" id="class_h_a_number_1ab4b9b631a1258353789b6ef34fb0398c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber13handleCommandEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parses the given command and executes the number’s callback with proper value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> – The string representation of the command. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The string representation of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

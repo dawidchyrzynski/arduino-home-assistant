@@ -73,8 +73,8 @@ Supported device types
      - ✅
      - :doc:`HADeviceTrigger </documents/api/device-types/ha-device-trigger>`
    * - Fan
-     - ❌
-     - --
+     - ✅
+     - :doc:`HAFan </documents/api/device-types/ha-fan>`
    * - Humidifier
      - ❌
      - --

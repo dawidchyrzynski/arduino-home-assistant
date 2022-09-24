@@ -10,6 +10,7 @@ Device types API
     ha-cover
     ha-device-tracker
     ha-device-trigger
+    ha-fan
     ha-lock
     ha-number
     ha-scene

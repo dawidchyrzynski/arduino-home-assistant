@@ -247,23 +247,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HACover15setCurrentStateEK10CoverState">
-<span id="_CPPv3N7HACover15setCurrentStateEK10CoverState"></span><span id="_CPPv2N7HACover15setCurrentStateEK10CoverState"></span><span id="HACover::setCurrentState__CoverStateC"></span><span class="target" id="class_h_a_cover_1a9ac315467ca1d777d60185d10ccb583e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover15setCurrentStateEK10CoverState" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets the current state of the cover without publishing it to Home Assistant. This method may be useful if you want to change the state before the connection with the MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> – The new state of the cover. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK7HACover15getCurrentStateEv">
-<span id="_CPPv3NK7HACover15getCurrentStateEv"></span><span id="_CPPv2NK7HACover15getCurrentStateEv"></span><span id="HACover::getCurrentStateC"></span><span class="target" id="class_h_a_cover_1a3622be83282b1d3d00ddde58213fd1d5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HACover15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known state of the cover. By default the state is set to CoverState::StateUnknown </p>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7HACover11setPositionEK7int16_tKb">
 <span id="_CPPv3N7HACover11setPositionEK7int16_tKb"></span><span id="_CPPv2N7HACover11setPositionEK7int16_tKb"></span><span id="HACover::setPosition__int16_tC.bC"></span><span class="target" id="class_h_a_cover_1ac187b7e96c542810fd20fd825a7c9c76"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setPosition</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">position</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover11setPositionEK7int16_tKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes the position of the cover and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -278,6 +261,23 @@
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover15setCurrentStateEK10CoverState">
+<span id="_CPPv3N7HACover15setCurrentStateEK10CoverState"></span><span id="_CPPv2N7HACover15setCurrentStateEK10CoverState"></span><span id="HACover::setCurrentState__CoverStateC"></span><span class="target" id="class_h_a_cover_1a9ac315467ca1d777d60185d10ccb583e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover15setCurrentStateEK10CoverState" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current state of the cover without publishing it to Home Assistant. This method may be useful if you want to change the state before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The new state of the cover. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7HACover15getCurrentStateEv">
+<span id="_CPPv3NK7HACover15getCurrentStateEv"></span><span id="_CPPv2NK7HACover15getCurrentStateEv"></span><span id="HACover::getCurrentStateC"></span><span class="target" id="class_h_a_cover_1a3622be83282b1d3d00ddde58213fd1d5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HACover15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the cover. By default the state is set to CoverState::StateUnknown </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -410,12 +410,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HACover13handleCommandEPKc">
-<span id="_CPPv3N7HACover13handleCommandEPKc"></span><span id="_CPPv2N7HACover13handleCommandEPKc"></span><span id="HACover::handleCommand__cCP"></span><span class="target" id="class_h_a_cover_1a0437c58d4b67a93fdf117b834a53aab6"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover13handleCommandEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover13handleCommandEPKcK8uint16_t">
+<span id="_CPPv3N7HACover13handleCommandEPKcK8uint16_t"></span><span id="_CPPv2N7HACover13handleCommandEPKcK8uint16_t"></span><span id="HACover::handleCommand__cCP.uint16_tC"></span><span class="target" id="class_h_a_cover_1a2ed99c8b08cf74f5eae984d7971f52bb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HACover13handleCommandEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parses the given command and executes the cover’s callback with proper enum’s property.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> – The string representation of the command. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The string representation of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -423,12 +426,6 @@
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N7HACover16_commandCallbackE">
-<span id="_CPPv3N7HACover16_commandCallbackE"></span><span id="_CPPv2N7HACover16_commandCallbackE"></span><span class="target" id="class_h_a_cover_1a8a3466f0350ae8d5ce9607c36aae4509"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_commandCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N7HACover12CoverCommandE" title="HACover::CoverCommand"><span class="n"><span class="pre">CoverCommand</span></span></a><span class="w"> </span><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HACover" title="HACover"><span class="n"><span class="pre">HACover</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HACover16_commandCallbackE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The command callback that will be called when clicking the cover’s button in the HA panel. </p>
-</dd></dl>
-
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7HACover13_currentStateE">
 <span id="_CPPv3N7HACover13_currentStateE"></span><span id="_CPPv2N7HACover13_currentStateE"></span><span id="HACover::_currentState__CoverState"></span><span class="target" id="class_h_a_cover_1a1ebddaf7dc9e916708c7db64d4db5b47"></span><a class="reference internal" href="#_CPPv4N7HACover10CoverStateE" title="HACover::CoverState"><span class="n"><span class="pre">CoverState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N7HACover13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
@@ -463,6 +460,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N7HACover11_optimisticE">
 <span id="_CPPv3N7HACover11_optimisticE"></span><span id="_CPPv2N7HACover11_optimisticE"></span><span id="HACover::_optimistic__b"></span><span class="target" id="class_h_a_cover_1a93ff94c4c40fd06e627c5c1884f45d3a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N7HACover11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The optimistic mode of the cover (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HACover16_commandCallbackE">
+<span id="_CPPv3N7HACover16_commandCallbackE"></span><span id="_CPPv2N7HACover16_commandCallbackE"></span><span class="target" id="class_h_a_cover_1a8a3466f0350ae8d5ce9607c36aae4509"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_commandCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N7HACover12CoverCommandE" title="HACover::CoverCommand"><span class="n"><span class="pre">CoverCommand</span></span></a><span class="w"> </span><span class="n"><span class="pre">cmd</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HACover" title="HACover"><span class="n"><span class="pre">HACover</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HACover16_commandCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The command callback that will be called when clicking the cover’s button in the HA panel. </p>
 </dd></dl>
 
 </div>

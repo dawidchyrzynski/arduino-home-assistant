@@ -25,7 +25,7 @@
   <link rel="index" title="Index" href="../../../genindex.html" />
   <link rel="search" title="Search" href="../../../search.html" />
   <link rel="next" title="HANumber class" href="ha-number.html" />
-  <link rel="prev" title="HADeviceTrigger class" href="ha-device-trigger.html" /> 
+  <link rel="prev" title="HAFan class" href="ha-fan.html" /> 
   </head>
 
   <body>
@@ -134,8 +134,8 @@
 
   <ul class="page-nav">
   <li class="prev">
-    <a href="ha-device-trigger.html"
-       title="previous chapter">← HADeviceTrigger class</a>
+    <a href="ha-fan.html"
+       title="previous chapter">← HAFan class</a>
   </li>
   <li class="next">
     <a href="ha-number.html"
@@ -217,39 +217,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HALock7setIconEPKc">
-<span id="_CPPv3N6HALock7setIconEPKc"></span><span id="_CPPv2N6HALock7setIconEPKc"></span><span id="HALock::setIcon__cCP"></span><span class="target" id="class_h_a_lock_1a49a737fab9e7df6b4fc4c0da4351b369"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets icon of the lock. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HALock9setRetainEKb">
-<span id="_CPPv3N6HALock9setRetainEKb"></span><span id="_CPPv2N6HALock9setRetainEKb"></span><span id="HALock::setRetain__bC"></span><span class="target" id="class_h_a_lock_1abacc6b02eca932b71c27cba7421d32ba"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets retain flag for the lock’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>retain</strong> – </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HALock13setOptimisticEKb">
-<span id="_CPPv3N6HALock13setOptimisticEKb"></span><span id="_CPPv2N6HALock13setOptimisticEKb"></span><span id="HALock::setOptimistic__bC"></span><span class="target" id="class_h_a_lock_1a66766a151565ae7b1df56522ce3af1c5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets optimistic flag for the lock state. In this mode the lock state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HALock8setStateEK9LockStateKb">
 <span id="_CPPv3N6HALock8setStateEK9LockStateKb"></span><span id="_CPPv2N6HALock8setStateEK9LockStateKb"></span><span id="HALock::setState__LockStateC.bC"></span><span class="target" id="class_h_a_lock_1afb75873a2092721b9f9719fbd8fce588"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HALock9LockStateE" title="HALock::LockState"><span class="n"><span class="pre">LockState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock8setStateEK9LockStateKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes state of the lock and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -281,6 +248,39 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK6HALock15getCurrentStateEv">
 <span id="_CPPv3NK6HALock15getCurrentStateEv"></span><span id="_CPPv2NK6HALock15getCurrentStateEv"></span><span id="HALock::getCurrentStateC"></span><span class="target" id="class_h_a_lock_1a1215fab65deb2b7cd43b65d8e91d3d0d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HALock9LockStateE" title="HALock::LockState"><span class="n"><span class="pre">LockState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HALock15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns last known state of the lock. If setState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HALock7setIconEPKc">
+<span id="_CPPv3N6HALock7setIconEPKc"></span><span id="_CPPv2N6HALock7setIconEPKc"></span><span id="HALock::setIcon__cCP"></span><span class="target" id="class_h_a_lock_1a49a737fab9e7df6b4fc4c0da4351b369"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the lock. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HALock9setRetainEKb">
+<span id="_CPPv3N6HALock9setRetainEKb"></span><span id="_CPPv2N6HALock9setRetainEKb"></span><span id="HALock::setRetain__bC"></span><span class="target" id="class_h_a_lock_1abacc6b02eca932b71c27cba7421d32ba"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the lock’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HALock13setOptimisticEKb">
+<span id="_CPPv3N6HALock13setOptimisticEKb"></span><span id="_CPPv2N6HALock13setOptimisticEKb"></span><span id="HALock::setOptimistic__bC"></span><span class="target" id="class_h_a_lock_1a66766a151565ae7b1df56522ce3af1c5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the lock state. In this mode the lock state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="cpp function">
@@ -330,12 +330,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HALock13handleCommandEPKc">
-<span id="_CPPv3N6HALock13handleCommandEPKc"></span><span id="_CPPv2N6HALock13handleCommandEPKc"></span><span id="HALock::handleCommand__cCP"></span><span class="target" id="class_h_a_lock_1a35ac6de0d2dfd9b696f04a67bd27d0ad"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock13handleCommandEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N6HALock13handleCommandEPKcK8uint16_t">
+<span id="_CPPv3N6HALock13handleCommandEPKcK8uint16_t"></span><span id="_CPPv2N6HALock13handleCommandEPKcK8uint16_t"></span><span id="HALock::handleCommand__cCP.uint16_tC"></span><span class="target" id="class_h_a_lock_1a37c687d3893cfb40f320ea32c5526e6f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HALock13handleCommandEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parses the given command and executes the lock’s callback with proper enum’s property.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>cmd</strong> – The string representation of the command. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The string representation of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -383,8 +386,8 @@
           <div class="page-nav">
             <div class="inner"><ul class="page-nav">
   <li class="prev">
-    <a href="ha-device-trigger.html"
-       title="previous chapter">← HADeviceTrigger class</a>
+    <a href="ha-fan.html"
+       title="previous chapter">← HAFan class</a>
   </li>
   <li class="next">
     <a href="ha-number.html"

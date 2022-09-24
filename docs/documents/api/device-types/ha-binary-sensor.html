@@ -170,28 +170,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor14setDeviceClassEPKc">
-<span id="_CPPv3N14HABinarySensor14setDeviceClassEPKc"></span><span id="_CPPv2N14HABinarySensor14setDeviceClassEPKc"></span><span id="HABinarySensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_binary_sensor_1afe64445b11b3f30ab6c140ee876e472d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/binary_sensor/#device-class">https://www.home-assistant.io/integrations/binary_sensor/#device-class</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor7setIconEPKc">
-<span id="_CPPv3N14HABinarySensor7setIconEPKc"></span><span id="_CPPv2N14HABinarySensor7setIconEPKc"></span><span id="HABinarySensor::setIcon__cCP"></span><span class="target" id="class_h_a_binary_sensor_1ab21b355dd9b19f9f594f12fdf26b4f05"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets icon of the sensor. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor8setStateEKbKb">
 <span id="_CPPv3N14HABinarySensor8setStateEKbKb"></span><span id="_CPPv2N14HABinarySensor8setStateEKbKb"></span><span id="HABinarySensor::setState__bC.bC"></span><span class="target" id="class_h_a_binary_sensor_1a137016ed9a25100de2503160e2c285c3"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor8setStateEKbKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes state of the sensor and publish MQTT message. Please note that if a new value is the same as the previous one the MQTT message won’t be published.</p>
@@ -223,6 +201,28 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK14HABinarySensor15getCurrentStateEv">
 <span id="_CPPv3NK14HABinarySensor15getCurrentStateEv"></span><span id="_CPPv2NK14HABinarySensor15getCurrentStateEv"></span><span id="HABinarySensor::getCurrentStateC"></span><span class="target" id="class_h_a_binary_sensor_1a01ce95f5ffe68b9baeb4b31383ef3efc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14HABinarySensor15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns the last known state of the sensor. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor14setDeviceClassEPKc">
+<span id="_CPPv3N14HABinarySensor14setDeviceClassEPKc"></span><span id="_CPPv2N14HABinarySensor14setDeviceClassEPKc"></span><span id="HABinarySensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_binary_sensor_1afe64445b11b3f30ab6c140ee876e472d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/binary_sensor/#device-class">https://www.home-assistant.io/integrations/binary_sensor/#device-class</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor7setIconEPKc">
+<span id="_CPPv3N14HABinarySensor7setIconEPKc"></span><span id="_CPPv2N14HABinarySensor7setIconEPKc"></span><span id="HABinarySensor::setIcon__cCP"></span><span class="target" id="class_h_a_binary_sensor_1ab21b355dd9b19f9f594f12fdf26b4f05"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the sensor. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

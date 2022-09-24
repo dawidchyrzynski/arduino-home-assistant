@@ -232,28 +232,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker7setIconEPKc">
-<span id="_CPPv3N15HADeviceTracker7setIconEPKc"></span><span id="_CPPv2N15HADeviceTracker7setIconEPKc"></span><span id="HADeviceTracker::setIcon__cCP"></span><span class="target" id="class_h_a_device_tracker_1a727faee54b475aae5351afe7b3e72bf9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets icon of the tracker. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType">
-<span id="_CPPv3N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="_CPPv2N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="HADeviceTracker::setSourceType__SourceTypeC"></span><span class="target" id="class_h_a_device_tracker_1ac5ae4dfb5dea532dc3b891524f6ceb62"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSourceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker10SourceTypeE" title="HADeviceTracker::SourceType"><span class="n"><span class="pre">SourceType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets the source type of the tracker.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>type</strong> – The source type (gps, router, bluetooth, bluetooth LE). </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker8setStateEK12TrackerStateKb">
 <span id="_CPPv3N15HADeviceTracker8setStateEK12TrackerStateKb"></span><span id="_CPPv2N15HADeviceTracker8setStateEK12TrackerStateKb"></span><span id="HADeviceTracker::setState__TrackerStateC.bC"></span><span class="target" id="class_h_a_device_tracker_1ac36ef94bb91c143301f35ecec2f47b66"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="HADeviceTracker::TrackerState"><span class="n"><span class="pre">TrackerState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker8setStateEK12TrackerStateKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes the state of the tracker and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -285,6 +263,28 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTracker8getStateEv">
 <span id="_CPPv3NK15HADeviceTracker8getStateEv"></span><span id="_CPPv2NK15HADeviceTracker8getStateEv"></span><span id="HADeviceTracker::getStateC"></span><span class="target" id="class_h_a_device_tracker_1a385aaea54a1facc2d01db59bf7a63a88"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker12TrackerStateE" title="HADeviceTracker::TrackerState"><span class="n"><span class="pre">TrackerState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTracker8getStateEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns the last known state of the tracker. If setState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker7setIconEPKc">
+<span id="_CPPv3N15HADeviceTracker7setIconEPKc"></span><span id="_CPPv2N15HADeviceTracker7setIconEPKc"></span><span id="HADeviceTracker::setIcon__cCP"></span><span class="target" id="class_h_a_device_tracker_1a727faee54b475aae5351afe7b3e72bf9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the tracker. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType">
+<span id="_CPPv3N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="_CPPv2N15HADeviceTracker13setSourceTypeEK10SourceType"></span><span id="HADeviceTracker::setSourceType__SourceTypeC"></span><span class="target" id="class_h_a_device_tracker_1ac5ae4dfb5dea532dc3b891524f6ceb62"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSourceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N15HADeviceTracker10SourceTypeE" title="HADeviceTracker::SourceType"><span class="n"><span class="pre">SourceType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">type</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTracker13setSourceTypeEK10SourceType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the source type of the tracker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>type</strong> – The source type (gps, router, bluetooth, bluetooth LE). </p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

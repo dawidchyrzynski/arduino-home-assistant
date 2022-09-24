@@ -175,6 +175,20 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8setValueEPKc">
+<span id="_CPPv3N8HASensor8setValueEPKc"></span><span id="_CPPv2N8HASensor8setValueEPKc"></span><span id="HASensor::setValue__cCP"></span><span class="target" id="class_h_a_sensor_1a47dba37f26cbf66d6cb9967734bc9c24"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8setValueEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given value. Unlike the other device types, the <a class="reference internal" href="#class_h_a_sensor"><span class="std std-ref">HASensor</span></a> doesn’t store the previous value that was set. It means that the MQTT message is produced each time the setValue method is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – String representation of the sensor’s value. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setDeviceClassEPKc">
 <span id="_CPPv3N8HASensor14setDeviceClassEPKc"></span><span id="_CPPv2N8HASensor14setDeviceClassEPKc"></span><span id="HASensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a8e2ffcb1ae1bb7411464a34d27df8817"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/sensor/#device-class">https://www.home-assistant.io/integrations/sensor/#device-class</a></p>
@@ -214,20 +228,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>units</strong> – For example: °C, % </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8setValueEPKc">
-<span id="_CPPv3N8HASensor8setValueEPKc"></span><span id="_CPPv2N8HASensor8setValueEPKc"></span><span id="HASensor::setValue__cCP"></span><span class="target" id="class_h_a_sensor_1a47dba37f26cbf66d6cb9967734bc9c24"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8setValueEPKc" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Publishes the MQTT message with the given value. Unlike the other device types, the <a class="reference internal" href="#class_h_a_sensor"><span class="std std-ref">HASensor</span></a> doesn’t store the previous value that was set. It means that the MQTT message is produced each time the setValue method is called.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>value</strong> – String representation of the sensor’s value. </p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
 </dd>
 </dl>
 </dd></dl>

@@ -24,7 +24,7 @@
     
   <link rel="index" title="Index" href="../../../genindex.html" />
   <link rel="search" title="Search" href="../../../search.html" />
-  <link rel="next" title="HALock class" href="ha-lock.html" />
+  <link rel="next" title="HAFan class" href="ha-fan.html" />
   <link rel="prev" title="HADeviceTracker class" href="ha-device-tracker.html" /> 
   </head>
 
@@ -138,8 +138,8 @@
        title="previous chapter">← HADeviceTracker class</a>
   </li>
   <li class="next">
-    <a href="ha-lock.html"
-       title="next chapter">HALock class →</a>
+    <a href="ha-fan.html"
+       title="next chapter">HAFan class →</a>
   </li>
 </ul>
   
@@ -319,6 +319,17 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger7triggerEv">
+<span id="_CPPv3N15HADeviceTrigger7triggerEv"></span><span id="_CPPv2N15HADeviceTrigger7triggerEv"></span><span id="HADeviceTrigger::trigger"></span><span class="target" id="class_h_a_device_trigger_1af5ccc2a8c7725822d5fff6be89432903"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trigger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger7triggerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes MQTT message with the trigger event. The published message is not retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger7getTypeEv">
 <span id="_CPPv3NK15HADeviceTrigger7getTypeEv"></span><span id="_CPPv2NK15HADeviceTrigger7getTypeEv"></span><span id="HADeviceTrigger::getTypeC"></span><span class="target" id="class_h_a_device_trigger_1a41c0dfc7efb9afbeebda68200f1ab368"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getType</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger7getTypeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns the type of the trigger. If the built-in type is used the returned value points to the flash memory. Use <code class="docutils literal notranslate"><a class="reference internal" href="#class_h_a_device_trigger_1a9c71bfeb19fca803eb2f1c9e2f0e9320"><span class="std std-ref"><span class="pre">HADeviceTrigger::isProgmemType</span></span></a></code> to verify if the returned value is the progmem pointer.</p>
@@ -350,17 +361,6 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK15HADeviceTrigger16isProgmemSubtypeEv">
 <span id="_CPPv3NK15HADeviceTrigger16isProgmemSubtypeEv"></span><span id="_CPPv2NK15HADeviceTrigger16isProgmemSubtypeEv"></span><span id="HADeviceTrigger::isProgmemSubtypeC"></span><span class="target" id="class_h_a_device_trigger_1a590f7b3442517232be40ea28753b5439"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isProgmemSubtype</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK15HADeviceTrigger16isProgmemSubtypeEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the built-in subtype was assigned to the trigger. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N15HADeviceTrigger7triggerEv">
-<span id="_CPPv3N15HADeviceTrigger7triggerEv"></span><span id="_CPPv2N15HADeviceTrigger7triggerEv"></span><span id="HADeviceTrigger::trigger"></span><span class="target" id="class_h_a_device_trigger_1af5ccc2a8c7725822d5fff6be89432903"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trigger</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N15HADeviceTrigger7triggerEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Publishes MQTT message with the trigger event. The published message is not retained.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
-</dd>
-</dl>
 </dd></dl>
 
 </div>
@@ -460,8 +460,8 @@
        title="previous chapter">← HADeviceTracker class</a>
   </li>
   <li class="next">
-    <a href="ha-lock.html"
-       title="next chapter">HALock class →</a>
+    <a href="ha-fan.html"
+       title="next chapter">HAFan class →</a>
   </li>
 </ul><div class="footer" role="contentinfo">
       &#169; Copyright 2022, Dawid Chyrzynski.

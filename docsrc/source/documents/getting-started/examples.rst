@@ -20,6 +20,8 @@ Examples
      - Tracking a device's position using the NEO-6M GPS module.
    * - :example:`Device trigger <multi-state-button/multi-state-button.ino>`
      - Implementation of a simple wall switch that reports press and hold states.
+   * - :example:`Fan <fan/fan.ino>`
+     - Controlling a simple fan (state + speed).
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
    * - :example:`Number <number/number.ino>`
