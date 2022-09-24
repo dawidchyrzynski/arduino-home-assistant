@@ -26,7 +26,13 @@ AHA_TEST(BinarySensorTest, default_params) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -65,7 +71,14 @@ AHA_TEST(BinarySensorTest, name_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -78,7 +91,14 @@ AHA_TEST(BinarySensorTest, device_class) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -91,7 +111,14 @@ AHA_TEST(BinarySensorTest, icon_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 

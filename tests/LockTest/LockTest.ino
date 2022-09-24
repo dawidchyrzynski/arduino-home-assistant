@@ -50,7 +50,14 @@ AHA_TEST(LockTest, default_params) {
     assertEntityConfig(
         mock,
         lock,
-        "{\"uniq_id\":\"uniqueLock\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLock\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
     )
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
@@ -112,7 +119,15 @@ AHA_TEST(LockTest, name_setter) {
     assertEntityConfig(
         mock,
         lock,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueLock\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueLock\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -125,7 +140,15 @@ AHA_TEST(LockTest, icon_setter) {
     assertEntityConfig(
         mock,
         lock,
-        "{\"uniq_id\":\"uniqueLock\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLock\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -138,7 +161,15 @@ AHA_TEST(LockTest, retain_setter) {
     assertEntityConfig(
         mock,
         lock,
-        "{\"uniq_id\":\"uniqueLock\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLock\","
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -151,7 +182,15 @@ AHA_TEST(LockTest, optimistic_setter) {
     assertEntityConfig(
         mock,
         lock,
-        "{\"uniq_id\":\"uniqueLock\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLock\","
+            "\"opt\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
     )
 }
 

@@ -44,7 +44,13 @@ AHA_TEST(ButtonTest, default_params) {
     assertEntityConfig(
         mock,
         button,
-        "{\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueButton\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -83,7 +89,14 @@ AHA_TEST(ButtonTest, name_setter) {
     assertEntityConfig(
         mock,
         button,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueButton\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueButton\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -96,7 +109,14 @@ AHA_TEST(ButtonTest, device_class) {
     assertEntityConfig(
         mock,
         button,
-        "{\"uniq_id\":\"uniqueButton\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueButton\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -109,7 +129,14 @@ AHA_TEST(ButtonTest, icon_setter) {
     assertEntityConfig(
         mock,
         button,
-        "{\"uniq_id\":\"uniqueButton\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueButton\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -122,7 +149,14 @@ AHA_TEST(ButtonTest, retain_setter) {
     assertEntityConfig(
         mock,
         button,
-        "{\"uniq_id\":\"uniqueButton\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueButton\","
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
     )
 }
 

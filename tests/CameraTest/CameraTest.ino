@@ -26,7 +26,13 @@ AHA_TEST(CameraTest, default_params) {
     assertEntityConfig(
         mock,
         camera,
-        "{\"uniq_id\":\"uniqueCamera\",\"dev\":{\"ids\":\"testDevice\"},\"t\":\"testData/testDevice/uniqueCamera/t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCamera\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
     )
 }
 
@@ -55,7 +61,14 @@ AHA_TEST(CameraTest, icon_setter) {
     assertEntityConfig(
         mock,
         camera,
-        "{\"uniq_id\":\"uniqueCamera\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"t\":\"testData/testDevice/uniqueCamera/t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCamera\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
     )
 }
 
@@ -68,7 +81,14 @@ AHA_TEST(CameraTest, encoding_base64) {
     assertEntityConfig(
         mock,
         camera,
-        "{\"uniq_id\":\"uniqueCamera\",\"e\":\"b64\",\"dev\":{\"ids\":\"testDevice\"},\"t\":\"testData/testDevice/uniqueCamera/t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCamera\","
+            "\"e\":\"b64\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
     )
 }
 

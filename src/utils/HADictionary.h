@@ -16,6 +16,7 @@ extern const char HAComponentSwitch[];
 extern const char HAComponentTag[];
 extern const char HAComponentScene[];
 extern const char HAComponentFan[];
+extern const char HAComponentLight[];
 
 // decorators
 extern const char HASerializerSlash[];

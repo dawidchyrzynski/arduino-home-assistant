@@ -53,7 +53,14 @@ AHA_TEST(NumberTest, default_params) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
     assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
 }
@@ -158,7 +165,15 @@ AHA_TEST(NumberTest, name_setter) {
     assertEntityConfig(
         mock,
         number,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueNumber\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -171,7 +186,15 @@ AHA_TEST(NumberTest, device_class) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -184,7 +207,15 @@ AHA_TEST(NumberTest, icon_setter) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -197,7 +228,15 @@ AHA_TEST(NumberTest, retain_setter) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -210,7 +249,15 @@ AHA_TEST(NumberTest, optimistic_setter) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"opt\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -223,7 +270,15 @@ AHA_TEST(NumberTest, mode_setter_box) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"mode\":\"box\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"mode\":\"box\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -236,7 +291,15 @@ AHA_TEST(NumberTest, mode_setter_slider) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"mode\":\"slider\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"mode\":\"slider\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -249,7 +312,15 @@ AHA_TEST(NumberTest, unit_of_measurement_setter) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"unit_of_meas\":\"%\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"unit_of_meas\":\"%\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -262,7 +333,15 @@ AHA_TEST(NumberTest, min_setter_p0) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"min\":2,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"min\":2,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -275,7 +354,16 @@ AHA_TEST(NumberTest, min_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"min\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"min\":2.5,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -288,7 +376,16 @@ AHA_TEST(NumberTest, min_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"min\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"min\":95467.50,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -301,7 +398,16 @@ AHA_TEST(NumberTest, min_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"min\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"min\":50.500,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -314,7 +420,15 @@ AHA_TEST(NumberTest, max_setter_p0) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"max\":2,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"max\":2,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -327,7 +441,16 @@ AHA_TEST(NumberTest, max_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"max\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"max\":2.5,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -340,7 +463,16 @@ AHA_TEST(NumberTest, max_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"max\":95467.50,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"max\":95467.50,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -353,7 +485,16 @@ AHA_TEST(NumberTest, max_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"max\":50.500,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"max\":50.500,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -366,7 +507,15 @@ AHA_TEST(NumberTest, step_setter_p0) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"step\":2,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"step\":2,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -379,7 +528,16 @@ AHA_TEST(NumberTest, step_setter_p1) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**1}}\",\"step\":2.5,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"step\":2.5,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -392,7 +550,16 @@ AHA_TEST(NumberTest, step_setter_p2) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**2}}\",\"step\":0.01,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"step\":0.01,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -405,7 +572,16 @@ AHA_TEST(NumberTest, step_setter_p3) {
     assertEntityConfig(
         mock,
         number,
-        "{\"uniq_id\":\"uniqueNumber\",\"cmd_tpl\":\"{{float(value)/10**3}}\",\"step\":0.001,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"step\":0.001,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
     )
 }
 

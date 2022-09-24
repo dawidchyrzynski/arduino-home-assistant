@@ -87,7 +87,15 @@ AHA_TEST(SelectTest, single_option) {
     assertEntityConfig(
         mock,
         select,
-        "{\"uniq_id\":\"uniqueSelect\",\"options\":[\"Option A\"],\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
@@ -102,7 +110,15 @@ AHA_TEST(SelectTest, multiple_options) {
     assertEntityConfig(
         mock,
         select,
-        "{\"uniq_id\":\"uniqueSelect\",\"options\":[\"Option A\",\"B\",\"C\"],\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
@@ -169,7 +185,16 @@ AHA_TEST(SelectTest, name_setter) {
     assertEntityConfig(
         mock,
         select,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueSelect\",\"options\":[\"Option A\",\"B\",\"C\"],\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -183,7 +208,16 @@ AHA_TEST(SelectTest, icon_setter) {
     assertEntityConfig(
         mock,
         select,
-        "{\"uniq_id\":\"uniqueSelect\",\"ic\":\"testIcon\",\"options\":[\"Option A\",\"B\",\"C\"],\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"ic\":\"testIcon\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -197,7 +231,16 @@ AHA_TEST(SelectTest, retain_setter) {
     assertEntityConfig(
         mock,
         select,
-        "{\"uniq_id\":\"uniqueSelect\",\"options\":[\"Option A\",\"B\",\"C\"],\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -211,7 +254,16 @@ AHA_TEST(SelectTest, optimistic_setter) {
     assertEntityConfig(
         mock,
         select,
-        "{\"uniq_id\":\"uniqueSelect\",\"options\":[\"Option A\",\"B\",\"C\"],\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"opt\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
     )
 }
 

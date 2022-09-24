@@ -214,7 +214,9 @@ AHA_TEST(SerializerTest, topic_field) {
     serializer.topic(AHATOFSTR(HAStateTopic));
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"stat_t\":\"testData/testDevice/testId/stat_t\"}")
+    assertSerializerMqttMessage(
+        "{\"stat_t\":\"testData/testDevice/testId/stat_t\"}"
+    )
 }
 
 AHA_TEST(SerializerTest, topics_field) {
@@ -224,7 +226,14 @@ AHA_TEST(SerializerTest, topics_field) {
     serializer.topic(AHATOFSTR(HAAvailabilityTopic));
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"stat_t\":\"testData/testDevice/testId/stat_t\",\"avty_t\":\"testData/testDevice/testId/avty_t\"}")
+    assertSerializerMqttMessage(
+        (
+            "{"
+            "\"stat_t\":\"testData/testDevice/testId/stat_t\","
+            "\"avty_t\":\"testData/testDevice/testId/avty_t\""
+            "}"
+        )
+    )
 }
 
 AHA_TEST(SerializerTest, device_serialization) {
@@ -243,7 +252,9 @@ AHA_TEST(SerializerTest, device_mixed_serialization) {
     serializer.set(AHATOFSTR(HADeviceClassProperty), "Class1");
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"dev\":{\"ids\":\"testDevice\"},\"dev_cla\":\"Class1\"}")
+    assertSerializerMqttMessage(
+        "{\"dev\":{\"ids\":\"testDevice\"},\"dev_cla\":\"Class1\"}"
+    )
 }
 
 AHA_TEST(SerializerTest, device_type_availability) {
@@ -253,7 +264,9 @@ AHA_TEST(SerializerTest, device_type_availability) {
     serializer.set(HASerializer::WithAvailability);
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"avty_t\":\"testData/testDevice/testId/avty_t\"}")
+    assertSerializerMqttMessage(
+        "{\"avty_t\":\"testData/testDevice/testId/avty_t\"}"
+    )
 }
 
 AHA_TEST(SerializerTest, device_type_availability_mixed) {
@@ -264,7 +277,14 @@ AHA_TEST(SerializerTest, device_type_availability_mixed) {
     serializer.set(AHATOFSTR(HADeviceClassProperty), "Class1");
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev_cla\":\"Class1\"}")
+    assertSerializerMqttMessage(
+        (
+            "{"
+            "\"avty_t\":\"testData/testDevice/testId/avty_t\","
+            "\"dev_cla\":\"Class1\""
+            "}"
+        )
+    )
 }
 
 AHA_TEST(SerializerTest, shared_availability) {
@@ -333,7 +353,18 @@ AHA_TEST(SerializerTest, mixed_elements) {
     );
 
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"dev_cla\":[\"dev\",\"ic\"],\"avty_t\":\"testData/testDevice/testId/avty_t\",\"dev\":{\"ids\":\"testDevice\"},\"name\":\"TestName\",\"stat_t\":\"testData/testDevice/testId/stat_t\",\"ic\":312346733}")
+    assertSerializerMqttMessage(
+        (
+            "{"
+            "\"dev_cla\":[\"dev\",\"ic\"],"
+            "\"avty_t\":\"testData/testDevice/testId/avty_t\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"name\":\"TestName\","
+            "\"stat_t\":\"testData/testDevice/testId/stat_t\","
+            "\"ic\":312346733"
+            "}"
+        )
+    )
 }
 
 void setup()

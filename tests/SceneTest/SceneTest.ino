@@ -44,7 +44,12 @@ AHA_TEST(SceneTest, default_params) {
     assertEntityConfig(
         mock,
         scene,
-        "{\"uniq_id\":\"uniqueScene\",\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueScene\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -83,7 +88,13 @@ AHA_TEST(SceneTest, name_setter) {
     assertEntityConfig(
         mock,
         scene,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueScene\",\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueScene\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -96,7 +107,13 @@ AHA_TEST(SceneTest, icon_setter) {
     assertEntityConfig(
         mock,
         scene,
-        "{\"uniq_id\":\"uniqueScene\",\"ic\":\"testIcon\",\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueScene\","
+            "\"ic\":\"testIcon\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -109,7 +126,13 @@ AHA_TEST(SceneTest, retain_setter) {
     assertEntityConfig(
         mock,
         scene,
-        "{\"uniq_id\":\"uniqueScene\",\"ret\":true,\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueScene\","
+            "\"ret\":true,"
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
     )
 }
 

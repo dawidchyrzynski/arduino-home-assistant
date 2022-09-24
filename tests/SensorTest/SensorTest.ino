@@ -26,7 +26,13 @@ AHA_TEST(SensorTest, default_params) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -55,7 +61,14 @@ AHA_TEST(SensorTest, name_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueSensor\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -68,7 +81,14 @@ AHA_TEST(SensorTest, device_class_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -81,7 +101,14 @@ AHA_TEST(SensorTest, force_update_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"frc_upd\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"frc_upd\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -94,7 +121,14 @@ AHA_TEST(SensorTest, icon_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -107,7 +141,14 @@ AHA_TEST(SensorTest, unit_of_measurement_setter) {
     assertEntityConfig(
         mock,
         sensor,
-        "{\"uniq_id\":\"uniqueSensor\",\"unit_of_meas\":\"%\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"unit_of_meas\":\"%\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
     )
 }
 

@@ -50,7 +50,15 @@ AHA_TEST(CoverTest, default_params) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"uniq_id\":\"uniqueCover\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
@@ -115,7 +123,16 @@ AHA_TEST(CoverTest, name_setter) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueCover\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueCover\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
 }
 
@@ -128,7 +145,16 @@ AHA_TEST(CoverTest, device_class) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"uniq_id\":\"uniqueCover\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
 }
 
@@ -141,7 +167,16 @@ AHA_TEST(CoverTest, icon_setter) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"uniq_id\":\"uniqueCover\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
 }
 
@@ -154,7 +189,16 @@ AHA_TEST(CoverTest, retain_setter) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"uniq_id\":\"uniqueCover\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
 }
 
@@ -167,7 +211,16 @@ AHA_TEST(CoverTest, optimistic_setter) {
     assertEntityConfig(
         mock,
         cover,
-        "{\"uniq_id\":\"uniqueCover\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\",\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"opt\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
+            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "}"
+        )
     )
 }
 

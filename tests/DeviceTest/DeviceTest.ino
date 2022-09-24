@@ -289,7 +289,17 @@ AHA_TEST(DeviceTest, full_serialization) {
 
     const HASerializer* serializer = device.getSerializer();
     flushSerializer(mock, serializer)
-    assertSerializerMqttMessage("{\"ids\":\"myDeviceId\",\"mf\":\"myManufacturer\",\"mdl\":\"myModel\",\"name\":\"myName\",\"sw\":\"myVersion\"}")
+    assertSerializerMqttMessage(
+        (
+            "{"
+            "\"ids\":\"myDeviceId\","
+            "\"mf\":\"myManufacturer\","
+            "\"mdl\":\"myModel\","
+            "\"name\":\"myName\","
+            "\"sw\":\"myVersion\""
+            "}"
+        )
+    )
 }
 
 void setup()

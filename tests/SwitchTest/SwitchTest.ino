@@ -49,7 +49,14 @@ AHA_TEST(SwitchTest, default_params) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"uniq_id\":\"uniqueSwitch\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
     assertEqual(2, mock->getFlushedMessagesNb());
 }
@@ -111,7 +118,15 @@ AHA_TEST(SwitchTest, name_setter) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueSwitch\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -124,7 +139,15 @@ AHA_TEST(SwitchTest, device_class) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"uniq_id\":\"uniqueSwitch\",\"dev_cla\":\"testClass\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -137,7 +160,15 @@ AHA_TEST(SwitchTest, icon_setter) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"uniq_id\":\"uniqueSwitch\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -150,7 +181,15 @@ AHA_TEST(SwitchTest, retain_setter) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"uniq_id\":\"uniqueSwitch\",\"ret\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"ret\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
 }
 
@@ -163,7 +202,15 @@ AHA_TEST(SwitchTest, optimistic_setter) {
     assertEntityConfig(
         mock,
         testSwitch,
-        "{\"uniq_id\":\"uniqueSwitch\",\"opt\":true,\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\",\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"opt\":true,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
     )
 }
 

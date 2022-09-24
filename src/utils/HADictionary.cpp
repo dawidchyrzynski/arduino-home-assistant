@@ -16,6 +16,7 @@ const char HAComponentSwitch[] PROGMEM = {"switch"};
 const char HAComponentTag[] PROGMEM = {"tag"};
 const char HAComponentScene[] PROGMEM = {"scene"};
 const char HAComponentFan[] PROGMEM = {"fan"};
+const char HAComponentLight[] PROGMEM = {"light"};
 
 // decorators
 const char HASerializerSlash[] PROGMEM = {"/"};

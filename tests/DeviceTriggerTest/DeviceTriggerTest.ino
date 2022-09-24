@@ -73,7 +73,15 @@ AHA_TEST(DeviceTriggerTest, default_params) {
     assertEntityConfig(
         mock,
         trigger,
-        "{\"atype\":\"trigger\",\"type\":\"myType\",\"stype\":\"mySubtype\",\"dev\":{\"ids\":\"testDevice\"},\"t\":\"testData/testDevice/myType_mySubtype/t\"}"
+        (
+            "{"
+            "\"atype\":\"trigger\","
+            "\"type\":\"myType\","
+            "\"stype\":\"mySubtype\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/myType_mySubtype/t\""
+            "}"
+        )
     )
 }
 

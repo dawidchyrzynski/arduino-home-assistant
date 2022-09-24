@@ -26,7 +26,13 @@ AHA_TEST(DeviceTrackerTest, default_params) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -38,7 +44,14 @@ AHA_TEST(DeviceTrackerTest, source_type_gps) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"gps\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"src_type\":\"gps\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -50,7 +63,14 @@ AHA_TEST(DeviceTrackerTest, source_type_router) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"router\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"src_type\":\"router\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -62,7 +82,14 @@ AHA_TEST(DeviceTrackerTest, source_type_bluetooth) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"bluetooth\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"src_type\":\"bluetooth\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -74,7 +101,14 @@ AHA_TEST(DeviceTrackerTest, source_type_bluetooth_le) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"src_type\":\"bluetooth_le\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"src_type\":\"bluetooth_le\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -113,7 +147,14 @@ AHA_TEST(DeviceTrackerTest, name_setter) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"name\":\"testName\",\"uniq_id\":\"uniqueTracker\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 
@@ -126,7 +167,14 @@ AHA_TEST(DeviceTrackerTest, icon_setter) {
     assertEntityConfig(
         mock,
         tracker,
-        "{\"uniq_id\":\"uniqueTracker\",\"ic\":\"testIcon\",\"dev\":{\"ids\":\"testDevice\"},\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\"}"
+        (
+            "{"
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"ic\":\"testIcon\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
     )
 }
 

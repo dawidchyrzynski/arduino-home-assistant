@@ -25,7 +25,12 @@ AHA_TEST(TagScannerTest, default_params) {
     assertEntityConfig(
         mock,
         scanner,
-        "{\"dev\":{\"ids\":\"testDevice\"},\"t\":\"testData/testDevice/uniqueScanner/t\"}"
+        (
+            "{"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueScanner/t\""
+            "}"
+        )
     )
 }
 
