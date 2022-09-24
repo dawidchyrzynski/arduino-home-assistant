@@ -150,7 +150,7 @@ public:
 
     /**
      * Registers callback that will be called each time the state command from HA is received.
-     * Please note that it's not possible to register multiple callbacks for the same cover.
+     * Please note that it's not possible to register multiple callbacks for the same fan.
      *
      * @param callback
      */
@@ -159,7 +159,7 @@ public:
 
     /**
      * Registers callback that will be called each time the speed command from HA is received.
-     * Please note that it's not possible to register multiple callbacks for the same cover.
+     * Please note that it's not possible to register multiple callbacks for the same fan.
      *
      * @param callback
      */

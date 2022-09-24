@@ -25,7 +25,7 @@ static const char* testUniqueId = "uniqueFan";
 
 static bool commandCallbackCalled = false;
 static bool commandCallbackState = false;
-static uint8_t commandCallbackSpeed = false;
+static uint8_t commandCallbackSpeed = 0;
 static HAFan* commandCallbackFanPtr = nullptr;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/fan/testDevice/uniqueFan/config"};

@@ -58,6 +58,7 @@ extern const char HAModeProperty[];
 extern const char HACommandTemplateProperty[];
 extern const char HASpeedRangeMaxProperty[];
 extern const char HASpeedRangeMinProperty[];
+extern const char HABrightnessScaleProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -68,6 +69,8 @@ extern const char HACommandTopic[];
 extern const char HAPositionTopic[];
 extern const char HAPercentageStateTopic[];
 extern const char HAPercentageCommandTopic[];
+extern const char HABrightnessCommandTopic[];
+extern const char HABrightnessStateTopic[];
 
 // misc
 extern const char HAOnline[];

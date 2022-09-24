@@ -22,6 +22,7 @@
 * Added support for the `HASelect` device type
 * Added support for the `HANumber` device type
 * Added support for the `HAScene` device type
+* Added support for the `HALight` device type
 
 **Bugs fixes:**
 * Last Will Message is now retained (#70)
