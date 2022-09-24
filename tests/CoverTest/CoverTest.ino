@@ -55,6 +55,25 @@ AHA_TEST(CoverTest, default_params) {
             "\"uniq_id\":\"uniqueCover\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
+AHA_TEST(CoverTest, default_params_with_position) {
+    prepareTest
+
+    HACover cover(testUniqueId, HACover::PositionFeature);
+    assertEntityConfig(
+        mock,
+        cover,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueCover\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
             "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
             "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
             "}"
@@ -97,6 +116,18 @@ AHA_TEST(CoverTest, publish_last_known_state) {
     cover.setCurrentPosition(100);
     mqtt.loop();
 
+    assertEqual(2, mock->getFlushedMessagesNb());
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "closed", true)
+}
+
+AHA_TEST(CoverTest, publish_last_known_state_with_position) {
+    prepareTest
+
+    HACover cover(testUniqueId, HACover::PositionFeature);
+    cover.setCurrentState(HACover::StateClosed);
+    cover.setCurrentPosition(100);
+    mqtt.loop();
+
     assertEqual(3, mock->getFlushedMessagesNb());
     assertMqttMessage(1, AHATOFSTR(StateTopic), "closed", true)
     assertMqttMessage(2, AHATOFSTR(PositionTopic), "100", true)
@@ -129,8 +160,7 @@ AHA_TEST(CoverTest, name_setter) {
             "\"uniq_id\":\"uniqueCover\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
-            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
-            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
             "}"
         )
     )
@@ -151,8 +181,7 @@ AHA_TEST(CoverTest, device_class) {
             "\"dev_cla\":\"testClass\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
-            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
-            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
             "}"
         )
     )
@@ -173,8 +202,7 @@ AHA_TEST(CoverTest, icon_setter) {
             "\"ic\":\"testIcon\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
-            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
-            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
             "}"
         )
     )
@@ -195,8 +223,7 @@ AHA_TEST(CoverTest, retain_setter) {
             "\"ret\":true,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
-            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
-            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
             "}"
         )
     )
@@ -217,8 +244,7 @@ AHA_TEST(CoverTest, optimistic_setter) {
             "\"opt\":true,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
-            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\","
-            "\"pos_t\":\"testData/testDevice/uniqueCover/pos_t\""
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
             "}"
         )
     )
@@ -249,10 +275,9 @@ AHA_TEST(CoverTest, publish_state_closed) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    bool result = cover.setState(HACover::StateClosed);
 
+    assertTrue(cover.setState(HACover::StateClosed));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "closed", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_closing) {
@@ -260,10 +285,9 @@ AHA_TEST(CoverTest, publish_state_closing) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    bool result = cover.setState(HACover::StateClosing);
-
+    
+    assertTrue(cover.setState(HACover::StateClosing));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "closing", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_open) {
@@ -271,10 +295,9 @@ AHA_TEST(CoverTest, publish_state_open) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    bool result = cover.setState(HACover::StateOpen);
 
+    assertTrue(cover.setState(HACover::StateOpen));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "open", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_opening) {
@@ -282,10 +305,9 @@ AHA_TEST(CoverTest, publish_state_opening) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    bool result = cover.setState(HACover::StateOpening);
 
+    assertTrue(cover.setState(HACover::StateOpening));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "opening", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_stopped) {
@@ -293,10 +315,9 @@ AHA_TEST(CoverTest, publish_state_stopped) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    bool result = cover.setState(HACover::StateStopped);
 
+    assertTrue(cover.setState(HACover::StateStopped));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "stopped", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_debounce) {
@@ -305,11 +326,10 @@ AHA_TEST(CoverTest, publish_state_debounce) {
     mock->connectDummy();
     HACover cover(testUniqueId);
     cover.setCurrentState(HACover::StateStopped);
-    bool result = cover.setState(HACover::StateStopped);
 
     // it shouldn't publish data if state doesn't change
+    assertTrue(cover.setState(HACover::StateStopped));
     assertEqual(mock->getFlushedMessagesNb(), 0);
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_state_debounce_skip) {
@@ -318,46 +338,42 @@ AHA_TEST(CoverTest, publish_state_debounce_skip) {
     mock->connectDummy();
     HACover cover(testUniqueId);
     cover.setCurrentState(HACover::StateStopped);
-    bool result = cover.setState(HACover::StateStopped, true);
 
+    assertTrue(cover.setState(HACover::StateStopped, true));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "stopped", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_position) {
     prepareTest
 
     mock->connectDummy();
-    HACover cover(testUniqueId);
-    bool result = cover.setPosition(250);
+    HACover cover(testUniqueId, HACover::PositionFeature);
 
+    assertTrue(cover.setPosition(250));
     assertSingleMqttMessage(AHATOFSTR(PositionTopic), "250", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_position_debounce) {
     prepareTest
 
     mock->connectDummy();
-    HACover cover(testUniqueId);
+    HACover cover(testUniqueId, HACover::PositionFeature);
     cover.setCurrentPosition(250);
-    bool result = cover.setPosition(250);
 
     // it shouldn't publish data if state doesn't change
+    assertTrue(cover.setPosition(250));
     assertEqual(mock->getFlushedMessagesNb(), 0);
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, publish_position_debounce_skip) {
     prepareTest
 
     mock->connectDummy();
-    HACover cover(testUniqueId);
+    HACover cover(testUniqueId, HACover::PositionFeature);
     cover.setCurrentPosition(250);
-    bool result = cover.setPosition(250, true);
 
+    assertTrue(cover.setPosition(250, true));
     assertSingleMqttMessage(AHATOFSTR(PositionTopic), "250", true)
-    assertTrue(result);
 }
 
 AHA_TEST(CoverTest, command_open) {

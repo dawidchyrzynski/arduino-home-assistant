@@ -5,8 +5,9 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
-HACover::HACover(const char* uniqueId) :
+HACover::HACover(const char* uniqueId, const Features features) :
     HABaseDeviceType(AHATOFSTR(HAComponentCover), uniqueId),
+    _features(features),
     _currentState(StateUnknown),
     _currentPosition(DefaultPosition),
     _class(nullptr),
@@ -78,7 +79,10 @@ void HACover::buildSerializer()
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HAStateTopic));
     _serializer->topic(AHATOFSTR(HACommandTopic));
-    _serializer->topic(AHATOFSTR(HAPositionTopic));
+
+    if (_features & PositionFeature) {
+        _serializer->topic(AHATOFSTR(HAPositionTopic));
+    }
 }
 
 void HACover::onMqttConnected()
@@ -150,7 +154,11 @@ bool HACover::publishState(CoverState state)
 
 bool HACover::publishPosition(int16_t position)
 {
-    if (!uniqueId() || position == DefaultPosition) {
+    if (
+        !uniqueId() ||
+        position == DefaultPosition ||
+        !(_features & PositionFeature)
+    ) {
         return false;
     }
 

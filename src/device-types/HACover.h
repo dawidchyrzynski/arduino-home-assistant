@@ -34,10 +34,16 @@ public:
         CommandStop
     };
 
+    enum Features {
+        DefaultFeatures = 0,
+        PositionFeature = 1
+    };
+
     /**
      * @param uniqueId The unique ID of the cover. It needs to be unique in a scope of your device.
+     * @param features Features that should be enabled for the fan.
      */
-    HACover(const char* uniqueId);
+    HACover(const char* uniqueId, const Features features = DefaultFeatures);
 
     /**
      * Changes state of the cover and publishes MQTT message.
@@ -174,6 +180,9 @@ private:
      * @param length Length of the command.
      */
     void handleCommand(const char* cmd, const uint16_t length);
+
+    /// Features enabled for the cover.
+    const uint8_t _features;
 
     /// The current state of the cover. By default it's `HACover::StateUnknown`.
     CoverState _currentState;

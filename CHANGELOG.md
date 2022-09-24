@@ -44,6 +44,7 @@
 * Refactored `HASensor` logic. It's now divided into two different classes: `HASensor` and `HASensorNumber`.
 * Removed all legacy constructors with `HAMqtt` argument
 * Removed `onConnectionFailed` callback from the `HAMqtt` class
+* The position in the `HACover` is now available as configurable feature. It's disabled by default.
 
 ## 1.3.0
 
