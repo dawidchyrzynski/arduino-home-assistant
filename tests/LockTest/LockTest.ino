@@ -3,34 +3,43 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackCommand = unknownCommand; \
-    commandCallbackLockPtr = nullptr;
+    lastCommandCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, expectedCommand, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedCommand, commandCallbackCommand); \
-    assertEqual(callerPtr, commandCallbackLockPtr);
+#define assertCommandCallbackCalled(expectedCommand, callerPtr) \
+    assertTrue(lastCommandCallbackCall.called); \
+    assertEqual(expectedCommand, lastCommandCallbackCall.command); \
+    assertEqual(callerPtr, lastCommandCallbackCall.caller);
+
+#define assertCommandCallbackNotCalled() \
+    assertFalse(lastCommandCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct CommandCallback {
+    bool called = false;
+    HALock::LockCommand command = static_cast<HALock::LockCommand>(0);
+    HALock* caller = nullptr;
+
+    void reset() {
+        called = false;
+        command = static_cast<HALock::LockCommand>(0);
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueLock";
+static CommandCallback lastCommandCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/lock/testDevice/uniqueLock/config"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueLock/cmd_t"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueLock/stat_t"};
 
-static const HALock::LockCommand unknownCommand = static_cast<HALock::LockCommand>(0);
-static bool commandCallbackCalled = false;
-static HALock::LockCommand commandCallbackCommand = unknownCommand;
-static HALock* commandCallbackLockPtr = nullptr;
-
-void onCommandReceived(HALock::LockCommand command, HALock* lock)
+void onCommandReceived(HALock::LockCommand command, HALock* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackCommand = command;
-    commandCallbackLockPtr = lock;
+    lastCommandCallbackCall.called = true;
+    lastCommandCallbackCall.command = command;
+    lastCommandCallbackCall.caller = caller;
 }
 
 AHA_TEST(LockTest, invalid_unique_id) {
@@ -209,10 +218,9 @@ AHA_TEST(LockTest, publish_state_locked) {
 
     mock->connectDummy();
     HALock lock(testUniqueId);
-    bool result = lock.setState(HALock::StateLocked);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "LOCKED", true)
-    assertTrue(result);
+    assertTrue(lock.setState(HALock::StateLocked));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "LOCKED", true) 
 }
 
 AHA_TEST(LockTest, publish_state_unlocked) {
@@ -220,10 +228,9 @@ AHA_TEST(LockTest, publish_state_unlocked) {
 
     mock->connectDummy();
     HALock lock(testUniqueId);
-    bool result = lock.setState(HALock::StateUnlocked);
 
+    assertTrue(lock.setState(HALock::StateUnlocked));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "UNLOCKED", true)
-    assertTrue(result);
 }
 
 AHA_TEST(LockTest, command_lock) {
@@ -233,7 +240,7 @@ AHA_TEST(LockTest, command_lock) {
     lock.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("LOCK"));
 
-    assertCallback(true, HALock::CommandLock, &lock)
+    assertCommandCallbackCalled(HALock::CommandLock, &lock)
 }
 
 AHA_TEST(LockTest, command_unlock) {
@@ -243,7 +250,7 @@ AHA_TEST(LockTest, command_unlock) {
     lock.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("UNLOCK"));
 
-    assertCallback(true, HALock::CommandUnlock, &lock)
+    assertCommandCallbackCalled(HALock::CommandUnlock, &lock)
 }
 
 AHA_TEST(LockTest, command_open) {
@@ -253,7 +260,7 @@ AHA_TEST(LockTest, command_open) {
     lock.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("OPEN"));
 
-    assertCallback(true, HALock::CommandOpen, &lock)
+    assertCommandCallbackCalled(HALock::CommandOpen, &lock)
 }
 
 AHA_TEST(LockTest, command_invalid) {
@@ -263,7 +270,7 @@ AHA_TEST(LockTest, command_invalid) {
     lock.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("NOT_SUPPORTED"));
 
-    assertCallback(false, unknownCommand, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 AHA_TEST(LockTest, different_lock_command) {
@@ -276,7 +283,7 @@ AHA_TEST(LockTest, different_lock_command) {
         F("CLOSE")
     );
 
-    assertCallback(false, unknownCommand, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 void setup()

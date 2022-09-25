@@ -7,7 +7,9 @@ static const char* testDeviceId = "testDevice";
 static const char* triggerType = "myType";
 static const char* triggerSubtype = "mySubtype";
 
-const char ConfigTopic[] PROGMEM = {"homeassistant/device_automation/testDevice/myType_mySubtype/config"};
+const char ConfigTopic[] PROGMEM = {
+    "homeassistant/device_automation/testDevice/myType_mySubtype/config"
+};
 
 AHA_TEST(DeviceTriggerTest, invalid_type) {
     initMqttTest(testDeviceId)

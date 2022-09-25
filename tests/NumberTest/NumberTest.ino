@@ -3,37 +3,51 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackNumber = HANumber::StateNone; \
-    commandCallbackPrecision = 0; \
-    commandCallbackNumberPtr = nullptr;
+    lastCommandCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, expectedNumber, expectedPrecision, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual((HAUtils::Number)expectedNumber, commandCallbackNumber); \
-    assertEqual(expectedPrecision, commandCallbackPrecision); \
-    assertEqual(callerPtr, commandCallbackNumberPtr);
+#define assertCommandCallbackCalled(expectedNumber, expectedPrecision, callerPtr) \
+    assertTrue(lastCommandCallbackCall.called); \
+    assertEqual((HAUtils::Number)expectedNumber, lastCommandCallbackCall.number); \
+    assertEqual(expectedPrecision, lastCommandCallbackCall.precision); \
+    assertEqual(callerPtr, lastCommandCallbackCall.caller);
+
+#define assertCommandCallbackNotCalled() \
+    assertFalse(lastCommandCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct CommandCallback {
+    bool called = false;
+    HAUtils::Number number = HANumber::StateNone;
+    uint8_t precision = 0;
+    HANumber* caller = nullptr;
+
+    void reset() {
+        called = false;
+        number = HANumber::StateNone;
+        precision = 0;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueNumber";
+static CommandCallback lastCommandCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/number/testDevice/uniqueNumber/config"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/cmd_t"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/stat_t"};
 
-static bool commandCallbackCalled = false;
-static HAUtils::Number commandCallbackNumber = HANumber::StateNone;
-static uint8_t commandCallbackPrecision = 0;
-static HANumber* commandCallbackNumberPtr = nullptr;
-
-void onCommandReceived(HAUtils::Number number, uint8_t precision, HANumber* sender)
+void onCommandReceived(
+    HAUtils::Number number,
+    uint8_t precision,
+    HANumber* caller
+)
 {
-    commandCallbackCalled = true;
-    commandCallbackNumber = number;
-    commandCallbackPrecision = precision;
-    commandCallbackNumberPtr = sender;
+    lastCommandCallbackCall.called = true;
+    lastCommandCallbackCall.number = number;
+    lastCommandCallbackCall.precision = precision;
+    lastCommandCallbackCall.caller = caller;
 }
 
 AHA_TEST(NumberTest, invalid_unique_id) {
@@ -592,7 +606,7 @@ AHA_TEST(NumberTest, command_none_p0) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
 
-    assertCallback(true, HANumber::StateNone, 0, &number)
+    assertCommandCallbackCalled(HANumber::StateNone, 0, &number)
 }
 
 AHA_TEST(NumberTest, command_none_p1) {
@@ -602,7 +616,7 @@ AHA_TEST(NumberTest, command_none_p1) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
 
-    assertCallback(true, HANumber::StateNone, 1, &number)
+    assertCommandCallbackCalled(HANumber::StateNone, 1, &number)
 }
 
 AHA_TEST(NumberTest, command_none_p2) {
@@ -612,7 +626,7 @@ AHA_TEST(NumberTest, command_none_p2) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
 
-    assertCallback(true, HANumber::StateNone, 2, &number)
+    assertCommandCallbackCalled(HANumber::StateNone, 2, &number)
 }
 
 AHA_TEST(NumberTest, command_none_p3) {
@@ -622,7 +636,7 @@ AHA_TEST(NumberTest, command_none_p3) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
 
-    assertCallback(true, HANumber::StateNone, 3, &number)
+    assertCommandCallbackCalled(HANumber::StateNone, 3, &number)
 }
 
 AHA_TEST(NumberTest, command_number_zero) {
@@ -632,7 +646,7 @@ AHA_TEST(NumberTest, command_number_zero) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("0"));
 
-    assertCallback(true, 0, 0, &number)
+    assertCommandCallbackCalled(0, 0, &number)
 }
 
 AHA_TEST(NumberTest, command_number_unsigned) {
@@ -642,7 +656,7 @@ AHA_TEST(NumberTest, command_number_unsigned) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("1234"));
 
-    assertCallback(true, 1234, 0, &number)
+    assertCommandCallbackCalled(1234, 0, &number)
 }
 
 AHA_TEST(NumberTest, command_number_signed) {
@@ -652,7 +666,7 @@ AHA_TEST(NumberTest, command_number_signed) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
 
-    assertCallback(true, -1234, 0, &number)
+    assertCommandCallbackCalled(-1234, 0, &number)
 }
 
 AHA_TEST(NumberTest, command_number_invalid) {
@@ -662,7 +676,7 @@ AHA_TEST(NumberTest, command_number_invalid) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("abc"));
 
-    assertCallback(false, HANumber::StateNone, 0, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 AHA_TEST(NumberTest, different_number_command) {
@@ -675,7 +689,7 @@ AHA_TEST(NumberTest, different_number_command) {
         F("123")
     );
 
-    assertCallback(false, HANumber::StateNone, 0, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 void setup()

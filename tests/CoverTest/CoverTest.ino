@@ -3,34 +3,44 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackCommand = unknownCommand; \
-    commandCallbackCoverPtr = nullptr;
+    lastCommandCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, expectedCommand, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedCommand, commandCallbackCommand); \
-    assertEqual(callerPtr, commandCallbackCoverPtr);
+#define assertCommandCallbackCalled(expectedCommand, callerPtr) \
+    assertTrue(lastCommandCallbackCall.called); \
+    assertEqual(expectedCommand, lastCommandCallbackCall.command); \
+    assertEqual(callerPtr, lastCommandCallbackCall.caller);
+
+#define assertCommandCallbackNotCalled() \
+    assertFalse(lastCommandCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct CommandCallback {
+    bool called = false;
+    HACover::CoverCommand command = static_cast<HACover::CoverCommand>(0);
+    HACover* caller = nullptr;
+
+    void reset() {
+        called = false;
+        command = static_cast<HACover::CoverCommand>(0);
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueCover";
-static const HACover::CoverCommand unknownCommand = static_cast<HACover::CoverCommand>(0);
-static bool commandCallbackCalled = false;
-static HACover::CoverCommand commandCallbackCommand = unknownCommand;
-static HACover* commandCallbackCoverPtr = nullptr;
+static CommandCallback lastCommandCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/cover/testDevice/uniqueCover/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueCover/stat_t"};
 const char PositionTopic[] PROGMEM = {"testData/testDevice/uniqueCover/pos_t"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueCover/cmd_t"};
 
-void onCommandReceived(HACover::CoverCommand command, HACover* cover)
+void onCommandReceived(HACover::CoverCommand command, HACover* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackCommand = command;
-    commandCallbackCoverPtr = cover;
+    lastCommandCallbackCall.called = true;
+    lastCommandCallbackCall.command = command;
+    lastCommandCallbackCall.caller = caller;
 }
 
 AHA_TEST(CoverTest, invalid_unique_id) {
@@ -383,7 +393,7 @@ AHA_TEST(CoverTest, command_open) {
     cover.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("OPEN"));
 
-    assertCallback(true, HACover::CommandOpen, &cover)
+    assertCommandCallbackCalled(HACover::CommandOpen, &cover)
 }
 
 AHA_TEST(CoverTest, command_close) {
@@ -393,7 +403,7 @@ AHA_TEST(CoverTest, command_close) {
     cover.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("CLOSE"));
 
-    assertCallback(true, HACover::CommandClose, &cover)
+    assertCommandCallbackCalled(HACover::CommandClose, &cover)
 }
 
 AHA_TEST(CoverTest, command_stop) {
@@ -403,7 +413,7 @@ AHA_TEST(CoverTest, command_stop) {
     cover.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("STOP"));
 
-    assertCallback(true, HACover::CommandStop, &cover)
+    assertCommandCallbackCalled(HACover::CommandStop, &cover)
 }
 
 AHA_TEST(CoverTest, command_invalid) {
@@ -413,7 +423,7 @@ AHA_TEST(CoverTest, command_invalid) {
     cover.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("NOT_SUPPORTED"));
 
-    assertCallback(false, unknownCommand, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 AHA_TEST(CoverTest, different_cover_command) {
@@ -426,7 +436,7 @@ AHA_TEST(CoverTest, different_cover_command) {
         F("CLOSE")
     );
 
-    assertCallback(false, unknownCommand, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 void setup()

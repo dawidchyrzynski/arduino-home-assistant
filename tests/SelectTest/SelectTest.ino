@@ -3,33 +3,43 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackIndex = -1; \
-    commandCallbackSelectPtr = nullptr;
+    lastCommandCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, expectedIndex, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedIndex, commandCallbackIndex); \
-    assertEqual(callerPtr, commandCallbackSelectPtr);
+#define assertCommandCallbackCalled(expectedIndex, callerPtr) \
+    assertTrue(lastCommandCallbackCall.called); \
+    assertEqual(expectedIndex, lastCommandCallbackCall.index); \
+    assertEqual(callerPtr, lastCommandCallbackCall.caller);
+
+#define assertCommandCallbackNotCalled() \
+    assertFalse(lastCommandCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct CommandCallback {
+    bool called = false;
+    int8_t index = -1;
+    HASelect* caller = nullptr;
+
+    void reset() {
+        called = false;
+        index = -1;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSelect";
+static CommandCallback lastCommandCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/select/testDevice/uniqueSelect/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSelect/stat_t"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueSelect/cmd_t"};
 
-static bool commandCallbackCalled = false;
-static int8_t commandCallbackIndex = -1;
-static HASelect* commandCallbackSelectPtr = nullptr;
-
-void onCommandReceived(int8_t index, HASelect* select)
+void onCommandReceived(int8_t index, HASelect* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackIndex = index;
-    commandCallbackSelectPtr = select;
+    lastCommandCallbackCall.called = true;
+    lastCommandCallbackCall.index = index;
+    lastCommandCallbackCall.caller = caller;
 }
 
 AHA_TEST(SelectTest, invalid_unique_id) {
@@ -284,12 +294,11 @@ AHA_TEST(SelectTest, publish_state_first) {
     mock->connectDummy();
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
-    bool result = select.setState(0);
 
+    assertTrue(select.setState(0));
     assertTrue(select.getOptions() != nullptr);
     assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
-    assertTrue(result);
 }
 
 AHA_TEST(SelectTest, publish_state_last) {
@@ -298,12 +307,11 @@ AHA_TEST(SelectTest, publish_state_last) {
     mock->connectDummy();
     HASelect select(testUniqueId);
     select.setOptions("Option A;B;C");
-    bool result = select.setState(2);
 
+    assertTrue(select.setState(2));
     assertTrue(select.getOptions() != nullptr);
     assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "C", true)
-    assertTrue(result);
 }
 
 AHA_TEST(SelectTest, publish_state_only) {
@@ -312,12 +320,11 @@ AHA_TEST(SelectTest, publish_state_only) {
     mock->connectDummy();
     HASelect select(testUniqueId);
     select.setOptions("Option A");
-    bool result = select.setState(0);
 
+    assertTrue(select.setState(0));
     assertTrue(select.getOptions() != nullptr);
     assertEqual(1, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
-    assertTrue(result);
 }
 
 AHA_TEST(SelectTest, publish_state_debounce) {
@@ -327,11 +334,10 @@ AHA_TEST(SelectTest, publish_state_debounce) {
     HASelect select(testUniqueId);
     select.setOptions("Option A");
     select.setCurrentState(0);
-    bool result = select.setState(0);
 
     // it shouldn't publish data if state doesn't change
+    assertTrue(select.setState(0));
     assertEqual(mock->getFlushedMessagesNb(), 0);
-    assertTrue(result);
 }
 
 AHA_TEST(SelectTest, publish_state_debounce_skip) {
@@ -341,10 +347,9 @@ AHA_TEST(SelectTest, publish_state_debounce_skip) {
     HASelect select(testUniqueId);
     select.setOptions("Option A");
     select.setCurrentState(0);
-    bool result = select.setState(0, true);
 
+    assertTrue(select.setState(0, true));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
-    assertTrue(result);
 }
 
 AHA_TEST(SelectTest, command_option_first) {
@@ -355,7 +360,7 @@ AHA_TEST(SelectTest, command_option_first) {
     select.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("Option A"));
 
-    assertCallback(true, 0, &select)
+    assertCommandCallbackCalled(0, &select)
 }
 
 AHA_TEST(SelectTest, command_option_middle) {
@@ -366,7 +371,7 @@ AHA_TEST(SelectTest, command_option_middle) {
     select.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("B"));
 
-    assertCallback(true, 1, &select)
+    assertCommandCallbackCalled(1, &select)
 }
 
 AHA_TEST(SelectTest, command_option_last) {
@@ -377,7 +382,7 @@ AHA_TEST(SelectTest, command_option_last) {
     select.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("C"));
 
-    assertCallback(true, 2, &select)
+    assertCommandCallbackCalled(2, &select)
 }
 
 AHA_TEST(SelectTest, command_option_non_existing) {
@@ -388,7 +393,7 @@ AHA_TEST(SelectTest, command_option_non_existing) {
     select.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("DoesNotExist"));
 
-    assertCallback(false, -1, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 AHA_TEST(SelectTest, different_select_command) {
@@ -402,7 +407,7 @@ AHA_TEST(SelectTest, different_select_command) {
         F("Option A")
     );
 
-    assertCallback(false, -1, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 

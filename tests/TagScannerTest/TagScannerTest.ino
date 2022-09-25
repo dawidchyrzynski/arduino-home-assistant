@@ -39,10 +39,9 @@ AHA_TEST(TagScannerTest, nullptr_tag_scanned) {
 
     mock->connectDummy();
     HATagScanner scanner(testUniqueId);
-    bool result = scanner.tagScanned(nullptr);
 
+    assertFalse(scanner.tagScanned(nullptr));
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertFalse(result);
 }
 
 AHA_TEST(TagScannerTest, empty_tag_scanned) {
@@ -50,10 +49,9 @@ AHA_TEST(TagScannerTest, empty_tag_scanned) {
 
     mock->connectDummy();
     HATagScanner scanner(testUniqueId);
-    bool result = scanner.tagScanned("");
 
+    assertFalse(scanner.tagScanned(""));
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertFalse(result);
 }
 
 AHA_TEST(TagScannerTest, tag_scanned) {
@@ -61,14 +59,13 @@ AHA_TEST(TagScannerTest, tag_scanned) {
 
     mock->connectDummy();
     HATagScanner scanner(testUniqueId);
-    bool result = scanner.tagScanned("helloTag");
 
+    assertTrue(scanner.tagScanned("helloTag"));
     assertSingleMqttMessage(
         F("testData/testDevice/uniqueScanner/t"),
         "helloTag",
         false
     )
-    assertTrue(result);
 }
 
 void setup()

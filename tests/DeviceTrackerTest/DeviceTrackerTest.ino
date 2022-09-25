@@ -6,7 +6,9 @@ using aunit::TestRunner;
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueTracker";
 
-const char ConfigTopic[] PROGMEM = {"homeassistant/device_tracker/testDevice/uniqueTracker/config"};
+const char ConfigTopic[] PROGMEM = {
+    "homeassistant/device_tracker/testDevice/uniqueTracker/config"
+};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueTracker/stat_t"};
 
 AHA_TEST(DeviceTrackerTest, invalid_unique_id) {

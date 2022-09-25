@@ -3,30 +3,55 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackState = false; \
-    commandCallbackSpeed = 0; \
-    commandCallbackFanPtr = nullptr;
+    lastStateCallbackCall.reset(); \
+    lastSpeedCallbackCall.reset();
 
-#define assertStateCallback(shouldBeCalled, expectedState, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedState, commandCallbackState); \
-    assertEqual(callerPtr, commandCallbackFanPtr);
+#define assertStateCallbackCalled(expectedState, callerPtr) \
+    assertTrue(lastStateCallbackCall.called); \
+    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(callerPtr, lastStateCallbackCall.caller);
 
-#define assertSpeedCallback(shouldBeCalled, expectedSpeed, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedSpeed, commandCallbackSpeed); \
-    assertEqual(callerPtr, commandCallbackFanPtr);  
+#define assertStateCallbackNotCalled() \
+    assertFalse(lastStateCallbackCall.called);
+
+#define assertSpeedCallbackCalled(expectedSpeed, callerPtr) \
+    assertTrue(lastSpeedCallbackCall.called); \
+    assertEqual(expectedSpeed, lastSpeedCallbackCall.speed); \
+    assertEqual(callerPtr, lastSpeedCallbackCall.caller);
+
+#define assertSpeedCallbackNotCalled() \
+    assertFalse(lastSpeedCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct StateCallback {
+    bool called = false;
+    bool state = false;
+    HAFan* caller = nullptr;
+
+    void reset() {
+        called = false;
+        state = false;
+        caller = nullptr;
+    }
+};
+
+struct SpeedCallback {
+    bool called = false;
+    uint8_t speed = 0;
+    HAFan* caller = nullptr;
+
+    void reset() {
+        called = false;
+        speed = 0;
+        caller = nullptr;
+    } 
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueFan";
-
-static bool commandCallbackCalled = false;
-static bool commandCallbackState = false;
-static uint8_t commandCallbackSpeed = 0;
-static HAFan* commandCallbackFanPtr = nullptr;
+static StateCallback lastStateCallbackCall;
+static SpeedCallback lastSpeedCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/fan/testDevice/uniqueFan/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueFan/stat_t"};
@@ -34,18 +59,18 @@ const char SpeedPercentageTopic[] PROGMEM = {"testData/testDevice/uniqueFan/pct_
 const char StateCommandTopic[] PROGMEM = {"testData/testDevice/uniqueFan/cmd_t"};
 const char SpeedPercentageCommandTopic[] PROGMEM = {"testData/testDevice/uniqueFan/pct_cmd_t"};
 
-void onStateCommandReceived(bool state, HAFan* fan)
+void onStateCommandReceived(bool state, HAFan* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackState = state;
-    commandCallbackFanPtr = fan;
+    lastStateCallbackCall.called = true;
+    lastStateCallbackCall.state = state;
+    lastStateCallbackCall.caller = caller;
 }
 
-void onSpeedCommandReceived(uint8_t speedPercentage, HAFan* fan)
+void onSpeedCommandReceived(uint8_t speedPercentage, HAFan* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackSpeed = speedPercentage;
-    commandCallbackFanPtr = fan;
+    lastSpeedCallbackCall.called = true;
+    lastSpeedCallbackCall.speed = speedPercentage;
+    lastSpeedCallbackCall.caller = caller;
 }
 
 AHA_TEST(FanTest, invalid_unique_id) {
@@ -407,7 +432,7 @@ AHA_TEST(FanTest, state_command_on) {
     fan.onStateCommand(onStateCommandReceived);
     mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("ON"));
 
-    assertStateCallback(true, true, &fan)
+    assertStateCallbackCalled(true, &fan)
 }
 
 AHA_TEST(FanTest, state_command_off) {
@@ -417,7 +442,7 @@ AHA_TEST(FanTest, state_command_off) {
     fan.onStateCommand(onStateCommandReceived);
     mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("OFF"));
 
-    assertStateCallback(true, false, &fan)
+    assertStateCallbackCalled(false, &fan)
 }
 
 AHA_TEST(FanTest, state_command_different_fan) {
@@ -430,7 +455,7 @@ AHA_TEST(FanTest, state_command_different_fan) {
         F("ON")
     );
 
-    assertStateCallback(false, false, nullptr)
+    assertStateCallbackNotCalled()
 }
 
 AHA_TEST(FanTest, speed_command_zero) {
@@ -440,7 +465,7 @@ AHA_TEST(FanTest, speed_command_zero) {
     fan.onSpeedCommand(onSpeedCommandReceived);
     mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("0"));
 
-    assertSpeedCallback(true, 0, &fan)
+    assertSpeedCallbackCalled(0, &fan)
 }
 
 AHA_TEST(FanTest, speed_command_max) {
@@ -450,7 +475,7 @@ AHA_TEST(FanTest, speed_command_max) {
     fan.onSpeedCommand(onSpeedCommandReceived);
     mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("100"));
 
-    assertSpeedCallback(true, 100, &fan)
+    assertSpeedCallbackCalled(100, &fan)
 }
 
 AHA_TEST(FanTest, speed_command_invalid) {
@@ -460,7 +485,7 @@ AHA_TEST(FanTest, speed_command_invalid) {
     fan.onSpeedCommand(onSpeedCommandReceived);
     mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("INVALID"));
 
-    assertSpeedCallback(false, 0, nullptr)
+    assertSpeedCallbackNotCalled()
 }
 
 AHA_TEST(FanTest, speed_command_different_fan) {
@@ -473,7 +498,7 @@ AHA_TEST(FanTest, speed_command_different_fan) {
         F("50")
     );
 
-    assertSpeedCallback(false, 0, nullptr)
+    assertSpeedCallbackNotCalled()
 }
 
 void setup()

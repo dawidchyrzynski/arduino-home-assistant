@@ -3,33 +3,43 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackState = false; \
-    commandCallbackSwitchPtr = nullptr;
+    lastCommandCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, expectedCommand, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedCommand, commandCallbackState); \
-    assertEqual(callerPtr, commandCallbackSwitchPtr);
+#define assertCommandCallbackCalled(expectedCommand, callerPtr) \
+    assertTrue(lastCommandCallbackCall.called); \
+    assertEqual(expectedCommand, lastCommandCallbackCall.state); \
+    assertEqual(callerPtr, lastCommandCallbackCall.caller);
+
+#define assertCommandCallbackNotCalled() \
+    assertFalse(lastCommandCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct CommandCallback {
+    bool called = false;
+    bool state = false;
+    HASwitch* caller = nullptr;
+
+    void reset() {
+        called = false;
+        state = false;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSwitch";
+static CommandCallback lastCommandCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/switch/testDevice/uniqueSwitch/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSwitch/stat_t"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueSwitch/cmd_t"};
 
-static bool commandCallbackCalled = false;
-static bool commandCallbackState = false;
-static HASwitch* commandCallbackSwitchPtr = nullptr;
-
-void onCommandReceived(bool state, HASwitch* sender)
+void onCommandReceived(bool state, HASwitch* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackState = state;
-    commandCallbackSwitchPtr = sender;
+    lastCommandCallbackCall.called = true;
+    lastCommandCallbackCall.state = state;
+    lastCommandCallbackCall.caller = caller;
 }
 
 AHA_TEST(SwitchTest, invalid_unique_id) {
@@ -229,10 +239,9 @@ AHA_TEST(SwitchTest, publish_state_on) {
 
     mock->connectDummy();
     HASwitch testSwitch(testUniqueId);
-    bool result = testSwitch.setState(true);
 
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
-    assertTrue(result);
+    assertTrue(testSwitch.setState(true));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
 }
 
 AHA_TEST(SwitchTest, publish_state_off) {
@@ -241,10 +250,9 @@ AHA_TEST(SwitchTest, publish_state_off) {
     mock->connectDummy();
     HASwitch testSwitch(testUniqueId);
     testSwitch.setCurrentState(true);
-    bool result = testSwitch.setState(false);
 
+    assertTrue(testSwitch.setState(false));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "OFF", true)
-    assertTrue(result);
 }
 
 AHA_TEST(SwitchTest, command_on) {
@@ -254,7 +262,7 @@ AHA_TEST(SwitchTest, command_on) {
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("ON"));
 
-    assertCallback(true, true, &testSwitch)
+    assertCommandCallbackCalled(true, &testSwitch)
 }
 
 AHA_TEST(SwitchTest, command_off) {
@@ -264,7 +272,7 @@ AHA_TEST(SwitchTest, command_off) {
     testSwitch.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("OFF"));
 
-    assertCallback(true, false, &testSwitch)
+    assertCommandCallbackCalled(false, &testSwitch)
 }
 
 AHA_TEST(SwitchTest, different_switch_command) {
@@ -277,7 +285,7 @@ AHA_TEST(SwitchTest, different_switch_command) {
         F("CLOSE")
     );
 
-    assertCallback(false, false, nullptr)
+    assertCommandCallbackNotCalled()
 }
 
 void setup()

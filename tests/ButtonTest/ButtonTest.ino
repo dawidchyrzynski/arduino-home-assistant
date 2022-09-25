@@ -3,28 +3,39 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackButtonPtr = nullptr;
+    lastPressCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(callerPtr, commandCallbackButtonPtr);
+#define assertPressCallbackCalled(callerPtr) \
+    assertTrue(lastPressCallbackCall.called); \
+    assertEqual(callerPtr, lastPressCallbackCall.caller);
+
+#define assertPressCallbackNotCalled() \
+    assertFalse(lastPressCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct PressCallback {
+    bool called = false;
+    HAButton* caller = nullptr;
+
+    void reset() {
+        called = false;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueButton";
-static bool commandCallbackCalled = false;
-static HAButton* commandCallbackButtonPtr = nullptr;
+static PressCallback lastPressCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/button/testDevice/uniqueButton/config"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueButton/cmd_t"};
 const char CommandMessage[] PROGMEM = {"PRESS"};
 
-void onCommandReceived(HAButton* button)
+void onCommandReceived(HAButton* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackButtonPtr = button;
+    lastPressCallbackCall.called = true;
+    lastPressCallbackCall.caller = caller;
 }
 
 AHA_TEST(ButtonTest, invalid_unique_id) {
@@ -167,7 +178,7 @@ AHA_TEST(ButtonTest, command_callback) {
     button.onPress(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
-    assertCallback(true, &button)
+    assertPressCallbackCalled(&button)
 }
 
 AHA_TEST(ButtonTest, no_command_callback) {
@@ -176,7 +187,7 @@ AHA_TEST(ButtonTest, no_command_callback) {
     HAButton button(testUniqueId);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
-    assertCallback(false, nullptr)
+    assertPressCallbackNotCalled()
 }
 
 AHA_TEST(ButtonTest, different_button_command) {
@@ -189,7 +200,7 @@ AHA_TEST(ButtonTest, different_button_command) {
         AHATOFSTR(CommandMessage)
     );
 
-    assertCallback(false, nullptr)
+    assertPressCallbackNotCalled()
 }
 
 void setup()

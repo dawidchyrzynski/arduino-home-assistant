@@ -189,6 +189,8 @@ void HAFan::handleStateCommand(const char* cmd, const uint16_t length)
 
 void HAFan::handleSpeedCommand(const char* cmd, const uint16_t length)
 {
+    (void)length;
+
     if (!_speedCallback) {
         return;
     }

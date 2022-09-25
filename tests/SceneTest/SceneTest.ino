@@ -3,28 +3,39 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackScenePtr = nullptr;
+    lastActivateCallbackCall.reset();
 
-#define assertCallback(shouldBeCalled, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(callerPtr, commandCallbackScenePtr);
+#define assertActivateCallbackCalled(callerPtr) \
+    assertTrue(lastActivateCallbackCall.called); \
+    assertEqual(callerPtr, lastActivateCallbackCall.caller);
+
+#define assertActivateCallbackNotCalled() \
+    assertFalse(lastActivateCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct ActivateCallback {
+    bool called = false;
+    HAScene* caller = nullptr;
+
+    void reset() {
+        called = false;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueScene";
-static bool commandCallbackCalled = false;
-static HAScene* commandCallbackScenePtr = nullptr;
+static ActivateCallback lastActivateCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/scene/testDevice/uniqueScene/config"};
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueScene/cmd_t"};
 const char CommandMessage[] PROGMEM = {"on"};
 
-void onCommandReceived(HAScene* scene)
+void onCommandReceived(HAScene* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackScenePtr = scene;
+    lastActivateCallbackCall.called = true;
+    lastActivateCallbackCall.caller = caller;
 }
 
 AHA_TEST(SceneTest, invalid_unique_id) {
@@ -143,7 +154,7 @@ AHA_TEST(SceneTest, command_callback) {
     scene.onActivate(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
-    assertCallback(true, &scene)
+    assertActivateCallbackCalled(&scene)
 }
 
 AHA_TEST(SceneTest, no_command_callback) {
@@ -152,7 +163,7 @@ AHA_TEST(SceneTest, no_command_callback) {
     HAScene scene(testUniqueId);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
-    assertCallback(false, nullptr)
+    assertActivateCallbackNotCalled()
 }
 
 AHA_TEST(SceneTest, different_scene_command) {
@@ -165,7 +176,7 @@ AHA_TEST(SceneTest, different_scene_command) {
         AHATOFSTR(CommandMessage)
     );
 
-    assertCallback(false, nullptr)
+    assertActivateCallbackNotCalled()
 }
 
 void setup()

@@ -3,37 +3,77 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    commandCallbackCalled = false; \
-    commandCallbackState = false; \
-    commandCallbackBrightness = 0; \
-    commandCallbackColorTemperature = 0; \
-    commandCallbackLightPtr = nullptr;
+    lastStateCallbackCall.reset(); \
+    lastBrightnessCallbackCall.reset(); \
+    lastColorTempCallbackCall.reset();
 
-#define assertStateCallback(shouldBeCalled, expectedState, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedState, commandCallbackState); \
-    assertEqual(callerPtr, commandCallbackLightPtr);
+#define assertStateCallbackCalled(expectedState, callerPtr) \
+    assertTrue(lastStateCallbackCall.called); \
+    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(callerPtr, lastStateCallbackCall.caller);
 
-#define assertBrightnessCallback(shouldBeCalled, expectedBrightness, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedBrightness, commandCallbackBrightness); \
-    assertEqual(callerPtr, commandCallbackLightPtr);
+#define assertStateCallbackNotCalled() \
+    assertFalse(lastStateCallbackCall.called);
 
-#define assertColorTempCallback(shouldBeCalled, expectedColorTemp, callerPtr) \
-    assertTrue(commandCallbackCalled == shouldBeCalled); \
-    assertEqual(expectedColorTemp, commandCallbackColorTemperature); \
-    assertEqual(callerPtr, commandCallbackLightPtr);
+#define assertBrightnessCallbackCalled(expectedBrightness, callerPtr) \
+    assertTrue(lastBrightnessCallbackCall.called); \
+    assertEqual(expectedBrightness, lastBrightnessCallbackCall.brightness); \
+    assertEqual(callerPtr, lastBrightnessCallbackCall.caller);
+
+#define assertBrightnessCallbackNotCalled() \
+    assertFalse(lastBrightnessCallbackCall.called);
+
+#define assertColorTempCallbackCalled(expectedColorTemp, callerPtr) \
+    assertTrue(lastColorTempCallbackCall.called); \
+    assertEqual(expectedColorTemp, lastColorTempCallbackCall.temperature); \
+    assertEqual(callerPtr, lastColorTempCallbackCall.caller);
+
+#define assertColorTempCallbackNotCalled() \
+    assertFalse(lastColorTempCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct StateCallback {
+    bool called = false;
+    bool state = false;
+    HALight* caller = nullptr;
+
+    void reset() {
+        called = false;
+        state = false;
+        caller = nullptr;
+    }
+};
+
+struct BrightnessCallback {
+    bool called = false;
+    uint8_t brightness = 0;
+    HALight* caller = nullptr;
+
+    void reset() {
+        called = false;
+        brightness = 0;
+        caller = nullptr;
+    }
+};
+
+struct ColorTemperatureCallback {
+    bool called = false;
+    uint16_t temperature = 0;
+    HALight* caller = nullptr;
+
+    void reset() {
+        called = false;
+        temperature = 0;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueLight";
-
-static bool commandCallbackCalled = false;
-static bool commandCallbackState = false;
-static uint8_t commandCallbackBrightness = 0;
-static uint16_t commandCallbackColorTemperature = 0;
-static HALight* commandCallbackLightPtr = nullptr;
+static StateCallback lastStateCallbackCall;
+static BrightnessCallback lastBrightnessCallbackCall;
+static ColorTemperatureCallback lastColorTempCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/light/testDevice/uniqueLight/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/stat_t"};
@@ -43,25 +83,25 @@ const char StateCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/cmd_t
 const char BrightnessCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/bri_cmd_t"};
 const char ColorTemperatureCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/clr_temp_cmd_t"};
 
-void onStateCommandReceived(bool state, HALight* light)
+void onStateCommandReceived(bool state, HALight* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackState = state;
-    commandCallbackLightPtr = light;
+    lastStateCallbackCall.called = true;
+    lastStateCallbackCall.state = state;
+    lastStateCallbackCall.caller = caller;
 }
 
-void onBrightnessCommandReceived(uint8_t brightness, HALight* light)
+void onBrightnessCommandReceived(uint8_t brightness, HALight* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackBrightness = brightness;
-    commandCallbackLightPtr = light;
+    lastBrightnessCallbackCall.called = true;
+    lastBrightnessCallbackCall.brightness = brightness;
+    lastBrightnessCallbackCall.caller = caller;
 }
 
-void onColorTemperatureCommandReceived(uint16_t temperature, HALight* light)
+void onColorTemperatureCommandReceived(uint16_t temperature, HALight* caller)
 {
-    commandCallbackCalled = true;
-    commandCallbackColorTemperature = temperature;
-    commandCallbackLightPtr = light;
+    lastColorTempCallbackCall.called = true;
+    lastColorTempCallbackCall.temperature = temperature;
+    lastColorTempCallbackCall.caller = caller;
 }
 
 AHA_TEST(LightTest, invalid_unique_id) {
@@ -590,7 +630,7 @@ AHA_TEST(LightTest, state_command_on) {
     light.onStateCommand(onStateCommandReceived);
     mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("ON"));
 
-    assertStateCallback(true, true, &light)
+    assertStateCallbackCalled(true, &light)
 }
 
 AHA_TEST(LightTest, state_command_off) {
@@ -600,7 +640,7 @@ AHA_TEST(LightTest, state_command_off) {
     light.onStateCommand(onStateCommandReceived);
     mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("OFF"));
 
-    assertStateCallback(true, false, &light)
+    assertStateCallbackCalled(false, &light)
 }
 
 AHA_TEST(LightTest, state_command_different_light) {
@@ -613,7 +653,7 @@ AHA_TEST(LightTest, state_command_different_light) {
         F("ON")
     );
 
-    assertStateCallback(false, false, nullptr)
+    assertStateCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, brightness_command_min) {
@@ -623,7 +663,7 @@ AHA_TEST(LightTest, brightness_command_min) {
     light.onBrightnessCommand(onBrightnessCommandReceived);
     mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("0"));
 
-    assertBrightnessCallback(true, 0, &light)
+    assertBrightnessCallbackCalled(0, &light)
 }
 
 AHA_TEST(LightTest, brightness_command_max) {
@@ -633,7 +673,7 @@ AHA_TEST(LightTest, brightness_command_max) {
     light.onBrightnessCommand(onBrightnessCommandReceived);
     mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("255"));
 
-    assertBrightnessCallback(true, 255, &light)
+    assertBrightnessCallbackCalled(255, &light)
 }
 
 AHA_TEST(LightTest, brightness_command_overflow) {
@@ -644,7 +684,7 @@ AHA_TEST(LightTest, brightness_command_overflow) {
     light.onBrightnessCommand(onBrightnessCommandReceived);
     mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("100"));
 
-    assertBrightnessCallback(false, 0, nullptr)
+    assertBrightnessCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, brightness_command_invalid) {
@@ -654,7 +694,7 @@ AHA_TEST(LightTest, brightness_command_invalid) {
     light.onBrightnessCommand(onBrightnessCommandReceived);
     mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("INVALID"));
 
-    assertBrightnessCallback(false, 0, nullptr)
+    assertBrightnessCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, brightness_command_different_light) {
@@ -667,7 +707,7 @@ AHA_TEST(LightTest, brightness_command_different_light) {
         F("50")
     );
 
-    assertBrightnessCallback(false, 0, nullptr)
+    assertBrightnessCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, color_temperature_command) {
@@ -677,7 +717,7 @@ AHA_TEST(LightTest, color_temperature_command) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("200"));
 
-    assertColorTempCallback(true, 200, &light)
+    assertColorTempCallbackCalled(200, &light)
 }
 
 AHA_TEST(LightTest, color_temperature_command_min) {
@@ -687,7 +727,7 @@ AHA_TEST(LightTest, color_temperature_command_min) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("153"));
 
-    assertColorTempCallback(true, 153, &light)
+    assertColorTempCallbackCalled(153, &light)
 }
 
 AHA_TEST(LightTest, color_temperature_command_max) {
@@ -697,7 +737,7 @@ AHA_TEST(LightTest, color_temperature_command_max) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("500"));
 
-    assertColorTempCallback(true, 500, &light)
+    assertColorTempCallbackCalled(500, &light)
 }
 
 AHA_TEST(LightTest, color_temperature_command_below_min) {
@@ -708,7 +748,7 @@ AHA_TEST(LightTest, color_temperature_command_below_min) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("1"));
 
-    assertColorTempCallback(false, 0, nullptr)
+    assertColorTempCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, color_temperature_command_above_max) {
@@ -719,7 +759,7 @@ AHA_TEST(LightTest, color_temperature_command_above_max) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("1000"));
 
-    assertColorTempCallback(false, 0, nullptr)
+    assertColorTempCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, color_temperature_command_invalid) {
@@ -729,7 +769,7 @@ AHA_TEST(LightTest, color_temperature_command_invalid) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("INVALID"));
 
-    assertColorTempCallback(false, 0, nullptr)
+    assertColorTempCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, color_temperature_command_different_light) {
@@ -739,10 +779,10 @@ AHA_TEST(LightTest, color_temperature_command_different_light) {
     light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
     mock->fakeMessage(
         F("testData/testDevice/uniqueLightDifferent/clr_temp_cmd_t"),
-        F("50")
+        F("180")
     );
 
-    assertColorTempCallback(false, 0, nullptr)
+    assertColorTempCallbackNotCalled()
 }
 
 void setup()
