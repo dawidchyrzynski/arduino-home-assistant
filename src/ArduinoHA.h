@@ -10,6 +10,7 @@
 #include "device-types/HADeviceTracker.h"
 #include "device-types/HADeviceTrigger.h"
 #include "device-types/HAFan.h"
+#include "device-types/HAHVAC.h"
 #include "device-types/HALight.h"
 #include "device-types/HALock.h"
 #include "device-types/HANumber.h"
