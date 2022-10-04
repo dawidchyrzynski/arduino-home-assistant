@@ -15,7 +15,8 @@ HAHVAC::HAHVAC(
     _precision(precision),
     _icon(nullptr),
     _retain(false),
-    _currentTemperature(HAUtils::NumberMax)
+    _currentTemperature(HAUtils::NumberMax),
+    _action(UnknownAction)
 {
 
 }
@@ -29,6 +30,20 @@ bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
 
     if (publishCurrentTemperature(realTemperature)) {
         _currentTemperature = realTemperature;
+        return true;
+    }
+
+    return false;
+}
+
+bool HAHVAC::setAction(const Action action, const bool force)
+{
+    if (!force && action == _action) {
+        return true;
+    }
+
+    if (publishAction(action)) {
+        _action = action;
         return true;
     }
 
@@ -54,6 +69,10 @@ void HAHVAC::buildSerializer()
         );
     }
 
+    if (_features & ActionFeature) {
+        _serializer->topic(AHATOFSTR(HAActionTopic));
+    }
+
     _serializer->topic(AHATOFSTR(HACurrentTemperatureTopic));
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
@@ -70,6 +89,7 @@ void HAHVAC::onMqttConnected()
 
     if (!_retain) {
         publishCurrentTemperature(_currentTemperature);
+        publishAction(_action);
     }
 }
 
@@ -100,6 +120,49 @@ bool HAHVAC::publishCurrentTemperature(const HAUtils::Number temperature)
     return publishOnDataTopic(
         AHATOFSTR(HACurrentTemperatureTopic),
         str,
+        true
+    );
+}
+
+bool HAHVAC::publishAction(const Action action)
+{
+    if (action == UnknownAction || !(_features & ActionFeature)) {
+        return false;
+    }
+
+    const __FlashStringHelper *stateStr = nullptr;
+    switch (action) {
+    case OffAction:
+        stateStr = AHATOFSTR(HAActionOff);
+        break;
+
+    case HeatingAction:
+        stateStr = AHATOFSTR(HAActionHeating);
+        break;
+
+    case CoolingAction:
+        stateStr = AHATOFSTR(HAActionCooling);
+        break;
+
+    case DryingAction:
+        stateStr = AHATOFSTR(HAActionDrying);
+        break;
+
+    case IdleAction:
+        stateStr = AHATOFSTR(HAActionIdle);
+        break;
+
+    case FanAction:
+        stateStr = AHATOFSTR(HAActionFan);
+        break;   
+
+    default:
+        return false;
+    }
+
+    return publishOnDataTopic(
+        AHATOFSTR(HAActionTopic),
+        stateStr,
         true
     );
 }

@@ -16,7 +16,18 @@ class HAHVAC : public HABaseDeviceType
 {
 public:
     enum Features {
-        DefaultFeatures = 0
+        DefaultFeatures = 0,
+        ActionFeature = 1
+    };
+
+    enum Action {
+        UnknownAction = 0,
+        OffAction,
+        HeatingAction,
+        CoolingAction,
+        DryingAction,
+        IdleAction,
+        FanAction
     };
 
     /**
@@ -59,6 +70,34 @@ public:
         { return HAUtils::getFloatValue(_currentTemperature, _precision); }
 
     /**
+     * Changes action of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param action New action.
+     * @param force Forces to update the action without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setAction(const Action action, const bool force = false);
+
+    /**
+     * Sets action of the HVAC without publishing it to Home Assistant.
+     * This method may be useful if you want to change temperature before connection
+     * with MQTT broker is acquired.
+     *
+     * @param action New action.
+     */
+    inline void setCurrentAction(const Action action)
+        { _action = action; }
+
+    /**
+     * Returns last known action of the HVAC.
+     * If setAction method wasn't called the initial value will be returned.
+     */
+    inline Action getAction() const
+        { return _action; }
+
+    /**
      * Sets icon of the HVAC.
      * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
@@ -94,6 +133,14 @@ private:
      */
     bool publishCurrentTemperature(const HAUtils::Number temperature);
 
+    /**
+     * Publishes the MQTT message with the given action.
+     *
+     * @param action The action to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishAction(const Action action);
+
     /// Features enabled for the HVAC.
     const uint8_t _features;
 
@@ -108,6 +155,9 @@ private:
 
     /// The current temperature of the HVAC. By default it's `HAUtils::NumberMax`.
     HAUtils::Number _currentTemperature;
+
+    /// The current action of the HVAC. By default it's `HAHVAC::UnknownAction`.
+    Action _action;
 };
 
 #endif

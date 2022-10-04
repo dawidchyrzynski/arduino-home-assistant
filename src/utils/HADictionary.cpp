@@ -77,6 +77,7 @@ const char HABrightnessStateTopic[] PROGMEM = {"bri_stat_t"};
 const char HAColorTemperatureCommandTopic[] PROGMEM = {"clr_temp_cmd_t"};
 const char HAColorTemperatureStateTopic[] PROGMEM = {"clr_temp_stat_t"};
 const char HACurrentTemperatureTopic[] PROGMEM = {"ctt"};
+const char HAActionTopic[] PROGMEM = {"at"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};
@@ -134,6 +135,14 @@ const char HAButton3Subtype[] PROGMEM = {"button_3"};
 const char HAButton4Subtype[] PROGMEM = {"button_4"};
 const char HAButton5Subtype[] PROGMEM = {"button_5"};
 const char HAButton6Subtype[] PROGMEM = {"button_6"};
+
+// actions
+const char HAActionOff[] PROGMEM = {"off"};
+const char HAActionHeating[] PROGMEM = {"heating"};
+const char HAActionCooling[] PROGMEM = {"cooling"};
+const char HAActionDrying[] PROGMEM = {"drying"};
+const char HAActionIdle[] PROGMEM = {"idle"};
+const char HAActionFan[] PROGMEM = {"fan"};
 
 // other
 const char HAHexMap[] PROGMEM = {"0123456789abcdef"};

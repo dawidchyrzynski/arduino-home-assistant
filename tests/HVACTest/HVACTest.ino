@@ -11,6 +11,7 @@ static const char* testUniqueId = "uniqueHVAC";
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
+const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/at"};
 
 AHA_TEST(HVACTest, invalid_unique_id) {
     prepareTest
@@ -32,6 +33,25 @@ AHA_TEST(HVACTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, default_params_with_action) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"at\":\"testData/testDevice/uniqueHVAC/at\","
             "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -116,26 +136,26 @@ AHA_TEST(HVACTest, retain_setter) {
     )
 }
 
-AHA_TEST(HVACTest, publish_data_on_connect) {
+AHA_TEST(HVACTest, publish_nothing_if_retained) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    hvac.setRetain(true);
+    hvac.setCurrentTemperature(21.5);
+    hvac.setCurrentAction(HAHVAC::CoolingAction);
+    mqtt.loop();
+
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
+AHA_TEST(HVACTest, publish_current_temperature_on_connect) {
     prepareTest
 
     HAHVAC hvac(testUniqueId);
     hvac.setCurrentCurrentTemperature(21.5);
     mqtt.loop();
 
-    assertEqual(2, mock->getFlushedMessagesNb());
     assertMqttMessage(1, AHATOFSTR(CurrentTemperatureTopic), "21.5", true)
-}
-
-AHA_TEST(HVACTest, publish_nothing_if_retained) {
-    prepareTest
-
-    HAHVAC hvac(testUniqueId);
-    hvac.setRetain(true);
-    hvac.setCurrentTemperature(21.5);
-    mqtt.loop();
-
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
 AHA_TEST(HVACTest, publish_current_temperature) {
@@ -146,6 +166,16 @@ AHA_TEST(HVACTest, publish_current_temperature) {
 
     assertTrue(hvac.setCurrentTemperature(21.5));
     assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.5", true) 
+}
+
+AHA_TEST(HVACTest, publish_current_temperature_p2) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP2);
+
+    assertTrue(hvac.setCurrentTemperature(21.5));
+    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.50", true) 
 }
 
 AHA_TEST(HVACTest, publish_current_temperature_debounce) {
@@ -170,6 +200,99 @@ AHA_TEST(HVACTest, publish_current_temperature_debounce_skip) {
     assertTrue(hvac.setCurrentTemperature(21.5, true));
     assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.5", true)
 }
+
+AHA_TEST(HVACTest, publish_action_on_connect) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    hvac.setCurrentAction(HAHVAC::OffAction);
+    mqtt.loop();
+
+    assertMqttMessage(1, AHATOFSTR(ActionTopic), "off", true)
+}
+
+AHA_TEST(HVACTest, publish_action_off) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::OffAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "off", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_heating) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::HeatingAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "heating", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_cooling) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::CoolingAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "cooling", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_drying) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::DryingAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "drying", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_idle) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::IdleAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "idle", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_fan) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+
+    assertTrue(hvac.setAction(HAHVAC::FanAction));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true) 
+}
+
+AHA_TEST(HVACTest, publish_action_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    hvac.setCurrentAction(HAHVAC::FanAction);
+        
+    assertTrue(hvac.setAction(HAHVAC::FanAction));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(HVACTest, publish_action_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    hvac.setCurrentAction(HAHVAC::FanAction);
+
+    assertTrue(hvac.setAction(HAHVAC::FanAction, true));
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true) 
+}
+
 
 
 

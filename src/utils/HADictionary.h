@@ -77,6 +77,7 @@ extern const char HABrightnessStateTopic[];
 extern const char HAColorTemperatureCommandTopic[];
 extern const char HAColorTemperatureStateTopic[];
 extern const char HACurrentTemperatureTopic[];
+extern const char HAActionTopic[];
 
 // misc
 extern const char HAOnline[];
@@ -134,6 +135,14 @@ extern const char HAButton3Subtype[];
 extern const char HAButton4Subtype[];
 extern const char HAButton5Subtype[];
 extern const char HAButton6Subtype[];
+
+// actions
+extern const char HAActionOff[];
+extern const char HAActionHeating[];
+extern const char HAActionCooling[];
+extern const char HAActionDrying[];
+extern const char HAActionIdle[];
+extern const char HAActionFan[];
 
 // other
 extern const char HAHexMap[];
