@@ -79,8 +79,8 @@ Supported device types
      - ❌
      - --
    * - HVAC
-     - ❌
-     - --
+     - ✅
+     - :doc:`HAHVAC </documents/api/device-types/ha-hvac>`
    * - Light
      - ✅
      - :doc:`HALight </documents/api/device-types/ha-light>`
