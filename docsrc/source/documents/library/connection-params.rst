@@ -5,6 +5,12 @@ Connection parameters
 **This method should be called only once and at the end of the setup logic.**
 The example below presents all possible variants. Pick one that meets your requirements.
 
+.. NOTE::
+
+    Connection to the MQTT broker is established asynchronously.
+    The `HAMqtt::begin` method just sets the parameters of the connection.
+    The connection attempt is made during the loop cycle.
+
 ::
 
     #include <Ethernet.h>

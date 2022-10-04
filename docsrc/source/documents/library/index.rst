@@ -16,3 +16,4 @@ Solid understanding of foundations will allow you to utilize full potential of t
     device-types
     mqtt-security
     mqtt-advanced
+    compiler-macros
