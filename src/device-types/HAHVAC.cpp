@@ -5,13 +5,34 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
-HAHVAC::HAHVAC(const char* uniqueId, const uint8_t features) :
+HAHVAC::HAHVAC(
+    const char* uniqueId,
+    const uint8_t features,
+    const NumberPrecision precision
+) :
     HABaseDeviceType(AHATOFSTR(HAComponentClimate), uniqueId),
     _features(features),
+    _precision(precision),
     _icon(nullptr),
-    _retain(false)
+    _retain(false),
+    _currentTemperature(HAUtils::NumberMax)
 {
 
+}
+
+bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
+{
+    const HAUtils::Number realTemperature = HAUtils::processFloatValue(temperature, _precision);
+    if (!force && realTemperature == _currentTemperature) {
+        return true;
+    }
+
+    if (publishCurrentTemperature(realTemperature)) {
+        _currentTemperature = realTemperature;
+        return true;
+    }
+
+    return false;
 }
 
 void HAHVAC::buildSerializer()
@@ -33,6 +54,7 @@ void HAHVAC::buildSerializer()
         );
     }
 
+    _serializer->topic(AHATOFSTR(HACurrentTemperatureTopic));
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
 }
@@ -46,7 +68,9 @@ void HAHVAC::onMqttConnected()
     publishConfig();
     publishAvailability();
 
-    // to do
+    if (!_retain) {
+        publishCurrentTemperature(_currentTemperature);
+    }
 }
 
 void HAHVAC::onMqttMessage(
@@ -56,6 +80,28 @@ void HAHVAC::onMqttMessage(
 )
 {
     // to do
+}
+
+bool HAHVAC::publishCurrentTemperature(const HAUtils::Number temperature)
+{
+    if (temperature == HAUtils::NumberMax) {
+        return false;
+    }
+
+    uint8_t size = HAUtils::calculateNumberSize(temperature, _precision);
+    if (size == 0) {
+        return false;
+    }
+
+    char str[size + 1]; // with null terminator
+    str[size] = 0;
+    HAUtils::numberToStr(str, temperature, _precision);
+
+    return publishOnDataTopic(
+        AHATOFSTR(HACurrentTemperatureTopic),
+        str,
+        true
+    );
 }
 
 #endif

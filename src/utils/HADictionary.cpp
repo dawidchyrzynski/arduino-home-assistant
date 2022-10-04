@@ -76,6 +76,7 @@ const char HABrightnessCommandTopic[] PROGMEM = {"bri_cmd_t"};
 const char HABrightnessStateTopic[] PROGMEM = {"bri_stat_t"};
 const char HAColorTemperatureCommandTopic[] PROGMEM = {"clr_temp_cmd_t"};
 const char HAColorTemperatureStateTopic[] PROGMEM = {"clr_temp_stat_t"};
+const char HACurrentTemperatureTopic[] PROGMEM = {"ctt"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};
