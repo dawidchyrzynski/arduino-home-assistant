@@ -1,8 +1,6 @@
 #include "HANumber.h"
 #ifndef EX_ARDUINOHA_NUMBER
 
-#define HANUMBER_PROCESS_FLOAT(value) HAUtils::processFloatValue(value, _precision)
-
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
@@ -17,9 +15,9 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     _optimistic(false),
     _mode(ModeAuto),
     _unitOfMeasurement(nullptr),
-    _minValue(HANUMBER_PROCESS_FLOAT(1)),
-    _maxValue(HANUMBER_PROCESS_FLOAT(100)),
-    _step(HANUMBER_PROCESS_FLOAT(1)),
+    _minValue(HAUtils::NumberMax),
+    _maxValue(HAUtils::NumberMax),
+    _step(HAUtils::NumberMax),
     _currentState(StateNone),
     _commandCallback(nullptr)
 {
@@ -28,7 +26,7 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
 
 bool HANumber::setState(const float state, const bool force)
 {
-    const HAUtils::Number realState = HANUMBER_PROCESS_FLOAT(state);
+    const HAUtils::Number realState = HAUtils::processFloatValue(state, _precision);
     if (!force && realState == _currentState) {
         return true;
     }
@@ -68,15 +66,15 @@ void HANumber::buildSerializer()
         HASerializer::ProgmemPropertyValue
     );
 
-    if (_minValue != HANUMBER_PROCESS_FLOAT(1)) {
+    if (_minValue != HAUtils::NumberMax) {
         _serializer->set(AHATOFSTR(HAMinProperty), &_minValue, numberProperty);
     }
 
-    if (_maxValue != HANUMBER_PROCESS_FLOAT(100)) {
+    if (_maxValue != HAUtils::NumberMax) {
         _serializer->set(AHATOFSTR(HAMaxProperty), &_maxValue, numberProperty);
     }
 
-    if (_step != HANUMBER_PROCESS_FLOAT(1)) {
+    if (_step != HAUtils::NumberMax) {
         _serializer->set(AHATOFSTR(HAStepProperty), &_step, numberProperty);
     }
 

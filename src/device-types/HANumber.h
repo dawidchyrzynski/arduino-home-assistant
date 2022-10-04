@@ -143,7 +143,7 @@ public:
      * @param step The step value. Smallest value `0.001`. By default it's `1`.
      */
     inline void setStep(const float step)
-        { _step = HAUtils::processFloatValue(step, _precision);; }
+        { _step = HAUtils::processFloatValue(step, _precision); }
 
     /**
      * Registers callback that will be called each time the number is changed in the HA panel.
