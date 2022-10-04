@@ -16,7 +16,8 @@ HAHVAC::HAHVAC(
     _icon(nullptr),
     _retain(false),
     _currentTemperature(HAUtils::NumberMax),
-    _action(UnknownAction)
+    _action(UnknownAction),
+    _temperatureUnit(DefaultUnit)
 {
 
 }
@@ -71,6 +72,18 @@ void HAHVAC::buildSerializer()
 
     if (_features & ActionFeature) {
         _serializer->topic(AHATOFSTR(HAActionTopic));
+    }
+
+    if (_temperatureUnit != DefaultUnit) {
+        const __FlashStringHelper *unitStr = _temperatureUnit == CelsiusUnit
+            ? AHATOFSTR(HATemperatureUnitC)
+            : AHATOFSTR(HATemperatureUnitF);
+
+        _serializer->set(
+            AHATOFSTR(HATemperatureUnitProperty),
+            unitStr,
+            HASerializer::ProgmemPropertyValue
+        );
     }
 
     _serializer->topic(AHATOFSTR(HACurrentTemperatureTopic));

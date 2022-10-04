@@ -136,6 +136,46 @@ AHA_TEST(HVACTest, retain_setter) {
     )
 }
 
+AHA_TEST(HVACTest, temperature_unit_c_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setTemperatureUnit(HAHVAC::CelsiusUnit);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_unit\":\"C\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, temperature_unit_f_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setTemperatureUnit(HAHVAC::FahrenheitUnit);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_unit\":\"F\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 

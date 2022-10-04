@@ -30,6 +30,12 @@ public:
         FanAction
     };
 
+    enum TemperatureUnit {
+        DefaultUnit = 1,
+        CelsiusUnit,
+        FahrenheitUnit
+    };
+
     /**
      * @param uniqueId The unique ID of the HVAC. It needs to be unique in a scope of your device.
      * @param features Features that should be enabled for the HVAC.
@@ -115,6 +121,14 @@ public:
     inline void setRetain(const bool retain)
         { _retain = retain; }
 
+    /**
+     * Changes the temperature unit.
+     *
+     * @param unit See the TemperatureUnit enum above.
+     */
+    inline void setTemperatureUnit(TemperatureUnit unit)
+        { _temperatureUnit = unit; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -158,6 +172,9 @@ private:
 
     /// The current action of the HVAC. By default it's `HAHVAC::UnknownAction`.
     Action _action;
+
+    /// The temperature unit for the HVAC. By default it's `HAHVAC::DefaultUnit`.
+    TemperatureUnit _temperatureUnit;
 };
 
 #endif
