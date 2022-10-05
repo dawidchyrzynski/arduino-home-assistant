@@ -10,7 +10,8 @@ class HAUtils
 {
 public:
     typedef int64_t Number;
-    static const Number NumberMax = INT64_MAX;
+    static const Number NumberMax;
+    static const uint8_t NumberMaxDigitsNb;
 
     /**
      * Checks whether the given `str` ends with the given `suffix`.
@@ -112,9 +113,10 @@ public:
      * Converts the given string into number.
      * If the given string doesn't contain a valid number the `HAUtils::NumberMax` is returned.
      *
-     * @param src A string containing the number.
+     * @param buffer The buffer that's supposed to contain the number.
+     * @param length Th length of the buffer.
      */
-    static HAUtils::Number strToNumber(const char* src);
+    static HAUtils::Number strToNumber(const uint8_t* buffer, const uint16_t length);
 };
 
 #endif

@@ -468,6 +468,16 @@ AHA_TEST(FanTest, speed_command_zero) {
     assertSpeedCallbackCalled(0, &fan)
 }
 
+AHA_TEST(FanTest, speed_command_half) {
+    prepareTest
+
+    HAFan fan(testUniqueId);
+    fan.onSpeedCommand(onSpeedCommandReceived);
+    mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("50"));
+
+    assertSpeedCallbackCalled(50, &fan)
+}
+
 AHA_TEST(FanTest, speed_command_max) {
     prepareTest
 

@@ -17,7 +17,7 @@
 
 #define assertBrightnessCallbackCalled(expectedBrightness, callerPtr) \
     assertTrue(lastBrightnessCallbackCall.called); \
-    assertEqual(expectedBrightness, lastBrightnessCallbackCall.brightness); \
+    assertEqual((uint8_t)expectedBrightness, lastBrightnessCallbackCall.brightness); \
     assertEqual(callerPtr, lastBrightnessCallbackCall.caller);
 
 #define assertBrightnessCallbackNotCalled() \
@@ -25,7 +25,7 @@
 
 #define assertColorTempCallbackCalled(expectedColorTemp, callerPtr) \
     assertTrue(lastColorTempCallbackCall.called); \
-    assertEqual(expectedColorTemp, lastColorTempCallbackCall.temperature); \
+    assertEqual((uint16_t)expectedColorTemp, lastColorTempCallbackCall.temperature); \
     assertEqual(callerPtr, lastColorTempCallbackCall.caller);
 
 #define assertColorTempCallbackNotCalled() \
@@ -491,7 +491,7 @@ AHA_TEST(LightTest, current_brightness_setter) {
     light.setCurrentBrightness(50);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(50, light.getCurrentBrightness());
+    assertEqual((uint8_t)50, light.getCurrentBrightness());
 }
 
 AHA_TEST(LightTest, current_color_temperature_setter) {
@@ -501,7 +501,7 @@ AHA_TEST(LightTest, current_color_temperature_setter) {
     light.setCurrentColorTemperature(50);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(50, light.getCurrentColorTemperature());
+    assertEqual((uint16_t)50, light.getCurrentColorTemperature());
 }
 
 AHA_TEST(LightTest, publish_state) {

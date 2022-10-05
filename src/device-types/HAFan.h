@@ -198,18 +198,18 @@ private:
     /**
      * Parses the given state command and executes the callback with proper value.
      * 
-     * @param cmd The string representation of the command.
+     * @param cmd The data of the command.
      * @param length Length of the command.
      */
-    void handleStateCommand(const char* cmd, const uint16_t length);
+    void handleStateCommand(const uint8_t* cmd, const uint16_t length);
 
     /**
      * Parses the given speed command and executes the callback with proper value.
      * 
-     * @param cmd The string representation of the command.
+     * @param cmd The data of the command.
      * @param length Length of the command.
      */
-    void handleSpeedCommand(const char* cmd, const uint16_t length);
+    void handleSpeedCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the fan.
     const uint8_t _features;

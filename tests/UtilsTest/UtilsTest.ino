@@ -31,7 +31,10 @@
 }
 
 #define assertStrToNumber(expected, str) \
-    assertEqual((HAUtils::Number)expected, HAUtils::strToNumber(str));
+    assertEqual( \
+        (HAUtils::Number)expected, \
+        HAUtils::strToNumber(reinterpret_cast<const uint8_t*>(str), strlen(str)) \
+    );
 
 using aunit::TestRunner;
 
@@ -422,7 +425,24 @@ AHA_TEST(UtilsTest, float_to_str_p3_signed) {
 }
 
 AHA_TEST(UtilsTest, str_to_number_null) {
-    assertStrToNumber(HAUtils::NumberMax, nullptr);
+    const char* num = nullptr;
+    assertStrToNumber(HAUtils::NumberMax, num);
+}
+
+AHA_TEST(UtilsTest, str_to_number_unsigned_overflow) {
+    assertStrToNumber(HAUtils::NumberMax, "92233720368547758078");
+}
+
+AHA_TEST(UtilsTest, str_to_number_signed_overflow) {
+    assertStrToNumber(HAUtils::NumberMax, "-92233720368547758078");
+}
+
+AHA_TEST(UtilsTest, str_to_number_max) {
+    assertStrToNumber((int64_t)9223372036854775807, "9223372036854775807");
+}
+
+AHA_TEST(UtilsTest, str_to_number_min) {
+    assertStrToNumber((int64_t)-9223372036854775807, "-9223372036854775807");
 }
 
 AHA_TEST(UtilsTest, str_to_number_zero) {

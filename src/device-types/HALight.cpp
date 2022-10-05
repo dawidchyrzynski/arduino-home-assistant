@@ -174,22 +174,19 @@ void HALight::onMqttMessage(
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleStateCommand(reinterpret_cast<const char*>(payload), length);
+        handleStateCommand(payload, length);
     } else if (HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HABrightnessCommandTopic)
     )) {
-        handleBrightnessCommand(reinterpret_cast<const char*>(payload), length);
+        handleBrightnessCommand(payload, length);
     }  else if (HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HAColorTemperatureCommandTopic)
     )) {
-        handleColorTemperatureCommand(
-            reinterpret_cast<const char*>(payload),
-            length
-        );
+        handleColorTemperatureCommand(payload, length);
     }
 }
 
@@ -243,7 +240,7 @@ bool HALight::publishColorTemperature(const uint16_t temperature)
     return publishOnDataTopic(AHATOFSTR(HAColorTemperatureStateTopic), str, true);
 }
 
-void HALight::handleStateCommand(const char* cmd, const uint16_t length)
+void HALight::handleStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
 
@@ -255,13 +252,13 @@ void HALight::handleStateCommand(const char* cmd, const uint16_t length)
     _stateCallback(state, this);
 }
 
-void HALight::handleBrightnessCommand(const char* cmd, const uint16_t length)
+void HALight::handleBrightnessCommand(const uint8_t* cmd, const uint16_t length)
 {
     if (!_brightnessCallback) {
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd);
+    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
     if (
         number != HAUtils::NumberMax &&
         number >= 0 &&
@@ -272,7 +269,7 @@ void HALight::handleBrightnessCommand(const char* cmd, const uint16_t length)
 }
 
 void HALight::handleColorTemperatureCommand(
-    const char* cmd,
+    const uint8_t* cmd,
     const uint16_t length
 )
 {
@@ -280,7 +277,7 @@ void HALight::handleColorTemperatureCommand(
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd);
+    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
     if (
         number != HAUtils::NumberMax &&
         number >= _minMireds &&

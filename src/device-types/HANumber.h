@@ -175,10 +175,10 @@ private:
     /**
      * Parses the given command and executes the number's callback with proper value.
      * 
-     * @param cmd The string representation of the command.
+     * @param cmd The data of the command.
      * @param length Length of the command.
      */
-    void handleCommand(const char* cmd, const uint16_t length);
+    void handleCommand(const uint8_t* cmd, const uint16_t length);
 
     /**
      * Returns progmem string representing mode of the number

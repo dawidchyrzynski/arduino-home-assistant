@@ -127,7 +127,7 @@ void HANumber::onMqttMessage(
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleCommand(reinterpret_cast<const char*>(payload), length);
+        handleCommand(payload, length);
     }
 }
 
@@ -157,7 +157,7 @@ bool HANumber::publishState(const HAUtils::Number state)
     );
 }
 
-void HANumber::handleCommand(const char* cmd, const uint16_t length)
+void HANumber::handleCommand(const uint8_t* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
         return;
@@ -166,7 +166,7 @@ void HANumber::handleCommand(const char* cmd, const uint16_t length)
     if (memcmp_P(cmd, HAStateNone, length) == 0) {
         _commandCallback(StateNone, _precision, this);
     } else {
-        HAUtils::Number number = HAUtils::strToNumber(cmd);
+        HAUtils::Number number = HAUtils::strToNumber(cmd, length);
         if (number != HAUtils::NumberMax) {
             _commandCallback(number, _precision, this);
         }

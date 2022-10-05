@@ -138,13 +138,13 @@ void HAFan::onMqttMessage(
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleStateCommand(reinterpret_cast<const char*>(payload), length);
+        handleStateCommand(payload, length);
     } else if (HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HAPercentageCommandTopic)
     )) {
-        handleSpeedCommand(reinterpret_cast<const char*>(payload), length);
+        handleSpeedCommand(payload, length);
     }
 }
 
@@ -175,7 +175,7 @@ bool HAFan::publishSpeed(const uint8_t speedPercentage)
     return publishOnDataTopic(AHATOFSTR(HAPercentageStateTopic), str, true);
 }
 
-void HAFan::handleStateCommand(const char* cmd, const uint16_t length)
+void HAFan::handleStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
 
@@ -187,15 +187,13 @@ void HAFan::handleStateCommand(const char* cmd, const uint16_t length)
     _stateCallback(state, this);
 }
 
-void HAFan::handleSpeedCommand(const char* cmd, const uint16_t length)
+void HAFan::handleSpeedCommand(const uint8_t* cmd, const uint16_t length)
 {
-    (void)length;
-
     if (!_speedCallback) {
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd);
+    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
     if (number != HAUtils::NumberMax && number >= 0 && number <= 100) { // 0-100%
         _speedCallback(static_cast<uint8_t>(number), this);
     }

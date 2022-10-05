@@ -6,6 +6,9 @@
 #include "HAUtils.h"
 #include "HADictionary.h"
 
+const HAUtils::Number HAUtils::NumberMax = INT64_MAX;
+const uint8_t HAUtils::NumberMaxDigitsNb = 19;
+
 bool HAUtils::endsWith(const char* str, const char* suffix)
 {
     if (str == nullptr || suffix == nullptr) {
@@ -165,14 +168,13 @@ void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
     }
 }
 
-HAUtils::Number HAUtils::strToNumber(const char* src)
+HAUtils::Number HAUtils::strToNumber(const uint8_t* src, const uint16_t length)
 {
-    const uint16_t len = src ? strlen(src) : 0;
-    if (len == 0) {
+    if (length == 0) {
         return NumberMax;
     }
 
-    const char* firstCh = &src[0];
+    const uint8_t* firstCh = &src[0];
     int64_t out = 0;
     bool isSigned = false;
 
@@ -181,8 +183,13 @@ HAUtils::Number HAUtils::strToNumber(const char* src)
         firstCh++;
     }
 
+    uint8_t digitsNb = isSigned ? length - 1 : length;
+    if (digitsNb > NumberMaxDigitsNb) {
+        return NumberMax;
+    }
+
     uint64_t base = 1;
-    const char* ptr = &src[len - 1];
+    const uint8_t* ptr = &src[length - 1];
 
     while (ptr >= firstCh) {
         uint8_t digit = *ptr - '0';
