@@ -17,7 +17,9 @@ HAHVAC::HAHVAC(
     _retain(false),
     _currentTemperature(HAUtils::NumberMax),
     _action(UnknownAction),
-    _temperatureUnit(DefaultUnit)
+    _temperatureUnit(DefaultUnit),
+    _minTemp(HAUtils::NumberMax),
+    _maxTemp(HAUtils::NumberMax)
 {
 
 }
@@ -57,7 +59,10 @@ void HAHVAC::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 13); // 13 - max properties nb
+    const HASerializer::PropertyValueType numberProperty =
+        HASerializer::precisionToPropertyType(_precision);
+
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -83,6 +88,22 @@ void HAHVAC::buildSerializer()
             AHATOFSTR(HATemperatureUnitProperty),
             unitStr,
             HASerializer::ProgmemPropertyValue
+        );
+    }
+
+    if (_minTemp != HAUtils::NumberMax) {
+        _serializer->set(
+            AHATOFSTR(HAMinTempProperty),
+            &_minTemp,
+            numberProperty
+        );
+    }
+
+    if (_maxTemp != HAUtils::NumberMax) {
+        _serializer->set(
+            AHATOFSTR(HAMaxTempProperty),
+            &_maxTemp,
+            numberProperty
         );
     }
 

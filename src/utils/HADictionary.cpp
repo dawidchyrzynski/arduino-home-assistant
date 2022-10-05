@@ -63,6 +63,8 @@ const char HABrightnessScaleProperty[] PROGMEM = {"bri_scl"};
 const char HAMinMiredsProperty[] PROGMEM = {"min_mirs"};
 const char HAMaxMiredsProperty[] PROGMEM = {"max_mirs"};
 const char HATemperatureUnitProperty[] PROGMEM = {"temp_unit"};
+const char HAMinTempProperty[] PROGMEM = {"min_temp"};
+const char HAMaxTempProperty[] PROGMEM = {"max_temp"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};

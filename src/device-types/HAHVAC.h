@@ -129,6 +129,22 @@ public:
     inline void setTemperatureUnit(TemperatureUnit unit)
         { _temperatureUnit = unit; }
 
+    /**
+     * Sets the minimum temperature that can be set from the Home Assistant panel.
+     *
+     * @param min The minimum value.
+     */
+    inline void setMinTemp(const float min)
+        { _minTemp = HAUtils::processFloatValue(min, _precision); }
+
+    /**
+     * Sets the maximum temperature that can be set from the Home Assistant panel.
+     *
+     * @param min The maximum value.
+     */
+    inline void setMaxTemp(const float max)
+        { _maxTemp = HAUtils::processFloatValue(max, _precision); }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -175,6 +191,12 @@ private:
 
     /// The temperature unit for the HVAC. By default it's `HAHVAC::DefaultUnit`.
     TemperatureUnit _temperatureUnit;
+
+    /// The minimum temperature that can be set.
+    HAUtils::Number _minTemp;
+
+    /// The maximum temperature that can be set.
+    HAUtils::Number _maxTemp;
 };
 
 #endif

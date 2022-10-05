@@ -63,6 +63,8 @@ extern const char HABrightnessScaleProperty[];
 extern const char HAMinMiredsProperty[];
 extern const char HAMaxMiredsProperty[];
 extern const char HATemperatureUnitProperty[];
+extern const char HAMinTempProperty[];
+extern const char HAMaxTempProperty[];
 
 // topics
 extern const char HAConfigTopic[];

@@ -176,6 +176,86 @@ AHA_TEST(HVACTest, temperature_unit_f_setter) {
     )
 }
 
+AHA_TEST(HVACTest, min_temp_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setMinTemp(25.555);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"min_temp\":25.5,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, min_temp_setter_p2) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP2);
+    hvac.setMinTemp(25.555);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"min_temp\":25.55,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, max_temp_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setMaxTemp(25.555);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"max_temp\":25.5,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, max_temp_setter_p2) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP2);
+    hvac.setMaxTemp(25.555);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"max_temp\":25.55,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 
