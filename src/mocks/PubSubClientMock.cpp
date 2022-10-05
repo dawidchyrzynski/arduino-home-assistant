@@ -230,11 +230,11 @@ void PubSubClientMock::fakeMessage(const char* topic, const char* message)
         return;
     }
 
-    callback(
-        const_cast<char*>(topic), // hack
-        const_cast<uint8_t*>(reinterpret_cast<const uint8_t*>(message)), // hack
-        strlen(message)
-    );
+    uint16_t len = strlen(message);
+    uint8_t data[len];
+    memcpy(data, message, len);
+
+    callback(const_cast<char*>(topic), data, len);
 }
 
 void PubSubClientMock::fakeMessage(
