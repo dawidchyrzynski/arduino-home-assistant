@@ -77,20 +77,36 @@ AHA_TEST(UtilsTest, calculate_number_zero) {
     assertEqual(1, HAUtils::calculateNumberSize(0));
 }
 
-AHA_TEST(UtilsTest, calculate_number_signed_small) {
+AHA_TEST(UtilsTest, calculate_number_signed_one_digit) {
     assertEqual(2, HAUtils::calculateNumberSize(-8));
 }
 
-AHA_TEST(UtilsTest, calculate_number_unsigned_small) {
+AHA_TEST(UtilsTest, calculate_number_unsigned_one_digit) {
     assertEqual(1, HAUtils::calculateNumberSize(8));
 }
 
-AHA_TEST(UtilsTest, calculate_number_signed_large) {
-    assertEqual(7, HAUtils::calculateNumberSize(-864564));
+AHA_TEST(UtilsTest, calculate_number_signed_two_digits) {
+    assertEqual(3, HAUtils::calculateNumberSize(-81));
 }
 
-AHA_TEST(UtilsTest, calculate_number_unsigned_large) {
-    assertEqual(6, HAUtils::calculateNumberSize(864564));
+AHA_TEST(UtilsTest, calculate_number_unsigned_two_digits) {
+    assertEqual(2, HAUtils::calculateNumberSize(86));
+}
+
+AHA_TEST(UtilsTest, calculate_number_signed_three_digits) {
+    assertEqual(4, HAUtils::calculateNumberSize(-100));
+}
+
+AHA_TEST(UtilsTest, calculate_number_unsigned_three_digits) {
+    assertEqual(3, HAUtils::calculateNumberSize(100));
+}
+
+AHA_TEST(UtilsTest, calculate_number_signed_four_digits) {
+    assertEqual(5, HAUtils::calculateNumberSize(-1234));
+}
+
+AHA_TEST(UtilsTest, calculate_number_unsigned_four_digits) {
+    assertEqual(4, HAUtils::calculateNumberSize(1234));
 }
 
 AHA_TEST(UtilsTest, calculate_float_p1_zero) {
