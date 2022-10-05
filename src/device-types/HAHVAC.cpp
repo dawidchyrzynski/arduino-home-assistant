@@ -7,7 +7,7 @@
 
 HAHVAC::HAHVAC(
     const char* uniqueId,
-    const uint8_t features,
+    const uint16_t features,
     const NumberPrecision precision
 ) :
     HABaseDeviceType(AHATOFSTR(HAComponentClimate), uniqueId),
@@ -19,14 +19,19 @@ HAHVAC::HAHVAC(
     _action(UnknownAction),
     _temperatureUnit(DefaultUnit),
     _minTemp(HAUtils::NumberMax),
-    _maxTemp(HAUtils::NumberMax)
+    _maxTemp(HAUtils::NumberMax),
+    _tempStep(HAUtils::NumberMax)
 {
 
 }
 
 bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
 {
-    const HAUtils::Number realTemperature = HAUtils::processFloatValue(temperature, _precision);
+    const HAUtils::Number realTemperature = HAUtils::processFloatValue(
+        temperature,
+        _precision
+    );
+
     if (!force && realTemperature == _currentTemperature) {
         return true;
     }
@@ -103,6 +108,14 @@ void HAHVAC::buildSerializer()
         _serializer->set(
             AHATOFSTR(HAMaxTempProperty),
             &_maxTemp,
+            numberProperty
+        );
+    }
+
+    if (_tempStep != HAUtils::NumberMax) {
+        _serializer->set(
+            AHATOFSTR(HATempStepProperty),
+            &_tempStep,
             numberProperty
         );
     }

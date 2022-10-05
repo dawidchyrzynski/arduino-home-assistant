@@ -256,6 +256,46 @@ AHA_TEST(HVACTest, max_temp_setter_p2) {
     )
 }
 
+AHA_TEST(HVACTest, temp_step_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setTempStep(0.5);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_step\":0.5,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, temp_step_setter_p2) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP2);
+    hvac.setTempStep(0.05);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_step\":0.05,"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 

@@ -43,7 +43,7 @@ public:
      */
     HAHVAC(
         const char* uniqueId,
-        const uint8_t features = DefaultFeatures,
+        const uint16_t features = DefaultFeatures,
         const NumberPrecision precision = PrecisionP1
     );
 
@@ -145,6 +145,14 @@ public:
     inline void setMaxTemp(const float max)
         { _maxTemp = HAUtils::processFloatValue(max, _precision); }
 
+    /**
+     * Sets the step of the temperature that can be set from the Home Assistant panel.
+     *
+     * @param step The setp value. By default it's `1`.
+     */
+    inline void setTempStep(const float step)
+        { _tempStep = HAUtils::processFloatValue(step, _precision); } 
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -172,7 +180,7 @@ private:
     bool publishAction(const Action action);
 
     /// Features enabled for the HVAC.
-    const uint8_t _features;
+    const uint16_t _features;
 
     /// The precision of temperatures. By default it's `HANumber::PrecisionP1`.
     const NumberPrecision _precision;
@@ -197,6 +205,9 @@ private:
 
     /// The maximum temperature that can be set.
     HAUtils::Number _maxTemp;
+
+    /// The step of the temperature that can be set.
+    HAUtils::Number _tempStep;
 };
 
 #endif
