@@ -205,13 +205,7 @@ bool HALight::publishBrightness(const uint8_t brightness)
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(brightness);
-    if (size == 0) {
-        return false;
-    }
-
-    char str[size + 1]; // with null terminator
-    str[size] = 0;
+    char str[3 + 1] = {0}; // uint8_t digits with null terminator
     HAUtils::numberToStr(str, brightness);
 
     return publishOnDataTopic(AHATOFSTR(HABrightnessStateTopic), str, true);
@@ -228,13 +222,7 @@ bool HALight::publishColorTemperature(const uint16_t temperature)
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(temperature);
-    if (size == 0) {
-        return false;
-    }
-
-    char str[size + 1]; // with null terminator
-    str[size] = 0;
+    char str[5 + 1] = {0}; // uint16_t digits with null terminator
     HAUtils::numberToStr(str, temperature);
 
     return publishOnDataTopic(AHATOFSTR(HAColorTemperatureStateTopic), str, true);

@@ -162,13 +162,7 @@ bool HACover::publishPosition(int16_t position)
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(position);
-    if (size == 0) {
-        return false;
-    }
-
-    char str[size + 1]; // with null terminator
-    str[size] = 0;
+    char str[6 + 1] = {0}; // int16_t digits with null terminator
     HAUtils::numberToStr(str, position);
 
     return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);

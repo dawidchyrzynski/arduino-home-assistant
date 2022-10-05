@@ -363,6 +363,16 @@ AHA_TEST(CoverTest, publish_position) {
     assertSingleMqttMessage(AHATOFSTR(PositionTopic), "250", true)
 }
 
+AHA_TEST(CoverTest, publish_position_max) {
+    prepareTest
+
+    mock->connectDummy();
+    HACover cover(testUniqueId, HACover::PositionFeature);
+
+    assertTrue(cover.setPosition(32767));
+    assertSingleMqttMessage(AHATOFSTR(PositionTopic), "32767", true)
+}
+
 AHA_TEST(CoverTest, publish_position_debounce) {
     prepareTest
 
