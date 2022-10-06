@@ -6,6 +6,8 @@
 
 #ifndef EX_ARDUINOHA_HVAC
 
+#define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool, HAHVAC*)
+
 /**
  *
  * @note
@@ -17,7 +19,8 @@ class HAHVAC : public HABaseDeviceType
 public:
     enum Features {
         DefaultFeatures = 0,
-        ActionFeature = 1
+        ActionFeature = 1,
+        AuxHeatingFeature = 2
     };
 
     enum Action {
@@ -88,7 +91,7 @@ public:
 
     /**
      * Sets action of the HVAC without publishing it to Home Assistant.
-     * This method may be useful if you want to change temperature before connection
+     * This method may be useful if you want to the action before connection
      * with MQTT broker is acquired.
      *
      * @param action New action.
@@ -102,6 +105,34 @@ public:
      */
     inline Action getAction() const
         { return _action; }
+
+    /**
+     * Changes state of the aux heating and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param state The new state.
+     * @param force Forces to update the state without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setAuxState(const bool state, const bool force = false);
+
+    /**
+     * Sets aux heating state without publishing it to Home Assistant.
+     * This method may be useful if you want to change the state before connection
+     * with MQTT broker is acquired.
+     *
+     * @param state The new state.
+     */
+    inline void setCurrentAuxState(const bool state)
+        { _auxState = state; }
+
+    /**
+     * Returns last known state of the aux heating.
+     * If setAuxState method wasn't called the initial value will be returned.
+     */
+    inline bool getAuxState() const
+        { return _auxState; }
 
     /**
      * Sets icon of the HVAC.
@@ -151,7 +182,16 @@ public:
      * @param step The setp value. By default it's `1`.
      */
     inline void setTempStep(const float step)
-        { _tempStep = HAUtils::processFloatValue(step, _precision); } 
+        { _tempStep = HAUtils::processFloatValue(step, _precision); }
+
+    /**
+     * Registers callback that will be called each time the aux state command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same HVAC.
+     *
+     * @param callback
+     */
+    inline void onAuxStateCommand(HAHVAC_CALLBACK_BOOL(callback))
+        { _auxCallback = callback; }
 
 protected:
     virtual void buildSerializer() override;
@@ -178,6 +218,22 @@ private:
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool publishAction(const Action action);
+
+    /**
+     * Publishes the MQTT message with the given aux heating state.
+     *
+     * @param state The state to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishAuxState(const bool state);
+
+    /**
+     * Parses the given aux state command and executes the callback with proper value.
+     * 
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleAuxStateCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the HVAC.
     const uint16_t _features;
@@ -208,6 +264,12 @@ private:
 
     /// The step of the temperature that can be set.
     HAUtils::Number _tempStep;
+
+    /// Callback that will be called when the aux command is received from the HA.
+    HAHVAC_CALLBACK_BOOL(_auxCallback);
+
+    /// The state of the aux heating. By default it's `false`.
+    bool _auxState;
 };
 
 #endif

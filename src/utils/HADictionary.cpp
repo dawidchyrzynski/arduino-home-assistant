@@ -82,6 +82,8 @@ const char HAColorTemperatureCommandTopic[] PROGMEM = {"clr_temp_cmd_t"};
 const char HAColorTemperatureStateTopic[] PROGMEM = {"clr_temp_stat_t"};
 const char HACurrentTemperatureTopic[] PROGMEM = {"ctt"};
 const char HAActionTopic[] PROGMEM = {"at"};
+const char HAAuxCommandTopic[] PROGMEM = {"act"};
+const char HAAuxStateTopic[] PROGMEM = {"ast"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

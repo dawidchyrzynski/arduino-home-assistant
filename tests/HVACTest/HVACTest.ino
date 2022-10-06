@@ -2,16 +2,47 @@
 #include <ArduinoHA.h>
 
 #define prepareTest \
-    initMqttTest(testDeviceId)
+    initMqttTest(testDeviceId) \
+    lastAuxStateCallbackCall.reset();
+
+#define assertAuxStateCallbackCalled(expectedState, callerPtr) \
+    assertTrue(lastAuxStateCallbackCall.called); \
+    assertEqual(expectedState, lastAuxStateCallbackCall.state); \
+    assertEqual(callerPtr, lastAuxStateCallbackCall.caller);
+
+#define assertAuxStateCallbackNotCalled() \
+    assertFalse(lastAuxStateCallbackCall.called);
 
 using aunit::TestRunner;
 
+struct AuxStateCallback {
+    bool called = false;
+    bool state = false;
+    HAHVAC* caller = nullptr;
+
+    void reset() {
+        called = false;
+        state = false;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueHVAC";
+static AuxStateCallback lastAuxStateCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
 const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/at"};
+const char AuxStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ast"};
+const char AuxCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/act"};
+
+void onAuxStateCommandReceived(bool state, HAHVAC* caller)
+{
+    lastAuxStateCallbackCall.called = true;
+    lastAuxStateCallbackCall.state = state;
+    lastAuxStateCallbackCall.caller = caller;
+}
 
 AHA_TEST(HVACTest, invalid_unique_id) {
     prepareTest
@@ -58,6 +89,26 @@ AHA_TEST(HVACTest, default_params_with_action) {
         )
     )
     assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, default_params_with_aux) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"act\":\"testData/testDevice/uniqueHVAC/act\","
+            "\"ast\":\"testData/testDevice/uniqueHVAC/ast\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + aux state
 }
 
 AHA_TEST(HVACTest, availability) {
@@ -299,7 +350,7 @@ AHA_TEST(HVACTest, temp_step_setter_p2) {
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 
-    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
+    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature | HAHVAC::AuxHeatingFeature);
     hvac.setRetain(true);
     hvac.setCurrentTemperature(21.5);
     hvac.setCurrentAction(HAHVAC::CoolingAction);
@@ -453,8 +504,80 @@ AHA_TEST(HVACTest, publish_action_debounce_skip) {
     assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true) 
 }
 
+AHA_TEST(HVACTest, publish_aux_state_on_connect) {
+    prepareTest
 
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.setCurrentAuxState(true);
+    mqtt.loop();
 
+    assertMqttMessage(1, AHATOFSTR(AuxStateTopic), "ON", true)
+}
+
+AHA_TEST(HVACTest, publish_aux_state_on) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+
+    assertTrue(hvac.setAuxState(true));
+    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "ON", true) 
+}
+
+AHA_TEST(HVACTest, publish_aux_state_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.setCurrentAuxState(true);
+        
+    assertTrue(hvac.setAuxState(true));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(HVACTest, publish_aux_state_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.setCurrentAuxState(false);
+
+    assertTrue(hvac.setAuxState(false, true));
+    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "OFF", true) 
+}
+
+AHA_TEST(HVACTest, aux_state_command_on) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.onAuxStateCommand(onAuxStateCommandReceived);
+    mock->fakeMessage(AHATOFSTR(AuxCommandTopic), F("ON"));
+
+    assertAuxStateCallbackCalled(true, &hvac)
+}
+
+AHA_TEST(HVACTest, aux_state_command_off) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.onAuxStateCommand(onAuxStateCommandReceived);
+    mock->fakeMessage(AHATOFSTR(AuxCommandTopic), F("OFF"));
+
+    assertAuxStateCallbackCalled(false, &hvac)
+}
+
+AHA_TEST(HVACTest, aux_command_different_fan) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.onAuxStateCommand(onAuxStateCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueHVACDifferent/act"),
+        F("ON")
+    );
+
+    assertAuxStateCallbackNotCalled()
+}
 
 void setup()
 {

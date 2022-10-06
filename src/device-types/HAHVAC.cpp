@@ -20,7 +20,9 @@ HAHVAC::HAHVAC(
     _temperatureUnit(DefaultUnit),
     _minTemp(HAUtils::NumberMax),
     _maxTemp(HAUtils::NumberMax),
-    _tempStep(HAUtils::NumberMax)
+    _tempStep(HAUtils::NumberMax),
+    _auxCallback(nullptr),
+    _auxState(false)
 {
 
 }
@@ -58,6 +60,20 @@ bool HAHVAC::setAction(const Action action, const bool force)
     return false;
 }
 
+bool HAHVAC::setAuxState(const bool state, const bool force)
+{
+    if (!force && state == _auxState) {
+        return true;
+    }
+
+    if (publishAuxState(state)) {
+        _auxState = state;
+        return true;
+    }
+
+    return false;
+}
+
 void HAHVAC::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
@@ -67,7 +83,7 @@ void HAHVAC::buildSerializer()
     const HASerializer::PropertyValueType numberProperty =
         HASerializer::precisionToPropertyType(_precision);
 
-    _serializer = new HASerializer(this, 11); // 11 - max properties nb
+    _serializer = new HASerializer(this, 13); // 13 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -83,6 +99,11 @@ void HAHVAC::buildSerializer()
     if (_features & ActionFeature) {
         _serializer->topic(AHATOFSTR(HAActionTopic));
     }
+
+    if (_features & AuxHeatingFeature) {
+        _serializer->topic(AHATOFSTR(HAAuxCommandTopic));
+        _serializer->topic(AHATOFSTR(HAAuxStateTopic));
+    } 
 
     if (_temperatureUnit != DefaultUnit) {
         const __FlashStringHelper *unitStr = _temperatureUnit == CelsiusUnit
@@ -137,6 +158,7 @@ void HAHVAC::onMqttConnected()
     if (!_retain) {
         publishCurrentTemperature(_currentTemperature);
         publishAction(_action);
+        publishAuxState(_auxState);
     }
 }
 
@@ -146,7 +168,13 @@ void HAHVAC::onMqttMessage(
     const uint16_t length
 )
 {
-    // to do
+    if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HAAuxCommandTopic)
+    )) {
+        handleAuxStateCommand(payload, length);
+    }
 }
 
 bool HAHVAC::publishCurrentTemperature(const HAUtils::Number temperature)
@@ -212,6 +240,31 @@ bool HAHVAC::publishAction(const Action action)
         stateStr,
         true
     );
+}
+
+bool HAHVAC::publishAuxState(const bool state)
+{
+    if (!(_features & AuxHeatingFeature)) {
+        return false;
+    }
+
+    return publishOnDataTopic(
+        AHATOFSTR(HAAuxStateTopic),
+        AHATOFSTR(state ? HAStateOn : HAStateOff),
+        true
+    );
+}
+
+void HAHVAC::handleAuxStateCommand(const uint8_t* cmd, const uint16_t length)
+{
+    (void)cmd;
+
+    if (!_auxCallback) {
+        return;
+    }
+
+    bool state = length == strlen_P(HAStateOn);
+    _auxCallback(state, this);
 }
 
 #endif

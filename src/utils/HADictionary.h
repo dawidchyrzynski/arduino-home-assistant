@@ -82,6 +82,8 @@ extern const char HAColorTemperatureCommandTopic[];
 extern const char HAColorTemperatureStateTopic[];
 extern const char HACurrentTemperatureTopic[];
 extern const char HAActionTopic[];
+extern const char HAAuxCommandTopic[];
+extern const char HAAuxStateTopic[];
 
 // misc
 extern const char HAOnline[];
