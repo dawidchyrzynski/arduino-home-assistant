@@ -72,7 +72,7 @@ public:
      * Returns the last known value of the sensor as a float.
      * By default it's zero.
      */
-    inline float getCurrentValueAsFloat() const
+    inline float getCurrentValueFloat() const
         { return HAUtils::getFloatValue(_currentValue, _precision); }
 
 protected:
@@ -87,7 +87,7 @@ private:
      */
     bool publishValue(const HAUtils::Number value);
 
-    /// The precision of the sensor. By default it's `HASensorNumber::PrecisionP2`.
+    /// The precision of the sensor. By default it's `HASensorNumber::PrecisionP0`.
     const NumberPrecision _precision;
 
     /// The current value of the sensor. By defaults it's zero.

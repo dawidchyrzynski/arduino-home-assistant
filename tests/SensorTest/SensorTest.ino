@@ -289,7 +289,7 @@ test(SensorNumberTest, publish_p0) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
     assertTrue(sensor.setValueFloat(173.5426));
-    assertNear((float)173, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear((float)173, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "173", true) 
 }
 
@@ -300,7 +300,7 @@ test(SensorNumberTest, publish_p0_zero_unsigned) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
     assertTrue(sensor.setValueFloat(0.050, true));
-    assertNear((float)0, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear((float)0, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true) 
 }
 
@@ -311,7 +311,7 @@ test(SensorNumberTest, publish_p0_zero_signed) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP0);
 
     assertTrue(sensor.setValueFloat(-0.050, true));
-    assertNear((float)0, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear((float)0, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0", true) 
 }
 
@@ -322,7 +322,7 @@ test(SensorNumberTest, publish_p1) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
     assertTrue(sensor.setValueFloat(173.5426));
-    assertNear(173.5, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear(173.5, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.5", true)
 }
 
@@ -333,7 +333,7 @@ test(SensorNumberTest, publish_p1_zero_unsigned) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
     assertTrue(sensor.setValueFloat(0.123, true));
-    assertNear(0.1, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear(0.1, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.1", true) 
 }
 
@@ -344,7 +344,7 @@ test(SensorNumberTest, publish_p1_zero_signed) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP1);
 
     assertTrue(sensor.setValueFloat(-0.123, true));
-    assertNear(-0.1, sensor.getCurrentValueAsFloat(), 0.1);
+    assertNear(-0.1, sensor.getCurrentValueFloat(), 0.1);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.1", true) 
 }
 
@@ -355,7 +355,7 @@ test(SensorNumberTest, publish_p2) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
  
     assertTrue(sensor.setValueFloat(173.1534));
-    assertNear(173.15, sensor.getCurrentValueAsFloat(), 0.01);
+    assertNear(173.15, sensor.getCurrentValueFloat(), 0.01);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.15", true)
 }
 
@@ -366,7 +366,7 @@ test(SensorNumberTest, publish_p2_zero_unsigned) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
 
     assertTrue(sensor.setValueFloat(0.123, true));
-    assertNear(0.12, sensor.getCurrentValueAsFloat(), 0.01);
+    assertNear(0.12, sensor.getCurrentValueFloat(), 0.01);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.12", true) 
 }
 
@@ -377,7 +377,7 @@ test(SensorNumberTest, publish_p2_zero_signed) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP2);
 
     assertTrue(sensor.setValueFloat(-0.123, true));
-    assertNear(-0.12, sensor.getCurrentValueAsFloat(), 0.01);
+    assertNear(-0.12, sensor.getCurrentValueFloat(), 0.01);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.12", true) 
 }
 
@@ -388,7 +388,7 @@ test(SensorNumberTest, publish_p3) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
 
     assertTrue(sensor.setValueFloat(173.333));
-    assertNear(173.333, sensor.getCurrentValueAsFloat(), 0.001);
+    assertNear(173.333, sensor.getCurrentValueFloat(), 0.001);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.333", true)
 }
 
@@ -399,7 +399,7 @@ test(SensorNumberTest, publish_p3_zero_unsigned) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
 
     assertTrue(sensor.setValueFloat(0.123, true));
-    assertNear(0.123, sensor.getCurrentValueAsFloat(), 0.001);
+    assertNear(0.123, sensor.getCurrentValueFloat(), 0.001);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "0.123", true) 
 }
 
@@ -410,7 +410,7 @@ test(SensorNumberTest, publish_p3_zero_signed) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
 
     assertTrue(sensor.setValueFloat(-0.123, true));
-    assertNear(-0.123, sensor.getCurrentValueAsFloat(), 0.001);
+    assertNear(-0.123, sensor.getCurrentValueFloat(), 0.001);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.123", true) 
 }
 
@@ -421,7 +421,7 @@ test(SensorNumberTest, publish_p3_smaller) {
     HASensorNumber sensor(testUniqueId, HASensorNumber::PrecisionP3);
 
     assertTrue(sensor.setValueFloat(173.3));
-    assertNear(173.3, sensor.getCurrentValueAsFloat(), 0.001);
+    assertNear(173.3, sensor.getCurrentValueFloat(), 0.001);
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "173.300", true)
 }
 
