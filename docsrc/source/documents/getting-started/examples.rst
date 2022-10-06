@@ -22,6 +22,8 @@ Examples
      - Implementation of a simple wall switch that reports press and hold states.
    * - :example:`Fan <fan/fan.ino>`
      - Controlling a simple fan (state + speed).
+   * - :example:`HVAC <hvac/hvac.ino>`
+     - HVAC controller with multiple modes, power control and target temperature.
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
    * - :example:`Light <light/light.ino>`
