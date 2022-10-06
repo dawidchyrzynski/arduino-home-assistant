@@ -153,7 +153,8 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv46HAHVAC">
 <span id="_CPPv36HAHVAC"></span><span id="_CPPv26HAHVAC"></span><span id="HAHVAC"></span><span class="target" id="class_h_a_h_v_a_c"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAHVAC</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv46HAHVAC" title="Permalink to this definition">¶</a><br /></dt>
-<dd><div class="admonition note">
+<dd><p><a class="reference internal" href="#class_h_a_h_v_a_c"><span class="std std-ref">HAHVAC</span></a> lets you control your HVAC devices.</p>
+<div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/climate.mqtt/">https://www.home-assistant.io/integrations/climate.mqtt/</a> </p>
 </div>
@@ -162,7 +163,8 @@
 <dl class="cpp enum">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8FeaturesE">
 <span id="_CPPv3N6HAHVAC8FeaturesE"></span><span id="_CPPv2N6HAHVAC8FeaturesE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Features</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8FeaturesE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><em>Values:</em></p>
+<dd><p>The list of features available in the HVAC. They’re used in the constructor. </p>
+<p><em>Values:</em></p>
 <dl class="cpp enumerator">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8Features15DefaultFeaturesE">
 <span id="_CPPv3N6HAHVAC8Features15DefaultFeaturesE"></span><span id="_CPPv2N6HAHVAC8Features15DefaultFeaturesE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543a442c915d8f8c6d59a2edcba7f97a272f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFeatures</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features15DefaultFeaturesE" title="Permalink to this definition">¶</a><br /></dt>
@@ -178,12 +180,33 @@
 <span id="_CPPv3N6HAHVAC8Features17AuxHeatingFeatureE"></span><span id="_CPPv2N6HAHVAC8Features17AuxHeatingFeatureE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543a4df6949a597878e9e8e5d5bb522555f1"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AuxHeatingFeature</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features17AuxHeatingFeatureE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8Features12PowerFeatureE">
+<span id="_CPPv3N6HAHVAC8Features12PowerFeatureE"></span><span id="_CPPv2N6HAHVAC8Features12PowerFeatureE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543a197650fb789938b8aa57a468c7d3a785"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PowerFeature</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features12PowerFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8Features10FanFeatureE">
+<span id="_CPPv3N6HAHVAC8Features10FanFeatureE"></span><span id="_CPPv2N6HAHVAC8Features10FanFeatureE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543a85cb2b939976390c03ad58b583178401"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FanFeature</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features10FanFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8Features12SwingFeatureE">
+<span id="_CPPv3N6HAHVAC8Features12SwingFeatureE"></span><span id="_CPPv2N6HAHVAC8Features12SwingFeatureE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543ab200834d5f300922cb4ca25a490b85c5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SwingFeature</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features12SwingFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8Features12ModesFeatureE">
+<span id="_CPPv3N6HAHVAC8Features12ModesFeatureE"></span><span id="_CPPv2N6HAHVAC8Features12ModesFeatureE"></span><span class="target" id="class_h_a_h_v_a_c_1a322f13f924a0ac67d47e7824aa270543a3fe35a12f354f2681ddc6d9e4d0ee9dc"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModesFeature</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8Features12ModesFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="cpp enum">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC6ActionE">
 <span id="_CPPv3N6HAHVAC6ActionE"></span><span id="_CPPv2N6HAHVAC6ActionE"></span><span class="target" id="class_h_a_h_v_a_c_1abdea436ab2708e03a20f506e38b5b42c"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Action</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC6ActionE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><em>Values:</em></p>
+<dd><p>The list of available actions of the HVAC. </p>
+<p><em>Values:</em></p>
 <dl class="cpp enumerator">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC6Action13UnknownActionE">
 <span id="_CPPv3N6HAHVAC6Action13UnknownActionE"></span><span id="_CPPv2N6HAHVAC6Action13UnknownActionE"></span><span class="target" id="class_h_a_h_v_a_c_1abdea436ab2708e03a20f506e38b5b42cad4547707a43ccefe9a12ce6b41326878"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownAction</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC6Action13UnknownActionE" title="Permalink to this definition">¶</a><br /></dt>
@@ -222,9 +245,106 @@
 </dd></dl>
 
 <dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanModeE">
+<span id="_CPPv3N6HAHVAC7FanModeE"></span><span id="_CPPv2N6HAHVAC7FanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The list of available fan modes. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanMode14UnknownFanModeE">
+<span id="_CPPv3N6HAHVAC7FanMode14UnknownFanModeE"></span><span id="_CPPv2N6HAHVAC7FanMode14UnknownFanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00ac60ed6cd8f0232d6d6e09a006a4e9e94"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownFanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanMode14UnknownFanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanMode11AutoFanModeE">
+<span id="_CPPv3N6HAHVAC7FanMode11AutoFanModeE"></span><span id="_CPPv2N6HAHVAC7FanMode11AutoFanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00aa79e4b2785e05d92a0978c2b8f2693eb"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AutoFanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanMode11AutoFanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanMode10LowFanModeE">
+<span id="_CPPv3N6HAHVAC7FanMode10LowFanModeE"></span><span id="_CPPv2N6HAHVAC7FanMode10LowFanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00a2a11a8445c1a46b9625f7be779d9d7b0"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LowFanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanMode10LowFanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanMode13MediumFanModeE">
+<span id="_CPPv3N6HAHVAC7FanMode13MediumFanModeE"></span><span id="_CPPv2N6HAHVAC7FanMode13MediumFanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00a9eb89faa818c229f57cd988bf40160db"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MediumFanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanMode13MediumFanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7FanMode11HighFanModeE">
+<span id="_CPPv3N6HAHVAC7FanMode11HighFanModeE"></span><span id="_CPPv2N6HAHVAC7FanMode11HighFanModeE"></span><span class="target" id="class_h_a_h_v_a_c_1a498228768b503061b444b0526e80be00ad0aa1aaed77d6ceb8cc6f873099fc43a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HighFanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC7FanMode11HighFanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9SwingModeE">
+<span id="_CPPv3N6HAHVAC9SwingModeE"></span><span id="_CPPv2N6HAHVAC9SwingModeE"></span><span class="target" id="class_h_a_h_v_a_c_1aa6c682abd499a4fc78e27f1941ab1cbb"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SwingMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9SwingModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The list of available swing modes. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9SwingMode16UnknownSwingModeE">
+<span id="_CPPv3N6HAHVAC9SwingMode16UnknownSwingModeE"></span><span id="_CPPv2N6HAHVAC9SwingMode16UnknownSwingModeE"></span><span class="target" id="class_h_a_h_v_a_c_1aa6c682abd499a4fc78e27f1941ab1cbba00a75e0783497011fc24a42d702c3b7f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownSwingMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9SwingMode16UnknownSwingModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9SwingMode11OnSwingModeE">
+<span id="_CPPv3N6HAHVAC9SwingMode11OnSwingModeE"></span><span id="_CPPv2N6HAHVAC9SwingMode11OnSwingModeE"></span><span class="target" id="class_h_a_h_v_a_c_1aa6c682abd499a4fc78e27f1941ab1cbbac1088f5ca60d4f18a9f3a172a688de07"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OnSwingMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9SwingMode11OnSwingModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9SwingMode12OffSwingModeE">
+<span id="_CPPv3N6HAHVAC9SwingMode12OffSwingModeE"></span><span id="_CPPv2N6HAHVAC9SwingMode12OffSwingModeE"></span><span class="target" id="class_h_a_h_v_a_c_1aa6c682abd499a4fc78e27f1941ab1cbbaaa7753e9a3e137c83c369b2ab71a3458"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OffSwingMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9SwingMode12OffSwingModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4ModeE">
+<span id="_CPPv3N6HAHVAC4ModeE"></span><span id="_CPPv2N6HAHVAC4ModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcb"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Mode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4ModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The list of available HVAC’s modes. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode11UnknownModeE">
+<span id="_CPPv3N6HAHVAC4Mode11UnknownModeE"></span><span id="_CPPv2N6HAHVAC4Mode11UnknownModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcba05d84eec2e6433b4db42615258978e71"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode11UnknownModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode8AutoModeE">
+<span id="_CPPv3N6HAHVAC4Mode8AutoModeE"></span><span id="_CPPv2N6HAHVAC4Mode8AutoModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcbacb58d4f036fa2ddf7acc684920b67ba9"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AutoMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode8AutoModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode7OffModeE">
+<span id="_CPPv3N6HAHVAC4Mode7OffModeE"></span><span id="_CPPv2N6HAHVAC4Mode7OffModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcbada41a725d8e48141d3121843cb2dc094"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">OffMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode7OffModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode8CoolModeE">
+<span id="_CPPv3N6HAHVAC4Mode8CoolModeE"></span><span id="_CPPv2N6HAHVAC4Mode8CoolModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcba6a9e486269ad1aeb8a80b386508aa7b9"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CoolMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode8CoolModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode8HeatModeE">
+<span id="_CPPv3N6HAHVAC4Mode8HeatModeE"></span><span id="_CPPv2N6HAHVAC4Mode8HeatModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcbad68c14586e0037476aff681972f93975"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HeatMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode8HeatModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode7DryModeE">
+<span id="_CPPv3N6HAHVAC4Mode7DryModeE"></span><span id="_CPPv2N6HAHVAC4Mode7DryModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcbaf6232457d6ea14ed7bf85fa5e0426f36"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DryMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode7DryModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC4Mode11FanOnlyModeE">
+<span id="_CPPv3N6HAHVAC4Mode11FanOnlyModeE"></span><span id="_CPPv2N6HAHVAC4Mode11FanOnlyModeE"></span><span class="target" id="class_h_a_h_v_a_c_1acfb9e243a3eed11d628efed4e4469fcbac5bf7a566de68aff108932828241fd07"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FanOnlyMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC4Mode11FanOnlyModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC15TemperatureUnitE">
 <span id="_CPPv3N6HAHVAC15TemperatureUnitE"></span><span id="_CPPv2N6HAHVAC15TemperatureUnitE"></span><span class="target" id="class_h_a_h_v_a_c_1a01b8ae94c28de90306c12a2776603fac"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TemperatureUnit</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC15TemperatureUnitE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><em>Values:</em></p>
+<dd><p>Temperature units available in the HVAC. </p>
+<p><em>Values:</em></p>
 <dl class="cpp enumerator">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC15TemperatureUnit11DefaultUnitE">
 <span id="_CPPv3N6HAHVAC15TemperatureUnit11DefaultUnitE"></span><span id="_CPPv2N6HAHVAC15TemperatureUnit11DefaultUnitE"></span><span class="target" id="class_h_a_h_v_a_c_1a01b8ae94c28de90306c12a2776603facaae1b605edd48d3b11208009f136cc4e5"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultUnit</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC15TemperatureUnit11DefaultUnitE" title="Permalink to this definition">¶</a><br /></dt>
@@ -313,7 +433,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16setCurrentActionEK6Action">
 <span id="_CPPv3N6HAHVAC16setCurrentActionEK6Action"></span><span id="_CPPv2N6HAHVAC16setCurrentActionEK6Action"></span><span id="HAHVAC::setCurrentAction__ActionC"></span><span class="target" id="class_h_a_h_v_a_c_1ab156e2dddf94b4421fec4a1eeec1d05f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">action</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC16setCurrentActionEK6Action" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets action of the HVAC without publishing it to Home Assistant. This method may be useful if you want to the action before connection with MQTT broker is acquired.</p>
+<dd><p>Sets action of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the action before connection with MQTT broker is acquired.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>action</strong> – New action. </p>
@@ -359,6 +479,141 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC11getAuxStateEv">
 <span id="_CPPv3NK6HAHVAC11getAuxStateEv"></span><span id="_CPPv2NK6HAHVAC11getAuxStateEv"></span><span id="HAHVAC::getAuxStateC"></span><span class="target" id="class_h_a_h_v_a_c_1a093cc9383f275d4846cc01d030664d76"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getAuxState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC11getAuxStateEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns last known state of the aux heating. If setAuxState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC10setFanModeEK7FanModeKb">
+<span id="_CPPv3N6HAHVAC10setFanModeEK7FanModeKb"></span><span id="_CPPv2N6HAHVAC10setFanModeEK7FanModeKb"></span><span id="HAHVAC::setFanMode__FanModeC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1aaf6cb1b099aa4e2e4daabfb9986a5db1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC10setFanModeEK7FanModeKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes mode of the fan of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – New fan’s mode. </p></li>
+<li><p><strong>force</strong> – Forces to update the mode without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode">
+<span id="_CPPv3N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="_CPPv2N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="HAHVAC::setCurrentFanMode__FanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae5ae1c57dc28e8488a744e124af84172"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets fan’s mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New fan’s mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC10getFanModeEv">
+<span id="_CPPv3NK6HAHVAC10getFanModeEv"></span><span id="_CPPv2NK6HAHVAC10getFanModeEv"></span><span id="HAHVAC::getFanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1af8949112e16766d3903030612cb2d1a5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getFanMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC10getFanModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known fan’s mode of the HVAC. If setFanMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC11setFanModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC11setFanModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC11setFanModesEK7uint8_t"></span><span id="HAHVAC::setFanModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ab67a1af6e04652c293a989c6321ebb15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setFanModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC11setFanModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available fan modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::AutoFanMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HighFanMode</span></code>). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC12setSwingModeEK9SwingModeKb">
+<span id="_CPPv3N6HAHVAC12setSwingModeEK9SwingModeKb"></span><span id="_CPPv2N6HAHVAC12setSwingModeEK9SwingModeKb"></span><span id="HAHVAC::setSwingMode__SwingModeC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1a318ae13360d71e98bb6146d5699d5210"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSwingMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC12setSwingModeEK9SwingModeKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes swing mode of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – New swing mode. </p></li>
+<li><p><strong>force</strong> – Forces to update the mode without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode">
+<span id="_CPPv3N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="_CPPv2N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="HAHVAC::setCurrentSwingMode__SwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a75d3ff43d99ac3f32c6b127e34144ef4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSwingMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets swing mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New swing mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC12getSwingModeEv">
+<span id="_CPPv3NK6HAHVAC12getSwingModeEv"></span><span id="_CPPv2NK6HAHVAC12getSwingModeEv"></span><span id="HAHVAC::getSwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a0f6de720a1dab308e8eda192dd19db1c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getSwingMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC12getSwingModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known swing mode of the HVAC. If setSwingMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC13setSwingModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="HAHVAC::setSwingModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1affd56083ed3f1bd91020ca7010b44d17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSwingModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC13setSwingModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available swing modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::OnSwingMode</span></code>). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7setModeEK4ModeKb">
+<span id="_CPPv3N6HAHVAC7setModeEK4ModeKb"></span><span id="_CPPv2N6HAHVAC7setModeEK4ModeKb"></span><span id="HAHVAC::setMode__ModeC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1a4d2c80762e2b9bfd4cf465cbd8ca40d9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC7setModeEK4ModeKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes mode of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mode</strong> – New HVAC’s mode. </p></li>
+<li><p><strong>force</strong> – Forces to update the mode without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14setCurrentModeEK4Mode">
+<span id="_CPPv3N6HAHVAC14setCurrentModeEK4Mode"></span><span id="_CPPv2N6HAHVAC14setCurrentModeEK4Mode"></span><span id="HAHVAC::setCurrentMode__ModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae7c102358e2d62ea66b7ea4fc543ac6b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC14setCurrentModeEK4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New HVAC’s mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC7getModeEv">
+<span id="_CPPv3NK6HAHVAC7getModeEv"></span><span id="_CPPv2NK6HAHVAC7getModeEv"></span><span id="HAHVAC::getModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ad1e49df5a28176a1ce59458c928bece3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC7getModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known mode of the HVAC. If setMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8setModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC8setModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC8setModesEK7uint8_t"></span><span id="HAHVAC::setModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a73d1490ba5f3af7d622a81b972d7ee08"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC8setModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available HVAC’s modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::CoolMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HeatMode</span></code>). </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="cpp function">
@@ -438,6 +693,68 @@
 </dl>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14onPowerCommandEPFvbP6HAHVACE">
+<span id="_CPPv3N6HAHVAC14onPowerCommandEPFvbP6HAHVACE"></span><span id="_CPPv2N6HAHVAC14onPowerCommandEPFvbP6HAHVACE"></span><span class="target" id="class_h_a_h_v_a_c_1af257efd1875fc5db81f410892203c476"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onPowerCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC14onPowerCommandEPFvbP6HAHVACE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the power command from HA is received. Please note that it’s not possible to register multiple callbacks for the same HVAC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16onFanModeCommandEPFv7FanModeP6HAHVACE">
+<span id="_CPPv3N6HAHVAC16onFanModeCommandEPFv7FanModeP6HAHVACE"></span><span id="_CPPv2N6HAHVAC16onFanModeCommandEPFv7FanModeP6HAHVACE"></span><span class="target" id="class_h_a_h_v_a_c_1a79313730b8e858362460593481d58482"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onFanModeCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC16onFanModeCommandEPFv7FanModeP6HAHVACE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the fan mode command from HA is received. Please note that it’s not possible to register multiple callbacks for the same HVAC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC18onSwingModeCommandEPFv9SwingModeP6HAHVACE">
+<span id="_CPPv3N6HAHVAC18onSwingModeCommandEPFv9SwingModeP6HAHVACE"></span><span id="_CPPv2N6HAHVAC18onSwingModeCommandEPFv9SwingModeP6HAHVACE"></span><span class="target" id="class_h_a_h_v_a_c_1a92875bbbf3e651c801bb9e7e6a2379a1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onSwingModeCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC18onSwingModeCommandEPFv9SwingModeP6HAHVACE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the swing mode command from HA is received. Please note that it’s not possible to register multiple callbacks for the same HVAC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC13onModeCommandEPFv4ModeP6HAHVACE">
+<span id="_CPPv3N6HAHVAC13onModeCommandEPFv4ModeP6HAHVACE"></span><span id="_CPPv2N6HAHVAC13onModeCommandEPFv4ModeP6HAHVACE"></span><span class="target" id="class_h_a_h_v_a_c_1ac8dce50093cc48931a6d612ed95e6e15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onModeCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC13onModeCommandEPFv4ModeP6HAHVACE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the HVAC mode command from HA is received. Please note that it’s not possible to register multiple callbacks for the same HVAC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC15DefaultFanModesE">
+<span id="_CPPv3N6HAHVAC15DefaultFanModesE"></span><span id="_CPPv2N6HAHVAC15DefaultFanModesE"></span><span id="HAHVAC::DefaultFanModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ad5f30da607cc797d351e67d8fcb31ea5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFanModes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC15DefaultFanModesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC17DefaultSwingModesE">
+<span id="_CPPv3N6HAHVAC17DefaultSwingModesE"></span><span id="_CPPv2N6HAHVAC17DefaultSwingModesE"></span><span id="HAHVAC::DefaultSwingModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a8ad2b16ff391d436c300c1a19062c2c4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultSwingModes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC17DefaultSwingModesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC12DefaultModesE">
+<span id="_CPPv3N6HAHVAC12DefaultModesE"></span><span id="_CPPv2N6HAHVAC12DefaultModesE"></span><span id="HAHVAC::DefaultModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a2ea07f56db83f1d728fca8d2afe80e4a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultModes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC12DefaultModesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
@@ -497,6 +814,118 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14publishFanModeEK7FanMode">
+<span id="_CPPv3N6HAHVAC14publishFanModeEK7FanMode"></span><span id="_CPPv2N6HAHVAC14publishFanModeEK7FanMode"></span><span id="HAHVAC::publishFanMode__FanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a0fc271cf66e2945519423ab728200daa"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC14publishFanModeEK7FanMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given fan mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – The mode to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16publishSwingModeEK9SwingMode">
+<span id="_CPPv3N6HAHVAC16publishSwingModeEK9SwingMode"></span><span id="_CPPv2N6HAHVAC16publishSwingModeEK9SwingMode"></span><span id="HAHVAC::publishSwingMode__SwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae2ac7f8db3271e8d44399e0249f0b5c7"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishSwingMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC16publishSwingModeEK9SwingMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given swing mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – The mode to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC11publishModeEK4Mode">
+<span id="_CPPv3N6HAHVAC11publishModeEK4Mode"></span><span id="_CPPv2N6HAHVAC11publishModeEK4Mode"></span><span id="HAHVAC::publishMode__ModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a99baf4c01ff5fa73281445ac3e5afbfb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC11publishModeEK4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given mode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – The mode to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC21handleAuxStateCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAHVAC21handleAuxStateCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAHVAC21handleAuxStateCommandEPK7uint8_tK8uint16_t"></span><span id="HAHVAC::handleAuxStateCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a421fa823233550ba6e83f626f99a4606"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleAuxStateCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC21handleAuxStateCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given aux state command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC18handlePowerCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAHVAC18handlePowerCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAHVAC18handlePowerCommandEPK7uint8_tK8uint16_t"></span><span id="HAHVAC::handlePowerCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ae7435a966d9f66b4d7d5537a78a4d21a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handlePowerCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC18handlePowerCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given power command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC20handleFanModeCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAHVAC20handleFanModeCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAHVAC20handleFanModeCommandEPK7uint8_tK8uint16_t"></span><span id="HAHVAC::handleFanModeCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a911bc44edbf6d6a11a198f7c27d4253e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleFanModeCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC20handleFanModeCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given fan mode command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC22handleSwingModeCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAHVAC22handleSwingModeCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAHVAC22handleSwingModeCommandEPK7uint8_tK8uint16_t"></span><span id="HAHVAC::handleSwingModeCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a094e3b8140b5e911785f00d550ad754f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleSwingModeCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC22handleSwingModeCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given swing mode command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC17handleModeCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAHVAC17handleModeCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAHVAC17handleModeCommandEPK7uint8_tK8uint16_t"></span><span id="HAHVAC::handleModeCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ab3aad9b6c8044b06d102f09fde64a9d9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleModeCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC17handleModeCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given HVAC’s mode command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -567,13 +996,91 @@
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC12_auxCallbackE">
 <span id="_CPPv3N6HAHVAC12_auxCallbackE"></span><span id="_CPPv2N6HAHVAC12_auxCallbackE"></span><span class="target" id="class_h_a_h_v_a_c_1a57cfc951a046f250b371a66c0e72cc2a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_auxCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAHVAC12_auxCallbackE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Callback that will be called when the aux command is received from the HA. </p>
+<dd><p>Callback that will be called when the aux state command is received from the HA. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9_auxStateE">
 <span id="_CPPv3N6HAHVAC9_auxStateE"></span><span id="_CPPv2N6HAHVAC9_auxStateE"></span><span id="HAHVAC::_auxState__b"></span><span class="target" id="class_h_a_h_v_a_c_1a62b54856f716adad0819991cec369ed1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_auxState</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9_auxStateE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The state of the aux heating. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14_powerCallbackE">
+<span id="_CPPv3N6HAHVAC14_powerCallbackE"></span><span id="_CPPv2N6HAHVAC14_powerCallbackE"></span><span class="target" id="class_h_a_h_v_a_c_1a058a3c393f656ac5dd53e900b20e32f5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_powerCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAHVAC14_powerCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Callback that will be called when the power command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8_fanModeE">
+<span id="_CPPv3N6HAHVAC8_fanModeE"></span><span id="_CPPv2N6HAHVAC8_fanModeE"></span><span id="HAHVAC::_fanMode__FanMode"></span><span class="target" id="class_h_a_h_v_a_c_1aa8003788f0c45a167bcbc28b3b503340"></span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_fanMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC8_fanModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current mode of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::UnknownFanMode</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9_fanModesE">
+<span id="_CPPv3N6HAHVAC9_fanModesE"></span><span id="_CPPv2N6HAHVAC9_fanModesE"></span><span id="HAHVAC::_fanModes__uint8_t"></span><span class="target" id="class_h_a_h_v_a_c_1adb4b5510da2a2857bec3172bfe65f6a6"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_fanModes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC9_fanModesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The supported fan modes. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::DefaultFanModes</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC19_fanModesSerializerE">
+<span id="_CPPv3N6HAHVAC19_fanModesSerializerE"></span><span id="_CPPv2N6HAHVAC19_fanModesSerializerE"></span><span id="HAHVAC::_fanModesSerializer__HASerializerArrayP"></span><span class="target" id="class_h_a_h_v_a_c_1a385bb6b677e7b9def92af307fa1ea17c"></span><a class="reference internal" href="../utils/ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_fanModesSerializer</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC19_fanModesSerializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The serializer for the fan modes. It’s <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> if the fan feature is disabled. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16_fanModeCallbackE">
+<span id="_CPPv3N6HAHVAC16_fanModeCallbackE"></span><span id="_CPPv2N6HAHVAC16_fanModeCallbackE"></span><span class="target" id="class_h_a_h_v_a_c_1a3de7a52339e96a1dbcfa4fc001197ffa"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_fanModeCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAHVAC16_fanModeCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Callback that will be called when the fan mode command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC10_swingModeE">
+<span id="_CPPv3N6HAHVAC10_swingModeE"></span><span id="_CPPv2N6HAHVAC10_swingModeE"></span><span id="HAHVAC::_swingMode__SwingMode"></span><span class="target" id="class_h_a_h_v_a_c_1acb1a4e857996ec0223f318fa28d3fde9"></span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_swingMode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC10_swingModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current swing mode. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::UnknownSwingMode</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC11_swingModesE">
+<span id="_CPPv3N6HAHVAC11_swingModesE"></span><span id="_CPPv2N6HAHVAC11_swingModesE"></span><span id="HAHVAC::_swingModes__uint8_t"></span><span class="target" id="class_h_a_h_v_a_c_1a46b80512b5db187b95d190e07797b9a2"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_swingModes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC11_swingModesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The supported swing modes. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::DefaultSwingModes</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC21_swingModesSerializerE">
+<span id="_CPPv3N6HAHVAC21_swingModesSerializerE"></span><span id="_CPPv2N6HAHVAC21_swingModesSerializerE"></span><span id="HAHVAC::_swingModesSerializer__HASerializerArrayP"></span><span class="target" id="class_h_a_h_v_a_c_1a2717a618d0ec730e25171ae002981b8d"></span><a class="reference internal" href="../utils/ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_swingModesSerializer</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC21_swingModesSerializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The serializer for the swing modes. It’s <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> if the swing feature is disabled. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC18_swingModeCallbackE">
+<span id="_CPPv3N6HAHVAC18_swingModeCallbackE"></span><span id="_CPPv2N6HAHVAC18_swingModeCallbackE"></span><span class="target" id="class_h_a_h_v_a_c_1a1ff6a005f411e0ffd5b97360c6b34f2a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_swingModeCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAHVAC18_swingModeCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Callback that will be called when the swing mode command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC5_modeE">
+<span id="_CPPv3N6HAHVAC5_modeE"></span><span id="_CPPv2N6HAHVAC5_modeE"></span><span id="HAHVAC::_mode__Mode"></span><span class="target" id="class_h_a_h_v_a_c_1a80e459ffc6ed98361bed5abf0631ac37"></span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_mode</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC5_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current mode. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::UnknownMode</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC6_modesE">
+<span id="_CPPv3N6HAHVAC6_modesE"></span><span id="_CPPv2N6HAHVAC6_modesE"></span><span id="HAHVAC::_modes__uint8_t"></span><span class="target" id="class_h_a_h_v_a_c_1a9230d7baeaa3a84726f6f3a18800efc8"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_modes</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC6_modesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The supported modes. By default it’s <code class="docutils literal notranslate"><span class="pre">HAHVAC::DefaultModes</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16_modesSerializerE">
+<span id="_CPPv3N6HAHVAC16_modesSerializerE"></span><span id="_CPPv2N6HAHVAC16_modesSerializerE"></span><span id="HAHVAC::_modesSerializer__HASerializerArrayP"></span><span class="target" id="class_h_a_h_v_a_c_1a8561a271caf375149280f786e74ae6f8"></span><a class="reference internal" href="../utils/ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_modesSerializer</span></span></span><a class="headerlink" href="#_CPPv4N6HAHVAC16_modesSerializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The serializer for the modes. It’s <code class="docutils literal notranslate"><span class="pre">nullptr</span></code> if the modes feature is disabled. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC13_modeCallbackE">
+<span id="_CPPv3N6HAHVAC13_modeCallbackE"></span><span id="_CPPv2N6HAHVAC13_modeCallbackE"></span><span class="target" id="class_h_a_h_v_a_c_1ab4edeac1422bf78e4be8ddfd9a4bf4c8"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_modeCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv46HAHVAC" title="HAHVAC"><span class="n"><span class="pre">HAHVAC</span></span></a><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAHVAC13_modeCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Callback that will be called when the mode command is received from the HA. </p>
 </dd></dl>
 
 </div>
