@@ -9,10 +9,12 @@
 #define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool, HAHVAC*)
 #define HAHVAC_CALLBACK_FAN_MODE(name) void (*name)(FanMode, HAHVAC*)
 #define HAHVAC_CALLBACK_SWING_MODE(name) void (*name)(SwingMode, HAHVAC*)
+#define HAHVAC_CALLBACK_MODE(name) void (*name)(Mode, HAHVAC*)
 
 class HASerializerArray;
 
 /**
+ * HAHVAC lets you control your HVAC devices.
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
@@ -23,6 +25,7 @@ class HAHVAC : public HABaseDeviceType
 public:
     static const uint8_t DefaultFanModes;
     static const uint8_t DefaultSwingModes;
+    static const uint8_t DefaultModes;
 
     /// The list of features available in the HVAC. They're used in the constructor.
     enum Features {
@@ -60,6 +63,17 @@ public:
         UnknownSwingMode = 0,
         OnSwingMode = 1,
         OffSwingMode = 2
+    };
+
+    /// The list of available HVAC's modes.
+    enum Mode {
+        UnknownMode = 0,
+        AutoMode = 1,
+        OffMode = 2,
+        CoolMode = 4,
+        HeatMode = 8,
+        DryMode = 16,
+        FanOnlyMode = 32
     };
 
     /// Temperature units available in the HVAC.
@@ -237,6 +251,42 @@ public:
         { _swingModes = modes; }
 
     /**
+     * Changes mode of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param mode New HVAC's mode.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setMode(const Mode mode, const bool force = false);
+
+    /**
+     * Sets mode of the HVAC without publishing it to Home Assistant.
+     * This method may be useful if you want to change the mode before connection
+     * with MQTT broker is acquired.
+     *
+     * @param mode New HVAC's mode.
+     */
+    inline void setCurrentMode(const Mode mode)
+        { _mode = mode; }
+
+    /**
+     * Returns last known mode of the HVAC.
+     * If setMode method wasn't called the initial value will be returned.
+     */
+    inline Mode getMode() const
+        { return _mode; }
+
+    /**
+     * Sets available HVAC's modes.
+     *
+     * @param modes The modes to set (for example: `HAHVAC::CoolMode | HAHVAC::HeatMode`).
+     */
+    inline void setModes(const uint8_t modes)
+        { _modes = modes; }
+
+    /**
      * Sets icon of the HVAC.
      * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
@@ -322,6 +372,15 @@ public:
     inline void onSwingModeCommand(HAHVAC_CALLBACK_SWING_MODE(callback))
         { _swingModeCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the HVAC mode command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same HVAC.
+     *
+     * @param callback
+     */
+    inline void onModeCommand(HAHVAC_CALLBACK_MODE(callback))
+        { _modeCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -373,6 +432,14 @@ private:
     bool publishSwingMode(const SwingMode mode);
 
     /**
+     * Publishes the MQTT message with the given mode.
+     *
+     * @param mode The mode to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishMode(const Mode mode);
+
+    /**
      * Parses the given aux state command and executes the callback with proper value.
      *
      * @param cmd The data of the command.
@@ -403,6 +470,14 @@ private:
      * @param length Length of the command.
      */
     void handleSwingModeCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given HVAC's mode command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleModeCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the HVAC.
     const uint16_t _features;
@@ -466,6 +541,18 @@ private:
 
     /// Callback that will be called when the swing mode command is received from the HA.
     HAHVAC_CALLBACK_SWING_MODE(_swingModeCallback);
+
+    /// The current mode. By default it's `HAHVAC::UnknownMode`.
+    Mode _mode;
+
+    /// The supported modes. By default it's `HAHVAC::DefaultModes`.
+    uint8_t _modes;
+
+    /// The serializer for the modes. It's `nullptr` if the modes feature is disabled.
+    HASerializerArray* _modesSerializer;
+
+    /// Callback that will be called when the mode command is received from the HA.
+    HAHVAC_CALLBACK_MODE(_modeCallback);
 };
 
 #endif

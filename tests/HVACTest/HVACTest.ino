@@ -6,7 +6,8 @@
     lastAuxStateCallbackCall.reset(); \
     lastPowerCallbackCall.reset(); \
     lastFanModeCallbackCall.reset(); \
-    lastSwingModeCallbackCall.reset();
+    lastSwingModeCallbackCall.reset(); \
+    lastModeCallbackCall.reset();
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
@@ -39,6 +40,14 @@
 
 #define assertSwingModeCallbackNotCalled() \
     assertFalse(lastSwingModeCallbackCall.called);
+
+#define assertModeCallbackCalled(expectedMode, callerPtr) \
+    assertTrue(lastModeCallbackCall.called); \
+    assertEqual(expectedMode, lastModeCallbackCall.mode); \
+    assertEqual(callerPtr, lastModeCallbackCall.caller);
+
+#define assertModeCallbackNotCalled() \
+    assertFalse(lastModeCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -90,12 +99,25 @@ struct SwingModeCallback {
     }
 };
 
+struct ModeCallback {
+    bool called = false;
+    HAHVAC::Mode mode = HAHVAC::UnknownMode;
+    HAHVAC* caller = nullptr;
+
+    void reset() {
+        called = false;
+        mode = HAHVAC::UnknownMode;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueHVAC";
 static AuxStateCallback lastAuxStateCallbackCall;
 static PowerCallback lastPowerCallbackCall;
 static FanModeCallback lastFanModeCallbackCall;
 static SwingModeCallback lastSwingModeCallbackCall;
+static ModeCallback lastModeCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
@@ -107,6 +129,8 @@ const char FanModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mo
 const char FanModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mode_cmd_t"};
 const char SwingModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/swing_mode_stat_t"};
 const char SwingModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/swing_mode_cmd_t"};
+const char ModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/mode_stat_t"};
+const char ModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/mode_cmd_t"};
 
 void onAuxStateCommandReceived(bool state, HAHVAC* caller)
 {
@@ -134,6 +158,13 @@ void onSwingModeCommandReceived(HAHVAC::SwingMode mode, HAHVAC* caller)
     lastSwingModeCallbackCall.called = true;
     lastSwingModeCallbackCall.mode = mode;
     lastSwingModeCallbackCall.caller = caller;
+}
+
+void onModeCommandReceived(HAHVAC::Mode mode, HAHVAC* caller)
+{
+    lastModeCallbackCall.called = true;
+    lastModeCallbackCall.mode = mode;
+    lastModeCallbackCall.caller = caller;
 }
 
 AHA_TEST(HVACTest, invalid_unique_id) {
@@ -262,6 +293,26 @@ AHA_TEST(HVACTest, config_with_swing) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
+AHA_TEST(HVACTest, config_with_modes) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
 AHA_TEST(HVACTest, aux_command_subscription) {
     prepareTest
 
@@ -310,6 +361,19 @@ AHA_TEST(HVACTest, swing_mode_command_subscription) {
     assertEqual(1, mock->getSubscriptionsNb());
     assertEqual(
         AHATOFSTR(SwingModeCommandTopic),
+        mock->getSubscriptions()[0]->topic
+    );
+}
+
+AHA_TEST(HVACTest, mode_command_subscription) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(ModeCommandTopic),
         mock->getSubscriptions()[0]->topic
     );
 }
@@ -711,6 +775,167 @@ AHA_TEST(HVACTest, swing_modes_setter_off_only) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
+AHA_TEST(HVACTest, modes_setter_auto_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::AutoMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"auto\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_off_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::OffMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"off\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_cool_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::CoolMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"cool\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_heat_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::HeatMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"heat\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_dry_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::DryMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"dry\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_fan_only_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::FanOnlyMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"fan_only\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, modes_setter_mixed) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setModes(HAHVAC::AutoMode | HAHVAC::HeatMode | HAHVAC::DryMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
+            "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
+            "\"modes\":[\"auto\",\"heat\",\"dry\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 
@@ -720,13 +945,15 @@ AHA_TEST(HVACTest, publish_nothing_if_retained) {
             HAHVAC::AuxHeatingFeature |
             HAHVAC::PowerFeature |
             HAHVAC::FanFeature |
-            HAHVAC::SwingFeature
+            HAHVAC::SwingFeature |
+            HAHVAC::ModesFeature
     );
     hvac.setRetain(true);
     hvac.setCurrentTemperature(21.5);
     hvac.setCurrentAction(HAHVAC::CoolingAction);
     hvac.setCurrentFanMode(HAHVAC::AutoFanMode);
     hvac.setCurrentSwingMode(HAHVAC::OnSwingMode);
+    hvac.setCurrentMode(HAHVAC::HeatMode);
     mqtt.loop();
 
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
@@ -1043,6 +1270,76 @@ AHA_TEST(HVACTest, publish_swing_mode_debounce_skip) {
     assertSingleMqttMessage(AHATOFSTR(SwingModeStateTopic), "on", true)
 }
 
+AHA_TEST(HVACTest, publish_mode_on_connect) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.setCurrentMode(HAHVAC::HeatMode);
+    mqtt.loop();
+
+    assertMqttMessage(1, AHATOFSTR(ModeStateTopic), "heat", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_auto) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::AutoMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "auto", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_off) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::OffMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "off", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_cool) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::CoolMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "cool", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_heat) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::HeatMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "heat", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_dry) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::DryMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "dry", true)
+}
+
+AHA_TEST(HVACTest, publish_mode_fan_only) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+
+    assertTrue(hvac.setMode(HAHVAC::FanOnlyMode));
+    assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "fan_only", true)
+}
+
 AHA_TEST(HVACTest, aux_state_command_on) {
     prepareTest
 
@@ -1213,6 +1510,66 @@ AHA_TEST(HVACTest, swing_mode_command_different) {
     );
 
     assertSwingModeCallbackNotCalled()
+}
+
+AHA_TEST(HVACTest, mode_command_auto) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("auto"));
+
+    assertModeCallbackCalled(HAHVAC::AutoMode, &hvac)
+}
+
+AHA_TEST(HVACTest, mode_command_off) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("off"));
+
+    assertModeCallbackCalled(HAHVAC::OffMode, &hvac)
+}
+
+AHA_TEST(HVACTest, mode_command_cool) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("cool"));
+
+    assertModeCallbackCalled(HAHVAC::CoolMode, &hvac)
+}
+
+AHA_TEST(HVACTest, mode_command_heat) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("heat"));
+
+    assertModeCallbackCalled(HAHVAC::HeatMode, &hvac)
+}
+
+AHA_TEST(HVACTest, mode_command_dry) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("dry"));
+
+    assertModeCallbackCalled(HAHVAC::DryMode, &hvac)
+}
+
+AHA_TEST(HVACTest, mode_command_fan_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("fan_only"));
+
+    assertModeCallbackCalled(HAHVAC::FanOnlyMode, &hvac)
 }
 
 void setup()

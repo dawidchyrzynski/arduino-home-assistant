@@ -7,6 +7,7 @@
 
 const uint8_t HAHVAC::DefaultFanModes = AutoFanMode | LowFanMode | MediumFanMode | HighFanMode;
 const uint8_t HAHVAC::DefaultSwingModes = OnSwingMode | OffSwingMode;
+const uint8_t HAHVAC::DefaultModes = AutoMode | OffMode | CoolMode | HeatMode | DryMode | FanOnlyMode;
 
 HAHVAC::HAHVAC(
     const char* uniqueId,
@@ -34,7 +35,11 @@ HAHVAC::HAHVAC(
     _swingMode(UnknownSwingMode),
     _swingModes(DefaultSwingModes),
     _swingModesSerializer(nullptr),
-    _swingModeCallback(nullptr)
+    _swingModeCallback(nullptr),
+    _mode(UnknownMode),
+    _modes(DefaultModes),
+    _modesSerializer(nullptr),
+    _modeCallback(nullptr)
 {
     if (_features & FanFeature) {
         _fanModesSerializer = new HASerializerArray(4);
@@ -42,7 +47,11 @@ HAHVAC::HAHVAC(
 
     if (_features & SwingFeature) {
         _swingModesSerializer = new HASerializerArray(2);
-    } 
+    }
+
+    if (_features & ModesFeature) {
+        _modesSerializer = new HASerializerArray(6);
+    }
 }
 
 bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
@@ -120,6 +129,20 @@ bool HAHVAC::setSwingMode(const SwingMode mode, const bool force)
     return false;
 }
 
+bool HAHVAC::setMode(const Mode mode, const bool force)
+{
+    if (!force && mode == _mode) {
+        return true;
+    }
+
+    if (publishMode(mode)) {
+        _mode = mode;
+        return true;
+    }
+
+    return false;
+}
+
 void HAHVAC::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
@@ -129,7 +152,7 @@ void HAHVAC::buildSerializer()
     const HASerializer::PropertyValueType numberProperty =
         HASerializer::precisionToPropertyType(_precision);
 
-    _serializer = new HASerializer(this, 21); // 21 - max properties nb
+    _serializer = new HASerializer(this, 24); // 24 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -209,6 +232,45 @@ void HAHVAC::buildSerializer()
         }
     }
 
+    if (_features & ModesFeature) {
+        _serializer->topic(AHATOFSTR(HAModeCommandTopic));
+        _serializer->topic(AHATOFSTR(HAModeStateTopic));
+
+        if (_modes != DefaultModes) {
+            _modesSerializer->clear();
+
+            if (_modes & AutoMode) {
+                _modesSerializer->add(HAModeAuto);
+            }
+
+            if (_modes & OffMode) {
+                _modesSerializer->add(HAModeOff);
+            }
+
+            if (_modes & CoolMode) {
+                _modesSerializer->add(HAModeCool);
+            }
+
+            if (_modes & HeatMode) {
+                _modesSerializer->add(HAModeHeat);
+            }
+
+            if (_modes & DryMode) {
+                _modesSerializer->add(HAModeDry);
+            }
+
+            if (_modes & FanOnlyMode) {
+                _modesSerializer->add(HAModeFanOnly);
+            }
+
+            _serializer->set(
+                AHATOFSTR(HAModesProperty),
+                _modesSerializer,
+                HASerializer::ArrayPropertyType
+            );
+        }
+    }
+
     if (_temperatureUnit != DefaultUnit) {
         const __FlashStringHelper *unitStr = _temperatureUnit == CelsiusUnit
             ? AHATOFSTR(HATemperatureUnitC)
@@ -265,6 +327,7 @@ void HAHVAC::onMqttConnected()
         publishAuxState(_auxState);
         publishFanMode(_fanMode);
         publishSwingMode(_swingMode);
+        publishMode(_mode);
     }
 
     if (_features & AuxHeatingFeature) {
@@ -281,6 +344,10 @@ void HAHVAC::onMqttConnected()
 
     if (_features & SwingFeature) {
         subscribeTopic(uniqueId(), AHATOFSTR(HASwingModeCommandTopic));
+    }
+
+    if (_features & ModesFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAModeCommandTopic));
     }
 }
 
@@ -314,6 +381,12 @@ void HAHVAC::onMqttMessage(
         AHATOFSTR(HASwingModeCommandTopic)
     )) {
         handleSwingModeCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HAModeCommandTopic)
+    )) {
+        handleModeCommand(payload, length);
     }
 }
 
@@ -457,6 +530,49 @@ bool HAHVAC::publishSwingMode(const SwingMode mode)
     );
 }
 
+bool HAHVAC::publishMode(const Mode mode)
+{
+    if (mode == UnknownMode || !(_features & ModesFeature)) {
+        return false;
+    }
+
+    const __FlashStringHelper *stateStr = nullptr;
+    switch (mode) {
+    case AutoMode:
+        stateStr = AHATOFSTR(HAModeAuto);
+        break;
+
+    case OffMode:
+        stateStr = AHATOFSTR(HAModeOff);
+        break;
+
+    case CoolMode:
+        stateStr = AHATOFSTR(HAModeCool);
+        break;
+
+    case HeatMode:
+        stateStr = AHATOFSTR(HAModeHeat);
+        break;
+
+    case DryMode:
+        stateStr = AHATOFSTR(HAModeDry);
+        break;
+
+    case FanOnlyMode:
+        stateStr = AHATOFSTR(HAModeFanOnly);
+        break;
+
+    default:
+        return false;
+    }
+
+    return publishOnDataTopic(
+        AHATOFSTR(HAModeStateTopic),
+        stateStr,
+        true
+    );
+}
+
 void HAHVAC::handleAuxStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
@@ -508,6 +624,27 @@ void HAHVAC::handleSwingModeCommand(const uint8_t* cmd, const uint16_t length)
         _swingModeCallback(OnSwingMode, this);
     } else if (memcmp_P(cmd, HASwingModeOff, length) == 0) {
         _swingModeCallback(OffSwingMode, this);
+    }
+}
+
+void HAHVAC::handleModeCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_modeCallback) {
+        return;
+    }
+
+    if (memcmp_P(cmd, HAModeAuto, length) == 0) {
+        _modeCallback(AutoMode, this);
+    } else if (memcmp_P(cmd, HAModeOff, length) == 0) {
+        _modeCallback(OffMode, this);
+    } else if (memcmp_P(cmd, HAModeCool, length) == 0) {
+        _modeCallback(CoolMode, this);
+    } else if (memcmp_P(cmd, HAModeHeat, length) == 0) {
+        _modeCallback(HeatMode, this);
+    }  else if (memcmp_P(cmd, HAModeDry, length) == 0) {
+        _modeCallback(DryMode, this);
+    }  else if (memcmp_P(cmd, HAModeFanOnly, length) == 0) {
+        _modeCallback(FanOnlyMode, this);
     }
 }
 
