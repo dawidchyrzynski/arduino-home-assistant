@@ -22,7 +22,8 @@ HAHVAC::HAHVAC(
     _maxTemp(HAUtils::NumberMax),
     _tempStep(HAUtils::NumberMax),
     _auxCallback(nullptr),
-    _auxState(false)
+    _auxState(false),
+    _powerCallback(nullptr)
 {
 
 }
@@ -83,7 +84,7 @@ void HAHVAC::buildSerializer()
     const HASerializer::PropertyValueType numberProperty =
         HASerializer::precisionToPropertyType(_precision);
 
-    _serializer = new HASerializer(this, 13); // 13 - max properties nb
+    _serializer = new HASerializer(this, 14); // 14 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -103,7 +104,11 @@ void HAHVAC::buildSerializer()
     if (_features & AuxHeatingFeature) {
         _serializer->topic(AHATOFSTR(HAAuxCommandTopic));
         _serializer->topic(AHATOFSTR(HAAuxStateTopic));
-    } 
+    }
+
+    if (_features & PowerFeature) {
+        _serializer->topic(AHATOFSTR(HAPowerCommandTopic));
+    }
 
     if (_temperatureUnit != DefaultUnit) {
         const __FlashStringHelper *unitStr = _temperatureUnit == CelsiusUnit
@@ -160,6 +165,8 @@ void HAHVAC::onMqttConnected()
         publishAction(_action);
         publishAuxState(_auxState);
     }
+
+    // to do: subscriptions
 }
 
 void HAHVAC::onMqttMessage(
@@ -174,6 +181,12 @@ void HAHVAC::onMqttMessage(
         AHATOFSTR(HAAuxCommandTopic)
     )) {
         handleAuxStateCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HAPowerCommandTopic)
+    )) {
+        handlePowerCommand(payload, length);
     }
 }
 
@@ -265,6 +278,18 @@ void HAHVAC::handleAuxStateCommand(const uint8_t* cmd, const uint16_t length)
 
     bool state = length == strlen_P(HAStateOn);
     _auxCallback(state, this);
+}
+
+void HAHVAC::handlePowerCommand(const uint8_t* cmd, const uint16_t length)
+{
+    (void)cmd;
+
+    if (!_powerCallback) {
+        return;
+    }
+
+    bool state = length == strlen_P(HAStateOn);
+    _powerCallback(state, this);
 }
 
 #endif

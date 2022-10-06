@@ -20,7 +20,8 @@ public:
     enum Features {
         DefaultFeatures = 0,
         ActionFeature = 1,
-        AuxHeatingFeature = 2
+        AuxHeatingFeature = 2,
+        PowerFeature = 4
     };
 
     enum Action {
@@ -193,6 +194,15 @@ public:
     inline void onAuxStateCommand(HAHVAC_CALLBACK_BOOL(callback))
         { _auxCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the power command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same HVAC.
+     *
+     * @param callback
+     */
+    inline void onPowerCommand(HAHVAC_CALLBACK_BOOL(callback))
+        { _powerCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -235,6 +245,14 @@ private:
      */
     void handleAuxStateCommand(const uint8_t* cmd, const uint16_t length);
 
+    /**
+     * Parses the given power command and executes the callback with proper value.
+     * 
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handlePowerCommand(const uint8_t* cmd, const uint16_t length);
+
     /// Features enabled for the HVAC.
     const uint16_t _features;
 
@@ -265,11 +283,14 @@ private:
     /// The step of the temperature that can be set.
     HAUtils::Number _tempStep;
 
-    /// Callback that will be called when the aux command is received from the HA.
+    /// Callback that will be called when the aux state command is received from the HA.
     HAHVAC_CALLBACK_BOOL(_auxCallback);
 
     /// The state of the aux heating. By default it's `false`.
     bool _auxState;
+
+    /// Callback that will be called when the power command is received from the HA.
+    HAHVAC_CALLBACK_BOOL(_powerCallback);
 };
 
 #endif

@@ -3,7 +3,8 @@
 
 #define prepareTest \
     initMqttTest(testDeviceId) \
-    lastAuxStateCallbackCall.reset();
+    lastAuxStateCallbackCall.reset(); \
+    lastPowerCallbackCall.reset();
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
@@ -12,6 +13,14 @@
 
 #define assertAuxStateCallbackNotCalled() \
     assertFalse(lastAuxStateCallbackCall.called);
+
+#define assertPowerCallbackCalled(expectedState, callerPtr) \
+    assertTrue(lastPowerCallbackCall.called); \
+    assertEqual(expectedState, lastPowerCallbackCall.state); \
+    assertEqual(callerPtr, lastPowerCallbackCall.caller);
+
+#define assertPowerCallbackNotCalled() \
+    assertFalse(lastPowerCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -27,21 +36,42 @@ struct AuxStateCallback {
     }
 };
 
+struct PowerCallback {
+    bool called = false;
+    bool state = false;
+    HAHVAC* caller = nullptr;
+
+    void reset() {
+        called = false;
+        state = false;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueHVAC";
 static AuxStateCallback lastAuxStateCallbackCall;
+static PowerCallback lastPowerCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
 const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/at"};
 const char AuxStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ast"};
 const char AuxCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/act"};
+const char PowerCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/pow_cmd_t"};
 
 void onAuxStateCommandReceived(bool state, HAHVAC* caller)
 {
     lastAuxStateCallbackCall.called = true;
     lastAuxStateCallbackCall.state = state;
     lastAuxStateCallbackCall.caller = caller;
+}
+
+void onPowerCommandReceived(bool state, HAHVAC* caller)
+{
+    lastPowerCallbackCall.called = true;
+    lastPowerCallbackCall.state = state;
+    lastPowerCallbackCall.caller = caller;
 }
 
 AHA_TEST(HVACTest, invalid_unique_id) {
@@ -109,6 +139,25 @@ AHA_TEST(HVACTest, default_params_with_aux) {
         )
     )
     assertEqual(2, mock->getFlushedMessagesNb()); // config + aux state
+}
+
+AHA_TEST(HVACTest, default_params_with_power) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"pow_cmd_t\":\"testData/testDevice/uniqueHVAC/pow_cmd_t\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
 AHA_TEST(HVACTest, availability) {
@@ -577,6 +626,39 @@ AHA_TEST(HVACTest, aux_command_different_fan) {
     );
 
     assertAuxStateCallbackNotCalled()
+}
+
+AHA_TEST(HVACTest, power_command_on) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    hvac.onPowerCommand(onPowerCommandReceived);
+    mock->fakeMessage(AHATOFSTR(PowerCommandTopic), F("ON"));
+
+    assertPowerCallbackCalled(true, &hvac)
+}
+
+AHA_TEST(HVACTest, power_command_off) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    hvac.onPowerCommand(onPowerCommandReceived);
+    mock->fakeMessage(AHATOFSTR(PowerCommandTopic), F("OFF"));
+
+    assertPowerCallbackCalled(false, &hvac)
+}
+
+AHA_TEST(HVACTest, power_command_different) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    hvac.onPowerCommand(onPowerCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueHVACDifferent/pow_cmd_t"),
+        F("ON")
+    );
+
+    assertPowerCallbackNotCalled()
 }
 
 void setup()
