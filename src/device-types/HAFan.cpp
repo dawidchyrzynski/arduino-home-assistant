@@ -159,7 +159,7 @@ bool HAFan::publishState(const bool state)
 
 bool HAFan::publishSpeed(const uint8_t speedPercentage)
 {
-    if (!uniqueId() || !(_features & SpeedsFeature)) {
+    if (!(_features & SpeedsFeature)) {
         return false;
     }
 

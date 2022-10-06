@@ -164,12 +164,7 @@ void HASelect::onMqttMessage(
 
 bool HASelect::publishState(const int8_t state)
 {
-    if (
-        !uniqueId() ||
-        state == -1 ||
-        !_options ||
-        state >= _options->getItemsNb()
-    ) {
+    if (state == -1 || !_options || state >= _options->getItemsNb()) {
         return false;
     }
 

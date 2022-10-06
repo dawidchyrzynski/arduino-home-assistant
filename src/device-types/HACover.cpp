@@ -119,7 +119,7 @@ void HACover::onMqttMessage(
 
 bool HACover::publishState(CoverState state)
 {
-    if (!uniqueId() || state == StateUnknown) {
+    if (state == StateUnknown) {
         return false;
     }
 
@@ -154,11 +154,7 @@ bool HACover::publishState(CoverState state)
 
 bool HACover::publishPosition(int16_t position)
 {
-    if (
-        !uniqueId() ||
-        position == DefaultPosition ||
-        !(_features & PositionFeature)
-    ) {
+    if (position == DefaultPosition || !(_features & PositionFeature)) {
         return false;
     }
 
