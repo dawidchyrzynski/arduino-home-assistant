@@ -15,10 +15,10 @@ HAMqtt mqtt(client, device);
 // "led" is unique ID of the switch. You should define your own ID.
 HASwitch led("led");
 
-void onSwitchCommand(bool state, HASwitch* s)
+void onSwitchCommand(bool state, HASwitch* sender)
 {
     digitalWrite(LED_PIN, (state ? HIGH : LOW));
-    s->setState(state); // report state back to the Home Assistant
+    sender->setState(state); // report state back to the Home Assistant
 }
 
 void setup() {

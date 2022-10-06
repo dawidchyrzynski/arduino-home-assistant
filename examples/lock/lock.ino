@@ -12,15 +12,15 @@ HAMqtt mqtt(client, device);
 // "myLock" is unique ID of the lock. You should define your own ID.
 HALock lock("myLock");
 
-void onLockCommand(HALock::LockCommand cmd) {
+void onLockCommand(HALock::LockCommand cmd, HALock* sender) {
     if (cmd == HALock::CommandLock) {
         Serial.println("Command: Lock");
-        lock.setState(HALock::StateLocked); // report state back to the HA
+        sender->setState(HALock::StateLocked); // report state back to the HA
     } else if (cmd == HALock::CommandUnlock) {
         Serial.println("Command: Unlock");
-        lock.setState(HALock::StateUnlocked); // report state back to the HA
+        sender->setState(HALock::StateUnlocked); // report state back to the HA
     } else if (cmd == HALock::CommandOpen) {
-        if (lock.getCurrentState() != HALock::StateUnlocked) {
+        if (sender->getCurrentState() != HALock::StateUnlocked) {
             return; // optionally you can verify if the lock is unlocked before opening
         }
 

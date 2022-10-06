@@ -13,11 +13,11 @@ HAMqtt mqtt(client, device);
 HAButton buttonA("myButtonA");
 HAButton buttonB("myButtonB");
 
-void onButtonPress(HAButton* s)
+void onButtonPress(HAButton* sender)
 {
-    if (s == &buttonA) {
+    if (sender == &buttonA) {
         // button A was clicked, do your logic here
-    } else if (s == &buttonB) {
+    } else if (sender == &buttonB) {
         // button B was clicked, do your logic here
     }
 }

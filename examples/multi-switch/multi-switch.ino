@@ -13,17 +13,17 @@ HAMqtt mqtt(client, device);
 HASwitch switch1("mySwitch1");
 HASwitch switch2("mySwitch2");
 
-void onSwitchCommand(bool state, HASwitch* s)
+void onSwitchCommand(bool state, HASwitch* sender)
 {
-    if (s == &switch1) {
+    if (sender == &switch1) {
         // the switch1 has been toggled
         // state == true means ON state
-    } else if (s == &switch2) {
+    } else if (sender == &switch2) {
         // the switch2 has been toggled
         // state == true means ON state
     }
 
-    s->setState(state); // report state back to the Home Assistant
+    sender->setState(state); // report state back to the Home Assistant
 }
 
 void setup() {

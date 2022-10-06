@@ -12,16 +12,16 @@ HAMqtt mqtt(client, device);
 // "myCover" is unique ID of the cover. You should define your own ID.
 HACover cover("myCover");
 
-void onCoverCommand(HACover::CoverCommand cmd) {
+void onCoverCommand(HACover::CoverCommand cmd, HACover* sender) {
     if (cmd == HACover::CommandOpen) {
         Serial.println("Command: Open");
-        cover.setState(HACover::StateOpening); // report state back to the HA
+        sender->setState(HACover::StateOpening); // report state back to the HA
     } else if (cmd == HACover::CommandClose) {
         Serial.println("Command: Close");
-        cover.setState(HACover::StateClosing); // report state back to the HA
+        sender->setState(HACover::StateClosing); // report state back to the HA
     } else if (cmd == HACover::CommandStop) {
         Serial.println("Command: Stop");
-        cover.setState(HACover::StateStopped); // report state back to the HA
+        sender->setState(HACover::StateStopped); // report state back to the HA
     }
 
     // Available states:

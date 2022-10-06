@@ -15,25 +15,25 @@ HAMqtt mqtt(client, device);
 // "prettyLight" is unique ID of the light. You should define your own ID.
 HALight light("prettyLight", HALight::BrightnessFeature | HALight::ColorTemperatureFeature);
 
-void onStateCommand(bool state, HALight* light) {
+void onStateCommand(bool state, HALight* sender) {
     Serial.print("State: ");
     Serial.println(state);
 
-    light->setState(state); // report state back to the Home Assistant
+    sender->setState(state); // report state back to the Home Assistant
 }
 
-void onBrightnessCommand(uint8_t brightness, HALight* light) {
+void onBrightnessCommand(uint8_t brightness, HALight* sender) {
     Serial.print("Brightness: ");
     Serial.println(brightness);
 
-    light->setBrightness(brightness); // report brightness back to the Home Assistant
+    sender->setBrightness(brightness); // report brightness back to the Home Assistant
 }
 
-void onColorTemperatureCommand(uint16_t temperature, HALight* light) {
+void onColorTemperatureCommand(uint16_t temperature, HALight* sender) {
     Serial.print("Color temperature: ");
     Serial.println(temperature);
 
-    light->setColorTemperature(temperature); // report color temperature back to the Home Assistant
+    sender->setColorTemperature(temperature); // report color temperature back to the Home Assistant
 }
 
 void setup() {

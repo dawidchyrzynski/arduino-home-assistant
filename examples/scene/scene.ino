@@ -12,9 +12,9 @@ HAMqtt mqtt(client, device);
 // "myScene" is unique IDs of buttons. You should define you own ID.
 HAScene scene("myScene");
 
-void onSceneActivate(HAScene* s)
+void onSceneActivate(HAScene* sender)
 {
-    if (s == &scene) {
+    if (sender == &scene) {
         // scene was activated via Home Assistant panel
     }
 }

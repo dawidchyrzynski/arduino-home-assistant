@@ -14,18 +14,18 @@ HAMqtt mqtt(client, device);
 // "ventilation" is unique ID of the fan. You should define your own ID.
 HAFan fan("ventilation", HAFan::SpeedsFeature);
 
-void onStateCommand(bool state, HAFan* fan) {
+void onStateCommand(bool state, HAFan* sender) {
     Serial.print("State: ");
     Serial.println(state);
 
-    fan->setState(state); // report state back to the Home Assistant
+    sender->setState(state); // report state back to the Home Assistant
 }
 
-void onSpeedCommand(uint8_t speedPercentage, HAFan* fan) {
+void onSpeedCommand(uint8_t speedPercentage, HAFan* sender) {
     Serial.print("Speed (%): ");
     Serial.println(speedPercentage);
 
-    fan->setSpeed(speedPercentage); // report speed back to the Home Assistant
+    sender->setSpeed(speedPercentage); // report speed back to the Home Assistant
 }
 
 void setup() {

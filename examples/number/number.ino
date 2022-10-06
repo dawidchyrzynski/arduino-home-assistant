@@ -15,7 +15,7 @@ HANumber number("myNumber");
 // HANumber number("myNumber", HANumber::PrecisionP2);
 // HANumber number("myNumber", HANumber::PrecisionP3);
 
-void onNumberCommand(HAUtils::Number number, uint8_t precision, HANumber* s)
+void onNumberCommand(HAUtils::Number number, uint8_t precision, HANumber* sender)
 {
     if (number == HANumber::StateNone) {
         // the reset command was send by Home Assistant
@@ -29,7 +29,7 @@ void onNumberCommand(HAUtils::Number number, uint8_t precision, HANumber* s)
         // do whatever you want with the number or numberFloat
     }
 
-    s->setState(number); // report the selected option back to the HA panel
+    sender->setState(number); // report the selected option back to the HA panel
 }
 
 void setup() {

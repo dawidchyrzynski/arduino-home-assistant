@@ -10,7 +10,7 @@ HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 HASelect select("mySelect");
 
-void onSelectCommand(int8_t index, HASelect* s)
+void onSelectCommand(int8_t index, HASelect* sender)
 {
     switch (index) {
     case 0:
@@ -30,7 +30,7 @@ void onSelectCommand(int8_t index, HASelect* s)
         return;
     }
 
-    s->setState(index); // report the selected option back to the HA panel
+    sender->setState(index); // report the selected option back to the HA panel
 }
 
 void setup() {
