@@ -126,13 +126,6 @@ private:
      */
     bool publishState(const bool state);
 
-    /**
-     * Parses the given on/off command and executes the switch callback with the proper state.
-     * 
-     * @param cmd The string representation of the command.
-     */
-    void handleCommand(const char* cmd);
-
     /// The device class. It can be nullptr.
     const char* _class;
 

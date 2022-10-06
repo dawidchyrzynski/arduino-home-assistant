@@ -108,12 +108,12 @@ void HACover::onMqttMessage(
     const uint16_t length
 )
 {
-    if (_commandCallback && HASerializer::compareDataTopics(
+    if (HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        handleCommand(reinterpret_cast<const char*>(payload), length);
+        handleCommand(payload, length);
     }
 }
 
@@ -168,7 +168,7 @@ bool HACover::publishPosition(int16_t position)
     return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);
 }
 
-void HACover::handleCommand(const char* cmd, const uint16_t length)
+void HACover::handleCommand(const uint8_t* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
         return;

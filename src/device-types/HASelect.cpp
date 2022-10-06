@@ -150,12 +150,11 @@ void HASelect::onMqttMessage(
         uniqueId(),
         AHATOFSTR(HACommandTopic)
     )) {
-        const char* option = reinterpret_cast<const char*>(payload);
         const uint8_t optionsNb = _options->getItemsNb();
         const HASerializerArray::ItemType* options = _options->getItems();
 
         for (uint8_t i = 0; i < optionsNb; i++) {
-            if (memcmp(option, options[i], length) == 0) {
+            if (memcmp(payload, options[i], length) == 0) {
                 _commandCallback(i, this);
                 return;
             }

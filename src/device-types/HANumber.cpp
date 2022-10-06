@@ -122,7 +122,7 @@ void HANumber::onMqttMessage(
     const uint16_t length
 )
 {
-    if (_commandCallback && HASerializer::compareDataTopics(
+    if (HASerializer::compareDataTopics(
         topic,
         uniqueId(),
         AHATOFSTR(HACommandTopic)
