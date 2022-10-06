@@ -298,12 +298,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils11strToNumberEPKc">
-<span id="_CPPv3N7HAUtils11strToNumberEPKc"></span><span id="_CPPv2N7HAUtils11strToNumberEPKc"></span><span id="HAUtils::strToNumber__cCP"></span><span class="target" id="class_h_a_utils_1ac40b54a7b8f895da22378f2fa1f49fbe"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HAUtils" title="HAUtils"><span class="n"><span class="pre">HAUtils</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">strToNumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">src</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11strToNumberEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils11strToNumberEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N7HAUtils11strToNumberEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N7HAUtils11strToNumberEPK7uint8_tK8uint16_t"></span><span id="HAUtils::strToNumber__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_utils_1a0264512a35e5733d29349db4d34d7cb0"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HAUtils" title="HAUtils"><span class="n"><span class="pre">HAUtils</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">strToNumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">buffer</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11strToNumberEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Converts the given string into number. If the given string doesn’t contain a valid number the <code class="docutils literal notranslate"><span class="pre">HAUtils::NumberMax</span></code> is returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>src</strong> – A string containing the number. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> – The buffer that’s supposed to contain the number. </p></li>
+<li><p><strong>length</strong> – Th length of the buffer. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -313,7 +316,12 @@
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7HAUtils9NumberMaxE">
-<span id="_CPPv3N7HAUtils9NumberMaxE"></span><span id="_CPPv2N7HAUtils9NumberMaxE"></span><span id="HAUtils::NumberMax__NumberC"></span><span class="target" id="class_h_a_utils_1a1cd0cb210d01b5b676e6e450a42d6292"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberMax</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">INT64_MAX</span></span><a class="headerlink" href="#_CPPv4N7HAUtils9NumberMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N7HAUtils9NumberMaxE"></span><span id="_CPPv2N7HAUtils9NumberMaxE"></span><span id="HAUtils::NumberMax__NumberC"></span><span class="target" id="class_h_a_utils_1a1cd0cb210d01b5b676e6e450a42d6292"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberMax</span></span></span><a class="headerlink" href="#_CPPv4N7HAUtils9NumberMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils17NumberMaxDigitsNbE">
+<span id="_CPPv3N7HAUtils17NumberMaxDigitsNbE"></span><span id="_CPPv2N7HAUtils17NumberMaxDigitsNbE"></span><span id="HAUtils::NumberMaxDigitsNb__uint8_tC"></span><span class="target" id="class_h_a_utils_1a864e3b13061351aa1b7d342954a4948d"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberMaxDigitsNb</span></span></span><a class="headerlink" href="#_CPPv4N7HAUtils17NumberMaxDigitsNbE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 </div>
