@@ -6,6 +6,7 @@
 #include "../utils/HASerializer.h"
 
 const uint8_t HAHVAC::DefaultFanModes = AutoFanMode | LowFanMode | MediumFanMode | HighFanMode;
+const uint8_t HAHVAC::DefaultSwingModes = OnSwingMode | OffSwingMode;
 
 HAHVAC::HAHVAC(
     const char* uniqueId,
@@ -29,11 +30,19 @@ HAHVAC::HAHVAC(
     _fanMode(UnknownFanMode),
     _fanModes(DefaultFanModes),
     _fanModesSerializer(nullptr),
-    _fanModeCallback(nullptr)
+    _fanModeCallback(nullptr),
+    _swingMode(UnknownSwingMode),
+    _swingModes(DefaultSwingModes),
+    _swingModesSerializer(nullptr),
+    _swingModeCallback(nullptr)
 {
     if (_features & FanFeature) {
         _fanModesSerializer = new HASerializerArray(4);
     }
+
+    if (_features & SwingFeature) {
+        _swingModesSerializer = new HASerializerArray(2);
+    } 
 }
 
 bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
@@ -97,6 +106,20 @@ bool HAHVAC::setFanMode(const FanMode mode, const bool force)
     return false;
 }
 
+bool HAHVAC::setSwingMode(const SwingMode mode, const bool force)
+{
+    if (!force && mode == _swingMode) {
+        return true;
+    }
+
+    if (publishSwingMode(mode)) {
+        _swingMode = mode;
+        return true;
+    }
+
+    return false;
+}
+
 void HAHVAC::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
@@ -106,7 +129,7 @@ void HAHVAC::buildSerializer()
     const HASerializer::PropertyValueType numberProperty =
         HASerializer::precisionToPropertyType(_precision);
 
-    _serializer = new HASerializer(this, 17); // 17 - max properties nb
+    _serializer = new HASerializer(this, 21); // 21 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -158,6 +181,29 @@ void HAHVAC::buildSerializer()
             _serializer->set(
                 AHATOFSTR(HAFanModesProperty),
                 _fanModesSerializer,
+                HASerializer::ArrayPropertyType
+            );
+        }
+    }
+
+    if (_features & SwingFeature) {
+        _serializer->topic(AHATOFSTR(HASwingModeCommandTopic));
+        _serializer->topic(AHATOFSTR(HASwingModeStateTopic));
+
+        if (_swingModes != DefaultSwingModes) {
+            _swingModesSerializer->clear();
+
+            if (_swingModes & OnSwingMode) {
+                _swingModesSerializer->add(HASwingModeOn);
+            }
+
+            if (_swingModes & OffSwingMode) {
+                _swingModesSerializer->add(HASwingModeOff);
+            }
+
+            _serializer->set(
+                AHATOFSTR(HASwingModesProperty),
+                _swingModesSerializer,
                 HASerializer::ArrayPropertyType
             );
         }
@@ -218,6 +264,7 @@ void HAHVAC::onMqttConnected()
         publishAction(_action);
         publishAuxState(_auxState);
         publishFanMode(_fanMode);
+        publishSwingMode(_swingMode);
     }
 
     if (_features & AuxHeatingFeature) {
@@ -230,6 +277,10 @@ void HAHVAC::onMqttConnected()
 
     if (_features & FanFeature) {
         subscribeTopic(uniqueId(), AHATOFSTR(HAFanModeCommandTopic));
+    }
+
+    if (_features & SwingFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HASwingModeCommandTopic));
     }
 }
 
@@ -257,6 +308,12 @@ void HAHVAC::onMqttMessage(
         AHATOFSTR(HAFanModeCommandTopic)
     )) {
         handleFanModeCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HASwingModeCommandTopic)
+    )) {
+        handleSwingModeCommand(payload, length);
     }
 }
 
@@ -373,6 +430,33 @@ bool HAHVAC::publishFanMode(const FanMode mode)
     );
 }
 
+bool HAHVAC::publishSwingMode(const SwingMode mode)
+{
+    if (mode == UnknownSwingMode || !(_features & SwingFeature)) {
+        return false;
+    }
+
+    const __FlashStringHelper *stateStr = nullptr;
+    switch (mode) {
+    case OnSwingMode:
+        stateStr = AHATOFSTR(HASwingModeOn);
+        break;
+
+    case OffSwingMode:
+        stateStr = AHATOFSTR(HASwingModeOff);
+        break;
+
+    default:
+        return false;
+    }
+
+    return publishOnDataTopic(
+        AHATOFSTR(HASwingModeStateTopic),
+        stateStr,
+        true
+    );
+}
+
 void HAHVAC::handleAuxStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
@@ -411,6 +495,19 @@ void HAHVAC::handleFanModeCommand(const uint8_t* cmd, const uint16_t length)
         _fanModeCallback(MediumFanMode, this);
     } else if (memcmp_P(cmd, HAFanModeHigh, length) == 0) {
         _fanModeCallback(HighFanMode, this);
+    }
+}
+
+void HAHVAC::handleSwingModeCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_swingModeCallback) {
+        return;
+    }
+
+    if (memcmp_P(cmd, HASwingModeOn, length) == 0) {
+        _swingModeCallback(OnSwingMode, this);
+    } else if (memcmp_P(cmd, HASwingModeOff, length) == 0) {
+        _swingModeCallback(OffSwingMode, this);
     }
 }
 
