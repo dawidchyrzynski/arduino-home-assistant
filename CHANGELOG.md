@@ -36,7 +36,7 @@
 * Changed structure of all MQTT topics used in the library.
 * Changed constructor of the `HABinarySensor` class (removed `deviceClass` and `initialState` arguments)
 * Renamed `HABinarySensor::getState()` method to `HABinarySensor::getCurrentState()`
-* Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check updated example of the `multi-state-button`.
+* Replaced `HATriggers` with `HADeviceTrigger` - the new implementation is not backward compatible. Please check the updated example of the `multi-state-button`.
 * Renamed `HADevice::isOnline()` method to `HADevice::isAvailable()`
 * Renamed `HASwitch::onStateChanged` method to `HASwitch::onCommand`.
 * Renamed `HAFan::onStateChanged` method to `HAFan::onStateCommand`.
@@ -46,6 +46,7 @@
 * Removed all legacy constructors with `HAMqtt` argument
 * Removed `onConnectionFailed` callback from the `HAMqtt` class
 * The position in the `HACover` is now available as configurable feature. It's disabled by default.
+* Refactored `HAHVAC` class to support more features of the MQTT discovery. Please check the update example.
 
 ## 1.3.0
 

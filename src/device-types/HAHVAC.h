@@ -6,10 +6,11 @@
 
 #ifndef EX_ARDUINOHA_HVAC
 
-#define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool, HAHVAC*)
-#define HAHVAC_CALLBACK_FAN_MODE(name) void (*name)(FanMode, HAHVAC*)
-#define HAHVAC_CALLBACK_SWING_MODE(name) void (*name)(SwingMode, HAHVAC*)
-#define HAHVAC_CALLBACK_MODE(name) void (*name)(Mode, HAHVAC*)
+#define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool state, HAHVAC* sender)
+#define HAHVAC_CALLBACK_TARGET_TEMP(name) void (*name)(HAUtils::Number number, uint8_t precision, HAHVAC* sender)
+#define HAHVAC_CALLBACK_FAN_MODE(name) void (*name)(FanMode mode, HAHVAC* sender)
+#define HAHVAC_CALLBACK_SWING_MODE(name) void (*name)(SwingMode mode, HAHVAC* sender)
+#define HAHVAC_CALLBACK_MODE(name) void (*name)(Mode mode, HAHVAC* sender)
 
 class HASerializerArray;
 
@@ -35,7 +36,8 @@ public:
         PowerFeature = 4,
         FanFeature = 8,
         SwingFeature = 16,
-        ModesFeature = 32
+        ModesFeature = 32,
+        TargetTemperatureFeature = 64
     };
 
     /// The list of available actions of the HVAC.
@@ -292,6 +294,34 @@ public:
         { _modes = modes; }
 
     /**
+     * Changes target temperature of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param temperature Target temperature to set.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setTargetTemperature(const float temperature, const bool force = false);
+
+    /**
+     * Sets target temperature of the HVAC without publishing it to Home Assistant.
+     * This method may be useful if you want to change the target before connection
+     * with MQTT broker is acquired.
+     *
+     * @param temperature Target temperature to set.
+     */
+    inline void setCurrentTargetTemperature(const float temperature)
+        { _targetTemperature = HAUtils::processFloatValue(temperature, _precision); }
+
+    /**
+     * Returns last known target temperature of the HVAC.
+     * If setTargetTemperature method wasn't called the initial value will be returned.
+     */
+    inline float getTargetTemperature() const
+        { return HAUtils::getFloatValue(_targetTemperature, _precision); }
+
+    /**
      * Sets icon of the HVAC.
      * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
@@ -386,6 +416,15 @@ public:
     inline void onModeCommand(HAHVAC_CALLBACK_MODE(callback))
         { _modeCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the target temperature is set via HA panel.
+     * Please note that it's not possible to register multiple callbacks for the same HVAC.
+     *
+     * @param callback
+     */
+    inline void onTargetTemperatureCommand(HAHVAC_CALLBACK_TARGET_TEMP(callback))
+        { _targetTemperatureCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -445,6 +484,14 @@ private:
     bool publishMode(const Mode mode);
 
     /**
+     * Publishes the MQTT message with the given target temperature.
+     *
+     * @param temperature The temperature to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishTargetTemperature(const HAUtils::Number temperature);
+
+    /**
      * Parses the given aux state command and executes the callback with proper value.
      *
      * @param cmd The data of the command.
@@ -483,6 +530,20 @@ private:
      * @param length Length of the command.
      */
     void handleModeCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given HVAC's target temperature command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleTargetTemperatureCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Returns progmem string representing value template for the command
+     * that contains floating point numbers.
+     */
+    const __FlashStringHelper* getCommandWithFloatTemplate();
 
     /// Features enabled for the HVAC.
     const uint16_t _features;
@@ -558,6 +619,12 @@ private:
 
     /// Callback that will be called when the mode command is received from the HA.
     HAHVAC_CALLBACK_MODE(_modeCallback);
+
+    /// The target temperature of the HVAC. By default it's `HAUtils::NumberMax`.
+    HAUtils::Number _targetTemperature;
+
+    /// Callback that will be called when the target temperature is changed via the HA panel.
+    HAHVAC_CALLBACK_TARGET_TEMP(_targetTemperatureCallback);
 };
 
 #endif

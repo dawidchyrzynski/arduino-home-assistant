@@ -7,7 +7,8 @@
     lastPowerCallbackCall.reset(); \
     lastFanModeCallbackCall.reset(); \
     lastSwingModeCallbackCall.reset(); \
-    lastModeCallbackCall.reset();
+    lastModeCallbackCall.reset(); \
+    lastTargetTempCallbackCall.reset();
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
@@ -48,6 +49,15 @@
 
 #define assertModeCallbackNotCalled() \
     assertFalse(lastModeCallbackCall.called);
+
+#define assertTargetTempCallbackCalled(expectedTemperature, expectedPrecision, callerPtr) \
+    assertTrue(lastTargetTempCallbackCall.called); \
+    assertEqual((HAUtils::Number)expectedTemperature, lastTargetTempCallbackCall.temperature); \
+    assertEqual(expectedPrecision, lastTargetTempCallbackCall.precision); \
+    assertEqual(callerPtr, lastTargetTempCallbackCall.caller);
+
+#define assertTargetTempCallbackNotCalled() \
+    assertFalse(lastTargetTempCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -111,6 +121,20 @@ struct ModeCallback {
     }
 };
 
+struct TargetTempCallback {
+    bool called = false;
+    HAUtils::Number temperature = HAUtils::NumberMax;
+    uint8_t precision = 0;
+    HAHVAC* caller = nullptr;
+
+    void reset() {
+        called = false;
+        temperature = HAUtils::NumberMax;
+        precision = 0;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueHVAC";
 static AuxStateCallback lastAuxStateCallbackCall;
@@ -118,6 +142,7 @@ static PowerCallback lastPowerCallbackCall;
 static FanModeCallback lastFanModeCallbackCall;
 static SwingModeCallback lastSwingModeCallbackCall;
 static ModeCallback lastModeCallbackCall;
+static TargetTempCallback lastTargetTempCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
@@ -131,6 +156,8 @@ const char SwingModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/swin
 const char SwingModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/swing_mode_cmd_t"};
 const char ModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/mode_stat_t"};
 const char ModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/mode_cmd_t"};
+const char TemperatureStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/temp_stat_t"};
+const char TemperatureCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/temp_cmd_t"};
 
 void onAuxStateCommandReceived(bool state, HAHVAC* caller)
 {
@@ -165,6 +192,18 @@ void onModeCommandReceived(HAHVAC::Mode mode, HAHVAC* caller)
     lastModeCallbackCall.called = true;
     lastModeCallbackCall.mode = mode;
     lastModeCallbackCall.caller = caller;
+}
+
+void onTargetTemperatureCommandReceived(
+    HAUtils::Number temperature,
+    uint8_t precision,
+    HAHVAC* caller
+)
+{
+    lastTargetTempCallbackCall.called = true;
+    lastTargetTempCallbackCall.temperature = temperature;
+    lastTargetTempCallbackCall.precision = precision;
+    lastTargetTempCallbackCall.caller = caller;
 }
 
 AHA_TEST(HVACTest, invalid_unique_id) {
@@ -313,6 +352,77 @@ AHA_TEST(HVACTest, config_with_modes) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
+AHA_TEST(HVACTest, config_with_target_temperature_p1) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
+            "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
+            "\"temp_cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, config_with_target_temperature_p2) {
+    prepareTest
+
+    HAHVAC hvac(
+        testUniqueId,
+        HAHVAC::TargetTemperatureFeature,
+        HAHVAC::PrecisionP2
+    );
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
+            "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
+            "\"temp_cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, config_with_target_temperature_p3) {
+    prepareTest
+
+    HAHVAC hvac(
+        testUniqueId,
+        HAHVAC::TargetTemperatureFeature,
+        HAHVAC::PrecisionP3
+    );
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
+            "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
+            "\"temp_cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
 AHA_TEST(HVACTest, aux_command_subscription) {
     prepareTest
 
@@ -374,6 +484,19 @@ AHA_TEST(HVACTest, mode_command_subscription) {
     assertEqual(1, mock->getSubscriptionsNb());
     assertEqual(
         AHATOFSTR(ModeCommandTopic),
+        mock->getSubscriptions()[0]->topic
+    );
+}
+
+AHA_TEST(HVACTest, target_temperature_command_subscription) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(TemperatureCommandTopic),
         mock->getSubscriptions()[0]->topic
     );
 }
@@ -989,6 +1112,16 @@ AHA_TEST(HVACTest, publish_current_temperature_p2) {
     assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.50", true) 
 }
 
+AHA_TEST(HVACTest, publish_current_temperature_p3) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP3);
+
+    assertTrue(hvac.setCurrentTemperature(21.555));
+    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.555", true) 
+}
+
 AHA_TEST(HVACTest, publish_current_temperature_debounce) {
     prepareTest
 
@@ -1340,6 +1473,69 @@ AHA_TEST(HVACTest, publish_mode_fan_only) {
     assertSingleMqttMessage(AHATOFSTR(ModeStateTopic), "fan_only", true)
 }
 
+AHA_TEST(HVACTest, publish_target_temperature_on_connect) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.setCurrentTargetTemperature(21.5);
+    mqtt.loop();
+
+    assertMqttMessage(1, AHATOFSTR(TemperatureStateTopic), "21.5", true)
+}
+
+AHA_TEST(HVACTest, publish_target_temperature) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+
+    assertTrue(hvac.setTargetTemperature(21.5));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.5", true) 
+}
+
+AHA_TEST(HVACTest, publish_target_temperature_p2) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature, HAHVAC::PrecisionP2);
+
+    assertTrue(hvac.setTargetTemperature(21.5));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.50", true) 
+}
+
+AHA_TEST(HVACTest, publish_target_temperature_p3) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature, HAHVAC::PrecisionP3);
+
+    assertTrue(hvac.setTargetTemperature(21.555));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.555", true) 
+}
+
+AHA_TEST(HVACTest, publish_target_temperature_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.setCurrentTargetTemperature(21.5);
+
+    // it shouldn't publish data if state doesn't change
+    assertTrue(hvac.setTargetTemperature(21.5));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(HVACTest, publish_target_temperature_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.setCurrentTargetTemperature(21.5);
+
+    assertTrue(hvac.setTargetTemperature(21.5, true));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.5", true)
+}
+
 AHA_TEST(HVACTest, aux_state_command_on) {
     prepareTest
 
@@ -1570,6 +1766,67 @@ AHA_TEST(HVACTest, mode_command_fan_only) {
     mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("fan_only"));
 
     assertModeCallbackCalled(HAHVAC::FanOnlyMode, &hvac)
+}
+
+AHA_TEST(HVACTest, target_temperature_command_p1) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
+    mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
+
+    assertTargetTempCallbackCalled(215, 1, &hvac)
+}
+
+AHA_TEST(HVACTest, target_temperature_command_p2) {
+    prepareTest
+
+    HAHVAC hvac(
+        testUniqueId,
+        HAHVAC::TargetTemperatureFeature,
+        HAHVAC::PrecisionP2
+    );
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
+    mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
+
+    assertTargetTempCallbackCalled(215, 2, &hvac)
+}
+
+AHA_TEST(HVACTest, target_temperature_command_p3) {
+    prepareTest
+
+    HAHVAC hvac(
+        testUniqueId,
+        HAHVAC::TargetTemperatureFeature,
+        HAHVAC::PrecisionP3
+    );
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
+    mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
+
+    assertTargetTempCallbackCalled(215, 3, &hvac)
+}
+
+AHA_TEST(HVACTest, target_temperature_command_invalid) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
+    mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("21.5"));
+
+    assertTargetTempCallbackNotCalled()
+}
+
+AHA_TEST(HVACTest, target_temperature_command_different) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueHVACDifferent/temp_cmd_t"),
+        F("215")
+    );
+
+    assertTargetTempCallbackNotCalled()
 }
 
 void setup()
