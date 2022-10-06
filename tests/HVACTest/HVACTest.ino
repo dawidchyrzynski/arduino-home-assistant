@@ -160,6 +160,32 @@ AHA_TEST(HVACTest, default_params_with_power) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
+AHA_TEST(HVACTest, aux_command_subscription) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(AuxCommandTopic),
+        mock->getSubscriptions()[0]->topic
+    );
+}
+
+AHA_TEST(HVACTest, power_command_subscription) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(PowerCommandTopic),
+        mock->getSubscriptions()[0]->topic
+    );
+}
+
 AHA_TEST(HVACTest, availability) {
     prepareTest
 

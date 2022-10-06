@@ -166,7 +166,13 @@ void HAHVAC::onMqttConnected()
         publishAuxState(_auxState);
     }
 
-    // to do: subscriptions
+    if (_features & AuxHeatingFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAAuxCommandTopic));
+    }
+
+    if (_features & PowerFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAPowerCommandTopic));
+    }
 }
 
 void HAHVAC::onMqttMessage(
