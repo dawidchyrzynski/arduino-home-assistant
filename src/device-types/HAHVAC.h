@@ -95,6 +95,11 @@ public:
     );
 
     /**
+     * Frees memory allocated for the arrays serialization.
+     */
+    ~HAHVAC();
+
+    /**
      * Changes current temperature of the HVAC and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.

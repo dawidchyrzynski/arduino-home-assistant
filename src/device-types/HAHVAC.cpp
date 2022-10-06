@@ -54,6 +54,21 @@ HAHVAC::HAHVAC(
     }
 }
 
+HAHVAC::~HAHVAC()
+{
+    if (_fanModesSerializer) {
+        delete _fanModesSerializer;
+    }
+
+    if (_swingModesSerializer) {
+        delete _swingModesSerializer;
+    }
+
+    if (_modesSerializer) {
+        delete _modesSerializer;
+    }
+}
+
 bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
 {
     const HAUtils::Number realTemperature = HAUtils::processFloatValue(
