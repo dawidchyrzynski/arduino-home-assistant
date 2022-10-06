@@ -7,6 +7,9 @@
 #ifndef EX_ARDUINOHA_HVAC
 
 #define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool, HAHVAC*)
+#define HAHVAC_CALLBACK_FAN_MODE(name) void (*name)(FanMode, HAHVAC*)
+
+class HASerializerArray;
 
 /**
  *
@@ -17,11 +20,14 @@
 class HAHVAC : public HABaseDeviceType
 {
 public:
+    static const uint8_t DefaultFanModes;
+
     enum Features {
         DefaultFeatures = 0,
         ActionFeature = 1,
         AuxHeatingFeature = 2,
-        PowerFeature = 4
+        PowerFeature = 4,
+        FanFeature = 8
     };
 
     enum Action {
@@ -32,6 +38,14 @@ public:
         DryingAction,
         IdleAction,
         FanAction
+    };
+
+    enum FanMode {
+        UnknownFanMode = 0,
+        AutoFanMode = 1,
+        LowFanMode = 2,
+        MediumFanMode = 4,
+        HighFanMode = 8
     };
 
     enum TemperatureUnit {
@@ -92,7 +106,7 @@ public:
 
     /**
      * Sets action of the HVAC without publishing it to Home Assistant.
-     * This method may be useful if you want to the action before connection
+     * This method may be useful if you want to change the action before connection
      * with MQTT broker is acquired.
      *
      * @param action New action.
@@ -134,6 +148,42 @@ public:
      */
     inline bool getAuxState() const
         { return _auxState; }
+
+    /**
+     * Changes mode of the fan of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param mode New fan's mode.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setFanMode(const FanMode mode, const bool force = false);
+
+    /**
+     * Sets fan's mode of the HVAC without publishing it to Home Assistant.
+     * This method may be useful if you want to change the mode before connection
+     * with MQTT broker is acquired.
+     *
+     * @param mode New fan's mode.
+     */
+    inline void setCurrentFanMode(const FanMode mode)
+        { _fanMode = mode; }
+
+    /**
+     * Returns last known fan's mode of the HVAC.
+     * If setFanMode method wasn't called the initial value will be returned.
+     */
+    inline FanMode getFanMode() const
+        { return _fanMode; }
+
+    /**
+     * Sets available fan modes.
+     *
+     * @param modes The modes to set (for example: `HAHVAC::AutoFanMode | HAHVAC::HighFanMode`)
+     */
+    inline void setFanModes(const uint8_t modes)
+        { _fanModes = modes; }
 
     /**
      * Sets icon of the HVAC.
@@ -203,6 +253,15 @@ public:
     inline void onPowerCommand(HAHVAC_CALLBACK_BOOL(callback))
         { _powerCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the fan mode command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same HVAC.
+     *
+     * @param callback
+     */
+    inline void onFanModeCommand(HAHVAC_CALLBACK_FAN_MODE(callback))
+        { _fanModeCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -238,8 +297,16 @@ private:
     bool publishAuxState(const bool state);
 
     /**
+     * Publishes the MQTT message with the given fan mode.
+     *
+     * @param fanMode The state to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishFanMode(const FanMode mode);
+
+    /**
      * Parses the given aux state command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
@@ -247,11 +314,19 @@ private:
 
     /**
      * Parses the given power command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
     void handlePowerCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given fan mode command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleFanModeCommand(const uint8_t* cmd, const uint16_t length); 
 
     /// Features enabled for the HVAC.
     const uint16_t _features;
@@ -291,6 +366,18 @@ private:
 
     /// Callback that will be called when the power command is received from the HA.
     HAHVAC_CALLBACK_BOOL(_powerCallback);
+
+    /// The current mode of the fan. By default it's `HAHVAC::UnknownFanMode`.
+    FanMode _fanMode;
+
+    /// The supported fan modes. By default it's `HAHVAC::DefaultFanModes`.
+    uint8_t _fanModes;
+
+    /// The serializer for the fan modes. It's `nullptr` if the fan feature is disabled.
+    HASerializerArray* _fanModesSerializer;
+
+    /// Callback that will be called when the fan mode command is received from the HA.
+    HAHVAC_CALLBACK_FAN_MODE(_fanModeCallback);
 };
 
 #endif

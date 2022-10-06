@@ -5,6 +5,8 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
+const uint8_t HAHVAC::DefaultFanModes = AutoFanMode | LowFanMode | MediumFanMode | HighFanMode;
+
 HAHVAC::HAHVAC(
     const char* uniqueId,
     const uint16_t features,
@@ -23,9 +25,15 @@ HAHVAC::HAHVAC(
     _tempStep(HAUtils::NumberMax),
     _auxCallback(nullptr),
     _auxState(false),
-    _powerCallback(nullptr)
+    _powerCallback(nullptr),
+    _fanMode(UnknownFanMode),
+    _fanModes(DefaultFanModes),
+    _fanModesSerializer(nullptr),
+    _fanModeCallback(nullptr)
 {
-
+    if (_features & FanFeature) {
+        _fanModesSerializer = new HASerializerArray(4);
+    }
 }
 
 bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
@@ -75,6 +83,20 @@ bool HAHVAC::setAuxState(const bool state, const bool force)
     return false;
 }
 
+bool HAHVAC::setFanMode(const FanMode mode, const bool force)
+{
+    if (!force && mode == _fanMode) {
+        return true;
+    }
+
+    if (publishFanMode(mode)) {
+        _fanMode = mode;
+        return true;
+    }
+
+    return false;
+}
+
 void HAHVAC::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
@@ -84,7 +106,7 @@ void HAHVAC::buildSerializer()
     const HASerializer::PropertyValueType numberProperty =
         HASerializer::precisionToPropertyType(_precision);
 
-    _serializer = new HASerializer(this, 14); // 14 - max properties nb
+    _serializer = new HASerializer(this, 17); // 17 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -108,6 +130,37 @@ void HAHVAC::buildSerializer()
 
     if (_features & PowerFeature) {
         _serializer->topic(AHATOFSTR(HAPowerCommandTopic));
+    }
+
+    if (_features & FanFeature) {
+        _serializer->topic(AHATOFSTR(HAFanModeCommandTopic));
+        _serializer->topic(AHATOFSTR(HAFanModeStateTopic));
+
+        if (_fanModes != DefaultFanModes) {
+            _fanModesSerializer->clear();
+
+            if (_fanModes & AutoFanMode) {
+                _fanModesSerializer->add(HAFanModeAuto);
+            }
+
+            if (_fanModes & LowFanMode) {
+                _fanModesSerializer->add(HAFanModeLow);
+            }
+
+            if (_fanModes & MediumFanMode) {
+                _fanModesSerializer->add(HAFanModeMedium);
+            }
+
+            if (_fanModes & HighFanMode) {
+                _fanModesSerializer->add(HAFanModeHigh);
+            }
+
+            _serializer->set(
+                AHATOFSTR(HAFanModesProperty),
+                _fanModesSerializer,
+                HASerializer::ArrayPropertyType
+            );
+        }
     }
 
     if (_temperatureUnit != DefaultUnit) {
@@ -164,6 +217,7 @@ void HAHVAC::onMqttConnected()
         publishCurrentTemperature(_currentTemperature);
         publishAction(_action);
         publishAuxState(_auxState);
+        publishFanMode(_fanMode);
     }
 
     if (_features & AuxHeatingFeature) {
@@ -172,6 +226,10 @@ void HAHVAC::onMqttConnected()
 
     if (_features & PowerFeature) {
         subscribeTopic(uniqueId(), AHATOFSTR(HAPowerCommandTopic));
+    }
+
+    if (_features & FanFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAFanModeCommandTopic));
     }
 }
 
@@ -193,6 +251,12 @@ void HAHVAC::onMqttMessage(
         AHATOFSTR(HAPowerCommandTopic)
     )) {
         handlePowerCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HAFanModeCommandTopic)
+    )) {
+        handleFanModeCommand(payload, length);
     }
 }
 
@@ -274,6 +338,41 @@ bool HAHVAC::publishAuxState(const bool state)
     );
 }
 
+bool HAHVAC::publishFanMode(const FanMode mode)
+{
+    if (mode == UnknownFanMode || !(_features & FanFeature)) {
+        return false;
+    }
+
+    const __FlashStringHelper *stateStr = nullptr;
+    switch (mode) {
+    case AutoFanMode:
+        stateStr = AHATOFSTR(HAFanModeAuto);
+        break;
+
+    case LowFanMode:
+        stateStr = AHATOFSTR(HAFanModeLow);
+        break;
+
+    case MediumFanMode:
+        stateStr = AHATOFSTR(HAFanModeMedium);
+        break;
+
+    case HighFanMode:
+        stateStr = AHATOFSTR(HAFanModeHigh);
+        break;
+
+    default:
+        return false;
+    }
+
+    return publishOnDataTopic(
+        AHATOFSTR(HAFanModeStateTopic),
+        stateStr,
+        true
+    );
+}
+
 void HAHVAC::handleAuxStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
@@ -296,6 +395,23 @@ void HAHVAC::handlePowerCommand(const uint8_t* cmd, const uint16_t length)
 
     bool state = length == strlen_P(HAStateOn);
     _powerCallback(state, this);
+}
+
+void HAHVAC::handleFanModeCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_fanModeCallback) {
+        return;
+    }
+
+    if (memcmp_P(cmd, HAFanModeAuto, length) == 0) {
+        _fanModeCallback(AutoFanMode, this);
+    } else if (memcmp_P(cmd, HAFanModeLow, length) == 0) {
+        _fanModeCallback(LowFanMode, this);
+    } else if (memcmp_P(cmd, HAFanModeMedium, length) == 0) {
+        _fanModeCallback(MediumFanMode, this);
+    } else if (memcmp_P(cmd, HAFanModeHigh, length) == 0) {
+        _fanModeCallback(HighFanMode, this);
+    }
 }
 
 #endif

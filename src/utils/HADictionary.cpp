@@ -66,6 +66,7 @@ const char HATemperatureUnitProperty[] PROGMEM = {"temp_unit"};
 const char HAMinTempProperty[] PROGMEM = {"min_temp"};
 const char HAMaxTempProperty[] PROGMEM = {"max_temp"};
 const char HATempStepProperty[] PROGMEM = {"temp_step"};
+const char HAFanModesProperty[] PROGMEM = {"fan_modes"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -85,6 +86,8 @@ const char HAActionTopic[] PROGMEM = {"at"};
 const char HAAuxCommandTopic[] PROGMEM = {"act"};
 const char HAAuxStateTopic[] PROGMEM = {"ast"};
 const char HAPowerCommandTopic[] PROGMEM = {"pow_cmd_t"};
+const char HAFanModeCommandTopic[] PROGMEM = {"fan_mode_cmd_t"};
+const char HAFanModeStateTopic[] PROGMEM = {"fan_mode_stat_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};
@@ -150,6 +153,12 @@ const char HAActionCooling[] PROGMEM = {"cooling"};
 const char HAActionDrying[] PROGMEM = {"drying"};
 const char HAActionIdle[] PROGMEM = {"idle"};
 const char HAActionFan[] PROGMEM = {"fan"};
+
+// fan
+const char HAFanModeAuto[] PROGMEM = {"auto"};
+const char HAFanModeLow[] PROGMEM = {"low"};
+const char HAFanModeMedium[] PROGMEM = {"medium"};
+const char HAFanModeHigh[] PROGMEM = {"high"};
 
 // other
 const char HAHexMap[] PROGMEM = {"0123456789abcdef"};

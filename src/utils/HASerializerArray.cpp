@@ -77,3 +77,8 @@ bool HASerializerArray::serialize(char* output) const
     strcat_P(output, HASerializerJsonArraySuffix);
     return true;
 }
+
+void HASerializerArray::clear()
+{
+    _itemsNb = 0;
+}

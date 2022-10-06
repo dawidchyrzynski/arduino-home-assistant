@@ -53,6 +53,11 @@ public:
      */
     bool serialize(char* output) const;
 
+    /**
+     * Clears the array.
+     */
+    void clear();
+
 private:
     /// Specifies whether items are stored in the flash memory.
     const bool _progmemItems;

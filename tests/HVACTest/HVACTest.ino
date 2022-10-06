@@ -4,7 +4,8 @@
 #define prepareTest \
     initMqttTest(testDeviceId) \
     lastAuxStateCallbackCall.reset(); \
-    lastPowerCallbackCall.reset();
+    lastPowerCallbackCall.reset(); \
+    lastFanModeCallbackCall.reset();
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
@@ -21,6 +22,14 @@
 
 #define assertPowerCallbackNotCalled() \
     assertFalse(lastPowerCallbackCall.called);
+
+#define assertFanModeCallbackCalled(expectedMode, callerPtr) \
+    assertTrue(lastFanModeCallbackCall.called); \
+    assertEqual(expectedMode, lastFanModeCallbackCall.mode); \
+    assertEqual(callerPtr, lastFanModeCallbackCall.caller);
+
+#define assertFanModeCallbackNotCalled() \
+    assertFalse(lastFanModeCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -48,10 +57,23 @@ struct PowerCallback {
     }
 };
 
+struct FanModeCallback {
+    bool called = false;
+    HAHVAC::FanMode mode = HAHVAC::UnknownFanMode;
+    HAHVAC* caller = nullptr;
+
+    void reset() {
+        called = false;
+        mode = HAHVAC::UnknownFanMode;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueHVAC";
 static AuxStateCallback lastAuxStateCallbackCall;
 static PowerCallback lastPowerCallbackCall;
+static FanModeCallback lastFanModeCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
 const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
@@ -59,6 +81,8 @@ const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/at"};
 const char AuxStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ast"};
 const char AuxCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/act"};
 const char PowerCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/pow_cmd_t"};
+const char FanModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mode_stat_t"};
+const char FanModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mode_cmd_t"};
 
 void onAuxStateCommandReceived(bool state, HAHVAC* caller)
 {
@@ -72,6 +96,13 @@ void onPowerCommandReceived(bool state, HAHVAC* caller)
     lastPowerCallbackCall.called = true;
     lastPowerCallbackCall.state = state;
     lastPowerCallbackCall.caller = caller;
+}
+
+void onFanModeCommandReceived(HAHVAC::FanMode mode, HAHVAC* caller)
+{
+    lastFanModeCallbackCall.called = true;
+    lastFanModeCallbackCall.mode = mode;
+    lastFanModeCallbackCall.caller = caller;
 }
 
 AHA_TEST(HVACTest, invalid_unique_id) {
@@ -102,7 +133,7 @@ AHA_TEST(HVACTest, default_params) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
-AHA_TEST(HVACTest, default_params_with_action) {
+AHA_TEST(HVACTest, config_with_action) {
     prepareTest
 
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
@@ -121,7 +152,7 @@ AHA_TEST(HVACTest, default_params_with_action) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
-AHA_TEST(HVACTest, default_params_with_aux) {
+AHA_TEST(HVACTest, config_with_aux) {
     prepareTest
 
     HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
@@ -141,7 +172,7 @@ AHA_TEST(HVACTest, default_params_with_aux) {
     assertEqual(2, mock->getFlushedMessagesNb()); // config + aux state
 }
 
-AHA_TEST(HVACTest, default_params_with_power) {
+AHA_TEST(HVACTest, config_with_power) {
     prepareTest
 
     HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
@@ -152,6 +183,26 @@ AHA_TEST(HVACTest, default_params_with_power) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"pow_cmd_t\":\"testData/testDevice/uniqueHVAC/pow_cmd_t\","
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, config_with_fan) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -186,6 +237,19 @@ AHA_TEST(HVACTest, power_command_subscription) {
     );
 }
 
+AHA_TEST(HVACTest, fan_mode_command_subscription) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    mqtt.loop();
+
+    assertEqual(1, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(FanModeCommandTopic),
+        mock->getSubscriptions()[0]->topic
+    );
+}
+
 AHA_TEST(HVACTest, availability) {
     prepareTest
 
@@ -193,7 +257,7 @@ AHA_TEST(HVACTest, availability) {
     hvac.setAvailability(true);
     mqtt.loop();
 
-    // availability is published after config in HAFan
+    // availability is published after config in HAHVAC
     assertMqttMessage(
         1,
         F("testData/testDevice/uniqueHVAC/avty_t"),
@@ -422,10 +486,131 @@ AHA_TEST(HVACTest, temp_step_setter_p2) {
     )
 }
 
+AHA_TEST(HVACTest, fan_modes_setter_auto_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setFanModes(HAHVAC::AutoFanMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
+            "\"fan_modes\":[\"auto\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, fan_modes_setter_low_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setFanModes(HAHVAC::LowFanMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
+            "\"fan_modes\":[\"low\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, fan_modes_setter_medium_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setFanModes(HAHVAC::MediumFanMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
+            "\"fan_modes\":[\"medium\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, fan_modes_setter_high_only) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setFanModes(HAHVAC::HighFanMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
+            "\"fan_modes\":[\"high\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, fan_modes_setter_mixed) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setFanModes(HAHVAC::AutoFanMode | HAHVAC::MediumFanMode | HAHVAC::HighFanMode);
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
+            "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
+            "\"fan_modes\":[\"auto\",\"medium\",\"high\"],"
+            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
 AHA_TEST(HVACTest, publish_nothing_if_retained) {
     prepareTest
 
-    HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature | HAHVAC::AuxHeatingFeature);
+    HAHVAC hvac(
+        testUniqueId,
+        HAHVAC::ActionFeature |
+            HAHVAC::AuxHeatingFeature |
+            HAHVAC::PowerFeature |
+            HAHVAC::FanFeature
+    );
     hvac.setRetain(true);
     hvac.setCurrentTemperature(21.5);
     hvac.setCurrentAction(HAHVAC::CoolingAction);
@@ -621,6 +806,78 @@ AHA_TEST(HVACTest, publish_aux_state_debounce_skip) {
     assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "OFF", true) 
 }
 
+AHA_TEST(HVACTest, publish_fan_mode_on_connect) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setCurrentFanMode(HAHVAC::HighFanMode);
+    mqtt.loop();
+
+    assertMqttMessage(1, AHATOFSTR(FanModeStateTopic), "high", true)
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_auto) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+
+    assertTrue(hvac.setFanMode(HAHVAC::AutoFanMode));
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "auto", true) 
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_low) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+
+    assertTrue(hvac.setFanMode(HAHVAC::LowFanMode));
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "low", true) 
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_medium) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+
+    assertTrue(hvac.setFanMode(HAHVAC::MediumFanMode));
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "medium", true) 
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_high) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+
+    assertTrue(hvac.setFanMode(HAHVAC::HighFanMode));
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true) 
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setCurrentFanMode(HAHVAC::HighFanMode);
+        
+    assertTrue(hvac.setFanMode(HAHVAC::HighFanMode));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(HVACTest, publish_fan_mode_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.setCurrentFanMode(HAHVAC::HighFanMode);
+
+    assertTrue(hvac.setFanMode(HAHVAC::HighFanMode, true));
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true) 
+}
+
 AHA_TEST(HVACTest, aux_state_command_on) {
     prepareTest
 
@@ -685,6 +942,69 @@ AHA_TEST(HVACTest, power_command_different) {
     );
 
     assertPowerCallbackNotCalled()
+}
+
+AHA_TEST(HVACTest, fan_mode_command_auto) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("auto"));
+
+    assertFanModeCallbackCalled(HAHVAC::AutoFanMode, &hvac)
+}
+
+AHA_TEST(HVACTest, fan_mode_command_low) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("low"));
+
+    assertFanModeCallbackCalled(HAHVAC::LowFanMode, &hvac)
+}
+
+AHA_TEST(HVACTest, fan_mode_command_medium) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("medium"));
+
+    assertFanModeCallbackCalled(HAHVAC::MediumFanMode, &hvac)
+}
+
+AHA_TEST(HVACTest, fan_mode_command_high) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("high"));
+
+    assertFanModeCallbackCalled(HAHVAC::HighFanMode, &hvac)
+}
+
+AHA_TEST(HVACTest, fan_mode_command_invalid) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("INVALID"));
+
+    assertFanModeCallbackNotCalled()
+}
+
+AHA_TEST(HVACTest, fan_mode_command_different) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(onFanModeCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueHVACDifferent/fan_mode_cmd_t"),
+        F("auto")
+    );
+
+    assertFanModeCallbackNotCalled()
 }
 
 void setup()
