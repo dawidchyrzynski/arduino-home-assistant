@@ -97,6 +97,8 @@ extern const char HAModeCommandTopic[];
 extern const char HAModeStateTopic[];
 extern const char HATemperatureCommandTopic[];
 extern const char HATemperatureStateTopic[];
+extern const char HARGBCommandTopic[];
+extern const char HARGBStateTopic[];
 
 // misc
 extern const char HAOnline[];

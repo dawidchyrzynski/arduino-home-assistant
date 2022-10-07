@@ -13,7 +13,7 @@ HAMqtt mqtt(client, device);
 // HALight::ColorTemperatureFeature enables support for setting color temperature of the light.
 // Both features are optional and you can remove them if they're not needed.
 // "prettyLight" is unique ID of the light. You should define your own ID.
-HALight light("prettyLight", HALight::BrightnessFeature | HALight::ColorTemperatureFeature);
+HALight light("prettyLight", HALight::BrightnessFeature | HALight::ColorTemperatureFeature | HALight::RGBFeature);
 
 void onStateCommand(bool state, HALight* sender) {
     Serial.print("State: ");
@@ -34,6 +34,17 @@ void onColorTemperatureCommand(uint16_t temperature, HALight* sender) {
     Serial.println(temperature);
 
     sender->setColorTemperature(temperature); // report color temperature back to the Home Assistant
+}
+
+void onRGBColorCommand(HALight::RGBColor color, HALight* sender) {
+    Serial.print("Red: ");
+    Serial.println(color.red);
+    Serial.print("Green: ");
+    Serial.println(color.green);
+    Serial.print("Blue: ");
+    Serial.println(color.blue);
+
+    sender->setRGBColor(color); // report color back to the Home Assistant
 }
 
 void setup() {
@@ -67,6 +78,7 @@ void setup() {
     light.onStateCommand(onStateCommand);
     light.onBrightnessCommand(onBrightnessCommand); // optional
     light.onColorTemperatureCommand(onColorTemperatureCommand); // optional
+    light.onRGBColorCommand(onRGBColorCommand); // optional
 
     mqtt.begin(BROKER_ADDR);
 }

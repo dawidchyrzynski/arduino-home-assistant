@@ -9,11 +9,12 @@
 #define HALIGHT_STATE_CALLBACK(name) void (*name)(bool state, HALight* sender)
 #define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
 #define HALIGHT_COLOR_TEMP_CALLBACK(name) void (*name)(uint16_t temperature, HALight* sender)
+#define HALIGHT_RGB_COLOR_CALLBACK(name) void (*name)(HALight::RGBColor color, HALight* sender)
 
 /**
  * HALight allows adding a controllable light in the Home Assistant panel.
- * The library supports only the state, brightness and color temperature.
- * If you want more features please open a new GitHub issue.
+ * The library supports only the state, brightness, color temperature and RGB color.
+ * If you need more features please open a new GitHub issue.
  *
  * @note
  * You can find more information about this entity in the Home Assistant documentation:
@@ -25,11 +26,47 @@ public:
     static const uint8_t DefaultBrightnessScale;
     static const uint16_t DefaultMinMireds;
     static const uint16_t DefaultMaxMireds;
+    static const uint8_t RGBStringMaxLength;
 
     enum Features {
         DefaultFeatures = 0,
         BrightnessFeature = 1,
-        ColorTemperatureFeature = 2
+        ColorTemperatureFeature = 2,
+        RGBFeature = 4
+    };
+
+    struct RGBColor {
+        uint8_t red;
+        uint8_t green;
+        uint8_t blue;
+        bool isSet;
+
+        RGBColor() :
+            red(0), green(0), blue(0), isSet(false) { }
+
+        RGBColor(const RGBColor& a) :
+            red(a.red), green(a.green), blue(a.blue), isSet(a.isSet) { }
+
+        RGBColor(uint8_t r, uint8_t g, uint8_t b) :
+            red(r), green(g), blue(b), isSet(true) { }
+
+        bool operator== (const RGBColor& a) const {
+            return (
+                red == a.red &&
+                green == a.green &&
+                blue == a.blue
+            );
+        }
+
+        bool operator!= (const RGBColor& a) const {
+            return (
+                red != a.red ||
+                green != a.green ||
+                blue != a.blue
+            );
+        }
+
+        void fromBuffer(const uint8_t* data, const uint16_t length);
     };
 
     /**
@@ -72,6 +109,17 @@ public:
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setColorTemperature(const uint16_t temperature, const bool force = false);
+
+    /**
+     * Changes the RGB color of the light and publishes MQTT message.
+     * Please note that if a new color is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param color The new RGB color of the light.
+     * @param force Forces to update the value without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setRGBColor(const RGBColor& color, const bool force = false);
 
     /**
      * Alias for `setState(true)`.
@@ -135,6 +183,23 @@ public:
      */
     inline uint16_t getCurrentColorTemperature() const
         { return _currentColorTemperature; }
+
+    /**
+     * Sets the current RGB color of the light without pushing the value to Home Assistant.
+     * This method may be useful if you want to change the color before the connection
+     * with the MQTT broker is acquired.
+     *
+     * @param color The new RGB color.
+     */
+    inline void setCurrentRGBColor(const RGBColor& color)
+        { _currentRGBColor = color; }
+
+    /**
+     * Returns the last known RGB color of the light.
+     * By default the RGB color is set to `0,0,0`.
+     */
+    inline const RGBColor& getCurrentRGBColor() const
+        { return _currentRGBColor; }
 
     /**
      * Sets icon of the light.
@@ -218,6 +283,15 @@ public:
     inline void onColorTemperatureCommand(HALIGHT_COLOR_TEMP_CALLBACK(callback))
         { _colorTemperatureCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the RGB color command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same light.
+     *
+     * @param callback
+     */
+    inline void onRGBColorCommand(HALIGHT_RGB_COLOR_CALLBACK(callback))
+        { _rgbColorCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -253,6 +327,14 @@ private:
     bool publishColorTemperature(const uint16_t temperature);
 
     /**
+     * Publishes the MQTT message with the given RGB color.
+     *
+     * @param color The color to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishRGBColor(const RGBColor& color);
+
+    /**
      * Parses the given state command and executes the callback with proper value.
      *
      * @param cmd The data of the command.
@@ -275,6 +357,14 @@ private:
      * @param length Length of the command.
      */
     void handleColorTemperatureCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given RGB color command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleRGBCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the light.
     const uint8_t _features;
@@ -306,6 +396,9 @@ private:
     /// The current color temperature (mireds). Bu default it's `0`.
     uint16_t _currentColorTemperature;
 
+    /// The current RBB color. By default it's `0,0,0`.
+    RGBColor _currentRGBColor;
+
     /// The callback that will be called when the state command is received from the HA.
     HALIGHT_STATE_CALLBACK(_stateCallback);
 
@@ -314,6 +407,9 @@ private:
 
     /// The callback that will be called when the color temperature command is received from the HA.
     HALIGHT_COLOR_TEMP_CALLBACK(_colorTemperatureCallback);
+
+    /// The callback that will be called when the RGB command is received from the HA.
+    HALIGHT_RGB_COLOR_CALLBACK(_rgbColorCallback);
 };
 
 #endif

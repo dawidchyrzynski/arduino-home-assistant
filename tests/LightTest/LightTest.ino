@@ -5,7 +5,8 @@
     initMqttTest(testDeviceId) \
     lastStateCallbackCall.reset(); \
     lastBrightnessCallbackCall.reset(); \
-    lastColorTempCallbackCall.reset();
+    lastColorTempCallbackCall.reset(); \
+    lastRGBColorCallbackCall.reset();
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
@@ -30,6 +31,15 @@
 
 #define assertColorTempCallbackNotCalled() \
     assertFalse(lastColorTempCallbackCall.called);
+
+#define assertRGBColorCallbackCalled(expectedColor, callerPtr) \
+    assertTrue(lastRGBColorCallbackCall.called); \
+    assertTrue(expectedColor == lastRGBColorCallbackCall.color); \
+    assertTrue(lastRGBColorCallbackCall.color.isSet); \
+    assertEqual(callerPtr, lastRGBColorCallbackCall.caller);
+
+#define assertRGBColorCallbackNotCalled() \
+    assertFalse(lastRGBColorCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -69,11 +79,24 @@ struct ColorTemperatureCallback {
     }
 };
 
+struct RGBCommandCallback {
+    bool called = false;
+    HALight::RGBColor color = HALight::RGBColor();
+    HALight* caller = nullptr;
+
+    void reset() {
+        called = false;
+        color = HALight::RGBColor();
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueLight";
 static StateCallback lastStateCallbackCall;
 static BrightnessCallback lastBrightnessCallbackCall;
 static ColorTemperatureCallback lastColorTempCallbackCall;
+static RGBCommandCallback lastRGBColorCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/light/testDevice/uniqueLight/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/stat_t"};
@@ -82,6 +105,8 @@ const char ColorTemperatureStateTopic[] PROGMEM = {"testData/testDevice/uniqueLi
 const char StateCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/cmd_t"};
 const char BrightnessCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/bri_cmd_t"};
 const char ColorTemperatureCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/clr_temp_cmd_t"};
+const char RGBCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/rgb_cmd_t"};
+const char RGBStateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/rgb_stat_t"};
 
 void onStateCommandReceived(bool state, HALight* caller)
 {
@@ -102,6 +127,13 @@ void onColorTemperatureCommandReceived(uint16_t temperature, HALight* caller)
     lastColorTempCallbackCall.called = true;
     lastColorTempCallbackCall.temperature = temperature;
     lastColorTempCallbackCall.caller = caller;
+}
+
+void onRGBColorCommand(HALight::RGBColor color, HALight* caller)
+{
+    lastRGBColorCallbackCall.called = true;
+    lastRGBColorCallbackCall.color = color;
+    lastRGBColorCallbackCall.caller = caller;
 }
 
 AHA_TEST(LightTest, invalid_unique_id) {
@@ -166,6 +198,27 @@ AHA_TEST(LightTest, default_params_with_color_temp) {
             "\"uniq_id\":\"uniqueLight\","
             "\"clr_temp_stat_t\":\"testData/testDevice/uniqueLight/clr_temp_stat_t\","
             "\"clr_temp_cmd_t\":\"testData/testDevice/uniqueLight/clr_temp_cmd_t\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
+AHA_TEST(LightTest, default_params_with_rgb) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLight\","
+            "\"rgb_cmd_t\":\"testData/testDevice/uniqueLight/rgb_cmd_t\","
+            "\"rgb_stat_t\":\"testData/testDevice/uniqueLight/rgb_stat_t\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
             "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
@@ -240,6 +293,19 @@ AHA_TEST(LightTest, color_temperature_command_subscription) {
     );
 }
 
+AHA_TEST(LightTest, rgb_command_subscription) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    mqtt.loop();
+
+    assertEqual(2, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(RGBCommandTopic),
+        mock->getSubscriptions()[1]->topic
+    );
+}
+
 AHA_TEST(LightTest, availability) {
     prepareTest
 
@@ -287,6 +353,17 @@ AHA_TEST(LightTest, publish_last_known_color_temperature) {
 
     assertEqual(3, mock->getFlushedMessagesNb());
     assertMqttMessage(2, AHATOFSTR(ColorTemperatureStateTopic), "200", true)
+}
+
+AHA_TEST(LightTest, publish_last_known_rgb_color) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.setCurrentRGBColor(HALight::RGBColor(255,123,15));
+    mqtt.loop();
+
+    assertEqual(3, mock->getFlushedMessagesNb());
+    assertMqttMessage(2, AHATOFSTR(RGBStateTopic), "255,123,15", true)
 }
 
 AHA_TEST(LightTest, publish_nothing_if_retained) {
@@ -504,6 +581,16 @@ AHA_TEST(LightTest, current_color_temperature_setter) {
     assertEqual((uint16_t)50, light.getCurrentColorTemperature());
 }
 
+AHA_TEST(LightTest, current_rgb_color_setter) {
+    prepareTest
+
+    HALight light(testUniqueId);
+    light.setCurrentRGBColor(HALight::RGBColor(255,123,111));
+
+    assertEqual(0, mock->getFlushedMessagesNb());
+    assertTrue(HALight::RGBColor(255,123,111) == light.getCurrentRGBColor());
+}
+
 AHA_TEST(LightTest, publish_state) {
     prepareTest
 
@@ -621,6 +708,39 @@ AHA_TEST(LightTest, publish_color_temperature_debounce_skip) {
 
     assertTrue(light.setColorTemperature(200, true));
     assertSingleMqttMessage(AHATOFSTR(ColorTemperatureStateTopic), "200", true) 
+}
+
+AHA_TEST(LightTest, publish_rgb_color) {
+    prepareTest
+
+    mock->connectDummy();
+    HALight light(testUniqueId, HALight::RGBFeature);
+
+    assertTrue(light.setRGBColor(HALight::RGBColor(255,123,111)));
+    assertSingleMqttMessage(AHATOFSTR(RGBStateTopic), "255,123,111", true) 
+}
+
+AHA_TEST(LightTest, publish_rgb_color_debounce) {
+    prepareTest
+
+    mock->connectDummy();
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.setCurrentRGBColor(HALight::RGBColor(255,123,111));
+
+    // it shouldn't publish data if value doesn't change
+    assertTrue(light.setRGBColor(HALight::RGBColor(255,123,111)));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(LightTest, publish_rgb_color_debounce_skip) {
+    prepareTest
+
+    mock->connectDummy();
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.setCurrentRGBColor(HALight::RGBColor(255,123,111));
+
+    assertTrue(light.setRGBColor(HALight::RGBColor(255,123,111), true));
+    assertSingleMqttMessage(AHATOFSTR(RGBStateTopic), "255,123,111", true)
 }
 
 AHA_TEST(LightTest, state_command_on) {
@@ -783,6 +903,119 @@ AHA_TEST(LightTest, color_temperature_command_different_light) {
     );
 
     assertColorTempCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_min_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("0,0,0"));
+
+    assertRGBColorCallbackCalled(HALight::RGBColor(0,0,0), &light)
+}
+
+AHA_TEST(LightTest, rgb_color_small_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("1,2,3"));
+
+    assertRGBColorCallbackCalled(HALight::RGBColor(1,2,3), &light)
+}
+
+AHA_TEST(LightTest, rgb_color_max_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("255,255,255"));
+
+    assertRGBColorCallbackCalled(HALight::RGBColor(255,255,255), &light)
+}
+
+AHA_TEST(LightTest, rgb_color_mix_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("255,12,1"));
+
+    assertRGBColorCallbackCalled(HALight::RGBColor(255,12,1), &light)
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_1_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("255,12"));
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_2_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F(",,"));
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_3_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), "");
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_4_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("255,,"));
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_5_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("thisIsNotTheColor"));
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_invalid_6_command) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("256,123,2"));
+
+    assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, rgb_color_command_different_light) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(onRGBColorCommand);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueLightDifferent/rgb_cmd_t"),
+        F("255,12,1")
+    );
+
+    assertRGBColorCallbackNotCalled()
 }
 
 void setup()
