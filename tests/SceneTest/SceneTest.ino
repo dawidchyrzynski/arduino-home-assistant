@@ -151,7 +151,7 @@ AHA_TEST(SceneTest, command_callback) {
     prepareTest
 
     HAScene scene(testUniqueId);
-    scene.onActivate(onCommandReceived);
+    scene.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
     assertActivateCallbackCalled(&scene)
@@ -170,7 +170,7 @@ AHA_TEST(SceneTest, different_scene_command) {
     prepareTest
 
     HAScene scene(testUniqueId);
-    scene.onActivate(onCommandReceived);
+    scene.onCommand(onCommandReceived);
     mock->fakeMessage(
         F("testData/testDevice/uniqueSceneDifferent/cmd_t"),
         AHATOFSTR(CommandMessage)

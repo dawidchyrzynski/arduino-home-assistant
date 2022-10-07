@@ -46,7 +46,7 @@ public:
      *
      * @param callback
      */
-    inline void onActivate(HASCENE_CALLBACK(callback))
+    inline void onCommand(HASCENE_CALLBACK(callback))
         { _commandCallback = callback; }
 
 protected:
