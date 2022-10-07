@@ -16,7 +16,7 @@ Features
 * Auto reconnect with MQTT broker
 * Reporting availability (online/offline states) of a device
 * Doxygen documentation
-* Covered by unit tests (~100% coverage)
+* Covered by unit tests (AUnit + EpoxyDuino + AUniter)
 
 .. toctree::
    :caption: Docs

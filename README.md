@@ -14,7 +14,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 * Auto reconnect with MQTT broker
 * Reporting availability (online/offline states) of a device
 * Doxygen documentation for all classes
-* Covered by unit tests (~100% coverage)
+* Covered by unit tests (AUnit + EpoxyDuino + AUniter)
 
 ## Supported HA types
 
@@ -71,11 +71,3 @@ Here is the list of devices on which the library was tested:
 
 Please note that it's not the complete list of supported devices.
 You may try to use the library on any device that uses Arduino core.
-
-# License
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0 as published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/gpl.html
