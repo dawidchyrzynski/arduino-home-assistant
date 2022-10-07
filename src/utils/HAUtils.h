@@ -11,6 +11,7 @@ class HAUtils
 public:
     typedef int64_t Number;
     static const Number NumberMax;
+    static const float FloatMax;
     static const uint8_t NumberMaxDigitsNb;
 
     /**

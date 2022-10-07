@@ -33,7 +33,7 @@
 #define assertStrToNumber(expected, str) \
     assertEqual( \
         (HAUtils::Number)expected, \
-        HAUtils::strToNumber(reinterpret_cast<const uint8_t*>(str), strlen(str)) \
+        HAUtils::strToNumber(reinterpret_cast<const uint8_t*>(str), str ? strlen(str) : 0) \
     );
 
 using aunit::TestRunner;
@@ -591,6 +591,26 @@ AHA_TEST(UtilsTest, str_to_number_invalid_2) {
 
 AHA_TEST(UtilsTest, str_to_number_invalid_3) {
     assertStrToNumber(HAUtils::NumberMax, "15.334");
+}
+
+AHA_TEST(UtilsTest, number_to_float_1) {
+    assertNear(HAUtils::getFloatValue(500, 0), 500.0, 0.01);
+}
+
+AHA_TEST(UtilsTest, number_to_float_2) {
+    assertNear(HAUtils::getFloatValue(500, 1), 50.0, 0.01);
+}
+
+AHA_TEST(UtilsTest, number_to_float_3) {
+    assertNear(HAUtils::getFloatValue(500, 2), 5.0, 0.01);
+}
+
+AHA_TEST(UtilsTest, number_to_float_4) {
+    assertNear(HAUtils::getFloatValue(500, 3), 0.5, 0.01);
+}
+
+AHA_TEST(UtilsTest, number_to_float_5) {
+    assertNear(HAUtils::getFloatValue(-265544, 3), -265.544, 0.0001);
 }
 
 void setup()

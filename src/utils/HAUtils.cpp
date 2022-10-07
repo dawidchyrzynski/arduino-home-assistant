@@ -7,6 +7,7 @@
 #include "HADictionary.h"
 
 const HAUtils::Number HAUtils::NumberMax = INT64_MAX;
+const float HAUtils::FloatMax = 3.4028235E+38;
 const uint8_t HAUtils::NumberMaxDigitsNb = 19;
 
 bool HAUtils::endsWith(const char* str, const char* suffix)
@@ -93,7 +94,11 @@ HAUtils::Number HAUtils::processFloatValue(float value, const uint8_t precision)
 
 float HAUtils::getFloatValue(Number value, const uint8_t precision)
 {
-    return (float)value / (float)getPrecisionBase(precision);
+    if (value == NumberMax) {
+        return FloatMax;
+    }
+
+    return value / (float)getPrecisionBase(precision);
 }
 
 uint8_t HAUtils::calculateNumberSize(Number value, const uint8_t precision)
