@@ -113,6 +113,72 @@ public:
     bool setCurrentTemperature(const float temperature, const bool force = false);
 
     /**
+     * Changes action of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param action New action.
+     * @param force Forces to update the action without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setAction(const Action action, const bool force = false);
+
+    /**
+     * Changes state of the aux heating and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param state The new state.
+     * @param force Forces to update the state without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setAuxState(const bool state, const bool force = false);
+
+    /**
+     * Changes mode of the fan of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param mode New fan's mode.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setFanMode(const FanMode mode, const bool force = false);
+
+    /**
+     * Changes swing mode of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param mode New swing mode.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setSwingMode(const SwingMode mode, const bool force = false);
+
+    /**
+     * Changes mode of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param mode New HVAC's mode.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setMode(const Mode mode, const bool force = false);
+
+    /**
+     * Changes target temperature of the HVAC and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param temperature Target temperature to set.
+     * @param force Forces to update the mode without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setTargetTemperature(const float temperature, const bool force = false);
+
+    /**
      * Sets current temperature of the HVAC without publishing it to Home Assistant.
      * This method may be useful if you want to change temperature before connection
      * with MQTT broker is acquired.
@@ -130,17 +196,6 @@ public:
         { return HAUtils::getFloatValue(_currentTemperature, _precision); }
 
     /**
-     * Changes action of the HVAC and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param action New action.
-     * @param force Forces to update the action without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setAction(const Action action, const bool force = false);
-
-    /**
      * Sets action of the HVAC without publishing it to Home Assistant.
      * This method may be useful if you want to change the action before connection
      * with MQTT broker is acquired.
@@ -154,19 +209,8 @@ public:
      * Returns last known action of the HVAC.
      * If setAction method wasn't called the initial value will be returned.
      */
-    inline Action getAction() const
+    inline Action getCurrentAction() const
         { return _action; }
-
-    /**
-     * Changes state of the aux heating and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param state The new state.
-     * @param force Forces to update the state without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setAuxState(const bool state, const bool force = false);
 
     /**
      * Sets aux heating state without publishing it to Home Assistant.
@@ -182,19 +226,8 @@ public:
      * Returns last known state of the aux heating.
      * If setAuxState method wasn't called the initial value will be returned.
      */
-    inline bool getAuxState() const
+    inline bool getCurrentAuxState() const
         { return _auxState; }
-
-    /**
-     * Changes mode of the fan of the HVAC and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param mode New fan's mode.
-     * @param force Forces to update the mode without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setFanMode(const FanMode mode, const bool force = false);
 
     /**
      * Sets fan's mode of the HVAC without publishing it to Home Assistant.
@@ -210,7 +243,7 @@ public:
      * Returns last known fan's mode of the HVAC.
      * If setFanMode method wasn't called the initial value will be returned.
      */
-    inline FanMode getFanMode() const
+    inline FanMode getCurrentFanMode() const
         { return _fanMode; }
 
     /**
@@ -220,17 +253,6 @@ public:
      */
     inline void setFanModes(const uint8_t modes)
         { _fanModes = modes; }
-
-    /**
-     * Changes swing mode of the HVAC and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param mode New swing mode.
-     * @param force Forces to update the mode without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setSwingMode(const SwingMode mode, const bool force = false);
 
     /**
      * Sets swing mode of the HVAC without publishing it to Home Assistant.
@@ -246,7 +268,7 @@ public:
      * Returns last known swing mode of the HVAC.
      * If setSwingMode method wasn't called the initial value will be returned.
      */
-    inline SwingMode getSwingMode() const
+    inline SwingMode getCurrentSwingMode() const
         { return _swingMode; }
 
     /**
@@ -256,17 +278,6 @@ public:
      */
     inline void setSwingModes(const uint8_t modes)
         { _swingModes = modes; }
-
-    /**
-     * Changes mode of the HVAC and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param mode New HVAC's mode.
-     * @param force Forces to update the mode without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setMode(const Mode mode, const bool force = false);
 
     /**
      * Sets mode of the HVAC without publishing it to Home Assistant.
@@ -282,7 +293,7 @@ public:
      * Returns last known mode of the HVAC.
      * If setMode method wasn't called the initial value will be returned.
      */
-    inline Mode getMode() const
+    inline Mode getCurrentMode() const
         { return _mode; }
 
     /**
@@ -292,17 +303,6 @@ public:
      */
     inline void setModes(const uint8_t modes)
         { _modes = modes; }
-
-    /**
-     * Changes target temperature of the HVAC and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
-     *
-     * @param temperature Target temperature to set.
-     * @param force Forces to update the mode without comparing it to a previous known value.
-     * @returns Returns `true` if MQTT message has been published successfully.
-     */
-    bool setTargetTemperature(const float temperature, const bool force = false);
 
     /**
      * Sets target temperature of the HVAC without publishing it to Home Assistant.
@@ -318,7 +318,7 @@ public:
      * Returns last known target temperature of the HVAC.
      * If setTargetTemperature method wasn't called the initial value will be returned.
      */
-    inline float getTargetTemperature() const
+    inline float getCurrentTargetTemperature() const
         { return HAUtils::getFloatValue(_targetTemperature, _precision); }
 
     /**

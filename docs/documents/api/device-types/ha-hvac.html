@@ -408,23 +408,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC28setCurrentCurrentTemperatureEKf">
-<span id="_CPPv3N6HAHVAC28setCurrentCurrentTemperatureEKf"></span><span id="_CPPv2N6HAHVAC28setCurrentCurrentTemperatureEKf"></span><span id="HAHVAC::setCurrentCurrentTemperature__floatC"></span><span class="target" id="class_h_a_h_v_a_c_1abbf2bc515814503c63540330178933c9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentCurrentTemperature</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">temperature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC28setCurrentCurrentTemperatureEKf" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets current temperature of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change temperature before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>temperature</strong> – New current temperature. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC21getCurrentTemperatureEv">
-<span id="_CPPv3NK6HAHVAC21getCurrentTemperatureEv"></span><span id="_CPPv2NK6HAHVAC21getCurrentTemperatureEv"></span><span id="HAHVAC::getCurrentTemperatureC"></span><span class="target" id="class_h_a_h_v_a_c_1adab6b006a401c478442149080975257f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentTemperature</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC21getCurrentTemperatureEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known current temperature of the HVAC. If setCurrentTemperature method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC9setActionEK6ActionKb">
 <span id="_CPPv3N6HAHVAC9setActionEK6ActionKb"></span><span id="_CPPv2N6HAHVAC9setActionEK6ActionKb"></span><span id="HAHVAC::setAction__ActionC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1af6b64fced7a1dee67ab9aa10bb36898e"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">action</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC9setActionEK6ActionKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes action of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -439,23 +422,6 @@
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16setCurrentActionEK6Action">
-<span id="_CPPv3N6HAHVAC16setCurrentActionEK6Action"></span><span id="_CPPv2N6HAHVAC16setCurrentActionEK6Action"></span><span id="HAHVAC::setCurrentAction__ActionC"></span><span class="target" id="class_h_a_h_v_a_c_1ab156e2dddf94b4421fec4a1eeec1d05f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">action</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC16setCurrentActionEK6Action" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets action of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the action before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>action</strong> – New action. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC9getActionEv">
-<span id="_CPPv3NK6HAHVAC9getActionEv"></span><span id="_CPPv2NK6HAHVAC9getActionEv"></span><span id="HAHVAC::getActionC"></span><span class="target" id="class_h_a_h_v_a_c_1ab3854a356b0626980c327d5be811450c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC9getActionEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known action of the HVAC. If setAction method wasn’t called the initial value will be returned. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -476,23 +442,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC18setCurrentAuxStateEKb">
-<span id="_CPPv3N6HAHVAC18setCurrentAuxStateEKb"></span><span id="_CPPv2N6HAHVAC18setCurrentAuxStateEKb"></span><span id="HAHVAC::setCurrentAuxState__bC"></span><span class="target" id="class_h_a_h_v_a_c_1afb2feea52fa7819fb3f29885b1fc84c0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentAuxState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC18setCurrentAuxStateEKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets aux heating state without publishing it to Home Assistant. This method may be useful if you want to change the state before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>state</strong> – The new state. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC11getAuxStateEv">
-<span id="_CPPv3NK6HAHVAC11getAuxStateEv"></span><span id="_CPPv2NK6HAHVAC11getAuxStateEv"></span><span id="HAHVAC::getAuxStateC"></span><span class="target" id="class_h_a_h_v_a_c_1a093cc9383f275d4846cc01d030664d76"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getAuxState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC11getAuxStateEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known state of the aux heating. If setAuxState method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC10setFanModeEK7FanModeKb">
 <span id="_CPPv3N6HAHVAC10setFanModeEK7FanModeKb"></span><span id="_CPPv2N6HAHVAC10setFanModeEK7FanModeKb"></span><span id="HAHVAC::setFanMode__FanModeC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1aaf6cb1b099aa4e2e4daabfb9986a5db1"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC10setFanModeEK7FanModeKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes mode of the fan of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -505,34 +454,6 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode">
-<span id="_CPPv3N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="_CPPv2N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="HAHVAC::setCurrentFanMode__FanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae5ae1c57dc28e8488a744e124af84172"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets fan’s mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mode</strong> – New fan’s mode. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC10getFanModeEv">
-<span id="_CPPv3NK6HAHVAC10getFanModeEv"></span><span id="_CPPv2NK6HAHVAC10getFanModeEv"></span><span id="HAHVAC::getFanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1af8949112e16766d3903030612cb2d1a5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getFanMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC10getFanModeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known fan’s mode of the HVAC. If setFanMode method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC11setFanModesEK7uint8_t">
-<span id="_CPPv3N6HAHVAC11setFanModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC11setFanModesEK7uint8_t"></span><span id="HAHVAC::setFanModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ab67a1af6e04652c293a989c6321ebb15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setFanModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC11setFanModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets available fan modes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::AutoFanMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HighFanMode</span></code>). </p>
 </dd>
 </dl>
 </dd></dl>
@@ -555,34 +476,6 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode">
-<span id="_CPPv3N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="_CPPv2N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="HAHVAC::setCurrentSwingMode__SwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a75d3ff43d99ac3f32c6b127e34144ef4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSwingMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets swing mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mode</strong> – New swing mode. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC12getSwingModeEv">
-<span id="_CPPv3NK6HAHVAC12getSwingModeEv"></span><span id="_CPPv2NK6HAHVAC12getSwingModeEv"></span><span id="HAHVAC::getSwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a0f6de720a1dab308e8eda192dd19db1c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getSwingMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC12getSwingModeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known swing mode of the HVAC. If setSwingMode method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC13setSwingModesEK7uint8_t">
-<span id="_CPPv3N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="HAHVAC::setSwingModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1affd56083ed3f1bd91020ca7010b44d17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSwingModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC13setSwingModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets available swing modes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::OnSwingMode</span></code>). </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC7setModeEK4ModeKb">
 <span id="_CPPv3N6HAHVAC7setModeEK4ModeKb"></span><span id="_CPPv2N6HAHVAC7setModeEK4ModeKb"></span><span id="HAHVAC::setMode__ModeC.bC"></span><span class="target" id="class_h_a_h_v_a_c_1a4d2c80762e2b9bfd4cf465cbd8ca40d9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC7setModeEK4ModeKb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Changes mode of the HVAC and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
@@ -595,34 +488,6 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14setCurrentModeEK4Mode">
-<span id="_CPPv3N6HAHVAC14setCurrentModeEK4Mode"></span><span id="_CPPv2N6HAHVAC14setCurrentModeEK4Mode"></span><span id="HAHVAC::setCurrentMode__ModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae7c102358e2d62ea66b7ea4fc543ac6b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC14setCurrentModeEK4Mode" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>mode</strong> – New HVAC’s mode. </p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC7getModeEv">
-<span id="_CPPv3NK6HAHVAC7getModeEv"></span><span id="_CPPv2NK6HAHVAC7getModeEv"></span><span id="HAHVAC::getModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ad1e49df5a28176a1ce59458c928bece3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC7getModeEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns last known mode of the HVAC. If setMode method wasn’t called the initial value will be returned. </p>
-</dd></dl>
-
-<dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8setModesEK7uint8_t">
-<span id="_CPPv3N6HAHVAC8setModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC8setModesEK7uint8_t"></span><span id="HAHVAC::setModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a73d1490ba5f3af7d622a81b972d7ee08"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC8setModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets available HVAC’s modes.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::CoolMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HeatMode</span></code>). </p>
 </dd>
 </dl>
 </dd></dl>
@@ -645,6 +510,141 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC28setCurrentCurrentTemperatureEKf">
+<span id="_CPPv3N6HAHVAC28setCurrentCurrentTemperatureEKf"></span><span id="_CPPv2N6HAHVAC28setCurrentCurrentTemperatureEKf"></span><span id="HAHVAC::setCurrentCurrentTemperature__floatC"></span><span class="target" id="class_h_a_h_v_a_c_1abbf2bc515814503c63540330178933c9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentCurrentTemperature</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">temperature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC28setCurrentCurrentTemperatureEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current temperature of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change temperature before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>temperature</strong> – New current temperature. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC21getCurrentTemperatureEv">
+<span id="_CPPv3NK6HAHVAC21getCurrentTemperatureEv"></span><span id="_CPPv2NK6HAHVAC21getCurrentTemperatureEv"></span><span id="HAHVAC::getCurrentTemperatureC"></span><span class="target" id="class_h_a_h_v_a_c_1adab6b006a401c478442149080975257f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentTemperature</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC21getCurrentTemperatureEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known current temperature of the HVAC. If setCurrentTemperature method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC16setCurrentActionEK6Action">
+<span id="_CPPv3N6HAHVAC16setCurrentActionEK6Action"></span><span id="_CPPv2N6HAHVAC16setCurrentActionEK6Action"></span><span id="HAHVAC::setCurrentAction__ActionC"></span><span class="target" id="class_h_a_h_v_a_c_1ab156e2dddf94b4421fec4a1eeec1d05f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentAction</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">action</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC16setCurrentActionEK6Action" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets action of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the action before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> – New action. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC16getCurrentActionEv">
+<span id="_CPPv3NK6HAHVAC16getCurrentActionEv"></span><span id="_CPPv2NK6HAHVAC16getCurrentActionEv"></span><span id="HAHVAC::getCurrentActionC"></span><span class="target" id="class_h_a_h_v_a_c_1aa39c26d96221e246c8207886b86abe69"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC6ActionE" title="HAHVAC::Action"><span class="n"><span class="pre">Action</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentAction</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC16getCurrentActionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known action of the HVAC. If setAction method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC18setCurrentAuxStateEKb">
+<span id="_CPPv3N6HAHVAC18setCurrentAuxStateEKb"></span><span id="_CPPv2N6HAHVAC18setCurrentAuxStateEKb"></span><span id="HAHVAC::setCurrentAuxState__bC"></span><span class="target" id="class_h_a_h_v_a_c_1afb2feea52fa7819fb3f29885b1fc84c0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentAuxState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC18setCurrentAuxStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets aux heating state without publishing it to Home Assistant. This method may be useful if you want to change the state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The new state. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC18getCurrentAuxStateEv">
+<span id="_CPPv3NK6HAHVAC18getCurrentAuxStateEv"></span><span id="_CPPv2NK6HAHVAC18getCurrentAuxStateEv"></span><span id="HAHVAC::getCurrentAuxStateC"></span><span class="target" id="class_h_a_h_v_a_c_1ab4b1b52e90ebbb0f6408e317fc414eaa"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentAuxState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC18getCurrentAuxStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the aux heating. If setAuxState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode">
+<span id="_CPPv3N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="_CPPv2N6HAHVAC17setCurrentFanModeEK7FanMode"></span><span id="HAHVAC::setCurrentFanMode__FanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae5ae1c57dc28e8488a744e124af84172"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentFanMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC17setCurrentFanModeEK7FanMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets fan’s mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New fan’s mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC17getCurrentFanModeEv">
+<span id="_CPPv3NK6HAHVAC17getCurrentFanModeEv"></span><span id="_CPPv2NK6HAHVAC17getCurrentFanModeEv"></span><span id="HAHVAC::getCurrentFanModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a13efd3862c50095bc72332b27cf7ef80"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC7FanModeE" title="HAHVAC::FanMode"><span class="n"><span class="pre">FanMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentFanMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC17getCurrentFanModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known fan’s mode of the HVAC. If setFanMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC11setFanModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC11setFanModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC11setFanModesEK7uint8_t"></span><span id="HAHVAC::setFanModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1ab67a1af6e04652c293a989c6321ebb15"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setFanModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC11setFanModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available fan modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::AutoFanMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HighFanMode</span></code>). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode">
+<span id="_CPPv3N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="_CPPv2N6HAHVAC19setCurrentSwingModeEK9SwingMode"></span><span id="HAHVAC::setCurrentSwingMode__SwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a75d3ff43d99ac3f32c6b127e34144ef4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSwingMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC19setCurrentSwingModeEK9SwingMode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets swing mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New swing mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC19getCurrentSwingModeEv">
+<span id="_CPPv3NK6HAHVAC19getCurrentSwingModeEv"></span><span id="_CPPv2NK6HAHVAC19getCurrentSwingModeEv"></span><span id="HAHVAC::getCurrentSwingModeC"></span><span class="target" id="class_h_a_h_v_a_c_1acdb96dc2466a0247a802e8e5c27ddf6a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC9SwingModeE" title="HAHVAC::SwingMode"><span class="n"><span class="pre">SwingMode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentSwingMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC19getCurrentSwingModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known swing mode of the HVAC. If setSwingMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC13setSwingModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC13setSwingModesEK7uint8_t"></span><span id="HAHVAC::setSwingModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1affd56083ed3f1bd91020ca7010b44d17"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSwingModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC13setSwingModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available swing modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::OnSwingMode</span></code>). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC14setCurrentModeEK4Mode">
+<span id="_CPPv3N6HAHVAC14setCurrentModeEK4Mode"></span><span id="_CPPv2N6HAHVAC14setCurrentModeEK4Mode"></span><span id="HAHVAC::setCurrentMode__ModeC"></span><span class="target" id="class_h_a_h_v_a_c_1ae7c102358e2d62ea66b7ea4fc543ac6b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC14setCurrentModeEK4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets mode of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the mode before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – New HVAC’s mode. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC14getCurrentModeEv">
+<span id="_CPPv3NK6HAHVAC14getCurrentModeEv"></span><span id="_CPPv2NK6HAHVAC14getCurrentModeEv"></span><span id="HAHVAC::getCurrentModeC"></span><span class="target" id="class_h_a_h_v_a_c_1a1a56a684188d023e8ea785f871d7d18a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAHVAC4ModeE" title="HAHVAC::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentMode</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC14getCurrentModeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known mode of the HVAC. If setMode method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC8setModesEK7uint8_t">
+<span id="_CPPv3N6HAHVAC8setModesEK7uint8_t"></span><span id="_CPPv2N6HAHVAC8setModesEK7uint8_t"></span><span id="HAHVAC::setModes__uint8_tC"></span><span class="target" id="class_h_a_h_v_a_c_1a73d1490ba5f3af7d622a81b972d7ee08"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setModes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">modes</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC8setModesEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets available HVAC’s modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>modes</strong> – The modes to set (for example: <code class="docutils literal notranslate"><span class="pre">HAHVAC::CoolMode</span> <span class="pre">|</span> <span class="pre">HAHVAC::HeatMode</span></code>). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAHVAC27setCurrentTargetTemperatureEKf">
 <span id="_CPPv3N6HAHVAC27setCurrentTargetTemperatureEKf"></span><span id="_CPPv2N6HAHVAC27setCurrentTargetTemperatureEKf"></span><span id="HAHVAC::setCurrentTargetTemperature__floatC"></span><span class="target" id="class_h_a_h_v_a_c_1ad1da4756aa7653d2c9535f408463f48a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentTargetTemperature</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">temperature</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAHVAC27setCurrentTargetTemperatureEKf" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets target temperature of the HVAC without publishing it to Home Assistant. This method may be useful if you want to change the target before connection with MQTT broker is acquired.</p>
@@ -656,8 +656,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC20getTargetTemperatureEv">
-<span id="_CPPv3NK6HAHVAC20getTargetTemperatureEv"></span><span id="_CPPv2NK6HAHVAC20getTargetTemperatureEv"></span><span id="HAHVAC::getTargetTemperatureC"></span><span class="target" id="class_h_a_h_v_a_c_1a97401ffd400f5a85ce6f1d31a7e9d2f5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getTargetTemperature</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC20getTargetTemperatureEv" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAHVAC27getCurrentTargetTemperatureEv">
+<span id="_CPPv3NK6HAHVAC27getCurrentTargetTemperatureEv"></span><span id="_CPPv2NK6HAHVAC27getCurrentTargetTemperatureEv"></span><span id="HAHVAC::getCurrentTargetTemperatureC"></span><span class="target" id="class_h_a_h_v_a_c_1a10fc5e83cfa3fad66dcfc82a96c221fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentTargetTemperature</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAHVAC27getCurrentTargetTemperatureEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns last known target temperature of the HVAC. If setTargetTemperature method wasn’t called the initial value will be returned. </p>
 </dd></dl>
 
