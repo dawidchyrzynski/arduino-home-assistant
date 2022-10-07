@@ -27,7 +27,7 @@ Examples
    * - :example:`Lock <lock/lock.ino>`
      - A simple door lock that's controlled by the Home Assistant.
    * - :example:`Light <light/light.ino>`
-     - A simple light that allows changing brightness and color temperature.
+     - A simple light that allows changing brightness, color temperature and RGB color.
    * - :example:`Number <number/number.ino>`
      - Adding an interactive numeric slider in the Home Assistant panel.
    * - :example:`Scene <scene/scene.ino>`

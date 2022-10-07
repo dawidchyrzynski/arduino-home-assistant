@@ -830,8 +830,6 @@
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC10setMaxTempEKf">HAHVAC::setMaxTemp (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC10setMinTempEKf">HAHVAC::setMinTemp (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC7setModeEK4ModeKb">HAHVAC::setMode (C++ function)</a>
@@ -852,6 +850,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC9SwingModeE">HAHVAC::SwingMode (C++ enum)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC9SwingMode12OffSwingModeE">HAHVAC::SwingMode::OffSwingMode (C++ enumerator)</a>
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC9SwingMode11OnSwingModeE">HAHVAC::SwingMode::OnSwingMode (C++ enumerator)</a>
@@ -880,6 +880,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight24_currentColorTemperatureE">HALight::_currentColorTemperature (C++ member)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight16_currentRGBColorE">HALight::_currentRGBColor (C++ member)</a>
+</li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight13_currentStateE">HALight::_currentState (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight9_featuresE">HALight::_features (C++ member)</a>
@@ -893,6 +895,8 @@
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight11_optimisticE">HALight::_optimistic (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight7_retainE">HALight::_retain (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight17_rgbColorCallbackE">HALight::_rgbColorCallback (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight14_stateCallbackE">HALight::_stateCallback (C++ member)</a>
 </li>
@@ -912,9 +916,13 @@
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8Features15DefaultFeaturesE">HALight::Features::DefaultFeatures (C++ enumerator)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8Features10RGBFeatureE">HALight::Features::RGBFeature (C++ enumerator)</a>
+</li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight20getCurrentBrightnessEv">HALight::getCurrentBrightness (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight26getCurrentColorTemperatureEv">HALight::getCurrentColorTemperature (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight18getCurrentRGBColorEv">HALight::getCurrentRGBColor (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight15getCurrentStateEv">HALight::getCurrentState (C++ function)</a>
 </li>
@@ -923,6 +931,8 @@
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight23handleBrightnessCommandEPK7uint8_tK8uint16_t">HALight::handleBrightnessCommand (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight29handleColorTemperatureCommandEPK7uint8_tK8uint16_t">HALight::handleColorTemperatureCommand (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight16handleRGBCommandEPK7uint8_tK8uint16_t">HALight::handleRGBCommand (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight18handleStateCommandEPK7uint8_tK8uint16_t">HALight::handleStateCommand (C++ function)</a>
 </li>
@@ -934,13 +944,37 @@
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight13onMqttMessageEPKcPK7uint8_tK8uint16_t">HALight::onMqttMessage (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight17onRGBColorCommandEPFvN7HALight8RGBColorEP7HALightE">HALight::onRGBColorCommand (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight14onStateCommandEPFvbP7HALightE">HALight::onStateCommand (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight17publishBrightnessEK7uint8_t">HALight::publishBrightness (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight23publishColorTemperatureEK8uint16_t">HALight::publishColorTemperature (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight15publishRGBColorERK8RGBColor">HALight::publishRGBColor (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight12publishStateEKb">HALight::publishState (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColorE">HALight::RGBColor (C++ struct)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor4blueE">HALight::RGBColor::blue (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor10fromBufferEPK7uint8_tK8uint16_t">HALight::RGBColor::fromBuffer (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor5greenE">HALight::RGBColor::green (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor5isSetE">HALight::RGBColor::isSet (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight8RGBColorneERK8RGBColor">HALight::RGBColor::operator!= (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4NK7HALight8RGBColoreqERK8RGBColor">HALight::RGBColor::operator== (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor3redE">HALight::RGBColor::red (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor8RGBColorE7uint8_t7uint8_t7uint8_t">HALight::RGBColor::RGBColor (C++ function)</a>, <a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor8RGBColorERK8RGBColor">[1]</a>, <a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8RGBColor8RGBColorEv">[2]</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight18RGBStringMaxLengthE">HALight::RGBStringMaxLength (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight13setBrightnessEK7uint8_tKb">HALight::setBrightness (C++ function)</a>
 </li>
@@ -951,6 +985,8 @@
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight20setCurrentBrightnessEK7uint8_t">HALight::setCurrentBrightness (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight26setCurrentColorTemperatureEK8uint16_t">HALight::setCurrentColorTemperature (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight18setCurrentRGBColorERK8RGBColor">HALight::setCurrentRGBColor (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight15setCurrentStateEKb">HALight::setCurrentState (C++ function)</a>
 </li>
@@ -963,6 +999,8 @@
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight13setOptimisticEKb">HALight::setOptimistic (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight9setRetainEKb">HALight::setRetain (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight11setRGBColorERK8RGBColorKb">HALight::setRGBColor (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight8setStateEKbKb">HALight::setState (C++ function)</a>
 </li>
