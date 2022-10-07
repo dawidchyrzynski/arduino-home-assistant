@@ -103,12 +103,13 @@ public:
      * It can be integer or floating point number.
      * In a case of float the input value needs to be multiped by `pow(10, precision)`.
      * 
-     * @param dst Destination where the number will be saved.
+     * @param dst Destination where the number will be saved. The null terminator is not added at the end.
      * @param value Number to convert.
      * @param precision Number of decimal digits in the number.
+     * @return The number of written characters.
      * @note The `dst` size should be calculated using HAUtils::calculateNumberSize method plus 1 extra byte for the null terminator.
      */
-    static void numberToStr(char* dst, Number value, const uint8_t precision = 0);
+    static uint16_t numberToStr(char* dst, Number value, const uint8_t precision = 0);
 
     /**
      * Converts the given string into number.

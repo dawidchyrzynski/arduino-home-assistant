@@ -131,12 +131,12 @@ uint8_t HAUtils::calculateNumberSize(Number value, const uint8_t precision)
     return digitsNb;
 }
 
-void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
+uint16_t HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
 {
     char* prefixCh = &dst[0];
     if (value == 0) {
         *prefixCh = '0';
-        return;
+        return 1;
     }
 
     const uint8_t digitsNb = calculateNumberSize(value, precision);
@@ -158,6 +158,7 @@ void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
     }
 
     char* ch = &dst[digitsNb - 1];
+    char* lastCh = ch;
     char* dotPos = precision > 0 ? &dst[digitsNb - 1 - precision] : nullptr;
 
     while (value != 0) {
@@ -171,6 +172,8 @@ void HAUtils::numberToStr(char* dst, Number value, const uint8_t precision)
         value /= 10;
         ch--;
     }
+
+    return lastCh - &dst[0] + 1;
 }
 
 HAUtils::Number HAUtils::strToNumber(const uint8_t* src, const uint16_t length)

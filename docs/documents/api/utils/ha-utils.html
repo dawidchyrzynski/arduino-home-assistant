@@ -280,7 +280,7 @@
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7HAUtils11numberToStrEPc6NumberK7uint8_t">
-<span id="_CPPv3N7HAUtils11numberToStrEPc6NumberK7uint8_t"></span><span id="_CPPv2N7HAUtils11numberToStrEPc6NumberK7uint8_t"></span><span id="HAUtils::numberToStr__cP.Number.uint8_tC"></span><span class="target" id="class_h_a_utils_1ae57e725046a29f5b1fce40219444f588"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numberToStr</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11numberToStrEPc6NumberK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N7HAUtils11numberToStrEPc6NumberK7uint8_t"></span><span id="_CPPv2N7HAUtils11numberToStrEPc6NumberK7uint8_t"></span><span id="HAUtils::numberToStr__cP.Number.uint8_tC"></span><span class="target" id="class_h_a_utils_1a9b9c19eee02452a5d89ec4d6d0ab79e6"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">numberToStr</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span>, <a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HAUtils11numberToStrEPc6NumberK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Converts the given number to the string. It can be integer or floating point number. In a case of float the input value needs to be multiped by <code class="docutils literal notranslate"><span class="pre">pow(10,</span> <span class="pre">precision)</span></code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -289,10 +289,13 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dst</strong> – Destination where the number will be saved. </p></li>
+<li><p><strong>dst</strong> – Destination where the number will be saved. The null terminator is not added at the end. </p></li>
 <li><p><strong>value</strong> – Number to convert. </p></li>
 <li><p><strong>precision</strong> – Number of decimal digits in the number. </p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of written characters. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,6 +320,11 @@
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7HAUtils9NumberMaxE">
 <span id="_CPPv3N7HAUtils9NumberMaxE"></span><span id="_CPPv2N7HAUtils9NumberMaxE"></span><span id="HAUtils::NumberMax__NumberC"></span><span class="target" id="class_h_a_utils_1a1cd0cb210d01b5b676e6e450a42d6292"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberMax</span></span></span><a class="headerlink" href="#_CPPv4N7HAUtils9NumberMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HAUtils8FloatMaxE">
+<span id="_CPPv3N7HAUtils8FloatMaxE"></span><span id="_CPPv2N7HAUtils8FloatMaxE"></span><span id="HAUtils::FloatMax__floatC"></span><span class="target" id="class_h_a_utils_1a27684e53f4bde859c960d9d65dda1a35"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FloatMax</span></span></span><a class="headerlink" href="#_CPPv4N7HAUtils8FloatMaxE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
 <dl class="cpp var">
