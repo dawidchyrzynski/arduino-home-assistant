@@ -321,13 +321,11 @@ bool HALight::publishRGBColor(const RGBColor& color)
     uint16_t len = 0;
 
     // append red color with comma
-    HAUtils::numberToStr(&str[0], color.red);
-    len = strlen(str);
+    len += HAUtils::numberToStr(&str[0], color.red);
     str[len++] = ',';
 
     // append green color with comma
-    HAUtils::numberToStr(&str[len], color.green);
-    len = strlen(str);
+    len += HAUtils::numberToStr(&str[len], color.green);
     str[len++] = ',';
 
     // append blue color
