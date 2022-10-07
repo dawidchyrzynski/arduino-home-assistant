@@ -175,7 +175,7 @@ AHA_TEST(ButtonTest, command_callback) {
     prepareTest
 
     HAButton button(testUniqueId);
-    button.onPress(onCommandReceived);
+    button.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
 
     assertPressCallbackCalled(&button)
@@ -194,7 +194,7 @@ AHA_TEST(ButtonTest, different_button_command) {
     prepareTest
 
     HAButton button(testUniqueId);
-    button.onPress(onCommandReceived);
+    button.onCommand(onCommandReceived);
     mock->fakeMessage(
         F("testData/testDevice/uniqueButtonDifferent/cmd_t"),
         AHATOFSTR(CommandMessage)

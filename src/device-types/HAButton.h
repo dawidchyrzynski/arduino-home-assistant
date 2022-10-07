@@ -56,7 +56,7 @@ public:
      *
      * @param callback
      */
-    inline void onPress(HABUTTON_CALLBACK(callback))
+    inline void onCommand(HABUTTON_CALLBACK(callback))
         { _commandCallback = callback; }
 
 protected:

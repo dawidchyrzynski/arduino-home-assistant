@@ -13,7 +13,7 @@ HAMqtt mqtt(client, device);
 HAButton buttonA("myButtonA");
 HAButton buttonB("myButtonB");
 
-void onButtonPress(HAButton* sender)
+void onButtonCommand(HAButton* sender)
 {
     if (sender == &buttonA) {
         // button A was clicked, do your logic here
@@ -37,8 +37,8 @@ void setup() {
     buttonB.setName("Click me B");
 
     // press callbacks
-    buttonA.onPress(onButtonPress);
-    buttonB.onPress(onButtonPress);
+    buttonA.onCommand(onButtonCommand);
+    buttonB.onCommand(onButtonCommand);
 
     mqtt.begin(BROKER_ADDR);
 }
