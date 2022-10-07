@@ -496,15 +496,11 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         const uint8_t precision = getNumberPropertyPrecision(
             static_cast<PropertyValueType>(entry->subtype)
         );
-        const uint8_t digitsNb = HAUtils::calculateNumberSize(
-            value,
-            precision
-        );
 
-        char tmp[digitsNb];
-        HAUtils::numberToStr(tmp, value, precision);
-        mqtt->writePayload(tmp, digitsNb);
+        char tmp[HAUtils::NumberMaxDigitsNb + 1];
+        const uint16_t length = HAUtils::numberToStr(tmp, value, precision);
 
+        mqtt->writePayload(tmp, length);
         return true;
     }
 
