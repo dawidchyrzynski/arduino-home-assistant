@@ -10,7 +10,7 @@ HASensorNumber::HASensorNumber(
 ) :
     HASensor(uniqueId),
     _precision(precision),
-    _currentValue(0)
+    _currentValue(HAUtils::NumberMax)
 {
 
 }
@@ -41,6 +41,10 @@ void HASensorNumber::onMqttConnected()
 
 bool HASensorNumber::publishValue(const HAUtils::Number value)
 {
+    if (value == HAUtils::NumberMax) {
+        return false;
+    }
+
     uint8_t size = HAUtils::calculateNumberSize(value, _precision);
     if (size == 0) {
         return false;

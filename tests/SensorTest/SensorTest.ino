@@ -173,6 +173,17 @@ test(SensorNumberTest, publish_value_on_connect) {
     assertMqttMessage(1, AHATOFSTR(StateTopic), "520", true)
 }
 
+test(SensorNumberTest, dont_publish_default_value_on_connect) {
+    initMqttTest(testDeviceId)
+
+    HASensorNumber sensor(testUniqueId);
+    mqtt.loop();
+
+    assertEqual(HAUtils::NumberMax, sensor.getCurrentValue());
+    assertEqual(HAUtils::FloatMax, sensor.getCurrentValueFloat());
+    assertEqual(mock->getFlushedMessagesNb(), 1); // config only
+}
+
 test(SensorNumberTest, publish_debounce) {
     initMqttTest(testDeviceId)
 
