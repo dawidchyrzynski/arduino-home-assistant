@@ -8,6 +8,7 @@
 * [EpoxyDuino](https://github.com/bxparks/EpoxyDuino)
 * [ESP8266 core](https://arduino-esp8266.readthedocs.io/en/latest/installing.html)
 * [ESP32 core](https://docs.espressif.com/projects/arduino-esp32/en/latest/installing.html#installing-using-arduino-ide)
+* [Arduino SAMD Core 1.8.9](https://github.com/arduino/ArduinoCore-samd)
 
 ## Running tests using EpoxyDuino
 

@@ -1,6 +1,7 @@
 #ifndef AHA_HAMQTT_H
 #define AHA_HAMQTT_H
 
+#include <Arduino.h>
 #include <Client.h>
 #include <IPAddress.h>
 #include "ArduinoHADefines.h"
@@ -18,7 +19,7 @@ class PubSubClient;
 class HADevice;
 class HABaseDeviceType;
 
-#ifdef __SAMD21G18A__
+#if defined(ARDUINO_API_VERSION)
 using namespace arduino;
 #endif
 
