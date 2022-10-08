@@ -12,7 +12,7 @@ Examples
      - Using the binary sensor as a door contact sensor.
    * - :example:`Button <button/button.ino>`
      - Adding simple buttons to the Home Assistant panel.
-   * - :example:`Camera <camera/camera.ino>`
+   * - :example:`Camera <esp32-cam/esp32-cam.ino>`
      - Publishing the preview from the ESP32-CAM module.
    * - :example:`Cover <cover/cover.ino>`
      - Controlling a window cover (open / close / stop).
