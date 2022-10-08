@@ -54,8 +54,6 @@ Examples
      - Subscribing to custom topics and publishing custom messages.
    * - :example:`MQTT with credentials <mqtt-with-credentials/mqtt-with-credentials.ino>`
      - Establishing connection with a MQTT broker using the credentials. 
-   * - :example:`MQTT SSL <mqtt-with-ssl/mqtt-with-ssl.ino>`
-     - Establishing secure connection with a MQTT broker.
    * - :example:`NodeMCU (ESP8266) <nodemcu/nodemcu.ino>`
      - Basic example for ESP8266 devices.
    * - :example:`Arduino Nano 33 IoT <nano33iot/nano33iot.ino>`

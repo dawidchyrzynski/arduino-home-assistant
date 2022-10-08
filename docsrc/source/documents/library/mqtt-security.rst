@@ -9,7 +9,7 @@ By default you can use the same credentials you use for login in the Home Assist
     This solution is not 100% secure because communication between Arduino and Home Assistant is not encrypted.
     Username and password can be easily discovered by analyzing your local network traffic.
     However, that's fine as long as your local network is secured against unattended access.
-    On more powerful devices (like ESP), you should consider using SSL.
+    On more powerful devices (like ESP), you should consider using TLS/SSL connection.
 
 ::
 
