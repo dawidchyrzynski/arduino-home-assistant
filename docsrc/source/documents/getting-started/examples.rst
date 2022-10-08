@@ -16,8 +16,6 @@ Examples
      - Publishing the preview from the ESP32-CAM module.
    * - :example:`Cover <cover/cover.ino>`
      - Controlling a window cover (open / close / stop).
-   * - :example:`Device tracker <device-tracker/device-tracker.ino>`
-     - Tracking a device's position using the NEO-6M GPS module.
    * - :example:`Device trigger <multi-state-button/multi-state-button.ino>`
      - Implementation of a simple wall switch that reports press and hold states.
    * - :example:`Fan <fan/fan.ino>`

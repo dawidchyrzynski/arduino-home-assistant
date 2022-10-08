@@ -49,7 +49,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 |[Button](examples/button/button.ino)|Adding simple buttons to the Home Assistant panel.|
 |[Camera](examples/esp32-cam/esp32-cam.ino)|Publishing the preview from the ESP32-CAM module.|
 |[Cover](examples/cover/cover.ino)|Controlling a window cover (open / close / stop).|
-|[Device tracker](examples/device-tracker/device-tracker.ino)|Tracking a device's position using the NEO-6M GPS module.|
 |[Device trigger](examples/multi-state-button/multi-state-button.ino)|Implementation of a simple wall switch that reports press and hold states.|
 |[Fan](examples/fan/fan.ino)|Controlling a simple fan (state + speed).|
 |[HVAC](examples/hvac/hvac.ino)|HVAC controller with multiple modes, power control and target temperature.|
