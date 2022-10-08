@@ -158,15 +158,28 @@ protected:
     void publishAvailability();
 
     /**
-     * Publishes the given flash data on the data topic.
+     * Publishes the given flash string on the data topic.
      *
      * @param topic The topic to publish on (progmem string).
-     * @param value The message's payload (progmem string).
+     * @param payload The message's payload (progmem string).
      * @param retained Specifies whether the message should be retained.
      */
     bool publishOnDataTopic(
         const __FlashStringHelper* topic,
-        const __FlashStringHelper* value,
+        const __FlashStringHelper* payload,
+        bool retained = false
+    );
+
+    /**
+     * Publishes the given string on the data topic.
+     *
+     * @param topic The topic to publish on (progmem string).
+     * @param payload The message's payload.
+     * @param retained Specifies whether the message should be retained.
+     */
+    bool publishOnDataTopic(
+        const __FlashStringHelper* topic,
+        const char* payload,
         bool retained = false
     );
 
@@ -174,15 +187,17 @@ protected:
      * Publishes the given data on the data topic.
      *
      * @param topic The topic to publish on (progmem string).
-     * @param value The message's payload.
+     * @param payload The message's payload.
+     * @param length The length of the payload.
      * @param retained Specifies whether the message should be retained.
-     * @param isProgmemValue Specifies whether the given value is stored in the flash memory.
+     * @param isProgmemData Specifies whether the given data is stored in the flash memory.
      */
     bool publishOnDataTopic(
         const __FlashStringHelper* topic,
-        const char* value,
+        const uint8_t* payload,
+        const uint16_t length,
         bool retained = false,
-        bool isProgmemValue = false
+        bool isProgmemData = false
     );
 
     /// The component name that was assigned via the constructor.

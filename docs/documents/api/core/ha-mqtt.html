@@ -352,7 +352,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12beginPublishEPKc8uint16_tb">
 <span id="_CPPv3N6HAMqtt12beginPublishEPKc8uint16_tb"></span><span id="_CPPv2N6HAMqtt12beginPublishEPKc8uint16_tb"></span><span id="HAMqtt::beginPublish__cCP.uint16_t.b"></span><span class="target" id="class_h_a_mqtt_1a2652787f2c681505d473cb6ed20f0261"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">beginPublish</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">payloadLength</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12beginPublishEPKc8uint16_tb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Begins publishing of a message with the given properties. When this method returns true the payload can be written using <a class="reference internal" href="#class_h_a_mqtt_1a48e6056c0ed85ae6e69a9110d0b7ef89"><span class="std std-ref">HAMqtt::writePayload</span></a> method.</p>
+<dd><p>Begins publishing of a message with the given properties. When this method returns true the payload can be written using <a class="reference internal" href="#class_h_a_mqtt_1a811d6b2325ede9e865b6ed9eddb38fcb"><span class="std std-ref">HAMqtt::writePayload</span></a> method.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -365,13 +365,27 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12writePayloadEPKc8uint16_t">
-<span id="_CPPv3N6HAMqtt12writePayloadEPKc8uint16_t"></span><span id="_CPPv2N6HAMqtt12writePayloadEPKc8uint16_t"></span><span id="HAMqtt::writePayload__cCP.uint16_t"></span><span class="target" id="class_h_a_mqtt_1a48e6056c0ed85ae6e69a9110d0b7ef89"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">writePayload</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12writePayloadEPKc8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12writePayloadEPKcK8uint16_t">
+<span id="_CPPv3N6HAMqtt12writePayloadEPKcK8uint16_t"></span><span id="_CPPv2N6HAMqtt12writePayloadEPKcK8uint16_t"></span><span id="HAMqtt::writePayload__cCP.uint16_tC"></span><span class="target" id="class_h_a_mqtt_1a811d6b2325ede9e865b6ed9eddb38fcb"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">writePayload</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12writePayloadEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Writes given string to the TCP stream. Please note that before writing any data the <a class="reference internal" href="#class_h_a_mqtt_1a2652787f2c681505d473cb6ed20f0261"><span class="std std-ref">HAMqtt::beginPublish</span></a> method needs to be called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The string to publish. </p></li>
+<li><p><strong>length</strong> – Length of the data (bytes). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12writePayloadEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N6HAMqtt12writePayloadEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N6HAMqtt12writePayloadEPK7uint8_tK8uint16_t"></span><span id="HAMqtt::writePayload__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_mqtt_1a52bff8cfb82f418cb6cc345beb19c763"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">writePayload</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12writePayloadEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Writes given data to the TCP stream. Please note that before writing any data the <a class="reference internal" href="#class_h_a_mqtt_1a2652787f2c681505d473cb6ed20f0261"><span class="std std-ref">HAMqtt::beginPublish</span></a> method needs to be called.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> – Data to publish. </p></li>
+<li><p><strong>data</strong> – The data to publish. </p></li>
 <li><p><strong>length</strong> – Length of the data (bytes). </p></li>
 </ul>
 </dd>

@@ -234,14 +234,24 @@ public:
     bool beginPublish(const char* topic, uint16_t payloadLength, bool retained = false);
 
     /**
+     * Writes given string to the TCP stream.
+     * Please note that before writing any data the HAMqtt::beginPublish method
+     * needs to be called.
+     *
+     * @param data The string to publish.
+     * @param length Length of the data (bytes).
+     */
+    void writePayload(const char* data, const uint16_t length);
+
+    /**
      * Writes given data to the TCP stream.
      * Please note that before writing any data the HAMqtt::beginPublish method
      * needs to be called.
      *
-     * @param data Data to publish.
+     * @param data The data to publish.
      * @param length Length of the data (bytes).
      */
-    void writePayload(const char* data, uint16_t length);
+    void writePayload(const uint8_t* data, const uint16_t length);
 
     /**
      * Writes given progmem data to the TCP stream.

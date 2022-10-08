@@ -98,7 +98,7 @@ AHA_TEST(CameraTest, publish_nullptr) {
     mock->connectDummy();
     HACamera camera(testUniqueId);
 
-    bool result = camera.publishImage(nullptr);
+    bool result = camera.publishImage(nullptr, 0);
 
     assertEqual(mock->getFlushedMessagesNb(), 0);
     assertFalse(result);
@@ -110,7 +110,8 @@ AHA_TEST(CameraTest, publish_image) {
     mock->connectDummy();
     HACamera camera(testUniqueId);
 
-    bool result = camera.publishImage("IMAGE CONTENT");
+    const char* data = "IMAGE CONTENT";
+    bool result = camera.publishImage((const uint8_t*)data, strlen(data));
 
     assertSingleMqttMessage(AHATOFSTR(DataTopic), "IMAGE CONTENT", true)
     assertTrue(result);

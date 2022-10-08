@@ -119,30 +119,58 @@ void HABaseDeviceType::publishAvailability()
     publishOnDataTopic(
         AHATOFSTR(HAAvailabilityTopic),
         _availability == AvailabilityOnline
-            ? HAOnline
-            : HAOffline,
-        true,
+            ? AHATOFSTR(HAOnline)
+            : AHATOFSTR(HAOffline),
         true
     );
 }
 
 bool HABaseDeviceType::publishOnDataTopic(
     const __FlashStringHelper* topic,
-    const __FlashStringHelper* value,
+    const __FlashStringHelper* payload,
     bool retained
 )
 {
-    return publishOnDataTopic(topic, AHAFROMFSTR(value), retained, true);
+    if (!payload) {
+        return false;
+    }
+
+    return publishOnDataTopic(
+        topic,
+        reinterpret_cast<const uint8_t*>(payload),
+        strlen_P(AHAFROMFSTR(payload)),
+        retained,
+        true
+    );
 }
 
 bool HABaseDeviceType::publishOnDataTopic(
     const __FlashStringHelper* topic,
-    const char* value,
-    bool retained,
-    bool isProgmemValue
+    const char* payload,
+    bool retained
 )
 {
-    if (!value) {
+    if (!payload) {
+        return false;
+    }
+
+    return publishOnDataTopic(
+        topic,
+        reinterpret_cast<const uint8_t*>(payload),
+        strlen(payload),
+        retained
+    );
+}
+
+bool HABaseDeviceType::publishOnDataTopic(
+    const __FlashStringHelper* topic,
+    const uint8_t* payload,
+    const uint16_t length,
+    bool retained,
+    bool isProgmemData
+)
+{
+    if (!payload) {
         return false;
     }
 
@@ -163,15 +191,11 @@ bool HABaseDeviceType::publishOnDataTopic(
         return false;
     }
 
-    const uint16_t valueLength = isProgmemValue
-        ? strlen_P(value)
-        : strlen(value);
-
-    if (mqtt()->beginPublish(fullTopic, valueLength, retained)) {
-        if (isProgmemValue) {
-            mqtt()->writePayload(AHATOFSTR(value));
+    if (mqtt()->beginPublish(fullTopic, length, retained)) {
+        if (isProgmemData) {
+            mqtt()->writePayload(AHATOFSTR(payload));
         } else {
-            mqtt()->writePayload(value, valueLength);
+            mqtt()->writePayload(payload, length);
         }
 
         return mqtt()->endPublish();

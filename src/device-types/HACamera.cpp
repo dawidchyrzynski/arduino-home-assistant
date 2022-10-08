@@ -12,13 +12,13 @@ HACamera::HACamera(const char* uniqueId) :
 
 }
 
-bool HACamera::publishImage(const char* data)
+bool HACamera::publishImage(const uint8_t* data, const uint16_t length)
 {
     if (!data) {
         return false;
     }
 
-    return publishOnDataTopic(AHATOFSTR(HATopic), data, true);
+    return publishOnDataTopic(AHATOFSTR(HATopic), data, length, true);
 }
 
 void HACamera::buildSerializer()

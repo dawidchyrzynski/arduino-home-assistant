@@ -32,9 +32,10 @@ public:
      * It updates image displayed in the Home Assistant panel.
      *
      * @param data Image data (raw binary data or base64)
+     * @param length The length of the data.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool publishImage(const char* data);
+    bool publishImage(const uint8_t* data, const uint16_t length);
 
     /**
      * Sets encoding of the image content.

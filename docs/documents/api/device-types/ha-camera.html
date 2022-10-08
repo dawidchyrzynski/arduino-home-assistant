@@ -190,12 +190,15 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HACamera12publishImageEPKc">
-<span id="_CPPv3N8HACamera12publishImageEPKc"></span><span id="_CPPv2N8HACamera12publishImageEPKc"></span><span id="HACamera::publishImage__cCP"></span><span class="target" id="class_h_a_camera_1ad0f5c6731eadc924bf65eead333ed455"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishImage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera12publishImageEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera12publishImageEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HACamera12publishImageEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HACamera12publishImageEPK7uint8_tK8uint16_t"></span><span id="HACamera::publishImage__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_camera_1a9db4f30666dafa721376c3560393aa07"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishImage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera12publishImageEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Publishes MQTT message with the given image data as a message content. It updates image displayed in the Home Assistant panel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> – Image data (raw binary data or base64) </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Image data (raw binary data or base64) </p></li>
+<li><p><strong>length</strong> – The length of the data. </p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
