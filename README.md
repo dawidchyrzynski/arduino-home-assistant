@@ -18,26 +18,26 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 ## Supported HA types
 
-| Home Assistant type | Supported | Documentation |
-| ------------------- | :--------: | :------: |
-| Binary sensor       |     ✅     |     -    |
-| Button              |     ✅     |     -    |
-| Camera              |     ✅     |     -    |
-| Cover               |     ✅     |     -    |
-| Device tracker      |     ✅     |     -    |
-| Device trigger      |     ✅     |     -    |
-| Fan                 |     ✅     |     -    |
-| Humidifier          |     ❌     |     -    |
-| HVAC\*              |     ✅     |     -    |
-| Light               |     ✅     |     -    |
-| Lock                |     ✅     |     -    |
-| Number              |     ✅     |     -    |
-| Scene               |     ✅     |     -    |
-| Select              |     ✅     |     -    |
-| Sensor              |     ✅     |     -    |
-| Switch              |     ✅     |     -    |
-| Tag scanner         |     ✅     |     -    |
-| Vacuum              |     ❌     |     -    |
+| Home Assistant type | Supported |
+| ------------------- | :--------: |
+| Binary sensor       |     ✅     |
+| Button              |     ✅     |
+| Camera              |     ✅     |
+| Cover               |     ✅     |
+| Device tracker      |     ✅     |
+| Device trigger      |     ✅     |
+| Fan                 |     ✅     |
+| Humidifier          |     ❌     |
+| HVAC\*              |     ✅     |
+| Light               |     ✅     |
+| Lock                |     ✅     |
+| Number              |     ✅     |
+| Scene               |     ✅     |
+| Select              |     ✅     |
+| Sensor              |     ✅     |
+| Switch              |     ✅     |
+| Tag scanner         |     ✅     |
+| Vacuum              |     ❌     |
 
 \* - Requires more resources (flash / RAM) than other devices types.
 
