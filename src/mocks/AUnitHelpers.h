@@ -45,6 +45,13 @@
     assertTrue(entity.getSerializer() == nullptr); \
 }
 
+#define assertEntityConfigOnTopic(mock, entity, topic, expectedJson) \
+{ \
+    mqtt.loop(); \
+    assertMqttMessage(0, topic, expectedJson, true) \
+    assertTrue(entity.getSerializer() == nullptr); \
+}
+
 #ifdef AUNITER
 
 #if defined(__AVR__)

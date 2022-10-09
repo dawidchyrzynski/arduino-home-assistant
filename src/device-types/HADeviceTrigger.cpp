@@ -72,8 +72,20 @@ void HADeviceTrigger::buildSerializer()
         AHATOFSTR(HATrigger),
         HASerializer::ProgmemPropertyValue
     );
-    _serializer->set(AHATOFSTR(HATypeProperty), _type);
-    _serializer->set(AHATOFSTR(HASubtypeProperty), _subtype);
+    _serializer->set(
+        AHATOFSTR(HATypeProperty),
+        _type,
+        _isProgmemType
+            ? HASerializer::ProgmemPropertyValue
+            : HASerializer::ConstCharPropertyValue
+    );
+    _serializer->set(
+        AHATOFSTR(HASubtypeProperty),
+        _subtype,
+        _isProgmemSubtype
+            ? HASerializer::ProgmemPropertyValue
+            : HASerializer::ConstCharPropertyValue
+    );
     _serializer->set(HASerializer::WithDevice);
     _serializer->topic(AHATOFSTR(HATopic));
 }

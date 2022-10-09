@@ -68,7 +68,7 @@ AHA_TEST(DeviceTriggerTest, unique_id_generator) {
     assertEqual(trigger.uniqueId(), "myType_mySubtype");
 }
 
-AHA_TEST(DeviceTriggerTest, default_params) {
+AHA_TEST(DeviceTriggerTest, string_type_string_subtype) {
     initMqttTest(testDeviceId)
 
     HADeviceTrigger trigger(triggerType, triggerSubtype);
@@ -82,6 +82,46 @@ AHA_TEST(DeviceTriggerTest, default_params) {
             "\"stype\":\"mySubtype\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"t\":\"testData/testDevice/myType_mySubtype/t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(DeviceTriggerTest, progmem_type_string_subtype) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTrigger trigger(HADeviceTrigger::ButtonShortPressType, triggerSubtype);
+    assertEntityConfigOnTopic(
+        mock,
+        trigger,
+        F("homeassistant/device_automation/testDevice/button_short_press_mySubtype/config"),
+        (
+            "{"
+            "\"atype\":\"trigger\","
+            "\"type\":\"button_short_press\","
+            "\"stype\":\"mySubtype\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/button_short_press_mySubtype/t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(DeviceTriggerTest, string_type_progmem_subtype) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTrigger trigger(triggerType, HADeviceTrigger::Button1Subtype);
+    assertEntityConfigOnTopic(
+        mock,
+        trigger,
+        F("homeassistant/device_automation/testDevice/myType_button_1/config"),
+        (
+            "{"
+            "\"atype\":\"trigger\","
+            "\"type\":\"myType\","
+            "\"stype\":\"button_1\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/myType_button_1/t\""
             "}"
         )
     )
