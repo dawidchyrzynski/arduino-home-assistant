@@ -38,7 +38,7 @@ struct StateCallback {
 
 struct SpeedCallback {
     bool called = false;
-    uint8_t speed = 0;
+    uint16_t speed = 0;
     HAFan* caller = nullptr;
 
     void reset() {
@@ -66,10 +66,10 @@ void onStateCommandReceived(bool state, HAFan* caller)
     lastStateCallbackCall.caller = caller;
 }
 
-void onSpeedCommandReceived(uint8_t speedPercentage, HAFan* caller)
+void onSpeedCommandReceived(uint16_t speed, HAFan* caller)
 {
     lastSpeedCallbackCall.called = true;
-    lastSpeedCallbackCall.speed = speedPercentage;
+    lastSpeedCallbackCall.speed = speed;
     lastSpeedCallbackCall.caller = caller;
 }
 
@@ -458,14 +458,14 @@ AHA_TEST(FanTest, state_command_different_fan) {
     assertStateCallbackNotCalled()
 }
 
-AHA_TEST(FanTest, speed_command_zero) {
+AHA_TEST(FanTest, speed_command_below_min) {
     prepareTest
 
     HAFan fan(testUniqueId);
     fan.onSpeedCommand(onSpeedCommandReceived);
     mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("0"));
 
-    assertSpeedCallbackCalled(0, &fan)
+    assertSpeedCallbackNotCalled()
 }
 
 AHA_TEST(FanTest, speed_command_half) {
@@ -486,6 +486,18 @@ AHA_TEST(FanTest, speed_command_max) {
     mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("100"));
 
     assertSpeedCallbackCalled(100, &fan)
+}
+
+AHA_TEST(FanTest, speed_command_in_range) {
+    prepareTest
+
+    HAFan fan(testUniqueId);
+    fan.onSpeedCommand(onSpeedCommandReceived);
+    fan.setSpeedRangeMin(1000);
+    fan.setSpeedRangeMax(50000);
+    mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("49999"));
+
+    assertSpeedCallbackCalled(49999, &fan)
 }
 
 AHA_TEST(FanTest, speed_command_invalid) {

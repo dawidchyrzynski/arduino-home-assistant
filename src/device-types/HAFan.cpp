@@ -17,7 +17,7 @@ HAFan::HAFan(const char* uniqueId, const uint8_t features) :
     _speedRangeMax(DefaultSpeedRangeMax),
     _speedRangeMin(DefaultSpeedRangeMin),
     _currentState(false),
-    _currentSpeedPercentage(0),
+    _currentSpeed(0),
     _stateCallback(nullptr),
     _speedCallback(nullptr)
 {
@@ -38,14 +38,14 @@ bool HAFan::setState(const bool state, const bool force)
     return false;
 }
 
-bool HAFan::setSpeed(const uint8_t speedPercentage, const bool force)
+bool HAFan::setSpeed(const uint16_t speed, const bool force)
 {
-    if (!force && speedPercentage == _currentSpeedPercentage) {
+    if (!force && speed == _currentSpeed) {
         return true;
     }
 
-    if (publishSpeed(speedPercentage)) {
-        _currentSpeedPercentage = speedPercentage;
+    if (publishSpeed(speed)) {
+        _currentSpeed = speed;
         return true;
     }
 
@@ -117,7 +117,7 @@ void HAFan::onMqttConnected()
 
     if (!_retain) {
         publishState(_currentState);
-        publishSpeed(_currentSpeedPercentage);
+        publishSpeed(_currentSpeed);
     }
 
     subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
@@ -157,14 +157,14 @@ bool HAFan::publishState(const bool state)
     );
 }
 
-bool HAFan::publishSpeed(const uint8_t speedPercentage)
+bool HAFan::publishSpeed(const uint16_t speed)
 {
     if (!(_features & SpeedsFeature)) {
         return false;
     }
 
-    char str[3 + 1] = {0}; // uint8_t digits with null terminator
-    HAUtils::numberToStr(str, speedPercentage);
+    char str[5 + 1] = {0}; // uint16_t digits with null terminator
+    HAUtils::numberToStr(str, speed);
 
     return publishOnDataTopic(AHATOFSTR(HAPercentageStateTopic), str, true);
 }
@@ -188,8 +188,12 @@ void HAFan::handleSpeedCommand(const uint8_t* cmd, const uint16_t length)
     }
 
     HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-    if (number != HAUtils::NumberMax && number >= 0 && number <= 100) { // 0-100%
-        _speedCallback(static_cast<uint8_t>(number), this);
+    if (
+        number != HAUtils::NumberMax &&
+        number >= _speedRangeMin &&
+        number <= _speedRangeMax
+    ) {
+        _speedCallback(static_cast<uint16_t>(number), this);
     }
 }
 

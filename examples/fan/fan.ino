@@ -21,11 +21,11 @@ void onStateCommand(bool state, HAFan* sender) {
     sender->setState(state); // report state back to the Home Assistant
 }
 
-void onSpeedCommand(uint8_t speedPercentage, HAFan* sender) {
-    Serial.print("Speed (%): ");
-    Serial.println(speedPercentage);
+void onSpeedCommand(uint16_t speed, HAFan* sender) {
+    Serial.print("Speed: ");
+    Serial.println(speed);
 
-    sender->setSpeed(speedPercentage); // report speed back to the Home Assistant
+    sender->setSpeed(speed); // report speed back to the Home Assistant
 }
 
 void setup() {
@@ -63,5 +63,5 @@ void loop() {
 
     // You can also change the state at runtime as shown below.
     // This kind of logic can be used if you want to control your fan using a button connected to the device.
-    // fan.setState(true); // use any state you want
+    // fan.setState(true); // true (ON) or false (OFF)
 }

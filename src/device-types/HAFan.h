@@ -7,7 +7,7 @@
 #ifndef EX_ARDUINOHA_FAN
 
 #define HAFAN_STATE_CALLBACK(name) void (*name)(bool state, HAFan* sender)
-#define HAFAN_SPEED_CALLBACK(name) void (*name)(uint8_t speedPercentage, HAFan* sender)
+#define HAFAN_SPEED_CALLBACK(name) void (*name)(uint16_t speed, HAFan* sender)
 
 /**
  * HAFan allows adding a controllable fan in the Home Assistant panel.
@@ -47,15 +47,15 @@ public:
     bool setState(const bool state, const bool force = false);
 
     /**
-     * Changes the speed percentage of the fan and publishes MQTT message.
+     * Changes the speed of the fan and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param speedPercentage The new speed percentage of the fan.
+     * @param speed The new speed of the fan. It should be in range of min and max value.
      * @param force Forces to update the value without comparing it to a previous known value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool setSpeed(const uint8_t speedPercentage, const bool force = false);
+    bool setSpeed(const uint16_t speed, const bool force = false);
 
     /**
      * Alias for `setState(true)`.
@@ -84,24 +84,24 @@ public:
      * By default it's `false`.
      */
     inline bool getCurrentState() const
-        { return _currentState; }  
+        { return _currentState; }
 
     /**
-     * Sets the current speed percentage of the fan without pushing the value to Home Assistant.
+     * Sets the current speed of the fan without pushing the value to Home Assistant.
      * This method may be useful if you want to change the speed before the connection
      * with the MQTT broker is acquired.
      *
-     * @param speedPercentage The new speed percentage of the fan.
+     * @param speed The new speed of the fan. It should be in range of min and max value.
      */
-    inline void setCurrentSpeed(const uint8_t speedPercentage)
-        { _currentSpeedPercentage = speedPercentage; }
+    inline void setCurrentSpeed(const uint16_t speed)
+        { _currentSpeed = speed; }
 
     /**
-     * Returns the last known speed percentage of the fan.
+     * Returns the last known speed of the fan.
      * By default speed is set to `0`.
      */
-    inline uint8_t getCurrentSpeed() const
-        { return _currentSpeedPercentage; }  
+    inline uint16_t getCurrentSpeed() const
+        { return _currentSpeed; }
 
     /**
      * Sets icon of the fan.
@@ -132,10 +132,10 @@ public:
         { _optimistic = optimistic; }
 
     /**
-     * Sets the maximum of numeric output range (representing 100 %).
+     * Sets the maximum of numeric output range (representing 100%).
      * The number of speeds within the speed_range / 100 will determine the percentage step.
      * By default the maximum range is `100`.
-     * 
+     *
      * @param max The maximum of numeric output range.
      */
     inline void setSpeedRangeMax(const uint16_t max)
@@ -145,7 +145,7 @@ public:
      * Sets the minimum of numeric output range (off is not included, so speed_range_min - 1 represents 0 %).
      * The number of speeds within the speed_range / 100 will determine the percentage step.
      * By default the minimum range is `1`.
-     * 
+     *
      * @param min The minimum of numeric output range.
      */
     inline void setSpeedRangeMin(const uint16_t min)
@@ -188,16 +188,16 @@ private:
     bool publishState(const bool state);
 
     /**
-     * Publishes the MQTT message with the given speed percentage.
+     * Publishes the MQTT message with the given speed.
      *
-     * @param speedPercentage The speed percentage to publish.
+     * @param speed The speed to publish. It should be in range of min and max value.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishSpeed(const uint8_t speedPercentage);
+    bool publishSpeed(const uint16_t speed);
 
     /**
      * Parses the given state command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
@@ -205,7 +205,7 @@ private:
 
     /**
      * Parses the given speed command and executes the callback with proper value.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
@@ -232,14 +232,14 @@ private:
     /// The current state of the fan. By default it's `false`.
     bool _currentState;
 
-    /// The current speed percentage of the fan. By default it's `0`.
-    uint8_t _currentSpeedPercentage;
+    /// The current speed of the fan. By default it's `0`.
+    uint16_t _currentSpeed;
 
     /// The callback that will be called when the state command is received from the HA.
     HAFAN_STATE_CALLBACK(_stateCallback);
 
     /// The callback that will be called when the speed command is received from the HA.
-    HAFAN_SPEED_CALLBACK(_speedCallback);  
+    HAFAN_SPEED_CALLBACK(_speedCallback);
 };
 
 #endif
