@@ -28,7 +28,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Device trigger      |     ✅     |
 | Fan                 |     ✅     |
 | Humidifier          |     ❌     |
-| HVAC\*              |     ✅     |
+| HVAC                |     ✅     |
 | Light               |     ✅     |
 | Lock                |     ✅     |
 | Number              |     ✅     |
@@ -38,8 +38,6 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 | Switch              |     ✅     |
 | Tag scanner         |     ✅     |
 | Vacuum              |     ❌     |
-
-\* - Requires more resources (flash / RAM) than other devices types.
 
 ## Examples
 
