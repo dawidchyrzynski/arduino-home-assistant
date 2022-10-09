@@ -41,9 +41,9 @@ void setup() {
     Serial.println();
     Serial.println("Connected to the network");
 
-    if (!MDNS.begin("arduinoha")) {
+    if (MDNS.begin("arduinoha")) {
         // at this stage your device will be available using the domain name "arduinoha.local"
-        Serial.println("MDNS initializes - arduinoha.local");
+        Serial.println("MDNS initialized - arduinoha.local");
     } else {
         Serial.println("Failed to initialize MDNS");
         return;
