@@ -61,7 +61,7 @@ public:
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param position The new position of the cover.
+     * @param position The new position of the cover (0-100).
      * @param force Forces to update the state without comparing it to a previous known state.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
@@ -89,7 +89,7 @@ public:
      * This method may be useful if you want to change the position before the connection
      * with the MQTT broker is acquired.
      *
-     * @param position The new position of the cover.
+     * @param position The new position of the cover (0-100).
      */
     inline void setCurrentPosition(const int16_t position)
         { _currentPosition = position; }

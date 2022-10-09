@@ -10,7 +10,10 @@ HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
 // "myCover" is unique ID of the cover. You should define your own ID.
-HACover cover("myCover");
+HACover cover("myCover", HACover::PositionFeature);
+
+// Cover with the position feature:
+// HACover cover("myCover", HACover::PositionFeature);
 
 void onCoverCommand(HACover::CoverCommand cmd, HACover* sender) {
     if (cmd == HACover::CommandOpen) {
@@ -37,6 +40,10 @@ void onCoverCommand(HACover::CoverCommand cmd, HACover* sender) {
 void setup() {
     Serial.begin(9600);
     Ethernet.begin(mac);
+
+    // optional device's details
+    device.setName("Arduino");
+    device.setSoftwareVersion("1.0.0");
 
     cover.onCommand(onCoverCommand);
     cover.setName("My cover"); // optional
