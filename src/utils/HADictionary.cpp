@@ -187,8 +187,8 @@ const char HAModeFanOnly[] PROGMEM = {"fan_only"};
 const char HAHexMap[] PROGMEM = {"0123456789abcdef"};
 
 // value templates
-const char HAValueTemplateFloatP1[] PROGMEM = {"{{float(value)/10**1}}"};
-const char HAValueTemplateFloatP2[] PROGMEM = {"{{float(value)/10**2}}"};
-const char HAValueTemplateFloatP3[] PROGMEM = {"{{float(value)/10**3}}"};
+const char HAValueTemplateFloatP1[] PROGMEM = {"{{int(float(value)*10**1)}}"};
+const char HAValueTemplateFloatP2[] PROGMEM = {"{{int(float(value)*10**2)}}"};
+const char HAValueTemplateFloatP3[] PROGMEM = {"{{int(float(value)*10**3)}}"};
 const char HATemperatureUnitC[] PROGMEM = {"C"};
 const char HATemperatureUnitF[] PROGMEM = {"F"};

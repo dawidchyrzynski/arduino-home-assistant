@@ -38,10 +38,7 @@ public:
         ConstCharPropertyValue,
         ProgmemPropertyValue,
         BoolPropertyType,
-        NumberP0PropertyType,
-        NumberP1PropertyType,
-        NumberP2PropertyType,
-        NumberP3PropertyType,
+        NumberPropertyType,
         ArrayPropertyType
     };
 
@@ -70,7 +67,7 @@ public:
     /**
      * Calculates the size of a configuration topic for the given component and object ID.
      * The configuration topic has structure as follows: `[discovery prefix]/[component]/[device ID]_[objectId]/config`
-     * 
+     *
      * @param component The name of the HA component (e.g. `binary_sensor`).
      * @param objectId The unique ID of a device type that's going to publish the config.
      */
@@ -122,7 +119,7 @@ public:
     /**
      * Checks whether the given topic matches the data topic that can be generated
      * using the given objectId and topicP.
-     * This method can be used to check if the received message matches some data topic. 
+     * This method can be used to check if the received message matches some data topic.
      *
      * @param actualTopic The actual topic to compare.
      * @param objectId The unique ID of a device type that may be the owner of the topic.
@@ -135,24 +132,10 @@ public:
     );
 
     /**
-     * Returns number's precision of the given property type.
-     *
-     * @param type Number property type.
-     */
-    static uint8_t getNumberPropertyPrecision(PropertyValueType type);
-
-    /**
-     * Returns number property type based on the given precision.
-     *
-     *  @param precision Precision to use as a base.
-     */
-    static PropertyValueType precisionToPropertyType(uint8_t precision);
-
-    /**
      * Creates instance of the serializer for the given device type.
      * Please note that the number JSON object's entries needs to be known upfront.
      * This approach reduces number of memory allocations.
-     * 
+     *
      * @param deviceType The device type that owns the serializer.
      * @param maxEntriesNb Maximum number of the output object entries.
      */
@@ -177,7 +160,7 @@ public:
 
     /**
      * Adds a new entry to the serialized with a type of `PropertyEntryType`.
-     * 
+     *
      * @param property Pointer to the name of the property (progmem string).
      * @param value Pointer to the value that's being set.
      * @param valueType The type of the value that's passed to the method.

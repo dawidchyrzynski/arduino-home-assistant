@@ -10,6 +10,7 @@
 #include "../HADevice.h"
 #include "../HAMqtt.h"
 #include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 #include "../device-types/HABaseDeviceType.h"
 
 uint16_t HASerializer::calculateConfigTopicLength(
@@ -150,45 +151,6 @@ bool HASerializer::compareDataTopics(
     }
 
     return memcmp(actualTopic, expectedTopic, topicLength) == 0;
-}
-
-uint8_t HASerializer::getNumberPropertyPrecision(PropertyValueType type)
-{
-    switch (type) {
-    case NumberP1PropertyType:
-        return 1;
-
-    case NumberP2PropertyType:
-        return 2;
-
-    case NumberP3PropertyType:
-        return 3;
-
-    default:
-        return 0;
-    }
-}
-
-HASerializer::PropertyValueType HASerializer::precisionToPropertyType(
-    uint8_t precision
-)
-{
-    switch (precision) {
-    case 0:
-        return NumberP0PropertyType;
-
-    case 1:
-        return NumberP1PropertyType;
-
-    case 2:
-        return NumberP2PropertyType;
-
-    case 3:
-        return NumberP3PropertyType;
-
-    default:
-        return UnknownPropertyValueType;
-    }
 }
 
 HASerializer::HASerializer(
@@ -409,19 +371,11 @@ uint16_t HASerializer::calculatePropertyValueSize(
         return value ? strlen_P(HATrue) : strlen_P(HAFalse);
     }
 
-    case NumberP0PropertyType:
-    case NumberP1PropertyType:
-    case NumberP2PropertyType:
-    case NumberP3PropertyType: {
-        const HAUtils::Number value = *static_cast<const HAUtils::Number*>(
+    case NumberPropertyType: {
+        const HANumeric* value = static_cast<const HANumeric*>(
             entry->value
         );
-        return HAUtils::calculateNumberSize(
-            value,
-            getNumberPropertyPrecision(
-                static_cast<PropertyValueType>(entry->subtype)
-            )
-        );
+        return value->calculateSize();
     }
 
     case ArrayPropertyType: {
@@ -486,19 +440,13 @@ bool HASerializer::flushEntryValue(const SerializerEntry* entry) const
         return true;
     }
 
-    case NumberP0PropertyType:
-    case NumberP1PropertyType:
-    case NumberP2PropertyType:
-    case NumberP3PropertyType: {
-        const HAUtils::Number value = *static_cast<const HAUtils::Number*>(
+    case NumberPropertyType: {
+        const HANumeric* value = static_cast<const HANumeric*>(
             entry->value
         );
-        const uint8_t precision = getNumberPropertyPrecision(
-            static_cast<PropertyValueType>(entry->subtype)
-        );
 
-        char tmp[HAUtils::NumberMaxDigitsNb + 1];
-        const uint16_t length = HAUtils::numberToStr(tmp, value, precision);
+        char tmp[HANumeric::MaxDigitsNb + 1];
+        const uint16_t length = value->toStr(tmp);
 
         mqtt->writePayload(tmp, length);
         return true;
@@ -533,7 +481,7 @@ bool HASerializer::flushTopic(const SerializerEntry* entry) const
 
     // value (escaped)
     mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
-    
+
     if (entry->value) {
         const char* topic = static_cast<const char*>(entry->value);
         mqtt->writePayload(topic, strlen(topic));

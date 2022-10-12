@@ -1,7 +1,7 @@
 #ifndef AHA_HAUTILS_H
 #define AHA_HAUTILS_H
 
-#include <Arduino.h>
+#include <stdint.h>
 
 /**
  * This class provides some useful methods to make life easier.
@@ -9,14 +9,9 @@
 class HAUtils
 {
 public:
-    typedef int64_t Number;
-    static const Number NumberMax;
-    static const float FloatMax;
-    static const uint8_t NumberMaxDigitsNb;
-
     /**
      * Checks whether the given `str` ends with the given `suffix`.
-     * 
+     *
      * @param str Input string to check.
      * @param suffix Suffix to find
      * @returns True if the given suffix is present at the end of the given string.
@@ -52,73 +47,6 @@ public:
         const byte* src,
         const uint16_t length
     );
-
-    /**
-     * Returns divider for the given precision.
-     * The maximum precision is 3.
-     *
-     * @param precision
-     */
-    static Number getPrecisionBase(const uint8_t precision);
-
-    /**
-     * Returns amount of zeroes that need to be added at the beginning of the given number.
-     *
-     * @param value The value to check.
-     * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
-     */
-    static uint8_t getFloatZeroPaddingSize(
-        const Number value,
-        const uint8_t precision
-    );
-
-    /**
-     * Converts the given float to the Number representation.
-     * The input float is multiped by pow(value, precision).
-     *
-     * @param value The input number.
-     * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
-     */
-    static Number processFloatValue(float value, const uint8_t precision);
-
-    /**
-     * Converts the given number into float representation.
-     *
-     * @param value The input number.
-     * @param precision The precision to use (amount of digits in the decimal part). Maximum value is 3.
-     */
-    static float getFloatValue(Number value, const uint8_t precision);
-
-    /**
-     * Calculates the number of digits in the given number.
-     * 
-     * @param value Input number. It can be signed value.
-     * @param precision Number of decimal digits in the number.
-     * @returns Number of digits (including the sign if the value is signed).
-     */
-    static uint8_t calculateNumberSize(Number value, const uint8_t precision = 0);
-
-    /**
-     * Converts the given number to the string.
-     * It can be integer or floating point number.
-     * In a case of float the input value needs to be multiped by `pow(10, precision)`.
-     * 
-     * @param dst Destination where the number will be saved. The null terminator is not added at the end.
-     * @param value Number to convert.
-     * @param precision Number of decimal digits in the number.
-     * @return The number of written characters.
-     * @note The `dst` size should be calculated using HAUtils::calculateNumberSize method plus 1 extra byte for the null terminator.
-     */
-    static uint16_t numberToStr(char* dst, Number value, const uint8_t precision = 0);
-
-    /**
-     * Converts the given string into number.
-     * If the given string doesn't contain a valid number the `HAUtils::NumberMax` is returned.
-     *
-     * @param buffer The buffer that's supposed to contain the number.
-     * @param length Th length of the buffer.
-     */
-    static HAUtils::Number strToNumber(const uint8_t* buffer, const uint16_t length);
 };
 
 #endif
