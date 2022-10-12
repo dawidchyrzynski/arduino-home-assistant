@@ -4,8 +4,6 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-const HAUtils::Number HANumber::StateNone = HAUtils::NumberMax;
-
 HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),
     _precision(precision),
@@ -15,24 +13,23 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     _optimistic(false),
     _mode(ModeAuto),
     _unitOfMeasurement(nullptr),
-    _minValue(HAUtils::NumberMax),
-    _maxValue(HAUtils::NumberMax),
-    _step(HAUtils::NumberMax),
-    _currentState(StateNone),
+    _minValue(),
+    _maxValue(),
+    _step(),
+    _currentState(),
     _commandCallback(nullptr)
 {
 
 }
 
-bool HANumber::setState(const float state, const bool force)
+bool HANumber::setState(const HANumeric& state, const bool force)
 {
-    const HAUtils::Number realState = HAUtils::processFloatValue(state, _precision);
-    if (!force && realState == _currentState) {
+    if (!force && state == _currentState) {
         return true;
     }
 
-    if (publishState(realState)) {
-        _currentState = realState;
+    if (publishState(state)) {
+        _currentState = state;
         return true;
     }
 
@@ -44,9 +41,6 @@ void HANumber::buildSerializer()
     if (_serializer || !uniqueId()) {
         return;
     }
-
-    const HASerializer::PropertyValueType numberProperty =
-        HASerializer::precisionToPropertyType(_precision);
 
     _serializer = new HASerializer(this, 15); // 15 - max properties nb
 
@@ -66,16 +60,28 @@ void HANumber::buildSerializer()
         HASerializer::ProgmemPropertyValue
     );
 
-    if (_minValue != HAUtils::NumberMax) {
-        _serializer->set(AHATOFSTR(HAMinProperty), &_minValue, numberProperty);
+    if (_minValue.isSet()) {
+        _serializer->set(
+            AHATOFSTR(HAMinProperty),
+            &_minValue,
+            HASerializer::NumberPropertyType
+        );
     }
 
-    if (_maxValue != HAUtils::NumberMax) {
-        _serializer->set(AHATOFSTR(HAMaxProperty), &_maxValue, numberProperty);
+    if (_maxValue.isSet()) {
+        _serializer->set(
+            AHATOFSTR(HAMaxProperty),
+            &_maxValue,
+            HASerializer::NumberPropertyType
+        );
     }
 
-    if (_step != HAUtils::NumberMax) {
-        _serializer->set(AHATOFSTR(HAStepProperty), &_step, numberProperty);
+    if (_step.isSet()) {
+        _serializer->set(
+            AHATOFSTR(HAStepProperty),
+            &_step,
+            HASerializer::NumberPropertyType
+        );
     }
 
     if (_retain) {
@@ -131,9 +137,9 @@ void HANumber::onMqttMessage(
     }
 }
 
-bool HANumber::publishState(const HAUtils::Number state)
+bool HANumber::publishState(const HANumeric& state)
 {
-    if (state == StateNone) {
+    if (!state.isSet()) {
         return publishOnDataTopic(
             AHATOFSTR(HAStateTopic),
             AHATOFSTR(HAStateNone),
@@ -141,14 +147,14 @@ bool HANumber::publishState(const HAUtils::Number state)
         );
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(state, _precision);
+    const uint8_t size = state.calculateSize();
     if (size == 0) {
         return false;
     }
 
     char str[size + 1]; // with null terminator
     str[size] = 0;
-    HAUtils::numberToStr(str, state, _precision);
+    state.toStr(str);
 
     return publishOnDataTopic(
         AHATOFSTR(HAStateTopic),
@@ -164,11 +170,12 @@ void HANumber::handleCommand(const uint8_t* cmd, const uint16_t length)
     }
 
     if (memcmp_P(cmd, HAStateNone, length) == 0) {
-        _commandCallback(StateNone, _precision, this);
+        _commandCallback(HANumeric(), this);
     } else {
-        HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-        if (number != HAUtils::NumberMax) {
-            _commandCallback(number, _precision, this);
+        HANumeric number = HANumeric::fromStr(cmd, length);
+        if (number.isSet()) {
+            number.setPrecision(_precision);
+            _commandCallback(number, this);
         }
     }
 }

@@ -2,11 +2,21 @@
 #define AHA_HANUMBER_H
 
 #include "HABaseDeviceType.h"
-#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_NUMBER
 
-#define HANUMBER_CALLBACK(name) void (*name)(HAUtils::Number number, uint8_t precision, HANumber* sender)
+#define _SET_STATE_OVERLOAD(type) \
+    /** @overload */ \
+    inline bool setState(const type state, const bool force = false) \
+        { return setState(HANumeric(state, _precision), force); }
+
+#define _SET_CURRENT_STATE_OVERLOAD(type) \
+    /** @overload */ \
+    inline void setCurrentState(const type state) \
+        { setCurrentState(HANumeric(state, _precision)); }
+
+#define HANUMBER_CALLBACK(name) void (*name)(HANumeric number, HANumber* sender)
 
 /**
  * HANumber adds a slider or a box in the Home Assistant panel
@@ -19,9 +29,6 @@
 class HANumber : public HABaseDeviceType
 {
 public:
-    /// Represents "None" state of the number.
-    static const HAUtils::Number StateNone;
-
     /// Represents mode of the number.
     enum Mode {
         ModeAuto = 0,
@@ -47,7 +54,15 @@ public:
      * @param force Forces to update state without comparing it to a previous known state.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool setState(const float state, const bool force = false);
+    bool setState(const HANumeric& state, const bool force = false);
+
+    _SET_STATE_OVERLOAD(int8_t)
+    _SET_STATE_OVERLOAD(int16_t)
+    _SET_STATE_OVERLOAD(int32_t)
+    _SET_STATE_OVERLOAD(uint8_t)
+    _SET_STATE_OVERLOAD(uint16_t)
+    _SET_STATE_OVERLOAD(uint32_t)
+    _SET_STATE_OVERLOAD(float)
 
     /**
      * Sets current state of the number without publishing it to Home Assistant.
@@ -56,15 +71,23 @@ public:
      *
      * @param state New state of the number.
      */
-    inline void setCurrentState(const float state)
-        { _currentState = HAUtils::processFloatValue(state, _precision); }
+    inline void setCurrentState(const HANumeric& state)
+        { if (state.getPrecision() == _precision) { _currentState = state; } }
+
+    _SET_CURRENT_STATE_OVERLOAD(int8_t)
+    _SET_CURRENT_STATE_OVERLOAD(int16_t)
+    _SET_CURRENT_STATE_OVERLOAD(int32_t)
+    _SET_CURRENT_STATE_OVERLOAD(uint8_t)
+    _SET_CURRENT_STATE_OVERLOAD(uint16_t)
+    _SET_CURRENT_STATE_OVERLOAD(uint32_t)
+    _SET_CURRENT_STATE_OVERLOAD(float)
 
     /**
      * Returns last known state of the number.
      * If setState method wasn't called the initial value will be returned.
      */
-    inline float getCurrentState() const
-        { return HAUtils::getFloatValue(_currentState, _precision); }
+    inline const HANumeric& getCurrentState() const
+        { return _currentState; }
 
     /**
      * Sets class of the device.
@@ -119,31 +142,31 @@ public:
      * @param units For example: °C, %
      */
     inline void setUnitOfMeasurement(const char* unitOfMeasurement)
-        { _unitOfMeasurement = unitOfMeasurement; } 
+        { _unitOfMeasurement = unitOfMeasurement; }
 
     /**
      * Sets the minimum value that can be set from the Home Assistant panel.
      *
-     * @param min The minimal value. By default it's `1`.
+     * @param min The minimal value. By default the value is not set.
      */
     inline void setMin(const float min)
-        { _minValue = HAUtils::processFloatValue(min, _precision); }
+        { _minValue = HANumeric(min, _precision); }
 
     /**
      * Sets the maximum value that can be set from the Home Assistant panel.
      *
-     * @param min The maximum value. By default it's `100`.
+     * @param min The maximum value. By default the value is not set.
      */
     inline void setMax(const float max)
-        { _maxValue = HAUtils::processFloatValue(max, _precision); }
+        { _maxValue = HANumeric(max, _precision); }
 
     /**
      * Sets step of the slider's movement in the Home Assistant panel.
      *
-     * @param step The step value. Smallest value `0.001`. By default it's `1`.
+     * @param step The step value. Smallest value `0.001`. By default the value is not set.
      */
     inline void setStep(const float step)
-        { _step = HAUtils::processFloatValue(step, _precision); }
+        { _step = HANumeric(step, _precision); }
 
     /**
      * Registers callback that will be called each time the number is changed in the HA panel.
@@ -166,15 +189,15 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given state.
-     * 
+     *
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishState(const HAUtils::Number state);
+    bool publishState(const HANumeric& state);
 
     /**
      * Parses the given command and executes the number's callback with proper value.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
@@ -212,16 +235,16 @@ private:
     const char* _unitOfMeasurement;
 
     /// The minimal value that can be set from the HA panel.
-    HAUtils::Number _minValue;
+    HANumeric _minValue;
 
     /// The maximum value that can be set from the HA panel.
-    HAUtils::Number _maxValue;
+    HANumeric _maxValue;
 
     /// The step of the slider's movement.
-    HAUtils::Number _step;
+    HANumeric _step;
 
-    /// The current state of the number. By default it's `HANumber::StateNone`.
-    HAUtils::Number _currentState;
+    /// The current state of the number. By default the value is not set.
+    HANumeric _currentState;
 
     /// The callback that will be called when the command is received from the HA.
     HANUMBER_CALLBACK(_commandCallback);
