@@ -3,6 +3,7 @@
 
 #include "../HAMqtt.h"
 #include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 #include "../utils/HASerializer.h"
 
 HACover::HACover(const char* uniqueId, const Features features) :
@@ -159,7 +160,7 @@ bool HACover::publishPosition(int16_t position)
     }
 
     char str[6 + 1] = {0}; // int16_t digits with null terminator
-    HAUtils::numberToStr(str, position);
+    HANumeric(position, 0).toStr(str);
 
     return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);
 }
