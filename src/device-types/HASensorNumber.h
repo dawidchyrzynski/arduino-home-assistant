@@ -2,9 +2,19 @@
 #define AHA_HASENSORNUMBER_H
 
 #include "HASensor.h"
-#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_SENSOR
+
+#define _SET_VALUE_OVERLOAD(type) \
+    /** @overload */ \
+    inline bool setValue(const type value, const bool force = false) \
+        { return setValue(HANumeric(value, _precision), force); }
+
+#define _SET_CURRENT_VALUE_OVERLOAD(type) \
+    /** @overload */ \
+    inline void setCurrentValue(const type value) \
+        { setCurrentValue(HANumeric(value, _precision)); }
 
 /**
  * HASensorInteger allows to publish numeric values of a sensor that will be displayed in the HA panel.
@@ -27,22 +37,19 @@ public:
      * Changes value of the sensor and publish MQTT message.
      * Please note that if a new value is the same as the previous one the MQTT message won't be published.
      *
-     * @param value New value of the sensor.
+     * @param value New value of the sensor. THe precision of the value needs to match precision of the sensor.
      * @param force Forces to update the value without comparing it to a previous known value.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool setValue(const HAUtils::Number value, const bool force = false);
+    bool setValue(const HANumeric& value, const bool force = false);
 
-    /**
-     * Changes value of the sensor using the float value.
-     * This method converts the given float into underlying data type. 
-     *
-     * @param value New value of the sensor.
-     * @param force Forces to update the value without comparing it to a previous known value.
-     * @returns Returns `true` if the MQTT message has been published successfully.
-     */
-    inline bool setValueFloat(const float value, const bool force = false)
-        { return setValue(HAUtils::processFloatValue(value, _precision), force); }
+    _SET_VALUE_OVERLOAD(int8_t)
+    _SET_VALUE_OVERLOAD(int16_t)
+    _SET_VALUE_OVERLOAD(int32_t)
+    _SET_VALUE_OVERLOAD(uint8_t)
+    _SET_VALUE_OVERLOAD(uint16_t)
+    _SET_VALUE_OVERLOAD(uint32_t)
+    _SET_VALUE_OVERLOAD(float)
 
     /**
      * Sets the current value of the sensor without publishing it to Home Assistant.
@@ -50,30 +57,23 @@ public:
      *
      * @param value New value of the sensor.
      */
-    inline void setCurrentValue(const HAUtils::Number value)
-        { _currentValue = value; }
+    inline void setCurrentValue(const HANumeric& value)
+        { if (value.getPrecision() == _precision) { _currentValue = value; } }
 
-    /**
-     * Sets the current value of the sensor using the float type.
-     *
-     * @param value The float value to set. It will be converted into underlying data type.
-     */
-    inline void setCurrentValueFloat(const float value)
-        { _currentValue = HAUtils::processFloatValue(value, _precision); }
+    _SET_CURRENT_VALUE_OVERLOAD(int8_t)
+    _SET_CURRENT_VALUE_OVERLOAD(int16_t)
+    _SET_CURRENT_VALUE_OVERLOAD(int32_t)
+    _SET_CURRENT_VALUE_OVERLOAD(uint8_t)
+    _SET_CURRENT_VALUE_OVERLOAD(uint16_t)
+    _SET_CURRENT_VALUE_OVERLOAD(uint32_t)
+    _SET_CURRENT_VALUE_OVERLOAD(float)
 
     /**
      * Returns the last known value of the sensor.
-     * By default it's `HAUtils::NumberMax`.
+     * By default the value is not set.
      */
-    inline HAUtils::Number getCurrentValue() const
+    inline const HANumeric& getCurrentValue() const
         { return _currentValue; }
-
-    /**
-     * Returns the last known value of the sensor as a float.
-     * By default it's `HAUtils::FloatMax`.
-     */
-    inline float getCurrentValueFloat() const
-        { return HAUtils::getFloatValue(_currentValue, _precision); }
 
 protected:
     virtual void onMqttConnected() override;
@@ -85,13 +85,13 @@ private:
      * @param state The value to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishValue(const HAUtils::Number value);
+    bool publishValue(const HANumeric& value);
 
     /// The precision of the sensor. By default it's `HASensorNumber::PrecisionP0`.
     const NumberPrecision _precision;
 
-    /// The current value of the sensor. By default it's `HAUtils::NumberMax`.
-    HAUtils::Number _currentValue;
+    /// The current value of the sensor. By default the value is not set.
+    HANumeric _currentValue;
 };
 
 #endif

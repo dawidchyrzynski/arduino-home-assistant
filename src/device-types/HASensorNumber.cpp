@@ -1,7 +1,6 @@
 #include "HASensorNumber.h"
 #ifndef EX_ARDUINOHA_SENSOR
 
-#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
 HASensorNumber::HASensorNumber(
@@ -10,13 +9,17 @@ HASensorNumber::HASensorNumber(
 ) :
     HASensor(uniqueId),
     _precision(precision),
-    _currentValue(HAUtils::NumberMax)
+    _currentValue()
 {
 
 }
 
-bool HASensorNumber::setValue(const HAUtils::Number value, const bool force)
+bool HASensorNumber::setValue(const HANumeric& value, const bool force)
 {
+    if (value.getPrecision() != _precision) {
+        return false;
+    }
+
     if (!force && value == _currentValue) {
         return true;
     }
@@ -39,20 +42,20 @@ void HASensorNumber::onMqttConnected()
     publishValue(_currentValue);
 }
 
-bool HASensorNumber::publishValue(const HAUtils::Number value)
+bool HASensorNumber::publishValue(const HANumeric& value)
 {
-    if (value == HAUtils::NumberMax) {
+    if (!value.isSet()) {
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(value, _precision);
+    uint8_t size = value.calculateSize();
     if (size == 0) {
         return false;
     }
 
     char str[size + 1]; // with null terminator
     str[size] = 0;
-    HAUtils::numberToStr(str, value, _precision);
+    value.toStr(str);
 
     return publishOnDataTopic(
         AHATOFSTR(HAStateTopic),
