@@ -21,6 +21,7 @@
 #include "device-types/HASwitch.h"
 #include "device-types/HATagScanner.h"
 #include "utils/HAUtils.h"
+#include "utils/HANumeric.h"
 
 #ifdef ARDUINOHA_TEST
 #include "mocks/AUnitHelpers.h"

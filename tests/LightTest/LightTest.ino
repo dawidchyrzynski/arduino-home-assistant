@@ -204,7 +204,9 @@ AHA_TEST(LightTest, default_params_with_color_temp) {
             "}"
         )
     )
-    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+
+    // config + default state + default color temp
+    assertEqual(3, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(LightTest, default_params_with_rgb) {
@@ -251,7 +253,9 @@ AHA_TEST(LightTest, default_params_with_brightness_and_color_temp) {
             "}"
         )
     )
-    assertEqual(3, mock->getFlushedMessagesNb()); // config + default state + default brightness
+
+    // config + default state + default brightness + default color temp
+    assertEqual(4, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(LightTest, state_command_subscription) {
@@ -484,7 +488,7 @@ AHA_TEST(LightTest, brightness_scale_setter) {
         )
     )
 }
- 
+
 AHA_TEST(LightTest, brightness_scale_feature_disabled) {
     prepareTest
 
@@ -598,7 +602,7 @@ AHA_TEST(LightTest, publish_state) {
     HALight light(testUniqueId);
 
     assertTrue(light.setState(true));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(LightTest, publish_state_debounce) {
@@ -621,7 +625,7 @@ AHA_TEST(LightTest, publish_state_debounce_skip) {
     light.setCurrentState(true);
 
     assertTrue(light.setState(true, true));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(LightTest, publish_nothing_if_brightness_feature_is_disabled) {
@@ -641,7 +645,7 @@ AHA_TEST(LightTest, publish_brightness) {
     HALight light(testUniqueId, HALight::BrightnessFeature);
 
     assertTrue(light.setBrightness(50));
-    assertSingleMqttMessage(AHATOFSTR(BrightnessStateTopic), "50", true) 
+    assertSingleMqttMessage(AHATOFSTR(BrightnessStateTopic), "50", true)
 }
 
 AHA_TEST(LightTest, publish_brightness_debounce) {
@@ -664,7 +668,7 @@ AHA_TEST(LightTest, publish_brightness_debounce_skip) {
     light.setCurrentBrightness(50);
 
     assertTrue(light.setBrightness(50, true));
-    assertSingleMqttMessage(AHATOFSTR(BrightnessStateTopic), "50", true) 
+    assertSingleMqttMessage(AHATOFSTR(BrightnessStateTopic), "50", true)
 }
 
 AHA_TEST(LightTest, publish_nothing_if_color_temperature_feature_is_disabled) {
@@ -684,7 +688,7 @@ AHA_TEST(LightTest, publish_color_temperature) {
     HALight light(testUniqueId, HALight::ColorTemperatureFeature);
 
     assertTrue(light.setColorTemperature(200));
-    assertSingleMqttMessage(AHATOFSTR(ColorTemperatureStateTopic), "200", true) 
+    assertSingleMqttMessage(AHATOFSTR(ColorTemperatureStateTopic), "200", true)
 }
 
 AHA_TEST(LightTest, publish_color_temperature_debounce) {
@@ -707,7 +711,7 @@ AHA_TEST(LightTest, publish_color_temperature_debounce_skip) {
     light.setCurrentColorTemperature(200);
 
     assertTrue(light.setColorTemperature(200, true));
-    assertSingleMqttMessage(AHATOFSTR(ColorTemperatureStateTopic), "200", true) 
+    assertSingleMqttMessage(AHATOFSTR(ColorTemperatureStateTopic), "200", true)
 }
 
 AHA_TEST(LightTest, publish_rgb_color) {
@@ -717,7 +721,7 @@ AHA_TEST(LightTest, publish_rgb_color) {
     HALight light(testUniqueId, HALight::RGBFeature);
 
     assertTrue(light.setRGBColor(HALight::RGBColor(255,123,111)));
-    assertSingleMqttMessage(AHATOFSTR(RGBStateTopic), "255,123,111", true) 
+    assertSingleMqttMessage(AHATOFSTR(RGBStateTopic), "255,123,111", true)
 }
 
 AHA_TEST(LightTest, publish_rgb_color_debounce) {
@@ -800,9 +804,8 @@ AHA_TEST(LightTest, brightness_command_overflow) {
     prepareTest
 
     HALight light(testUniqueId);
-    light.setBrightnessScale(30);
     light.onBrightnessCommand(onBrightnessCommandReceived);
-    mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("100"));
+    mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("300"));
 
     assertBrightnessCallbackNotCalled()
 }
@@ -858,28 +861,6 @@ AHA_TEST(LightTest, color_temperature_command_max) {
     mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("500"));
 
     assertColorTempCallbackCalled(500, &light)
-}
-
-AHA_TEST(LightTest, color_temperature_command_below_min) {
-    prepareTest
-
-    HALight light(testUniqueId, HALight::ColorTemperatureFeature);
-    light.setBrightnessScale(30);
-    light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
-    mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("1"));
-
-    assertColorTempCallbackNotCalled()
-}
-
-AHA_TEST(LightTest, color_temperature_command_above_max) {
-    prepareTest
-
-    HALight light(testUniqueId, HALight::ColorTemperatureFeature);
-    light.setBrightnessScale(30);
-    light.onColorTemperatureCommand(onColorTemperatureCommandReceived);
-    mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("1000"));
-
-    assertColorTempCallbackNotCalled()
 }
 
 AHA_TEST(LightTest, color_temperature_command_invalid) {

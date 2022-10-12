@@ -50,10 +50,9 @@
 #define assertModeCallbackNotCalled() \
     assertFalse(lastModeCallbackCall.called);
 
-#define assertTargetTempCallbackCalled(expectedTemperature, expectedPrecision, callerPtr) \
+#define assertTargetTempCallbackCalled(expectedTemperature, callerPtr) \
     assertTrue(lastTargetTempCallbackCall.called); \
-    assertEqual((HAUtils::Number)expectedTemperature, lastTargetTempCallbackCall.temperature); \
-    assertEqual(expectedPrecision, lastTargetTempCallbackCall.precision); \
+    assertTrue(expectedTemperature == lastTargetTempCallbackCall.temperature); \
     assertEqual(callerPtr, lastTargetTempCallbackCall.caller);
 
 #define assertTargetTempCallbackNotCalled() \
@@ -123,14 +122,12 @@ struct ModeCallback {
 
 struct TargetTempCallback {
     bool called = false;
-    HAUtils::Number temperature = HAUtils::NumberMax;
-    uint8_t precision = 0;
+    HANumeric temperature;
     HAHVAC* caller = nullptr;
 
     void reset() {
         called = false;
-        temperature = HAUtils::NumberMax;
-        precision = 0;
+        temperature.reset();
         caller = nullptr;
     }
 };
@@ -194,15 +191,10 @@ void onModeCommandReceived(HAHVAC::Mode mode, HAHVAC* caller)
     lastModeCallbackCall.caller = caller;
 }
 
-void onTargetTemperatureCommandReceived(
-    HAUtils::Number temperature,
-    uint8_t precision,
-    HAHVAC* caller
-)
+void onTargetTemperatureCommandReceived(HANumeric temperature, HAHVAC* caller)
 {
     lastTargetTempCallbackCall.called = true;
     lastTargetTempCallbackCall.temperature = temperature;
-    lastTargetTempCallbackCall.precision = precision;
     lastTargetTempCallbackCall.caller = caller;
 }
 
@@ -364,7 +356,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p1) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
-            "\"temp_cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"temp_cmd_tpl\":\"{{int(float(value)*10**1)}}\","
             "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -389,7 +381,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p2) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
-            "\"temp_cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"temp_cmd_tpl\":\"{{int(float(value)*10**2)}}\","
             "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -414,7 +406,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p3) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
-            "\"temp_cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"temp_cmd_tpl\":\"{{int(float(value)*10**3)}}\","
             "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -1072,7 +1064,7 @@ AHA_TEST(HVACTest, publish_nothing_if_retained) {
             HAHVAC::ModesFeature
     );
     hvac.setRetain(true);
-    hvac.setCurrentTemperature(21.5);
+    hvac.setCurrentTemperature(21.5f);
     hvac.setCurrentAction(HAHVAC::CoolingAction);
     hvac.setCurrentFanMode(HAHVAC::AutoFanMode);
     hvac.setCurrentSwingMode(HAHVAC::OnSwingMode);
@@ -1086,7 +1078,7 @@ AHA_TEST(HVACTest, publish_current_temperature_on_connect) {
     prepareTest
 
     HAHVAC hvac(testUniqueId);
-    hvac.setCurrentCurrentTemperature(21.5);
+    hvac.setCurrentCurrentTemperature(21.5f);
     mqtt.loop();
 
     assertMqttMessage(1, AHATOFSTR(CurrentTemperatureTopic), "21.5", true)
@@ -1098,8 +1090,8 @@ AHA_TEST(HVACTest, publish_current_temperature) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId);
 
-    assertTrue(hvac.setCurrentTemperature(21.5));
-    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.5", true) 
+    assertTrue(hvac.setCurrentTemperature(21.5f));
+    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.5", true)
 }
 
 AHA_TEST(HVACTest, publish_current_temperature_p2) {
@@ -1108,8 +1100,8 @@ AHA_TEST(HVACTest, publish_current_temperature_p2) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP2);
 
-    assertTrue(hvac.setCurrentTemperature(21.5));
-    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.50", true) 
+    assertTrue(hvac.setCurrentTemperature(21.5f));
+    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.50", true)
 }
 
 AHA_TEST(HVACTest, publish_current_temperature_p3) {
@@ -1118,8 +1110,8 @@ AHA_TEST(HVACTest, publish_current_temperature_p3) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::DefaultFeatures, HAHVAC::PrecisionP3);
 
-    assertTrue(hvac.setCurrentTemperature(21.555));
-    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.555", true) 
+    assertTrue(hvac.setCurrentTemperature(21.555f));
+    assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.555", true)
 }
 
 AHA_TEST(HVACTest, publish_current_temperature_debounce) {
@@ -1127,10 +1119,10 @@ AHA_TEST(HVACTest, publish_current_temperature_debounce) {
 
     mock->connectDummy();
     HAHVAC hvac(testUniqueId);
-    hvac.setCurrentCurrentTemperature(21.5);
+    hvac.setCurrentCurrentTemperature(21.5f);
 
     // it shouldn't publish data if state doesn't change
-    assertTrue(hvac.setCurrentTemperature(21.5));
+    assertTrue(hvac.setCurrentTemperature(21.5f));
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
 
@@ -1139,9 +1131,9 @@ AHA_TEST(HVACTest, publish_current_temperature_debounce_skip) {
 
     mock->connectDummy();
     HAHVAC hvac(testUniqueId);
-    hvac.setCurrentCurrentTemperature(21.5);
+    hvac.setCurrentCurrentTemperature(21.5f);
 
-    assertTrue(hvac.setCurrentTemperature(21.5, true));
+    assertTrue(hvac.setCurrentTemperature(21.5f, true));
     assertSingleMqttMessage(AHATOFSTR(CurrentTemperatureTopic), "21.5", true)
 }
 
@@ -1162,7 +1154,7 @@ AHA_TEST(HVACTest, publish_action_off) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::OffAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "off", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "off", true)
 }
 
 AHA_TEST(HVACTest, publish_action_heating) {
@@ -1172,7 +1164,7 @@ AHA_TEST(HVACTest, publish_action_heating) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::HeatingAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "heating", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "heating", true)
 }
 
 AHA_TEST(HVACTest, publish_action_cooling) {
@@ -1182,7 +1174,7 @@ AHA_TEST(HVACTest, publish_action_cooling) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::CoolingAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "cooling", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "cooling", true)
 }
 
 AHA_TEST(HVACTest, publish_action_drying) {
@@ -1192,7 +1184,7 @@ AHA_TEST(HVACTest, publish_action_drying) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::DryingAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "drying", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "drying", true)
 }
 
 AHA_TEST(HVACTest, publish_action_idle) {
@@ -1202,7 +1194,7 @@ AHA_TEST(HVACTest, publish_action_idle) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::IdleAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "idle", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "idle", true)
 }
 
 AHA_TEST(HVACTest, publish_action_fan) {
@@ -1212,7 +1204,7 @@ AHA_TEST(HVACTest, publish_action_fan) {
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
 
     assertTrue(hvac.setAction(HAHVAC::FanAction));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true)
 }
 
 AHA_TEST(HVACTest, publish_action_debounce) {
@@ -1221,7 +1213,7 @@ AHA_TEST(HVACTest, publish_action_debounce) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::ActionFeature);
     hvac.setCurrentAction(HAHVAC::FanAction);
-        
+
     assertTrue(hvac.setAction(HAHVAC::FanAction));
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
@@ -1234,7 +1226,7 @@ AHA_TEST(HVACTest, publish_action_debounce_skip) {
     hvac.setCurrentAction(HAHVAC::FanAction);
 
     assertTrue(hvac.setAction(HAHVAC::FanAction, true));
-    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true) 
+    assertSingleMqttMessage(AHATOFSTR(ActionTopic), "fan", true)
 }
 
 AHA_TEST(HVACTest, publish_aux_state_on_connect) {
@@ -1254,7 +1246,7 @@ AHA_TEST(HVACTest, publish_aux_state_on) {
     HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
 
     assertTrue(hvac.setAuxState(true));
-    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "ON", true)
 }
 
 AHA_TEST(HVACTest, publish_aux_state_debounce) {
@@ -1263,7 +1255,7 @@ AHA_TEST(HVACTest, publish_aux_state_debounce) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
     hvac.setCurrentAuxState(true);
-        
+
     assertTrue(hvac.setAuxState(true));
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
@@ -1276,7 +1268,7 @@ AHA_TEST(HVACTest, publish_aux_state_debounce_skip) {
     hvac.setCurrentAuxState(false);
 
     assertTrue(hvac.setAuxState(false, true));
-    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "OFF", true) 
+    assertSingleMqttMessage(AHATOFSTR(AuxStateTopic), "OFF", true)
 }
 
 AHA_TEST(HVACTest, publish_fan_mode_on_connect) {
@@ -1296,7 +1288,7 @@ AHA_TEST(HVACTest, publish_fan_mode_auto) {
     HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
 
     assertTrue(hvac.setFanMode(HAHVAC::AutoFanMode));
-    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "auto", true) 
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "auto", true)
 }
 
 AHA_TEST(HVACTest, publish_fan_mode_low) {
@@ -1306,7 +1298,7 @@ AHA_TEST(HVACTest, publish_fan_mode_low) {
     HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
 
     assertTrue(hvac.setFanMode(HAHVAC::LowFanMode));
-    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "low", true) 
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "low", true)
 }
 
 AHA_TEST(HVACTest, publish_fan_mode_medium) {
@@ -1316,7 +1308,7 @@ AHA_TEST(HVACTest, publish_fan_mode_medium) {
     HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
 
     assertTrue(hvac.setFanMode(HAHVAC::MediumFanMode));
-    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "medium", true) 
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "medium", true)
 }
 
 AHA_TEST(HVACTest, publish_fan_mode_high) {
@@ -1326,7 +1318,7 @@ AHA_TEST(HVACTest, publish_fan_mode_high) {
     HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
 
     assertTrue(hvac.setFanMode(HAHVAC::HighFanMode));
-    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true) 
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true)
 }
 
 AHA_TEST(HVACTest, publish_fan_mode_debounce) {
@@ -1335,7 +1327,7 @@ AHA_TEST(HVACTest, publish_fan_mode_debounce) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
     hvac.setCurrentFanMode(HAHVAC::HighFanMode);
-        
+
     assertTrue(hvac.setFanMode(HAHVAC::HighFanMode));
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
@@ -1348,7 +1340,7 @@ AHA_TEST(HVACTest, publish_fan_mode_debounce_skip) {
     hvac.setCurrentFanMode(HAHVAC::HighFanMode);
 
     assertTrue(hvac.setFanMode(HAHVAC::HighFanMode, true));
-    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true) 
+    assertSingleMqttMessage(AHATOFSTR(FanModeStateTopic), "high", true)
 }
 
 AHA_TEST(HVACTest, publish_swing_mode_on_connect) {
@@ -1477,7 +1469,7 @@ AHA_TEST(HVACTest, publish_target_temperature_on_connect) {
     prepareTest
 
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
-    hvac.setCurrentTargetTemperature(21.5);
+    hvac.setCurrentTargetTemperature(21.5f);
     mqtt.loop();
 
     assertMqttMessage(1, AHATOFSTR(TemperatureStateTopic), "21.5", true)
@@ -1489,8 +1481,8 @@ AHA_TEST(HVACTest, publish_target_temperature) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
 
-    assertTrue(hvac.setTargetTemperature(21.5));
-    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.5", true) 
+    assertTrue(hvac.setTargetTemperature(21.5f));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.5", true)
 }
 
 AHA_TEST(HVACTest, publish_target_temperature_p2) {
@@ -1499,8 +1491,8 @@ AHA_TEST(HVACTest, publish_target_temperature_p2) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature, HAHVAC::PrecisionP2);
 
-    assertTrue(hvac.setTargetTemperature(21.5));
-    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.50", true) 
+    assertTrue(hvac.setTargetTemperature(21.5f));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.50", true)
 }
 
 AHA_TEST(HVACTest, publish_target_temperature_p3) {
@@ -1509,8 +1501,8 @@ AHA_TEST(HVACTest, publish_target_temperature_p3) {
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature, HAHVAC::PrecisionP3);
 
-    assertTrue(hvac.setTargetTemperature(21.555));
-    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.555", true) 
+    assertTrue(hvac.setTargetTemperature(21.555f));
+    assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.555", true)
 }
 
 AHA_TEST(HVACTest, publish_target_temperature_debounce) {
@@ -1518,10 +1510,10 @@ AHA_TEST(HVACTest, publish_target_temperature_debounce) {
 
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
-    hvac.setCurrentTargetTemperature(21.5);
+    hvac.setCurrentTargetTemperature(21.5f);
 
     // it shouldn't publish data if state doesn't change
-    assertTrue(hvac.setTargetTemperature(21.5));
+    assertTrue(hvac.setTargetTemperature(21.5f));
     assertEqual(mock->getFlushedMessagesNb(), 0);
 }
 
@@ -1530,9 +1522,9 @@ AHA_TEST(HVACTest, publish_target_temperature_debounce_skip) {
 
     mock->connectDummy();
     HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
-    hvac.setCurrentTargetTemperature(21.5);
+    hvac.setCurrentTargetTemperature(21.5f);
 
-    assertTrue(hvac.setTargetTemperature(21.5, true));
+    assertTrue(hvac.setTargetTemperature(21.5f, true));
     assertSingleMqttMessage(AHATOFSTR(TemperatureStateTopic), "21.5", true)
 }
 
@@ -1775,7 +1767,7 @@ AHA_TEST(HVACTest, target_temperature_command_p1) {
     hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
 
-    assertTargetTempCallbackCalled(215, 1, &hvac)
+    assertTargetTempCallbackCalled(HANumeric(21.5f, 1), &hvac)
 }
 
 AHA_TEST(HVACTest, target_temperature_command_p2) {
@@ -1789,7 +1781,7 @@ AHA_TEST(HVACTest, target_temperature_command_p2) {
     hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
 
-    assertTargetTempCallbackCalled(215, 2, &hvac)
+    assertTargetTempCallbackCalled(HANumeric(2.15f, 2), &hvac)
 }
 
 AHA_TEST(HVACTest, target_temperature_command_p3) {
@@ -1803,7 +1795,7 @@ AHA_TEST(HVACTest, target_temperature_command_p3) {
     hvac.onTargetTemperatureCommand(onTargetTemperatureCommandReceived);
     mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
 
-    assertTargetTempCallbackCalled(215, 3, &hvac)
+    assertTargetTempCallbackCalled(HANumeric(0.215f, 3), &hvac)
 }
 
 AHA_TEST(HVACTest, target_temperature_command_invalid) {

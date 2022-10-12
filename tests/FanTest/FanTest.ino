@@ -16,7 +16,7 @@
 
 #define assertSpeedCallbackCalled(expectedSpeed, callerPtr) \
     assertTrue(lastSpeedCallbackCall.called); \
-    assertEqual(expectedSpeed, lastSpeedCallbackCall.speed); \
+    assertEqual((uint16_t)expectedSpeed, lastSpeedCallbackCall.speed); \
     assertEqual(callerPtr, lastSpeedCallbackCall.caller);
 
 #define assertSpeedCallbackNotCalled() \
@@ -45,7 +45,7 @@ struct SpeedCallback {
         called = false;
         speed = 0;
         caller = nullptr;
-    } 
+    }
 };
 
 static const char* testDeviceId = "testDevice";
@@ -122,7 +122,7 @@ AHA_TEST(FanTest, default_params_with_speed) {
     )
     assertEqual(3, mock->getFlushedMessagesNb()); // config + default state + default speed
 }
- 
+
 AHA_TEST(FanTest, state_command_subscription) {
     prepareTest
 
@@ -346,7 +346,7 @@ AHA_TEST(FanTest, current_speed_setter) {
     fan.setCurrentSpeed(50);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(50, fan.getCurrentSpeed());
+    assertEqual((uint16_t)50, fan.getCurrentSpeed());
 }
 
 AHA_TEST(FanTest, publish_state) {
@@ -356,7 +356,7 @@ AHA_TEST(FanTest, publish_state) {
     HAFan fan(testUniqueId);
 
     assertTrue(fan.setState(true));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(FanTest, publish_state_debounce) {
@@ -379,7 +379,7 @@ AHA_TEST(FanTest, publish_state_debounce_skip) {
     fan.setCurrentState(true);
 
     assertTrue(fan.setState(true, true));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(FanTest, publish_nothing_if_speed_feature_is_disabled) {
@@ -399,7 +399,7 @@ AHA_TEST(FanTest, publish_speed) {
     HAFan fan(testUniqueId, HAFan::SpeedsFeature);
 
     assertTrue(fan.setSpeed(50));
-    assertSingleMqttMessage(AHATOFSTR(SpeedPercentageTopic), "50", true) 
+    assertSingleMqttMessage(AHATOFSTR(SpeedPercentageTopic), "50", true)
 }
 
 AHA_TEST(FanTest, publish_speed_debounce) {
@@ -422,7 +422,7 @@ AHA_TEST(FanTest, publish_speed_debounce_skip) {
     fan.setCurrentSpeed(50);
 
     assertTrue(fan.setSpeed(50, true));
-    assertSingleMqttMessage(AHATOFSTR(SpeedPercentageTopic), "50", true) 
+    assertSingleMqttMessage(AHATOFSTR(SpeedPercentageTopic), "50", true)
 }
 
 AHA_TEST(FanTest, state_command_on) {
@@ -456,16 +456,6 @@ AHA_TEST(FanTest, state_command_different_fan) {
     );
 
     assertStateCallbackNotCalled()
-}
-
-AHA_TEST(FanTest, speed_command_below_min) {
-    prepareTest
-
-    HAFan fan(testUniqueId);
-    fan.onSpeedCommand(onSpeedCommandReceived);
-    mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("0"));
-
-    assertSpeedCallbackNotCalled()
 }
 
 AHA_TEST(FanTest, speed_command_half) {

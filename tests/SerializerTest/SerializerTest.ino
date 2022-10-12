@@ -86,11 +86,11 @@ AHA_TEST(SerializerTest, bool_true_field) {
 AHA_TEST(SerializerTest, number_zero_field) {
     prepareTest(1)
 
-    HAUtils::Number value = 0;
+    HANumeric value(0, 0);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP0PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer)
@@ -100,11 +100,11 @@ AHA_TEST(SerializerTest, number_zero_field) {
 AHA_TEST(SerializerTest, number_signed_field) {
     prepareTest(1)
 
-    HAUtils::Number value = -12346756;
+    HANumeric value(-12346756, 0);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP0PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer)
@@ -114,11 +114,11 @@ AHA_TEST(SerializerTest, number_signed_field) {
 AHA_TEST(SerializerTest, number_unsigned_field) {
     prepareTest(1)
 
-    HAUtils::Number value = 312346733;
+    HANumeric value(312346733, 0);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP0PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -128,11 +128,11 @@ AHA_TEST(SerializerTest, number_unsigned_field) {
 AHA_TEST(SerializerTest, float_p1_field) {
     prepareTest(1)
 
-    HAUtils::Number value = HAUtils::processFloatValue(250.5235, 1);
+    HANumeric value(250.5235f, 1);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP1PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -142,11 +142,11 @@ AHA_TEST(SerializerTest, float_p1_field) {
 AHA_TEST(SerializerTest, float_p2_field) {
     prepareTest(1)
 
-    HAUtils::Number value = HAUtils::processFloatValue(250.5235, 2);
+    HANumeric value(250.5235f, 2);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP2PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -156,11 +156,11 @@ AHA_TEST(SerializerTest, float_p2_field) {
 AHA_TEST(SerializerTest, float_p3_field) {
     prepareTest(1)
 
-    HAUtils::Number value = HAUtils::processFloatValue(250.5235, 3);
+    HANumeric value(250.5235f, 3);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP3PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -170,11 +170,11 @@ AHA_TEST(SerializerTest, float_p3_field) {
 AHA_TEST(SerializerTest, float_p3_zero_signed_field) {
     prepareTest(1)
 
-    HAUtils::Number value = HAUtils::processFloatValue(-0.243, 3);
+    HANumeric value(-0.243f, 3);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP3PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -184,11 +184,11 @@ AHA_TEST(SerializerTest, float_p3_zero_signed_field) {
 AHA_TEST(SerializerTest, float_p3_zero_unsigned_field) {
     prepareTest(1)
 
-    HAUtils::Number value = HAUtils::processFloatValue(0.243, 3);
+    HANumeric value(0.243f, 3);
     serializer.set(
         AHATOFSTR(HANameProperty),
         &value,
-        HASerializer::NumberP3PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer);
@@ -345,11 +345,11 @@ AHA_TEST(SerializerTest, mixed_elements) {
     serializer.set(AHATOFSTR(HANameProperty), "TestName");
     serializer.topic(AHATOFSTR(HAStateTopic));
 
-    HAUtils::Number intValue = 312346733;
+    HANumeric intValue(312346733, 0);
     serializer.set(
         AHATOFSTR(HAIconProperty),
         &intValue,
-        HASerializer::NumberP0PropertyType
+        HASerializer::NumberPropertyType
     );
 
     flushSerializer(mock, serializer)

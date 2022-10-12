@@ -5,10 +5,9 @@
     initMqttTest(testDeviceId) \
     lastCommandCallbackCall.reset();
 
-#define assertCommandCallbackCalled(expectedNumber, expectedPrecision, callerPtr) \
+#define assertCommandCallbackCalled(expectedNumber, callerPtr) \
     assertTrue(lastCommandCallbackCall.called); \
-    assertEqual((HAUtils::Number)expectedNumber, lastCommandCallbackCall.number); \
-    assertEqual(expectedPrecision, lastCommandCallbackCall.precision); \
+    assertTrue(expectedNumber == lastCommandCallbackCall.number); \
     assertEqual(callerPtr, lastCommandCallbackCall.caller);
 
 #define assertCommandCallbackNotCalled() \
@@ -18,14 +17,12 @@ using aunit::TestRunner;
 
 struct CommandCallback {
     bool called = false;
-    HAUtils::Number number = HANumber::StateNone;
-    uint8_t precision = 0;
+    HANumeric number;
     HANumber* caller = nullptr;
 
     void reset() {
         called = false;
-        number = HANumber::StateNone;
-        precision = 0;
+        number.reset();
         caller = nullptr;
     }
 };
@@ -38,15 +35,10 @@ const char ConfigTopic[] PROGMEM = {"homeassistant/number/testDevice/uniqueNumbe
 const char CommandTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/cmd_t"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueNumber/stat_t"};
 
-void onCommandReceived(
-    HAUtils::Number number,
-    uint8_t precision,
-    HANumber* caller
-)
+void onCommandReceived(HANumeric number, HANumber* caller)
 {
     lastCommandCallbackCall.called = true;
     lastCommandCallbackCall.number = number;
-    lastCommandCallbackCall.precision = precision;
     lastCommandCallbackCall.caller = caller;
 }
 
@@ -105,6 +97,17 @@ AHA_TEST(NumberTest, availability) {
     )
 }
 
+AHA_TEST(NumberTest, publish_nothing_if_retained) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.setRetain(true);
+    number.setCurrentState(50);
+    mqtt.loop();
+
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
 AHA_TEST(NumberTest, publish_state_none) {
     prepareTest
 
@@ -115,59 +118,180 @@ AHA_TEST(NumberTest, publish_state_none) {
     assertMqttMessage(1, AHATOFSTR(StateTopic), "None", true)
 }
 
-AHA_TEST(NumberTest, publish_last_known_state_p0) {
+AHA_TEST(NumberTest, set_state_int8) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    int8_t value = -123;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-123", true)
+}
+
+AHA_TEST(NumberTest, set_state_int16) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    int16_t value = -12345;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-12345", true)
+}
+
+AHA_TEST(NumberTest, set_state_int32) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    int32_t value = -1234567;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-1234567", true)
+}
+
+AHA_TEST(NumberTest, set_state_uint8) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    uint8_t value = 254;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "254", true)
+}
+
+AHA_TEST(NumberTest, set_state_uint16) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    uint16_t value = 65200;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "65200", true)
+}
+
+AHA_TEST(NumberTest, set_state_uint32) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId);
+    uint32_t value = 105200;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "105200", true)
+}
+
+AHA_TEST(NumberTest, set_state_float_p1) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId, HANumber::PrecisionP1);
+    float value = 25.1f;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "25.1", true)
+}
+
+AHA_TEST(NumberTest, set_state_float_p2) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId, HANumber::PrecisionP2);
+    float value = -25.1f;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-25.10", true)
+}
+
+AHA_TEST(NumberTest, set_state_float_p3) {
+    prepareTest
+
+    mock->connectDummy();
+    HANumber number(testUniqueId, HANumber::PrecisionP3);
+    float value = -0.333333f;
+
+    assertTrue(number.setState(value));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "-0.333", true)
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_int8) {
     prepareTest
 
     HANumber number(testUniqueId);
-    number.setCurrentState(50);
-    mqtt.loop();
+    int8_t value = -123;
 
-    assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "50", true)
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isInt8());
+    assertEqual(value, number.getCurrentState().toInt8());
 }
 
-AHA_TEST(NumberTest, publish_last_known_state_p1) {
+AHA_TEST(NumberTest, current_state_setter_getter_int16) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    int16_t value = -1234;
+
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isInt16());
+    assertEqual(value, number.getCurrentState().toInt16());
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_int32) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    int32_t value = -12345;
+
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isInt32());
+    assertEqual(value, number.getCurrentState().toInt32());
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_uint8) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    uint8_t value = 254;
+
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isUInt8());
+    assertEqual(value, number.getCurrentState().toUInt8());
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_uint16) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    uint16_t value = 12345;
+
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isUInt16());
+    assertEqual(value, number.getCurrentState().toUInt16());
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_uint32) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    uint32_t value = 1234567;
+
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isUInt32());
+    assertEqual(value, number.getCurrentState().toUInt32());
+}
+
+AHA_TEST(NumberTest, current_state_setter_getter_float) {
     prepareTest
 
     HANumber number(testUniqueId, HANumber::PrecisionP1);
-    number.setCurrentState(50);
-    mqtt.loop();
+    float value = 25.0f;
 
-    assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "50.0", true)
-}
-
-AHA_TEST(NumberTest, publish_last_known_state_p2) {
-    prepareTest
-
-    HANumber number(testUniqueId, HANumber::PrecisionP2);
-    number.setCurrentState(8888);
-    mqtt.loop();
-
-    assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "8888.00", true)
-}
-
-AHA_TEST(NumberTest, publish_last_known_state_p3) {
-    prepareTest
-
-    HANumber number(testUniqueId, HANumber::PrecisionP3);
-    number.setCurrentState(1.234);
-    mqtt.loop();
-
-    assertEqual(2, mock->getFlushedMessagesNb());
-    assertMqttMessage(1, AHATOFSTR(StateTopic), "1.234", true)
-}
-
-AHA_TEST(NumberTest, publish_nothing_if_retained) {
-    prepareTest
-
-    HANumber number(testUniqueId);
-    number.setRetain(true);
-    number.setCurrentState(50);
-    mqtt.loop();
-
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    number.setCurrentState(value);
+    assertTrue(number.getCurrentState().isFloat());
+    assertNear(value, number.getCurrentState().toFloat(), 0.1);
 }
 
 AHA_TEST(NumberTest, name_setter) {
@@ -371,7 +495,7 @@ AHA_TEST(NumberTest, min_setter_p1) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**1)}}\","
             "\"min\":2.5,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -393,7 +517,7 @@ AHA_TEST(NumberTest, min_setter_p2) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**2)}}\","
             "\"min\":95467.50,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -415,7 +539,7 @@ AHA_TEST(NumberTest, min_setter_p3) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**3)}}\","
             "\"min\":50.500,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -458,7 +582,7 @@ AHA_TEST(NumberTest, max_setter_p1) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**1)}}\","
             "\"max\":2.5,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -480,7 +604,7 @@ AHA_TEST(NumberTest, max_setter_p2) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**2)}}\","
             "\"max\":95467.50,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -502,7 +626,7 @@ AHA_TEST(NumberTest, max_setter_p3) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**3)}}\","
             "\"max\":50.500,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -545,7 +669,7 @@ AHA_TEST(NumberTest, step_setter_p1) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**1}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**1)}}\","
             "\"step\":2.5,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -567,7 +691,7 @@ AHA_TEST(NumberTest, step_setter_p2) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**2}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**2)}}\","
             "\"step\":0.01,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -589,7 +713,7 @@ AHA_TEST(NumberTest, step_setter_p3) {
         (
             "{"
             "\"uniq_id\":\"uniqueNumber\","
-            "\"cmd_tpl\":\"{{float(value)/10**3}}\","
+            "\"cmd_tpl\":\"{{int(float(value)*10**3)}}\","
             "\"step\":0.001,"
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
@@ -599,44 +723,14 @@ AHA_TEST(NumberTest, step_setter_p3) {
     )
 }
 
-AHA_TEST(NumberTest, command_none_p0) {
+AHA_TEST(NumberTest, command_none) {
     prepareTest
 
     HANumber number(testUniqueId);
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
 
-    assertCommandCallbackCalled(HANumber::StateNone, 0, &number)
-}
-
-AHA_TEST(NumberTest, command_none_p1) {
-    prepareTest
-
-    HANumber number(testUniqueId, HANumber::PrecisionP1);
-    number.onCommand(onCommandReceived);
-    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
-
-    assertCommandCallbackCalled(HANumber::StateNone, 1, &number)
-}
-
-AHA_TEST(NumberTest, command_none_p2) {
-    prepareTest
-
-    HANumber number(testUniqueId, HANumber::PrecisionP2);
-    number.onCommand(onCommandReceived);
-    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
-
-    assertCommandCallbackCalled(HANumber::StateNone, 2, &number)
-}
-
-AHA_TEST(NumberTest, command_none_p3) {
-    prepareTest
-
-    HANumber number(testUniqueId, HANumber::PrecisionP3);
-    number.onCommand(onCommandReceived);
-    mock->fakeMessage(AHATOFSTR(CommandTopic), F("None"));
-
-    assertCommandCallbackCalled(HANumber::StateNone, 3, &number)
+    assertCommandCallbackCalled(HANumeric(), &number)
 }
 
 AHA_TEST(NumberTest, command_number_zero) {
@@ -646,7 +740,8 @@ AHA_TEST(NumberTest, command_number_zero) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("0"));
 
-    assertCommandCallbackCalled(0, 0, &number)
+
+    assertCommandCallbackCalled(HANumeric(0, 0), &number)
 }
 
 AHA_TEST(NumberTest, command_number_unsigned) {
@@ -656,7 +751,7 @@ AHA_TEST(NumberTest, command_number_unsigned) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("1234"));
 
-    assertCommandCallbackCalled(1234, 0, &number)
+    assertCommandCallbackCalled(HANumeric(1234, 0), &number)
 }
 
 AHA_TEST(NumberTest, command_number_signed) {
@@ -666,7 +761,37 @@ AHA_TEST(NumberTest, command_number_signed) {
     number.onCommand(onCommandReceived);
     mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
 
-    assertCommandCallbackCalled(-1234, 0, &number)
+    assertCommandCallbackCalled(HANumeric(-1234, 0), &number)
+}
+
+AHA_TEST(NumberTest, command_number_float_p1) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP1);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
+
+    assertCommandCallbackCalled(HANumeric(-123.4f, 1), &number)
+}
+
+AHA_TEST(NumberTest, command_number_float_p2) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP2);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
+
+    assertCommandCallbackCalled(HANumeric(-12.34f, 2), &number)
+}
+
+AHA_TEST(NumberTest, command_number_float_p3) {
+    prepareTest
+
+    HANumber number(testUniqueId, HANumber::PrecisionP3);
+    number.onCommand(onCommandReceived);
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("-1234"));
+
+    assertCommandCallbackCalled(HANumeric(-1.234f, 3), &number)
 }
 
 AHA_TEST(NumberTest, command_number_invalid) {
