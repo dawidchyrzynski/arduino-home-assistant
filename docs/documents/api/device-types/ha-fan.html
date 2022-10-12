@@ -210,13 +210,13 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8setSpeedEK7uint8_tKb">
-<span id="_CPPv3N5HAFan8setSpeedEK7uint8_tKb"></span><span id="_CPPv2N5HAFan8setSpeedEK7uint8_tKb"></span><span id="HAFan::setSpeed__uint8_tC.bC"></span><span class="target" id="class_h_a_fan_1a3645a3037817e41805c60eb8962e0c7a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speedPercentage</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan8setSpeedEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Changes the speed percentage of the fan and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8setSpeedEK8uint16_tKb">
+<span id="_CPPv3N5HAFan8setSpeedEK8uint16_tKb"></span><span id="_CPPv2N5HAFan8setSpeedEK8uint16_tKb"></span><span id="HAFan::setSpeed__uint16_tC.bC"></span><span class="target" id="class_h_a_fan_1a1c729717948c2a47cdfdb7cbd529c529"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan8setSpeedEK8uint16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes the speed of the fan and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>speedPercentage</strong> – The new speed percentage of the fan. </p></li>
+<li><p><strong>speed</strong> – The new speed of the fan. It should be in range of min and max value. </p></li>
 <li><p><strong>force</strong> – Forces to update the value without comparing it to a previous known value. </p></li>
 </ul>
 </dd>
@@ -256,20 +256,20 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15setCurrentSpeedEK7uint8_t">
-<span id="_CPPv3N5HAFan15setCurrentSpeedEK7uint8_t"></span><span id="_CPPv2N5HAFan15setCurrentSpeedEK7uint8_t"></span><span id="HAFan::setCurrentSpeed__uint8_tC"></span><span class="target" id="class_h_a_fan_1abffd84738c2278ace837d132d758d0dc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speedPercentage</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan15setCurrentSpeedEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets the current speed percentage of the fan without pushing the value to Home Assistant. This method may be useful if you want to change the speed before the connection with the MQTT broker is acquired.</p>
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15setCurrentSpeedEK8uint16_t">
+<span id="_CPPv3N5HAFan15setCurrentSpeedEK8uint16_t"></span><span id="_CPPv2N5HAFan15setCurrentSpeedEK8uint16_t"></span><span id="HAFan::setCurrentSpeed__uint16_tC"></span><span class="target" id="class_h_a_fan_1a804407492c4fa2b843c139cdb3dd59b8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan15setCurrentSpeedEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current speed of the fan without pushing the value to Home Assistant. This method may be useful if you want to change the speed before the connection with the MQTT broker is acquired.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>speedPercentage</strong> – The new speed percentage of the fan. </p>
+<dd class="field-odd"><p><strong>speed</strong> – The new speed of the fan. It should be in range of min and max value. </p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4NK5HAFan15getCurrentSpeedEv">
-<span id="_CPPv3NK5HAFan15getCurrentSpeedEv"></span><span id="_CPPv2NK5HAFan15getCurrentSpeedEv"></span><span id="HAFan::getCurrentSpeedC"></span><span class="target" id="class_h_a_fan_1a1d151e7b166cceea69093d34f10de9c1"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5HAFan15getCurrentSpeedEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Returns the last known speed percentage of the fan. By default speed is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+<span id="_CPPv3NK5HAFan15getCurrentSpeedEv"></span><span id="_CPPv2NK5HAFan15getCurrentSpeedEv"></span><span id="HAFan::getCurrentSpeedC"></span><span class="target" id="class_h_a_fan_1a3d17377dfff961d63ec0353981654d1a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5HAFan15getCurrentSpeedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the last known speed of the fan. By default speed is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -308,7 +308,7 @@
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan16setSpeedRangeMaxEK8uint16_t">
 <span id="_CPPv3N5HAFan16setSpeedRangeMaxEK8uint16_t"></span><span id="_CPPv2N5HAFan16setSpeedRangeMaxEK8uint16_t"></span><span id="HAFan::setSpeedRangeMax__uint16_tC"></span><span class="target" id="class_h_a_fan_1a719c38c45d69f7e279a47d74a62d2913"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeedRangeMax</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan16setSpeedRangeMaxEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Sets the maximum of numeric output range (representing 100 %). The number of speeds within the speed_range / 100 will determine the percentage step. By default the maximum range is <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p>
+<dd><p>Sets the maximum of numeric output range (representing 100%). The number of speeds within the speed_range / 100 will determine the percentage step. By default the maximum range is <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>max</strong> – The maximum of numeric output range. </p>
@@ -339,8 +339,8 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE">
-<span id="_CPPv3N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE"></span><span id="_CPPv2N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE"></span><span class="target" id="class_h_a_fan_1a68cbbeb3b2ad835c2860e2d0099516f7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onSpeedCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">speedPercentage</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onSpeedCommandEPFv7uint8_tP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE">
+<span id="_CPPv3N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE"></span><span id="_CPPv2N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE"></span><span class="target" id="class_h_a_fan_1a4e17ae5188a7e04d6d4ac43bdee10465"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onSpeedCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Registers callback that will be called each time the speed command from HA is received. Please note that it’s not possible to register multiple callbacks for the same fan.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -348,19 +348,6 @@
 </dd>
 </dl>
 </dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan20DefaultSpeedRangeMinE">
-<span id="_CPPv3N5HAFan20DefaultSpeedRangeMinE"></span><span id="_CPPv2N5HAFan20DefaultSpeedRangeMinE"></span><span id="HAFan::DefaultSpeedRangeMin__uint8_tC"></span><span class="target" id="class_h_a_fan_1a00527450ce47ff31544ddaf3cafb1290"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultSpeedRangeMin</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan20DefaultSpeedRangeMinE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
-
-<dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan20DefaultSpeedRangeMaxE">
-<span id="_CPPv3N5HAFan20DefaultSpeedRangeMaxE"></span><span id="_CPPv2N5HAFan20DefaultSpeedRangeMaxE"></span><span id="HAFan::DefaultSpeedRangeMax__uint8_tC"></span><span class="target" id="class_h_a_fan_1aeb03185235800985973f6d7ca1724220"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultSpeedRangeMax</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan20DefaultSpeedRangeMaxE" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
 
 </div>
 <div class="breathe-sectiondef docutils container">
@@ -398,12 +385,12 @@
 </dd></dl>
 
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan12publishSpeedEK7uint8_t">
-<span id="_CPPv3N5HAFan12publishSpeedEK7uint8_t"></span><span id="_CPPv2N5HAFan12publishSpeedEK7uint8_t"></span><span id="HAFan::publishSpeed__uint8_tC"></span><span class="target" id="class_h_a_fan_1ac573f2783140994d551a639252191aae"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speedPercentage</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan12publishSpeedEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Publishes the MQTT message with the given speed percentage.</p>
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan12publishSpeedEK8uint16_t">
+<span id="_CPPv3N5HAFan12publishSpeedEK8uint16_t"></span><span id="_CPPv2N5HAFan12publishSpeedEK8uint16_t"></span><span id="HAFan::publishSpeed__uint16_tC"></span><span class="target" id="class_h_a_fan_1aefb9b94829875f3d7f13b800e6347e0f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan12publishSpeedEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given speed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>speedPercentage</strong> – The speed percentage to publish. </p>
+<dd class="field-odd"><p><strong>speed</strong> – The speed to publish. It should be in range of min and max value. </p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
@@ -468,13 +455,13 @@
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedRangeMaxE">
-<span id="_CPPv3N5HAFan14_speedRangeMaxE"></span><span id="_CPPv2N5HAFan14_speedRangeMaxE"></span><span id="HAFan::_speedRangeMax__HAUtils::Number"></span><span class="target" id="class_h_a_fan_1ac6b85629472cc2bcc11e7a62678a70a5"></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv47HAUtils" title="HAUtils"><span class="n"><span class="pre">HAUtils</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMax</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5HAFan14_speedRangeMaxE"></span><span id="_CPPv2N5HAFan14_speedRangeMaxE"></span><span id="HAFan::_speedRangeMax__HANumeric"></span><span class="target" id="class_h_a_fan_1a64ef481057528a9c7c92a6fa103303f6"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMax</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMaxE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The maximum of numeric output range. </p>
 </dd></dl>
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedRangeMinE">
-<span id="_CPPv3N5HAFan14_speedRangeMinE"></span><span id="_CPPv2N5HAFan14_speedRangeMinE"></span><span id="HAFan::_speedRangeMin__HAUtils::Number"></span><span class="target" id="class_h_a_fan_1a9b107c422b27828c75730cf38bd33300"></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv47HAUtils" title="HAUtils"><span class="n"><span class="pre">HAUtils</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="../utils/ha-utils.html#_CPPv4N7HAUtils6NumberE" title="HAUtils::Number"><span class="n"><span class="pre">Number</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMin</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMinE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5HAFan14_speedRangeMinE"></span><span id="_CPPv2N5HAFan14_speedRangeMinE"></span><span id="HAFan::_speedRangeMin__HANumeric"></span><span class="target" id="class_h_a_fan_1a7711b8c3719c624cb195e3f10a414d1c"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMin</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMinE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The minimum of numeric output range. </p>
 </dd></dl>
 
@@ -485,9 +472,9 @@
 </dd></dl>
 
 <dl class="cpp var">
-<dt class="sig sig-object cpp" id="_CPPv4N5HAFan23_currentSpeedPercentageE">
-<span id="_CPPv3N5HAFan23_currentSpeedPercentageE"></span><span id="_CPPv2N5HAFan23_currentSpeedPercentageE"></span><span id="HAFan::_currentSpeedPercentage__uint8_t"></span><span class="target" id="class_h_a_fan_1ab82636ab62342de2d857a08e9a5586ac"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentSpeedPercentage</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan23_currentSpeedPercentageE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>The current speed percentage of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan13_currentSpeedE">
+<span id="_CPPv3N5HAFan13_currentSpeedE"></span><span id="_CPPv2N5HAFan13_currentSpeedE"></span><span id="HAFan::_currentSpeed__uint16_t"></span><span class="target" id="class_h_a_fan_1a8323f3e5ed9df88f296d378ee1c7f3c2"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentSpeed</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan13_currentSpeedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current speed of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
 </dd></dl>
 
 <dl class="cpp var">
@@ -498,7 +485,7 @@
 
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedCallbackE">
-<span id="_CPPv3N5HAFan14_speedCallbackE"></span><span id="_CPPv2N5HAFan14_speedCallbackE"></span><span class="target" id="class_h_a_fan_1acf7c0a910a277f4600b4a031b02885ca"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_speedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">speedPercentage</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N5HAFan14_speedCallbackE"></span><span id="_CPPv2N5HAFan14_speedCallbackE"></span><span class="target" id="class_h_a_fan_1ac83fd1716649b258ab263fee32a5c63a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_speedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The callback that will be called when the speed command is received from the HA. </p>
 </dd></dl>
 
