@@ -18,7 +18,7 @@ HAHVAC hvac(
 );
 
 unsigned long lastTempPublishAt = 0;
-double lastTemp = 0;
+float lastTemp = 0;
 
 void onTargetTemperatureCommand(HAUtils::Number temperature, uint8_t precision, HAHVAC* sender) {
     // By default the "temperature" is integer representation of the floating point numbers.

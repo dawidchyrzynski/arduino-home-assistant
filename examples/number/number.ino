@@ -11,22 +11,23 @@ HAMqtt mqtt(client, device);
 HANumber number("myNumber");
 
 // You can also specify the precision of the number by providing the second argument to the constructor as follows:
-// HANumber number("myNumber", HANumber::PrecisionP2);
+// HANumber number("myNumber", HANumber::PrecisionP1);
 // HANumber number("myNumber", HANumber::PrecisionP2);
 // HANumber number("myNumber", HANumber::PrecisionP3);
 
-void onNumberCommand(HAUtils::Number number, uint8_t precision, HANumber* sender)
+void onNumberCommand(HANumeric number, HANumber* sender)
 {
-    if (number == HANumber::StateNone) {
+    if (!number.isSet()) {
         // the reset command was send by Home Assistant
     } else {
-        // By default the "number" is integer representation of the floating point numbers.
-        // For example: if precision is set to 2, the "25.12" float will be represented as "2512".
-        // If you're using floats you can convert the number to float as shown below.
-        // If you only need integers then conversion is not needed.
-        float numberFloat = HAUtils::getFloatValue(number, precision);
-
-        // do whatever you want with the number or numberFloat
+        // you can do whatever you want with the number as follows:
+        int8_t numberInt8 = number.toInt8();
+        int16_t numberInt16 = number.toInt16();
+        int32_t numberInt32 = number.toInt32();
+        uint8_t numberUInt8 = number.toUInt8();
+        uint16_t numberUInt16 = number.toUInt16();
+        uint32_t numberUInt32 = number.toUInt32();
+        float numberFloat = number.toFloat();
     }
 
     sender->setState(number); // report the selected option back to the HA panel
@@ -68,5 +69,5 @@ void loop() {
 
     // You can also report the state to the HA panel at runtime as shown below.
     // number.setState(1);
-    // number.setState(25.25); // remember to change precision before using floats
+    // number.setState(25.25f); // remember to change precision before using floats
 }

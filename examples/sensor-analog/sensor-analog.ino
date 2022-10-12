@@ -41,7 +41,7 @@ void loop() {
         uint16_t reading = analogRead(ANALOG_PIN);
         float voltage = reading * 5.f / 1023.f; // 0.0V - 5.0V
 
-        analogSensor.setValueFloat(voltage);
+        analogSensor.setValue(voltage);
         lastUpdateAt = millis();
     }
 }
