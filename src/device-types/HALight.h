@@ -2,7 +2,7 @@
 #define AHA_HALIGHT_H
 
 #include "HABaseDeviceType.h"
-#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_LIGHT
 
@@ -23,9 +23,6 @@
 class HALight : public HABaseDeviceType
 {
 public:
-    static const uint8_t DefaultBrightnessScale;
-    static const uint16_t DefaultMinMireds;
-    static const uint16_t DefaultMaxMireds;
     static const uint8_t RGBStringMaxLength;
 
     enum Features {
@@ -44,11 +41,15 @@ public:
         RGBColor() :
             red(0), green(0), blue(0), isSet(false) { }
 
-        RGBColor(const RGBColor& a) :
-            red(a.red), green(a.green), blue(a.blue), isSet(a.isSet) { }
-
         RGBColor(uint8_t r, uint8_t g, uint8_t b) :
             red(r), green(g), blue(b), isSet(true) { }
+
+        void operator= (const RGBColor& a) {
+            red = a.red;
+            green = a.green;
+            blue = a.blue;
+            isSet = a.isSet;
+        }
 
         bool operator== (const RGBColor& a) const {
             return (
@@ -148,7 +149,7 @@ public:
      * By default it's `false`.
      */
     inline bool getCurrentState() const
-        { return _currentState; }  
+        { return _currentState; }
 
     /**
      * Sets the current brightness of the light without pushing the value to Home Assistant.
@@ -232,11 +233,11 @@ public:
     /**
      * Sets the maximum brightness value that can be set via HA panel.
      * By default it's `255`.
-     * 
+     *
      * @param scale The maximum value of the brightness.
      */
     inline void setBrightnessScale(const uint8_t scale)
-        { _brightnessScale = scale; }
+        { _brightnessScale.setBaseValue(scale); }
 
     /**
      * Sets the minimum color temperature (mireds) value that can be set via HA panel.
@@ -245,7 +246,7 @@ public:
      * @param mireds The minimum value of the brightness.
      */
     inline void setMinMireds(const uint16_t mireds)
-        { _minMireds = mireds; }
+        { _minMireds.setBaseValue(mireds); }
 
     /**
      * Sets the maximum color temperature (mireds) value that can be set via HA panel.
@@ -254,7 +255,7 @@ public:
      * @param mireds The maximum value of the brightness.
      */
     inline void setMaxMireds(const uint16_t mireds)
-        { _maxMireds = mireds; }
+        { _maxMireds.setBaseValue(mireds); }
 
     /**
      * Registers callback that will be called each time the state command from HA is received.
@@ -379,7 +380,7 @@ private:
     bool _optimistic;
 
     /// The maximum value of the brightness. By default it's 255.
-    HAUtils::Number _brightnessScale;
+    HANumeric _brightnessScale;
 
     /// The current state of the light. By default it's `false`.
     bool _currentState;
@@ -387,16 +388,16 @@ private:
     /// The current brightness of the light. By default it's `0`.
     uint8_t _currentBrightness;
 
-    /// The minimum color temperature (mireds). By default it's `153`.
-    HAUtils::Number _minMireds;
+    /// The minimum color temperature (mireds). By default the value is not set.
+    HANumeric _minMireds;
 
-    /// The maximum color temperature (mireds). By default it's `500`.
-    HAUtils::Number _maxMireds;
+    /// The maximum color temperature (mireds). By default the value is not set.
+    HANumeric _maxMireds;
 
-    /// The current color temperature (mireds). Bu default it's `0`.
+    /// The current color temperature (mireds). By default the value is not set.
     uint16_t _currentColorTemperature;
 
-    /// The current RBB color. By default it's `0,0,0`.
+    /// The current RBB color. By default the value is not set.
     RGBColor _currentRGBColor;
 
     /// The callback that will be called when the state command is received from the HA.

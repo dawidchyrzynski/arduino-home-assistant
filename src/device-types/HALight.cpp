@@ -2,12 +2,8 @@
 #ifndef EX_ARDUINOHA_LIGHT
 
 #include "../HAMqtt.h"
-#include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
-const uint8_t HALight::DefaultBrightnessScale = 255;
-const uint16_t HALight::DefaultMinMireds = 153;
-const uint16_t HALight::DefaultMaxMireds = 500;
 const uint8_t HALight::RGBStringMaxLength = 3*4; // 4 characters per color
 
 void HALight::RGBColor::fromBuffer(const uint8_t* data, const uint16_t length)
@@ -37,24 +33,14 @@ void HALight::RGBColor::fromBuffer(const uint8_t* data, const uint16_t length)
     const uint8_t greenLen = secondCommaPos - firstCommaPos - 1; // minus comma
     const uint8_t blueLen = length - redLen - greenLen - 2; // minus two commas
 
-    HAUtils::Number r = HAUtils::strToNumber(data, redLen);
-    HAUtils::Number g = HAUtils::strToNumber(
-        &data[redLen + 1],
-        greenLen
-    );
-    HAUtils::Number b = HAUtils::strToNumber(
-        &data[redLen + greenLen + 2],
-        blueLen
-    );
+    const HANumeric& r = HANumeric::fromStr(data, redLen);
+    const HANumeric& g = HANumeric::fromStr(&data[redLen + 1], greenLen);
+    const HANumeric& b = HANumeric::fromStr(&data[redLen + greenLen + 2], blueLen);
 
-    if (
-        r >= 0 && r <= 255 &&
-        g >= 0 && g <= 255 &&
-        b >= 0 && b <= 255
-    ) {
-        red = static_cast<uint8_t>(r);
-        green = static_cast<uint8_t>(g);
-        blue = static_cast<uint8_t>(b);
+    if (r.isUInt8() && g.isUInt8() && b.isUInt8()) {
+        red = r.toUInt8();
+        green = g.toUInt8();
+        blue = b.toUInt8();
         isSet = true;
     }
 }
@@ -65,11 +51,11 @@ HALight::HALight(const char* uniqueId, const uint8_t features) :
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _brightnessScale(DefaultBrightnessScale),
+    _brightnessScale(),
     _currentState(false),
     _currentBrightness(0),
-    _minMireds(DefaultMinMireds),
-    _maxMireds(DefaultMaxMireds),
+    _minMireds(),
+    _maxMireds(),
     _currentColorTemperature(0),
     _currentRGBColor(),
     _stateCallback(nullptr),
@@ -167,11 +153,11 @@ void HALight::buildSerializer()
         _serializer->topic(AHATOFSTR(HABrightnessStateTopic));
         _serializer->topic(AHATOFSTR(HABrightnessCommandTopic));
 
-        if (_brightnessScale != DefaultBrightnessScale) {
+        if (_brightnessScale.isSet()) {
             _serializer->set(
                 AHATOFSTR(HABrightnessScaleProperty),
                 &_brightnessScale,
-                HASerializer::NumberP0PropertyType
+                HASerializer::NumberPropertyType
             );
         }
     }
@@ -180,19 +166,19 @@ void HALight::buildSerializer()
         _serializer->topic(AHATOFSTR(HAColorTemperatureStateTopic));
         _serializer->topic(AHATOFSTR(HAColorTemperatureCommandTopic));
 
-        if (_minMireds != DefaultMinMireds) {
+        if (_minMireds.isSet()) {
             _serializer->set(
                 AHATOFSTR(HAMinMiredsProperty),
                 &_minMireds,
-                HASerializer::NumberP0PropertyType
+                HASerializer::NumberPropertyType
             );
         }
 
-        if (_maxMireds != DefaultMaxMireds) {
+        if (_maxMireds.isSet()) {
             _serializer->set(
                 AHATOFSTR(HAMaxMiredsProperty),
                 &_maxMireds,
-                HASerializer::NumberP0PropertyType
+                HASerializer::NumberPropertyType
             );
         }
     }
@@ -290,23 +276,19 @@ bool HALight::publishBrightness(const uint8_t brightness)
     }
 
     char str[3 + 1] = {0}; // uint8_t digits with null terminator
-    HAUtils::numberToStr(str, brightness);
+    HANumeric(brightness, 0).toStr(str);
 
     return publishOnDataTopic(AHATOFSTR(HABrightnessStateTopic), str, true);
 }
 
 bool HALight::publishColorTemperature(const uint16_t temperature)
 {
-    if (
-        !(_features & ColorTemperatureFeature) ||
-        temperature < _minMireds ||
-        temperature > _maxMireds
-    ) {
+    if (!(_features & ColorTemperatureFeature)) {
         return false;
     }
 
     char str[5 + 1] = {0}; // uint16_t digits with null terminator
-    HAUtils::numberToStr(str, temperature);
+    HANumeric(temperature, 0).toStr(str);
 
     return publishOnDataTopic(AHATOFSTR(HAColorTemperatureStateTopic), str, true);
 }
@@ -321,15 +303,15 @@ bool HALight::publishRGBColor(const RGBColor& color)
     uint16_t len = 0;
 
     // append red color with comma
-    len += HAUtils::numberToStr(&str[0], color.red);
+    len += HANumeric(color.red, 0).toStr(&str[0]);
     str[len++] = ',';
 
     // append green color with comma
-    len += HAUtils::numberToStr(&str[len], color.green);
+    len += HANumeric(color.green, 0).toStr(&str[len]);
     str[len++] = ',';
 
     // append blue color
-    HAUtils::numberToStr(&str[len], color.blue);
+    HANumeric(color.blue, 0).toStr(&str[len]);
 
     return publishOnDataTopic(AHATOFSTR(HARGBStateTopic), str, true);
 }
@@ -352,13 +334,9 @@ void HALight::handleBrightnessCommand(const uint8_t* cmd, const uint16_t length)
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-    if (
-        number != HAUtils::NumberMax &&
-        number >= 0 &&
-        number <= _brightnessScale
-    ) {
-        _brightnessCallback(static_cast<uint8_t>(number), this);
+    const HANumeric& number = HANumeric::fromStr(cmd, length);
+    if (number.isUInt8()) {
+        _brightnessCallback(number.toUInt8(), this);
     }
 }
 
@@ -371,13 +349,9 @@ void HALight::handleColorTemperatureCommand(
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-    if (
-        number != HAUtils::NumberMax &&
-        number >= _minMireds &&
-        number <= _maxMireds
-    ) {
-        _colorTemperatureCallback(static_cast<uint16_t>(number), this);
+    const HANumeric& number = HANumeric::fromStr(cmd, length);
+    if (number.isUInt16()) {
+        _colorTemperatureCallback(number.toUInt16(), this);
     }
 }
 
