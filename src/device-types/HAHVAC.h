@@ -140,6 +140,10 @@ public:
     _SET_CURRENT_TEMPERATURE_OVERLOAD(uint32_t)
     _SET_CURRENT_TEMPERATURE_OVERLOAD(float)
 
+#ifdef __SAMD21G18A__
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(int)
+#endif
+
     /**
      * Changes action of the HVAC and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
@@ -214,6 +218,10 @@ public:
     _SET_TARGET_TEMPERATURE_OVERLOAD(uint32_t)
     _SET_TARGET_TEMPERATURE_OVERLOAD(float)
 
+#ifdef __SAMD21G18A__
+    _SET_TARGET_TEMPERATURE_OVERLOAD(int)
+#endif
+
     /**
      * Sets current temperature of the HVAC without publishing it to Home Assistant.
      * This method may be useful if you want to change temperature before connection
@@ -232,6 +240,9 @@ public:
     _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(uint32_t)
     _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(float)
 
+#ifdef __SAMD21G18A__
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(int)
+#endif
 
     /**
      * Returns last known current temperature of the HVAC.
@@ -366,6 +377,10 @@ public:
     _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(uint16_t)
     _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(uint32_t)
     _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(float)
+
+#ifdef __SAMD21G18A__
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(int)
+#endif
 
     /**
      * Returns last known target temperature of the HVAC.

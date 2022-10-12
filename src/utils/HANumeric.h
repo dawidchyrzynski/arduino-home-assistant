@@ -92,6 +92,17 @@ public:
      */
     HANumeric(const uint32_t value, const uint8_t precision);
 
+#ifdef __SAMD21G18A__
+    /**
+     * Converts the given int into number representation of the given precision.
+     * If the precision is greater than zero the given value will be converted to float.
+     *
+     * @param value The value that should be used as a base.
+     * @param precision The number of digits in the decimal part.
+     */
+    HANumeric(const int value, const uint8_t precision);
+#endif
+
     void operator= (const HANumeric& a) {
         if (!a.isSet()) {
             reset();

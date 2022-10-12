@@ -51,6 +51,10 @@ public:
     _SET_VALUE_OVERLOAD(uint32_t)
     _SET_VALUE_OVERLOAD(float)
 
+#ifdef __SAMD21G18A__
+    _SET_VALUE_OVERLOAD(int)
+#endif
+
     /**
      * Sets the current value of the sensor without publishing it to Home Assistant.
      * This method may be useful if you want to change the value before the connection with the MQTT broker is acquired.
@@ -67,6 +71,10 @@ public:
     _SET_CURRENT_VALUE_OVERLOAD(uint16_t)
     _SET_CURRENT_VALUE_OVERLOAD(uint32_t)
     _SET_CURRENT_VALUE_OVERLOAD(float)
+
+#ifdef __SAMD21G18A__
+    _SET_CURRENT_VALUE_OVERLOAD(int)
+#endif
 
     /**
      * Returns the last known value of the sensor.

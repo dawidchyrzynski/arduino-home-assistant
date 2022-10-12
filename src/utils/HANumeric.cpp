@@ -96,6 +96,15 @@ HANumeric::HANumeric(const uint32_t value, const uint8_t precision):
     _value = value * getPrecisionBase();
 }
 
+#ifdef __SAMD21G18A__
+HANumeric::HANumeric(const int value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * static_cast<int>(getPrecisionBase());
+}
+#endif
+
 HANumeric::HANumeric(const int64_t value):
     _isSet(true),
     _value(value),

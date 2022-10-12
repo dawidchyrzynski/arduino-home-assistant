@@ -64,6 +64,10 @@ public:
     _SET_STATE_OVERLOAD(uint32_t)
     _SET_STATE_OVERLOAD(float)
 
+#ifdef __SAMD21G18A__
+    _SET_STATE_OVERLOAD(int)
+#endif
+
     /**
      * Sets current state of the number without publishing it to Home Assistant.
      * This method may be useful if you want to change state before connection
@@ -81,6 +85,10 @@ public:
     _SET_CURRENT_STATE_OVERLOAD(uint16_t)
     _SET_CURRENT_STATE_OVERLOAD(uint32_t)
     _SET_CURRENT_STATE_OVERLOAD(float)
+
+#ifdef __SAMD21G18A__
+    _SET_CURRENT_STATE_OVERLOAD(int)
+#endif
 
     /**
      * Returns last known state of the number.
