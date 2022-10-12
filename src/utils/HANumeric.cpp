@@ -1,11 +1,5 @@
 #include "HANumeric.h"
 
-#define HANUMERIC_CONSTRUCTOR(type) \
-    HANumeric::HANumeric(const type value, const uint8_t precision): \
-        _isSet(true), \
-        _precision(precision) \
-    { _value = value * static_cast<type>(getPrecisionBase()); }
-
 const uint8_t HANumeric::MaxDigitsNb = 19;
 
 HANumeric HANumeric::fromStr(const uint8_t* buffer, const uint16_t length)
@@ -53,13 +47,54 @@ HANumeric::HANumeric():
 
 }
 
-HANUMERIC_CONSTRUCTOR(float)
-HANUMERIC_CONSTRUCTOR(int8_t)
-HANUMERIC_CONSTRUCTOR(int16_t)
-HANUMERIC_CONSTRUCTOR(int32_t)
-HANUMERIC_CONSTRUCTOR(uint8_t)
-HANUMERIC_CONSTRUCTOR(uint16_t)
-HANUMERIC_CONSTRUCTOR(uint32_t)
+HANumeric::HANumeric(const float value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * static_cast<float>(getPrecisionBase());
+}
+
+HANumeric::HANumeric(const int8_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * static_cast<int32_t>(getPrecisionBase());
+}
+
+HANumeric::HANumeric(const int16_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * static_cast<int32_t>(getPrecisionBase());
+}
+
+HANumeric::HANumeric(const int32_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * static_cast<int32_t>(getPrecisionBase());
+}
+
+HANumeric::HANumeric(const uint8_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * getPrecisionBase();
+}
+
+HANumeric::HANumeric(const uint16_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * getPrecisionBase();
+}
+
+HANumeric::HANumeric(const uint32_t value, const uint8_t precision):
+    _isSet(true),
+    _precision(precision)
+{
+    _value = value * getPrecisionBase();
+}
 
 HANumeric::HANumeric(const int64_t value):
     _isSet(true),
@@ -69,7 +104,7 @@ HANumeric::HANumeric(const int64_t value):
 
 }
 
-uint16_t HANumeric::getPrecisionBase() const
+uint32_t HANumeric::getPrecisionBase() const
 {
     // using pow() increases the flash size by ~2KB
     switch (_precision) {

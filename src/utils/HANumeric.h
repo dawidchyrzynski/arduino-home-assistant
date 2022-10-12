@@ -114,7 +114,7 @@ public:
      * Returns multiplier that used to generate base value based on the precision.
      * The multiplier is generated using the formula: `pow(precision, 10)`.
      */
-    uint16_t getPrecisionBase() const;
+    uint32_t getPrecisionBase() const;
 
     /**
      * Returns size of the number
