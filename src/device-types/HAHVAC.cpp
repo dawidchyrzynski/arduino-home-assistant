@@ -19,12 +19,12 @@ HAHVAC::HAHVAC(
     _precision(precision),
     _icon(nullptr),
     _retain(false),
-    _currentTemperature(HAUtils::NumberMax),
+    _currentTemperature(),
     _action(UnknownAction),
     _temperatureUnit(DefaultUnit),
-    _minTemp(HAUtils::NumberMax),
-    _maxTemp(HAUtils::NumberMax),
-    _tempStep(HAUtils::NumberMax),
+    _minTemp(),
+    _maxTemp(),
+    _tempStep(),
     _auxCallback(nullptr),
     _auxState(false),
     _powerCallback(nullptr),
@@ -40,7 +40,7 @@ HAHVAC::HAHVAC(
     _modes(DefaultModes),
     _modesSerializer(nullptr),
     _modeCallback(nullptr),
-    _targetTemperature(HAUtils::NumberMax),
+    _targetTemperature(),
     _targetTemperatureCallback(nullptr)
 {
     if (_features & FanFeature) {
@@ -71,19 +71,18 @@ HAHVAC::~HAHVAC()
     }
 }
 
-bool HAHVAC::setCurrentTemperature(const float temperature, const bool force)
+bool HAHVAC::setCurrentTemperature(const HANumeric& temperature, const bool force)
 {
-    const HAUtils::Number realTemperature = HAUtils::processFloatValue(
-        temperature,
-        _precision
-    );
+    if (temperature.getPrecision() != _precision) {
+        return false;
+    }
 
-    if (!force && realTemperature == _currentTemperature) {
+    if (!force && temperature == _currentTemperature) {
         return true;
     }
 
-    if (publishCurrentTemperature(realTemperature)) {
-        _currentTemperature = realTemperature;
+    if (publishCurrentTemperature(temperature)) {
+        _currentTemperature = temperature;
         return true;
     }
 
@@ -160,19 +159,18 @@ bool HAHVAC::setMode(const Mode mode, const bool force)
     return false;
 }
 
-bool HAHVAC::setTargetTemperature(const float temperature, const bool force)
+bool HAHVAC::setTargetTemperature(const HANumeric& temperature, const bool force)
 {
-    const HAUtils::Number realTemperature = HAUtils::processFloatValue(
-        temperature,
-        _precision
-    );
+    if (temperature.getPrecision() != _precision) {
+        return false;
+    }
 
-    if (!force && realTemperature == _targetTemperature) {
+    if (!force && temperature == _targetTemperature) {
         return true;
     }
 
-    if (publishTargetTemperature(realTemperature)) {
-        _targetTemperature = realTemperature;
+    if (publishTargetTemperature(temperature)) {
+        _targetTemperature = temperature;
         return true;
     }
 
@@ -184,9 +182,6 @@ void HAHVAC::buildSerializer()
     if (_serializer || !uniqueId()) {
         return;
     }
-
-    const HASerializer::PropertyValueType numberProperty =
-        HASerializer::precisionToPropertyType(_precision);
 
     _serializer = new HASerializer(this, 27); // 27 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
@@ -329,27 +324,27 @@ void HAHVAC::buildSerializer()
         );
     }
 
-    if (_minTemp != HAUtils::NumberMax) {
+    if (_minTemp.isSet()) {
         _serializer->set(
             AHATOFSTR(HAMinTempProperty),
             &_minTemp,
-            numberProperty
+            HASerializer::NumberPropertyType
         );
     }
 
-    if (_maxTemp != HAUtils::NumberMax) {
+    if (_maxTemp.isSet()) {
         _serializer->set(
             AHATOFSTR(HAMaxTempProperty),
             &_maxTemp,
-            numberProperty
+            HASerializer::NumberPropertyType
         );
     }
 
-    if (_tempStep != HAUtils::NumberMax) {
+    if (_tempStep.isSet()) {
         _serializer->set(
             AHATOFSTR(HATempStepProperty),
             &_tempStep,
-            numberProperty
+            HASerializer::NumberPropertyType
         );
     }
 
@@ -447,20 +442,20 @@ void HAHVAC::onMqttMessage(
     }
 }
 
-bool HAHVAC::publishCurrentTemperature(const HAUtils::Number temperature)
+bool HAHVAC::publishCurrentTemperature(const HANumeric& temperature)
 {
-    if (temperature == HAUtils::NumberMax) {
+    if (!temperature.isSet()) {
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(temperature, _precision);
+    uint8_t size = temperature.calculateSize();
     if (size == 0) {
         return false;
     }
 
     char str[size + 1]; // with null terminator
     str[size] = 0;
-    HAUtils::numberToStr(str, temperature, _precision);
+    temperature.toStr(str);
 
     return publishOnDataTopic(
         AHATOFSTR(HACurrentTemperatureTopic),
@@ -499,7 +494,7 @@ bool HAHVAC::publishAction(const Action action)
 
     case FanAction:
         stateStr = AHATOFSTR(HAActionFan);
-        break;   
+        break;
 
     default:
         return false;
@@ -630,20 +625,20 @@ bool HAHVAC::publishMode(const Mode mode)
     );
 }
 
-bool HAHVAC::publishTargetTemperature(const HAUtils::Number temperature)
+bool HAHVAC::publishTargetTemperature(const HANumeric& temperature)
 {
-    if (temperature == HAUtils::NumberMax) {
+    if (!temperature.isSet()) {
         return false;
     }
 
-    uint8_t size = HAUtils::calculateNumberSize(temperature, _precision);
+    uint8_t size = temperature.calculateSize();
     if (size == 0) {
         return false;
     }
 
     char str[size + 1]; // with null terminator
     str[size] = 0;
-    HAUtils::numberToStr(str, temperature, _precision);
+    temperature.toStr(str);
 
     return publishOnDataTopic(
         AHATOFSTR(HATemperatureStateTopic),
@@ -733,9 +728,10 @@ void HAHVAC::handleTargetTemperatureCommand(const uint8_t* cmd, const uint16_t l
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-    if (number != HAUtils::NumberMax) {
-        _targetTemperatureCallback(number, _precision, this);
+    HANumeric number = HANumeric::fromStr(cmd, length);
+    if (number.isSet()) {
+        number.setPrecision(_precision);
+        _targetTemperatureCallback(number, this);
     }
 }
 

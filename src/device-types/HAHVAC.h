@@ -2,12 +2,32 @@
 #define AHA_HAHVAC_H
 
 #include "HABaseDeviceType.h"
-#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_HVAC
 
+#define _SET_CURRENT_TEMPERATURE_OVERLOAD(type) \
+    /** @overload */ \
+    inline bool setCurrentTemperature(const type temperature, const bool force = false) \
+        { return setCurrentTemperature(HANumeric(temperature, _precision), force); }
+
+#define _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(type) \
+    /** @overload */ \
+    inline void setCurrentCurrentTemperature(const type temperature) \
+        { setCurrentCurrentTemperature(HANumeric(temperature, _precision)); }
+
+#define _SET_TARGET_TEMPERATURE_OVERLOAD(type) \
+    /** @overload */ \
+    inline bool setTargetTemperature(const type temperature, const bool force = false) \
+        { return setTargetTemperature(HANumeric(temperature, _precision), force); }
+
+#define _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(type) \
+    /** @overload */ \
+    inline void setCurrentTargetTemperature(const type temperature) \
+        { setCurrentTargetTemperature(HANumeric(temperature, _precision)); }
+
 #define HAHVAC_CALLBACK_BOOL(name) void (*name)(bool state, HAHVAC* sender)
-#define HAHVAC_CALLBACK_TARGET_TEMP(name) void (*name)(HAUtils::Number number, uint8_t precision, HAHVAC* sender)
+#define HAHVAC_CALLBACK_TARGET_TEMP(name) void (*name)(HANumeric temperature, HAHVAC* sender)
 #define HAHVAC_CALLBACK_FAN_MODE(name) void (*name)(FanMode mode, HAHVAC* sender)
 #define HAHVAC_CALLBACK_SWING_MODE(name) void (*name)(SwingMode mode, HAHVAC* sender)
 #define HAHVAC_CALLBACK_MODE(name) void (*name)(Mode mode, HAHVAC* sender)
@@ -110,7 +130,15 @@ public:
      * @param force Forces to update the temperature without comparing it to a previous known value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool setCurrentTemperature(const float temperature, const bool force = false);
+    bool setCurrentTemperature(const HANumeric& temperature, const bool force = false);
+
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(int8_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(int16_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(int32_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(uint8_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(uint16_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(uint32_t)
+    _SET_CURRENT_TEMPERATURE_OVERLOAD(float)
 
     /**
      * Changes action of the HVAC and publishes MQTT message.
@@ -176,7 +204,15 @@ public:
      * @param force Forces to update the mode without comparing it to a previous known value.
      * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool setTargetTemperature(const float temperature, const bool force = false);
+    bool setTargetTemperature(const HANumeric& temperature, const bool force = false);
+
+    _SET_TARGET_TEMPERATURE_OVERLOAD(int8_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(int16_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(int32_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(uint8_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(uint16_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(uint32_t)
+    _SET_TARGET_TEMPERATURE_OVERLOAD(float)
 
     /**
      * Sets current temperature of the HVAC without publishing it to Home Assistant.
@@ -185,15 +221,24 @@ public:
      *
      * @param temperature New current temperature.
      */
-    inline void setCurrentCurrentTemperature(const float temperature)
-        { _currentTemperature = HAUtils::processFloatValue(temperature, _precision); }
+    inline void setCurrentCurrentTemperature(const HANumeric& temperature)
+        { if (temperature.getPrecision() == _precision) { _currentTemperature = temperature; } }
+
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(int8_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(int16_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(int32_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(uint8_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(uint16_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(uint32_t)
+    _SET_CURRENT_CURRENT_TEMPERATURE_OVERLOAD(float)
+
 
     /**
      * Returns last known current temperature of the HVAC.
      * If setCurrentTemperature method wasn't called the initial value will be returned.
      */
-    inline float getCurrentTemperature() const
-        { return HAUtils::getFloatValue(_currentTemperature, _precision); }
+    inline const HANumeric& getCurrentTemperature() const
+        { return _currentTemperature; }
 
     /**
      * Sets action of the HVAC without publishing it to Home Assistant.
@@ -311,15 +356,23 @@ public:
      *
      * @param temperature Target temperature to set.
      */
-    inline void setCurrentTargetTemperature(const float temperature)
-        { _targetTemperature = HAUtils::processFloatValue(temperature, _precision); }
+    inline void setCurrentTargetTemperature(const HANumeric& temperature)
+        { if (temperature.getPrecision() == _precision) { _targetTemperature = temperature; } }
+
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(int8_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(int16_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(int32_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(uint8_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(uint16_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(uint32_t)
+    _SET_CURRENT_TARGET_TEMPERATURE_OVERLOAD(float)
 
     /**
      * Returns last known target temperature of the HVAC.
      * If setTargetTemperature method wasn't called the initial value will be returned.
      */
-    inline float getCurrentTargetTemperature() const
-        { return HAUtils::getFloatValue(_targetTemperature, _precision); }
+    inline const HANumeric& getCurrentTargetTemperature() const
+        { return _targetTemperature; }
 
     /**
      * Sets icon of the HVAC.
@@ -353,7 +406,7 @@ public:
      * @param min The minimum value.
      */
     inline void setMinTemp(const float min)
-        { _minTemp = HAUtils::processFloatValue(min, _precision); }
+        { _minTemp = HANumeric(min, _precision); }
 
     /**
      * Sets the maximum temperature that can be set from the Home Assistant panel.
@@ -361,7 +414,7 @@ public:
      * @param min The maximum value.
      */
     inline void setMaxTemp(const float max)
-        { _maxTemp = HAUtils::processFloatValue(max, _precision); }
+        { _maxTemp = HANumeric(max, _precision); }
 
     /**
      * Sets the step of the temperature that can be set from the Home Assistant panel.
@@ -369,7 +422,7 @@ public:
      * @param step The setp value. By default it's `1`.
      */
     inline void setTempStep(const float step)
-        { _tempStep = HAUtils::processFloatValue(step, _precision); }
+        { _tempStep = HANumeric(step, _precision); }
 
     /**
      * Registers callback that will be called each time the aux state command from HA is received.
@@ -441,7 +494,7 @@ private:
      * @param temperature The temperature to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishCurrentTemperature(const HAUtils::Number temperature);
+    bool publishCurrentTemperature(const HANumeric& temperature);
 
     /**
      * Publishes the MQTT message with the given action.
@@ -489,7 +542,7 @@ private:
      * @param temperature The temperature to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    bool publishTargetTemperature(const HAUtils::Number temperature);
+    bool publishTargetTemperature(const HANumeric& temperature);
 
     /**
      * Parses the given aux state command and executes the callback with proper value.
@@ -557,8 +610,8 @@ private:
     /// The retain flag for the HA commands.
     bool _retain;
 
-    /// The current temperature of the HVAC. By default it's `HAUtils::NumberMax`.
-    HAUtils::Number _currentTemperature;
+    /// The current temperature of the HVAC. By default it's not set.
+    HANumeric _currentTemperature;
 
     /// The current action of the HVAC. By default it's `HAHVAC::UnknownAction`.
     Action _action;
@@ -567,13 +620,13 @@ private:
     TemperatureUnit _temperatureUnit;
 
     /// The minimum temperature that can be set.
-    HAUtils::Number _minTemp;
+    HANumeric _minTemp;
 
     /// The maximum temperature that can be set.
-    HAUtils::Number _maxTemp;
+    HANumeric _maxTemp;
 
     /// The step of the temperature that can be set.
-    HAUtils::Number _tempStep;
+    HANumeric _tempStep;
 
     /// Callback that will be called when the aux state command is received from the HA.
     HAHVAC_CALLBACK_BOOL(_auxCallback);
@@ -620,8 +673,8 @@ private:
     /// Callback that will be called when the mode command is received from the HA.
     HAHVAC_CALLBACK_MODE(_modeCallback);
 
-    /// The target temperature of the HVAC. By default it's `HAUtils::NumberMax`.
-    HAUtils::Number _targetTemperature;
+    /// The target temperature of the HVAC. By default it's not set.
+    HANumeric _targetTemperature;
 
     /// Callback that will be called when the target temperature is changed via the HA panel.
     HAHVAC_CALLBACK_TARGET_TEMP(_targetTemperatureCallback);
