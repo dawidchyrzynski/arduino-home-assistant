@@ -5,17 +5,14 @@
 #include "../utils/HAUtils.h"
 #include "../utils/HASerializer.h"
 
-const uint8_t HAFan::DefaultSpeedRangeMin = 1;
-const uint8_t HAFan::DefaultSpeedRangeMax = 100;
-
 HAFan::HAFan(const char* uniqueId, const uint8_t features) :
     HABaseDeviceType(AHATOFSTR(HAComponentFan), uniqueId),
     _features(features),
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _speedRangeMax(DefaultSpeedRangeMax),
-    _speedRangeMin(DefaultSpeedRangeMin),
+    _speedRangeMax(),
+    _speedRangeMin(),
     _currentState(false),
     _currentSpeed(0),
     _stateCallback(nullptr),
@@ -83,19 +80,19 @@ void HAFan::buildSerializer()
         _serializer->topic(AHATOFSTR(HAPercentageStateTopic));
         _serializer->topic(AHATOFSTR(HAPercentageCommandTopic));
 
-        if (_speedRangeMax != DefaultSpeedRangeMax) {
+        if (_speedRangeMax.isSet()) {
             _serializer->set(
                 AHATOFSTR(HASpeedRangeMaxProperty),
                 &_speedRangeMax,
-                HASerializer::NumberP0PropertyType
+                HASerializer::NumberPropertyType
             );
         }
 
-        if (_speedRangeMin != DefaultSpeedRangeMin) {
+        if (_speedRangeMin.isSet()) {
             _serializer->set(
                 AHATOFSTR(HASpeedRangeMinProperty),
                 &_speedRangeMin,
-                HASerializer::NumberP0PropertyType
+                HASerializer::NumberPropertyType
             );
         }
     }
@@ -164,7 +161,7 @@ bool HAFan::publishSpeed(const uint16_t speed)
     }
 
     char str[5 + 1] = {0}; // uint16_t digits with null terminator
-    HAUtils::numberToStr(str, speed);
+    HANumeric(speed, 0).toStr(str);
 
     return publishOnDataTopic(AHATOFSTR(HAPercentageStateTopic), str, true);
 }
@@ -187,13 +184,9 @@ void HAFan::handleSpeedCommand(const uint8_t* cmd, const uint16_t length)
         return;
     }
 
-    HAUtils::Number number = HAUtils::strToNumber(cmd, length);
-    if (
-        number != HAUtils::NumberMax &&
-        number >= _speedRangeMin &&
-        number <= _speedRangeMax
-    ) {
-        _speedCallback(static_cast<uint16_t>(number), this);
+    const HANumeric& number = HANumeric::fromStr(cmd, length);
+    if (number.isUInt16()) {
+        _speedCallback(number.toUInt16(), this);
     }
 }
 

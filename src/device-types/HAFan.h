@@ -2,7 +2,7 @@
 #define AHA_HAFAN_H
 
 #include "HABaseDeviceType.h"
-#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_FAN
 
@@ -21,9 +21,6 @@
 class HAFan : public HABaseDeviceType
 {
 public:
-    static const uint8_t DefaultSpeedRangeMin;
-    static const uint8_t DefaultSpeedRangeMax;
-
     enum Features {
         DefaultFeatures = 0,
         SpeedsFeature = 1
@@ -139,7 +136,7 @@ public:
      * @param max The maximum of numeric output range.
      */
     inline void setSpeedRangeMax(const uint16_t max)
-        { _speedRangeMax = max; }
+        { _speedRangeMax.setBaseValue(max); }
 
     /**
      * Sets the minimum of numeric output range (off is not included, so speed_range_min - 1 represents 0 %).
@@ -149,7 +146,7 @@ public:
      * @param min The minimum of numeric output range.
      */
     inline void setSpeedRangeMin(const uint16_t min)
-        { _speedRangeMin = min; }
+        { _speedRangeMin.setBaseValue(min); }
 
     /**
      * Registers callback that will be called each time the state command from HA is received.
@@ -224,10 +221,10 @@ private:
     bool _optimistic;
 
     /// The maximum of numeric output range.
-    HAUtils::Number _speedRangeMax;
+    HANumeric _speedRangeMax;
 
     /// The minimum of numeric output range.
-    HAUtils::Number _speedRangeMin;
+    HANumeric _speedRangeMin;
 
     /// The current state of the fan. By default it's `false`.
     bool _currentState;
