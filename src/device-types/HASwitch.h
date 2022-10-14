@@ -104,6 +104,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same switch.
      *
      * @param callback
+     * @note In non-optimistic mode, the state must be reported back to HA using the HASwitch::setState method.
      */
     inline void onCommand(HASWITCH_CALLBACK(callback))
         { _commandCallback = callback; }

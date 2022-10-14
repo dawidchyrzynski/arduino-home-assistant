@@ -181,6 +181,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same number.
      *
      * @param callback
+     * @note In non-optimistic mode, the number must be reported back to HA using the HANumber::setState method.
      */
     inline void onCommand(HANUMBER_CALLBACK(callback))
         { _commandCallback = callback; }

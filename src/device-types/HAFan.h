@@ -153,6 +153,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same fan.
      *
      * @param callback
+     * @note In non-optimistic mode, the state must be reported back to HA using the HAFan::setState method.
      */
     inline void onStateCommand(HAFAN_STATE_CALLBACK(callback))
         { _stateCallback = callback; }
@@ -162,6 +163,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same fan.
      *
      * @param callback
+     * @note In non-optimistic mode, the speed must be reported back to HA using the HAFan::setSpeed method.
      */
     inline void onSpeedCommand(HAFAN_SPEED_CALLBACK(callback))
         { _speedCallback = callback; }

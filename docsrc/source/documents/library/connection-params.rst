@@ -8,7 +8,7 @@ The example below presents all possible variants. Pick one that meets your requi
 .. NOTE::
 
     Connection to the MQTT broker is established asynchronously.
-    The `HAMqtt::begin` method just sets the parameters of the connection.
+    The :doc:`HAMqtt::begin </documents/api/core/ha-mqtt>` method just sets the parameters of the connection.
     The connection attempt is made during the loop cycle.
 
 ::
@@ -37,7 +37,7 @@ The example below presents all possible variants. Pick one that meets your requi
         mqtt.begin("192.168.1.50", 8888, "username", "password");
 
         // you can also use hostname in all variants
-        mqtt.begin("mybroker.local");  
+        mqtt.begin("mybroker.local");
     }
 
     void loop() {

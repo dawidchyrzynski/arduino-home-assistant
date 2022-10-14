@@ -262,6 +262,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
      * @param callback
+     * @note In non-optimistic mode, the state must be reported back to HA using the HALight::setState method.
      */
     inline void onStateCommand(HALIGHT_STATE_CALLBACK(callback))
         { _stateCallback = callback; }
@@ -271,6 +272,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
      * @param callback
+     * @note In non-optimistic mode, the brightness must be reported back to HA using the HALight::setBrightness method.
      */
     inline void onBrightnessCommand(HALIGHT_BRIGHTNESS_CALLBACK(callback))
         { _brightnessCallback = callback; }
@@ -280,6 +282,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
      * @param callback
+     * @note In non-optimistic mode, the color temperature must be reported back to HA using the HALight::setColorTemperature method.
      */
     inline void onColorTemperatureCommand(HALIGHT_COLOR_TEMP_CALLBACK(callback))
         { _colorTemperatureCallback = callback; }
@@ -289,6 +292,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
      * @param callback
+     * @note In non-optimistic mode, the color must be reported back to HA using the HALight::setRGBColor method.
      */
     inline void onRGBColorCommand(HALIGHT_RGB_COLOR_CALLBACK(callback))
         { _rgbColorCallback = callback; }

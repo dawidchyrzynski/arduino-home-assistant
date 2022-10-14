@@ -444,6 +444,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same HVAC.
      *
      * @param callback
+     * @note The aux state must be reported back to HA using the HAHVAC::setAuxState method.
      */
     inline void onAuxStateCommand(HAHVAC_CALLBACK_BOOL(callback))
         { _auxCallback = callback; }
@@ -462,6 +463,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same HVAC.
      *
      * @param callback
+     * @note The fan mode must be reported back to HA using the HAHVAC::setFanMode method.
      */
     inline void onFanModeCommand(HAHVAC_CALLBACK_FAN_MODE(callback))
         { _fanModeCallback = callback; }
@@ -471,6 +473,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same HVAC.
      *
      * @param callback
+     * @note The swing mode must be reported back to HA using the HAHVAC::setSwingMode method.
      */
     inline void onSwingModeCommand(HAHVAC_CALLBACK_SWING_MODE(callback))
         { _swingModeCallback = callback; }
@@ -480,6 +483,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same HVAC.
      *
      * @param callback
+     * @note The mode must be reported back to HA using the HAHVAC::setMode method.
      */
     inline void onModeCommand(HAHVAC_CALLBACK_MODE(callback))
         { _modeCallback = callback; }
@@ -489,6 +493,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same HVAC.
      *
      * @param callback
+     * @note The target temperature must be reported back to HA using the HAHVAC::setTargetTemperature method.
      */
     inline void onTargetTemperatureCommand(HAHVAC_CALLBACK_TARGET_TEMP(callback))
         { _targetTemperatureCallback = callback; }

@@ -114,7 +114,7 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given state.
-     * 
+     *
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
@@ -122,7 +122,7 @@ private:
 
     /**
      * Parses the given command and executes the lock's callback with proper enum's property.
-     * 
+     *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */

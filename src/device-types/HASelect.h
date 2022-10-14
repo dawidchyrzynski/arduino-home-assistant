@@ -99,6 +99,7 @@ public:
      * Please note that it's not possible to register multiple callbacks for the same select.
      *
      * @param callback
+     * @note In non-optimistic mode, the selected option must be reported back to HA using the HASelect::setState method.
      */
     inline void onCommand(HASELECT_CALLBACK(callback))
         { _commandCallback = callback; }
@@ -120,7 +121,7 @@ protected:
 private:
     /**
      * Publishes the MQTT message with the given state.
-     * 
+     *
      * @param state The state to publish.
      * @returns Returns `true` if the MQTT message has been published successfully.
      */

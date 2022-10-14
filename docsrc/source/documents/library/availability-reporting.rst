@@ -15,7 +15,7 @@ Basically, shared availability allows to control availability of all types relat
 For example: if your device has 5 switches and 2 buttons you can control their availability in the HA panel using a single method call.
 
 See example below showing how to enable shared availability of the device.
-By default the device is considered online but you can control its state manually using ``HADevice::setAvailability(bool online)`` method.
+By default, the device is considered online but you can control its state manually using ``HADevice::setAvailability(bool online)`` method.
 In most cases you won't need to control availability manually as the library takes care of availability as long as the device is powered on.
 
 ::
