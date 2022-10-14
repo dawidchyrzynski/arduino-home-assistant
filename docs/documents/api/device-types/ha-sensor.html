@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASensor class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HASensorNumber class" href="ha-sensor-number.html" />
+  <link rel="prev" title="HASelect class" href="ha-select.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HASensor class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-select.html"
+       title="previous chapter">← HASelect class</a>
+  </li>
+  <li class="next">
+    <a href="ha-sensor-number.html"
+       title="next chapter">HASensorNumber class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hasensor-class">
+<h1>HASensor class<a class="headerlink" href="#hasensor-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HASensor">
+<span id="_CPPv38HASensor"></span><span id="_CPPv28HASensor"></span><span id="HASensor"></span><span class="target" id="class_h_a_sensor"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASensor</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv48HASensor" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_sensor"><span class="std std-ref">HASensor</span></a> allows to publish textual sensor values that will be displayed in the HA panel. If you need to publish numbers then <a class="reference internal" href="ha-sensor-number.html#class_h_a_sensor_number"><span class="std std-ref">HASensorNumber</span></a> is what you’re looking for.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It’s not possible to define a sensor that publishes mixed values (e.g. string + integer values). </p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/sensor.mqtt/">https://www.home-assistant.io/integrations/sensor.mqtt/</a> </p>
+</div>
+<p>Subclassed by <a class="reference internal" href="ha-sensor-number.html#class_h_a_sensor_number"><span class="std std-ref">HASensorNumber</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8HASensorEPKc">
+<span id="_CPPv3N8HASensor8HASensorEPKc"></span><span id="_CPPv2N8HASensor8HASensorEPKc"></span><span id="HASensor::HASensor__cCP"></span><span class="target" id="class_h_a_sensor_1ae03b7288c4b75fdd65d2714c3f57ab99"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8HASensorEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8setValueEPKc">
+<span id="_CPPv3N8HASensor8setValueEPKc"></span><span id="_CPPv2N8HASensor8setValueEPKc"></span><span id="HASensor::setValue__cCP"></span><span class="target" id="class_h_a_sensor_1a47dba37f26cbf66d6cb9967734bc9c24"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8setValueEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given value. Unlike the other device types, the <a class="reference internal" href="#class_h_a_sensor"><span class="std std-ref">HASensor</span></a> doesn’t store the previous value that was set. It means that the MQTT message is produced each time the setValue method is called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – String representation of the sensor’s value. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setDeviceClassEPKc">
+<span id="_CPPv3N8HASensor14setDeviceClassEPKc"></span><span id="_CPPv2N8HASensor14setDeviceClassEPKc"></span><span id="HASensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a8e2ffcb1ae1bb7411464a34d27df8817"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/sensor/#device-class">https://www.home-assistant.io/integrations/sensor/#device-class</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setForceUpdateEb">
+<span id="_CPPv3N8HASensor14setForceUpdateEb"></span><span id="_CPPv2N8HASensor14setForceUpdateEb"></span><span id="HASensor::setForceUpdate__b"></span><span class="target" id="class_h_a_sensor_1adb8db20cf6c35033c6653ab10de319cb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setForceUpdate</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">forceUpdate</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setForceUpdateEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Forces HA panel to process each incoming value (MQTT message). It’s useful if you want to have meaningful value graphs in history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>forceUpdate</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor7setIconEPKc">
+<span id="_CPPv3N8HASensor7setIconEPKc"></span><span id="_CPPv2N8HASensor7setIconEPKc"></span><span id="HASensor::setIcon__cCP"></span><span class="target" id="class_h_a_sensor_1abc06a58cd84ecd2a8c1ddb3c305dfb7b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the sensor. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>class</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor20setUnitOfMeasurementEPKc">
+<span id="_CPPv3N8HASensor20setUnitOfMeasurementEPKc"></span><span id="_CPPv2N8HASensor20setUnitOfMeasurementEPKc"></span><span id="HASensor::setUnitOfMeasurement__cCP"></span><span class="target" id="class_h_a_sensor_1aab81b220cc390558090e81177e2b1a11"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setUnitOfMeasurement</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">unitOfMeasurement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor20setUnitOfMeasurementEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Defines the units of measurement of the sensor, if any.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>units</strong> – For example: °C, % </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor15buildSerializerEv">
+<span id="_CPPv3N8HASensor15buildSerializerEv"></span><span id="_CPPv2N8HASensor15buildSerializerEv"></span><span id="HASensor::buildSerializer"></span><span class="target" id="class_h_a_sensor_1aa9f52aab45cd8f8d146be4d9b6050db8"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">final</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASensor15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor15onMqttConnectedEv">
+<span id="_CPPv3N8HASensor15onMqttConnectedEv"></span><span id="_CPPv2N8HASensor15onMqttConnectedEv"></span><span id="HASensor::onMqttConnected"></span><span class="target" id="class_h_a_sensor_1aad00d5148f514fa1b2fc7d4c89f67ab4"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASensor15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_deviceClassE">
+<span id="_CPPv3N8HASensor12_deviceClassE"></span><span id="_CPPv2N8HASensor12_deviceClassE"></span><span id="HASensor::_deviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a42ff8d2271f7728acf2fb349595862f0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_deviceClass</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_deviceClassE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The device class. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_forceUpdateE">
+<span id="_CPPv3N8HASensor12_forceUpdateE"></span><span id="_CPPv2N8HASensor12_forceUpdateE"></span><span id="HASensor::_forceUpdate__b"></span><span class="target" id="class_h_a_sensor_1a8239a2f39b6cae94871dd852f2526825"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_forceUpdate</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_forceUpdateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The force update flag for the HA panel. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor5_iconE">
+<span id="_CPPv3N8HASensor5_iconE"></span><span id="_CPPv2N8HASensor5_iconE"></span><span id="HASensor::_icon__cCP"></span><span class="target" id="class_h_a_sensor_1aaddfd49dc1d24de9580d2132c697e7f3"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the sensor. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor18_unitOfMeasurementE">
+<span id="_CPPv3N8HASensor18_unitOfMeasurementE"></span><span id="_CPPv2N8HASensor18_unitOfMeasurementE"></span><span id="HASensor::_unitOfMeasurement__cCP"></span><span class="target" id="class_h_a_sensor_1abedc7a1be1cb9b3855c1721b356c5635"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_unitOfMeasurement</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor18_unitOfMeasurementE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The unit of measurement for the sensor. It can be nullptr. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-select.html"
+       title="previous chapter">← HASelect class</a>
+  </li>
+  <li class="next">
+    <a href="ha-sensor-number.html"
+       title="next chapter">HASensorNumber class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

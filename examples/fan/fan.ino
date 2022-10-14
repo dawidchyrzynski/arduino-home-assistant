@@ -14,14 +14,18 @@ HAMqtt mqtt(client, device);
 // "ventilation" is unique ID of the fan. You should define your own ID.
 HAFan fan("ventilation", HAFan::SpeedsFeature);
 
-void onStateChanged(bool state) {
+void onStateCommand(bool state, HAFan* sender) {
     Serial.print("State: ");
     Serial.println(state);
+
+    sender->setState(state); // report state back to the Home Assistant
 }
 
-void onSpeedChanged(uint16_t speed) {
+void onSpeedCommand(uint16_t speed, HAFan* sender) {
     Serial.print("Speed: ");
     Serial.println(speed);
+
+    sender->setSpeed(speed); // report speed back to the Home Assistant
 }
 
 void setup() {
@@ -36,13 +40,19 @@ void setup() {
 
     // configure fan (optional)
     fan.setName("Bathroom");
-    fan.setRetain(true);
     fan.setSpeedRangeMin(1);
     fan.setSpeedRangeMax(100);
 
+    // Optionally you can set retain flag for the HA commands
+    // fan.setRetain(true);
+
+    // Optionally you can enable optimistic mode for the HAFan.
+    // In this mode you won't need to report state back to the HA when commands are executed.
+    // fan.setOptimistic(true);
+
     // handle fan states
-    fan.onStateChanged(onStateChanged);
-    fan.onSpeedChanged(onSpeedChanged);
+    fan.onStateCommand(onStateCommand);
+    fan.onSpeedCommand(onSpeedCommand);
 
     mqtt.begin(BROKER_ADDR);
 }
@@ -50,4 +60,8 @@ void setup() {
 void loop() {
     Ethernet.maintain();
     mqtt.loop();
+
+    // You can also change the state at runtime as shown below.
+    // This kind of logic can be used if you want to control your fan using a button connected to the device.
+    // fan.setState(true); // true (ON) or false (OFF)
 }

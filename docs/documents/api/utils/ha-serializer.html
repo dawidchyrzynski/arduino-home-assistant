@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASerializer class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HASerializerArray class" href="ha-serializer-array.html" />
+  <link rel="prev" title="HANumeric class" href="ha-numeric.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device-types/index.html">Device types API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Utils API</a> &raquo;</li>
+    
+    <li>HASerializer class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-numeric.html"
+       title="previous chapter">← HANumeric class</a>
+  </li>
+  <li class="next">
+    <a href="ha-serializer-array.html"
+       title="next chapter">HASerializerArray class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="haserializer-class">
+<h1>HASerializer class<a class="headerlink" href="#haserializer-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv412HASerializer">
+<span id="_CPPv312HASerializer"></span><span id="_CPPv212HASerializer"></span><span id="HASerializer"></span><span class="target" id="class_h_a_serializer"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASerializer</span></span></span><a class="headerlink" href="#_CPPv412HASerializer" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This class allows to create JSON objects easily. Its main purpose is to handle configuration of a device type that’s going to be published to the MQTT broker. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Type of the object’s entry. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType16UnknownEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType16UnknownEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType16UnknownEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a4b639d5c8c1f1b5dcfd4c3c0806901e2"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType16UnknownEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType17PropertyEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType17PropertyEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType17PropertyEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a7a217c953d1bab14c8b9965d895f41a4"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PropertyEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType17PropertyEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType14TopicEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType14TopicEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType14TopicEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a1a8ec082ba78a59265913658f8324d1f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">TopicEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType14TopicEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer9EntryType13FlagEntryTypeE">
+<span id="_CPPv3N12HASerializer9EntryType13FlagEntryTypeE"></span><span id="_CPPv2N12HASerializer9EntryType13FlagEntryTypeE"></span><span class="target" id="class_h_a_serializer_1a52e622ec3b8bb97373d98999abe514e8a9f13783a46ffe8e021a1436936bb7773"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FlagEntryType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer9EntryType13FlagEntryTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagTypeE">
+<span id="_CPPv3N12HASerializer8FlagTypeE"></span><span id="_CPPv2N12HASerializer8FlagTypeE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">FlagType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of a flag for a FlagEntryType. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagType10WithDeviceE">
+<span id="_CPPv3N12HASerializer8FlagType10WithDeviceE"></span><span id="_CPPv2N12HASerializer8FlagType10WithDeviceE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20aa55ad781fc08255ec1b9ae9e133623fa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WithDevice</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagType10WithDeviceE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8FlagType16WithAvailabilityE">
+<span id="_CPPv3N12HASerializer8FlagType16WithAvailabilityE"></span><span id="_CPPv2N12HASerializer8FlagType16WithAvailabilityE"></span><span class="target" id="class_h_a_serializer_1af48ac87d6107bdf5682c2f847fcc1c20ab6eb2bc6b231c4a431cd7124c4f3d9d8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">WithAvailability</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8FlagType16WithAvailabilityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199d"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PropertyValueType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Available data types of entries. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType24UnknownPropertyValueTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType24UnknownPropertyValueTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType24UnknownPropertyValueTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199dadb484af1392ae0fc265cf30f4be9e376"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">UnknownPropertyValueType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType24UnknownPropertyValueTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType22ConstCharPropertyValueE">
+<span id="_CPPv3N12HASerializer17PropertyValueType22ConstCharPropertyValueE"></span><span id="_CPPv2N12HASerializer17PropertyValueType22ConstCharPropertyValueE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da70ed2ecab6d1ca6f97f8b6dab3672261"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ConstCharPropertyValue</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType22ConstCharPropertyValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType20ProgmemPropertyValueE">
+<span id="_CPPv3N12HASerializer17PropertyValueType20ProgmemPropertyValueE"></span><span id="_CPPv2N12HASerializer17PropertyValueType20ProgmemPropertyValueE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da1dbd161613dc5c39802e8e9a7fa9079a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ProgmemPropertyValue</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType20ProgmemPropertyValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType16BoolPropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType16BoolPropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType16BoolPropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da0626b8fa2eb98d45ddab24f2cec0753f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BoolPropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType16BoolPropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType18NumberPropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType18NumberPropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType18NumberPropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da0072fb14f001eb60ec12393ab14dce2a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberPropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType18NumberPropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17PropertyValueType17ArrayPropertyTypeE">
+<span id="_CPPv3N12HASerializer17PropertyValueType17ArrayPropertyTypeE"></span><span id="_CPPv2N12HASerializer17PropertyValueType17ArrayPropertyTypeE"></span><span class="target" id="class_h_a_serializer_1a35cb1cb5fec45dd46c6fad9232d5199da2bfb76b45d3697a1cb1d15cd0e9f30ce"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ArrayPropertyType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer17PropertyValueType17ArrayPropertyTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer12HASerializerEP16HABaseDeviceTypeK7uint8_t">
+<span id="_CPPv3N12HASerializer12HASerializerEP16HABaseDeviceTypeK7uint8_t"></span><span id="_CPPv2N12HASerializer12HASerializerEP16HABaseDeviceTypeK7uint8_t"></span><span id="HASerializer::HASerializer__HABaseDeviceTypeP.uint8_tC"></span><span class="target" id="class_h_a_serializer_1acec947d4ceff5c135b8e1018d4296ef7"></span><span class="sig-name descname"><span class="n"><span class="pre">HASerializer</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../device-types/ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceType</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">maxEntriesNb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer12HASerializerEP16HABaseDeviceTypeK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates instance of the serializer for the given device type. Please note that the number JSON object’s entries needs to be known upfront. This approach reduces number of memory allocations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>deviceType</strong> – The device type that owns the serializer. </p></li>
+<li><p><strong>maxEntriesNb</strong> – Maximum number of the output object entries. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializerD0Ev">
+<span id="_CPPv3N12HASerializerD0Ev"></span><span id="_CPPv2N12HASerializerD0Ev"></span><span id="HASerializer::~HASerializer"></span><span class="target" id="class_h_a_serializer_1a278c7b4b862407e74a57ff7b95e68338"></span><span class="sig-name descname"><span class="n"><span class="pre">~HASerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Frees the dynamic memory allocated by the class. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer12getEntriesNbEv">
+<span id="_CPPv3NK12HASerializer12getEntriesNbEv"></span><span id="_CPPv2NK12HASerializer12getEntriesNbEv"></span><span id="HASerializer::getEntriesNbC"></span><span class="target" id="class_h_a_serializer_1a0bfdc9ac369945cf60c902e71c7c6439"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getEntriesNb</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer12getEntriesNbEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the number of items that were added to the serializer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer10getEntriesEv">
+<span id="_CPPv3NK12HASerializer10getEntriesEv"></span><span id="_CPPv2NK12HASerializer10getEntriesEv"></span><span id="HASerializer::getEntriesC"></span><span class="target" id="class_h_a_serializer_1a052f3e59212ad7dba3ae7c9911e2c2e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getEntries</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer10getEntriesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns pointer to the serializer’s entries. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer3setEPK19__FlashStringHelperPKv17PropertyValueType">
+<span id="_CPPv3N12HASerializer3setEPK19__FlashStringHelperPKv17PropertyValueType"></span><span id="_CPPv2N12HASerializer3setEPK19__FlashStringHelperPKv17PropertyValueType"></span><span id="HASerializer::set____FlashStringHelperCP.voidCP.PropertyValueType"></span><span class="target" id="class_h_a_serializer_1a337b8f102e8e66286501cfb9eb1dcd16"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">property</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">value</span></span>, <a class="reference internal" href="#_CPPv4N12HASerializer17PropertyValueTypeE" title="HASerializer::PropertyValueType"><span class="n"><span class="pre">PropertyValueType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">valueType</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer17PropertyValueType22ConstCharPropertyValueE" title="HASerializer::ConstCharPropertyValue"><span class="n"><span class="pre">ConstCharPropertyValue</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer3setEPK19__FlashStringHelperPKv17PropertyValueType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a new entry to the serialized with a type of <code class="docutils literal notranslate"><span class="pre">PropertyEntryType</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>property</strong> – Pointer to the name of the property (progmem string). </p></li>
+<li><p><strong>value</strong> – Pointer to the value that’s being set. </p></li>
+<li><p><strong>valueType</strong> – The type of the value that’s passed to the method. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer3setEK8FlagType">
+<span id="_CPPv3N12HASerializer3setEK8FlagType"></span><span id="_CPPv2N12HASerializer3setEK8FlagType"></span><span id="HASerializer::set__FlagTypeC"></span><span class="target" id="class_h_a_serializer_1ab6621da36ef95e2e516d4333abbff8c5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">set</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer8FlagTypeE" title="HASerializer::FlagType"><span class="n"><span class="pre">FlagType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">flag</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer3setEK8FlagType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a new entry to the serializer with a type of <code class="docutils literal notranslate"><span class="pre">FlagEntryType</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>flag</strong> – Flag to add. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer5topicEPK19__FlashStringHelper">
+<span id="_CPPv3N12HASerializer5topicEPK19__FlashStringHelper"></span><span id="_CPPv2N12HASerializer5topicEPK19__FlashStringHelper"></span><span id="HASerializer::topic____FlashStringHelperCP"></span><span class="target" id="class_h_a_serializer_1a863488f26930a27d0ba9563b9e8f7037"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">topic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer5topicEPK19__FlashStringHelper" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a new entry to the serialize with a type of <code class="docutils literal notranslate"><span class="pre">TopicEntryType</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>topic</strong> – The topic name to add (progmem string). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer13calculateSizeEv">
+<span id="_CPPv3NK12HASerializer13calculateSizeEv"></span><span id="_CPPv2NK12HASerializer13calculateSizeEv"></span><span id="HASerializer::calculateSizeC"></span><span class="target" id="class_h_a_serializer_1a68850036a40b01336815967a53f12abf"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer13calculateSizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the output size of the serialized JSON object. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer5flushEv">
+<span id="_CPPv3NK12HASerializer5flushEv"></span><span id="_CPPv2NK12HASerializer5flushEv"></span><span id="HASerializer::flushC"></span><span class="target" id="class_h_a_serializer_1a393c7c33d9e270034771786679952070"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flush</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer5flushEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Flushes the JSON object to the MQTT stream. Please note that this method only writes the MQTT payload. The MQTT session needs to be opened before. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer26calculateConfigTopicLengthEPK19__FlashStringHelperPKc">
+<span id="_CPPv3N12HASerializer26calculateConfigTopicLengthEPK19__FlashStringHelperPKc"></span><span id="_CPPv2N12HASerializer26calculateConfigTopicLengthEPK19__FlashStringHelperPKc"></span><span id="HASerializer::calculateConfigTopicLength____FlashStringHelperCP.cCP"></span><span class="target" id="class_h_a_serializer_1a00b7034afca0a97610ddc380a88a24d5"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateConfigTopicLength</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">component</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer26calculateConfigTopicLengthEPK19__FlashStringHelperPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of a configuration topic for the given component and object ID. The configuration topic has structure as follows: <code class="docutils literal notranslate"><span class="pre">[discovery</span> <span class="pre">prefix]/[component]/[device</span> <span class="pre">ID]_[objectId]/config</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>component</strong> – The name of the HA component (e.g. <code class="docutils literal notranslate"><span class="pre">binary_sensor</span></code>). </p></li>
+<li><p><strong>objectId</strong> – The unique ID of a device type that’s going to publish the config. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer19generateConfigTopicEPcPK19__FlashStringHelperPKc">
+<span id="_CPPv3N12HASerializer19generateConfigTopicEPcPK19__FlashStringHelperPKc"></span><span id="_CPPv2N12HASerializer19generateConfigTopicEPcPK19__FlashStringHelperPKc"></span><span id="HASerializer::generateConfigTopic__cP.__FlashStringHelperCP.cCP"></span><span class="target" id="class_h_a_serializer_1a4321df25cc8bb151ee397657258b7e80"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generateConfigTopic</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">component</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer19generateConfigTopicEPcPK19__FlashStringHelperPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generates the configuration topic for the given component and object ID. The topic will be stored in the <code class="docutils literal notranslate"><span class="pre">output</span></code> variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> – Buffer where the topic will be written. </p></li>
+<li><p><strong>component</strong> – The name of the HA component (e.g. <code class="docutils literal notranslate"><span class="pre">binary_sensor</span></code>). </p></li>
+<li><p><strong>objectId</strong> – The unique ID of a device type that’s going to publish the config. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer24calculateDataTopicLengthEPKcPK19__FlashStringHelper">
+<span id="_CPPv3N12HASerializer24calculateDataTopicLengthEPKcPK19__FlashStringHelper"></span><span id="_CPPv2N12HASerializer24calculateDataTopicLengthEPKcPK19__FlashStringHelper"></span><span id="HASerializer::calculateDataTopicLength__cCP.__FlashStringHelperCP"></span><span class="target" id="class_h_a_serializer_1ac3d03dd0b3a3c75197e9ec33f94d01b1"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateDataTopicLength</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer24calculateDataTopicLengthEPKcPK19__FlashStringHelper" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the given data topic for the given objectId. The data topic has structure as follows: <code class="docutils literal notranslate"><span class="pre">[data</span> <span class="pre">prefix]/[device</span> <span class="pre">ID]_[objectId]/[topic]</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>objectId</strong> – The unique ID of a device type that’s going to publish the data. </p></li>
+<li><p><strong>topic</strong> – The topic name (progmem string). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17generateDataTopicEPcPKcPK19__FlashStringHelper">
+<span id="_CPPv3N12HASerializer17generateDataTopicEPcPKcPK19__FlashStringHelper"></span><span id="_CPPv2N12HASerializer17generateDataTopicEPcPKcPK19__FlashStringHelper"></span><span id="HASerializer::generateDataTopic__cP.cCP.__FlashStringHelperCP"></span><span class="target" id="class_h_a_serializer_1aa72c3347ff7a056d4c002984103d129a"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">generateDataTopic</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer17generateDataTopicEPcPKcPK19__FlashStringHelper" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generates the data topic for the given object ID. The topic will be stored in the <code class="docutils literal notranslate"><span class="pre">output</span></code> variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> – Buffer where the topic will be written. </p></li>
+<li><p><strong>objectId</strong> – The unique ID of a device type that’s going to publish the data. </p></li>
+<li><p><strong>topic</strong> – The topic name (progmem string). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer17compareDataTopicsEPKcPKcPK19__FlashStringHelper">
+<span id="_CPPv3N12HASerializer17compareDataTopicsEPKcPKcPK19__FlashStringHelper"></span><span id="_CPPv2N12HASerializer17compareDataTopicsEPKcPKcPK19__FlashStringHelper"></span><span id="HASerializer::compareDataTopics__cCP.cCP.__FlashStringHelperCP"></span><span class="target" id="class_h_a_serializer_1a15c009b743edf4aa7cd1db63210b5ffc"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">compareDataTopics</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">actualTopic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer17compareDataTopicsEPKcPKcPK19__FlashStringHelper" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Checks whether the given topic matches the data topic that can be generated using the given objectId and topicP. This method can be used to check if the received message matches some data topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>actualTopic</strong> – The actual topic to compare. </p></li>
+<li><p><strong>objectId</strong> – The unique ID of a device type that may be the owner of the topic. </p></li>
+<li><p><strong>topic</strong> – The topic name (progmem string). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8addEntryEv">
+<span id="_CPPv3N12HASerializer8addEntryEv"></span><span id="_CPPv2N12HASerializer8addEntryEv"></span><span id="HASerializer::addEntry"></span><span class="target" id="class_h_a_serializer_1a6ada7fe3415c8e2c6b30838d66301b94"></span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">addEntry</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer8addEntryEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a new entry in the serializer’s memory. If the limit of entries is hit, the nullptr is returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer18calculateEntrySizeEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer18calculateEntrySizeEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer18calculateEntrySizeEPK15SerializerEntry"></span><span id="HASerializer::calculateEntrySize__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1ac980505ec6ed67ba65f2c87c5ac8d675"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateEntrySize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer18calculateEntrySizeEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the serialized size of the given entry. Internally, this method recognizes the type of the entry and calls a proper calculate method listed below. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer23calculateTopicEntrySizeEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer23calculateTopicEntrySizeEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer23calculateTopicEntrySizeEPK15SerializerEntry"></span><span id="HASerializer::calculateTopicEntrySize__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1a6881da54ef4bf88eb773ac66ec5f3fa2"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateTopicEntrySize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer23calculateTopicEntrySizeEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the entry of type <code class="docutils literal notranslate"><span class="pre">TopicEntryType</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer17calculateFlagSizeEK8FlagType">
+<span id="_CPPv3NK12HASerializer17calculateFlagSizeEK8FlagType"></span><span id="_CPPv2NK12HASerializer17calculateFlagSizeEK8FlagType"></span><span id="HASerializer::calculateFlagSize__FlagTypeCC"></span><span class="target" id="class_h_a_serializer_1a2bfa192139e29026fe37e88184f72fcb"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateFlagSize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer8FlagTypeE" title="HASerializer::FlagType"><span class="n"><span class="pre">FlagType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">flag</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer17calculateFlagSizeEK8FlagType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the entry of type <code class="docutils literal notranslate"><span class="pre">FlagEntryType</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer26calculatePropertyValueSizeEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer26calculatePropertyValueSizeEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer26calculatePropertyValueSizeEPK15SerializerEntry"></span><span id="HASerializer::calculatePropertyValueSize__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1a03905687d7820c8fad0e5edb623ac09f"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculatePropertyValueSize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer26calculatePropertyValueSizeEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the entry’s value if the entry is <code class="docutils literal notranslate"><span class="pre">PropertyEntryType</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer18calculateArraySizeEPK17HASerializerArray">
+<span id="_CPPv3NK12HASerializer18calculateArraySizeEPK17HASerializerArray"></span><span id="_CPPv2NK12HASerializer18calculateArraySizeEPK17HASerializerArray"></span><span id="HASerializer::calculateArraySize__HASerializerArrayCPC"></span><span class="target" id="class_h_a_serializer_1a9f2bdcab32f7a7e083e15c7c8121c041"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateArraySize</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">array</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer18calculateArraySizeEPK17HASerializerArray" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the array if the property’s value is a type of <code class="docutils literal notranslate"><span class="pre">ArrayPropertyType</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer10flushEntryEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer10flushEntryEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer10flushEntryEPK15SerializerEntry"></span><span id="HASerializer::flushEntry__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1a3e7353dc7041874324a4f4395f24669a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flushEntry</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer10flushEntryEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Flushes the given entry to the MQTT. Internally this method recognizes the type of the entry and calls a proper flush method listed below. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer15flushEntryValueEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer15flushEntryValueEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer15flushEntryValueEPK15SerializerEntry"></span><span id="HASerializer::flushEntryValue__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1a59f820d8d3ff2d2a2e3b750cf70a4e31"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flushEntryValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer15flushEntryValueEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Flushes the value of the <code class="docutils literal notranslate"><span class="pre">PropertyEntryType</span></code> entry. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer10flushTopicEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer10flushTopicEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer10flushTopicEPK15SerializerEntry"></span><span id="HASerializer::flushTopic__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1aa25fb91260003ea68788610d5af84ae2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flushTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer10flushTopicEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Flushes the entry of type <code class="docutils literal notranslate"><span class="pre">TopicEntryType</span></code> to the MQTT. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK12HASerializer9flushFlagEPK15SerializerEntry">
+<span id="_CPPv3NK12HASerializer9flushFlagEPK15SerializerEntry"></span><span id="_CPPv2NK12HASerializer9flushFlagEPK15SerializerEntry"></span><span id="HASerializer::flushFlag__SerializerEntryCPC"></span><span class="target" id="class_h_a_serializer_1a3642b01084b1aff891bab6b8e3b23424"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">flushFlag</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">entry</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK12HASerializer9flushFlagEPK15SerializerEntry" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Flushes the entry of type <code class="docutils literal notranslate"><span class="pre">FlagEntryType</span></code> to the MQTT. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer11_deviceTypeE">
+<span id="_CPPv3N12HASerializer11_deviceTypeE"></span><span id="_CPPv2N12HASerializer11_deviceTypeE"></span><span id="HASerializer::_deviceType__HABaseDeviceTypeP"></span><span class="target" id="class_h_a_serializer_1aae339a388745f06c14b1137fc6d110c4"></span><a class="reference internal" href="../device-types/ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_deviceType</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer11_deviceTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Pointer to the device type that owns the serializer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer10_entriesNbE">
+<span id="_CPPv3N12HASerializer10_entriesNbE"></span><span id="_CPPv2N12HASerializer10_entriesNbE"></span><span id="HASerializer::_entriesNb__uint8_t"></span><span class="target" id="class_h_a_serializer_1a8fb1587b29433e74937118696445d887"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_entriesNb</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer10_entriesNbE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of entries added to the serializer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer13_maxEntriesNbE">
+<span id="_CPPv3N12HASerializer13_maxEntriesNbE"></span><span id="_CPPv2N12HASerializer13_maxEntriesNbE"></span><span id="HASerializer::_maxEntriesNb__uint8_t"></span><span class="target" id="class_h_a_serializer_1a6fc2f149387930c2814ff0981bf2c003"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_maxEntriesNb</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer13_maxEntriesNbE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Maximum number of entries that can be added to the serializer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer8_entriesE">
+<span id="_CPPv3N12HASerializer8_entriesE"></span><span id="_CPPv2N12HASerializer8_entriesE"></span><span id="HASerializer::_entries__SerializerEntryP"></span><span class="target" id="class_h_a_serializer_1a23d226a26172edeb59a82baff1572374"></span><a class="reference internal" href="#_CPPv4N12HASerializer15SerializerEntryE" title="HASerializer::SerializerEntry"><span class="n"><span class="pre">SerializerEntry</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_entries</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer8_entriesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Pointer to the serializer entries. </p>
+</dd></dl>
+
+</div>
+<dl class="cpp struct">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntryE">
+<span id="_CPPv3N12HASerializer15SerializerEntryE"></span><span id="_CPPv2N12HASerializer15SerializerEntryE"></span><span id="HASerializer::SerializerEntry"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SerializerEntry</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Representation of a single entry in the object. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry15SerializerEntryEv">
+<span id="_CPPv3N12HASerializer15SerializerEntry15SerializerEntryEv"></span><span id="_CPPv2N12HASerializer15SerializerEntry15SerializerEntryEv"></span><span id="HASerializer::SerializerEntry::SerializerEntry"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1aa4a289e81a8c48dee11b1337c3d033ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SerializerEntry</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry15SerializerEntryEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-members">Public Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry4typeE">
+<span id="_CPPv3N12HASerializer15SerializerEntry4typeE"></span><span id="_CPPv2N12HASerializer15SerializerEntry4typeE"></span><span id="HASerializer::SerializerEntry::type__EntryType"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1a99b8d520fb4a9cfe86de2e0d7bb94c5b"></span><a class="reference internal" href="#_CPPv4N12HASerializer9EntryTypeE" title="HASerializer::EntryType"><span class="n"><span class="pre">EntryType</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry4typeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Type of the entry. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry7subtypeE">
+<span id="_CPPv3N12HASerializer15SerializerEntry7subtypeE"></span><span id="_CPPv2N12HASerializer15SerializerEntry7subtypeE"></span><span id="HASerializer::SerializerEntry::subtype__uint8_t"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1a1db4acee885aa141f3d6c6c5561c2e54"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">subtype</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry7subtypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subtype of the entry. It can be <code class="docutils literal notranslate"><span class="pre">FlagType</span></code>, <code class="docutils literal notranslate"><span class="pre">PropertyValueType</span></code> or <code class="docutils literal notranslate"><span class="pre">TopicType</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry8propertyE">
+<span id="_CPPv3N12HASerializer15SerializerEntry8propertyE"></span><span id="_CPPv2N12HASerializer15SerializerEntry8propertyE"></span><span id="HASerializer::SerializerEntry::property____FlashStringHelperCP"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1a0c31c654eb28736f36e14b8fa15f1478"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">property</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry8propertyE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Pointer to the property name (progmem string). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N12HASerializer15SerializerEntry5valueE">
+<span id="_CPPv3N12HASerializer15SerializerEntry5valueE"></span><span id="_CPPv2N12HASerializer15SerializerEntry5valueE"></span><span id="HASerializer::SerializerEntry::value__voidCP"></span><span class="target" id="struct_h_a_serializer_1_1_serializer_entry_1aa49acec07e91e4b86e91ba6876f1b0ba"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">value</span></span></span><a class="headerlink" href="#_CPPv4N12HASerializer15SerializerEntry5valueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Pointer to the property value. The value type is determined by <code class="docutils literal notranslate"><span class="pre">subtype</span></code>. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-numeric.html"
+       title="previous chapter">← HANumeric class</a>
+  </li>
+  <li class="next">
+    <a href="ha-serializer-array.html"
+       title="next chapter">HASerializerArray class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

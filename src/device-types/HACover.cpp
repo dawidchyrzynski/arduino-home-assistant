@@ -1,73 +1,26 @@
 #include "HACover.h"
-#ifdef ARDUINOHA_COVER
+#ifndef EX_ARDUINOHA_COVER
 
 #include "../HAMqtt.h"
-#include "../HADevice.h"
+#include "../utils/HAUtils.h"
+#include "../utils/HANumeric.h"
+#include "../utils/HASerializer.h"
 
-static const char ClosedStateStr[] PROGMEM = {"closed"};
-static const char ClosingStateStr[] PROGMEM = {"closing"};
-static const char OpenStateStr[] PROGMEM = {"open"};
-static const char OpeningStateStr[] PROGMEM = {"opening"};
-static const char StoppedStateStr[] PROGMEM = {"stopped"};
-static const char OpenCommandStr[] PROGMEM = {"OPEN"};
-static const char CloseCommandStr[] PROGMEM = {"CLOSE"};
-static const char StopCommandStr[] PROGMEM = {"STOP"};
-
-const char* HACover::PositionTopic = "ps";
-
-HACover::HACover(const char* uniqueId) :
-    BaseDeviceType("cover", uniqueId),
-    _commandCallback(nullptr),
+HACover::HACover(const char* uniqueId, const Features features) :
+    HABaseDeviceType(AHATOFSTR(HAComponentCover), uniqueId),
+    _features(features),
     _currentState(StateUnknown),
-    _currentPosition(0),
-    _retain(false)
+    _currentPosition(DefaultPosition),
+    _class(nullptr),
+    _icon(nullptr),
+    _retain(false),
+    _optimistic(false),
+    _commandCallback(nullptr)
 {
 
 }
 
-HACover::HACover(const char* uniqueId, HAMqtt& mqtt) :
-    HACover(uniqueId)
-{
-    (void)mqtt;
-}
-
-void HACover::onMqttConnected()
-{
-    if (strlen(uniqueId()) == 0) {
-        return;
-    }
-
-    publishConfig();
-    publishAvailability();
-
-    DeviceTypeSerializer::mqttSubscribeTopic(
-        this,
-        DeviceTypeSerializer::CommandTopic
-    );
-
-    if (!_retain) {
-        publishState(_currentState);
-        publishPosition(_currentPosition);
-    }
-}
-
-void HACover::onMqttMessage(
-    const char* topic,
-    const uint8_t* payload,
-    const uint16_t& length
-)
-{
-    (void)payload;
-
-    if (compareTopics(topic, DeviceTypeSerializer::CommandTopic)) {
-        char cmd[length + 1];
-        memset(cmd, 0, sizeof(cmd));
-        memcpy(cmd, payload, length);
-        handleCommand(cmd);
-    }
-}
-
-bool HACover::setState(CoverState state, bool force)
+bool HACover::setState(const CoverState state, const bool force)
 {
     if (!force && _currentState == state) {
         return true;
@@ -81,9 +34,9 @@ bool HACover::setState(CoverState state, bool force)
     return false;
 }
 
-bool HACover::setPosition(int16_t position)
+bool HACover::setPosition(const int16_t position, const bool force)
 {
-    if (_currentPosition == position) {
+    if (!force && _currentPosition == position) {
         return true;
     }
 
@@ -95,191 +48,135 @@ bool HACover::setPosition(int16_t position)
     return false;
 }
 
+void HACover::buildSerializer()
+{
+    if (_serializer || !uniqueId()) {
+        return;
+    }
+
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
+    _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
+    _serializer->set(AHATOFSTR(HAIconProperty), _icon);
+
+    if (_retain) {
+        _serializer->set(
+            AHATOFSTR(HARetainProperty),
+            &_retain,
+            HASerializer::BoolPropertyType
+        );
+    }
+
+    if (_optimistic) {
+        _serializer->set(
+            AHATOFSTR(HAOptimisticProperty),
+            &_optimistic,
+            HASerializer::BoolPropertyType
+        );
+    }
+
+    _serializer->set(HASerializer::WithDevice);
+    _serializer->set(HASerializer::WithAvailability);
+    _serializer->topic(AHATOFSTR(HAStateTopic));
+    _serializer->topic(AHATOFSTR(HACommandTopic));
+
+    if (_features & PositionFeature) {
+        _serializer->topic(AHATOFSTR(HAPositionTopic));
+    }
+}
+
+void HACover::onMqttConnected()
+{
+    if (!uniqueId()) {
+        return;
+    }
+
+    publishConfig();
+    publishAvailability();
+
+    if (!_retain) {
+        publishState(_currentState);
+        publishPosition(_currentPosition);
+    }
+
+    subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
+}
+
+void HACover::onMqttMessage(
+    const char* topic,
+    const uint8_t* payload,
+    const uint16_t length
+)
+{
+    if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HACommandTopic)
+    )) {
+        handleCommand(payload, length);
+    }
+}
+
 bool HACover::publishState(CoverState state)
 {
-    if (strlen(uniqueId()) == 0 || state == StateUnknown) {
+    if (state == StateUnknown) {
         return false;
     }
 
-    char stateStr[8];
+    const __FlashStringHelper *stateStr = nullptr;
     switch (state) {
-        case StateClosed:
-            strcpy_P(stateStr, ClosedStateStr);
-            break;
+    case StateClosed:
+        stateStr = AHATOFSTR(HAClosedState);
+        break;
 
-        case StateClosing:
-            strcpy_P(stateStr, ClosingStateStr);
-            break;
+    case StateClosing:
+        stateStr = AHATOFSTR(HAClosingState);
+        break;
 
-        case StateOpen:
-            strcpy_P(stateStr, OpenStateStr);
-            break;
+    case StateOpen:
+        stateStr = AHATOFSTR(HAOpenState);
+        break;
 
-        case StateOpening:
-            strcpy_P(stateStr, OpeningStateStr);
-            break;
+    case StateOpening:
+        stateStr = AHATOFSTR(HAOpeningState);
+        break;
 
-        case StateStopped:
-            strcpy_P(stateStr, StoppedStateStr);
-            break;
+    case StateStopped:
+        stateStr = AHATOFSTR(HAStoppedState);
+        break;
 
-        default:
-            return false;
+    default:
+        return false;
     }
 
-    return DeviceTypeSerializer::mqttPublishMessage(
-        this,
-        DeviceTypeSerializer::StateTopic,
-        stateStr
-    );
+    return publishOnDataTopic(AHATOFSTR(HAStateTopic), stateStr, true);
 }
 
 bool HACover::publishPosition(int16_t position)
 {
-    if (strlen(uniqueId()) == 0) {
+    if (position == DefaultPosition || !(_features & PositionFeature)) {
         return false;
     }
 
-    uint8_t digitsNb = floor(log10(position)) + 1;
-    char str[digitsNb + 2]; // + null terminator + negative sign
-    memset(str, 0, sizeof(str));
-    itoa(position, str, 10);
+    char str[6 + 1] = {0}; // int16_t digits with null terminator
+    HANumeric(position, 0).toStr(str);
 
-    return DeviceTypeSerializer::mqttPublishMessage(
-        this,
-        PositionTopic,
-        str
-    );
+    return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);
 }
 
-uint16_t HACover::calculateSerializedLength(const char* serializedDevice) const
-{
-    if (serializedDevice == nullptr) {
-        return 0;
-    }
-
-    uint16_t size = 0;
-    size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateNameFieldSize(getName());
-    size += DeviceTypeSerializer::calculateUniqueIdFieldSize(uniqueId());
-    size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-    size += DeviceTypeSerializer::calculateAvailabilityFieldSize(this);
-    size += DeviceTypeSerializer::calculateRetainFieldSize(_retain);
-
-    // command topic
-    {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            uniqueId(),
-            DeviceTypeSerializer::CommandTopic,
-            false
-        );
-
-        if (topicLength == 0) {
-            return 0;
-        }
-
-        // Field format: "cmd_t":"[TOPIC]"
-        size += topicLength + 10; // 10 - length of the JSON decorators for this field
-    }
-
-    // state topic
-    {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            uniqueId(),
-            DeviceTypeSerializer::StateTopic,
-            false
-        );
-
-        if (topicLength == 0) {
-            return 0;
-        }
-
-        // Field format: ,"stat_t":"[TOPIC]"
-        size += topicLength + 12; // 12 - length of the JSON decorators for this field
-    }
-
-    // position topic
-    {
-        const uint16_t& topicLength = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            uniqueId(),
-            PositionTopic,
-            false
-        );
-
-        if (topicLength == 0) {
-            return 0;
-        }
-
-        // Field format: ,"pos_t":"[TOPIC]"
-        size += topicLength + 11; // 11 - length of the JSON decorators for this field
-    }
-
-    return size; // exludes null terminator
-}
-
-bool HACover::writeSerializedData(const char* serializedDevice) const
-{
-    if (serializedDevice == nullptr) {
-        return false;
-    }
-
-    DeviceTypeSerializer::mqttWriteBeginningJson();
-
-    // command topic
-    {
-        static const char Prefix[] PROGMEM = {"\"cmd_t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
-            DeviceTypeSerializer::CommandTopic
-        );
-    }
-
-    // state topic
-    {
-        static const char Prefix[] PROGMEM = {",\"stat_t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
-            DeviceTypeSerializer::StateTopic
-        );
-    }
-
-    // position topic
-    {
-        static const char Prefix[] PROGMEM = {",\"pos_t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
-            PositionTopic
-        );
-    }
-
-    DeviceTypeSerializer::mqttWriteNameField(getName());
-    DeviceTypeSerializer::mqttWriteUniqueIdField(uniqueId());
-    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
-    DeviceTypeSerializer::mqttWriteAvailabilityField(this);
-    DeviceTypeSerializer::mqttWriteRetainField(_retain);
-    DeviceTypeSerializer::mqttWriteEndJson();
-
-    return true;
-}
-
-void HACover::handleCommand(const char* cmd)
+void HACover::handleCommand(const uint8_t* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
         return;
     }
 
-    if (strcmp_P(cmd, CloseCommandStr) == 0) {
-        _commandCallback(CommandClose);
-    } else if (strcmp_P(cmd, OpenCommandStr) == 0) {
-        _commandCallback(CommandOpen);
-    } else if (strcmp_P(cmd, StopCommandStr) == 0) {
-        _commandCallback(CommandStop);
+    if (memcmp_P(cmd, HACloseCommand, length) == 0) {
+        _commandCallback(CommandClose, this);
+    } else if (memcmp_P(cmd, HAOpenCommand, length) == 0) {
+        _commandCallback(CommandOpen, this);
+    } else if (memcmp_P(cmd, HAStopCommand, length) == 0) {
+        _commandCallback(CommandStop, this);
     }
 }
 

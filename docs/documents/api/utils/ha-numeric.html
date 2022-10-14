@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HANumeric class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HASerializer class" href="ha-serializer.html" />
+  <link rel="prev" title="Utils API" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device-types/index.html">Device types API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Utils API</a> &raquo;</li>
+    
+    <li>HANumeric class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Utils API</a>
+  </li>
+  <li class="next">
+    <a href="ha-serializer.html"
+       title="next chapter">HASerializer class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hanumeric-class">
+<h1>HANumeric class<a class="headerlink" href="#hanumeric-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv49HANumeric">
+<span id="_CPPv39HANumeric"></span><span id="_CPPv29HANumeric"></span><span id="HANumeric"></span><span class="target" id="class_h_a_numeric"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><a class="headerlink" href="#_CPPv49HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This class represents a numeric value that simplifies use of different types of numbers across the library. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEv">
+<span id="_CPPv3N9HANumeric9HANumericEv"></span><span id="_CPPv2N9HANumeric9HANumericEv"></span><span id="HANumeric::HANumeric"></span><span class="target" id="class_h_a_numeric_1a9c08a8e9393eb3eafb37b0920d4ff545"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates an empty number representation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEKfK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEKfK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEKfK7uint8_t"></span><span id="HANumeric::HANumeric__floatC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1a39374543545df36e2c467e5d64136a83"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEKfK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given float into number representation of the given precision. If the precision is set to zero the given float will be converted into integer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK6int8_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK6int8_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK6int8_tK7uint8_t"></span><span id="HANumeric::HANumeric__int8_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1a0146869df2d91fecb6f8c8e98f48e9c8"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK6int8_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given int8_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK7int16_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK7int16_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK7int16_tK7uint8_t"></span><span id="HANumeric::HANumeric__int16_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1ad8090f877bc88382769c974d374df647"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK7int16_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given int16_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK7int32_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK7int32_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK7int32_tK7uint8_t"></span><span id="HANumeric::HANumeric__int32_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1a20f2feed1baa63fb8a82f8a4626aa0ee"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK7int32_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given int32_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK7uint8_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK7uint8_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK7uint8_tK7uint8_t"></span><span id="HANumeric::HANumeric__uint8_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1aa9713608b4070418844b716d78a91502"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK7uint8_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given uint8_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK8uint16_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK8uint16_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK8uint16_tK7uint8_t"></span><span id="HANumeric::HANumeric__uint16_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1ac7754ada0308b94ca4f04ddf03595ba1"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK8uint16_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given uint16_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK8uint32_tK7uint8_t">
+<span id="_CPPv3N9HANumeric9HANumericEK8uint32_tK7uint8_t"></span><span id="_CPPv2N9HANumeric9HANumericEK8uint32_tK7uint8_t"></span><span id="HANumeric::HANumeric__uint32_tC.uint8_tC"></span><span class="target" id="class_h_a_numeric_1aaceb9edc6d9cc1ced9a283e2ddda7f6f"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK8uint32_tK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the given uint32_t into number representation of the given precision. If the precision is greater than zero the given value will be converted to float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – The value that should be used as a base. </p></li>
+<li><p><strong>precision</strong> – The number of digits in the decimal part. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumericaSERK9HANumeric">
+<span id="_CPPv3N9HANumericaSERK9HANumeric"></span><span id="_CPPv2N9HANumericaSERK9HANumeric"></span><span id="HANumeric::assign-operator__HANumericCR"></span><span class="target" id="class_h_a_numeric_1a971a861ec37ad1f289db664bfc56259d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumericaSERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumericeqERK9HANumeric">
+<span id="_CPPv3NK9HANumericeqERK9HANumeric"></span><span id="_CPPv2NK9HANumericeqERK9HANumeric"></span><span id="HANumeric::eq-operator__HANumericCRC"></span><span class="target" id="class_h_a_numeric_1a50622f42e97913c27b0b39fb307cac72"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">==</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">a</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumericeqERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric16getPrecisionBaseEv">
+<span id="_CPPv3NK9HANumeric16getPrecisionBaseEv"></span><span id="_CPPv2NK9HANumeric16getPrecisionBaseEv"></span><span id="HANumeric::getPrecisionBaseC"></span><span class="target" id="class_h_a_numeric_1a8bcc0693ff1ee25fdf521d32acdfdc39"></span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPrecisionBase</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric16getPrecisionBaseEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns multiplier that used to generate base value based on the precision. The multiplier is generated using the formula: <code class="docutils literal notranslate"><span class="pre">pow(precision,</span> <span class="pre">10)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric13calculateSizeEv">
+<span id="_CPPv3NK9HANumeric13calculateSizeEv"></span><span id="_CPPv2NK9HANumeric13calculateSizeEv"></span><span id="HANumeric::calculateSizeC"></span><span class="target" id="class_h_a_numeric_1a144cec49a99d1cab47f11d2c5fd85956"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric13calculateSizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns size of the number </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric5toStrEPc">
+<span id="_CPPv3NK9HANumeric5toStrEPc"></span><span id="_CPPv2NK9HANumeric5toStrEPc"></span><span id="HANumeric::toStr__cPC"></span><span class="target" id="class_h_a_numeric_1a32a214ad1b136bbb4c71e022c0d5b94d"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toStr</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">dst</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric5toStrEPc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Converts the number to the string.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">dst</span></code> size should be calculated using <a class="reference internal" href="#class_h_a_numeric_1a144cec49a99d1cab47f11d2c5fd85956"><span class="std std-ref">HANumeric::calculateSize()</span></a> method plus 1 extra byte for the null terminator. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dst</strong> – Destination where the number will be saved. The null terminator is not added at the end. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of written characters. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric5isSetEv">
+<span id="_CPPv3NK9HANumeric5isSetEv"></span><span id="_CPPv2NK9HANumeric5isSetEv"></span><span id="HANumeric::isSetC"></span><span class="target" id="class_h_a_numeric_1a110e4d6c325b0bfadf23d5b4ff623c3d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isSet</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric5isSetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns true if the base value is set. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric12setBaseValueE7int64_t">
+<span id="_CPPv3N9HANumeric12setBaseValueE7int64_t"></span><span id="_CPPv2N9HANumeric12setBaseValueE7int64_t"></span><span id="HANumeric::setBaseValue__int64_t"></span><span class="target" id="class_h_a_numeric_1a55b88e05062e6c83ad67f6657e44b351"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setBaseValue</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric12setBaseValueE7int64_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the base value without converting it to the proper precision. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric12getBaseValueEv">
+<span id="_CPPv3NK9HANumeric12getBaseValueEv"></span><span id="_CPPv2NK9HANumeric12getBaseValueEv"></span><span id="HANumeric::getBaseValueC"></span><span class="target" id="class_h_a_numeric_1a3f211e9d04c8d6cc4722f7b6631846ef"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getBaseValue</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric12getBaseValueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the base value of the number. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric12setPrecisionEK7uint8_t">
+<span id="_CPPv3N9HANumeric12setPrecisionEK7uint8_t"></span><span id="_CPPv2N9HANumeric12setPrecisionEK7uint8_t"></span><span id="HANumeric::setPrecision__uint8_tC"></span><span class="target" id="class_h_a_numeric_1af2956148006a4d9cb677f35a29862ac2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setPrecision</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric12setPrecisionEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the precision of the number (number of digits in the decimal part).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>precision</strong> – The precision to use. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric12getPrecisionEv">
+<span id="_CPPv3NK9HANumeric12getPrecisionEv"></span><span id="_CPPv2NK9HANumeric12getPrecisionEv"></span><span id="HANumeric::getPrecisionC"></span><span class="target" id="class_h_a_numeric_1aa9d3f2cab0feef1c0dd421888d1a8f43"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getPrecision</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric12getPrecisionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the precision of the number. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric5resetEv">
+<span id="_CPPv3N9HANumeric5resetEv"></span><span id="_CPPv2N9HANumeric5resetEv"></span><span id="HANumeric::reset"></span><span class="target" id="class_h_a_numeric_1ae114c63e174be39fca926971020d17bf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reset</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric5resetEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Resets the number to the defaults. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7isUInt8Ev">
+<span id="_CPPv3NK9HANumeric7isUInt8Ev"></span><span id="_CPPv2NK9HANumeric7isUInt8Ev"></span><span id="HANumeric::isUInt8C"></span><span class="target" id="class_h_a_numeric_1acf58b7fbcde137dc796fca591e1c4487"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isUInt8</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7isUInt8Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric8isUInt16Ev">
+<span id="_CPPv3NK9HANumeric8isUInt16Ev"></span><span id="_CPPv2NK9HANumeric8isUInt16Ev"></span><span id="HANumeric::isUInt16C"></span><span class="target" id="class_h_a_numeric_1aef5b3a5297dcf5d01b2536faa601341d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isUInt16</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric8isUInt16Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric8isUInt32Ev">
+<span id="_CPPv3NK9HANumeric8isUInt32Ev"></span><span id="_CPPv2NK9HANumeric8isUInt32Ev"></span><span id="HANumeric::isUInt32C"></span><span class="target" id="class_h_a_numeric_1a07ab3ad2f16e3f2ce1cd6ba3170db6d4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isUInt32</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric8isUInt32Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric6isInt8Ev">
+<span id="_CPPv3NK9HANumeric6isInt8Ev"></span><span id="_CPPv2NK9HANumeric6isInt8Ev"></span><span id="HANumeric::isInt8C"></span><span class="target" id="class_h_a_numeric_1aa230371b21fd9e054ea5ce583084ae34"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isInt8</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric6isInt8Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7isInt16Ev">
+<span id="_CPPv3NK9HANumeric7isInt16Ev"></span><span id="_CPPv2NK9HANumeric7isInt16Ev"></span><span id="HANumeric::isInt16C"></span><span class="target" id="class_h_a_numeric_1a54769f123110dd5b8b0a5525cab816bf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isInt16</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7isInt16Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7isInt32Ev">
+<span id="_CPPv3NK9HANumeric7isInt32Ev"></span><span id="_CPPv2NK9HANumeric7isInt32Ev"></span><span id="HANumeric::isInt32C"></span><span class="target" id="class_h_a_numeric_1a9fa24a09af42b0a764695619f756ee60"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isInt32</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7isInt32Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7isFloatEv">
+<span id="_CPPv3NK9HANumeric7isFloatEv"></span><span id="_CPPv2NK9HANumeric7isFloatEv"></span><span id="HANumeric::isFloatC"></span><span class="target" id="class_h_a_numeric_1a89f9d595f7d6cc29f5828218d6c87ad2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isFloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7isFloatEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7toUInt8Ev">
+<span id="_CPPv3NK9HANumeric7toUInt8Ev"></span><span id="_CPPv2NK9HANumeric7toUInt8Ev"></span><span id="HANumeric::toUInt8C"></span><span class="target" id="class_h_a_numeric_1a755ab6f4d9252ddbe2f5906c7d47e4a6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toUInt8</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7toUInt8Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric8toUInt16Ev">
+<span id="_CPPv3NK9HANumeric8toUInt16Ev"></span><span id="_CPPv2NK9HANumeric8toUInt16Ev"></span><span id="HANumeric::toUInt16C"></span><span class="target" id="class_h_a_numeric_1a72da99422ab49373b3a58957e34e05cc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toUInt16</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric8toUInt16Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric8toUInt32Ev">
+<span id="_CPPv3NK9HANumeric8toUInt32Ev"></span><span id="_CPPv2NK9HANumeric8toUInt32Ev"></span><span id="HANumeric::toUInt32C"></span><span class="target" id="class_h_a_numeric_1ab58cb873a10b8cb8d9e6e6110098d7d4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toUInt32</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric8toUInt32Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric6toInt8Ev">
+<span id="_CPPv3NK9HANumeric6toInt8Ev"></span><span id="_CPPv2NK9HANumeric6toInt8Ev"></span><span id="HANumeric::toInt8C"></span><span class="target" id="class_h_a_numeric_1a0415c574adb7f9c539285f4e7aed278b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toInt8</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric6toInt8Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7toInt16Ev">
+<span id="_CPPv3NK9HANumeric7toInt16Ev"></span><span id="_CPPv2NK9HANumeric7toInt16Ev"></span><span id="HANumeric::toInt16C"></span><span class="target" id="class_h_a_numeric_1a9d33131c19121424662597bfa363f956"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toInt16</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7toInt16Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7toInt32Ev">
+<span id="_CPPv3NK9HANumeric7toInt32Ev"></span><span id="_CPPv2NK9HANumeric7toInt32Ev"></span><span id="HANumeric::toInt32C"></span><span class="target" id="class_h_a_numeric_1aa7e63bae773e90440bc91a3d08587718"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toInt32</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7toInt32Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK9HANumeric7toFloatEv">
+<span id="_CPPv3NK9HANumeric7toFloatEv"></span><span id="_CPPv2NK9HANumeric7toFloatEv"></span><span id="HANumeric::toFloatC"></span><span class="target" id="class_h_a_numeric_1a0dc83160e99beaeb2f11226af541bdc0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">toFloat</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK9HANumeric7toFloatEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-functions">Public Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric7fromStrEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N9HANumeric7fromStrEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N9HANumeric7fromStrEPK7uint8_tK8uint16_t"></span><span id="HANumeric::fromStr__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_numeric_1a9a1bc9bac880ff3939dd3d8e0ccd1bb3"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">fromStr</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">buffer</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric7fromStrEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Deserializes number from the given buffer. Please note that the class expected buffer to contain the base number. For example, deserializing <code class="docutils literal notranslate"><span class="pre">1234</span></code> number and setting precision to <code class="docutils literal notranslate"><span class="pre">1</span></code> results in representation of <code class="docutils literal notranslate"><span class="pre">123.4</span></code> float.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>buffer</strong> – The buffer that contains the number. </p></li>
+<li><p><strong>length</strong> – The length of the buffer. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric11MaxDigitsNbE">
+<span id="_CPPv3N9HANumeric11MaxDigitsNbE"></span><span id="_CPPv2N9HANumeric11MaxDigitsNbE"></span><span id="HANumeric::MaxDigitsNb__uint8_tC"></span><span class="target" id="class_h_a_numeric_1acdc8d2c68acdcd38c433eba5c043514e"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">MaxDigitsNb</span></span></span><a class="headerlink" href="#_CPPv4N9HANumeric11MaxDigitsNbE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The maximum number of digits that the base value can have (int64_t). </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric9HANumericEK7int64_t">
+<span id="_CPPv3N9HANumeric9HANumericEK7int64_t"></span><span id="_CPPv2N9HANumeric9HANumericEK7int64_t"></span><span id="HANumeric::HANumeric__int64_tC"></span><span class="target" id="class_h_a_numeric_1a0abfc64b6880279f4e7dd3d63d203d25"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HANumeric</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N9HANumeric9HANumericEK7int64_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric6_isSetE">
+<span id="_CPPv3N9HANumeric6_isSetE"></span><span id="_CPPv2N9HANumeric6_isSetE"></span><span id="HANumeric::_isSet__b"></span><span class="target" id="class_h_a_numeric_1ac45310178bcc8b230596454c56c1c05f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_isSet</span></span></span><a class="headerlink" href="#_CPPv4N9HANumeric6_isSetE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric6_valueE">
+<span id="_CPPv3N9HANumeric6_valueE"></span><span id="_CPPv2N9HANumeric6_valueE"></span><span id="HANumeric::_value__int64_t"></span><span class="target" id="class_h_a_numeric_1a29ebd1e65fd3951943873f7d049d90ef"></span><span class="n"><span class="pre">int64_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_value</span></span></span><a class="headerlink" href="#_CPPv4N9HANumeric6_valueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N9HANumeric10_precisionE">
+<span id="_CPPv3N9HANumeric10_precisionE"></span><span id="_CPPv2N9HANumeric10_precisionE"></span><span id="HANumeric::_precision__uint8_t"></span><span class="target" id="class_h_a_numeric_1ab36b34e101f3de1373979f44d1ea67eb"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_precision</span></span></span><a class="headerlink" href="#_CPPv4N9HANumeric10_precisionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">HANumeric</span></dt>
+</dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Utils API</a>
+  </li>
+  <li class="next">
+    <a href="ha-serializer.html"
+       title="next chapter">HASerializer class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

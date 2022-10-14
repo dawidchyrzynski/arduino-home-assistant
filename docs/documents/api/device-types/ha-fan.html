@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HAFan class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HAHVAC class" href="ha-hvac.html" />
+  <link rel="prev" title="HADeviceTrigger class" href="ha-device-trigger.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HAFan class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-device-trigger.html"
+       title="previous chapter">← HADeviceTrigger class</a>
+  </li>
+  <li class="next">
+    <a href="ha-hvac.html"
+       title="next chapter">HAHVAC class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hafan-class">
+<h1>HAFan class<a class="headerlink" href="#hafan-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv45HAFan">
+<span id="_CPPv35HAFan"></span><span id="_CPPv25HAFan"></span><span id="HAFan"></span><span class="target" id="class_h_a_fan"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAFan</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv45HAFan" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_fan"><span class="std std-ref">HAFan</span></a> allows adding a controllable fan in the Home Assistant panel. The library supports only the state and speed of the fan. If you want more features please open a new GitHub issue.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/fan.mqtt/">https://www.home-assistant.io/integrations/fan.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8FeaturesE">
+<span id="_CPPv3N5HAFan8FeaturesE"></span><span id="_CPPv2N5HAFan8FeaturesE"></span><span class="target" id="class_h_a_fan_1ac2952d493b1df35b3c3fa87d0a9abe9a"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Features</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan8FeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8Features15DefaultFeaturesE">
+<span id="_CPPv3N5HAFan8Features15DefaultFeaturesE"></span><span id="_CPPv2N5HAFan8Features15DefaultFeaturesE"></span><span class="target" id="class_h_a_fan_1ac2952d493b1df35b3c3fa87d0a9abe9aa04cec7e09d833af990cbf51cb5a94417"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFeatures</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan8Features15DefaultFeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8Features13SpeedsFeatureE">
+<span id="_CPPv3N5HAFan8Features13SpeedsFeatureE"></span><span id="_CPPv2N5HAFan8Features13SpeedsFeatureE"></span><span class="target" id="class_h_a_fan_1ac2952d493b1df35b3c3fa87d0a9abe9aab3dc217392d8a8052cf3aa3128f7fd69"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SpeedsFeature</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan8Features13SpeedsFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan5HAFanEPKcK7uint8_t">
+<span id="_CPPv3N5HAFan5HAFanEPKcK7uint8_t"></span><span id="_CPPv2N5HAFan5HAFanEPKcK7uint8_t"></span><span id="HAFan::HAFan__cCP.uint8_tC"></span><span class="target" id="class_h_a_fan_1a3b0184557d94a793dffcfb0c2c52d42b"></span><span class="sig-name descname"><span class="n"><span class="pre">HAFan</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">features</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5HAFan8Features15DefaultFeaturesE" title="HAFan::DefaultFeatures"><span class="n"><span class="pre">DefaultFeatures</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan5HAFanEPKcK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the fan. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>features</strong> – Features that should be enabled for the fan. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8setStateEKbKb">
+<span id="_CPPv3N5HAFan8setStateEKbKb"></span><span id="_CPPv2N5HAFan8setStateEKbKb"></span><span id="HAFan::setState__bC.bC"></span><span class="target" id="class_h_a_fan_1a114762da8e47dd00536cd61b2bf95fed"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan8setStateEKbKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the fan and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the fan. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan8setSpeedEK8uint16_tKb">
+<span id="_CPPv3N5HAFan8setSpeedEK8uint16_tKb"></span><span id="_CPPv2N5HAFan8setSpeedEK8uint16_tKb"></span><span id="HAFan::setSpeed__uint16_tC.bC"></span><span class="target" id="class_h_a_fan_1a1c729717948c2a47cdfdb7cbd529c529"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan8setSpeedEK8uint16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes the speed of the fan and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>speed</strong> – The new speed of the fan. It should be in range of min and max value. </p></li>
+<li><p><strong>force</strong> – Forces to update the value without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan6turnOnEv">
+<span id="_CPPv3N5HAFan6turnOnEv"></span><span id="_CPPv2N5HAFan6turnOnEv"></span><span id="HAFan::turnOn"></span><span class="target" id="class_h_a_fan_1a77303e853ecd9b21657d9fda1fca528a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOn</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan6turnOnEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(true)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan7turnOffEv">
+<span id="_CPPv3N5HAFan7turnOffEv"></span><span id="_CPPv2N5HAFan7turnOffEv"></span><span id="HAFan::turnOff"></span><span class="target" id="class_h_a_fan_1a109a8563ac17cf753e90166e3eed471f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOff</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan7turnOffEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(false)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15setCurrentStateEKb">
+<span id="_CPPv3N5HAFan15setCurrentStateEKb"></span><span id="_CPPv2N5HAFan15setCurrentStateEKb"></span><span id="HAFan::setCurrentState__bC"></span><span class="target" id="class_h_a_fan_1a8f0401511c112c9492b007125e6be5a7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan15setCurrentStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the fan without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the fan. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5HAFan15getCurrentStateEv">
+<span id="_CPPv3NK5HAFan15getCurrentStateEv"></span><span id="_CPPv2NK5HAFan15getCurrentStateEv"></span><span id="HAFan::getCurrentStateC"></span><span class="target" id="class_h_a_fan_1a7fa37668dff36008fdbc7a68ae4174bc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5HAFan15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15setCurrentSpeedEK8uint16_t">
+<span id="_CPPv3N5HAFan15setCurrentSpeedEK8uint16_t"></span><span id="_CPPv2N5HAFan15setCurrentSpeedEK8uint16_t"></span><span id="HAFan::setCurrentSpeed__uint16_tC"></span><span class="target" id="class_h_a_fan_1a804407492c4fa2b843c139cdb3dd59b8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan15setCurrentSpeedEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current speed of the fan without pushing the value to Home Assistant. This method may be useful if you want to change the speed before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>speed</strong> – The new speed of the fan. It should be in range of min and max value. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5HAFan15getCurrentSpeedEv">
+<span id="_CPPv3NK5HAFan15getCurrentSpeedEv"></span><span id="_CPPv2NK5HAFan15getCurrentSpeedEv"></span><span id="HAFan::getCurrentSpeedC"></span><span class="target" id="class_h_a_fan_1a3d17377dfff961d63ec0353981654d1a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentSpeed</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5HAFan15getCurrentSpeedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the last known speed of the fan. By default speed is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan7setIconEPKc">
+<span id="_CPPv3N5HAFan7setIconEPKc"></span><span id="_CPPv2N5HAFan7setIconEPKc"></span><span id="HAFan::setIcon__cCP"></span><span class="target" id="class_h_a_fan_1af661ea2d90c3b17121fa5d6e40059db2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the fan. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan9setRetainEKb">
+<span id="_CPPv3N5HAFan9setRetainEKb"></span><span id="_CPPv2N5HAFan9setRetainEKb"></span><span id="HAFan::setRetain__bC"></span><span class="target" id="class_h_a_fan_1aaa185f079e946717fa0af42b927e694d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the fan’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan13setOptimisticEKb">
+<span id="_CPPv3N5HAFan13setOptimisticEKb"></span><span id="_CPPv2N5HAFan13setOptimisticEKb"></span><span id="HAFan::setOptimistic__bC"></span><span class="target" id="class_h_a_fan_1ae36b9e3dbb8f9c5dd401fa8f15cfa558"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the fan state. In this mode the fan state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan16setSpeedRangeMaxEK8uint16_t">
+<span id="_CPPv3N5HAFan16setSpeedRangeMaxEK8uint16_t"></span><span id="_CPPv2N5HAFan16setSpeedRangeMaxEK8uint16_t"></span><span id="HAFan::setSpeedRangeMax__uint16_tC"></span><span class="target" id="class_h_a_fan_1a719c38c45d69f7e279a47d74a62d2913"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeedRangeMax</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan16setSpeedRangeMaxEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the maximum of numeric output range (representing 100%). The number of speeds within the speed_range / 100 will determine the percentage step. By default the maximum range is <code class="docutils literal notranslate"><span class="pre">100</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max</strong> – The maximum of numeric output range. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan16setSpeedRangeMinEK8uint16_t">
+<span id="_CPPv3N5HAFan16setSpeedRangeMinEK8uint16_t"></span><span id="_CPPv2N5HAFan16setSpeedRangeMinEK8uint16_t"></span><span id="HAFan::setSpeedRangeMin__uint16_tC"></span><span class="target" id="class_h_a_fan_1ad57d958fe889c336670f1726bc886d89"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSpeedRangeMin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">min</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan16setSpeedRangeMinEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the minimum of numeric output range (off is not included, so speed_range_min - 1 represents 0 %). The number of speeds within the speed_range / 100 will determine the percentage step. By default the minimum range is <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>min</strong> – The minimum of numeric output range. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onStateCommandEPFvbP5HAFanE">
+<span id="_CPPv3N5HAFan14onStateCommandEPFvbP5HAFanE"></span><span id="_CPPv2N5HAFan14onStateCommandEPFvbP5HAFanE"></span><span class="target" id="class_h_a_fan_1abe03e2ddf7aa3e4dd539a87a04289ee8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onStateCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onStateCommandEPFvbP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the state command from HA is received. Please note that it’s not possible to register multiple callbacks for the same fan.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the state must be reported back to HA using the <a class="reference internal" href="#class_h_a_fan_1a114762da8e47dd00536cd61b2bf95fed"><span class="std std-ref">HAFan::setState</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE">
+<span id="_CPPv3N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE"></span><span id="_CPPv2N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE"></span><span class="target" id="class_h_a_fan_1a4e17ae5188a7e04d6d4ac43bdee10465"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onSpeedCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan14onSpeedCommandEPFv8uint16_tP5HAFanE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the speed command from HA is received. Please note that it’s not possible to register multiple callbacks for the same fan.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the speed must be reported back to HA using the <a class="reference internal" href="#class_h_a_fan_1a1c729717948c2a47cdfdb7cbd529c529"><span class="std std-ref">HAFan::setSpeed</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15buildSerializerEv">
+<span id="_CPPv3N5HAFan15buildSerializerEv"></span><span id="_CPPv2N5HAFan15buildSerializerEv"></span><span id="HAFan::buildSerializer"></span><span class="target" id="class_h_a_fan_1af49ce74c8723eccd743ce95464becf53"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5HAFan15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan15onMqttConnectedEv">
+<span id="_CPPv3N5HAFan15onMqttConnectedEv"></span><span id="_CPPv2N5HAFan15onMqttConnectedEv"></span><span id="HAFan::onMqttConnected"></span><span class="target" id="class_h_a_fan_1a9f36b4bac50ed81e3da6ae8d34a8dfa2"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5HAFan15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N5HAFan13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N5HAFan13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HAFan::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_fan_1ac1662486be74151c630e79a7b9d1f07b"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5HAFan13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan12publishStateEKb">
+<span id="_CPPv3N5HAFan12publishStateEKb"></span><span id="_CPPv2N5HAFan12publishStateEKb"></span><span id="HAFan::publishState__bC"></span><span class="target" id="class_h_a_fan_1a98bd59e34b59159ab76d465695d8da3d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan12publishStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The state to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan12publishSpeedEK8uint16_t">
+<span id="_CPPv3N5HAFan12publishSpeedEK8uint16_t"></span><span id="_CPPv2N5HAFan12publishSpeedEK8uint16_t"></span><span id="HAFan::publishSpeed__uint16_tC"></span><span class="target" id="class_h_a_fan_1aefb9b94829875f3d7f13b800e6347e0f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishSpeed</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">speed</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan12publishSpeedEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given speed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>speed</strong> – The speed to publish. It should be in range of min and max value. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan18handleStateCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N5HAFan18handleStateCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N5HAFan18handleStateCommandEPK7uint8_tK8uint16_t"></span><span id="HAFan::handleStateCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_fan_1ae3e5dfc7f169fb459c1ff0c26ae89711"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleStateCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan18handleStateCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given state command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan18handleSpeedCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N5HAFan18handleSpeedCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N5HAFan18handleSpeedCommandEPK7uint8_tK8uint16_t"></span><span id="HAFan::handleSpeedCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_fan_1a221446005023e4b556f03e81d2dfdf4e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleSpeedCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5HAFan18handleSpeedCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given speed command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan9_featuresE">
+<span id="_CPPv3N5HAFan9_featuresE"></span><span id="_CPPv2N5HAFan9_featuresE"></span><span id="HAFan::_features__uint8_tC"></span><span class="target" id="class_h_a_fan_1a1ba31ba37425705f423819a9892cfa0a"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_features</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan9_featuresE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Features enabled for the fan. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan5_iconE">
+<span id="_CPPv3N5HAFan5_iconE"></span><span id="_CPPv2N5HAFan5_iconE"></span><span id="HAFan::_icon__cCP"></span><span class="target" id="class_h_a_fan_1a3a52943a2509556d072711b338971fd6"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the button. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan7_retainE">
+<span id="_CPPv3N5HAFan7_retainE"></span><span id="_CPPv2N5HAFan7_retainE"></span><span id="HAFan::_retain__b"></span><span class="target" id="class_h_a_fan_1aba432c8d3c192ec6ddca4fdffb4891e3"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_retain</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan7_retainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The retain flag for the HA commands. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan11_optimisticE">
+<span id="_CPPv3N5HAFan11_optimisticE"></span><span id="_CPPv2N5HAFan11_optimisticE"></span><span id="HAFan::_optimistic__b"></span><span class="target" id="class_h_a_fan_1a44162bd60ff508748b6b8e482dff0f71"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The optimistic mode of the fan (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedRangeMaxE">
+<span id="_CPPv3N5HAFan14_speedRangeMaxE"></span><span id="_CPPv2N5HAFan14_speedRangeMaxE"></span><span id="HAFan::_speedRangeMax__HANumeric"></span><span class="target" id="class_h_a_fan_1a64ef481057528a9c7c92a6fa103303f6"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMax</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMaxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The maximum of numeric output range. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedRangeMinE">
+<span id="_CPPv3N5HAFan14_speedRangeMinE"></span><span id="_CPPv2N5HAFan14_speedRangeMinE"></span><span id="HAFan::_speedRangeMin__HANumeric"></span><span class="target" id="class_h_a_fan_1a7711b8c3719c624cb195e3f10a414d1c"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_speedRangeMin</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedRangeMinE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The minimum of numeric output range. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan13_currentStateE">
+<span id="_CPPv3N5HAFan13_currentStateE"></span><span id="_CPPv2N5HAFan13_currentStateE"></span><span id="HAFan::_currentState__b"></span><span class="target" id="class_h_a_fan_1ada660ba2cc7d02edca116feead2ddc9c"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current state of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan13_currentSpeedE">
+<span id="_CPPv3N5HAFan13_currentSpeedE"></span><span id="_CPPv2N5HAFan13_currentSpeedE"></span><span id="HAFan::_currentSpeed__uint16_t"></span><span class="target" id="class_h_a_fan_1a8323f3e5ed9df88f296d378ee1c7f3c2"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentSpeed</span></span></span><a class="headerlink" href="#_CPPv4N5HAFan13_currentSpeedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current speed of the fan. By default it’s <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_stateCallbackE">
+<span id="_CPPv3N5HAFan14_stateCallbackE"></span><span id="_CPPv2N5HAFan14_stateCallbackE"></span><span class="target" id="class_h_a_fan_1aae14e20bedfe0c888ff28cf666968c0a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N5HAFan14_stateCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the state command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5HAFan14_speedCallbackE">
+<span id="_CPPv3N5HAFan14_speedCallbackE"></span><span id="_CPPv2N5HAFan14_speedCallbackE"></span><span class="target" id="class_h_a_fan_1ac83fd1716649b258ab263fee32a5c63a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_speedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n"><span class="pre">speed</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv45HAFan" title="HAFan"><span class="n"><span class="pre">HAFan</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N5HAFan14_speedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the speed command is received from the HA. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-device-trigger.html"
+       title="previous chapter">← HADeviceTrigger class</a>
+  </li>
+  <li class="next">
+    <a href="ha-hvac.html"
+       title="next chapter">HAHVAC class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

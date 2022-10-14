@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASerializerArray class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HAUtils class" href="ha-utils.html" />
+  <link rel="prev" title="HASerializer class" href="ha-serializer.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device-types/index.html">Device types API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Utils API</a> &raquo;</li>
+    
+    <li>HASerializerArray class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-serializer.html"
+       title="previous chapter">← HASerializer class</a>
+  </li>
+  <li class="next">
+    <a href="ha-utils.html"
+       title="next chapter">HAUtils class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="haserializerarray-class">
+<h1>HASerializerArray class<a class="headerlink" href="#haserializerarray-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv417HASerializerArray">
+<span id="_CPPv317HASerializerArray"></span><span id="_CPPv217HASerializerArray"></span><span id="HASerializerArray"></span><span class="target" id="class_h_a_serializer_array"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASerializerArray</span></span></span><a class="headerlink" href="#_CPPv417HASerializerArray" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_serializer_array"><span class="std std-ref">HASerializerArray</span></a> represents array of items that can be used as a <a class="reference internal" href="ha-serializer.html#class_h_a_serializer"><span class="std std-ref">HASerializer</span></a> property. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray8ItemTypeE">
+<span id="_CPPv3N17HASerializerArray8ItemTypeE"></span><span id="_CPPv2N17HASerializerArray8ItemTypeE"></span><span id="HASerializerArray::ItemType"></span><span class="target" id="class_h_a_serializer_array_1a09c71a95b05992fb13521035034dda93"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">ItemType</span></span></span><a class="headerlink" href="#_CPPv4N17HASerializerArray8ItemTypeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray17HASerializerArrayEK7uint8_tKb">
+<span id="_CPPv3N17HASerializerArray17HASerializerArrayEK7uint8_tKb"></span><span id="_CPPv2N17HASerializerArray17HASerializerArrayEK7uint8_tKb"></span><span id="HASerializerArray::HASerializerArray__uint8_tC.bC"></span><span class="target" id="class_h_a_serializer_array_1a06f6b81fe8baafc64ce935ad919c65ea"></span><span class="sig-name descname"><span class="n"><span class="pre">HASerializerArray</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">progmemItems</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">true</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17HASerializerArray17HASerializerArrayEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructs <a class="reference internal" href="#class_h_a_serializer_array"><span class="std std-ref">HASerializerArray</span></a> with the static size (number of elements). The array is allocated dynamically in the memory based on the given size.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>size</strong> – The desired number of elements that will be stored in the array. </p></li>
+<li><p><strong>progmemItems</strong> – Specifies whether items are going to be stored in the flash memory. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArrayD0Ev">
+<span id="_CPPv3N17HASerializerArrayD0Ev"></span><span id="_CPPv2N17HASerializerArrayD0Ev"></span><span id="HASerializerArray::~HASerializerArray"></span><span class="target" id="class_h_a_serializer_array_1a14c2e3c3b53b2ccb54d418ef1e3681a3"></span><span class="sig-name descname"><span class="n"><span class="pre">~HASerializerArray</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17HASerializerArrayD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK17HASerializerArray10getItemsNbEv">
+<span id="_CPPv3NK17HASerializerArray10getItemsNbEv"></span><span id="_CPPv2NK17HASerializerArray10getItemsNbEv"></span><span id="HASerializerArray::getItemsNbC"></span><span class="target" id="class_h_a_serializer_array_1ae91920729571f0f0f9d673544c319bbf"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getItemsNb</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK17HASerializerArray10getItemsNbEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the number of elements that were added to the array. It can be lower than size of the array. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK17HASerializerArray8getItemsEv">
+<span id="_CPPv3NK17HASerializerArray8getItemsEv"></span><span id="_CPPv2NK17HASerializerArray8getItemsEv"></span><span id="HASerializerArray::getItemsC"></span><span class="target" id="class_h_a_serializer_array_1a4b67e8db6fd6134d1eec34c991aaf7ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N17HASerializerArray8ItemTypeE" title="HASerializerArray::ItemType"><span class="n"><span class="pre">ItemType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getItems</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK17HASerializerArray8getItemsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns pointer to the array. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray3addE8ItemType">
+<span id="_CPPv3N17HASerializerArray3addE8ItemType"></span><span id="_CPPv2N17HASerializerArray3addE8ItemType"></span><span id="HASerializerArray::add__ItemType"></span><span class="target" id="class_h_a_serializer_array_1a081082b55bb91a71531c4e1f0b63533a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">add</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N17HASerializerArray8ItemTypeE" title="HASerializerArray::ItemType"><span class="n"><span class="pre">ItemType</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">item</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17HASerializerArray3addE8ItemType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Adds a new element to the array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>itemP</strong> – Item to add (string). </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if item has been added to the array successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK17HASerializerArray13calculateSizeEv">
+<span id="_CPPv3NK17HASerializerArray13calculateSizeEv"></span><span id="_CPPv2NK17HASerializerArray13calculateSizeEv"></span><span id="HASerializerArray::calculateSizeC"></span><span class="target" id="class_h_a_serializer_array_1acd7c86423ae198910ae141002771c847"></span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">calculateSize</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK17HASerializerArray13calculateSizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Calculates the size of the serialized array (JSON representation). </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK17HASerializerArray9serializeEPc">
+<span id="_CPPv3NK17HASerializerArray9serializeEPc"></span><span id="_CPPv2NK17HASerializerArray9serializeEPc"></span><span id="HASerializerArray::serialize__cPC"></span><span class="target" id="class_h_a_serializer_array_1a0b18863657136e0019225756d4505a69"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">serialize</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">output</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK17HASerializerArray9serializeEPc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Serializes array as JSON to the given output. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray5clearEv">
+<span id="_CPPv3N17HASerializerArray5clearEv"></span><span id="_CPPv2N17HASerializerArray5clearEv"></span><span id="HASerializerArray::clear"></span><span class="target" id="class_h_a_serializer_array_1a0de172ec8af6b157da5a1e07f1c4fa85"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">clear</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N17HASerializerArray5clearEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Clears the array. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray13_progmemItemsE">
+<span id="_CPPv3N17HASerializerArray13_progmemItemsE"></span><span id="_CPPv2N17HASerializerArray13_progmemItemsE"></span><span id="HASerializerArray::_progmemItems__bC"></span><span class="target" id="class_h_a_serializer_array_1aad07e80cccf91e360f574f33c55015cd"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_progmemItems</span></span></span><a class="headerlink" href="#_CPPv4N17HASerializerArray13_progmemItemsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Specifies whether items are stored in the flash memory. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray5_sizeE">
+<span id="_CPPv3N17HASerializerArray5_sizeE"></span><span id="_CPPv2N17HASerializerArray5_sizeE"></span><span id="HASerializerArray::_size__uint8_tC"></span><span class="target" id="class_h_a_serializer_array_1a4a9bd301ebf8f4de5f1c6ac859faaa24"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_size</span></span></span><a class="headerlink" href="#_CPPv4N17HASerializerArray5_sizeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The maximum size of the array. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray8_itemsNbE">
+<span id="_CPPv3N17HASerializerArray8_itemsNbE"></span><span id="_CPPv2N17HASerializerArray8_itemsNbE"></span><span id="HASerializerArray::_itemsNb__uint8_t"></span><span class="target" id="class_h_a_serializer_array_1a0a32631479f936fa913cb293cb6fe7d4"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_itemsNb</span></span></span><a class="headerlink" href="#_CPPv4N17HASerializerArray8_itemsNbE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The number of items that were added to the array. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N17HASerializerArray6_itemsE">
+<span id="_CPPv3N17HASerializerArray6_itemsE"></span><span id="_CPPv2N17HASerializerArray6_itemsE"></span><span id="HASerializerArray::_items__ItemTypeP"></span><span class="target" id="class_h_a_serializer_array_1a5fa750152eb5997b532587ef66ff7b90"></span><a class="reference internal" href="#_CPPv4N17HASerializerArray8ItemTypeE" title="HASerializerArray::ItemType"><span class="n"><span class="pre">ItemType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_items</span></span></span><a class="headerlink" href="#_CPPv4N17HASerializerArray6_itemsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Pointer to the array elements. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-serializer.html"
+       title="previous chapter">← HASerializer class</a>
+  </li>
+  <li class="next">
+    <a href="ha-utils.html"
+       title="next chapter">HAUtils class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

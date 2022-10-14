@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASelect class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HASensor class" href="ha-sensor.html" />
+  <link rel="prev" title="HAScene class" href="ha-scene.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HASelect class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-scene.html"
+       title="previous chapter">← HAScene class</a>
+  </li>
+  <li class="next">
+    <a href="ha-sensor.html"
+       title="next chapter">HASensor class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="haselect-class">
+<h1>HASelect class<a class="headerlink" href="#haselect-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HASelect">
+<span id="_CPPv38HASelect"></span><span id="_CPPv28HASelect"></span><span id="HASelect"></span><span class="target" id="class_h_a_select"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASelect</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv48HASelect" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_select"><span class="std std-ref">HASelect</span></a> adds a dropdown with options in the Home Assistant panel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/button.mqtt/">https://www.home-assistant.io/integrations/button.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect8HASelectEPKc">
+<span id="_CPPv3N8HASelect8HASelectEPKc"></span><span id="_CPPv2N8HASelect8HASelectEPKc"></span><span id="HASelect::HASelect__cCP"></span><span class="target" id="class_h_a_select_1a6cad6cd7fcb544573e1fc4896fa245ae"></span><span class="sig-name descname"><span class="n"><span class="pre">HASelect</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect8HASelectEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the select. It needs to be unique in a scope of your device. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelectD0Ev">
+<span id="_CPPv3N8HASelectD0Ev"></span><span id="_CPPv2N8HASelectD0Ev"></span><span id="HASelect::~HASelect"></span><span class="target" id="class_h_a_select_1a68d290087a4296c5f3534cfc4b7c587b"></span><span class="sig-name descname"><span class="n"><span class="pre">~HASelect</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelectD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect10setOptionsEPKc">
+<span id="_CPPv3N8HASelect10setOptionsEPKc"></span><span id="_CPPv2N8HASelect10setOptionsEPKc"></span><span id="HASelect::setOptions__cCP"></span><span class="target" id="class_h_a_select_1a4513521d03590d61ba30da4bab151f76"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptions</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">options</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect10setOptionsEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the list of available options that will be listed in the dropdown. The input string should contain options separated using semicolons. For example: `setOptions(“Option A;Option B;Option C”);</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The options list can be set only once. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>options</strong> – The list of options that are separated by semicolons. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect8setStateEK6int8_tKb">
+<span id="_CPPv3N8HASelect8setStateEK6int8_tKb"></span><span id="_CPPv2N8HASelect8setStateEK6int8_tKb"></span><span id="HASelect::setState__int8_tC.bC"></span><span class="target" id="class_h_a_select_1a810f425f40428d8526f46aaa81d12c69"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect8setStateEK6int8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the select and publishes MQTT message. State represents the index of the option that was set using the setOptions method. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the select. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns true if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect15setCurrentStateEK6int8_t">
+<span id="_CPPv3N8HASelect15setCurrentStateEK6int8_t"></span><span id="_CPPv2N8HASelect15setCurrentStateEK6int8_t"></span><span id="HASelect::setCurrentState__int8_tC"></span><span class="target" id="class_h_a_select_1a3ce2a5372c12323e5bd1a29aada88aee"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect15setCurrentStateEK6int8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current state of the select without publishing it to Home Assistant. State represents the index of the option that was set using the setOptions method. This method may be useful if you want to change the state before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The new state of the cover. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HASelect15getCurrentStateEv">
+<span id="_CPPv3NK8HASelect15getCurrentStateEv"></span><span id="_CPPv2NK8HASelect15getCurrentStateEv"></span><span id="HASelect::getCurrentStateC"></span><span class="target" id="class_h_a_select_1aabcc2f518def78d2238ef9e51707be9f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HASelect15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the select. State represents the index of the option that was set using the setOptions method. By default the state is set to <code class="docutils literal notranslate"><span class="pre">-1</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect7setIconEPKc">
+<span id="_CPPv3N8HASelect7setIconEPKc"></span><span id="_CPPv2N8HASelect7setIconEPKc"></span><span id="HASelect::setIcon__cCP"></span><span class="target" id="class_h_a_select_1a25f95626fff8ec8c93acdd9155a47c63"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the select. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect9setRetainEKb">
+<span id="_CPPv3N8HASelect9setRetainEKb"></span><span id="_CPPv2N8HASelect9setRetainEKb"></span><span id="HASelect::setRetain__bC"></span><span class="target" id="class_h_a_select_1a22b85508c745a05299a2b44ea375719e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the select’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect13setOptimisticEKb">
+<span id="_CPPv3N8HASelect13setOptimisticEKb"></span><span id="_CPPv2N8HASelect13setOptimisticEKb"></span><span id="HASelect::setOptimistic__bC"></span><span class="target" id="class_h_a_select_1ad97a29c2e40baf3aa2c4ab610398b71c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the select state. In this mode the select state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect9onCommandEPFv6int8_tP8HASelectE">
+<span id="_CPPv3N8HASelect9onCommandEPFv6int8_tP8HASelectE"></span><span id="_CPPv2N8HASelect9onCommandEPFv6int8_tP8HASelectE"></span><span class="target" id="class_h_a_select_1a9b8457f341a869c2782ae5dfa713e733"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HASelect" title="HASelect"><span class="n"><span class="pre">HASelect</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect9onCommandEPFv6int8_tP8HASelectE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the option is changed from the HA panel. Please note that it’s not possible to register multiple callbacks for the same select.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the selected option must be reported back to HA using the <a class="reference internal" href="#class_h_a_select_1a810f425f40428d8526f46aaa81d12c69"><span class="std std-ref">HASelect::setState</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect15buildSerializerEv">
+<span id="_CPPv3N8HASelect15buildSerializerEv"></span><span id="_CPPv2N8HASelect15buildSerializerEv"></span><span id="HASelect::buildSerializer"></span><span class="target" id="class_h_a_select_1a41e1cb470359fbba83d7031e6908eb8a"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASelect15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect15onMqttConnectedEv">
+<span id="_CPPv3N8HASelect15onMqttConnectedEv"></span><span id="_CPPv2N8HASelect15onMqttConnectedEv"></span><span id="HASelect::onMqttConnected"></span><span class="target" id="class_h_a_select_1aec67fc3de241c00cbf4f4405fbde92b2"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASelect15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HASelect13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HASelect13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HASelect::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_select_1a8b2d26c6e7ff0f21660e35c926b7ec2b"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASelect13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect12publishStateEK6int8_t">
+<span id="_CPPv3N8HASelect12publishStateEK6int8_t"></span><span id="_CPPv2N8HASelect12publishStateEK6int8_t"></span><span id="HASelect::publishState__int8_tC"></span><span class="target" id="class_h_a_select_1a5b025f58e8bec5acb0d730482f5b1c57"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASelect12publishStateEK6int8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The state to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HASelect20countOptionsInStringEPKc">
+<span id="_CPPv3NK8HASelect20countOptionsInStringEPKc"></span><span id="_CPPv2NK8HASelect20countOptionsInStringEPKc"></span><span id="HASelect::countOptionsInString__cCPC"></span><span class="target" id="class_h_a_select_1adb23b81e291486851919e246c0e78f57"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">countOptionsInString</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">options</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HASelect20countOptionsInStringEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Counts the amount of options in the given string. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect8_optionsE">
+<span id="_CPPv3N8HASelect8_optionsE"></span><span id="_CPPv2N8HASelect8_optionsE"></span><span id="HASelect::_options__HASerializerArrayP"></span><span class="target" id="class_h_a_select_1ab3dbbe49a3b7b917bd2cc0b5387a9198"></span><a class="reference internal" href="../utils/ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_options</span></span></span><a class="headerlink" href="#_CPPv4N8HASelect8_optionsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Array of options for the serializer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect13_currentStateE">
+<span id="_CPPv3N8HASelect13_currentStateE"></span><span id="_CPPv2N8HASelect13_currentStateE"></span><span id="HASelect::_currentState__int8_t"></span><span class="target" id="class_h_a_select_1aaabf788699587ee9c4a0835c20d82ef0"></span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N8HASelect13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Stores the current state (the current option’s index). By default it’s <code class="docutils literal notranslate"><span class="pre">-1</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect5_iconE">
+<span id="_CPPv3N8HASelect5_iconE"></span><span id="_CPPv2N8HASelect5_iconE"></span><span id="HASelect::_icon__cCP"></span><span class="target" id="class_h_a_select_1a87d5f7cfd44e7ad3b61bb657206b1469"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N8HASelect5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the select. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect7_retainE">
+<span id="_CPPv3N8HASelect7_retainE"></span><span id="_CPPv2N8HASelect7_retainE"></span><span id="HASelect::_retain__b"></span><span class="target" id="class_h_a_select_1a8a3c35fe2583eff270f39b9d4f028a54"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_retain</span></span></span><a class="headerlink" href="#_CPPv4N8HASelect7_retainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The retain flag for the HA commands. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect11_optimisticE">
+<span id="_CPPv3N8HASelect11_optimisticE"></span><span id="_CPPv2N8HASelect11_optimisticE"></span><span id="HASelect::_optimistic__b"></span><span class="target" id="class_h_a_select_1a35d3f30cab38a5f01159c645cac2af5d"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N8HASelect11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The optimistic mode of the select (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASelect16_commandCallbackE">
+<span id="_CPPv3N8HASelect16_commandCallbackE"></span><span id="_CPPv2N8HASelect16_commandCallbackE"></span><span class="target" id="class_h_a_select_1a152568ed3eee5ede9765fcf0d969e88f"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_commandCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HASelect" title="HASelect"><span class="n"><span class="pre">HASelect</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N8HASelect16_commandCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The command callback that will be called when option is changed via the HA panel. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-scene.html"
+       title="previous chapter">← HAScene class</a>
+  </li>
+  <li class="next">
+    <a href="ha-sensor.html"
+       title="next chapter">HASensor class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

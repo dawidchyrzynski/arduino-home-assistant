@@ -1,18 +1,14 @@
-#include <Arduino.h>
-
 #include "ArduinoHADefines.h"
 #include "HADevice.h"
-#include "HAUtils.h"
 #include "HAMqtt.h"
-#include "device-types/DeviceTypeSerializer.h"
+#include "utils/HAUtils.h"
+#include "utils/HASerializer.h"
 
 #define HADEVICE_INIT \
-    _manufacturer(nullptr), \
-    _model(nullptr), \
-    _name(nullptr), \
-    _softwareVersion(nullptr), \
-    _sharedAvailability(false), \
+    _ownsUniqueId(false), \
+    _serializer(new HASerializer(nullptr, 5)), \
     _availabilityTopic(nullptr), \
+    _sharedAvailability(false), \
     _available(true) // device will be available by default
 
 HADevice::HADevice() :
@@ -26,14 +22,63 @@ HADevice::HADevice(const char* uniqueId) :
     _uniqueId(uniqueId),
     HADEVICE_INIT
 {
-
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
 }
 
-HADevice::HADevice(const byte* uniqueId, const uint16_t& length) :
+HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
     _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
     HADEVICE_INIT
 {
+    _ownsUniqueId = true;
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
+}
 
+HADevice::~HADevice()
+{
+    delete _serializer;
+
+    if (_availabilityTopic) {
+        delete _availabilityTopic;
+    }
+
+    if (_ownsUniqueId) {
+        delete[] _uniqueId;
+    }
+}
+
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
+{
+    if (_uniqueId) {
+        return false; // unique ID cannot be changed at runtime once it's set
+    }
+
+    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
+    _ownsUniqueId = true;
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
+    return true;
+}
+
+void HADevice::setManufacturer(const char* manufacturer)
+{
+    _serializer->set(AHATOFSTR(HADeviceManufacturerProperty), manufacturer);
+}
+
+void HADevice::setModel(const char* model)
+{
+    _serializer->set(AHATOFSTR(HADeviceModelProperty), model);
+}
+
+void HADevice::setName(const char* name)
+{
+    _serializer->set(AHATOFSTR(HANameProperty), name);
+}
+
+void HADevice::setSoftwareVersion(const char* softwareVersion)
+{
+    _serializer->set(
+        AHATOFSTR(HADeviceSoftwareVersionProperty),
+        softwareVersion
+    );
 }
 
 void HADevice::setAvailability(bool online)
@@ -45,154 +90,57 @@ void HADevice::setAvailability(bool online)
 bool HADevice::enableSharedAvailability()
 {
     if (_sharedAvailability) {
-        return false;
+        return true; // already enabled
     }
 
-#if defined(ARDUINOHA_DEBUG)
-    Serial.println(F("Enabling shared availability in the device"));
-#endif
-
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
+    const uint16_t topicLength = HASerializer::calculateDataTopicLength(
         nullptr,
-        nullptr,
-        DeviceTypeSerializer::AvailabilityTopic
+        AHATOFSTR(HAAvailabilityTopic)
     );
-    if (topicSize == 0) {
+    if (topicLength == 0) {
         return false;
     }
 
-    _availabilityTopic = (char*)malloc(topicSize);
-    _sharedAvailability = true;
+    _availabilityTopic = new char[topicLength];
 
-    DeviceTypeSerializer::generateTopic(
+    if (HASerializer::generateDataTopic(
         _availabilityTopic,
         nullptr,
-        nullptr,
-        DeviceTypeSerializer::AvailabilityTopic
-    );
-    return true;
+        AHATOFSTR(HAAvailabilityTopic)
+    ) > 0) {
+        _sharedAvailability = true;
+        return true;
+    }
+
+    return false;
 }
 
-bool HADevice::enableLastWill()
+void HADevice::enableLastWill()
 {
     HAMqtt* mqtt = HAMqtt::instance();
-    if (mqtt == nullptr || _availabilityTopic == nullptr) {
-        return false;
+    if (!mqtt || !_availabilityTopic) {
+        return;
     }
 
     mqtt->setLastWill(
         _availabilityTopic,
-        DeviceTypeSerializer::Offline,
-        false
-    );
-    return true;
-}
-
-bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t& length)
-{
-    if (_uniqueId != nullptr) {
-        return false;
-    }
-
-    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
-    return true;
-}
-
-void HADevice::publishAvailability()
-{
-    if (!_sharedAvailability) {
-        return;
-    }
-
-    HAMqtt* mqtt = HAMqtt::instance();
-    if (mqtt == nullptr) {
-        return;
-    }
-
-    mqtt->publish(
-        _availabilityTopic,
-        (
-            _available ?
-            DeviceTypeSerializer::Online :
-            DeviceTypeSerializer::Offline
-        ),
+        "offline",
         true
     );
 }
 
-uint16_t HADevice::calculateSerializedLength() const
+void HADevice::publishAvailability() const
 {
-    uint16_t size =
-        3 + // opening and closing bracket + null terminator
-        strlen(_uniqueId) + 8; // 8 - length of the JSON data for this field
-
-    if (_manufacturer != nullptr) {
-        size += strlen(_manufacturer) + 8; // 8 - length of the JSON data for this field
+    HAMqtt* mqtt = HAMqtt::instance();
+    if (!_availabilityTopic || !mqtt) {
+        return;
     }
 
-    if (_model != nullptr) {
-        size += strlen(_model) + 9; // 9 - length of the JSON data for this field
+    const char* payload = _available ? HAOnline : HAOffline;
+    const uint16_t length = strlen_P(payload);
+
+    if (mqtt->beginPublish(_availabilityTopic, length, true)) {
+        mqtt->writePayload(AHATOFSTR(payload));
+        mqtt->endPublish();
     }
-
-    if (_name != nullptr) {
-        size += strlen(_name) + 10; // 10 - length of the JSON data for this field
-    }
-
-    if (_softwareVersion != nullptr) {
-        size += strlen(_softwareVersion) + 8; // 8 - length of the JSON data for this field
-    }
-
-    return size;
-}
-
-uint16_t HADevice::serialize(char* dst) const
-{
-    static const char QuotationSign[] PROGMEM = {"\""};
-
-    {
-        static const char DataBefore[] PROGMEM = {"{\"ids\":\""};
-
-        strcpy_P(dst, DataBefore);
-        strcat(dst, _uniqueId);
-        strcat_P(dst, QuotationSign);
-    }
-
-    if (_manufacturer != nullptr) {
-        static const char DataBefore[] PROGMEM = {",\"mf\":\""};
-
-        strcat_P(dst, DataBefore);
-        strcat(dst, _manufacturer);
-        strcat_P(dst, QuotationSign);
-    }
-
-    if (_model != nullptr) {
-        static const char DataBefore[] PROGMEM = {",\"mdl\":\""};
-
-        strcat_P(dst, DataBefore);
-        strcat(dst, _model);
-        strcat_P(dst, QuotationSign);
-    }
-
-    if (_name != nullptr) {
-        static const char DataBefore[] PROGMEM = {",\"name\":\""};
-
-        strcat_P(dst, DataBefore);
-        strcat(dst, _name);
-        strcat_P(dst, QuotationSign);
-    }
-
-    if (_softwareVersion != nullptr) {
-        static const char DataBefore[] PROGMEM = {",\"sw\":\""};
-
-        strcat_P(dst, DataBefore);
-        strcat(dst, _softwareVersion);
-        strcat_P(dst, QuotationSign);
-    }
-
-    {
-        static const char Data[] PROGMEM = {"}"};
-        strcat_P(dst, Data);
-    }
-
-    return strlen(dst) + 1; // size with null terminator
 }

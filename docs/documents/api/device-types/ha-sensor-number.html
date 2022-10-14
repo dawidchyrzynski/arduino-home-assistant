@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASensorNumber class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HASwitch class" href="ha-switch.html" />
+  <link rel="prev" title="HASensor class" href="ha-sensor.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HASensorNumber class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-sensor.html"
+       title="previous chapter">← HASensor class</a>
+  </li>
+  <li class="next">
+    <a href="ha-switch.html"
+       title="next chapter">HASwitch class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hasensornumber-class">
+<h1>HASensorNumber class<a class="headerlink" href="#hasensornumber-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv414HASensorNumber">
+<span id="_CPPv314HASensorNumber"></span><span id="_CPPv214HASensorNumber"></span><span id="HASensorNumber"></span><span class="target" id="class_h_a_sensor_number"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASensorNumber</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-sensor.html#_CPPv48HASensor" title="HASensor"><span class="n"><span class="pre">HASensor</span></span></a><a class="headerlink" href="#_CPPv414HASensorNumber" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>HASensorInteger allows to publish numeric values of a sensor that will be displayed in the HA panel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this class in <a class="reference internal" href="ha-sensor.html#class_h_a_sensor"><span class="std std-ref">HASensor</span></a> documentation. </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision">
+<span id="_CPPv3N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision"></span><span id="_CPPv2N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision"></span><span id="HASensorNumber::HASensorNumber__cCP.NumberPrecisionC"></span><span class="target" id="class_h_a_sensor_number_1ad25fdeb579c1459fd3f57218825b13c1"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensorNumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">PrecisionP0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>precision</strong> – Precision of the floating point number that will be displayed in the HA panel. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueERK9HANumericKb">
+<span id="_CPPv3N14HASensorNumber8setValueERK9HANumericKb"></span><span id="_CPPv2N14HASensorNumber8setValueERK9HANumericKb"></span><span id="HASensorNumber::setValue__HANumericCR.bC"></span><span class="target" id="class_h_a_sensor_number_1a6c8a3a582a575d371c8a60efba43594b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueERK9HANumericKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes value of the sensor and publish MQTT message. Please note that if a new value is the same as the previous one the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> – New value of the sensor. THe precision of the value needs to match precision of the sensor. </p></li>
+<li><p><strong>force</strong> – Forces to update the value without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK6int8_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK6int8_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK6int8_tKb"></span><span id="HASensorNumber::setValue__int8_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1a1edeedc35c521359c1e661283e0b166a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK6int8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK7int16_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK7int16_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK7int16_tKb"></span><span id="HASensorNumber::setValue__int16_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1a1e58fec53cb1575c9742e4103e8ac866"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK7int16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK7int32_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK7int32_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK7int32_tKb"></span><span id="HASensorNumber::setValue__int32_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1ad58b92a812d5683e731de6cf3c9c5fd4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK7int32_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK7uint8_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK7uint8_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK7uint8_tKb"></span><span id="HASensorNumber::setValue__uint8_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1a14b72b21359ae06ef34664a2e26f534d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK8uint16_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK8uint16_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK8uint16_tKb"></span><span id="HASensorNumber::setValue__uint16_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1a87b56a15ad4a3b28f98dab8f3dc49a7c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK8uint16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEK8uint32_tKb">
+<span id="_CPPv3N14HASensorNumber8setValueEK8uint32_tKb"></span><span id="_CPPv2N14HASensorNumber8setValueEK8uint32_tKb"></span><span id="HASensorNumber::setValue__uint32_tC.bC"></span><span class="target" id="class_h_a_sensor_number_1a25bd582a22e8fc2fb6c5bce776c1daa8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEK8uint32_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber8setValueEKfKb">
+<span id="_CPPv3N14HASensorNumber8setValueEKfKb"></span><span id="_CPPv2N14HASensorNumber8setValueEKfKb"></span><span id="HASensorNumber::setValue__floatC.bC"></span><span class="target" id="class_h_a_sensor_number_1aec9974c36c0795a44ce7c4650c1cffe2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber8setValueEKfKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueERK9HANumeric">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueERK9HANumeric"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueERK9HANumeric"></span><span id="HASensorNumber::setCurrentValue__HANumericCR"></span><span class="target" id="class_h_a_sensor_number_1a0cc7100ba72b728dab3e8c11c3b04ec4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current value of the sensor without publishing it to Home Assistant. This method may be useful if you want to change the value before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> – New value of the sensor. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK6int8_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK6int8_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK6int8_t"></span><span id="HASensorNumber::setCurrentValue__int8_tC"></span><span class="target" id="class_h_a_sensor_number_1a5747a8259e94e2ec265ce0929de4e154"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK6int8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK7int16_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK7int16_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK7int16_t"></span><span id="HASensorNumber::setCurrentValue__int16_tC"></span><span class="target" id="class_h_a_sensor_number_1a55d4e2bf6019dc5dcb2dbd98f54e643d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK7int16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK7int32_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK7int32_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK7int32_t"></span><span id="HASensorNumber::setCurrentValue__int32_tC"></span><span class="target" id="class_h_a_sensor_number_1a4fa96e4a6cb1d813275352c4a1880fe5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK7uint8_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK7uint8_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK7uint8_t"></span><span id="HASensorNumber::setCurrentValue__uint8_tC"></span><span class="target" id="class_h_a_sensor_number_1ae79a9ca448518c5a1eb92499c47b5e11"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK8uint16_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK8uint16_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK8uint16_t"></span><span id="HASensorNumber::setCurrentValue__uint16_tC"></span><span class="target" id="class_h_a_sensor_number_1a0c8129a3f410a31418084fcb0c66748e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEK8uint32_t">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEK8uint32_t"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEK8uint32_t"></span><span id="HASensorNumber::setCurrentValue__uint32_tC"></span><span class="target" id="class_h_a_sensor_number_1ab2fc0f8af97b165fc9b27ff8a180204c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEK8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15setCurrentValueEKf">
+<span id="_CPPv3N14HASensorNumber15setCurrentValueEKf"></span><span id="_CPPv2N14HASensorNumber15setCurrentValueEKf"></span><span id="HASensorNumber::setCurrentValue__floatC"></span><span class="target" id="class_h_a_sensor_number_1adb516b8720d664eb205a69b7e31d35ac"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber15setCurrentValueEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK14HASensorNumber15getCurrentValueEv">
+<span id="_CPPv3NK14HASensorNumber15getCurrentValueEv"></span><span id="_CPPv2NK14HASensorNumber15getCurrentValueEv"></span><span id="HASensorNumber::getCurrentValueC"></span><span class="target" id="class_h_a_sensor_number_1a442ca01b52ca951699322781d55bac73"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentValue</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK14HASensorNumber15getCurrentValueEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the last known value of the sensor. By default the value is not set. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber15onMqttConnectedEv">
+<span id="_CPPv3N14HASensorNumber15onMqttConnectedEv"></span><span id="_CPPv2N14HASensorNumber15onMqttConnectedEv"></span><span id="HASensorNumber::onMqttConnected"></span><span class="target" id="class_h_a_sensor_number_1a0bdb7e0be2140abfdfcdb09eae72e27b"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N14HASensorNumber15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber12publishValueERK9HANumeric">
+<span id="_CPPv3N14HASensorNumber12publishValueERK9HANumeric"></span><span id="_CPPv2N14HASensorNumber12publishValueERK9HANumeric"></span><span id="HASensorNumber::publishValue__HANumericCR"></span><span class="target" id="class_h_a_sensor_number_1af623382a7591a694622890138f11891b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishValue</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">value</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber12publishValueERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The value to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber10_precisionE">
+<span id="_CPPv3N14HASensorNumber10_precisionE"></span><span id="_CPPv2N14HASensorNumber10_precisionE"></span><span id="HASensorNumber::_precision__NumberPrecisionC"></span><span class="target" id="class_h_a_sensor_number_1a70959adc7e23c22ae5b6a087f4c94895"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_precision</span></span></span><a class="headerlink" href="#_CPPv4N14HASensorNumber10_precisionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The precision of the sensor. By default it’s <code class="docutils literal notranslate"><span class="pre">HASensorNumber::PrecisionP0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber13_currentValueE">
+<span id="_CPPv3N14HASensorNumber13_currentValueE"></span><span id="_CPPv2N14HASensorNumber13_currentValueE"></span><span id="HASensorNumber::_currentValue__HANumeric"></span><span class="target" id="class_h_a_sensor_number_1a747a147cb57b66a75362dd8e9d93f40d"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentValue</span></span></span><a class="headerlink" href="#_CPPv4N14HASensorNumber13_currentValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current value of the sensor. By default the value is not set. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-sensor.html"
+       title="previous chapter">← HASensor class</a>
+  </li>
+  <li class="next">
+    <a href="ha-switch.html"
+       title="next chapter">HASwitch class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

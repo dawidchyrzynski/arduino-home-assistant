@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HABaseDeviceType class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HABinarySensor class" href="ha-binary-sensor.html" />
+  <link rel="prev" title="Device types API" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HABaseDeviceType class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Device types API</a>
+  </li>
+  <li class="next">
+    <a href="ha-binary-sensor.html"
+       title="next chapter">HABinarySensor class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="habasedevicetype-class">
+<h1>HABaseDeviceType class<a class="headerlink" href="#habasedevicetype-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv416HABaseDeviceType">
+<span id="_CPPv316HABaseDeviceType"></span><span id="_CPPv216HABaseDeviceType"></span><span id="HABaseDeviceType"></span><span class="target" id="class_h_a_base_device_type"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HABaseDeviceType</span></span></span><a class="headerlink" href="#_CPPv416HABaseDeviceType" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subclassed by <a class="reference internal" href="ha-binary-sensor.html#class_h_a_binary_sensor"><span class="std std-ref">HABinarySensor</span></a>, <a class="reference internal" href="ha-button.html#class_h_a_button"><span class="std std-ref">HAButton</span></a>, <a class="reference internal" href="ha-camera.html#class_h_a_camera"><span class="std std-ref">HACamera</span></a>, <a class="reference internal" href="ha-cover.html#class_h_a_cover"><span class="std std-ref">HACover</span></a>, <a class="reference internal" href="ha-device-tracker.html#class_h_a_device_tracker"><span class="std std-ref">HADeviceTracker</span></a>, <a class="reference internal" href="ha-device-trigger.html#class_h_a_device_trigger"><span class="std std-ref">HADeviceTrigger</span></a>, <a class="reference internal" href="ha-fan.html#class_h_a_fan"><span class="std std-ref">HAFan</span></a>, <a class="reference internal" href="ha-hvac.html#class_h_a_h_v_a_c"><span class="std std-ref">HAHVAC</span></a>, <a class="reference internal" href="ha-light.html#class_h_a_light"><span class="std std-ref">HALight</span></a>, <a class="reference internal" href="ha-lock.html#class_h_a_lock"><span class="std std-ref">HALock</span></a>, <a class="reference internal" href="ha-number.html#class_h_a_number"><span class="std std-ref">HANumber</span></a>, <a class="reference internal" href="ha-scene.html#class_h_a_scene"><span class="std std-ref">HAScene</span></a>, <a class="reference internal" href="ha-select.html#class_h_a_select"><span class="std std-ref">HASelect</span></a>, <a class="reference internal" href="ha-sensor.html#class_h_a_sensor"><span class="std std-ref">HASensor</span></a>, <a class="reference internal" href="ha-switch.html#class_h_a_switch"><span class="std std-ref">HASwitch</span></a>, <a class="reference internal" href="ha-tag-scanner.html#class_h_a_tag_scanner"><span class="std std-ref">HATagScanner</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15NumberPrecisionE">
+<span id="_CPPv3N16HABaseDeviceType15NumberPrecisionE"></span><span id="_CPPv2N16HABaseDeviceType15NumberPrecisionE"></span><span class="target" id="class_h_a_base_device_type_1ad553122566c5cb5a2bd9e7cd5f44e202"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">NumberPrecision</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15NumberPrecisionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP0E">
+<span id="_CPPv3N16HABaseDeviceType15NumberPrecision11PrecisionP0E"></span><span id="_CPPv2N16HABaseDeviceType15NumberPrecision11PrecisionP0E"></span><span class="target" id="class_h_a_base_device_type_1ad553122566c5cb5a2bd9e7cd5f44e202a759e6eed5f6e29cf93ac5c183d619c76"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PrecisionP0</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP0E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>No digits after the decimal point. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP1E">
+<span id="_CPPv3N16HABaseDeviceType15NumberPrecision11PrecisionP1E"></span><span id="_CPPv2N16HABaseDeviceType15NumberPrecision11PrecisionP1E"></span><span class="target" id="class_h_a_base_device_type_1ad553122566c5cb5a2bd9e7cd5f44e202a90e8e8375ba7812cc435f7b43a5d77af"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PrecisionP1</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP1E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>One digit after the decimal point. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP2E">
+<span id="_CPPv3N16HABaseDeviceType15NumberPrecision11PrecisionP2E"></span><span id="_CPPv2N16HABaseDeviceType15NumberPrecision11PrecisionP2E"></span><span class="target" id="class_h_a_base_device_type_1ad553122566c5cb5a2bd9e7cd5f44e202a4d39e28a48e44e342e974d5e888e1f2a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PrecisionP2</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP2E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Two digits after the decimal point. </p>
+</dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP3E">
+<span id="_CPPv3N16HABaseDeviceType15NumberPrecision11PrecisionP3E"></span><span id="_CPPv2N16HABaseDeviceType15NumberPrecision11PrecisionP3E"></span><span class="target" id="class_h_a_base_device_type_1ad553122566c5cb5a2bd9e7cd5f44e202a8f6e51a3897a75599fbbf04d960810db"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PrecisionP3</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15NumberPrecision11PrecisionP3E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Three digits after the decimal point. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType16HABaseDeviceTypeEPK19__FlashStringHelperPKc">
+<span id="_CPPv3N16HABaseDeviceType16HABaseDeviceTypeEPK19__FlashStringHelperPKc"></span><span id="_CPPv2N16HABaseDeviceType16HABaseDeviceTypeEPK19__FlashStringHelperPKc"></span><span id="HABaseDeviceType::HABaseDeviceType____FlashStringHelperCP.cCP"></span><span class="target" id="class_h_a_base_device_type_1afce9574903581e604657705b29476ec0"></span><span class="sig-name descname"><span class="n"><span class="pre">HABaseDeviceType</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">componentName</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType16HABaseDeviceTypeEPK19__FlashStringHelperPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a new device type instance and registers it in the <a class="reference internal" href="../core/ha-mqtt.html#class_h_a_mqtt"><span class="std std-ref">HAMqtt</span></a> class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>componentName</strong> – The name of the Home Assistant component (e.g. <code class="docutils literal notranslate"><span class="pre">binary_sensor</span></code>). You can find all available component names in the Home Assistant documentation. The component name needs to be stored in the flash memory. </p></li>
+<li><p><strong>uniqueId</strong> – The unique ID of the device type. It needs to be unique in a scope of the <a class="reference internal" href="../core/ha-device.html#class_h_a_device"><span class="std std-ref">HADevice</span></a>. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType8uniqueIdEv">
+<span id="_CPPv3NK16HABaseDeviceType8uniqueIdEv"></span><span id="_CPPv2NK16HABaseDeviceType8uniqueIdEv"></span><span id="HABaseDeviceType::uniqueIdC"></span><span class="target" id="class_h_a_base_device_type_1a70ebb55af7cfbdaff2a46ec2bff4464b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">uniqueId</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType8uniqueIdEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns unique ID of the device type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType13componentNameEv">
+<span id="_CPPv3NK16HABaseDeviceType13componentNameEv"></span><span id="_CPPv2NK16HABaseDeviceType13componentNameEv"></span><span id="HABaseDeviceType::componentNameC"></span><span class="target" id="class_h_a_base_device_type_1a96d9c3478ebd685a6de4b95de64b9f2d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">componentName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType13componentNameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns component name defined by the device type. It’s used for the MQTT discovery topic. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType24isAvailabilityConfiguredEv">
+<span id="_CPPv3NK16HABaseDeviceType24isAvailabilityConfiguredEv"></span><span id="_CPPv2NK16HABaseDeviceType24isAvailabilityConfiguredEv"></span><span id="HABaseDeviceType::isAvailabilityConfiguredC"></span><span class="target" id="class_h_a_base_device_type_1a225b15caa59634344101fa795a0e76c5"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isAvailabilityConfigured</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType24isAvailabilityConfiguredEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the availability was configured for this device type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType8isOnlineEv">
+<span id="_CPPv3NK16HABaseDeviceType8isOnlineEv"></span><span id="_CPPv2NK16HABaseDeviceType8isOnlineEv"></span><span id="HABaseDeviceType::isOnlineC"></span><span class="target" id="class_h_a_base_device_type_1a766d6175fb17bc26467ccc93c7e5d1b6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isOnline</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType8isOnlineEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns online state of the device type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType7setNameEPKc">
+<span id="_CPPv3N16HABaseDeviceType7setNameEPKc"></span><span id="_CPPv2N16HABaseDeviceType7setNameEPKc"></span><span id="HABaseDeviceType::setName__cCP"></span><span class="target" id="class_h_a_base_device_type_1a3035423ffd99c5c3fb79fd74bbf61a97"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType7setNameEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets name of the device type that will be used as a label in the HA panel. Keep the name short to save the resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – The device type name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType7getNameEv">
+<span id="_CPPv3NK16HABaseDeviceType7getNameEv"></span><span id="_CPPv2NK16HABaseDeviceType7getNameEv"></span><span id="HABaseDeviceType::getNameC"></span><span class="target" id="class_h_a_base_device_type_1a7a69e32a0d46c5416389c498b3b600d7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getName</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType7getNameEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns name of the deviced type that was assigned via setName method. It can be nullptr if there is no name assigned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15setAvailabilityEb">
+<span id="_CPPv3N16HABaseDeviceType15setAvailabilityEb"></span><span id="_CPPv2N16HABaseDeviceType15setAvailabilityEb"></span><span id="HABaseDeviceType::setAvailability__b"></span><span class="target" id="class_h_a_base_device_type_1a7552355c7806c24cb839b068a2b8694e"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setAvailability</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">online</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15setAvailabilityEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets availability of the device type. Setting the initial availability enables availability reporting for this device type. Please note that not all device types support this feature. Follow HA documentation of a specific device type to get more information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>online</strong> – Specifies whether the device type is online. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15buildSerializerEv">
+<span id="_CPPv3N16HABaseDeviceType15buildSerializerEv"></span><span id="_CPPv2N16HABaseDeviceType15buildSerializerEv"></span><span id="HABaseDeviceType::buildSerializer"></span><span class="target" id="class_h_a_base_device_type_1ac77d78a55b801bda524a184bee5b790a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This method should build serializer that will be used for publishing the configuration. The serializer is built each time the MQTT connection is acquired. Follow implementation of the existing device types to get better understanding of the logic. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15onMqttConnectedEv">
+<span id="_CPPv3N16HABaseDeviceType15onMqttConnectedEv"></span><span id="_CPPv2N16HABaseDeviceType15onMqttConnectedEv"></span><span id="HABaseDeviceType::onMqttConnected"></span><span class="target" id="class_h_a_base_device_type_1a816350135a33c2f0e6bf3458e3252145"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This method is called each time the MQTT connection is acquired. Each device type should publish its configuration and availability. It can be also used for subscribing to MQTT topics. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N16HABaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N16HABaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HABaseDeviceType::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_base_device_type_1ae7b0762368d3267671d24e0ca1bb4c26"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This method is called each time the device receives a MQTT message. It can be any MQTT message so the method should always verify the topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> – The topic on which the message was produced. </p></li>
+<li><p><strong>payload</strong> – The payload of the message. It can be nullptr. </p></li>
+<li><p><strong>length</strong> – The length of the payload. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType17destroySerializerEv">
+<span id="_CPPv3N16HABaseDeviceType17destroySerializerEv"></span><span id="_CPPv2N16HABaseDeviceType17destroySerializerEv"></span><span id="HABaseDeviceType::destroySerializer"></span><span class="target" id="class_h_a_base_device_type_1a64b52e444f27c1366e3518f4efcfc3e2"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">destroySerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType17destroySerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Destroys the existing serializer. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType13publishConfigEv">
+<span id="_CPPv3N16HABaseDeviceType13publishConfigEv"></span><span id="_CPPv2N16HABaseDeviceType13publishConfigEv"></span><span id="HABaseDeviceType::publishConfig"></span><span class="target" id="class_h_a_base_device_type_1a24cd9f841c7e083eccec39ef6c157a56"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishConfig</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType13publishConfigEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes configuration of this device type on the HA discovery topic. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType19publishAvailabilityEv">
+<span id="_CPPv3N16HABaseDeviceType19publishAvailabilityEv"></span><span id="_CPPv2N16HABaseDeviceType19publishAvailabilityEv"></span><span id="HABaseDeviceType::publishAvailability"></span><span class="target" id="class_h_a_base_device_type_1a721e6bea7abd3e0d721f46e588c8bd09"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishAvailability</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType19publishAvailabilityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes current availability of the device type. The message is only produced if the availability is configured for this device type. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK19__FlashStringHelperb">
+<span id="_CPPv3N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK19__FlashStringHelperb"></span><span id="_CPPv2N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK19__FlashStringHelperb"></span><span id="HABaseDeviceType::publishOnDataTopic____FlashStringHelperCP.__FlashStringHelperCP.b"></span><span class="target" id="class_h_a_base_device_type_1a9e435cbe130a4af10950b917d0f788b0"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishOnDataTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK19__FlashStringHelperb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the given flash string on the data topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> – The topic to publish on (progmem string). </p></li>
+<li><p><strong>payload</strong> – The message’s payload (progmem string). </p></li>
+<li><p><strong>retained</strong> – Specifies whether the message should be retained. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPKcb">
+<span id="_CPPv3N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPKcb"></span><span id="_CPPv2N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPKcb"></span><span id="HABaseDeviceType::publishOnDataTopic____FlashStringHelperCP.cCP.b"></span><span class="target" id="class_h_a_base_device_type_1a48448bbea2f96cf0dac53fc1908ccf8e"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishOnDataTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPKcb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the given string on the data topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> – The topic to publish on (progmem string). </p></li>
+<li><p><strong>payload</strong> – The message’s payload. </p></li>
+<li><p><strong>retained</strong> – Specifies whether the message should be retained. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK7uint8_tK8uint16_tbb">
+<span id="_CPPv3N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK7uint8_tK8uint16_tbb"></span><span id="_CPPv2N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK7uint8_tK8uint16_tbb"></span><span id="HABaseDeviceType::publishOnDataTopic____FlashStringHelperCP.uint8_tCP.uint16_tC.b.b"></span><span class="target" id="class_h_a_base_device_type_1a83c6f2cb90bafc63b982c7bfc5f71136"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishOnDataTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retained</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span>, <span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">isProgmemData</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType18publishOnDataTopicEPK19__FlashStringHelperPK7uint8_tK8uint16_tbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the given data on the data topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>topic</strong> – The topic to publish on (progmem string). </p></li>
+<li><p><strong>payload</strong> – The message’s payload. </p></li>
+<li><p><strong>length</strong> – The length of the payload. </p></li>
+<li><p><strong>retained</strong> – Specifies whether the message should be retained. </p></li>
+<li><p><strong>isProgmemData</strong> – Specifies whether the given data is stored in the flash memory. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-attributes">Protected Attributes</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType14_componentNameE">
+<span id="_CPPv3N16HABaseDeviceType14_componentNameE"></span><span id="_CPPv2N16HABaseDeviceType14_componentNameE"></span><span id="HABaseDeviceType::_componentName____FlashStringHelperCPC"></span><span class="target" id="class_h_a_base_device_type_1a00b0a4b7e71bf40ebd6402d18edf11ec"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_componentName</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType14_componentNameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The component name that was assigned via the constructor. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType9_uniqueIdE">
+<span id="_CPPv3N16HABaseDeviceType9_uniqueIdE"></span><span id="_CPPv2N16HABaseDeviceType9_uniqueIdE"></span><span id="HABaseDeviceType::_uniqueId__cCP"></span><span class="target" id="class_h_a_base_device_type_1a152861451a37aea0723dadabe063c6b2"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_uniqueId</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType9_uniqueIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The unique ID that was assigned via the constructor. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType5_nameE">
+<span id="_CPPv3N16HABaseDeviceType5_nameE"></span><span id="_CPPv2N16HABaseDeviceType5_nameE"></span><span id="HABaseDeviceType::_name__cCP"></span><span class="target" id="class_h_a_base_device_type_1adae2a1ba7a7b5ad55b383e62fee1476d"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_name</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType5_nameE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The name that was set using setName method. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType11_serializerE">
+<span id="_CPPv3N16HABaseDeviceType11_serializerE"></span><span id="_CPPv2N16HABaseDeviceType11_serializerE"></span><span id="HABaseDeviceType::_serializer__HASerializerP"></span><span class="target" id="class_h_a_base_device_type_1a2183f616ed3662b9d954ee65df896079"></span><a class="reference internal" href="../utils/ha-serializer.html#_CPPv412HASerializer" title="HASerializer"><span class="n"><span class="pre">HASerializer</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_serializer</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType11_serializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="../utils/ha-serializer.html#class_h_a_serializer"><span class="std std-ref">HASerializer</span></a> that belongs to this device type. It can be nullptr. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-static-functions">Protected Static Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType4mqttEv">
+<span id="_CPPv3N16HABaseDeviceType4mqttEv"></span><span id="_CPPv2N16HABaseDeviceType4mqttEv"></span><span id="HABaseDeviceType::mqtt"></span><span class="target" id="class_h_a_base_device_type_1aefcd1bbb12c5ca2de2e70be2f61f56aa"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="../core/ha-mqtt.html#_CPPv46HAMqtt" title="HAMqtt"><span class="n"><span class="pre">HAMqtt</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">mqtt</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType4mqttEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns instance of the <a class="reference internal" href="../core/ha-mqtt.html#class_h_a_mqtt"><span class="std std-ref">HAMqtt</span></a> class. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType14subscribeTopicEPKcPK19__FlashStringHelper">
+<span id="_CPPv3N16HABaseDeviceType14subscribeTopicEPKcPK19__FlashStringHelper"></span><span id="_CPPv2N16HABaseDeviceType14subscribeTopicEPKcPK19__FlashStringHelper"></span><span id="HABaseDeviceType::subscribeTopic__cCP.__FlashStringHelperCP"></span><span class="target" id="class_h_a_base_device_type_1a25704866db32489fefb0d77a44676eaf"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">subscribeTopic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType14subscribeTopicEPKcPK19__FlashStringHelper" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subscribes to the given data topic.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – THe unique ID of the device type assigned via the constructor. </p></li>
+<li><p><strong>topic</strong> – Topic to subscribe (progmem string). </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-types">Private Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType12AvailabilityE">
+<span id="_CPPv3N16HABaseDeviceType12AvailabilityE"></span><span id="_CPPv2N16HABaseDeviceType12AvailabilityE"></span><span class="target" id="class_h_a_base_device_type_1a1a551260968943d53b531b41671c02e8"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Availability</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType12AvailabilityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType12Availability19AvailabilityDefaultE">
+<span id="_CPPv3N16HABaseDeviceType12Availability19AvailabilityDefaultE"></span><span id="_CPPv2N16HABaseDeviceType12Availability19AvailabilityDefaultE"></span><span class="target" id="class_h_a_base_device_type_1a1a551260968943d53b531b41671c02e8a9648e8ece222d59ff8fe7a1beff4ac4b"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AvailabilityDefault</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType12Availability19AvailabilityDefaultE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType12Availability18AvailabilityOnlineE">
+<span id="_CPPv3N16HABaseDeviceType12Availability18AvailabilityOnlineE"></span><span id="_CPPv2N16HABaseDeviceType12Availability18AvailabilityOnlineE"></span><span class="target" id="class_h_a_base_device_type_1a1a551260968943d53b531b41671c02e8a9f8b3df0ac2216584d837f25d8687d64"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AvailabilityOnline</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType12Availability18AvailabilityOnlineE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType12Availability19AvailabilityOfflineE">
+<span id="_CPPv3N16HABaseDeviceType12Availability19AvailabilityOfflineE"></span><span id="_CPPv2N16HABaseDeviceType12Availability19AvailabilityOfflineE"></span><span class="target" id="class_h_a_base_device_type_1a1a551260968943d53b531b41671c02e8af4b02f5523b7779143355c3c3de9de42"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AvailabilityOffline</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType12Availability19AvailabilityOfflineE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType13_availabilityE">
+<span id="_CPPv3N16HABaseDeviceType13_availabilityE"></span><span id="_CPPv2N16HABaseDeviceType13_availabilityE"></span><span id="HABaseDeviceType::_availability__Availability"></span><span class="target" id="class_h_a_base_device_type_1afe6c4c8f5a27f8fd1fe1945bb7089b7b"></span><a class="reference internal" href="#_CPPv4N16HABaseDeviceType12AvailabilityE" title="HABaseDeviceType::Availability"><span class="n"><span class="pre">Availability</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_availability</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType13_availabilityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current availability of this device type. AvailabilityDefault means that the initial availability was never set. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl>
+<dt class="sig sig-object cpp">
+<em class="property"><span class="pre">friend</span> <span class="pre">class</span></em> <span class="pre">HAMqtt</span></dt>
+</dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Device types API</a>
+  </li>
+  <li class="next">
+    <a href="ha-binary-sensor.html"
+       title="next chapter">HABinarySensor class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

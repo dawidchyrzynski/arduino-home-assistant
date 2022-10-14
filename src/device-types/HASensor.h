@@ -1,89 +1,88 @@
 #ifndef AHA_HASENSOR_H
 #define AHA_HASENSOR_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
-#ifdef ARDUINOHA_SENSOR
+#ifndef EX_ARDUINOHA_SENSOR
 
-class HASensor : public BaseDeviceType
+/**
+ * HASensor allows to publish textual sensor values that will be displayed in the HA panel.
+ * If you need to publish numbers then HASensorNumber is what you're looking for.
+ *
+ * @note It's not possible to define a sensor that publishes mixed values (e.g. string + integer values).
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/sensor.mqtt/
+ */
+class HASensor : public HABaseDeviceType
 {
 public:
     /**
-     * Initializes binary sensor.
-     *
-     * @param uniqueId Unique ID of the sensor. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId The unique ID of the sensor. It needs to be unique in a scope of your device.
      */
-    HASensor(
-        const char* uniqueId
-    );
-    HASensor(
-        const char* uniqueId,
-        HAMqtt& mqtt
-    ); // legacy constructor
+    HASensor(const char* uniqueId);
 
     /**
-     * Publishes configuration of the sensor to the MQTT.
-     */
-    virtual void onMqttConnected() override;
-
-    /**
-     * Publishes new value of the sensor.
-     * Please note that connection to MQTT broker must be acquired.
-     * Otherwise method will return false.
+     * Publishes the MQTT message with the given value.
+     * Unlike the other device types, the HASensor doesn't store the previous value that was set.
+     * It means that the MQTT message is produced each time the setValue method is called.
      *
-     * @param state Value to publish.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @param value String representation of the sensor's value.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setValue(const char* value);
-    bool setValue(uint32_t value);
-    bool setValue(int32_t value);
-    bool setValue(double value, uint8_t precision = 2);
-    bool setValue(float value, uint8_t precision = 2);
-
-    inline bool setValue(uint8_t value)
-        { return setValue(static_cast<uint32_t>(value)); }
-
-    inline bool setValue(uint16_t value)
-        { return setValue(static_cast<uint32_t>(value)); }
-
-    inline bool setValue(int8_t value)
-        { return setValue(static_cast<int32_t>(value)); }
-
-    inline bool setValue(int16_t value)
-        { return setValue(static_cast<int32_t>(value)); }
 
     /**
-     * The type/class of the sensor to set the icon in the frontend.
+     * Sets class of the device.
+     * You can find list of available values here: https://www.home-assistant.io/integrations/sensor/#device-class
      *
-     * @param className https://www.home-assistant.io/integrations/sensor/#device-class
+     * @param deviceClass The class name.
      */
-    inline void setDeviceClass(const char* className)
-        { _class = className; }
+    inline void setDeviceClass(const char* deviceClass)
+        { _deviceClass = deviceClass; }
+
+    /**
+     * Forces HA panel to process each incoming value (MQTT message).
+     * It's useful if you want to have meaningful value graphs in history.
+     *
+     * @param forceUpdate
+     */
+    inline void setForceUpdate(bool forceUpdate)
+        { _forceUpdate = forceUpdate; }
+
+    /**
+     * Sets icon of the sensor.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
+     *
+     * @param class The icon name.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
 
     /**
      * Defines the units of measurement of the sensor, if any.
      *
      * @param units For example: °C, %
      */
-    inline void setUnitOfMeasurement(const char* units)
-        { _units = units; }
+    inline void setUnitOfMeasurement(const char* unitOfMeasurement)
+        { _unitOfMeasurement = unitOfMeasurement; }
 
-    /**
-     * Sets icon of the sensor, e.g. `mdi:home`.
-     *
-     * @param icon Material Design Icon name with mdi: prefix.
-     */
-    inline void setIcon(const char* icon)
-        { _icon = icon; }
+protected:
+    virtual void buildSerializer() override final;
+    virtual void onMqttConnected() override;
 
 private:
-    bool publishValue(const char* value);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    bool writeSerializedData(const char* serializedDevice) const override;
+    /// The device class. It can be nullptr.
+    const char* _deviceClass;
 
-    const char* _class;
-    const char* _units;
+    /// The force update flag for the HA panel.
+    bool _forceUpdate;
+
+    /// The icon of the sensor. It can be nullptr.
     const char* _icon;
+
+    /// The unit of measurement for the sensor. It can be nullptr.
+    const char* _unitOfMeasurement;
 };
 
 #endif

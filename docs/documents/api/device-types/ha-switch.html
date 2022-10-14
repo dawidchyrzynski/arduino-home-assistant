@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HASwitch class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HATagScanner class" href="ha-tag-scanner.html" />
+  <link rel="prev" title="HASensorNumber class" href="ha-sensor-number.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HASwitch class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-sensor-number.html"
+       title="previous chapter">← HASensorNumber class</a>
+  </li>
+  <li class="next">
+    <a href="ha-tag-scanner.html"
+       title="next chapter">HATagScanner class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="haswitch-class">
+<h1>HASwitch class<a class="headerlink" href="#haswitch-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HASwitch">
+<span id="_CPPv38HASwitch"></span><span id="_CPPv28HASwitch"></span><span id="HASwitch"></span><span class="target" id="class_h_a_switch"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HASwitch</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv48HASwitch" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_switch"><span class="std std-ref">HASwitch</span></a> allows to display on/off switch in the HA panel and receive commands on your device.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/switch.mqtt/">https://www.home-assistant.io/integrations/switch.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch8HASwitchEPKc">
+<span id="_CPPv3N8HASwitch8HASwitchEPKc"></span><span id="_CPPv2N8HASwitch8HASwitchEPKc"></span><span id="HASwitch::HASwitch__cCP"></span><span class="target" id="class_h_a_switch_1ace25dd403e01d6d14baf1adbe2a5e86d"></span><span class="sig-name descname"><span class="n"><span class="pre">HASwitch</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch8HASwitchEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch8setStateEKbKb">
+<span id="_CPPv3N8HASwitch8setStateEKbKb"></span><span id="_CPPv2N8HASwitch8setStateEKbKb"></span><span id="HASwitch::setState__bC.bC"></span><span class="target" id="class_h_a_switch_1a939d64e7dd5665111a7eb3a841deb1d7"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch8setStateEKbKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the switch and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the switch. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch6turnOnEv">
+<span id="_CPPv3N8HASwitch6turnOnEv"></span><span id="_CPPv2N8HASwitch6turnOnEv"></span><span id="HASwitch::turnOn"></span><span class="target" id="class_h_a_switch_1a0f803e2564f6b7f9557df258fac78533"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOn</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch6turnOnEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(true)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch7turnOffEv">
+<span id="_CPPv3N8HASwitch7turnOffEv"></span><span id="_CPPv2N8HASwitch7turnOffEv"></span><span id="HASwitch::turnOff"></span><span class="target" id="class_h_a_switch_1a59bb9b59f700519789277c22e17d3aa0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">turnOff</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch7turnOffEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Alias for <code class="docutils literal notranslate"><span class="pre">setState(false)</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch15setCurrentStateEKb">
+<span id="_CPPv3N8HASwitch15setCurrentStateEKb"></span><span id="_CPPv2N8HASwitch15setCurrentStateEKb"></span><span id="HASwitch::setCurrentState__bC"></span><span class="target" id="class_h_a_switch_1a8a9345fd041d8fc07dba8fd473557614"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch15setCurrentStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the switch without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the switch. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HASwitch15getCurrentStateEv">
+<span id="_CPPv3NK8HASwitch15getCurrentStateEv"></span><span id="_CPPv2NK8HASwitch15getCurrentStateEv"></span><span id="HASwitch::getCurrentStateC"></span><span class="target" id="class_h_a_switch_1ad32be718d9553d2e184097eba8d38a9b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HASwitch15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the switch. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch14setDeviceClassEPKc">
+<span id="_CPPv3N8HASwitch14setDeviceClassEPKc"></span><span id="_CPPv2N8HASwitch14setDeviceClassEPKc"></span><span id="HASwitch::setDeviceClass__cCP"></span><span class="target" id="class_h_a_switch_1ab6b41a9c8d83421d71c5eb37911405b8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/switch/#device-class">https://www.home-assistant.io/integrations/switch/#device-class</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch7setIconEPKc">
+<span id="_CPPv3N8HASwitch7setIconEPKc"></span><span id="_CPPv2N8HASwitch7setIconEPKc"></span><span id="HASwitch::setIcon__cCP"></span><span class="target" id="class_h_a_switch_1a0a109c0a19d6e975a15dd2a04af05521"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the sensor. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch9setRetainEKb">
+<span id="_CPPv3N8HASwitch9setRetainEKb"></span><span id="_CPPv2N8HASwitch9setRetainEKb"></span><span id="HASwitch::setRetain__bC"></span><span class="target" id="class_h_a_switch_1a745c222a490ee7e6acbdf5f93944e161"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the switch command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch13setOptimisticEKb">
+<span id="_CPPv3N8HASwitch13setOptimisticEKb"></span><span id="_CPPv2N8HASwitch13setOptimisticEKb"></span><span id="HASwitch::setOptimistic__bC"></span><span class="target" id="class_h_a_switch_1af995fcb979434389aa8a0648ff91b042"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the switch state. In this mode the switch state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch9onCommandEPFvbP8HASwitchE">
+<span id="_CPPv3N8HASwitch9onCommandEPFvbP8HASwitchE"></span><span id="_CPPv2N8HASwitch9onCommandEPFvbP8HASwitchE"></span><span class="target" id="class_h_a_switch_1a85b9b311d6335603b30bc06c49a8f0f9"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HASwitch" title="HASwitch"><span class="n"><span class="pre">HASwitch</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch9onCommandEPFvbP8HASwitchE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the on/off command from HA is received. Please note that it’s not possible to register multiple callbacks for the same switch.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the state must be reported back to HA using the <a class="reference internal" href="#class_h_a_switch_1a939d64e7dd5665111a7eb3a841deb1d7"><span class="std std-ref">HASwitch::setState</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch15buildSerializerEv">
+<span id="_CPPv3N8HASwitch15buildSerializerEv"></span><span id="_CPPv2N8HASwitch15buildSerializerEv"></span><span id="HASwitch::buildSerializer"></span><span class="target" id="class_h_a_switch_1a38d4b9c0bf1050d5f419aa5f35212f34"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASwitch15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch15onMqttConnectedEv">
+<span id="_CPPv3N8HASwitch15onMqttConnectedEv"></span><span id="_CPPv2N8HASwitch15onMqttConnectedEv"></span><span id="HASwitch::onMqttConnected"></span><span class="target" id="class_h_a_switch_1a82b6f2c3d0d9b66f3c7b6b8fb7ae0c38"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASwitch15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HASwitch13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HASwitch13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HASwitch::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_switch_1a80e5a8cf41936a6658c5999cd299a127"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HASwitch13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch12publishStateEKb">
+<span id="_CPPv3N8HASwitch12publishStateEKb"></span><span id="_CPPv2N8HASwitch12publishStateEKb"></span><span id="HASwitch::publishState__bC"></span><span class="target" id="class_h_a_switch_1a729854411450ab395820e51c552f5a7b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASwitch12publishStateEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The state to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch6_classE">
+<span id="_CPPv3N8HASwitch6_classE"></span><span id="_CPPv2N8HASwitch6_classE"></span><span id="HASwitch::_class__cCP"></span><span class="target" id="class_h_a_switch_1abc8449f0518c5e2cf7ca856bdfaa4c5e"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_class</span></span></span><a class="headerlink" href="#_CPPv4N8HASwitch6_classE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The device class. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch5_iconE">
+<span id="_CPPv3N8HASwitch5_iconE"></span><span id="_CPPv2N8HASwitch5_iconE"></span><span id="HASwitch::_icon__cCP"></span><span class="target" id="class_h_a_switch_1a47c0d25f5102a25ad5d89ac0515d9008"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N8HASwitch5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the button. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch7_retainE">
+<span id="_CPPv3N8HASwitch7_retainE"></span><span id="_CPPv2N8HASwitch7_retainE"></span><span id="HASwitch::_retain__b"></span><span class="target" id="class_h_a_switch_1a6bb21f627a887a2eccdad4b09d218b15"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_retain</span></span></span><a class="headerlink" href="#_CPPv4N8HASwitch7_retainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The retain flag for the HA commands. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch11_optimisticE">
+<span id="_CPPv3N8HASwitch11_optimisticE"></span><span id="_CPPv2N8HASwitch11_optimisticE"></span><span id="HASwitch::_optimistic__b"></span><span class="target" id="class_h_a_switch_1af73038853c9a48345aa72a8ca2b6204a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N8HASwitch11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The optimistic mode of the switch (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch13_currentStateE">
+<span id="_CPPv3N8HASwitch13_currentStateE"></span><span id="_CPPv2N8HASwitch13_currentStateE"></span><span id="HASwitch::_currentState__b"></span><span class="target" id="class_h_a_switch_1afeb2c379dbbfa6f358945c0f15ac457f"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N8HASwitch13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current state of the switch. By default it’s <code class="docutils literal notranslate"><span class="pre">false</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASwitch16_commandCallbackE">
+<span id="_CPPv3N8HASwitch16_commandCallbackE"></span><span id="_CPPv2N8HASwitch16_commandCallbackE"></span><span class="target" id="class_h_a_switch_1abf4049a596f759f18bd1f7f0e3ccfd68"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_commandCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HASwitch" title="HASwitch"><span class="n"><span class="pre">HASwitch</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N8HASwitch16_commandCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when switch command is received from the HA. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-sensor-number.html"
+       title="previous chapter">← HASensorNumber class</a>
+  </li>
+  <li class="next">
+    <a href="ha-tag-scanner.html"
+       title="next chapter">HATagScanner class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

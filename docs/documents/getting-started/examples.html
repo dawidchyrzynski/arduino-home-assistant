@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Examples - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../_static/theme-vendors.js"></script> -->
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../genindex.html" />
+  <link rel="search" title="Search" href="../../search.html" />
+  <link rel="next" title="Library" href="../library/index.html" />
+  <link rel="prev" title="Compatible Hardware" href="compatible-hardware.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting started</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/device-types/index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Getting started</a> &raquo;</li>
+    
+    <li>Examples</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="compatible-hardware.html"
+       title="previous chapter">← Compatible Hardware</a>
+  </li>
+  <li class="next">
+    <a href="../library/index.html"
+       title="next chapter">Library →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<table class="colwidths-given examples-table docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/binary-sensor/binary-sensor.ino">Binary sensor</a></p></td>
+<td><p>Using the binary sensor as a door contact sensor.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/button/button.ino">Button</a></p></td>
+<td><p>Adding simple buttons to the Home Assistant panel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/esp32-cam/esp32-cam.ino">Camera</a></p></td>
+<td><p>Publishing the preview from the ESP32-CAM module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/cover/cover.ino">Cover</a></p></td>
+<td><p>Controlling a window cover (open / close / stop).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/multi-state-button/multi-state-button.ino">Device trigger</a></p></td>
+<td><p>Implementation of a simple wall switch that reports press and hold states.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/fan/fan.ino">Fan</a></p></td>
+<td><p>Controlling a simple fan (state + speed).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/hvac/hvac.ino">HVAC</a></p></td>
+<td><p>HVAC controller with multiple modes, power control and target temperature.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/lock/lock.ino">Lock</a></p></td>
+<td><p>A simple door lock that’s controlled by the Home Assistant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/light/light.ino">Light</a></p></td>
+<td><p>A simple light that allows changing brightness, color temperature and RGB color.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/number/number.ino">Number</a></p></td>
+<td><p>Adding an interactive numeric slider in the Home Assistant panel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/scene/scene.ino">Scene</a></p></td>
+<td><p>Adding a custom scene in the Home Assistant panel.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/select/select.ino">Select</a></p></td>
+<td><p>A dropdown selector that’s displayed in the Home Assistant panel.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/sensor/sensor.ino">Sensor</a></p></td>
+<td><p>A simple sensor that reports a state in a string representation (open / opening / close).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/sensor-analog/sensor-analog.ino">Analog sensor</a></p></td>
+<td><p>Reporting the analog pin’s voltage to the Home Assistant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/sensor-integer/sensor-integer.ino">Integer sensor</a></p></td>
+<td><p>Reporting the device’s uptime to the Home Assistant.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/led-switch/led-switch.ino">Switch</a></p></td>
+<td><p>The LED that’s controlled by the Home Assistant.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/multi-switch/multi-switch.ino">Multi-switch</a></p></td>
+<td><p>Multiple switches controlled by the Home Assistant.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/tag-scanner/tag-scanner.ino">Tag scanner</a></p></td>
+<td><p>Scanning RFID tags using the MFRC522 module.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/availability/availability.ino">Availability</a></p></td>
+<td><p>Reporting entities’ availability (online / offline) to the Home Assistant.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/advanced-availability/advanced-availability.ino">Advanced availability</a></p></td>
+<td><p>Advanced availability reporting with MQTT LWT (Last Will and Testament).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/mqtt-advanced/mqtt-advanced.ino">MQTT advanced</a></p></td>
+<td><p>Subscribing to custom topics and publishing custom messages.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/mqtt-with-credentials/mqtt-with-credentials.ino">MQTT with credentials</a></p></td>
+<td><p>Establishing connection with a MQTT broker using the credentials.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/nodemcu/nodemcu.ino">NodeMCU (ESP8266)</a></p></td>
+<td><p>Basic example for ESP8266 devices.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/nano33iot/nano33iot.ino">Arduino Nano 33 IoT</a></p></td>
+<td><p>Basic example for Arduino Nano 33 IoT (SAMD family).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/mdns/mdns.ino">mDNS discovery</a></p></td>
+<td><p>Make your ESP8266 discoverable via the mDNS.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="compatible-hardware.html"
+       title="previous chapter">← Compatible Hardware</a>
+  </li>
+  <li class="next">
+    <a href="../library/index.html"
+       title="next chapter">Library →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

@@ -12,10 +12,8 @@ EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
 
-// "input" is unique ID of the sensor. You should define you own ID.
-// "door" is device class (based on the class HA displays different icons in the panel)
-// "true" is initial state of the sensor. In this example it's "true" as we use pullup resistor
-HABinarySensor sensor("input", "door", true);
+// "myInput" is unique ID of the sensor. You should define you own ID.
+HABinarySensor sensor("myInput");
 
 void setup() {
     pinMode(INPUT_PIN, INPUT_PULLUP);
@@ -24,11 +22,15 @@ void setup() {
     // you don't need to verify return status
     Ethernet.begin(mac);
 
-    // set device's details (optional)
+    // optional device's details
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
 
-    sensor.setName("Door sensor"); // optional
+    // optional properties
+    sensor.setCurrentState(lastInputState);
+    sensor.setName("Door sensor");
+    sensor.setDeviceClass("door");
+    sensor.setIcon("mdi:fire");
 
     mqtt.begin(BROKER_ADDR);
 }
@@ -37,10 +39,11 @@ void loop() {
     Ethernet.maintain();
     mqtt.loop();
 
+    // reading the digital input of the Arduino device
     if ((millis() - lastReadAt) > 30) { // read in 30ms interval
         // library produces MQTT message if a new state is different than the previous one
         sensor.setState(digitalRead(INPUT_PIN));
-        lastInputState = sensor.getState();
+        lastInputState = sensor.getCurrentState();
         lastReadAt = millis();
     }
 }

@@ -1,42 +1,37 @@
 #ifndef AHA_HATAGSCANNER_H
 #define AHA_HATAGSCANNER_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
-#ifdef ARDUINOHA_TAG_SCANNER
+#ifndef EX_ARDUINOHA_TAG_SCANNER
 
-class HATagScanner : public BaseDeviceType
+/**
+ * HATagScanner allow to produce scan events that can be used in the HA automation. 
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/tag.mqtt/
+ */
+class HATagScanner : public HABaseDeviceType
 {
 public:
     /**
-     * Initializes tag scanner with the given name.
-     *
-     * @param uniqueId Unique ID of the scanner. Recommendes characters: [a-z0-9\-_]
+     * @param uniqueId The unique ID of the scanner. It needs to be unique in a scope of your device.
      */
     HATagScanner(const char* uniqueId);
-    HATagScanner(const char* uniqueId, HAMqtt& mqtt); // legacy constructor
-
-    /**
-     * Publishes configuration of the sensor to the MQTT.
-     */
-    virtual void onMqttConnected() override;
-
-    /**
-     * Tag scanner doesn't support availability. Nothing to do here.
-     */
-    virtual void setAvailability(bool online) override { (void)online; }
 
     /**
      * Sends "tag scanned" event to the MQTT (Home Assistant).
      * Based on this event HA may perform user-defined automation.
      *
      * @param tag Value of the scanned tag.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool tagScanned(const char* tag);
 
-private:
-    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    bool writeSerializedData(const char* serializedDevice) const override;
+protected:
+    virtual void buildSerializer() override;
+    virtual void onMqttConnected() override;
 };
 
 #endif

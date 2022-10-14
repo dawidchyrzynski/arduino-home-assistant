@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HACamera class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HACover class" href="ha-cover.html" />
+  <link rel="prev" title="HAButton class" href="ha-button.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HACamera class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-button.html"
+       title="previous chapter">← HAButton class</a>
+  </li>
+  <li class="next">
+    <a href="ha-cover.html"
+       title="next chapter">HACover class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hacamera-class">
+<h1>HACamera class<a class="headerlink" href="#hacamera-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HACamera">
+<span id="_CPPv38HACamera"></span><span id="_CPPv28HACamera"></span><span id="HACamera"></span><span class="target" id="class_h_a_camera"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HACamera</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv48HACamera" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_camera"><span class="std std-ref">HACamera</span></a> allows to display an image in the Home Assistant panel. It can be used for publishing an image from the ESP32-Cam module or any other module that’s equipped with a camera.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/camera.mqtt/">https://www.home-assistant.io/integrations/camera.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera13ImageEncodingE">
+<span id="_CPPv3N8HACamera13ImageEncodingE"></span><span id="_CPPv2N8HACamera13ImageEncodingE"></span><span class="target" id="class_h_a_camera_1aa97980e8c7c58bc793372c0e967ca77f"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ImageEncoding</span></span></span><a class="headerlink" href="#_CPPv4N8HACamera13ImageEncodingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera13ImageEncoding14EncodingBinaryE">
+<span id="_CPPv3N8HACamera13ImageEncoding14EncodingBinaryE"></span><span id="_CPPv2N8HACamera13ImageEncoding14EncodingBinaryE"></span><span class="target" id="class_h_a_camera_1aa97980e8c7c58bc793372c0e967ca77fa249f4595196842b039756ea6e67fd6aa"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodingBinary</span></span></span><a class="headerlink" href="#_CPPv4N8HACamera13ImageEncoding14EncodingBinaryE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera13ImageEncoding14EncodingBase64E">
+<span id="_CPPv3N8HACamera13ImageEncoding14EncodingBase64E"></span><span id="_CPPv2N8HACamera13ImageEncoding14EncodingBase64E"></span><span class="target" id="class_h_a_camera_1aa97980e8c7c58bc793372c0e967ca77fa242cb14da5b63cd1ae60338a0c2bc224"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EncodingBase64</span></span></span><a class="headerlink" href="#_CPPv4N8HACamera13ImageEncoding14EncodingBase64E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera8HACameraEPKc">
+<span id="_CPPv3N8HACamera8HACameraEPKc"></span><span id="_CPPv2N8HACamera8HACameraEPKc"></span><span id="HACamera::HACamera__cCP"></span><span class="target" id="class_h_a_camera_1aa38966e052322145b050c9389d7b6a55"></span><span class="sig-name descname"><span class="n"><span class="pre">HACamera</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera8HACameraEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the camera. It needs to be unique in a scope of your device. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera12publishImageEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HACamera12publishImageEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HACamera12publishImageEPK7uint8_tK8uint16_t"></span><span id="HACamera::publishImage__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_camera_1a9db4f30666dafa721376c3560393aa07"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishImage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">data</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera12publishImageEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes MQTT message with the given image data as a message content. It updates image displayed in the Home Assistant panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – Image data (raw binary data or base64) </p></li>
+<li><p><strong>length</strong> – The length of the data. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera11setEncodingEK13ImageEncoding">
+<span id="_CPPv3N8HACamera11setEncodingEK13ImageEncoding"></span><span id="_CPPv2N8HACamera11setEncodingEK13ImageEncoding"></span><span id="HACamera::setEncoding__ImageEncodingC"></span><span class="target" id="class_h_a_camera_1af1d39be8c23e1441575d93406694acbd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setEncoding</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HACamera13ImageEncodingE" title="HACamera::ImageEncoding"><span class="n"><span class="pre">ImageEncoding</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">encoding</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera11setEncodingEK13ImageEncoding" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets encoding of the image content. Bu default Home Assistant expects raw binary data (e.g. JPEG binary data).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>encoding</strong> – The image’s data encoding. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera7setIconEPKc">
+<span id="_CPPv3N8HACamera7setIconEPKc"></span><span id="_CPPv2N8HACamera7setIconEPKc"></span><span id="HACamera::setIcon__cCP"></span><span class="target" id="class_h_a_camera_1a42698c253030dece18acb009f930b00b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HACamera7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the camera. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera15buildSerializerEv">
+<span id="_CPPv3N8HACamera15buildSerializerEv"></span><span id="_CPPv2N8HACamera15buildSerializerEv"></span><span id="HACamera::buildSerializer"></span><span class="target" id="class_h_a_camera_1a6f9ed71fe8ac4ed144d403448cb09262"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HACamera15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera15onMqttConnectedEv">
+<span id="_CPPv3N8HACamera15onMqttConnectedEv"></span><span id="_CPPv2N8HACamera15onMqttConnectedEv"></span><span id="HACamera::onMqttConnected"></span><span class="target" id="class_h_a_camera_1ad75031a072f19dcc1471668fb1bd2e0b"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HACamera15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HACamera19getEncodingPropertyEv">
+<span id="_CPPv3NK8HACamera19getEncodingPropertyEv"></span><span id="_CPPv2NK8HACamera19getEncodingPropertyEv"></span><span id="HACamera::getEncodingPropertyC"></span><span class="target" id="class_h_a_camera_1aa52d37da30dcfb14adf822ebb5cda6cd"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getEncodingProperty</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HACamera19getEncodingPropertyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns progmem string representing the encoding property. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera9_encodingE">
+<span id="_CPPv3N8HACamera9_encodingE"></span><span id="_CPPv2N8HACamera9_encodingE"></span><span id="HACamera::_encoding__ImageEncoding"></span><span class="target" id="class_h_a_camera_1a5be9c51a0cec48b78e2d0170d44ef455"></span><a class="reference internal" href="#_CPPv4N8HACamera13ImageEncodingE" title="HACamera::ImageEncoding"><span class="n"><span class="pre">ImageEncoding</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_encoding</span></span></span><a class="headerlink" href="#_CPPv4N8HACamera9_encodingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The encoding of the image’s data. By default it’s <code class="docutils literal notranslate"><span class="pre">HACamera::EncodingBinary</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HACamera5_iconE">
+<span id="_CPPv3N8HACamera5_iconE"></span><span id="_CPPv2N8HACamera5_iconE"></span><span id="HACamera::_icon__cCP"></span><span class="target" id="class_h_a_camera_1a37517f7bc5e66c22c107e4cb7c83c2b8"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N8HACamera5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the camera. It can be nullptr. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-button.html"
+       title="previous chapter">← HAButton class</a>
+  </li>
+  <li class="next">
+    <a href="ha-cover.html"
+       title="next chapter">HACover class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

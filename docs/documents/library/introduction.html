@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>Introduction - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../_static/theme-vendors.js"></script> -->
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../genindex.html" />
+  <link rel="search" title="Search" href="../../search.html" />
+  <link rel="next" title="Device configuration" href="device-configuration.html" />
+  <link rel="prev" title="Library" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Library</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/core/index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/device-types/index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="index.html">Library</a> &raquo;</li>
+    
+    <li>Introduction</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Library</a>
+  </li>
+  <li class="next">
+    <a href="device-configuration.html"
+       title="next chapter">Device configuration →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Before implementing the business logic of your application you will need to
+add a few necessary pieces of code to your project.
+Basically, everything comes up to a few basic rules:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> and <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> instances need to be initialized once globally or as a part of another global object.</p></li>
+<li><p><a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt::begin</span></a> needs to be called at the end of setup logic. It provides MQTT broker credentials that will be used for a connection.</p></li>
+<li><p><a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt::loop</span></a> method needs to be called periodically (it doesn’t need to be called on each tick).</p></li>
+<li><p>Device types need to be initialized after <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> class (it will be described later in the documentation).</p></li>
+</ol>
+<p>Here are the minimal boilerplates that you can start with.
+Don’t worry if you have no idea what’s going on here.
+Everything will be covered in the following chapters.</p>
+<section id="arduino-boilerplate">
+<h2>Arduino Boilerplate<a class="headerlink" href="#arduino-boilerplate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
+
+<span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFA</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6E</span><span class="p">,</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4A</span><span class="p">};</span><span class="w"></span>
+<span class="n">EthernetClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
+<span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
+<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// your setup logic goes here</span>
+
+<span class="w">    </span><span class="c1">// MQTT broker connection (use your data here)</span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;192.168.1.50&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">maintain</span><span class="p">();</span><span class="w"></span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// your loop logic goes here</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+<section id="esp32-esp8266-boilerplate">
+<h2>ESP32/ESP8266 Boilerplate<a class="headerlink" href="#esp32-esp8266-boilerplate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ESP8266WiFi.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
+
+<span class="n">WiFiClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
+<span class="n">HADevice</span><span class="w"> </span><span class="n">device</span><span class="p">;</span><span class="w"></span>
+<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">);</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[</span><span class="n">WL_MAC_ADDR_LENGTH</span><span class="p">];</span><span class="w"></span>
+<span class="w">    </span><span class="n">WiFi</span><span class="p">.</span><span class="n">macAddress</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setUniqueId</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// you can skip this part if you&#39;re already maintaining the connection logic</span>
+<span class="w">    </span><span class="n">WiFi</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;MyNetworkSSID&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;MyPassword&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">WiFi</span><span class="p">.</span><span class="n">status</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">WL_CONNECTED</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">delay</span><span class="p">(</span><span class="mi">500</span><span class="p">);</span><span class="w"> </span><span class="c1">// waiting for the connection</span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// your setup logic goes here</span>
+
+<span class="w">    </span><span class="c1">// MQTT broker connection (use your data here)</span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;192.168.1.50&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">loop</span><span class="p">();</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">// your loop logic goes here</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Library</a>
+  </li>
+  <li class="next">
+    <a href="device-configuration.html"
+       title="next chapter">Device configuration →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

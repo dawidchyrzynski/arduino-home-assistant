@@ -1,0 +1,180 @@
+header.navbar {
+    background: #3eaf7c
+}
+header.navbar a {
+    color: #fff
+}
+header.navbar .nav-item a:hover {
+    color: #eee
+}
+header.navbar .site-name {
+    color: #fff
+}
+header.navbar .icon {
+    color: #fff;
+    position: relative;
+    top: 2px
+}
+.body-header ul.page-nav {
+    margin-right: 1.2em;
+    padding-right: 0
+}
+.body-header + hr {
+    margin-top: 0 !important;
+}
+table.examples-table tbody td + td {
+    text-align: left;
+}
+.sidebar-links li.toctree-l1 > a {
+    font-weight: 600
+}
+.sidebar-links > .caption {
+    display: none
+}
+.content + div.page-nav {
+    max-width: 840px;
+}
+.content + div.page-nav ul.page-nav {
+    max-width: 100%;
+    padding: 0 0 0.5em
+}
+.searchbox .caption-text {
+    display: none
+}
+form {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em
+}
+form.search {
+    padding-right: 0.5em
+}
+input[type="text"] {
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    flex: 1;
+    padding: 8px 15px;
+    font-size: 15px;
+    outline: none;
+}
+input[type="submit"] {
+    background: #3eaf7c;
+    border: 1px solid #3eaf7c;
+    color: #fff;
+    font-weight: 500;
+    font-size: 15px;
+    padding: 8px;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: background-color .3s
+}
+input[type="submit"]:hover {
+    background: #58C996
+}
+.content p + ul {
+    margin-top: -10px
+}
+.content pre {
+    font-size: 14px
+}
+.cpp.var,
+.cpp.function {
+    border: 1px solid #eee;
+    background: #fcfcfc;
+    margin-bottom: 0.5em;
+    padding: 15px
+}
+.cpp > dt {
+    border-bottom: 1px solid #eee;
+    margin: 0 0 10px;
+    padding-bottom: 5px;
+}
+.cpp.function > dt {
+    border-bottom: 2px solid #eee;
+}
+.cpp > dt * {
+    font-size: 16px;
+    font-weight: 600
+}
+.cpp.class > dt * {
+    font-size: 20px
+}
+.cpp > dt a * {
+    color: #3eaf7c
+}
+.cpp > dt .k::after {
+    content: " "
+}
+.cpp > dt .kt + .w::before {
+    content: " "
+}
+.cpp > dd {
+    margin-left: 0;
+    text-align: justify;
+    font-size: 15px;
+}
+.cpp .sig-paren {
+    margin-left: 0;
+    margin-right: 3px;
+}
+.cpp .sig-name {
+    margin-right: 2px
+}
+.cpp .p::after,
+.cpp .n::after {
+    content: " "
+}
+.cpp .k,
+.cpp .kt {
+    color: #2664b9
+}
+.cpp .n {
+    color: #2c3e50;
+    margin: 0
+}
+.cpp.function .field-list {
+    display: block;
+    margin-bottom: 0
+}
+.cpp.function .field-list dt {
+    padding-left: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    color: #999 !important;
+}
+.cpp.function .field-list dd {
+    padding-left: 0
+}
+.cpp.function .field-list dd > p,
+.cpp.function .field-list dd > ul {
+    margin: 8px 0 0;
+    list-style-type: none;
+    padding-left: 0
+}
+.cpp.function .field-list dd p strong {
+    margin-left: 0
+}
+.cpp.function .field-list dd + dt {
+    margin-top: 15px
+}
+.cpp .admonition {
+    padding: 8px 15px
+}
+.cpp .admonition .admonition-title {
+    margin-bottom: 5px
+}
+.breathe-sectiondef-title {
+    color: #222 !important;
+    font-size: 20px !important;
+    text-align: center;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+.cpp p + ul {
+    margin-top: 5px
+}
+p.highlight-link {
+    margin-bottom: 0
+}

@@ -1,111 +1,42 @@
 #include "HATagScanner.h"
-#ifdef ARDUINOHA_TAG_SCANNER
+#ifndef EX_ARDUINOHA_TAG_SCANNER
 
-#include "../ArduinoHADefines.h"
 #include "../HAMqtt.h"
-#include "../HADevice.h"
+#include "../utils/HASerializer.h"
 
 HATagScanner::HATagScanner(const char* uniqueId) :
-    BaseDeviceType("tag", uniqueId)
+    HABaseDeviceType(AHATOFSTR(HAComponentTag), uniqueId)
 {
 
-}
-
-HATagScanner::HATagScanner(const char* uniqueId, HAMqtt& mqtt) :
-    HATagScanner(uniqueId)
-{
-    (void)mqtt;
-}
-
-void HATagScanner::onMqttConnected()
-{
-    if (strlen(uniqueId()) == 0) {
-        return;
-    }
-
-    publishConfig();
 }
 
 bool HATagScanner::tagScanned(const char* tag)
 {
-    if (tag == nullptr || strlen(tag) == 0 || strlen(uniqueId()) == 0) {
+    if (!tag || strlen(tag) == 0) {
         return false;
     }
 
-    const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::EventTopic
-    );
-    if (topicSize == 0) {
-        return false;
-    }
-
-    char topic[topicSize];
-    DeviceTypeSerializer::generateTopic(
-        topic,
-        componentName(),
-        uniqueId(),
-        DeviceTypeSerializer::EventTopic
-    );
-
-    if (strlen(topic) == 0) {
-        return false;
-    }
-
-    return mqtt()->publish(topic, tag);
+    return publishOnDataTopic(AHATOFSTR(HATopic), tag);
 }
 
-uint16_t HATagScanner::calculateSerializedLength(
-    const char* serializedDevice
-) const
+void HATagScanner::buildSerializer()
 {
-    if (serializedDevice == nullptr) {
-        return 0;
+    if (_serializer || !uniqueId()) {
+        return;
     }
 
-    uint16_t size = 0;
-    size += DeviceTypeSerializer::calculateBaseJsonDataSize();
-    size += DeviceTypeSerializer::calculateDeviceFieldSize(serializedDevice);
-
-    // event topic
-    {
-        const uint16_t& topicSize = DeviceTypeSerializer::calculateTopicLength(
-            componentName(),
-            uniqueId(),
-            DeviceTypeSerializer::EventTopic,
-            false
-        );
-
-        // Format: "t":"[TOPIC]"
-        size += topicSize + 6; // 6 - length of the JSON decorators for this field
-    }
-
-    return size; // exludes null terminator
+    _serializer = new HASerializer(this, 2); // 2 - max properties nb
+    _serializer->set(HASerializer::WithDevice);
+    _serializer->topic(AHATOFSTR(HATopic));
 }
 
-bool HATagScanner::writeSerializedData(const char* serializedDevice) const
+void HATagScanner::onMqttConnected()
 {
-    if (serializedDevice == nullptr) {
-        return false;
+    if (!uniqueId()) {
+        return;
     }
 
-    DeviceTypeSerializer::mqttWriteBeginningJson();
-
-    // topic
-    {
-        static const char Prefix[] PROGMEM = {"\"t\":\""};
-        DeviceTypeSerializer::mqttWriteTopicField(
-            this,
-            Prefix,
-            DeviceTypeSerializer::EventTopic
-        );
-    }
-
-    DeviceTypeSerializer::mqttWriteDeviceField(serializedDevice);
-    DeviceTypeSerializer::mqttWriteEndJson();
-
-    return true;
+    publishConfig();
 }
 
 #endif

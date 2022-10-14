@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HADevice class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HAMqtt class" href="ha-mqtt.html" />
+  <link rel="prev" title="Core API" href="index.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Core API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../device-types/index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Core API</a> &raquo;</li>
+    
+    <li>HADevice class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Core API</a>
+  </li>
+  <li class="next">
+    <a href="ha-mqtt.html"
+       title="next chapter">HAMqtt class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hadevice-class">
+<h1>HADevice class<a class="headerlink" href="#hadevice-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HADevice">
+<span id="_CPPv38HADevice"></span><span id="_CPPv28HADevice"></span><span id="HADevice"></span><span class="target" id="class_h_a_device"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HADevice</span></span></span><a class="headerlink" href="#_CPPv48HADevice" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This class represents your device that’s going to be registered in the Home Assistant devices registry. Each entity (<a class="reference internal" href="../device-types/ha-binary-sensor.html#class_h_a_binary_sensor"><span class="std std-ref">HABinarySensor</span></a>, <a class="reference internal" href="../device-types/ha-sensor.html#class_h_a_sensor"><span class="std std-ref">HASensor</span></a>, etc.) that you use will be owned by this device. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice8HADeviceEv">
+<span id="_CPPv3N8HADevice8HADeviceEv"></span><span id="_CPPv2N8HADevice8HADeviceEv"></span><span id="HADevice::HADevice"></span><span class="target" id="class_h_a_device_1a6921f99bb21a59aef8e4a8288b8ee599"></span><span class="sig-name descname"><span class="n"><span class="pre">HADevice</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice8HADeviceEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructs <a class="reference internal" href="#class_h_a_device"><span class="std std-ref">HADevice</span></a> without the unique ID.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You will need to set the ID using <a class="reference internal" href="#class_h_a_device_1a8d10a57aa14007643ccdecd7c1a372a5"><span class="std std-ref">HADevice::setUniqueId</span></a> method. Otherwise none of the entities will work. </p>
+</div>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice8HADeviceEPKc">
+<span id="_CPPv3N8HADevice8HADeviceEPKc"></span><span id="_CPPv2N8HADevice8HADeviceEPKc"></span><span id="HADevice::HADevice__cCP"></span><span class="target" id="class_h_a_device_1a74583bbf58825f6110332a2b30365ad5"></span><span class="sig-name descname"><span class="n"><span class="pre">HADevice</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice8HADeviceEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructs <a class="reference internal" href="#class_h_a_device"><span class="std std-ref">HADevice</span></a> with the given unique ID (string). Keep the unique ID short to save the memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>uniqueId</strong> – String with the null terminator. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice8HADeviceEPK4byteK8uint16_t">
+<span id="_CPPv3N8HADevice8HADeviceEPK4byteK8uint16_t"></span><span id="_CPPv2N8HADevice8HADeviceEPK4byteK8uint16_t"></span><span id="HADevice::HADevice__byteCP.uint16_tC"></span><span class="target" id="class_h_a_device_1a9b6c1f247492c3398a0709a579571f71"></span><span class="sig-name descname"><span class="n"><span class="pre">HADevice</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">byte</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice8HADeviceEPK4byteK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructs <a class="reference internal" href="#class_h_a_device"><span class="std std-ref">HADevice</span></a> using the given byte array as the unique ID. It works in the same way as <a class="reference internal" href="#class_h_a_device_1a8d10a57aa14007643ccdecd7c1a372a5"><span class="std std-ref">HADevice::setUniqueId</span></a> method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – Bytes array that’s going to be converted into the string. </p></li>
+<li><p><strong>length</strong> – Number of bytes in the array. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADeviceD0Ev">
+<span id="_CPPv3N8HADeviceD0Ev"></span><span id="_CPPv2N8HADeviceD0Ev"></span><span id="HADevice::~HADevice"></span><span class="target" id="class_h_a_device_1a8b2977b5a5f38a4451af6141003e85d6"></span><span class="sig-name descname"><span class="n"><span class="pre">~HADevice</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADeviceD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Deletes <a class="reference internal" href="../utils/ha-serializer.html#class_h_a_serializer"><span class="std std-ref">HASerializer</span></a> and the availability topic if the shared availability was enabled. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice11getUniqueIdEv">
+<span id="_CPPv3NK8HADevice11getUniqueIdEv"></span><span id="_CPPv2NK8HADevice11getUniqueIdEv"></span><span id="HADevice::getUniqueIdC"></span><span class="target" id="class_h_a_device_1af48f9fb916963e1883facb0c5b27bab7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getUniqueId</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice11getUniqueIdEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns pointer to the unique ID. It can be nullptr if the device has no ID assigned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice13getSerializerEv">
+<span id="_CPPv3NK8HADevice13getSerializerEv"></span><span id="_CPPv2NK8HADevice13getSerializerEv"></span><span id="HADevice::getSerializerC"></span><span class="target" id="class_h_a_device_1afec11cd2585283d90778ec5c28ebe11c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-serializer.html#_CPPv412HASerializer" title="HASerializer"><span class="n"><span class="pre">HASerializer</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice13getSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the instance of the <a class="reference internal" href="../utils/ha-serializer.html#class_h_a_serializer"><span class="std std-ref">HASerializer</span></a> used by the device. This method is used by all entities to serialize device’s representation. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice27isSharedAvailabilityEnabledEv">
+<span id="_CPPv3NK8HADevice27isSharedAvailabilityEnabledEv"></span><span id="_CPPv2NK8HADevice27isSharedAvailabilityEnabledEv"></span><span id="HADevice::isSharedAvailabilityEnabledC"></span><span class="target" id="class_h_a_device_1abccb58cd260e89069c0e640b27111680"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isSharedAvailabilityEnabled</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice27isSharedAvailabilityEnabledEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns true if the shared availability is enabled for the device. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice20getAvailabilityTopicEv">
+<span id="_CPPv3NK8HADevice20getAvailabilityTopicEv"></span><span id="_CPPv2NK8HADevice20getAvailabilityTopicEv"></span><span id="HADevice::getAvailabilityTopicC"></span><span class="target" id="class_h_a_device_1ab508af42eb1fc0573a89afa3b92645fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getAvailabilityTopic</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice20getAvailabilityTopicEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns availability topic generated by the <a class="reference internal" href="#class_h_a_device_1a24e9d95ec7ca2397945c4d1b8d3be3f2"><span class="std std-ref">HADevice::enableSharedAvailability</span></a> method. It can be nullptr if the shared availability is not enabled. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice11isAvailableEv">
+<span id="_CPPv3NK8HADevice11isAvailableEv"></span><span id="_CPPv2NK8HADevice11isAvailableEv"></span><span id="HADevice::isAvailableC"></span><span class="target" id="class_h_a_device_1afda59cc1d82dc5fa98cde5b1f4b9af0b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isAvailable</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice11isAvailableEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns online/offline state of the device. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice11setUniqueIdEPK4byteK8uint16_t">
+<span id="_CPPv3N8HADevice11setUniqueIdEPK4byteK8uint16_t"></span><span id="_CPPv2N8HADevice11setUniqueIdEPK4byteK8uint16_t"></span><span id="HADevice::setUniqueId__byteCP.uint16_tC"></span><span class="target" id="class_h_a_device_1a8d10a57aa14007643ccdecd7c1a372a5"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setUniqueId</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">byte</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice11setUniqueIdEPK4byteK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets unique ID of the device based on the given byte array. Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The unique ID can be set only once (via constructor or using this method). </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – Bytes array that’s going to be converted into the string. </p></li>
+<li><p><strong>length</strong> – Number of bytes in the array. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice15setManufacturerEPKc">
+<span id="_CPPv3N8HADevice15setManufacturerEPKc"></span><span id="_CPPv2N8HADevice15setManufacturerEPKc"></span><span id="HADevice::setManufacturer__cCP"></span><span class="target" id="class_h_a_device_1aac0e57509fafeaa1fc4edaabfd1f8c00"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setManufacturer</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">manufacturer</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice15setManufacturerEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the “manufacturer” property that’s going to be displayed in the Home Assistant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>manufacturer</strong> – Any string. Keep it short to save the memory. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice8setModelEPKc">
+<span id="_CPPv3N8HADevice8setModelEPKc"></span><span id="_CPPv2N8HADevice8setModelEPKc"></span><span id="HADevice::setModel__cCP"></span><span class="target" id="class_h_a_device_1ace75ab3fe59304ce44a956bff0f4145b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setModel</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">model</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice8setModelEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the “model” property that’s going to be displayed in the Home Assistant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – Any string. Keep it short to save the memory. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice7setNameEPKc">
+<span id="_CPPv3N8HADevice7setNameEPKc"></span><span id="_CPPv2N8HADevice7setNameEPKc"></span><span id="HADevice::setName__cCP"></span><span class="target" id="class_h_a_device_1a439227a1e73175bb9f2177e39f0ac7ac"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setName</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice7setNameEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the “name” property that’s going to be displayed in the Home Assistant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – Any string. Keep it short to save the memory. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice18setSoftwareVersionEPKc">
+<span id="_CPPv3N8HADevice18setSoftwareVersionEPKc"></span><span id="_CPPv2N8HADevice18setSoftwareVersionEPKc"></span><span id="HADevice::setSoftwareVersion__cCP"></span><span class="target" id="class_h_a_device_1a935e9d844b8727e54873cd38b56d04ef"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setSoftwareVersion</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">softwareVersion</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice18setSoftwareVersionEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the “software version” property that’s going to be displayed in the Home Assistant.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>softwareVersion</strong> – Any string. Keep it short to save the memory. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice15setAvailabilityEb">
+<span id="_CPPv3N8HADevice15setAvailabilityEb"></span><span id="_CPPv2N8HADevice15setAvailabilityEb"></span><span id="HADevice::setAvailability__b"></span><span class="target" id="class_h_a_device_1a3eac570f51a76789f0564714166c674a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setAvailability</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">online</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice15setAvailabilityEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets device’s availability and publishes MQTT message on the availability topic. If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>online</strong> – Set to true if the device should be displayed as available in the HA panel. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice24enableSharedAvailabilityEv">
+<span id="_CPPv3N8HADevice24enableSharedAvailabilityEv"></span><span id="_CPPv2N8HADevice24enableSharedAvailabilityEv"></span><span id="HADevice::enableSharedAvailability"></span><span class="target" id="class_h_a_device_1a24e9d95ec7ca2397945c4d1b8d3be3f2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enableSharedAvailability</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice24enableSharedAvailabilityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the shared availability feature. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice14enableLastWillEv">
+<span id="_CPPv3N8HADevice14enableLastWillEv"></span><span id="_CPPv2N8HADevice14enableLastWillEv"></span><span id="HADevice::enableLastWill"></span><span class="target" id="class_h_a_device_1a0a76aeef43b5f868b009ff85737ff070"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">enableLastWill</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HADevice14enableLastWillEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables MQTT LWT feature. Please note that the shared availability needs to be enabled first. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HADevice19publishAvailabilityEv">
+<span id="_CPPv3NK8HADevice19publishAvailabilityEv"></span><span id="_CPPv2NK8HADevice19publishAvailabilityEv"></span><span id="HADevice::publishAvailabilityC"></span><span class="target" id="class_h_a_device_1a802ca77511d46ffb7f1f1b7f3cea2113"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishAvailability</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HADevice19publishAvailabilityEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes current availability of the device on the availability topic. If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens. This method is called by the <a class="reference internal" href="ha-mqtt.html#class_h_a_mqtt"><span class="std std-ref">HAMqtt</span></a> when the connection to an MQTT broker is acquired. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice9_uniqueIdE">
+<span id="_CPPv3N8HADevice9_uniqueIdE"></span><span id="_CPPv2N8HADevice9_uniqueIdE"></span><span id="HADevice::_uniqueId__cCP"></span><span class="target" id="class_h_a_device_1a216ecf832d93f5f17f0f38696abe6826"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_uniqueId</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice9_uniqueIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The unique ID of the device. It can be a memory allocated by <a class="reference internal" href="#class_h_a_device_1a8d10a57aa14007643ccdecd7c1a372a5"><span class="std std-ref">HADevice::setUniqueId</span></a> method. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice13_ownsUniqueIdE">
+<span id="_CPPv3N8HADevice13_ownsUniqueIdE"></span><span id="_CPPv2N8HADevice13_ownsUniqueIdE"></span><span id="HADevice::_ownsUniqueId__b"></span><span class="target" id="class_h_a_device_1a11ad6382b7677eccf237a3bb5909b337"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_ownsUniqueId</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice13_ownsUniqueIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Specifies whether <a class="reference internal" href="#class_h_a_device"><span class="std std-ref">HADevice</span></a> class owns the _uniqueId pointer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice11_serializerE">
+<span id="_CPPv3N8HADevice11_serializerE"></span><span id="_CPPv2N8HADevice11_serializerE"></span><span id="HADevice::_serializer__HASerializerP"></span><span class="target" id="class_h_a_device_1a765b60fc68b47dbdc7a5c9b2d6c8d336"></span><a class="reference internal" href="../utils/ha-serializer.html#_CPPv412HASerializer" title="HASerializer"><span class="n"><span class="pre">HASerializer</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_serializer</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice11_serializerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>JSON serializer of the <a class="reference internal" href="#class_h_a_device"><span class="std std-ref">HADevice</span></a> class. It’s allocated in the constructor. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice18_availabilityTopicE">
+<span id="_CPPv3N8HADevice18_availabilityTopicE"></span><span id="_CPPv2N8HADevice18_availabilityTopicE"></span><span id="HADevice::_availabilityTopic__cP"></span><span class="target" id="class_h_a_device_1ad7001e265f4ed32a1bf353f3a9112177"></span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_availabilityTopic</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice18_availabilityTopicE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The availability topic allocated by <a class="reference internal" href="#class_h_a_device_1a24e9d95ec7ca2397945c4d1b8d3be3f2"><span class="std std-ref">HADevice::enableSharedAvailability</span></a> method. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice19_sharedAvailabilityE">
+<span id="_CPPv3N8HADevice19_sharedAvailabilityE"></span><span id="_CPPv2N8HADevice19_sharedAvailabilityE"></span><span id="HADevice::_sharedAvailability__b"></span><span class="target" id="class_h_a_device_1a6bf1a602142a683299cb395f7c0039a9"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_sharedAvailability</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice19_sharedAvailabilityE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Specifies whether the shared availability is enabled. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HADevice10_availableE">
+<span id="_CPPv3N8HADevice10_availableE"></span><span id="_CPPv2N8HADevice10_availableE"></span><span id="HADevice::_available__b"></span><span class="target" id="class_h_a_device_1ae5e8765277a6474a30b1d061fd881d43"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_available</span></span></span><a class="headerlink" href="#_CPPv4N8HADevice10_availableE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Specifies whether the device is available (online / offline). </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="index.html"
+       title="previous chapter">← Core API</a>
+  </li>
+  <li class="next">
+    <a href="ha-mqtt.html"
+       title="next chapter">HAMqtt class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

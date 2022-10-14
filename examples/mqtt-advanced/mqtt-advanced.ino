@@ -29,17 +29,12 @@ void onMqttConnected() {
     mqtt.subscribe("myCustomTopic");
 }
 
-void onMqttConnectionFailed() {
-    Serial.println("Failed to connect to the broker!");
-}
-
 void setup() {
     Serial.begin(9600);
     Ethernet.begin(mac);
 
     mqtt.onMessage(onMqttMessage);
     mqtt.onConnected(onMqttConnected);
-    mqtt.onConnectionFailed(onMqttConnectionFailed);
 
     // If you use custom discovery prefix you can change it as following:
     // mqtt.setDiscoveryPrefix("customPrefix");

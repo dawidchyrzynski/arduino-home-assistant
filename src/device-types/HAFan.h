@@ -1,155 +1,244 @@
-#ifndef AHA_FAN_H
-#define AHA_FAN_H
+#ifndef AHA_HAFAN_H
+#define AHA_HAFAN_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
+#include "../utils/HANumeric.h"
 
-#ifdef ARDUINOHA_FAN
+#ifndef EX_ARDUINOHA_FAN
 
-#define HAFAN_STATE_CALLBACK_BOOL(name) void (*name)(bool)
-#define HAFAN_STATE_CALLBACK_SPEED(name) void (*name)(uint16_t)
-#define HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(name) void (*name)(Speed)
+#define HAFAN_STATE_CALLBACK(name) void (*name)(bool state, HAFan* sender)
+#define HAFAN_SPEED_CALLBACK(name) void (*name)(uint16_t speed, HAFan* sender)
 
-class HAFan : public BaseDeviceType
+/**
+ * HAFan allows adding a controllable fan in the Home Assistant panel.
+ * The library supports only the state and speed of the fan.
+ * If you want more features please open a new GitHub issue.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/fan.mqtt/
+ */
+class HAFan : public HABaseDeviceType
 {
 public:
-    static const char* PercentageCommandTopic;
-    static const char* PercentageStateTopic;
-
     enum Features {
         DefaultFeatures = 0,
         SpeedsFeature = 1
     };
 
-    // @deprecated
-    enum Speed {
-        UnknownSpeed = 0,
-        OffSpeed = 1,
-        LowSpeed = 2,
-        MediumSpeed = 4,
-        HighSpeed = 8
-    };
-
-    HAFan(const char* uniqueId, uint8_t features = DefaultFeatures);
-    HAFan(const char* uniqueId, uint8_t features, HAMqtt& mqtt); // legacy constructor
-
-    virtual void onMqttConnected() override;
-    virtual void onMqttMessage(
-        const char* topic,
-        const uint8_t* payload,
-        const uint16_t& length
-    ) override;
+    /**
+     * @param uniqueId The unique ID of the fan. It needs to be unique in a scope of your device.
+     * @param features Features that should be enabled for the fan.
+     */
+    HAFan(const char* uniqueId, const uint8_t features = DefaultFeatures);
 
     /**
      * Changes state of the fan and publishes MQTT message.
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param state New state of the fan (on - true, off - false).
+     * @param state New state of the fan.
      * @param force Forces to update state without comparing it to previous known state.
-     * @returns Returns true if MQTT message has been published successfully.
+     * @returns Returns `true` if MQTT message has been published successfully.
      */
-    bool setState(bool state, bool force = false);
+    bool setState(const bool state, const bool force = false);
 
     /**
-     * Alias for setState(true).
+     * Changes the speed of the fan and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param speed The new speed of the fan. It should be in range of min and max value.
+     * @param force Forces to update the value without comparing it to a previous known value.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setSpeed(const uint16_t speed, const bool force = false);
+
+    /**
+     * Alias for `setState(true)`.
      */
     inline bool turnOn()
         { return setState(true); }
 
     /**
-     * Alias for setState(false).
+     * Alias for `setState(false)`.
      */
     inline bool turnOff()
         { return setState(false); }
 
     /**
-     * Returns last known state of the fan.
-     * If setState method wasn't called the initial value will be returned.
+     * Sets current state of the fan without publishing it to Home Assistant.
+     * This method may be useful if you want to change state before connection
+     * with MQTT broker is acquired.
+     *
+     * @param state New state of the fan.
      */
-    inline bool getState() const
+    inline void setCurrentState(const bool state)
+        { _currentState = state; }
+
+    /**
+     * Returns last known state of the fan.
+     * By default it's `false`.
+     */
+    inline bool getCurrentState() const
         { return _currentState; }
 
     /**
-     * Registers callback that will be called each time the state of the fan changes.
-     * Please note that it's not possible to register multiple callbacks for the same fan.
+     * Sets the current speed of the fan without pushing the value to Home Assistant.
+     * This method may be useful if you want to change the speed before the connection
+     * with the MQTT broker is acquired.
      *
-     * @param callback
+     * @param speed The new speed of the fan. It should be in range of min and max value.
      */
-    inline void onStateChanged(HAFAN_STATE_CALLBACK_BOOL(callback))
-        { _stateCallback = callback; }
+    inline void setCurrentSpeed(const uint16_t speed)
+        { _currentSpeed = speed; }
 
     /**
-     * Sets the list of supported fan's speeds.
-     *
-     * @param speeds
+     * Returns the last known speed of the fan.
+     * By default speed is set to `0`.
      */
-    AHA_DEPRECATED(inline void setSpeeds(uint8_t speeds))
-        { (void)speeds; }
-
-    /**
-     * Sets speed of the fan.
-     *
-     * @param speed
-     */
-    bool setSpeed(uint16_t speed);
-
-    /**
-     * Returns current speed of the fan.
-     */
-    inline uint16_t getSpeed() const
+    inline uint16_t getCurrentSpeed() const
         { return _currentSpeed; }
 
     /**
-     * Registers callback that will be called each time the speed of the fan changes.
-     * Please note that it's not possible to register multiple callbacks for the same fan.
+     * Sets icon of the fan.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
      *
-     * @param callback
+     * @param icon The icon name.
      */
-    inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED(callback))
-        { _speedCallback = callback; }
-
-    AHA_DEPRECATED(inline void onSpeedChanged(HAFAN_STATE_CALLBACK_SPEED_DEPRECATED(callback)))
-        { (void)callback; }
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
 
     /**
-     * Sets `retain` flag for commands published by Home Assistant.
-     * By default it's set to false.
+     * Sets retain flag for the fan's command.
+     * If set to `true` the command produced by Home Assistant will be retained.
      *
      * @param retain
      */
-    inline void setRetain(bool retain)
+    inline void setRetain(const bool retain)
         { _retain = retain; }
 
     /**
-     * Sets minimum range for slider in the HA panel.
+     * Sets optimistic flag for the fan state.
+     * In this mode the fan state doesn't need to be reported back to the HA panel when a command is received.
+     * By default the optimistic mode is disabled.
      *
-     * @param min
+     * @param optimistic The optimistic mode (`true` - enabled, `false` - disabled).
      */
-    inline void setSpeedRangeMin(uint16_t min)
-        { _speedRangeMin = min; }
+    inline void setOptimistic(const bool optimistic)
+        { _optimistic = optimistic; }
 
     /**
-     * Sets maximum range for slider in the HA panel.
+     * Sets the maximum of numeric output range (representing 100%).
+     * The number of speeds within the speed_range / 100 will determine the percentage step.
+     * By default the maximum range is `100`.
      *
-     * @param min
+     * @param max The maximum of numeric output range.
      */
-    inline void setSpeedRangeMax(uint16_t max)
-        { _speedRangeMax = max; }
+    inline void setSpeedRangeMax(const uint16_t max)
+        { _speedRangeMax.setBaseValue(max); }
+
+    /**
+     * Sets the minimum of numeric output range (off is not included, so speed_range_min - 1 represents 0 %).
+     * The number of speeds within the speed_range / 100 will determine the percentage step.
+     * By default the minimum range is `1`.
+     *
+     * @param min The minimum of numeric output range.
+     */
+    inline void setSpeedRangeMin(const uint16_t min)
+        { _speedRangeMin.setBaseValue(min); }
+
+    /**
+     * Registers callback that will be called each time the state command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same fan.
+     *
+     * @param callback
+     * @note In non-optimistic mode, the state must be reported back to HA using the HAFan::setState method.
+     */
+    inline void onStateCommand(HAFAN_STATE_CALLBACK(callback))
+        { _stateCallback = callback; }
+
+    /**
+     * Registers callback that will be called each time the speed command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same fan.
+     *
+     * @param callback
+     * @note In non-optimistic mode, the speed must be reported back to HA using the HAFan::setSpeed method.
+     */
+    inline void onSpeedCommand(HAFAN_SPEED_CALLBACK(callback))
+        { _speedCallback = callback; }
 
 protected:
-    bool publishState(bool state);
-    bool publishSpeed(uint16_t speed);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    bool writeSerializedData(const char* serializedDevice) const override;
+    virtual void buildSerializer() override;
+    virtual void onMqttConnected() override;
+    virtual void onMqttMessage(
+        const char* topic,
+        const uint8_t* payload,
+        const uint16_t length
+    ) override;
 
+private:
+    /**
+     * Publishes the MQTT message with the given state.
+     *
+     * @param state The state to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishState(const bool state);
+
+    /**
+     * Publishes the MQTT message with the given speed.
+     *
+     * @param speed The speed to publish. It should be in range of min and max value.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishSpeed(const uint16_t speed);
+
+    /**
+     * Parses the given state command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleStateCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given speed command and executes the callback with proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleSpeedCommand(const uint8_t* cmd, const uint16_t length);
+
+    /// Features enabled for the fan.
     const uint8_t _features;
-    bool _currentState;
-    HAFAN_STATE_CALLBACK_BOOL(_stateCallback);
-    uint16_t _currentSpeed;
-    HAFAN_STATE_CALLBACK_SPEED(_speedCallback);
+
+    /// The icon of the button. It can be nullptr.
+    const char* _icon;
+
+    /// The retain flag for the HA commands.
     bool _retain;
-    uint16_t _speedRangeMin;
-    uint16_t _speedRangeMax;
+
+    /// The optimistic mode of the fan (`true` - enabled, `false` - disabled).
+    bool _optimistic;
+
+    /// The maximum of numeric output range.
+    HANumeric _speedRangeMax;
+
+    /// The minimum of numeric output range.
+    HANumeric _speedRangeMin;
+
+    /// The current state of the fan. By default it's `false`.
+    bool _currentState;
+
+    /// The current speed of the fan. By default it's `0`.
+    uint16_t _currentSpeed;
+
+    /// The callback that will be called when the state command is received from the HA.
+    HAFAN_STATE_CALLBACK(_stateCallback);
+
+    /// The callback that will be called when the speed command is received from the HA.
+    HAFAN_SPEED_CALLBACK(_speedCallback);
 };
 
 #endif

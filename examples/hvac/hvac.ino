@@ -9,33 +9,35 @@ WiFiClient client;
 HADevice device;
 HAMqtt mqtt(client, device);
 
-// see src/device-types/HAHVAC.h header for more details
-HAHVAC hvac("my_name", HAHVAC::AuxHeatingFeature | HAHVAC::AwayModeFeature | HAHVAC::HoldFeature);
+// By default HAHVAC supports only reporting of the temperature.
+// You can enable feature you need using the second argument of the constructor.
+// Please check the documentation of the HAHVAC class.
+HAHVAC hvac(
+  "my_name",
+  HAHVAC::TargetTemperatureFeature | HAHVAC::PowerFeature | HAHVAC::ModesFeature
+);
 
 unsigned long lastTempPublishAt = 0;
-double lastTemp = 0;
+float lastTemp = 0;
 
-void onAuxHeatingStateChanged(bool state) {
-    Serial.print("Aux heating: ");
-    Serial.println(state);
-}
+void onTargetTemperatureCommand(HANumeric temperature, HAHVAC* sender) {
+    float temperatureFloat = temperature.toFloat();
 
-void onAwayStateChanged(bool state) {
-    Serial.print("Away state: ");
-    Serial.println(state);
-}
-
-void onHoldStateChanged(bool state) {
-    Serial.print("Hold state: ");
-    Serial.println(state);
-}
-
-void onTargetTemperatureChanged(double temp) {
     Serial.print("Target temperature: ");
-    Serial.println(temp);
+    Serial.println(temperatureFloat);
+
+    sender->setTargetTemperature(temperature); // report target temperature back to the HA panel
 }
 
-void onModeChanged(HAHVAC::Mode mode) {
+void onPowerCommand(bool state, HAHVAC* sender) {
+  if (state) {
+    Serial.println("Power on");
+  } else {
+    Serial.println("Power off");
+  }
+}
+
+void onModeCommand(HAHVAC::Mode mode, HAHVAC* sender) {
     Serial.print("Mode: ");
     if (mode == HAHVAC::OffMode) {
         Serial.println("off");
@@ -50,6 +52,8 @@ void onModeChanged(HAHVAC::Mode mode) {
     } else if (mode == HAHVAC::FanOnlyMode) {
         Serial.println("fan only");
     }
+
+    sender->setMode(mode); // report mode back to the HA panel
 }
 
 void setup() {
@@ -75,18 +79,21 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // assign callbacks (optional)
-    hvac.onAuxHeatingStateChanged(onAuxHeatingStateChanged);
-    hvac.onAwayStateChanged(onAwayStateChanged);
-    hvac.onHoldStateChanged(onHoldStateChanged);
-    hvac.onTargetTemperatureChanged(onTargetTemperatureChanged);
-    hvac.onModeChanged(onModeChanged);
+    hvac.onTargetTemperatureCommand(onTargetTemperatureCommand);
+    hvac.onPowerCommand(onPowerCommand);
+    hvac.onModeCommand(onModeCommand);
 
     // configure HVAC (optional)
     hvac.setName("My HVAC");
     hvac.setMinTemp(10);
     hvac.setMaxTemp(30);
     hvac.setTempStep(0.5);
-    hvac.setRetain(true);
+
+    // You can set retain flag for the HA commands
+    // hvac.setRetain(true);
+
+    // You can choose which modes should be available in the HA panel
+    // hvac.setModes(HAHVAC::OffMode | HAHVAC::CoolMode);
 
     mqtt.begin(BROKER_ADDR);
 }

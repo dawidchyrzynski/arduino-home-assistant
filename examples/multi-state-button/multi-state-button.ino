@@ -14,7 +14,9 @@ byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
 EthernetClient client;
 HADevice device(mac, sizeof(mac));
 HAMqtt mqtt(client, device);
-HATriggers triggers;
+
+HADeviceTrigger shortPressTrigger(HADeviceTrigger::ButtonShortPressType, BUTTON_NAME);
+HADeviceTrigger longPressTrigger(HADeviceTrigger::ButtonLongPressType, BUTTON_NAME);
 Button btn(BUTTON_PIN);
 bool holdingBtn = false;
 
@@ -26,9 +28,7 @@ void setup() {
     device.setName("Arduino");
     device.setSoftwareVersion("1.0.0");
 
-    // setup triggers
-    triggers.add("button_short_press", BUTTON_NAME);
-    triggers.add("button_long_press", BUTTON_NAME);
+    // setup JC button
     btn.begin();
 
     mqtt.begin(BROKER_ADDR);
@@ -40,13 +40,13 @@ void loop() {
     btn.read();
 
     if (btn.pressedFor(3000) && !holdingBtn) {
-        triggers.trigger("button_long_press", BUTTON_NAME);
+        longPressTrigger.trigger();
         holdingBtn = true;
     } else if (btn.wasReleased()) {
         if (holdingBtn) {
             holdingBtn = false;
         } else {
-            triggers.trigger("button_short_press", BUTTON_NAME);
+            shortPressTrigger.trigger();
         }
     }
 }

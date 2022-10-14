@@ -1,79 +1,88 @@
 #ifndef AHA_HABINARYSENSOR_H
 #define AHA_HABINARYSENSOR_H
 
-#include "BaseDeviceType.h"
+#include "HABaseDeviceType.h"
 
-#ifdef ARDUINOHA_BINARY_SENSOR
+#ifndef EX_ARDUINOHA_BINARY_SENSOR
 
-class HABinarySensor : public BaseDeviceType
+/**
+ * HABinarySensor represents a binary sensor that allows publishing on/off state to the Home Assistant panel.
+ *
+ * @note
+ * You can find more information about this entity in the Home Assistant documentation:
+ * https://www.home-assistant.io/integrations/binary_sensor.mqtt/
+ */
+class HABinarySensor : public HABaseDeviceType
 {
 public:
     /**
-     * Initializes binary sensor.
+     * @param uniqueId The unique ID of the button. It needs to be unique in a scope of your device.
+     */
+    HABinarySensor(const char* uniqueId);
+
+    /**
+     * Changes state of the sensor and publish MQTT message.
+     * Please note that if a new value is the same as the previous one the MQTT message won't be published.
      *
-     * @param uniqueId Unique ID of the sensor. Recommended characters: [a-z0-9\-_]
-     * @param initialState Initial state of the sensor.
-                           It will be published right after "config" message in order to update HA state.
+     * @param state New state of the sensor (`true` - on, `false` - off).
+     * @param force Forces to update the state without comparing it to a previous known state.
+     * @returns Returns `true` if the MQTT message has been published successfully.
      */
-    HABinarySensor(
-        const char* uniqueId,
-        bool initialState
-    );
-    HABinarySensor(
-        const char* uniqueId,
-        bool initialState,
-        HAMqtt& mqtt
-    ); // legacy constructor
+    bool setState(const bool state, const bool force = false);
 
     /**
-     * Initializes binary sensor with the specified class.
-     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
-     *
-     * @param uniqueId Unique ID of the sensor. Recommendes characters: [a-z0-9\-_]
-     * @param deviceClass Name of the class (lower case).
-     * @param initialState Initial state of the sensor.
-                           It will be published right after "config" message in order to update HA state.
-     */
-    HABinarySensor(
-        const char* uniqueId,
-        const char* deviceClass,
-        bool initialState
-    );
-    HABinarySensor(
-        const char* uniqueId,
-        const char* deviceClass,
-        bool initialState,
-        HAMqtt& mqtt
-    );
-
-    /**
-     * Publishes configuration of the sensor to the MQTT.
-     */
-    virtual void onMqttConnected() override;
-
-    /**
-     * Changes state of the sensor and publishes MQTT message.
-     * Please note that if a new value is the same as previous one,
-     * the MQTT message won't be published.
+     * Sets the current state of the sensor without publishing it to Home Assistant.
+     * This method may be useful if you want to change the state before the connection with the MQTT broker is acquired.
      *
      * @param state New state of the sensor.
-     * @returns Returns true if MQTT message has been published successfully.
      */
-    bool setState(bool state);
+    inline void setCurrentState(const bool state)
+        { _currentState = state; }
 
     /**
-     * Returns last known state of the sensor.
-     * If setState method wasn't called the initial value will be returned.
+     * Returns the last known state of the sensor.
      */
-    inline bool getState() const
+    inline bool getCurrentState() const
         { return _currentState; }
 
-private:
-    bool publishState(bool state);
-    uint16_t calculateSerializedLength(const char* serializedDevice) const override;
-    bool writeSerializedData(const char* serializedDevice) const override;
+    /**
+     * Sets class of the device.
+     * You can find list of available values here: https://www.home-assistant.io/integrations/binary_sensor/#device-class
+     *
+     * @param deviceClass The class name.
+     */
+    inline void setDeviceClass(const char* deviceClass)
+        { _class = deviceClass; }
 
+    /**
+     * Sets icon of the sensor.
+     * Any icon from MaterialDesignIcons.com (for example: `mdi:home`).
+     *
+     * @param icon The icon name.
+     */
+    inline void setIcon(const char* icon)
+        { _icon = icon; }
+
+protected:
+    virtual void buildSerializer() override;
+    virtual void onMqttConnected() override;
+
+private:
+    /**
+     * Publishes the MQTT message with the given state.
+     *
+     * @param state The state to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishState(bool state);
+
+    /// The device class. It can be nullptr.
     const char* _class;
+
+    /// The icon of the sensor. It can be nullptr.
+    const char* _icon;
+
+    /// Current state of the sensor. By default it's false.
     bool _currentState;
 };
 

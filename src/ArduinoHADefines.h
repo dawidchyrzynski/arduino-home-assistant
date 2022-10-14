@@ -3,21 +3,35 @@
 // by calling Serial.begin([baudRate]) before initializing ArduinoHA.
 // #define ARDUINOHA_DEBUG
 
-// You can reduce Flash size of the compiled library by commenting unused components below
-#define ARDUINOHA_BINARY_SENSOR
-#define ARDUINOHA_COVER
-#define ARDUINOHA_FAN
-#define ARDUINOHA_HVAC
-#define ARDUINOHA_SENSOR
-#define ARDUINOHA_SWITCH
-#define ARDUINOHA_TAG_SCANNER
-#define ARDUINOHA_TRIGGERS
+// These macros allow to exclude some parts of the library to save more resources.
+// #define EX_ARDUINOHA_BINARY_SENSOR
+// #define EX_ARDUINOHA_BUTTON
+// #define EX_ARDUINOHA_CAMERA
+// #define EX_ARDUINOHA_COVER
+// #define EX_ARDUINOHA_DEVICE_TRACKER
+// #define EX_ARDUINOHA_DEVICE_TRIGGER
+// #define EX_ARDUINOHA_FAN
+// #define EX_ARDUINOHA_HVAC
+// #define EX_ARDUINOHA_LIGHT
+// #define EX_ARDUINOHA_LOCK
+// #define EX_ARDUINOHA_NUMBER
+// #define EX_ARDUINOHA_SCENE
+// #define EX_ARDUINOHA_SELECT
+// #define EX_ARDUINOHA_SENSOR
+// #define EX_ARDUINOHA_SWITCH
+// #define EX_ARDUINOHA_TAG_SCANNER
 
-#ifdef __GNUC__
-#define AHA_DEPRECATED(func) func __attribute__ ((deprecated))
-#elif defined(_MSC_VER)
-#define AHA_DEPRECATED(func) __declspec(deprecated) func
+#if defined(ARDUINOHA_DEBUG)
+    #include <Arduino.h>
+
+    #define ARDUINOHA_DEBUG_INIT() Serial.begin(115200);
+    #define ARDUINOHA_DEBUG_PRINTLN(x) Serial.println(x);
+    #define ARDUINOHA_DEBUG_PRINT(x) Serial.print(x);
 #else
-#warning "Arduino Home Assistant: You may miss deprecation warnings."
-#define AHA_DEPRECATED(func) func
+    #define ARDUINOHA_DEBUG_INIT()
+    #define ARDUINOHA_DEBUG_PRINTLN(x)
+    #define ARDUINOHA_DEBUG_PRINT(x)
 #endif
+
+#define AHATOFSTR(x) reinterpret_cast<const __FlashStringHelper*>(x)
+#define AHAFROMFSTR(x) reinterpret_cast<const char*>(x)

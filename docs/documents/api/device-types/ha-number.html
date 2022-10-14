@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+      <title>HANumber class - ArduinoHA</title>
+    
+          <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../_static/theme.css " type="text/css" />
+          <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/custom.js"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../search.html" />
+  <link rel="next" title="HAScene class" href="ha-scene.html" />
+  <link rel="prev" title="HALock class" href="ha-lock.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../index.html" class="home-link">
+    
+      <span class="site-name">ArduinoHA</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+  
+    <div class="nav-item">
+      <a href="https://github.com/dawidchyrzynski/arduino-home-assistant"
+        class="nav-link external">
+          Github <outboundlink></outboundlink>
+      </a>
+    </div>
+  
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  <p class="caption" role="heading"><span class="caption-text">Docs</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started/index.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/prerequisites.html">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/compatible-hardware.html">Compatible Hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started/examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../library/index.html">Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../library/introduction.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-configuration.html">Device configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../core/index.html">Core API</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Device types API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">API reference</a> &raquo;</li>
+    
+      <li><a href="index.html">Device types API</a> &raquo;</li>
+    
+    <li>HANumber class</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+  <li class="prev">
+    <a href="ha-lock.html"
+       title="previous chapter">← HALock class</a>
+  </li>
+  <li class="next">
+    <a href="ha-scene.html"
+       title="next chapter">HAScene class →</a>
+  </li>
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <section id="hanumber-class">
+<h1>HANumber class<a class="headerlink" href="#hanumber-class" title="Permalink to this headline">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv48HANumber">
+<span id="_CPPv38HANumber"></span><span id="_CPPv28HANumber"></span><span id="HANumber"></span><span class="target" id="class_h_a_number"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HANumber</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv48HANumber" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><a class="reference internal" href="#class_h_a_number"><span class="std std-ref">HANumber</span></a> adds a slider or a box in the Home Assistant panel that controls the numeric value stored on your device.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/number.mqtt/">https://www.home-assistant.io/integrations/number.mqtt/</a> </p>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber4ModeE">
+<span id="_CPPv3N8HANumber4ModeE"></span><span id="_CPPv2N8HANumber4ModeE"></span><span class="target" id="class_h_a_number_1a9435006a993ae09f58bbf0f047f012d4"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Mode</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber4ModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Represents mode of the number. </p>
+<p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber4Mode8ModeAutoE">
+<span id="_CPPv3N8HANumber4Mode8ModeAutoE"></span><span id="_CPPv2N8HANumber4Mode8ModeAutoE"></span><span class="target" id="class_h_a_number_1a9435006a993ae09f58bbf0f047f012d4ab98dc727a6017a9a172e170337575e72"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModeAuto</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber4Mode8ModeAutoE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber4Mode7ModeBoxE">
+<span id="_CPPv3N8HANumber4Mode7ModeBoxE"></span><span id="_CPPv2N8HANumber4Mode7ModeBoxE"></span><span class="target" id="class_h_a_number_1a9435006a993ae09f58bbf0f047f012d4a2b127ce3241fb269b3b01be5377d764a"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModeBox</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber4Mode7ModeBoxE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber4Mode10ModeSliderE">
+<span id="_CPPv3N8HANumber4Mode10ModeSliderE"></span><span id="_CPPv2N8HANumber4Mode10ModeSliderE"></span><span class="target" id="class_h_a_number_1a9435006a993ae09f58bbf0f047f012d4a49439b6a99d4a68bcec49215a0e2d87f"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ModeSlider</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber4Mode10ModeSliderE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8HANumberEPKcK15NumberPrecision">
+<span id="_CPPv3N8HANumber8HANumberEPKcK15NumberPrecision"></span><span id="_CPPv2N8HANumber8HANumberEPKcK15NumberPrecision"></span><span id="HANumber::HANumber__cCP.NumberPrecisionC"></span><span class="target" id="class_h_a_number_1a9221897a4bef104ef7c8d0f102fca8c3"></span><span class="sig-name descname"><span class="n"><span class="pre">HANumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">PrecisionP0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8HANumberEPKcK15NumberPrecision" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates instance of the <a class="reference internal" href="#class_h_a_number"><span class="std std-ref">HANumber</span></a> entity with the given numbers precision. The given precision applies to the state, min, max and step values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the number. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>precision</strong> – Precision of the floating point number that will be displayed in the HA panel. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateERK9HANumericKb">
+<span id="_CPPv3N8HANumber8setStateERK9HANumericKb"></span><span id="_CPPv2N8HANumber8setStateERK9HANumericKb"></span><span id="HANumber::setState__HANumericCR.bC"></span><span class="target" id="class_h_a_number_1ada4274da481d1dcb90574a0785b40c03"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateERK9HANumericKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes state of the number and publishes MQTT message. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> – New state of the number. </p></li>
+<li><p><strong>force</strong> – Forces to update state without comparing it to a previous known state. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK6int8_tKb">
+<span id="_CPPv3N8HANumber8setStateEK6int8_tKb"></span><span id="_CPPv2N8HANumber8setStateEK6int8_tKb"></span><span id="HANumber::setState__int8_tC.bC"></span><span class="target" id="class_h_a_number_1a9c1a6837a19a4003d1b0909d6a027065"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK6int8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK7int16_tKb">
+<span id="_CPPv3N8HANumber8setStateEK7int16_tKb"></span><span id="_CPPv2N8HANumber8setStateEK7int16_tKb"></span><span id="HANumber::setState__int16_tC.bC"></span><span class="target" id="class_h_a_number_1abf563fb87e7fb06ef43134af7043e308"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK7int16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK7int32_tKb">
+<span id="_CPPv3N8HANumber8setStateEK7int32_tKb"></span><span id="_CPPv2N8HANumber8setStateEK7int32_tKb"></span><span id="HANumber::setState__int32_tC.bC"></span><span class="target" id="class_h_a_number_1a6330a60a0c31e80dba541c9b4447bdbe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK7int32_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK7uint8_tKb">
+<span id="_CPPv3N8HANumber8setStateEK7uint8_tKb"></span><span id="_CPPv2N8HANumber8setStateEK7uint8_tKb"></span><span id="HANumber::setState__uint8_tC.bC"></span><span class="target" id="class_h_a_number_1a22252c398cd52a37173f16d61486528c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK8uint16_tKb">
+<span id="_CPPv3N8HANumber8setStateEK8uint16_tKb"></span><span id="_CPPv2N8HANumber8setStateEK8uint16_tKb"></span><span id="HANumber::setState__uint16_tC.bC"></span><span class="target" id="class_h_a_number_1ac5b3868b31417918d2822fca0dae79a8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK8uint16_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEK8uint32_tKb">
+<span id="_CPPv3N8HANumber8setStateEK8uint32_tKb"></span><span id="_CPPv2N8HANumber8setStateEK8uint32_tKb"></span><span id="HANumber::setState__uint32_tC.bC"></span><span class="target" id="class_h_a_number_1aad5da251bae07b5732d0a5651b41d3bd"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEK8uint32_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber8setStateEKfKb">
+<span id="_CPPv3N8HANumber8setStateEKfKb"></span><span id="_CPPv2N8HANumber8setStateEKfKb"></span><span id="HANumber::setState__floatC.bC"></span><span class="target" id="class_h_a_number_1afd5c53d3a498b0828ba2adcb9a1ed97c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber8setStateEKfKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateERK9HANumeric">
+<span id="_CPPv3N8HANumber15setCurrentStateERK9HANumeric"></span><span id="_CPPv2N8HANumber15setCurrentStateERK9HANumeric"></span><span id="HANumber::setCurrentState__HANumericCR"></span><span class="target" id="class_h_a_number_1a3cfdd5dceb1f0c254cfb9ab4c806bc44"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets current state of the number without publishing it to Home Assistant. This method may be useful if you want to change state before connection with MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – New state of the number. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK6int8_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK6int8_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK6int8_t"></span><span id="HANumber::setCurrentState__int8_tC"></span><span class="target" id="class_h_a_number_1a064a13160a406169b57cb4c6a97292e3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK6int8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK7int16_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK7int16_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK7int16_t"></span><span id="HANumber::setCurrentState__int16_tC"></span><span class="target" id="class_h_a_number_1a710bcf12b9fea1ecb1a0e6114573a1d8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK7int16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK7int32_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK7int32_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK7int32_t"></span><span id="HANumber::setCurrentState__int32_tC"></span><span class="target" id="class_h_a_number_1a0f07a6765b015836b7f2c6a901ee1d4c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">int32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK7int32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK7uint8_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK7uint8_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK7uint8_t"></span><span id="HANumber::setCurrentState__uint8_tC"></span><span class="target" id="class_h_a_number_1a60a7844f059b502cb069ee18354bc0bb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK8uint16_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK8uint16_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK8uint16_t"></span><span id="HANumber::setCurrentState__uint16_tC"></span><span class="target" id="class_h_a_number_1a5301b380e72d814adae9b12de3045976"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEK8uint32_t">
+<span id="_CPPv3N8HANumber15setCurrentStateEK8uint32_t"></span><span id="_CPPv2N8HANumber15setCurrentStateEK8uint32_t"></span><span id="HANumber::setCurrentState__uint32_tC"></span><span class="target" id="class_h_a_number_1a0cb7b4c26881871b7fbdf3f0addd74a7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint32_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEK8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15setCurrentStateEKf">
+<span id="_CPPv3N8HANumber15setCurrentStateEKf"></span><span id="_CPPv2N8HANumber15setCurrentStateEKf"></span><span id="HANumber::setCurrentState__floatC"></span><span class="target" id="class_h_a_number_1a27ea5ab263e20107eaca4529fb68d123"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber15setCurrentStateEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HANumber15getCurrentStateEv">
+<span id="_CPPv3NK8HANumber15getCurrentStateEv"></span><span id="_CPPv2NK8HANumber15getCurrentStateEv"></span><span id="HANumber::getCurrentStateC"></span><span class="target" id="class_h_a_number_1a64718eca189b9f4f346342bf10928ed3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HANumber15getCurrentStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns last known state of the number. If setState method wasn’t called the initial value will be returned. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber14setDeviceClassEPKc">
+<span id="_CPPv3N8HANumber14setDeviceClassEPKc"></span><span id="_CPPv2N8HANumber14setDeviceClassEPKc"></span><span id="HANumber::setDeviceClass__cCP"></span><span class="target" id="class_h_a_number_1ac6fa6da05a2c9689f1e1acb490e0215a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/number/#device-class">https://www.home-assistant.io/integrations/number/#device-class</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber7setIconEPKc">
+<span id="_CPPv3N8HANumber7setIconEPKc"></span><span id="_CPPv2N8HANumber7setIconEPKc"></span><span id="HANumber::setIcon__cCP"></span><span class="target" id="class_h_a_number_1a01b7e8b84921a71155a37631eebd7a0b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setIcon</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">icon</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber7setIconEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets icon of the number. Any icon from MaterialDesignIcons.com (for example: <code class="docutils literal notranslate"><span class="pre">mdi:home</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>icon</strong> – The icon name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber9setRetainEKb">
+<span id="_CPPv3N8HANumber9setRetainEKb"></span><span id="_CPPv2N8HANumber9setRetainEKb"></span><span id="HANumber::setRetain__bC"></span><span class="target" id="class_h_a_number_1ae6a2b694fe4cd12046fc2650ba2711fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setRetain</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">retain</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber9setRetainEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets retain flag for the number’s command. If set to <code class="docutils literal notranslate"><span class="pre">true</span></code> the command produced by Home Assistant will be retained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>retain</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13setOptimisticEKb">
+<span id="_CPPv3N8HANumber13setOptimisticEKb"></span><span id="_CPPv2N8HANumber13setOptimisticEKb"></span><span id="HANumber::setOptimistic__bC"></span><span class="target" id="class_h_a_number_1a205617770784b804761a3722b38907f6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setOptimistic</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">optimistic</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber13setOptimisticEKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets optimistic flag for the number state. In this mode the number state doesn’t need to be reported back to the HA panel when a command is received. By default the optimistic mode is disabled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>optimistic</strong> – The optimistic mode (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber7setModeEK4Mode">
+<span id="_CPPv3N8HANumber7setModeEK4Mode"></span><span id="_CPPv2N8HANumber7setModeEK4Mode"></span><span id="HANumber::setMode__ModeC"></span><span class="target" id="class_h_a_number_1a9d846b616dc5afb7eb44bf491906d1b7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMode</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HANumber4ModeE" title="HANumber::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">mode</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber7setModeEK4Mode" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets mode of the number. It controls how the number should be displayed in the UI. By default it’s <code class="docutils literal notranslate"><span class="pre">HANumber::ModeAuto</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>mode</strong> – Mode to set. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber20setUnitOfMeasurementEPKc">
+<span id="_CPPv3N8HANumber20setUnitOfMeasurementEPKc"></span><span id="_CPPv2N8HANumber20setUnitOfMeasurementEPKc"></span><span id="HANumber::setUnitOfMeasurement__cCP"></span><span class="target" id="class_h_a_number_1a05fb419defa6d8be76a43a52c2b9d907"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setUnitOfMeasurement</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">unitOfMeasurement</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber20setUnitOfMeasurementEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Defines the units of measurement of the number, if any.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>units</strong> – For example: °C, % </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber6setMinEKf">
+<span id="_CPPv3N8HANumber6setMinEKf"></span><span id="_CPPv2N8HANumber6setMinEKf"></span><span id="HANumber::setMin__floatC"></span><span class="target" id="class_h_a_number_1a50b1058e08b1f399f199acd04ac9f033"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">min</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber6setMinEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the minimum value that can be set from the Home Assistant panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>min</strong> – The minimal value. By default the value is not set. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber6setMaxEKf">
+<span id="_CPPv3N8HANumber6setMaxEKf"></span><span id="_CPPv2N8HANumber6setMaxEKf"></span><span id="HANumber::setMax__floatC"></span><span class="target" id="class_h_a_number_1aa3d091066355b7ecdd821395492fb505"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setMax</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">max</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber6setMaxEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the maximum value that can be set from the Home Assistant panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>min</strong> – The maximum value. By default the value is not set. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber7setStepEKf">
+<span id="_CPPv3N8HANumber7setStepEKf"></span><span id="_CPPv2N8HANumber7setStepEKf"></span><span id="HANumber::setStep__floatC"></span><span class="target" id="class_h_a_number_1a7a7ca75fbe616f6c8b30646d971d414d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setStep</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">float</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">step</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber7setStepEKf" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets step of the slider’s movement in the Home Assistant panel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>step</strong> – The step value. Smallest value <code class="docutils literal notranslate"><span class="pre">0.001</span></code>. By default the value is not set. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber9onCommandEPFv9HANumericP8HANumberE">
+<span id="_CPPv3N8HANumber9onCommandEPFv9HANumericP8HANumberE"></span><span id="_CPPv2N8HANumber9onCommandEPFv9HANumericP8HANumberE"></span><span class="target" id="class_h_a_number_1a9d28599c8cfa199fd01da817e71986fe"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HANumber" title="HANumber"><span class="n"><span class="pre">HANumber</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber9onCommandEPFv9HANumericP8HANumberE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the number is changed in the HA panel. Please note that it’s not possible to register multiple callbacks for the same number.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the number must be reported back to HA using the <a class="reference internal" href="#class_h_a_number_1ada4274da481d1dcb90574a0785b40c03"><span class="std std-ref">HANumber::setState</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-protected-functions">Protected Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15buildSerializerEv">
+<span id="_CPPv3N8HANumber15buildSerializerEv"></span><span id="_CPPv2N8HANumber15buildSerializerEv"></span><span id="HANumber::buildSerializer"></span><span class="target" id="class_h_a_number_1a9730c50b57f933f1bac065abed6ff4ad"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">buildSerializer</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HANumber15buildSerializerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber15onMqttConnectedEv">
+<span id="_CPPv3N8HANumber15onMqttConnectedEv"></span><span id="_CPPv2N8HANumber15onMqttConnectedEv"></span><span id="HANumber::onMqttConnected"></span><span class="target" id="class_h_a_number_1a9bc3443c61d2fb93d1857aa25b5a6408"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HANumber15onMqttConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13onMqttMessageEPKcPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HANumber13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HANumber13onMqttMessageEPKcPK7uint8_tK8uint16_t"></span><span id="HANumber::onMqttMessage__cCP.uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_number_1a916a883b685038ec6c84614ddf20de2c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onMqttMessage</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">topic</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">payload</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N8HANumber13onMqttMessageEPKcPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber12publishStateERK9HANumeric">
+<span id="_CPPv3N8HANumber12publishStateERK9HANumeric"></span><span id="_CPPv2N8HANumber12publishStateERK9HANumeric"></span><span id="HANumber::publishState__HANumericCR"></span><span class="target" id="class_h_a_number_1aeed0505af99f8ebbb8ebe689e6b3dad2"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishState</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber12publishStateERK9HANumeric" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>state</strong> – The state to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13handleCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N8HANumber13handleCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N8HANumber13handleCommandEPK7uint8_tK8uint16_t"></span><span id="HANumber::handleCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_number_1a8ae76d7da35b91319047b50ef964de4e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber13handleCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given command and executes the number’s callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HANumber15getModePropertyEv">
+<span id="_CPPv3NK8HANumber15getModePropertyEv"></span><span id="_CPPv2NK8HANumber15getModePropertyEv"></span><span id="HANumber::getModePropertyC"></span><span class="target" id="class_h_a_number_1a75084de4e344002ec86d592c2bc1754e"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getModeProperty</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HANumber15getModePropertyEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns progmem string representing mode of the number </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber18getCommandTemplateEv">
+<span id="_CPPv3N8HANumber18getCommandTemplateEv"></span><span id="_CPPv2N8HANumber18getCommandTemplateEv"></span><span id="HANumber::getCommandTemplate"></span><span class="target" id="class_h_a_number_1ab18a54df72f33133f3152c6b97c00678"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">__FlashStringHelper</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCommandTemplate</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HANumber18getCommandTemplateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns progmem string representing value template for the command. </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber10_precisionE">
+<span id="_CPPv3N8HANumber10_precisionE"></span><span id="_CPPv2N8HANumber10_precisionE"></span><span id="HANumber::_precision__NumberPrecisionC"></span><span class="target" id="class_h_a_number_1ab283b52830be2d3fafc626e4688d5b96"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_precision</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber10_precisionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The precision of the number. By default it’s <code class="docutils literal notranslate"><span class="pre">HANumber::PrecisionP0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber6_classE">
+<span id="_CPPv3N8HANumber6_classE"></span><span id="_CPPv2N8HANumber6_classE"></span><span id="HANumber::_class__cCP"></span><span class="target" id="class_h_a_number_1a6d695fe42f07e43a4fe4fbad5777be5f"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_class</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber6_classE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The device class. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber5_iconE">
+<span id="_CPPv3N8HANumber5_iconE"></span><span id="_CPPv2N8HANumber5_iconE"></span><span id="HANumber::_icon__cCP"></span><span class="target" id="class_h_a_number_1a13880bd7e7813320326125e30beef50d"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber5_iconE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The icon of the number. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber7_retainE">
+<span id="_CPPv3N8HANumber7_retainE"></span><span id="_CPPv2N8HANumber7_retainE"></span><span id="HANumber::_retain__b"></span><span class="target" id="class_h_a_number_1a3be53ec4df622fde14df15752478a5c5"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_retain</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber7_retainE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The retain flag for the HA commands. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber11_optimisticE">
+<span id="_CPPv3N8HANumber11_optimisticE"></span><span id="_CPPv2N8HANumber11_optimisticE"></span><span id="HANumber::_optimistic__b"></span><span class="target" id="class_h_a_number_1ae967f1bb390d8dcd6b78a3ebded74051"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_optimistic</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber11_optimisticE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The optimistic mode of the number (<code class="docutils literal notranslate"><span class="pre">true</span></code> - enabled, <code class="docutils literal notranslate"><span class="pre">false</span></code> - disabled). </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber5_modeE">
+<span id="_CPPv3N8HANumber5_modeE"></span><span id="_CPPv2N8HANumber5_modeE"></span><span id="HANumber::_mode__Mode"></span><span class="target" id="class_h_a_number_1a527f271b27acdfc450ccbe18b02bc581"></span><a class="reference internal" href="#_CPPv4N8HANumber4ModeE" title="HANumber::Mode"><span class="n"><span class="pre">Mode</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_mode</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber5_modeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Controls how the number should be displayed in the UI. By default it’s <code class="docutils literal notranslate"><span class="pre">HANumber::ModeAuto</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber18_unitOfMeasurementE">
+<span id="_CPPv3N8HANumber18_unitOfMeasurementE"></span><span id="_CPPv2N8HANumber18_unitOfMeasurementE"></span><span id="HANumber::_unitOfMeasurement__cCP"></span><span class="target" id="class_h_a_number_1aafee65503fff1c78fc2c4ed2823a11ba"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_unitOfMeasurement</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber18_unitOfMeasurementE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The unit of measurement for the sensor. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber9_minValueE">
+<span id="_CPPv3N8HANumber9_minValueE"></span><span id="_CPPv2N8HANumber9_minValueE"></span><span id="HANumber::_minValue__HANumeric"></span><span class="target" id="class_h_a_number_1a2bb2a66a78d042a52c0d01309c99cc72"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_minValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_minValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The minimal value that can be set from the HA panel. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber9_maxValueE">
+<span id="_CPPv3N8HANumber9_maxValueE"></span><span id="_CPPv2N8HANumber9_maxValueE"></span><span id="HANumber::_maxValue__HANumeric"></span><span class="target" id="class_h_a_number_1a8a213deface1291040ed4bfe5cc28ae4"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_maxValue</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber9_maxValueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The maximum value that can be set from the HA panel. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber5_stepE">
+<span id="_CPPv3N8HANumber5_stepE"></span><span id="_CPPv2N8HANumber5_stepE"></span><span id="HANumber::_step__HANumeric"></span><span class="target" id="class_h_a_number_1ab58fcdf6eddc6678b256498db280f828"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_step</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber5_stepE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The step of the slider’s movement. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber13_currentStateE">
+<span id="_CPPv3N8HANumber13_currentStateE"></span><span id="_CPPv2N8HANumber13_currentStateE"></span><span id="HANumber::_currentState__HANumeric"></span><span class="target" id="class_h_a_number_1a24e56b0c6ddb5a893f16667e1836fc84"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N8HANumber13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current state of the number. By default the value is not set. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HANumber16_commandCallbackE">
+<span id="_CPPv3N8HANumber16_commandCallbackE"></span><span id="_CPPv2N8HANumber16_commandCallbackE"></span><span class="target" id="class_h_a_number_1a0ba6fd05c48678bd2b405e06701eb4a4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_commandCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv48HANumber" title="HANumber"><span class="n"><span class="pre">HANumber</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N8HANumber16_commandCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the command is received from the HA. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+  <li class="prev">
+    <a href="ha-lock.html"
+       title="previous chapter">← HALock class</a>
+  </li>
+  <li class="next">
+    <a href="ha-scene.html"
+       title="next chapter">HAScene class →</a>
+  </li>
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2022, Dawid Chyrzynski.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.5.0 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.8.0.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
