@@ -142,10 +142,10 @@ static ModeCallback lastModeCallbackCall;
 static TargetTempCallback lastTargetTempCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/climate/testDevice/uniqueHVAC/config"};
-const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ctt"};
-const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/at"};
-const char AuxStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/ast"};
-const char AuxCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/act"};
+const char CurrentTemperatureTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/curr_temp_t"};
+const char ActionTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/act_t"};
+const char AuxStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/aux_stat_t"};
+const char AuxCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/aux_cmd_t"};
 const char PowerCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/pow_cmd_t"};
 const char FanModeStateTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mode_stat_t"};
 const char FanModeCommandTopic[] PROGMEM = {"testData/testDevice/uniqueHVAC/fan_mode_cmd_t"};
@@ -218,7 +218,7 @@ AHA_TEST(HVACTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -236,8 +236,8 @@ AHA_TEST(HVACTest, config_with_action) {
         (
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
-            "\"at\":\"testData/testDevice/uniqueHVAC/at\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"act_t\":\"testData/testDevice/uniqueHVAC/act_t\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -255,9 +255,9 @@ AHA_TEST(HVACTest, config_with_aux) {
         (
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
-            "\"act\":\"testData/testDevice/uniqueHVAC/act\","
-            "\"ast\":\"testData/testDevice/uniqueHVAC/ast\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"aux_cmd_t\":\"testData/testDevice/uniqueHVAC/aux_cmd_t\","
+            "\"aux_stat_t\":\"testData/testDevice/uniqueHVAC/aux_stat_t\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -276,7 +276,7 @@ AHA_TEST(HVACTest, config_with_power) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"pow_cmd_t\":\"testData/testDevice/uniqueHVAC/pow_cmd_t\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -296,7 +296,7 @@ AHA_TEST(HVACTest, config_with_fan) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -316,7 +316,7 @@ AHA_TEST(HVACTest, config_with_swing) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"swing_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/swing_mode_cmd_t\","
             "\"swing_mode_stat_t\":\"testData/testDevice/uniqueHVAC/swing_mode_stat_t\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -336,7 +336,7 @@ AHA_TEST(HVACTest, config_with_modes) {
             "\"uniq_id\":\"uniqueHVAC\","
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -357,7 +357,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p1) {
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
             "\"temp_cmd_tpl\":\"{{int(float(value)*10**1)}}\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -382,7 +382,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p2) {
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
             "\"temp_cmd_tpl\":\"{{int(float(value)*10**2)}}\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -407,7 +407,7 @@ AHA_TEST(HVACTest, config_with_target_temperature_p3) {
             "\"temp_cmd_t\":\"testData/testDevice/uniqueHVAC/temp_cmd_t\","
             "\"temp_stat_t\":\"testData/testDevice/uniqueHVAC/temp_stat_t\","
             "\"temp_cmd_tpl\":\"{{int(float(value)*10**3)}}\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -522,7 +522,7 @@ AHA_TEST(HVACTest, name_setter) {
             "{"
             "\"name\":\"testName\","
             "\"uniq_id\":\"uniqueHVAC\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -542,7 +542,7 @@ AHA_TEST(HVACTest, icon_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"ic\":\"testIcon\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -562,7 +562,7 @@ AHA_TEST(HVACTest, retain_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"ret\":true,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -582,7 +582,7 @@ AHA_TEST(HVACTest, temperature_unit_c_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_unit\":\"C\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -602,7 +602,7 @@ AHA_TEST(HVACTest, temperature_unit_f_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_unit\":\"F\","
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -622,7 +622,7 @@ AHA_TEST(HVACTest, min_temp_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"min_temp\":25.5,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -642,7 +642,7 @@ AHA_TEST(HVACTest, min_temp_setter_p2) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"min_temp\":25.55,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -662,7 +662,7 @@ AHA_TEST(HVACTest, max_temp_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"max_temp\":25.5,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -682,7 +682,7 @@ AHA_TEST(HVACTest, max_temp_setter_p2) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"max_temp\":25.55,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -702,7 +702,7 @@ AHA_TEST(HVACTest, temp_step_setter) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_step\":0.5,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -722,7 +722,7 @@ AHA_TEST(HVACTest, temp_step_setter_p2) {
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
             "\"temp_step\":0.05,"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -744,7 +744,7 @@ AHA_TEST(HVACTest, fan_modes_setter_auto_only) {
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"fan_modes\":[\"auto\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -767,7 +767,7 @@ AHA_TEST(HVACTest, fan_modes_setter_low_only) {
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"fan_modes\":[\"low\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -790,7 +790,7 @@ AHA_TEST(HVACTest, fan_modes_setter_medium_only) {
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"fan_modes\":[\"medium\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -813,7 +813,7 @@ AHA_TEST(HVACTest, fan_modes_setter_high_only) {
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"fan_modes\":[\"high\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -836,7 +836,7 @@ AHA_TEST(HVACTest, fan_modes_setter_mixed) {
             "\"fan_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/fan_mode_cmd_t\","
             "\"fan_mode_stat_t\":\"testData/testDevice/uniqueHVAC/fan_mode_stat_t\","
             "\"fan_modes\":[\"auto\",\"medium\",\"high\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -859,7 +859,7 @@ AHA_TEST(HVACTest, swing_modes_setter_on_only) {
             "\"swing_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/swing_mode_cmd_t\","
             "\"swing_mode_stat_t\":\"testData/testDevice/uniqueHVAC/swing_mode_stat_t\","
             "\"swing_modes\":[\"on\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -882,7 +882,7 @@ AHA_TEST(HVACTest, swing_modes_setter_off_only) {
             "\"swing_mode_cmd_t\":\"testData/testDevice/uniqueHVAC/swing_mode_cmd_t\","
             "\"swing_mode_stat_t\":\"testData/testDevice/uniqueHVAC/swing_mode_stat_t\","
             "\"swing_modes\":[\"off\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -905,7 +905,7 @@ AHA_TEST(HVACTest, modes_setter_auto_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"auto\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -928,7 +928,7 @@ AHA_TEST(HVACTest, modes_setter_off_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"off\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -951,7 +951,7 @@ AHA_TEST(HVACTest, modes_setter_cool_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"cool\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -974,7 +974,7 @@ AHA_TEST(HVACTest, modes_setter_heat_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"heat\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -997,7 +997,7 @@ AHA_TEST(HVACTest, modes_setter_dry_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"dry\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -1020,7 +1020,7 @@ AHA_TEST(HVACTest, modes_setter_fan_only_only) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"fan_only\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )
@@ -1043,7 +1043,7 @@ AHA_TEST(HVACTest, modes_setter_mixed) {
             "\"mode_cmd_t\":\"testData/testDevice/uniqueHVAC/mode_cmd_t\","
             "\"mode_stat_t\":\"testData/testDevice/uniqueHVAC/mode_stat_t\","
             "\"modes\":[\"auto\",\"heat\",\"dry\"],"
-            "\"ctt\":\"testData/testDevice/uniqueHVAC/ctt\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
         )

@@ -20,11 +20,8 @@ HAHVAC hvac(
 unsigned long lastTempPublishAt = 0;
 float lastTemp = 0;
 
-void onTargetTemperatureCommand(HAUtils::Number temperature, uint8_t precision, HAHVAC* sender) {
-    // By default the "temperature" is integer representation of the floating point numbers.
-    // For example: if precision is set to 2, the "25.12" float will be represented as "2512".
-    // If you're using floats you can convert the number to float as shown below.
-    float temperatureFloat = HAUtils::getFloatValue(temperature, precision);
+void onTargetTemperatureCommand(HANumeric temperature, HAHVAC* sender) {
+    float temperatureFloat = temperature.toFloat();
 
     Serial.print("Target temperature: ");
     Serial.println(temperatureFloat);
@@ -93,7 +90,7 @@ void setup() {
     hvac.setTempStep(0.5);
 
     // You can set retain flag for the HA commands
-    hvac.setRetain(true);
+    // hvac.setRetain(true);
 
     // You can choose which modes should be available in the HA panel
     // hvac.setModes(HAHVAC::OffMode | HAHVAC::CoolMode);
