@@ -24,6 +24,7 @@ void setup() {
     // configure sensor (optional)
     uptimeSensor.setIcon("mdi:home");
     uptimeSensor.setName("Uptime");
+    uptimeSensor.setUnitOfMeasurement("s");
 
     mqtt.begin(BROKER_ADDR);
 }
