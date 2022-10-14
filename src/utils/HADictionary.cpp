@@ -69,7 +69,8 @@ const char HATempStepProperty[] PROGMEM = {"temp_step"};
 const char HAFanModesProperty[] PROGMEM = {"fan_modes"};
 const char HASwingModesProperty[] PROGMEM = {"swing_modes"};
 const char HAModesProperty[] PROGMEM = {"modes"};
-const char HATemperatureCommandTemplate[] PROGMEM = {"temp_cmd_tpl"};
+const char HATemperatureCommandTemplateProperty[] PROGMEM = {"temp_cmd_tpl"};
+const char HAPayloadOnProperty[] PROGMEM = {"pl_on"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};

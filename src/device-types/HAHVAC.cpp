@@ -306,7 +306,7 @@ void HAHVAC::buildSerializer()
         _serializer->topic(AHATOFSTR(HATemperatureCommandTopic));
         _serializer->topic(AHATOFSTR(HATemperatureStateTopic));
         _serializer->set(
-            AHATOFSTR(HATemperatureCommandTemplate),
+            AHATOFSTR(HATemperatureCommandTemplateProperty),
             getCommandWithFloatTemplate(),
             HASerializer::ProgmemPropertyValue
         );

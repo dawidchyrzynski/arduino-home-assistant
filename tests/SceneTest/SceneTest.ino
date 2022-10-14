@@ -58,6 +58,7 @@ AHA_TEST(SceneTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueScene\","
+            "\"pl_on\":\"ON\","
             "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
             "}"
         )
@@ -103,6 +104,7 @@ AHA_TEST(SceneTest, name_setter) {
             "{"
             "\"name\":\"testName\","
             "\"uniq_id\":\"uniqueScene\","
+            "\"pl_on\":\"ON\","
             "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
             "}"
         )
@@ -122,6 +124,7 @@ AHA_TEST(SceneTest, icon_setter) {
             "{"
             "\"uniq_id\":\"uniqueScene\","
             "\"ic\":\"testIcon\","
+            "\"pl_on\":\"ON\","
             "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
             "}"
         )
@@ -141,6 +144,7 @@ AHA_TEST(SceneTest, retain_setter) {
             "{"
             "\"uniq_id\":\"uniqueScene\","
             "\"ret\":true,"
+            "\"pl_on\":\"ON\","
             "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
             "}"
         )

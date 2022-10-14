@@ -49,7 +49,7 @@ void setup() {
     number.setName("My number");
     // number.setMin(1); // can be float if precision is set via the constructor
     // number.setMax(100); // can be float if precision is set via the constructor
-    // number.setStep(1); // minimum step: 0.001
+    // number.setStep(0.5f); // minimum step: 0.001f
     // number.setMode(HANumber::ModeBox);
     // number.setMode(HANumber::ModeSlider);
 

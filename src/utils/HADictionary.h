@@ -69,7 +69,8 @@ extern const char HATempStepProperty[];
 extern const char HAFanModesProperty[];
 extern const char HASwingModesProperty[];
 extern const char HAModesProperty[];
-extern const char HATemperatureCommandTemplate[];
+extern const char HATemperatureCommandTemplateProperty[];
+extern const char HAPayloadOnProperty[];
 
 // topics
 extern const char HAConfigTopic[];

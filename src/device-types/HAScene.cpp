@@ -19,7 +19,7 @@ void HAScene::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 6); // 6 - max properties nb
+    _serializer = new HASerializer(this, 7); // 7 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
@@ -32,6 +32,13 @@ void HAScene::buildSerializer()
             HASerializer::BoolPropertyType
         );
     }
+
+    // HA 2022.10 throws an exception if this property is not set
+    _serializer->set(
+        AHATOFSTR(HAPayloadOnProperty),
+        AHATOFSTR(HAStateOn),
+        HASerializer::ProgmemPropertyValue
+    );
 
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HACommandTopic));
