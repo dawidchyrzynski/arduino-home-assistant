@@ -29,6 +29,7 @@ void setup() {
     // configure sensor (optional)
     analogSensor.setIcon("mdi:home");
     analogSensor.setName("Analog voltage");
+    analogSensor.setUnitOfMeasurement("V");
 
     mqtt.begin(BROKER_ADDR);
 }
@@ -37,7 +38,7 @@ void loop() {
     Ethernet.maintain();
     mqtt.loop();
 
-    if ((millis() - lastUpdateAt) > 100) { // 100ms debounce time
+    if ((millis() - lastUpdateAt) > 1000) { // 1000ms debounce time
         uint16_t reading = analogRead(ANALOG_PIN);
         float voltage = reading * 5.f / 1023.f; // 0.0V - 5.0V
 
