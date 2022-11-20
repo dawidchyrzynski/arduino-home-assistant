@@ -14,6 +14,7 @@ HACover cover("myCover", HACover::PositionFeature);
 
 // PositionFeature is optional, however required to be in a "stopped" state other than open or closed.
 // If ommitted, a CommandStop will result in HA treating the cover as either Open or Closed immediately after the command.
+// See https://www.home-assistant.io/integrations/cover.mqtt/
 
 void onCoverCommand(HACover::CoverCommand cmd, HACover* sender) {
     if (cmd == HACover::CommandOpen) {
