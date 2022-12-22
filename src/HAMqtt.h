@@ -203,6 +203,22 @@ public:
      */
     bool isConnected() const;
 
+     /**
+     * Returns the state code of mqtt connection.
+     * 
+     * MQTT_CONNECTION_TIMEOUT     -4
+     * MQTT_CONNECTION_LOST        -3
+     * MQTT_CONNECT_FAILED         -2
+     * MQTT_DISCONNECTED           -1
+     * MQTT_CONNECTED               0
+     * MQTT_CONNECT_BAD_PROTOCOL    1
+     * MQTT_CONNECT_BAD_CLIENT_ID   2
+     * MQTT_CONNECT_UNAVAILABLE     3
+     * MQTT_CONNECT_BAD_CREDENTIALS 4
+     * MQTT_CONNECT_UNAUTHORIZED    5
+     */
+    int getState() const;
+
     /**
      * Adds a new device's type to the MQTT.
      * Each time the connection with MQTT broker is acquired, the HAMqtt class
