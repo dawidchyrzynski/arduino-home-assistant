@@ -7,6 +7,7 @@
 HASensor::HASensor(const char* uniqueId) :
     HABaseDeviceType(AHATOFSTR(HAComponentSensor), uniqueId),
     _deviceClass(nullptr),
+    _stateClass(nullptr),
     _forceUpdate(false),
     _icon(nullptr),
     _unitOfMeasurement(nullptr)
@@ -29,6 +30,7 @@ void HASensor::buildSerializer()
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
+    _serializer->set(AHATOFSTR(HAStateClassProperty), _stateClass);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
 

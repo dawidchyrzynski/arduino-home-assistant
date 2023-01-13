@@ -40,6 +40,7 @@ const char HANameProperty[] PROGMEM = {"name"};
 const char HAUniqueIdProperty[] PROGMEM = {"uniq_id"};
 const char HADeviceProperty[] PROGMEM = {"dev"};
 const char HADeviceClassProperty[] PROGMEM = {"dev_cla"};
+const char HAStateClassProperty[] PROGMEM = {"stat_cla"};
 const char HAIconProperty[] PROGMEM = {"ic"};
 const char HARetainProperty[] PROGMEM = {"ret"};
 const char HASourceTypeProperty[] PROGMEM = {"src_type"};
