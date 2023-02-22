@@ -14,6 +14,7 @@ HABaseDeviceType::HABaseDeviceType(
     _serializer(nullptr),
     _availability(AvailabilityDefault)
 {
+    _uniqueId = strdup(uniqueId);
     if (mqtt()) {
         mqtt()->addDeviceType(this);
     }
