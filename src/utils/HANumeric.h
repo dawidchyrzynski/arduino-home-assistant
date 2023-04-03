@@ -229,7 +229,7 @@ private:
 
     explicit HANumeric(const int64_t value);
 
-    friend class HANumeric;
+//    friend class HANumeric;
 };
 
 #endif
