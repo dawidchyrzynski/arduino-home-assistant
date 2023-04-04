@@ -33,6 +33,14 @@ public:
     bool setValue(const char* value);
 
     /**
+     * Publishes the MQTT message with the given attributes.
+     *
+     * @param attributes A JSON String representation of the sensor's attributes
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setAttributes(const char* attributes);
+
+    /**
      * Sets class of the device.
      * You can find list of available values here: https://www.home-assistant.io/integrations/sensor/#device-class
      *
@@ -58,6 +66,13 @@ public:
      */
     inline void setForceUpdate(bool forceUpdate)
         { _forceUpdate = forceUpdate; }
+
+    /**
+     * Adds the attributes topic to the config phase
+     * THe flag can only be set, disabling the flag afterwards has no use
+     */
+    inline void hasAttributes()
+        { _hasAttributes = true; }
 
     /**
      * Sets icon of the sensor.
@@ -89,6 +104,9 @@ private:
 
     /// The force update flag for the HA panel.
     bool _forceUpdate;
+
+    /// The attributes flag indicating attributes will be set
+    bool _hasAttributes;
 
     /// The icon of the sensor. It can be nullptr.
     const char* _icon;

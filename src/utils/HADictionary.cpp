@@ -78,6 +78,7 @@ const char HAConfigTopic[] PROGMEM = {"config"};
 const char HAAvailabilityTopic[] PROGMEM = {"avty_t"};
 const char HATopic[] PROGMEM = {"t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
+const char HAAttributeTopic[] PROGMEM = {"json_attr_t"};
 const char HACommandTopic[] PROGMEM = {"cmd_t"};
 const char HAPositionTopic[] PROGMEM = {"pos_t"};
 const char HAPercentageStateTopic[] PROGMEM = {"pct_stat_t"};

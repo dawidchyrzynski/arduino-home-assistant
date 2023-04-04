@@ -78,6 +78,7 @@ extern const char HAConfigTopic[];
 extern const char HAAvailabilityTopic[];
 extern const char HATopic[];
 extern const char HAStateTopic[];
+extern const char HAAttributeTopic[];
 extern const char HACommandTopic[];
 extern const char HAPositionTopic[];
 extern const char HAPercentageStateTopic[];

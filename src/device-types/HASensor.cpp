@@ -9,6 +9,7 @@ HASensor::HASensor(const char* uniqueId) :
     _deviceClass(nullptr),
     _stateClass(nullptr),
     _forceUpdate(false),
+    _hasAttributes(false),
     _icon(nullptr),
     _unitOfMeasurement(nullptr)
 {
@@ -20,13 +21,20 @@ bool HASensor::setValue(const char* value)
     return publishOnDataTopic(AHATOFSTR(HAStateTopic), value, true);
 }
 
+bool HASensor::setAttributes(const char* json)
+{
+    if (!_hasAttributes)
+        return false;
+    return publishOnDataTopic(AHATOFSTR(HAAttributeTopic), json, true);
+}
+
 void HASensor::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
         return;
     }
 
-    _serializer = new HASerializer(this, 9); // 9 - max properties nb
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
@@ -42,10 +50,11 @@ void HASensor::buildSerializer()
             HASerializer::BoolPropertyType
         );
     }
-
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HAStateTopic));
+    if (_hasAttributes)
+        _serializer->topic(AHATOFSTR(HAAttributeTopic));
 }
 
 void HASensor::onMqttConnected()
