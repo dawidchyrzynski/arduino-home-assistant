@@ -6,7 +6,8 @@
     lastStateCallbackCall.reset(); \
     lastBrightnessCallbackCall.reset(); \
     lastColorTempCallbackCall.reset(); \
-    lastRGBColorCallbackCall.reset();
+    lastRGBColorCallbackCall.reset(); \
+    lastEffectCallbackCall.reset();
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
@@ -40,6 +41,14 @@
 
 #define assertRGBColorCallbackNotCalled() \
     assertFalse(lastRGBColorCallbackCall.called);
+
+#define assertEffectCallbackCalled(expectedIndex, callerPtr) \
+    assertTrue(lastEffectCallbackCall.called); \
+    assertEqual(expectedIndex, lastEffectCallbackCall.index); \
+    assertEqual(callerPtr, lastEffectCallbackCall.caller);
+
+#define assertEffectCallbackNotCalled() \
+    assertFalse(lastEffectCallbackCall.called);
 
 using aunit::TestRunner;
 
@@ -91,12 +100,25 @@ struct RGBCommandCallback {
     }
 };
 
+struct EffectCallback {
+    bool called = false;
+    uint8_t index = 0;
+    HALight* caller = nullptr;
+
+    void reset() {
+        called = false;
+        index = 0;
+        caller = nullptr;
+    }
+};
+
 static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueLight";
 static StateCallback lastStateCallbackCall;
 static BrightnessCallback lastBrightnessCallbackCall;
 static ColorTemperatureCallback lastColorTempCallbackCall;
 static RGBCommandCallback lastRGBColorCallbackCall;
+static EffectCallback lastEffectCallbackCall;
 
 const char ConfigTopic[] PROGMEM = {"homeassistant/light/testDevice/uniqueLight/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/stat_t"};
@@ -107,6 +129,8 @@ const char BrightnessCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/
 const char ColorTemperatureCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/clr_temp_cmd_t"};
 const char RGBCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/rgb_cmd_t"};
 const char RGBStateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/rgb_stat_t"};
+const char EffectCommandTopic[] PROGMEM = {"testData/testDevice/uniqueLight/fx_cmd_t"};
+const char EffectStateTopic[] PROGMEM = {"testData/testDevice/uniqueLight/fx_stat_t"};
 
 void onStateCommandReceived(bool state, HALight* caller)
 {
@@ -134,6 +158,13 @@ void onRGBColorCommand(HALight::RGBColor color, HALight* caller)
     lastRGBColorCallbackCall.called = true;
     lastRGBColorCallbackCall.color = color;
     lastRGBColorCallbackCall.caller = caller;
+}
+
+void onEffectCommandReceived(uint8_t index, HALight* caller)
+{
+    lastEffectCallbackCall.called = true;
+    lastEffectCallbackCall.index = index;
+    lastEffectCallbackCall.caller = caller;
 }
 
 AHA_TEST(LightTest, invalid_unique_id) {
@@ -278,6 +309,106 @@ AHA_TEST(LightTest, default_params_with_brightness_and_color_temp) {
     assertEqual(4, mock->getFlushedMessagesNb());
 }
 
+AHA_TEST(LightTest, default_params_with_no_effects_set) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.buildSerializerTest();
+    HASerializer* serializer = light.getSerializer();
+
+    assertTrue(serializer == nullptr);
+    assertTrue(light.getEffects() == nullptr);
+}
+
+AHA_TEST(LightTest, default_params_with_invalid_effects_disabled_feature) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    HALight light(testUniqueId);
+    light.setEffects(effects, 2);
+    light.buildSerializerTest();
+    HASerializer* serializer = light.getSerializer();
+
+    assertTrue(serializer != nullptr);
+    assertTrue(light.getEffects() == nullptr);
+}
+
+AHA_TEST(LightTest, default_params_with_invalid_effects_nullptr) {
+    prepareTest
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(nullptr, 1);
+    light.buildSerializerTest();
+    HASerializer* serializer = light.getSerializer();
+
+    assertTrue(serializer == nullptr);
+    assertTrue(light.getEffects() == nullptr);
+}
+
+AHA_TEST(LightTest, default_params_with_invalid_effects_zero_size) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 0);
+    light.buildSerializerTest();
+    HASerializer* serializer = light.getSerializer();
+
+    assertTrue(serializer == nullptr);
+    assertTrue(light.getEffects() == nullptr);
+}
+
+AHA_TEST(LightTest, default_params_with_effects_single_init) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1" };
+    const char* const notAbleToSetEffects[] = { "Effect 2" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 1);
+    light.setEffects(notAbleToSetEffects, 1); // effects already initialized at previous line
+    light.buildSerializerTest();
+    HASerializer* serializer = light.getSerializer();
+
+    assertTrue(serializer != nullptr);
+
+    HASerializerArray* lightEffects = light.getEffects();
+
+    assertTrue(lightEffects != nullptr);
+    assertEqual(1, lightEffects->getItemsNb());
+    assertEqual(0, strcmp(effects[0], lightEffects->getItems()[0]));
+}
+
+AHA_TEST(LightTest, default_params_with_effects) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 2);
+
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueLight\","
+            "\"fx_stat_t\":\"testData/testDevice/uniqueLight/fx_stat_t\","
+            "\"fx_cmd_t\":\"testData/testDevice/uniqueLight/fx_cmd_t\","
+            "\"fx_list\":[\"Effect 1\",\"Effect 2\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+
+    // config + default state + default effect
+    assertEqual(3, mock->getFlushedMessagesNb());
+}
+
 AHA_TEST(LightTest, state_command_subscription) {
     prepareTest
 
@@ -326,6 +457,22 @@ AHA_TEST(LightTest, rgb_command_subscription) {
     assertEqual(2, mock->getSubscriptionsNb());
     assertEqual(
         AHATOFSTR(RGBCommandTopic),
+        mock->getSubscriptions()[1]->topic
+    );
+}
+
+AHA_TEST(LightTest, effect_command_subscription) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 2);
+    mqtt.loop();
+
+    assertEqual(2, mock->getSubscriptionsNb());
+    assertEqual(
+        AHATOFSTR(EffectCommandTopic),
         mock->getSubscriptions()[1]->topic
     );
 }
@@ -388,6 +535,20 @@ AHA_TEST(LightTest, publish_last_known_rgb_color) {
 
     assertEqual(3, mock->getFlushedMessagesNb());
     assertMqttMessage(2, AHATOFSTR(RGBStateTopic), "255,123,15", true)
+}
+
+AHA_TEST(LightTest, publish_last_known_effect) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 2);
+    light.setCurrentEffect(1);
+    mqtt.loop();
+
+    assertEqual(3, mock->getFlushedMessagesNb());
+    assertMqttMessage(2, AHATOFSTR(EffectStateTopic), "Effect 2", true)
 }
 
 AHA_TEST(LightTest, publish_nothing_if_retained) {
@@ -636,6 +797,16 @@ AHA_TEST(LightTest, current_rgb_color_setter) {
     assertTrue(HALight::RGBColor(255,123,111) == light.getCurrentRGBColor());
 }
 
+AHA_TEST(LightTest, current_effect_setter) {
+    prepareTest
+
+    HALight light(testUniqueId);
+    light.setCurrentEffect(3);
+
+    assertEqual(0, mock->getFlushedMessagesNb());
+    assertEqual((uint8_t)3, light.getCurrentEffect());
+}
+
 AHA_TEST(LightTest, publish_state) {
     prepareTest
 
@@ -786,6 +957,89 @@ AHA_TEST(LightTest, publish_rgb_color_debounce_skip) {
 
     assertTrue(light.setRGBColor(HALight::RGBColor(255,123,111), true));
     assertSingleMqttMessage(AHATOFSTR(RGBStateTopic), "255,123,111", true)
+}
+
+AHA_TEST(LightTest, publish_nothing_if_effects_feature_is_disabled) {
+    prepareTest
+
+    mock->connectDummy();
+    HALight light(testUniqueId);
+
+    assertFalse(light.setEffect(5));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(LightTest, publish_effect_first) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2", "Effect 3" };
+
+    mock->connectDummy();
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+
+    assertTrue(light.setEffect(0));
+    // First effect is a default one, shouldn't publish
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(LightTest, publish_effect_last) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2", "Effect 3" };
+
+    mock->connectDummy();
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+
+    assertTrue(light.setEffect(2));
+    assertSingleMqttMessage(AHATOFSTR(EffectStateTopic), "Effect 3", true)
+}
+
+AHA_TEST(LightTest, publish_effect_only) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1" };
+
+    mock->connectDummy();
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 1);
+
+    assertTrue(light.setEffect(0));
+    // First effect is a default one, shouldn't publish
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(LightTest, publish_effect_debounce) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    mock->connectDummy();
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 2);
+    light.setCurrentEffect(1);
+
+    // it shouldn't publish data if value doesn't change
+    assertTrue(light.setEffect(1));
+    assertEqual(mock->getFlushedMessagesNb(), 0);
+}
+
+AHA_TEST(LightTest, publish_effect_debounce_skip) {
+    prepareTest
+
+    const char* const effects[] = { "Effect 1", "Effect 2" };
+
+    mock->connectDummy();
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 2);
+    light.setCurrentEffect(1);
+
+    assertTrue(light.setEffect(1, true));
+    assertSingleMqttMessage(AHATOFSTR(EffectStateTopic), "Effect 2", true)
 }
 
 AHA_TEST(LightTest, state_command_on) {
@@ -1038,6 +1292,74 @@ AHA_TEST(LightTest, rgb_color_command_different_light) {
     );
 
     assertRGBColorCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, effect_command) {
+    prepareTest
+
+    const char* const effects[] = { "Fire", "Rainbow", "Snowflakes" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+    light.onEffectCommand(onEffectCommandReceived);
+    mock->fakeMessage(AHATOFSTR(EffectCommandTopic), F("Rainbow"));
+
+    assertEffectCallbackCalled(1, &light)
+}
+
+AHA_TEST(LightTest, effect_command_first) {
+    prepareTest
+
+    const char* const effects[] = { "Fire", "Rainbow", "Snowflakes" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+    light.onEffectCommand(onEffectCommandReceived);
+    mock->fakeMessage(AHATOFSTR(EffectCommandTopic), F("Fire"));
+
+    assertEffectCallbackCalled(0, &light)
+}
+
+AHA_TEST(LightTest, effect_command_last) {
+    prepareTest
+
+    const char* const effects[] = { "Fire", "Rainbow", "Snowflakes" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+    light.onEffectCommand(onEffectCommandReceived);
+    mock->fakeMessage(AHATOFSTR(EffectCommandTopic), F("Snowflakes"));
+
+    assertEffectCallbackCalled(2, &light)
+}
+
+AHA_TEST(LightTest, effect_command_non_existing) {
+    prepareTest
+
+    const char* const effects[] = { "Fire", "Rainbow", "Snowflakes" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+    light.onEffectCommand(onEffectCommandReceived);
+    mock->fakeMessage(AHATOFSTR(EffectCommandTopic), F("NON_EXISTING"));
+
+    assertEffectCallbackNotCalled()
+}
+
+AHA_TEST(LightTest, effect_command_different_light) {
+    prepareTest
+
+    const char* const effects[] = { "Fire", "Rainbow", "Snowflakes" };
+
+    HALight light(testUniqueId, HALight::EffectsFeature);
+    light.setEffects(effects, 3);
+    light.onEffectCommand(onEffectCommandReceived);
+    mock->fakeMessage(
+            F("testData/testDevice/uniqueLightDifferent/fx_cmd_t"),
+            F("Fire")
+    );
+
+    assertEffectCallbackNotCalled()
 }
 
 void setup()
