@@ -69,7 +69,7 @@ public:
 
     /**
      * Adds the attributes topic to the config phase
-     * THe flag can only be set, disabling the flag afterwards has no use
+     * The flag can only be set during announcement, disabling the flag afterwards will not change behavior
      */
     inline void hasAttributes()
         { _hasAttributes = true; }
