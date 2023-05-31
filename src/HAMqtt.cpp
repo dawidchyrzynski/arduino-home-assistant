@@ -183,6 +183,11 @@ bool HAMqtt::isConnected() const
     return _mqtt->connected();
 }
 
+void HAMqtt::setKeepAlive(uint16_t keepAlive)
+{
+    _mqtt->setKeepAlive(keepAlive);
+}
+
 void HAMqtt::addDeviceType(HABaseDeviceType* deviceType)
 {
     if (_devicesTypesNb + 1 >= _maxDevicesTypesNb) {

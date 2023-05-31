@@ -202,6 +202,11 @@ public:
      * Returns true if connection to the MQTT broker is established.
      */
     bool isConnected() const;
+    
+    /**
+     * sets keepAlive value.
+     */
+    void setKeepAlive(uint16_t keepAlive);
 
     /**
      * Adds a new device's type to the MQTT.
