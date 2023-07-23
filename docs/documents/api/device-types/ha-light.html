@@ -154,7 +154,7 @@
 <dl class="cpp class">
 <dt class="sig sig-object cpp" id="_CPPv47HALight">
 <span id="_CPPv37HALight"></span><span id="_CPPv27HALight"></span><span id="HALight"></span><span class="target" id="class_h_a_light"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HALight</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><a class="headerlink" href="#_CPPv47HALight" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><a class="reference internal" href="#class_h_a_light"><span class="std std-ref">HALight</span></a> allows adding a controllable light in the Home Assistant panel. The library supports only the state, brightness, color temperature and RGB color. If you need more features please open a new GitHub issue.</p>
+<dd><p><a class="reference internal" href="#class_h_a_light"><span class="std std-ref">HALight</span></a> allows adding a controllable light in the Home Assistant panel. The library supports only the state, brightness, color temperature, RGB color and effects. If you need more features please open a new GitHub issue.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You can find more information about this entity in the Home Assistant documentation: <a class="reference external" href="https://www.home-assistant.io/integrations/light.mqtt/">https://www.home-assistant.io/integrations/light.mqtt/</a> </p>
@@ -185,6 +185,11 @@
 <span id="_CPPv3N7HALight8Features10RGBFeatureE"></span><span id="_CPPv2N7HALight8Features10RGBFeatureE"></span><span class="target" id="class_h_a_light_1aacae5a7d42203d2fcc1b3a7307644e04abe6e95808a00f280dc3486d64e9d4839"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">RGBFeature</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8Features10RGBFeatureE" title="Permalink to this definition">¶</a><br /></dt>
 <dd></dd></dl>
 
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8Features14EffectsFeatureE">
+<span id="_CPPv3N7HALight8Features14EffectsFeatureE"></span><span id="_CPPv2N7HALight8Features14EffectsFeatureE"></span><span class="target" id="class_h_a_light_1aacae5a7d42203d2fcc1b3a7307644e04afcf2a392b2fe37b4e807e29bb45c7f2c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EffectsFeature</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8Features14EffectsFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -202,6 +207,11 @@
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALightD0Ev">
+<span id="_CPPv3N7HALightD0Ev"></span><span id="_CPPv2N7HALightD0Ev"></span><span id="HALight::~HALight"></span><span class="target" id="class_h_a_light_1a1ec9830ac879a659b1f8a428e68e332d"></span><span class="sig-name descname"><span class="n"><span class="pre">~HALight</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALightD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
 
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7HALight8setStateEKbKb">
@@ -267,6 +277,41 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight10setEffectsEA_PCKcK7uint8_t">
+<span id="_CPPv3N7HALight10setEffectsEA_PCKcK7uint8_t"></span><span id="_CPPv2N7HALight10setEffectsEA_PCKcK7uint8_t"></span><span id="HALight::setEffects__cCPCA.uint8_tC"></span><span class="target" id="class_h_a_light_1a2a9ac67fff0729c8892fce87e6c94a49"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setEffects</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">effects</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight10setEffectsEA_PCKcK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the list of available effects that will be listed. For example: <code class="docutils literal notranslate"> <span class="pre">const</span> <span class="pre">char*</span> <span class="pre">const</span> <span class="pre">lightEffects[]</span> <span class="pre">=</span> <span class="pre">{&quot;Fire&quot;,&quot;Rainbow&quot;,&quot;Snowflales&quot;,&quot;Rain&quot;,&quot;Smoke&quot;};</span> <span class="pre">light.setEffects(lightEffects,</span> <span class="pre">5);</span> </code></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The effects list can be set only once. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>effects</strong> – The list of effects i.e. array of strings. </p></li>
+<li><p><strong>size</strong> – The size of the effects list i.e. total number of effects. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight9setEffectEK7uint8_tKb">
+<span id="_CPPv3N7HALight9setEffectEK7uint8_tKb"></span><span id="_CPPv2N7HALight9setEffectEK7uint8_tKb"></span><span id="HALight::setEffect__uint8_tC.bC"></span><span class="target" id="class_h_a_light_1a4fafc4ab5aad47ccb633955ca44b1103"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setEffect</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">effect</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">force</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">false</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight9setEffectEK7uint8_tKb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Changes the effect of the light and publishes MQTT message. Effect represents the index of the effect that was set using setEffects method. Please note that if a new value is the same as previous one, the MQTT message won’t be published.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>effect</strong> – The new effect index of the light. </p></li>
+<li><p><strong>force</strong> – Forces to update the value without comparing it to a previous known value. </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the effect is set successfully. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,6 +394,23 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK7HALight18getCurrentRGBColorEv">
 <span id="_CPPv3NK7HALight18getCurrentRGBColorEv"></span><span id="_CPPv2NK7HALight18getCurrentRGBColorEv"></span><span id="HALight::getCurrentRGBColorC"></span><span class="target" id="class_h_a_light_1a27711f2c96bf335fd02c050956d0bdf6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N7HALight8RGBColorE" title="HALight::RGBColor"><span class="n"><span class="pre">RGBColor</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentRGBColor</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HALight18getCurrentRGBColorEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns the last known RGB color of the light. By default the RGB color is set to <code class="docutils literal notranslate"><span class="pre">0,0,0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight16setCurrentEffectEK7uint8_t">
+<span id="_CPPv3N7HALight16setCurrentEffectEK7uint8_t"></span><span id="_CPPv2N7HALight16setCurrentEffectEK7uint8_t"></span><span id="HALight::setCurrentEffect__uint8_tC"></span><span class="target" id="class_h_a_light_1a819bee81b45b8d9059aeecee6d2b8584"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setCurrentEffect</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">effect</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight16setCurrentEffectEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the current effect of the light without pushing the value to Home Assistant. This method may be useful if you want to change the effect before the connection with the MQTT broker is acquired.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>effect</strong> – The new effect. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK7HALight16getCurrentEffectEv">
+<span id="_CPPv3NK7HALight16getCurrentEffectEv"></span><span id="_CPPv2NK7HALight16getCurrentEffectEv"></span><span id="HALight::getCurrentEffectC"></span><span class="target" id="class_h_a_light_1ad41ecc9da5bb84455a8e993ab170c0b2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentEffect</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK7HALight16getCurrentEffectEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the last known effect of the light. Effect represents the index of the effect that was set using setEffects method. By default the effect is set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
 </dd></dl>
 
 <dl class="cpp function">
@@ -477,6 +539,21 @@
 </dl>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight15onEffectCommandEPFv7uint8_tP7HALightE">
+<span id="_CPPv3N7HALight15onEffectCommandEPFv7uint8_tP7HALightE"></span><span id="_CPPv2N7HALight15onEffectCommandEPFv7uint8_tP7HALightE"></span><span class="target" id="class_h_a_light_1aaa941c32801c41fed34ce44d1fa14a61"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onEffectCommand</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight15onEffectCommandEPFv7uint8_tP7HALightE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers callback that will be called each time the effect command from HA is received. Please note that it’s not possible to register multiple callbacks for the same light.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In non-optimistic mode, the effect must be reported back to HA using the <a class="reference internal" href="#class_h_a_light_1a4fafc4ab5aad47ccb633955ca44b1103"><span class="std std-ref">HALight::setEffect</span></a> method. </p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – </p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-static-attributes">Public Static Attributes</p>
@@ -563,6 +640,20 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight13publishEffectEK7uint8_t">
+<span id="_CPPv3N7HALight13publishEffectEK7uint8_t"></span><span id="_CPPv2N7HALight13publishEffectEK7uint8_t"></span><span id="HALight::publishEffect__uint8_tC"></span><span class="target" id="class_h_a_light_1a9a91e20ce9adad3867e6752b81c6ac11"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">publishEffect</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">effect</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight13publishEffectEK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the MQTT message with the given effect.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>effect</strong> – The effect to publish. </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N7HALight18handleStateCommandEPK7uint8_tK8uint16_t">
 <span id="_CPPv3N7HALight18handleStateCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N7HALight18handleStateCommandEPK7uint8_tK8uint16_t"></span><span id="HALight::handleStateCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_light_1af1fac046b55b6c493a208e53f052a078"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleStateCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight18handleStateCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parses the given state command and executes the callback with proper value.</p>
@@ -608,6 +699,20 @@
 <dt class="sig sig-object cpp" id="_CPPv4N7HALight16handleRGBCommandEPK7uint8_tK8uint16_t">
 <span id="_CPPv3N7HALight16handleRGBCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N7HALight16handleRGBCommandEPK7uint8_tK8uint16_t"></span><span id="HALight::handleRGBCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_light_1ab6c637a14ce6df83a5e0b2eb005b0f88"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleRGBCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight16handleRGBCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Parses the given RGB color command and executes the callback with proper value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> – The data of the command. </p></li>
+<li><p><strong>length</strong> – Length of the command. </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight19handleEffectCommandEPK7uint8_tK8uint16_t">
+<span id="_CPPv3N7HALight19handleEffectCommandEPK7uint8_tK8uint16_t"></span><span id="_CPPv2N7HALight19handleEffectCommandEPK7uint8_tK8uint16_t"></span><span id="HALight::handleEffectCommand__uint8_tCP.uint16_tC"></span><span class="target" id="class_h_a_light_1a86da9f1cc0619538feec75a30c3f4316"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">handleEffectCommand</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">cmd</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">length</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N7HALight19handleEffectCommandEPK7uint8_tK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Parses the given effect command and executes the callback with proper value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -688,6 +793,18 @@
 </dd></dl>
 
 <dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight8_effectsE">
+<span id="_CPPv3N7HALight8_effectsE"></span><span id="_CPPv2N7HALight8_effectsE"></span><span id="HALight::_effects__HASerializerArrayP"></span><span class="target" id="class_h_a_light_1a622fce772dd69656b9bf63fe65942c88"></span><a class="reference internal" href="../utils/ha-serializer-array.html#_CPPv417HASerializerArray" title="HASerializerArray"><span class="n"><span class="pre">HASerializerArray</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_effects</span></span></span><a class="headerlink" href="#_CPPv4N7HALight8_effectsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Array of effects for the serializer. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight14_currentEffectE">
+<span id="_CPPv3N7HALight14_currentEffectE"></span><span id="_CPPv2N7HALight14_currentEffectE"></span><span id="HALight::_currentEffect__uint8_t"></span><span class="target" id="class_h_a_light_1a5a4c9c688c52039f41c5ab1f2bca51e5"></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentEffect</span></span></span><a class="headerlink" href="#_CPPv4N7HALight14_currentEffectE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current effect (the current effect’s index). By default it’s <code class="docutils literal notranslate"><span class="pre">0</span></code>. </p>
+</dd></dl>
+
+<dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N7HALight14_stateCallbackE">
 <span id="_CPPv3N7HALight14_stateCallbackE"></span><span id="_CPPv2N7HALight14_stateCallbackE"></span><span class="target" id="class_h_a_light_1a05bab537923c6e1d4d1eaba71ef3d668"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HALight14_stateCallbackE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The callback that will be called when the state command is received from the HA. </p>
@@ -709,6 +826,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N7HALight17_rgbColorCallbackE">
 <span id="_CPPv3N7HALight17_rgbColorCallbackE"></span><span id="_CPPv2N7HALight17_rgbColorCallbackE"></span><span class="target" id="class_h_a_light_1a5202c19ad9e1898363efce9738fda31a"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_rgbColorCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="#_CPPv4N7HALight8RGBColorE" title="HALight::RGBColor"><span class="n"><span class="pre">RGBColor</span></span></a><span class="w"> </span><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HALight17_rgbColorCallbackE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The callback that will be called when the RGB command is received from the HA. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N7HALight15_effectCallbackE">
+<span id="_CPPv3N7HALight15_effectCallbackE"></span><span id="_CPPv2N7HALight15_effectCallbackE"></span><span class="target" id="class_h_a_light_1a6ee49deb953f10d3966003d51fd111e1"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_effectCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv47HALight" title="HALight"><span class="n"><span class="pre">HALight</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">sender</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N7HALight15_effectCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback that will be called when the effect is received from the HA. </p>
 </dd></dl>
 
 </div>
