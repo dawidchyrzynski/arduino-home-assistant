@@ -92,6 +92,26 @@ AHA_TEST(SensorTest, device_class_setter) {
     )
 }
 
+AHA_TEST(SensorTest, state_class_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setStateClass("measurement");
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"state_class\":\"measurement\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SensorTest, force_update_setter) {
     initMqttTest(testDeviceId)
 
