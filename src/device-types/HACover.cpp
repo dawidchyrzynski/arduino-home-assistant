@@ -203,7 +203,13 @@ void HACover::handleSetPosition(const uint8_t* cmd, const uint16_t length)
 
     if (memcmp_P(cmd, HAStateNone, length) == 0) {
         _setPosCallback(HANumeric(), this);
-    } 
+    } else {
+        HANumeric number = HANumeric::fromStr(cmd, length);
+        if (number.isSet()) {
+            number.setPrecision(0);
+            _setPosCallback(number, this);
+        }
+    }
 }
 
 #endif
