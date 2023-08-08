@@ -15,7 +15,8 @@ HACover::HACover(const char* uniqueId, const Features features) :
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _commandCallback(nullptr)
+    _commandCallback(nullptr),
+    _setPosCallback(nullptr)
 {
 
 }
@@ -83,6 +84,7 @@ void HACover::buildSerializer()
 
     if (_features & PositionFeature) {
         _serializer->topic(AHATOFSTR(HAPositionTopic));
+        _serializer->topic(AHATOFSTR(HASetPositionTopic));
     }
 }
 
@@ -101,6 +103,11 @@ void HACover::onMqttConnected()
     }
 
     subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
+
+    if (_features & PositionFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HASetPositionTopic));
+    }    
+    
 }
 
 void HACover::onMqttMessage(
@@ -116,6 +123,14 @@ void HACover::onMqttMessage(
     )) {
         handleCommand(payload, length);
     }
+
+    if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HASetPositionTopic)
+    )) {
+        handleSetPosition(payload, length);
+    }    
 }
 
 bool HACover::publishState(CoverState state)
@@ -178,6 +193,17 @@ void HACover::handleCommand(const uint8_t* cmd, const uint16_t length)
     } else if (memcmp_P(cmd, HAStopCommand, length) == 0) {
         _commandCallback(CommandStop, this);
     }
+}
+
+void HACover::handleSetPosition(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_setPosCallback) {
+        return;
+    }
+
+    if (memcmp_P(cmd, HAStateNone, length) == 0) {
+        _setPosCallback(HANumeric(), this);
+    } 
 }
 
 #endif

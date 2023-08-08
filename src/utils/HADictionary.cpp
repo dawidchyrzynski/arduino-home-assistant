@@ -79,6 +79,7 @@ const char HATopic[] PROGMEM = {"t"};
 const char HAStateTopic[] PROGMEM = {"stat_t"};
 const char HACommandTopic[] PROGMEM = {"cmd_t"};
 const char HAPositionTopic[] PROGMEM = {"pos_t"};
+const char HASetPositionTopic[] PROGMEM = {"set_pos_t"};
 const char HAPercentageStateTopic[] PROGMEM = {"pct_stat_t"};
 const char HAPercentageCommandTopic[] PROGMEM = {"pct_cmd_t"};
 const char HABrightnessCommandTopic[] PROGMEM = {"bri_cmd_t"};

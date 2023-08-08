@@ -79,6 +79,7 @@ extern const char HATopic[];
 extern const char HAStateTopic[];
 extern const char HACommandTopic[];
 extern const char HAPositionTopic[];
+extern const char HASetPositionTopic[];
 extern const char HAPercentageStateTopic[];
 extern const char HAPercentageCommandTopic[];
 extern const char HABrightnessCommandTopic[];
