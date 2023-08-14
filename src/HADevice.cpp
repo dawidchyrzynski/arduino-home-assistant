@@ -18,7 +18,20 @@ HADevice::HADevice() :
 
 }
 
+HADevice::HADevice(const char* uniqueId) :
+    _uniqueId(uniqueId),
+    HADEVICE_INIT
+{
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
+}
 
+HADevice::HADevice(const byte* uniqueId, const uint16_t length) :
+    _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
+    HADEVICE_INIT
+{
+    _ownsUniqueId = true;
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
+}
 
 HADevice::~HADevice()
 {
@@ -33,41 +46,15 @@ HADevice::~HADevice()
     }
 }
 
-void HADevice::serializeID(const std::string &uniqueId)
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
 {
-    HADevice const *device = HAMqtt::instance()->getDevice();
-    if (device == nullptr)
-    {
-        return;
-    }
-
-    _serializedID = std::string(device->getUniqueId()) + "_" + uniqueId;
-    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _serializedID.c_str());
-}
-
-HADevice::HADevice(const char *uniqueId) : _uniqueId(uniqueId),
-                                           HADEVICE_INIT
-{
-    serializeID(uniqueId);
-}
-
-HADevice::HADevice(const byte *uniqueId, const uint16_t length) : _uniqueId(HAUtils::byteArrayToStr(uniqueId, length)),
-                                                                  HADEVICE_INIT
-{
-    _ownsUniqueId = true;
-    serializeID(_uniqueId);
-}
-
-bool HADevice::setUniqueId(const byte *uniqueId, const uint16_t length)
-{
-    if (_uniqueId != nullptr)
-    {
+    if (_uniqueId) {
         return false; // unique ID cannot be changed at runtime once it's set
     }
 
     _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
     _ownsUniqueId = true;
-    serializeID(_uniqueId);
+    _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
     return true;
 }
 
