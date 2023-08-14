@@ -21,12 +21,11 @@ HABaseDeviceType::HABaseDeviceType(
             size_t totalLength = strlen(mainUniqueId) + strlen(uniqueIdSuffix) + 2;
             char *concatenatedId = new char[totalLength];
             snprintf(concatenatedId, totalLength, "%s_%s", mainUniqueId, uniqueIdSuffix);
-            Serial.println(concatenatedId); // Print for debugging
             _uniqueId = concatenatedId;
         }
         else
         {
-            _uniqueId = uniqueIdSuffix; // Or another sensible default
+            _uniqueId = uniqueIdSuffix;
         }
     }
     else
