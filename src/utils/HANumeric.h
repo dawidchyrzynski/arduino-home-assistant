@@ -228,8 +228,6 @@ private:
     uint8_t _precision;
 
     explicit HANumeric(const int64_t value);
-
-    friend class HANumeric;
 };
 
 #endif
