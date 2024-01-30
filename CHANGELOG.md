@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0
+
+**Fixes:**
+* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` (#197)
+
 ## 2.0.0
 
 **New features:**
@@ -24,12 +29,12 @@
 * Added support for the `HAScene` device type
 * Added support for the `HALight` device type
 
-**Bugs fixes:**
+**Fixes:**
 * Last Will Message is now retained (#70)
 * Compilation error on SAMD family (#82)
 
-**New examples:** 
-* [Button](examples/button/button.ino) - adding simple buttons to the Home Assistant panel. 
+**New examples:**
+* [Button](examples/button/button.ino) - adding simple buttons to the Home Assistant panel.
 
 **Breaking changes:**
 
