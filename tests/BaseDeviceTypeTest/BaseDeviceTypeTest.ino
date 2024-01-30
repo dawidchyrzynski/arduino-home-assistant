@@ -41,6 +41,16 @@ AHA_TEST(BaseDeviceTypeTest, register_mqtt_type) {
     assertEqual(&deviceType, mqtt.getDevicesTypes()[0]);
 }
 
+// TODO it would be better to place this test in HAMqtt related test. Since there is no one yet, I leave it here
+AHA_TEST(BaseDeviceTypeTest, maximum_number_of_device_types) {
+    HADevice device(testDeviceId);
+    HAMqtt mqtt(nullptr, device, 1);
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
+
+    assertEqual((uint8_t)1, mqtt.getDevicesTypesNb());
+    assertEqual(&deviceType, mqtt.getDevicesTypes()[0]);
+}
+
 AHA_TEST(BaseDeviceTypeTest, default_name) {
     DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
     assertEqual((const char*)nullptr, deviceType.getName());
