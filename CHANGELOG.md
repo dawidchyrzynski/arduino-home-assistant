@@ -3,7 +3,8 @@
 ## 2.1.0
 
 **Fixes:**
-* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` (#197)
+* Fixed a bug with the maximum number of device types (#190 by @martaisty)
+* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` (#197 by @shedokan)
 
 ## 2.0.0
 
