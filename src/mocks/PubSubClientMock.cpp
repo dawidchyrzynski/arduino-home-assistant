@@ -6,6 +6,7 @@
 PubSubClientMock::PubSubClientMock() :
     _pendingMessage(nullptr),
     _flushedMessages(nullptr),
+    _keepAlive(15),
     _flushedMessagesNb(0),
     _subscriptions(nullptr),
     _subscriptionsNb(0),
@@ -119,7 +120,7 @@ bool PubSubClientMock::beginPublish(
     }
 
     _pendingMessage = new MqttMessage();
-    _pendingMessage->retained = retained; 
+    _pendingMessage->retained = retained;
 
     {
         size_t size = strlen(topic) + 1;

@@ -104,7 +104,7 @@ AHA_TEST(SensorTest, state_class_setter) {
         (
             "{"
             "\"uniq_id\":\"uniqueSensor\","
-            "\"state_class\":\"measurement\","
+            "\"stat_cla\":\"measurement\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
             "}"
