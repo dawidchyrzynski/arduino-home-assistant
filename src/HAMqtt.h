@@ -202,9 +202,12 @@ public:
      * Returns true if connection to the MQTT broker is established.
      */
     bool isConnected() const;
-    
+
     /**
-     * sets keepAlive value.
+     * Sets keep alive for the MQTT connection.
+     * By default it's 15 seconds.
+     *
+    * @param keepAlive Number of seconds to keep connection alive.
      */
     void setKeepAlive(uint16_t keepAlive);
 

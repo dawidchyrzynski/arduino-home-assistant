@@ -2,9 +2,12 @@
 
 ## 2.1.0
 
+**New features:**
+* Added support for setting MQTT's keep alive ([https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153](#153))
+
 **Fixes:**
-* Fixed a bug with the maximum number of device types (#190 by @martaisty)
-* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` (#197 by @shedokan)
+* Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))
+* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` ([#197](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/197) by [@shedokan](https://github.com/shedokan))
 
 ## 2.0.0
 
