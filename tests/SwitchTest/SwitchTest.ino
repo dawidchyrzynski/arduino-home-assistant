@@ -71,6 +71,26 @@ AHA_TEST(SwitchTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb());
 }
 
+AHA_TEST(SwitchTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HASwitch testSwitch(testUniqueId);
+    assertEntityConfig(
+        mock,
+        testSwitch,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSwitch\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb());
+}
+
 AHA_TEST(SwitchTest, command_subscription) {
     prepareTest
 
@@ -241,7 +261,7 @@ AHA_TEST(SwitchTest, publish_state_on) {
     HASwitch testSwitch(testUniqueId);
 
     assertTrue(testSwitch.setState(true));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "ON", true)
 }
 
 AHA_TEST(SwitchTest, publish_state_off) {

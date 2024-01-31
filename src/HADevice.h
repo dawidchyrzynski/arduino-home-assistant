@@ -80,6 +80,13 @@ public:
         { return _available; }
 
     /**
+     * Enables the use of extended unique IDs for all registered device types.
+     * The unique ID of each device type will be prefixed with the device's ID once enabled.
+     */
+    inline void enableExtendedUniqueIds()
+        { _extendedUniqueIds = true; }
+
+    /**
      * Sets unique ID of the device based on the given byte array.
      * Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.
      *
@@ -135,12 +142,6 @@ public:
      * Please note that the shared availability needs to be enabled first.
      */
     void enableLastWill();
-
-    /**
-     * Enables the use of extended unique IDs for all registered device types.
-     * The unique ID of each device type will be prefixed with the device's ID once enabled.
-     */
-    void enableExtendedUniqueIds();
 
     /**
      * Publishes current availability of the device on the availability topic.

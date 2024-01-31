@@ -87,6 +87,30 @@ AHA_TEST(SelectTest, invalid_options_empty) {
     assertTrue(select.getOptions() == nullptr);
 }
 
+AHA_TEST(SelectTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HASelect select(testUniqueId);
+    select.setOptions("Option A");
+
+    assertEqual(1, select.getOptions()->getItemsNb());
+    assertEntityConfig(
+        mock,
+        select,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSelect\","
+            "\"options\":[\"Option A\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
 AHA_TEST(SelectTest, single_option) {
     prepareTest
 

@@ -260,6 +260,21 @@ AHA_TEST(DeviceTest, availability_publish_online) {
     assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "online", true)
 }
 
+AHA_TEST(DeviceTest, extended_unique_ids_disabled) {
+    prepareMqttTest
+
+    assertFalse(device.isExtendedUniqueIdsEnabled());
+}
+
+AHA_TEST(DeviceTest, enable_extended_unique_ids) {
+    prepareMqttTest
+
+    device.enableExtendedUniqueIds();
+
+    assertTrue(device.isExtendedUniqueIdsEnabled());
+    assertNoMqttMessage()
+}
+
 AHA_TEST(DeviceTest, lwt_disabled) {
     prepareMqttTest
 
@@ -281,7 +296,7 @@ AHA_TEST(DeviceTest, lwt_enabled) {
 
 AHA_TEST(DeviceTest, full_serialization) {
     initMqttTest("myDeviceId");
-    
+
     device.setManufacturer("myManufacturer");
     device.setModel("myModel");
     device.setName("myName");

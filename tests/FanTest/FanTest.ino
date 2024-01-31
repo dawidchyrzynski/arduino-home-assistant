@@ -102,6 +102,26 @@ AHA_TEST(FanTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
 }
 
+AHA_TEST(FanTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAFan fan(testUniqueId);
+    assertEntityConfig(
+        mock,
+        fan,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueFan\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueFan/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueFan/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
 AHA_TEST(FanTest, default_params_with_speed) {
     prepareTest
 

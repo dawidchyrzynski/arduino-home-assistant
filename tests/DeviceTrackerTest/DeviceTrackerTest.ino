@@ -38,6 +38,24 @@ AHA_TEST(DeviceTrackerTest, default_params) {
     )
 }
 
+AHA_TEST(DeviceTrackerTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HADeviceTracker tracker(testUniqueId);
+    assertEntityConfig(
+        mock,
+        tracker,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueTracker\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(DeviceTrackerTest, source_type_gps) {
     initMqttTest(testDeviceId)
 
