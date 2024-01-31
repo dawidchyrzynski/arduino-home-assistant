@@ -349,6 +349,12 @@ uint16_t HASerializer::calculateFlagSize(const FlagType flag) const
             strlen_P(HASerializerJsonPropertySuffix) +
             deviceLength;
     } else if (flag == WithUniqueId && _deviceType) {
+        uint16_t uniqueIdLength = strlen(_deviceType->uniqueId());
+
+        if (device->isExtendedUniqueIdsEnabled()) {
+            uniqueIdLength += strlen(device->getUniqueId()) + 1; // with separator
+        }
+
         return
             // property name
             strlen_P(HASerializerJsonPropertyPrefix) +
@@ -356,7 +362,7 @@ uint16_t HASerializer::calculateFlagSize(const FlagType flag) const
             strlen_P(HASerializerJsonPropertySuffix) +
             // property value
             2 * strlen_P(HASerializerJsonEscapeChar) +
-            strlen(_deviceType->uniqueId()); // to do
+            uniqueIdLength;
     }
 
     return 0;
@@ -539,9 +545,15 @@ bool HASerializer::flushFlag(const SerializerEntry* entry) const
 
         // value
         const char* uniqueId = _deviceType->uniqueId();
-
         mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
-        mqtt->writePayload(uniqueId, strlen(uniqueId)); // to do
+
+        if (device->isExtendedUniqueIdsEnabled()) {
+            const char* deviceUniqueId = device->getUniqueId();
+            mqtt->writePayload(deviceUniqueId, strlen(deviceUniqueId));
+            mqtt->writePayload(AHATOFSTR(HASerializerUnderscore));
+        }
+
+        mqtt->writePayload(uniqueId, strlen(uniqueId));
         mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
 
         return true;

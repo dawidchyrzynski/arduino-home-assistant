@@ -9,7 +9,8 @@
     _serializer(new HASerializer(nullptr, 5)), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
-    _available(true) // device will be available by default
+    _available(true), \
+    _extendedUniqueIds(false)
 
 HADevice::HADevice() :
     _uniqueId(nullptr),
