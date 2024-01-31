@@ -4,6 +4,7 @@
 
 **New features:**
 * Added support for setting MQTT's keep alive ([https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153](#153))
+* Added support for the `state_class` property in the `HASensor` ([#179](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/179) by [@https://github.com/Starzu])
 
 **Fixes:**
 * Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))
