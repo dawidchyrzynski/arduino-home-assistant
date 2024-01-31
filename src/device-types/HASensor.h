@@ -42,6 +42,15 @@ public:
         { _deviceClass = deviceClass; }
 
     /**
+     * Sets class of the state for the long term stats.
+     * See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
+     *
+     * @param stateClass The class name.
+     */
+    inline void setStateClass(const char* stateClass)
+        { _stateClass = stateClass; }
+
+    /**
      * Forces HA panel to process each incoming value (MQTT message).
      * It's useful if you want to have meaningful value graphs in history.
      *
@@ -74,6 +83,9 @@ protected:
 private:
     /// The device class. It can be nullptr.
     const char* _deviceClass;
+	
+    /// The state class for the long term stats. It can be nullptr. See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
+    const char* _stateClass;
 
     /// The force update flag for the HA panel.
     bool _forceUpdate;

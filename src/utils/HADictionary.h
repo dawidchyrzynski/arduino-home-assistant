@@ -40,6 +40,7 @@ extern const char HANameProperty[];
 extern const char HAUniqueIdProperty[];
 extern const char HADeviceProperty[];
 extern const char HADeviceClassProperty[];
+extern const char HAStateClassProperty[];
 extern const char HAIconProperty[];
 extern const char HARetainProperty[];
 extern const char HASourceTypeProperty[];
