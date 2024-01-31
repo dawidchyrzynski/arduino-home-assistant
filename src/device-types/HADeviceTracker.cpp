@@ -35,7 +35,7 @@ void HADeviceTracker::buildSerializer()
 
     _serializer = new HASerializer(this, 7); // 7 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
-    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(
         AHATOFSTR(HASourceTypeProperty),

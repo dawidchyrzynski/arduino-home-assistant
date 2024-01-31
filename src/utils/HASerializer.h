@@ -29,7 +29,8 @@ public:
     /// The type of a flag for a FlagEntryType.
     enum FlagType {
         WithDevice = 1,
-        WithAvailability
+        WithAvailability,
+        WithUniqueId
     };
 
     /// Available data types of entries.
