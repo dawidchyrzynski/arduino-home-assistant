@@ -41,6 +41,10 @@ table.examples-table tbody td + td {
 .searchbox .caption-text {
     display: none
 }
+.code-block-caption {
+    margin-top: 30px;
+    font-weight: bold;
+}
 form {
     display: flex;
     flex-direction: row;

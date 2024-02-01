@@ -201,6 +201,17 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor13setStateClassEPKc">
+<span id="_CPPv3N8HASensor13setStateClassEPKc"></span><span id="_CPPv2N8HASensor13setStateClassEPKc"></span><span id="HASensor::setStateClass__cCP"></span><span class="target" id="class_h_a_sensor_1a1e246b6728645eeb0b1d190b52221780"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setStateClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stateClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor13setStateClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the state for the long term stats. See: <a class="reference external" href="https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics">https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stateClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setForceUpdateEb">
 <span id="_CPPv3N8HASensor14setForceUpdateEb"></span><span id="_CPPv2N8HASensor14setForceUpdateEb"></span><span id="HASensor::setForceUpdate__b"></span><span class="target" id="class_h_a_sensor_1adb8db20cf6c35033c6653ab10de319cb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setForceUpdate</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">forceUpdate</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setForceUpdateEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Forces HA panel to process each incoming value (MQTT message). It’s useful if you want to have meaningful value graphs in history.</p>
@@ -253,6 +264,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_deviceClassE">
 <span id="_CPPv3N8HASensor12_deviceClassE"></span><span id="_CPPv2N8HASensor12_deviceClassE"></span><span id="HASensor::_deviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a42ff8d2271f7728acf2fb349595862f0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_deviceClass</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_deviceClassE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The device class. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor11_stateClassE">
+<span id="_CPPv3N8HASensor11_stateClassE"></span><span id="_CPPv2N8HASensor11_stateClassE"></span><span id="HASensor::_stateClass__cCP"></span><span class="target" id="class_h_a_sensor_1ac096f47f39b39e3d91cd94355a62fa35"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateClass</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor11_stateClassE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The state class for the long term stats. It can be nullptr. See: <a class="reference external" href="https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics">https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics</a>. </p>
 </dd></dl>
 
 <dl class="cpp var">

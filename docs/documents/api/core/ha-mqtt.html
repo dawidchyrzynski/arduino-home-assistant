@@ -320,6 +320,17 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12setKeepAliveE8uint16_t">
+<span id="_CPPv3N6HAMqtt12setKeepAliveE8uint16_t"></span><span id="_CPPv2N6HAMqtt12setKeepAliveE8uint16_t"></span><span id="HAMqtt::setKeepAlive__uint16_t"></span><span class="target" id="class_h_a_mqtt_1a014a655f288e0e02e441b5bb33d1094e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setKeepAlive</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">keepAlive</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12setKeepAliveE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets keep alive for the MQTT connection. By default it’s 15 seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keepAlive</strong> – Number of seconds to keep connection alive. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13addDeviceTypeEP16HABaseDeviceType">
 <span id="_CPPv3N6HAMqtt13addDeviceTypeEP16HABaseDeviceType"></span><span id="_CPPv2N6HAMqtt13addDeviceTypeEP16HABaseDeviceType"></span><span id="HAMqtt::addDeviceType__HABaseDeviceTypeP"></span><span class="target" id="class_h_a_mqtt_1a4f732ac5fd2f5cfc0e6256853adc08f9"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">addDeviceType</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../device-types/ha-base-device-type.html#_CPPv416HABaseDeviceType" title="HABaseDeviceType"><span class="n"><span class="pre">HABaseDeviceType</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceType</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt13addDeviceTypeEP16HABaseDeviceType" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Adds a new device’s type to the MQTT. Each time the connection with MQTT broker is acquired, the <a class="reference internal" href="#class_h_a_mqtt"><span class="std std-ref">HAMqtt</span></a> class calls “onMqttConnected” method in all devices’ types instances.</p>
