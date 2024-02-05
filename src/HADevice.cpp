@@ -6,7 +6,7 @@
 
 #define HADEVICE_INIT \
     _ownsUniqueId(false), \
-    _serializer(new HASerializer(nullptr, 5)), \
+    _serializer(new HASerializer(nullptr, 6)), \
     _availabilityTopic(nullptr), \
     _sharedAvailability(false), \
     _available(true), \
@@ -79,6 +79,14 @@ void HADevice::setSoftwareVersion(const char* softwareVersion)
     _serializer->set(
         AHATOFSTR(HADeviceSoftwareVersionProperty),
         softwareVersion
+    );
+}
+
+void HADevice::setConfigurationUrl(const char* url)
+{
+    _serializer->set(
+        AHATOFSTR(HADeviceConfigurationUrlProperty),
+        url
     );
 }
 

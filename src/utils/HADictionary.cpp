@@ -36,6 +36,7 @@ const char HADeviceIdentifiersProperty[] PROGMEM = {"ids"};
 const char HADeviceManufacturerProperty[] PROGMEM = {"mf"};
 const char HADeviceModelProperty[] PROGMEM = {"mdl"};
 const char HADeviceSoftwareVersionProperty[] PROGMEM = {"sw"};
+const char HADeviceConfigurationUrlProperty[] PROGMEM = {"cu"};
 const char HANameProperty[] PROGMEM = {"name"};
 const char HAUniqueIdProperty[] PROGMEM = {"uniq_id"};
 const char HADeviceProperty[] PROGMEM = {"dev"};
