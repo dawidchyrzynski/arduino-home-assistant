@@ -71,4 +71,7 @@ void loop() {
     // You can also report the state to the HA panel at runtime as shown below.
     // The integer corresponds to the option's index.
     // mySelect.setState(1);
+
+    // You can also reset the select as follows:
+    // mySelect.setState(-1);
 }
