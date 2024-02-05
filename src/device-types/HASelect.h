@@ -48,6 +48,13 @@ public:
     bool setState(const int8_t state, const bool force = false);
 
     /**
+     * Returns the selected option based on the most recent state of the select.
+     * You can utilize this method to get the string representation of the option (e.g. for printing).
+     * If no option is selected, null is returned.
+     */
+    const char* const getCurrentOption() const;
+
+    /**
      * Sets the current state of the select without publishing it to Home Assistant.
      * State represents the index of the option that was set using the setOptions method.
      * This method may be useful if you want to change the state before the connection

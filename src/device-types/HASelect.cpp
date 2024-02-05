@@ -85,6 +85,11 @@ bool HASelect::setState(const int8_t state, const bool force)
     return false;
 }
 
+const char* const HASelect::getCurrentOption() const
+{
+    return _options->getItem(getCurrentState());
+}
+
 void HASelect::buildSerializer()
 {
     if (_serializer || !uniqueId() || !_options) {
