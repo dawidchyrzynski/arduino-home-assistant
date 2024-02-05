@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
@@ -161,6 +161,7 @@ Enabling optional properties can lead to increased flash and RAM usage, therefor
 <li><p>software version</p></li>
 <li><p>manufacturer</p></li>
 <li><p>model</p></li>
+<li><p>configuration url</p></li>
 </ul>
 <section id="unique-id">
 <h2>Unique ID<a class="headerlink" href="#unique-id" title="Permalink to this headline">¶</a></h2>
@@ -238,6 +239,7 @@ Please note that all of these methods accept a const char pointer whose <strong>
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setSoftwareVersion</span><span class="p">(</span><span class="s">&quot;1.0.0&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setManufacturer</span><span class="p">(</span><span class="s">&quot;Developer Corp.&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setModel</span><span class="p">(</span><span class="s">&quot;ABC-123&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setConfigurationUrl</span><span class="p">(</span><span class="s">&quot;http://192.168.1.55:1234&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="p">}</span><span class="w"></span>
