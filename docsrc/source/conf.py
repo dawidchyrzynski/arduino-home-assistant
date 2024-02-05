@@ -21,7 +21,7 @@ copyright = '2022, Dawid Chyrzynski'
 author = 'Dawid Chyrzynski'
 
 # The full version, including alpha/beta/rc tags
-release = '2.0.0'
+release = '2.1.0'
 
 # -- General configuration ---------------------------------------------------
 

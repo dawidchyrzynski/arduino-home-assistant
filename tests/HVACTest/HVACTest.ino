@@ -226,6 +226,25 @@ AHA_TEST(HVACTest, default_params) {
     assertEqual(1, mock->getFlushedMessagesNb()); // config
 }
 
+AHA_TEST(HVACTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAHVAC hvac(testUniqueId);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueHVAC\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
 AHA_TEST(HVACTest, config_with_action) {
     prepareTest
 

@@ -71,6 +71,26 @@ AHA_TEST(NumberTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
 }
 
+AHA_TEST(NumberTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HANumber number(testUniqueId);
+    assertEntityConfig(
+        mock,
+        number,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
 AHA_TEST(NumberTest, command_subscription) {
     prepareTest
 

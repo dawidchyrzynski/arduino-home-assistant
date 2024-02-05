@@ -130,7 +130,7 @@ void HALight::buildSerializer()
 
     _serializer = new HASerializer(this, 18); // 18 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
-    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
 
     if (_retain) {

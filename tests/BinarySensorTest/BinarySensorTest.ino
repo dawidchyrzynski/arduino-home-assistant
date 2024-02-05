@@ -36,6 +36,24 @@ AHA_TEST(BinarySensorTest, default_params) {
     )
 }
 
+AHA_TEST(BinarySensorTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HABinarySensor sensor(testUniqueId);
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(BinarySensorTest, availability) {
     initMqttTest(testDeviceId)
 

@@ -36,6 +36,24 @@ AHA_TEST(CameraTest, default_params) {
     )
 }
 
+AHA_TEST(CameraTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HACamera camera(testUniqueId);
+    assertEntityConfig(
+        mock,
+        camera,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueCamera\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(CameraTest, availability) {
     initMqttTest(testDeviceId)
 

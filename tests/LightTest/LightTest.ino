@@ -165,6 +165,26 @@ AHA_TEST(LightTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
 }
 
+AHA_TEST(LightTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HALight light(testUniqueId);
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueLight\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
 AHA_TEST(LightTest, default_params_with_brightness) {
     prepareTest
 

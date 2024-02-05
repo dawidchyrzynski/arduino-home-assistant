@@ -72,6 +72,26 @@ AHA_TEST(CoverTest, default_params) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
+AHA_TEST(CoverTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HACover cover(testUniqueId);
+    assertEntityConfig(
+        mock,
+        cover,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueCover\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueCover/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueCover/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
 AHA_TEST(CoverTest, default_params_with_position) {
     prepareTest
 
@@ -295,7 +315,7 @@ AHA_TEST(CoverTest, publish_state_closing) {
 
     mock->connectDummy();
     HACover cover(testUniqueId);
-    
+
     assertTrue(cover.setState(HACover::StateClosing));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "closing", true)
 }

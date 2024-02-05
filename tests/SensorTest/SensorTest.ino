@@ -36,6 +36,24 @@ AHA_TEST(SensorTest, default_params) {
     )
 }
 
+AHA_TEST(SensorTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HASensor sensor(testUniqueId);
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SensorTest, availability) {
     initMqttTest(testDeviceId)
 

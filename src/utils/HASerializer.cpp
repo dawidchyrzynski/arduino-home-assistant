@@ -189,10 +189,10 @@ void HASerializer::set(
 
 void HASerializer::set(const FlagType flag)
 {
-    if (flag == WithDevice) {
+    if (flag == WithDevice || flag == WithUniqueId) {
         SerializerEntry* entry = addEntry();
         entry->type = FlagEntryType;
-        entry->subtype = static_cast<uint8_t>(WithDevice);
+        entry->subtype = static_cast<uint8_t>(flag);
         entry->property = nullptr;
         entry->value = nullptr;
     } else if (flag == WithAvailability) {
@@ -348,6 +348,21 @@ uint16_t HASerializer::calculateFlagSize(const FlagType flag) const
             strlen_P(HADeviceProperty) +
             strlen_P(HASerializerJsonPropertySuffix) +
             deviceLength;
+    } else if (flag == WithUniqueId && _deviceType) {
+        uint16_t uniqueIdLength = strlen(_deviceType->uniqueId());
+
+        if (device->isExtendedUniqueIdsEnabled()) {
+            uniqueIdLength += strlen(device->getUniqueId()) + 1; // with separator
+        }
+
+        return
+            // property name
+            strlen_P(HASerializerJsonPropertyPrefix) +
+            strlen_P(HAUniqueIdProperty) +
+            strlen_P(HASerializerJsonPropertySuffix) +
+            // property value
+            2 * strlen_P(HASerializerJsonEscapeChar) +
+            uniqueIdLength;
     }
 
     return 0;
@@ -515,11 +530,33 @@ bool HASerializer::flushFlag(const SerializerEntry* entry) const
     const FlagType flag = static_cast<FlagType>(entry->subtype);
 
     if (flag == WithDevice && device) {
+        // property name
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
         mqtt->writePayload(AHATOFSTR(HADeviceProperty));
         mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
 
+        // property value
         return device->getSerializer()->flush();
+    } else if (flag == WithUniqueId && _deviceType) {
+        // property name
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertyPrefix));
+        mqtt->writePayload(AHATOFSTR(HAUniqueIdProperty));
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonPropertySuffix));
+
+        // value
+        const char* uniqueId = _deviceType->uniqueId();
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
+
+        if (device->isExtendedUniqueIdsEnabled()) {
+            const char* deviceUniqueId = device->getUniqueId();
+            mqtt->writePayload(deviceUniqueId, strlen(deviceUniqueId));
+            mqtt->writePayload(AHATOFSTR(HASerializerUnderscore));
+        }
+
+        mqtt->writePayload(uniqueId, strlen(uniqueId));
+        mqtt->writePayload(AHATOFSTR(HASerializerJsonEscapeChar));
+
+        return true;
     }
 
     return false;
