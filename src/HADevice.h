@@ -125,6 +125,13 @@ public:
     void setSoftwareVersion(const char* softwareVersion);
 
     /**
+     * Sets the "configuration URL" property that's going to be used by the Home Assistant.
+     *
+     * @param url Configuration URL to publish.
+     */
+    void setConfigurationUrl(const char* url);
+
+    /**
      * Sets device's availability and publishes MQTT message on the availability topic.
      * If the device is not connected to an MQTT broker or the shared availability is not enabled then nothing happens.
      *

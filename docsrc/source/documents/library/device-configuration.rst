@@ -15,6 +15,7 @@ The supported properties are:
 * software version
 * manufacturer
 * model
+* configuration url
 
 Unique ID
 ---------
@@ -102,6 +103,7 @@ Please note that all of these methods accept a const char pointer whose **conten
         device.setSoftwareVersion("1.0.0");
         device.setManufacturer("Developer Corp.");
         device.setModel("ABC-123");
+        device.setConfigurationUrl("http://192.168.1.55:1234");
 
         // ...
     }

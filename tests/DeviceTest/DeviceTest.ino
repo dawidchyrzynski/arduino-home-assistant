@@ -301,6 +301,7 @@ AHA_TEST(DeviceTest, full_serialization) {
     device.setModel("myModel");
     device.setName("myName");
     device.setSoftwareVersion("myVersion");
+    device.setConfigurationUrl("http://1.1.1.1:1234");
 
     const HASerializer* serializer = device.getSerializer();
     flushSerializer(mock, serializer)
@@ -311,7 +312,8 @@ AHA_TEST(DeviceTest, full_serialization) {
             "\"mf\":\"myManufacturer\","
             "\"mdl\":\"myModel\","
             "\"name\":\"myName\","
-            "\"sw\":\"myVersion\""
+            "\"sw\":\"myVersion\","
+            "\"cu\":\"http://1.1.1.1:1234\""
             "}"
         )
     )

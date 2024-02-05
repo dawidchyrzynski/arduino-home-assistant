@@ -1,6 +1,6 @@
 
-Device types
-============
+Device types (entities)
+=======================
 
 Device type represents a single entity within the Home Assistant panel, which could be a sensor, lock, camera, or any other item listed in the table below.
 
