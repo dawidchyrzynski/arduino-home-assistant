@@ -28,7 +28,7 @@ bool HASerializerArray::add(ItemType item)
     return true;
 }
 
-const char* const HASerializerArray::getItem(const uint8_t index) const
+const char* HASerializerArray::getItem(const uint8_t index) const
 {
     if (index < 0 || index >= _itemsNb) {
         return nullptr;

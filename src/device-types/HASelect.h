@@ -52,7 +52,7 @@ public:
      * You can utilize this method to get the string representation of the option (e.g. for printing).
      * If no option is selected, null is returned.
      */
-    const char* const getCurrentOption() const;
+    const char* getCurrentOption() const;
 
     /**
      * Sets the current state of the select without publishing it to Home Assistant.

@@ -47,7 +47,7 @@ public:
      * Returns a pointer to the item at the given index.
      * If the element doesn't exist, null is returned.
      */
-    const char* const getItem(const uint8_t index) const;
+    const char* getItem(const uint8_t index) const;
 
     /**
      * Calculates the size of the serialized array (JSON representation).

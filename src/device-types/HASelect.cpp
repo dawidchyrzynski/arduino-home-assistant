@@ -85,7 +85,7 @@ bool HASelect::setState(const int8_t state, const bool force)
     return false;
 }
 
-const char* const HASelect::getCurrentOption() const
+const char* HASelect::getCurrentOption() const
 {
     return _options->getItem(getCurrentState());
 }
