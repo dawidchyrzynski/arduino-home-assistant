@@ -50,6 +50,7 @@ AHA_TEST(SerializerArrayTest, size_overflow_progmem) {
     assertTrue(array.add(HANameProperty));
     assertFalse(array.add(HAUniqueIdProperty));
     assertEqual(1, array.getItemsNb());
+
     assertEqual((uintptr_t)HANameProperty, (uintptr_t)&(*array.getItems()[0]));
     assertJson("[\"name\"]", array);
 }
@@ -61,6 +62,8 @@ AHA_TEST(SerializerArrayTest, single_element_ram) {
 
     assertTrue(result);
     assertEqual(1, array.getItemsNb());
+
+    assertEqual((uintptr_t)item, (uintptr_t)&(*array.getItem(0)));
     assertEqual((uintptr_t)item, (uintptr_t)&(*array.getItems()[0]));
     assertJson("[\"test\"]", array);
 }
@@ -77,8 +80,17 @@ AHA_TEST(SerializerArrayTest, multiple_elements_ram) {
     assertEqual(3, array.getItemsNb());
 
     HASerializerArray::ItemType* items = array.getItems();
+
+    assertEqual((uintptr_t)nullptr, (uintptr_t)&(*array.getItem(-1)));
+    assertEqual((uintptr_t)nullptr, (uintptr_t)&(*array.getItem(3)));
+
+    assertEqual((uintptr_t)item0, (uintptr_t)&(*array.getItem(0)));
     assertEqual((uintptr_t)item0, (uintptr_t)&(*items[0]));
+
+    assertEqual((uintptr_t)item1, (uintptr_t)&(*array.getItem(1)));
     assertEqual((uintptr_t)item1, (uintptr_t)&(*items[1]));
+
+    assertEqual((uintptr_t)item2, (uintptr_t)&(*array.getItem(2)));
     assertEqual((uintptr_t)item2, (uintptr_t)&(*items[2]));
     assertJson("[\"item0\",\"item1\",\"item2\"]", array);
 }

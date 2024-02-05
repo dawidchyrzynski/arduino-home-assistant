@@ -7,7 +7,6 @@ static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
 const char ConfigTopic[] PROGMEM = {"homeassistant/sensor/testDevice/uniqueSensor/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSensor/stat_t"};
-const char DummyTemplateStr[] PROGMEM = {"dummyTemplate"};
 
 AHA_TEST(SensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)

@@ -41,11 +41,18 @@ public:
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param state New state of the select.
+     * @param state New state of the select. You can set `-1` to reset the select.
      * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */
     bool setState(const int8_t state, const bool force = false);
+
+    /**
+     * Returns the selected option based on the most recent state of the select.
+     * You can utilize this method to get the string representation of the option (e.g. for printing).
+     * If no option is selected, null is returned.
+     */
+    const char* getCurrentOption() const;
 
     /**
      * Sets the current state of the select without publishing it to Home Assistant.

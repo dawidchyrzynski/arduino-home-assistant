@@ -108,7 +108,7 @@ AHA_TEST(SelectTest, extended_unique_id) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, single_option) {
@@ -131,7 +131,7 @@ AHA_TEST(SelectTest, single_option) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, multiple_options) {
@@ -154,7 +154,7 @@ AHA_TEST(SelectTest, multiple_options) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, command_subscription) {
@@ -194,6 +194,7 @@ AHA_TEST(SelectTest, publish_last_known_state) {
     mqtt.loop();
 
     assertEqual(2, mock->getFlushedMessagesNb());
+    assertEqual("B", select.getCurrentOption());
     assertMqttMessage(1, AHATOFSTR(StateTopic), "B", true)
 }
 
@@ -207,6 +208,17 @@ AHA_TEST(SelectTest, publish_nothing_if_retained) {
     mqtt.loop();
 
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
+AHA_TEST(SelectTest, publish_state_none) {
+    prepareTest
+
+    HASelect select(testUniqueId);
+    select.setOptions("Option A;B;C");
+    mqtt.loop();
+
+    assertEqual(2, mock->getFlushedMessagesNb());
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "None", true)
 }
 
 AHA_TEST(SelectTest, name_setter) {
@@ -310,6 +322,7 @@ AHA_TEST(SelectTest, current_state_getter) {
 
     assertEqual(0, mock->getFlushedMessagesNb());
     assertEqual(1, select.getCurrentState());
+    assertEqual("B", select.getCurrentOption());
 }
 
 AHA_TEST(SelectTest, publish_state_first) {
@@ -321,6 +334,7 @@ AHA_TEST(SelectTest, publish_state_first) {
 
     assertTrue(select.setState(0));
     assertTrue(select.getOptions() != nullptr);
+    assertEqual("Option A", select.getCurrentOption());
     assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "Option A", true)
 }
@@ -334,6 +348,7 @@ AHA_TEST(SelectTest, publish_state_last) {
 
     assertTrue(select.setState(2));
     assertTrue(select.getOptions() != nullptr);
+    assertEqual("C", select.getCurrentOption());
     assertEqual(3, select.getOptions()->getItemsNb());
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "C", true)
 }
