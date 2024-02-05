@@ -8,6 +8,7 @@
 * Implemented extended unique ID support for all device types. This allows you to prefix each device type's unique ID with the device ID, ensuring smooth deployment of identical code on multiple devices without encountering unique ID conflicts [#212](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/212#issuecomment-1919832684)
 * Added support for the `configuration_url` parameter in the `HADevice` [#182](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/182)
 * Added `getCurrentOption` method to the `HASelect` device type [#163](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/163)
+* Added support for publishing `None` state in the `HASelect` device type [#146](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/146)
 
 **Fixes:**
 * Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))

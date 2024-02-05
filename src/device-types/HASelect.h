@@ -41,7 +41,7 @@ public:
      * Please note that if a new value is the same as previous one,
      * the MQTT message won't be published.
      *
-     * @param state New state of the select.
+     * @param state New state of the select. You can set `-1` to reset the select.
      * @param force Forces to update state without comparing it to previous known state.
      * @returns Returns true if MQTT message has been published successfully.
      */

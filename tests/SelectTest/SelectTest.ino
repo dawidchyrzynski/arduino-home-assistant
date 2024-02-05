@@ -108,7 +108,7 @@ AHA_TEST(SelectTest, extended_unique_id) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, single_option) {
@@ -131,7 +131,7 @@ AHA_TEST(SelectTest, single_option) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, multiple_options) {
@@ -154,7 +154,7 @@ AHA_TEST(SelectTest, multiple_options) {
             "}"
         )
     )
-    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+    assertEqual(2, mock->getFlushedMessagesNb());
 }
 
 AHA_TEST(SelectTest, command_subscription) {
@@ -208,6 +208,17 @@ AHA_TEST(SelectTest, publish_nothing_if_retained) {
     mqtt.loop();
 
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
+AHA_TEST(SelectTest, publish_state_none) {
+    prepareTest
+
+    HASelect select(testUniqueId);
+    select.setOptions("Option A;B;C");
+    mqtt.loop();
+
+    assertEqual(2, mock->getFlushedMessagesNb());
+    assertMqttMessage(1, AHATOFSTR(StateTopic), "None", true)
 }
 
 AHA_TEST(SelectTest, name_setter) {
