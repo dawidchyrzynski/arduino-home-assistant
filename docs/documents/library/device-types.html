@@ -253,7 +253,7 @@ This feature incorporates the device’s unique ID as a prefix for the device ty
 <p>Registering a new device type involves utilizing a certain amount of flash and RAM memory.
 On less powerful units, such as the Arduino Uno, you may rapidly reach the resource limit.
 Therefore, it is advisable to keep the device simple to avoid hitting the resource limit, which could lead to random reboots of the device.</p>
-<p>By default, the maximum number of device types is 6.
+<p>By default, devices utilizing ATmega328P or ATmega168 processors are limited to a maximum of 6 device types, while other platforms can support up to 24 device types.
 You can increase the limit using the <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> class constructor as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
@@ -261,7 +261,7 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFA</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6E</span><span class="p">,</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4A</span><span class="p">};</span><span class="w"></span>
 <span class="n">EthernetClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
 <span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
-<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">);</span><span class="w"> </span><span class="c1">// &lt;------------ 12 is a new limit of device types</span>
+<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">);</span><span class="w"> </span><span class="c1">// &lt;------------ 40 is a new limit of device types</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>

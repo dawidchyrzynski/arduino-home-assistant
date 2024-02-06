@@ -16,6 +16,7 @@
 **Fixes:**
 * Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))
 * Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` ([#197](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/197) by [@shedokan](https://github.com/shedokan))
+* The default limit for device types has been raised to 24 on processors other than ATMega328/ATMega168. The previous default limit of 6 led to confusion for many users.
 
 ## 2.0.0
 
