@@ -2,6 +2,7 @@
 #define AHA_HASENSOR_H
 
 #include "HABaseDeviceType.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_SENSOR
 
@@ -31,6 +32,14 @@ public:
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setValue(const char* value);
+
+    /**
+     * Sets the number of seconds after the sensor’s state expires, if it’s not updated.
+     * By default the sensors state never expires.
+     *
+     * @param expireAfterSeconds The number of seconds.
+     */
+    void setExpireAfter(uint16_t expireAfter);
 
     /**
      * Sets class of the device.
@@ -83,7 +92,7 @@ protected:
 private:
     /// The device class. It can be nullptr.
     const char* _deviceClass;
-	
+
     /// The state class for the long term stats. It can be nullptr. See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
     const char* _stateClass;
 
@@ -95,6 +104,9 @@ private:
 
     /// The unit of measurement for the sensor. It can be nullptr.
     const char* _unitOfMeasurement;
+
+    /// It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.
+    HANumeric _expireAfter;
 };
 
 #endif

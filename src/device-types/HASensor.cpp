@@ -10,7 +10,8 @@ HASensor::HASensor(const char* uniqueId) :
     _stateClass(nullptr),
     _forceUpdate(false),
     _icon(nullptr),
-    _unitOfMeasurement(nullptr)
+    _unitOfMeasurement(nullptr),
+    _expireAfter()
 {
 
 }
@@ -24,13 +25,22 @@ bool HASensor::setValue(const char* value)
     return publishOnDataTopic(AHATOFSTR(HAStateTopic), value, true);
 }
 
+void HASensor::setExpireAfter(uint16_t expireAfter)
+{
+    if (expireAfter > 0) {
+        _expireAfter.setBaseValue(expireAfter);
+    } else {
+        _expireAfter.reset();
+    }
+}
+
 void HASensor::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
         return;
     }
 
-    _serializer = new HASerializer(this, 10); // 10 - max properties nb
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
@@ -44,6 +54,14 @@ void HASensor::buildSerializer()
             AHATOFSTR(HAForceUpdateProperty),
             &_forceUpdate,
             HASerializer::BoolPropertyType
+        );
+    }
+
+    if (_expireAfter.isSet()) {
+        _serializer->set(
+            AHATOFSTR(HAExpireAfterProperty),
+            &_expireAfter,
+            HASerializer::NumberPropertyType
         );
     }
 

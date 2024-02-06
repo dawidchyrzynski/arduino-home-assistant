@@ -2,7 +2,6 @@
 #define AHA_HASENSORNUMBER_H
 
 #include "HASensor.h"
-#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_SENSOR
 

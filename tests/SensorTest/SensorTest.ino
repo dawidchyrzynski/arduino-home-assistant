@@ -189,6 +189,46 @@ AHA_TEST(SensorTest, unit_of_measurement_setter) {
     )
 }
 
+AHA_TEST(SensorTest, expire_after_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setExpireAfter(60);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"exp_aft\":60,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SensorTest, expire_after_zero_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setExpireAfter(0);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+
 AHA_TEST(SensorTest, publish_value) {
     initMqttTest(testDeviceId)
 
