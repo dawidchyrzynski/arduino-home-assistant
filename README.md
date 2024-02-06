@@ -1,11 +1,13 @@
 # Arduino Home Assistant integration 🏠
 
+[![](https://img.shields.io/github/v/release/dawidchyrzynski/arduino-home-assistant?label=Version)](https://github.com/dawidchyrzynski/arduino-home-assistant/releases)
+[![](https://img.shields.io/badge/Browse_Documentation-40BC13)](https://dawidchyrzynski.github.io/arduino-home-assistant/)
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/dawidchyrzynski)
+
 ArduinoHA allows to integrate an Arduino/ESP based device with Home Assistant using MQTT.
 The library is designed to use as low resources (RAM/flash) as possible.
 Initially, it was optimized to work on Arduino Uno with Ethernet Shield,
 but I successfully use it on ESP8266/ESP8255 boards in my projects.
-
-[📘 Documentation](https://dawidchyrzynski.github.io/arduino-home-assistant/)
 
 ## Features
 
