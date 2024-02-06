@@ -191,6 +191,17 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setExpireAfterE8uint16_t">
+<span id="_CPPv3N8HASensor14setExpireAfterE8uint16_t"></span><span id="_CPPv2N8HASensor14setExpireAfterE8uint16_t"></span><span id="HASensor::setExpireAfter__uint16_t"></span><span class="target" id="class_h_a_sensor_1a11af92c3452c511596c63dbc00baed6e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setExpireAfter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">expireAfter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setExpireAfterE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expireAfterSeconds</strong> – The number of seconds. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setDeviceClassEPKc">
 <span id="_CPPv3N8HASensor14setDeviceClassEPKc"></span><span id="_CPPv2N8HASensor14setDeviceClassEPKc"></span><span id="HASensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a8e2ffcb1ae1bb7411464a34d27df8817"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/sensor/#device-class">https://www.home-assistant.io/integrations/sensor/#device-class</a></p>
@@ -289,6 +300,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor18_unitOfMeasurementE">
 <span id="_CPPv3N8HASensor18_unitOfMeasurementE"></span><span id="_CPPv2N8HASensor18_unitOfMeasurementE"></span><span id="HASensor::_unitOfMeasurement__cCP"></span><span class="target" id="class_h_a_sensor_1abedc7a1be1cb9b3855c1721b356c5635"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_unitOfMeasurement</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor18_unitOfMeasurementE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The unit of measurement for the sensor. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_expireAfterE">
+<span id="_CPPv3N8HASensor12_expireAfterE"></span><span id="_CPPv2N8HASensor12_expireAfterE"></span><span id="HASensor::_expireAfter__HANumeric"></span><span class="target" id="class_h_a_sensor_1a695e13ee19b2ca57a2f61f8d1021612c"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_expireAfter</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_expireAfterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires. </p>
 </dd></dl>
 
 </div>

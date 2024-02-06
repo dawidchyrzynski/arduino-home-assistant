@@ -157,6 +157,9 @@ Supported device types
    * - Device type
      - Supported
      - Documentation
+   * - Alarm control panel
+     - ❌
+     - --
    * - Binary sensor
      - ✅
      - :doc:`HABinarySensor </documents/api/device-types/ha-binary-sensor>`
@@ -175,6 +178,9 @@ Supported device types
    * - Device trigger
      - ✅
      - :doc:`HADeviceTrigger </documents/api/device-types/ha-device-trigger>`
+   * - Event
+     - ❌
+     - --
    * - Fan
      - ✅
      - :doc:`HAFan </documents/api/device-types/ha-fan>`
@@ -184,6 +190,9 @@ Supported device types
    * - HVAC
      - ✅
      - :doc:`HAHVAC </documents/api/device-types/ha-hvac>`
+   * - Lawn mower
+     - ❌
+     - --
    * - Light
      - ✅
      - :doc:`HALight </documents/api/device-types/ha-light>`
@@ -205,12 +214,27 @@ Supported device types
    * - | Sensor (number)
      - ✅
      - :doc:`HASensorNumber </documents/api/device-types/ha-sensor-number>`
+   * - Siren
+     - ❌
+     - --
    * - Switch
      - ✅
      - :doc:`HASwitch </documents/api/device-types/ha-switch>`
+   * - Update
+     - ❌
+     - --
    * - Tag scanner
      - ✅
      - :doc:`HATagScanner </documents/api/device-types/ha-tag-scanner>`
+   * - Text
+     - ❌
+     - --
    * - Vacuum
+     - ❌
+     - --
+   * - Valve
+     - ❌
+     - --
+   * - Water heater
      - ❌
      - --

@@ -22,24 +22,33 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 | Home Assistant type | Supported |
 | ------------------- | :--------: |
+| Alarm control panel |     ❌     |
 | Binary sensor       |     ✅     |
 | Button              |     ✅     |
 | Camera              |     ✅     |
 | Cover               |     ✅     |
 | Device tracker      |     ✅     |
 | Device trigger      |     ✅     |
+| Event               |     ❌     |
 | Fan                 |     ✅     |
 | Humidifier          |     ❌     |
+| Image               |     ❌     |
 | HVAC                |     ✅     |
+| Lawn mower          |     ❌     |
 | Light               |     ✅     |
 | Lock                |     ✅     |
 | Number              |     ✅     |
 | Scene               |     ✅     |
 | Select              |     ✅     |
 | Sensor              |     ✅     |
+| Siren               |     ❌     |
 | Switch              |     ✅     |
+| Update              |     ❌     |
 | Tag scanner         |     ✅     |
+| Text                |     ❌     |
 | Vacuum              |     ❌     |
+| Valve               |     ❌     |
+| Water heater        |     ❌     |
 
 ## Examples
 
