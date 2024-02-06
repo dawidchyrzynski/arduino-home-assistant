@@ -17,6 +17,10 @@ HASensor::HASensor(const char* uniqueId) :
 
 bool HASensor::setValue(const char* value)
 {
+    if (!value) {
+        return publishOnDataTopic(AHATOFSTR(HAStateTopic), AHATOFSTR(HAStateNone), true);
+    }
+
     return publishOnDataTopic(AHATOFSTR(HAStateTopic), value, true);
 }
 

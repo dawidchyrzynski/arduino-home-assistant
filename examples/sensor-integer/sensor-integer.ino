@@ -37,5 +37,8 @@ void loop() {
         unsigned long uptimeValue = millis() / 1000;
         uptimeSensor.setValue(uptimeValue);
         lastUpdateAt = millis();
+
+        // you can reset the sensor as follows:
+        // analogSensor.setValue(nullptr);
     }
 }

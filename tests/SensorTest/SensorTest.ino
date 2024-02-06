@@ -199,6 +199,16 @@ AHA_TEST(SensorTest, publish_value) {
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "test123", true)
 }
 
+AHA_TEST(SensorTest, publish_null_value) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensor sensor(testUniqueId);
+
+    assertTrue(sensor.setValue(nullptr));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "None", true)
+}
+
 test(SensorNumberTest, publish_value_on_connect) {
     initMqttTest(testDeviceId)
 
