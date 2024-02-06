@@ -160,6 +160,27 @@ AHA_TEST(LockTest, name_setter) {
     )
 }
 
+AHA_TEST(LockTest, object_id_setter) {
+    prepareTest
+
+    HALock lock(testUniqueId);
+    lock.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        lock,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueLock\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(LockTest, icon_setter) {
     prepareTest
 

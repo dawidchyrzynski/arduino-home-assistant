@@ -244,6 +244,29 @@ AHA_TEST(SelectTest, name_setter) {
     )
 }
 
+AHA_TEST(SelectTest, object_id_setter) {
+    prepareTest
+
+    HASelect select(testUniqueId);
+    select.setOptions("Option A;B;C");
+    select.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        select,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueSelect\","
+            "\"options\":[\"Option A\",\"B\",\"C\"],"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSelect/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSelect/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SelectTest, icon_setter) {
     prepareTest
 

@@ -335,6 +335,27 @@ AHA_TEST(NumberTest, name_setter) {
     )
 }
 
+AHA_TEST(NumberTest, object_id_setter) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        number,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(NumberTest, device_class) {
     prepareTest
 

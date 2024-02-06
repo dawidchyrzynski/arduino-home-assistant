@@ -178,6 +178,26 @@ AHA_TEST(DeviceTrackerTest, name_setter) {
     )
 }
 
+AHA_TEST(DeviceTrackerTest, object_id_setter) {
+    initMqttTest(testDeviceId)
+
+    HADeviceTracker tracker(testUniqueId);
+    tracker.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        tracker,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueTracker\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueTracker/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(DeviceTrackerTest, icon_setter) {
     initMqttTest(testDeviceId)
 
