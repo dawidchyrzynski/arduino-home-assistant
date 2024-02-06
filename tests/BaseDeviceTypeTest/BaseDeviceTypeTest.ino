@@ -53,6 +53,13 @@ AHA_TEST(BaseDeviceTypeTest, name_setter) {
     assertEqual(name, deviceType.getName());
 }
 
+AHA_TEST(BaseDeviceTypeTest, object_id_setter) {
+    const char* objectId = "testId";
+    DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
+    deviceType.setObjectId(objectId);
+    assertEqual(objectId, deviceType.getObjectId());
+}
+
 AHA_TEST(BaseDeviceTypeTest, default_availability) {
     DummyDeviceType deviceType(AHATOFSTR(ComponentNameStr), testUniqueId);
     assertFalse(deviceType.isAvailabilityConfigured());

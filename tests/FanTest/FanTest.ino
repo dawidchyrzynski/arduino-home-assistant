@@ -240,6 +240,27 @@ AHA_TEST(FanTest, name_setter) {
     )
 }
 
+AHA_TEST(FanTest, object_id_setter) {
+    prepareTest
+
+    HAFan fan(testUniqueId);
+    fan.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        fan,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueFan\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueFan/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueFan/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(FanTest, icon_setter) {
     prepareTest
 

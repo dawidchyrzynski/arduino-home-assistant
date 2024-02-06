@@ -46,8 +46,9 @@ void HASensor::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 12); // 12 - max properties nb
+    _serializer = new HASerializer(this, 13); // 13 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
     _serializer->set(AHATOFSTR(HAStateClassProperty), _stateClass);

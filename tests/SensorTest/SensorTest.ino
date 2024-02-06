@@ -90,6 +90,26 @@ AHA_TEST(SensorTest, name_setter) {
     )
 }
 
+AHA_TEST(SensorTest, object_id_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SensorTest, device_class_setter) {
     initMqttTest(testDeviceId)
 

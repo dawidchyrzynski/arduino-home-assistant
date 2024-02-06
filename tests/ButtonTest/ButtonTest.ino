@@ -129,6 +129,26 @@ AHA_TEST(ButtonTest, name_setter) {
     )
 }
 
+AHA_TEST(ButtonTest, object_id_setter) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    button.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        button,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueButton\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(ButtonTest, device_class) {
     prepareTest
 

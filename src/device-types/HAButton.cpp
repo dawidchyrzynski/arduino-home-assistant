@@ -20,8 +20,9 @@ void HAButton::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 8); // 8 - max properties nb
+    _serializer = new HASerializer(this, 9); // 9 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
+    _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);

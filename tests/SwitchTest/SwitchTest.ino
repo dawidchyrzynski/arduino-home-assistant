@@ -160,6 +160,27 @@ AHA_TEST(SwitchTest, name_setter) {
     )
 }
 
+AHA_TEST(SwitchTest, object_id_setter) {
+    prepareTest
+
+    HASwitch testSwitch(testUniqueId);
+    testSwitch.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        testSwitch,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueSwitch\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSwitch/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueSwitch/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SwitchTest, device_class) {
     prepareTest
 

@@ -423,6 +423,27 @@ AHA_TEST(LightTest, name_setter) {
     )
 }
 
+AHA_TEST(LightTest, object_id_setter) {
+    prepareTest
+
+    HALight light(testUniqueId);
+    light.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueLight\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(LightTest, icon_setter) {
     prepareTest
 

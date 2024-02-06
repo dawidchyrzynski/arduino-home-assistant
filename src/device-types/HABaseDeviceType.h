@@ -79,6 +79,22 @@ public:
         { return _name; }
 
     /**
+     * Sets object ID that will be used by HA to generate entity ID.
+     * Keep the ID short to save the resources.
+     *
+     * @param objectId The object ID.
+     */
+    inline void setObjectId(const char* objectId)
+        { _objectId = objectId; }
+
+    /**
+     * Returns the object ID that was set by setObjectId method.
+     * It can be nullptr if there is no ID assigned.
+     */
+    inline const char* getObjectId() const
+        { return _objectId; }
+
+    /**
      * Sets availability of the device type.
      * Setting the initial availability enables availability reporting for this device type.
      * Please note that not all device types support this feature.
@@ -208,6 +224,9 @@ protected:
 
     /// The name that was set using setName method. It can be nullptr.
     const char* _name;
+
+    /// The object ID that was set using setObjectId method. It can be nullptr.
+    const char* _objectId;
 
     /// HASerializer that belongs to this device type. It can be nullptr.
     HASerializer* _serializer;

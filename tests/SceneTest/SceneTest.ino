@@ -129,6 +129,26 @@ AHA_TEST(SceneTest, name_setter) {
     )
 }
 
+AHA_TEST(SceneTest, object_id_setter) {
+    prepareTest
+
+    HAScene scene(testUniqueId);
+    scene.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        scene,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueScene\","
+            "\"pl_on\":\"ON\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SceneTest, icon_setter) {
     prepareTest
 
