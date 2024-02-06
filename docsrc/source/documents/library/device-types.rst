@@ -118,7 +118,7 @@ Registering a new device type involves utilizing a certain amount of flash and R
 On less powerful units, such as the Arduino Uno, you may rapidly reach the resource limit.
 Therefore, it is advisable to keep the device simple to avoid hitting the resource limit, which could lead to random reboots of the device.
 
-By default, the maximum number of device types is 6.
+By default, devices utilizing ATmega328P or ATmega168 processors are limited to a maximum of 6 device types, while other platforms can support up to 24 device types.
 You can increase the limit using the :doc:`HAMqtt </documents/api/core/ha-mqtt>` class constructor as follows:
 
 ::
@@ -129,7 +129,7 @@ You can increase the limit using the :doc:`HAMqtt </documents/api/core/ha-mqtt>`
     byte mac[] = {0x00, 0x10, 0xFA, 0x6E, 0x38, 0x4A};
     EthernetClient client;
     HADevice device(mac, sizeof(mac));
-    HAMqtt mqtt(client, device, 12); // <------------ 12 is a new limit of device types
+    HAMqtt mqtt(client, device, 40); // <------------ 40 is a new limit of device types
 
     void setup() {
         Ethernet.begin(mac);
@@ -157,6 +157,9 @@ Supported device types
    * - Device type
      - Supported
      - Documentation
+   * - Alarm control panel
+     - ❌
+     - --
    * - Binary sensor
      - ✅
      - :doc:`HABinarySensor </documents/api/device-types/ha-binary-sensor>`
@@ -175,6 +178,9 @@ Supported device types
    * - Device trigger
      - ✅
      - :doc:`HADeviceTrigger </documents/api/device-types/ha-device-trigger>`
+   * - Event
+     - ❌
+     - --
    * - Fan
      - ✅
      - :doc:`HAFan </documents/api/device-types/ha-fan>`
@@ -184,6 +190,9 @@ Supported device types
    * - HVAC
      - ✅
      - :doc:`HAHVAC </documents/api/device-types/ha-hvac>`
+   * - Lawn mower
+     - ❌
+     - --
    * - Light
      - ✅
      - :doc:`HALight </documents/api/device-types/ha-light>`
@@ -205,12 +214,27 @@ Supported device types
    * - | Sensor (number)
      - ✅
      - :doc:`HASensorNumber </documents/api/device-types/ha-sensor-number>`
+   * - Siren
+     - ❌
+     - --
    * - Switch
      - ✅
      - :doc:`HASwitch </documents/api/device-types/ha-switch>`
+   * - Update
+     - ❌
+     - --
    * - Tag scanner
      - ✅
      - :doc:`HATagScanner </documents/api/device-types/ha-tag-scanner>`
+   * - Text
+     - ❌
+     - --
    * - Vacuum
+     - ❌
+     - --
+   * - Valve
+     - ❌
+     - --
+   * - Water heater
      - ❌
      - --

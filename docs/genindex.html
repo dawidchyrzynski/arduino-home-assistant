@@ -215,6 +215,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor13_currentStateE">HABinarySensor::_currentState (C++ member)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor12_expireAfterE">HABinarySensor::_expireAfter (C++ member)</a>
+</li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor5_iconE">HABinarySensor::_icon (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor15buildSerializerEv">HABinarySensor::buildSerializer (C++ function)</a>
@@ -230,6 +232,8 @@
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor15setCurrentStateEKb">HABinarySensor::setCurrentState (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor14setDeviceClassEPKc">HABinarySensor::setDeviceClass (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor14setExpireAfterE8uint16_t">HABinarySensor::setExpireAfter (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor7setIconEPKc">HABinarySensor::setIcon (C++ function)</a>
 </li>
@@ -869,14 +873,14 @@
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC15TemperatureUnit14FahrenheitUnitE">HAHVAC::TemperatureUnit::FahrenheitUnit (C++ enumerator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVACD0Ev">HAHVAC::~HAHVAC (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv47HALight">HALight (C++ class)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight19_brightnessCallbackE">HALight::_brightnessCallback (C++ member)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight16_brightnessScaleE">HALight::_brightnessScale (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight25_colorTemperatureCallbackE">HALight::_colorTemperatureCallback (C++ member)</a>
@@ -1363,6 +1367,10 @@
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_deviceClassE">HASensor::_deviceClass (C++ member)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_expireAfterE">HASensor::_expireAfter (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor9_featuresE">HASensor::_features (C++ member)</a>
+</li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_forceUpdateE">HASensor::_forceUpdate (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor5_iconE">HASensor::_icon (C++ member)</a>
@@ -1373,15 +1381,25 @@
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor15buildSerializerEv">HASensor::buildSerializer (C++ function)</a>
 </li>
-      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8HASensorEPKc">HASensor::HASensor (C++ function)</a>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8FeaturesE">HASensor::Features (C++ enum)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8Features15DefaultFeaturesE">HASensor::Features::DefaultFeatures (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8Features21JsonAttributesFeatureE">HASensor::Features::JsonAttributesFeature (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8HASensorEPKcK8uint16_t">HASensor::HASensor (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor15onMqttConnectedEv">HASensor::onMqttConnected (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setDeviceClassEPKc">HASensor::setDeviceClass (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setExpireAfterE8uint16_t">HASensor::setExpireAfter (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setForceUpdateEb">HASensor::setForceUpdate (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor7setIconEPKc">HASensor::setIcon (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor17setJsonAttributesEPKc">HASensor::setJsonAttributes (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor13setStateClassEPKc">HASensor::setStateClass (C++ function)</a>
 </li>
@@ -1397,7 +1415,7 @@
 </li>
       <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4NK14HASensorNumber15getCurrentValueEv">HASensorNumber::getCurrentValue (C++ function)</a>
 </li>
-      <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision">HASensorNumber::HASensorNumber (C++ function)</a>
+      <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t">HASensorNumber::HASensorNumber (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber15onMqttConnectedEv">HASensorNumber::onMqttConnected (C++ function)</a>
 </li>

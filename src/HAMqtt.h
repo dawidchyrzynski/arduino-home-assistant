@@ -16,6 +16,12 @@ class PubSubClientMock;
 class PubSubClient;
 #endif
 
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
+#define HAMQTT_DEFAULT_DEVICES_LIMIT 6
+#else
+#define HAMQTT_DEFAULT_DEVICES_LIMIT 24
+#endif
+
 class HADevice;
 class HABaseDeviceType;
 
@@ -41,7 +47,7 @@ public:
     explicit HAMqtt(
         PubSubClientMock* pubSub,
         HADevice& device,
-        const uint8_t maxDevicesTypesNb = 6
+        const uint8_t maxDevicesTypesNb = HAMQTT_DEFAULT_DEVICES_LIMIT
     );
 #else
     /**
@@ -55,7 +61,7 @@ public:
     explicit HAMqtt(
         Client& netClient,
         HADevice& device,
-        const uint8_t maxDevicesTypesNb = 6
+        const uint8_t maxDevicesTypesNb = HAMQTT_DEFAULT_DEVICES_LIMIT
     );
 #endif
 

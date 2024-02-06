@@ -44,5 +44,8 @@ void loop() {
 
         analogSensor.setValue(voltage);
         lastUpdateAt = millis();
+
+        // you can reset the sensor as follows:
+        // analogSensor.setValue(nullptr);
     }
 }

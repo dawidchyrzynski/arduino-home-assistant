@@ -5,9 +5,10 @@
 
 HASensorNumber::HASensorNumber(
     const char* uniqueId,
-    const NumberPrecision precision
+    const NumberPrecision precision,
+    const uint16_t features
 ) :
-    HASensor(uniqueId),
+    HASensor(uniqueId, features),
     _precision(precision),
     _currentValue()
 {

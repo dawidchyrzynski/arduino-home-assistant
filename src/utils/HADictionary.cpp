@@ -73,6 +73,7 @@ const char HASwingModesProperty[] PROGMEM = {"swing_modes"};
 const char HAModesProperty[] PROGMEM = {"modes"};
 const char HATemperatureCommandTemplateProperty[] PROGMEM = {"temp_cmd_tpl"};
 const char HAPayloadOnProperty[] PROGMEM = {"pl_on"};
+const char HAExpireAfterProperty[] PROGMEM = {"exp_aft"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -102,6 +103,7 @@ const char HATemperatureCommandTopic[] PROGMEM = {"temp_cmd_t"};
 const char HATemperatureStateTopic[] PROGMEM = {"temp_stat_t"};
 const char HARGBCommandTopic[] PROGMEM = {"rgb_cmd_t"};
 const char HARGBStateTopic[] PROGMEM = {"rgb_stat_t"};
+const char HAJsonAttributesTopic[] PROGMEM = {"json_attr_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

@@ -253,7 +253,7 @@ This feature incorporates the device’s unique ID as a prefix for the device ty
 <p>Registering a new device type involves utilizing a certain amount of flash and RAM memory.
 On less powerful units, such as the Arduino Uno, you may rapidly reach the resource limit.
 Therefore, it is advisable to keep the device simple to avoid hitting the resource limit, which could lead to random reboots of the device.</p>
-<p>By default, the maximum number of device types is 6.
+<p>By default, devices utilizing ATmega328P or ATmega168 processors are limited to a maximum of 6 device types, while other platforms can support up to 24 device types.
 You can increase the limit using the <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> class constructor as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
@@ -261,7 +261,7 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <span class="n">byte</span><span class="w"> </span><span class="n">mac</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="mh">0x10</span><span class="p">,</span><span class="w"> </span><span class="mh">0xFA</span><span class="p">,</span><span class="w"> </span><span class="mh">0x6E</span><span class="p">,</span><span class="w"> </span><span class="mh">0x38</span><span class="p">,</span><span class="w"> </span><span class="mh">0x4A</span><span class="p">};</span><span class="w"></span>
 <span class="n">EthernetClient</span><span class="w"> </span><span class="n">client</span><span class="p">;</span><span class="w"></span>
 <span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="n">mac</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">mac</span><span class="p">));</span><span class="w"></span>
-<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">);</span><span class="w"> </span><span class="c1">// &lt;------------ 12 is a new limit of device types</span>
+<span class="n">HAMqtt</span><span class="w"> </span><span class="nf">mqtt</span><span class="p">(</span><span class="n">client</span><span class="p">,</span><span class="w"> </span><span class="n">device</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">);</span><span class="w"> </span><span class="c1">// &lt;------------ 40 is a new limit of device types</span>
 
 <span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>
@@ -294,29 +294,37 @@ You can increase the limit using the <a class="reference internal" href="../api/
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>Binary sensor</p></td>
+<tr class="row-even"><td><p>Alarm control panel</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Binary sensor</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-binary-sensor.html"><span class="doc">HABinarySensor</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Button</p></td>
+<tr class="row-even"><td><p>Button</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-button.html"><span class="doc">HAButton</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>Camera</p></td>
+<tr class="row-odd"><td><p>Camera</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-camera.html"><span class="doc">HACamera</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Cover</p></td>
+<tr class="row-even"><td><p>Cover</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-cover.html"><span class="doc">HACover</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>Device tracker</p></td>
+<tr class="row-odd"><td><p>Device tracker</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-device-tracker.html"><span class="doc">HADeviceTracker</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Device trigger</p></td>
+<tr class="row-even"><td><p>Device trigger</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-device-trigger.html"><span class="doc">HADeviceTrigger</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>Event</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
 </tr>
 <tr class="row-even"><td><p>Fan</p></td>
 <td><p>✅</p></td>
@@ -330,49 +338,73 @@ You can increase the limit using the <a class="reference internal" href="../api/
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-hvac.html"><span class="doc">HAHVAC</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Light</p></td>
+<tr class="row-odd"><td><p>Lawn mower</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Light</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-light.html"><span class="doc">HALight</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>Lock</p></td>
+<tr class="row-odd"><td><p>Lock</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-lock.html"><span class="doc">HALock</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Number</p></td>
+<tr class="row-even"><td><p>Number</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-number.html"><span class="doc">HANumber</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p>Scene</p></td>
+<tr class="row-odd"><td><p>Scene</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-scene.html"><span class="doc">HAScene</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Select</p></td>
+<tr class="row-even"><td><p>Select</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-select.html"><span class="doc">HASelect</span></a></p></td>
 </tr>
-<tr class="row-even"><td><div class="line-block">
+<tr class="row-odd"><td><div class="line-block">
 <div class="line">Sensor (text)</div>
 </div>
 </td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-sensor.html"><span class="doc">HASensor</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><div class="line-block">
+<tr class="row-even"><td><div class="line-block">
 <div class="line">Sensor (number)</div>
 </div>
 </td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-sensor-number.html"><span class="doc">HASensorNumber</span></a></p></td>
 </tr>
+<tr class="row-odd"><td><p>Siren</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
 <tr class="row-even"><td><p>Switch</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-switch.html"><span class="doc">HASwitch</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p>Tag scanner</p></td>
+<tr class="row-odd"><td><p>Update</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Tag scanner</p></td>
 <td><p>✅</p></td>
 <td><p><a class="reference internal" href="../api/device-types/ha-tag-scanner.html"><span class="doc">HATagScanner</span></a></p></td>
 </tr>
+<tr class="row-odd"><td><p>Text</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
 <tr class="row-even"><td><p>Vacuum</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-odd"><td><p>Valve</p></td>
+<td><p>❌</p></td>
+<td><p>–</p></td>
+</tr>
+<tr class="row-even"><td><p>Water heater</p></td>
 <td><p>❌</p></td>
 <td><p>–</p></td>
 </tr>
