@@ -103,6 +103,7 @@ const char HATemperatureCommandTopic[] PROGMEM = {"temp_cmd_t"};
 const char HATemperatureStateTopic[] PROGMEM = {"temp_stat_t"};
 const char HARGBCommandTopic[] PROGMEM = {"rgb_cmd_t"};
 const char HARGBStateTopic[] PROGMEM = {"rgb_stat_t"};
+const char HAJsonAttributesTopic[] PROGMEM = {"json_attr_t"};
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};

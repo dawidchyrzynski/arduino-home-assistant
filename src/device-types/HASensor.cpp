@@ -4,8 +4,9 @@
 #include "../HAMqtt.h"
 #include "../utils/HASerializer.h"
 
-HASensor::HASensor(const char* uniqueId) :
+HASensor::HASensor(const char* uniqueId, const uint16_t features) :
     HABaseDeviceType(AHATOFSTR(HAComponentSensor), uniqueId),
+    _features(features),
     _deviceClass(nullptr),
     _stateClass(nullptr),
     _forceUpdate(false),
@@ -25,6 +26,11 @@ bool HASensor::setValue(const char* value)
     return publishOnDataTopic(AHATOFSTR(HAStateTopic), value, true);
 }
 
+bool HASensor::setJsonAttributes(const char* json)
+{
+    return publishOnDataTopic(AHATOFSTR(HAJsonAttributesTopic), json, true);
+}
+
 void HASensor::setExpireAfter(uint16_t expireAfter)
 {
     if (expireAfter > 0) {
@@ -40,7 +46,7 @@ void HASensor::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 11); // 11 - max properties nb
+    _serializer = new HASerializer(this, 12); // 12 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _deviceClass);
@@ -48,7 +54,6 @@ void HASensor::buildSerializer()
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
 
-    // optional property
     if (_forceUpdate) {
         _serializer->set(
             AHATOFSTR(HAForceUpdateProperty),
@@ -63,6 +68,10 @@ void HASensor::buildSerializer()
             &_expireAfter,
             HASerializer::NumberPropertyType
         );
+    }
+
+    if (_features & JsonAttributesFeature) {
+        _serializer->topic(AHATOFSTR(HAJsonAttributesTopic));
     }
 
     _serializer->set(HASerializer::WithDevice);

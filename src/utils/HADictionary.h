@@ -103,6 +103,7 @@ extern const char HATemperatureCommandTopic[];
 extern const char HATemperatureStateTopic[];
 extern const char HARGBCommandTopic[];
 extern const char HARGBStateTopic[];
+extern const char HAJsonAttributesTopic[];
 
 // misc
 extern const char HAOnline[];

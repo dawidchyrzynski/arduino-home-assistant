@@ -26,10 +26,12 @@ public:
     /**
      * @param uniqueId The unique ID of the sensor. It needs to be unique in a scope of your device.
      * @param precision Precision of the floating point number that will be displayed in the HA panel.
+     * @param features Features that should be enabled for the sensor.
      */
     HASensorNumber(
         const char* uniqueId,
-        const NumberPrecision precision = PrecisionP0
+        const NumberPrecision precision = PrecisionP0,
+        const uint16_t features = DefaultFeatures
     );
 
     /**

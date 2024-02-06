@@ -18,10 +18,16 @@
 class HASensor : public HABaseDeviceType
 {
 public:
+    enum Features {
+        DefaultFeatures = 0,
+        JsonAttributesFeature = 1
+    };
+
     /**
      * @param uniqueId The unique ID of the sensor. It needs to be unique in a scope of your device.
+     * @param features Features that should be enabled for the sensor.
      */
-    HASensor(const char* uniqueId);
+    HASensor(const char* uniqueId, const uint16_t features = DefaultFeatures);
 
     /**
      * Publishes the MQTT message with the given value.
@@ -32,6 +38,14 @@ public:
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setValue(const char* value);
+
+    /**
+     * Publishes the given JSON data on the JSON attributes topic.
+     * The `JsonAttributesFeature` has to be enabled prior to setting the value.
+     *
+     * @param json JSON attributes.
+     */
+    bool setJsonAttributes(const char* json);
 
     /**
      * Sets the number of seconds after the sensor’s state expires, if it’s not updated.
@@ -90,6 +104,9 @@ protected:
     virtual void onMqttConnected() override;
 
 private:
+    /// Features enabled for the sensor.
+    const uint16_t _features;
+
     /// The device class. It can be nullptr.
     const char* _deviceClass;
 
