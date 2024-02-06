@@ -2,6 +2,7 @@
 #define AHA_HABINARYSENSOR_H
 
 #include "HABaseDeviceType.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_BINARY_SENSOR
 
@@ -29,6 +30,14 @@ public:
      * @returns Returns `true` if the MQTT message has been published successfully.
      */
     bool setState(const bool state, const bool force = false);
+
+    /**
+     * Sets the number of seconds after the sensor’s state expires, if it’s not updated.
+     * By default the sensors state never expires.
+     *
+     * @param expireAfter The number of seconds.
+     */
+    void setExpireAfter(uint16_t expireAfter);
 
     /**
      * Sets the current state of the sensor without publishing it to Home Assistant.
@@ -82,8 +91,12 @@ private:
     /// The icon of the sensor. It can be nullptr.
     const char* _icon;
 
+    /// It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.
+    HANumeric _expireAfter;
+
     /// Current state of the sensor. By default it's false.
     bool _currentState;
+
 };
 
 #endif

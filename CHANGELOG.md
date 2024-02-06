@@ -11,6 +11,7 @@
 * Added support for publishing the `None` state in the `HASelect` device type [#146](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/146)
 * Added support for publishing the `None` state in the `HASensor` device type [#175](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/175)
 * Added support for the `expire_after` property in the `HASensor` [#171](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/171)
+* Added support for the `expire_after` property in the `HABinarySensor` [#159](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/159)
 
 **Fixes:**
 * Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))

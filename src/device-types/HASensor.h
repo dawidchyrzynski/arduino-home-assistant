@@ -37,7 +37,7 @@ public:
      * Sets the number of seconds after the sensor’s state expires, if it’s not updated.
      * By default the sensors state never expires.
      *
-     * @param expireAfterSeconds The number of seconds.
+     * @param expireAfter The number of seconds.
      */
     void setExpireAfter(uint16_t expireAfter);
 
