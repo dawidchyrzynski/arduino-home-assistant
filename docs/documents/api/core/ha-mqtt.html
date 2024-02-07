@@ -156,6 +156,20 @@
 <span id="_CPPv36HAMqtt"></span><span id="_CPPv26HAMqtt"></span><span id="HAMqtt"></span><span class="target" id="class_h_a_mqtt"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><a class="headerlink" href="#_CPPv46HAMqtt" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This class is a wrapper for the PubSub API. It’s a central point of the library where instances of all device types are stored. </p>
 <div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionStateE">
+<span id="_CPPv3N6HAMqtt15ConnectionStateE"></span><span id="_CPPv2N6HAMqtt15ConnectionStateE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ConnectionState</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState17StateUnauthorizedE">
+<span id="_CPPv3N6HAMqtt15ConnectionState17StateUnauthorizedE"></span><span id="_CPPv2N6HAMqtt15ConnectionState17StateUnauthorizedE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a39d4eda1c9ac8023f84e63c1023e0c54"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateUnauthorized</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState17StateUnauthorizedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t">
@@ -329,6 +343,23 @@
 <dd class="field-odd"><p><strong>keepAlive</strong> – Number of seconds to keep connection alive. </p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13setBufferSizeE8uint16_t">
+<span id="_CPPv3N6HAMqtt13setBufferSizeE8uint16_t"></span><span id="_CPPv2N6HAMqtt13setBufferSizeE8uint16_t"></span><span id="HAMqtt::setBufferSize__uint16_t"></span><span class="target" id="class_h_a_mqtt_1a90c9d43346a86471ffcc6e5e98fbba6a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setBufferSize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt13setBufferSizeE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the buffer size for the MQTT connection. By default it’s 256 bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> – Size of the buffer. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt8getStateEv">
+<span id="_CPPv3NK6HAMqtt8getStateEv"></span><span id="_CPPv2NK6HAMqtt8getStateEv"></span><span id="HAMqtt::getStateC"></span><span class="target" id="class_h_a_mqtt_1a356b1b1ee9ed9b46abca060616cca56e"></span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt8getStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the current state of the MQTT connection. </p>
 </dd></dl>
 
 <dl class="cpp function">
