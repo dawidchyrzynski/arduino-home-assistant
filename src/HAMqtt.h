@@ -37,17 +37,17 @@ class HAMqtt
 {
 public:
     enum ConnectionState {
-        StateNotInitialized = -5;
-        StateConnectionTimeout = -4;
-        StateConnectionLost = -3;
-        StateConnectionFailed = -2;
-        StateDisconnected = -1;
-        StateConnected = 0;
-        StateBadProtocol = 1;
-        StateBadClientId = 2;
-        StateUnavailable = 3;
-        StateBadCredentials = 4;
-        StateUnauthorized = 5;
+        StateNotInitialized = -5,
+        StateConnectionTimeout = -4,
+        StateConnectionLost = -3,
+        StateConnectionFailed = -2,
+        StateDisconnected = -1,
+        StateConnected = 0,
+        StateBadProtocol = 1,
+        StateBadClientId = 2,
+        StateUnavailable = 3,
+        StateBadCredentials = 4,
+        StateUnauthorized = 5
     };
 
     /**

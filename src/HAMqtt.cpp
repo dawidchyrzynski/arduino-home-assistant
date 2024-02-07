@@ -193,7 +193,7 @@ bool HAMqtt::setBufferSize(uint16_t size)
     return _mqtt->setBufferSize(size);
 }
 
-ConnectionState HAMqtt::state() const
+HAMqtt::ConnectionState HAMqtt::getState() const
 {
     if (!_initialized) {
         return StateNotInitialized;
