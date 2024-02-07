@@ -136,7 +136,7 @@ public:
     inline bool setBufferSize(uint16_t bufferSize)
         { _bufferSize = bufferSize; return true; }
 
-    inline int16_t getBufferSize() const
+    inline uint16_t getBufferSize() const
         { return _bufferSize; }
 
     inline void setState(int16_t state)
