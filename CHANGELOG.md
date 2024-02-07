@@ -3,9 +3,9 @@
 ## 2.1.0
 
 **New features:**
-* Added support for setting MQTT's keep alive ([https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153](#153))
-* Added support for the `state_class` property in the `HASensor` ([#179](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/179) by [@https://github.com/Starzu])
-* Implemented extended unique ID support for all device types. This allows you to prefix each device type's unique ID with the device ID, ensuring smooth deployment of identical code on multiple devices without encountering unique ID conflicts [#212](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/212#issuecomment-1919832684)
+* Added support for setting MQTT's keep alive [#153](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153) by [@allenb2800](https://github.com/allenb2800)
+* Added support for the `state_class` property in the `HASensor` [#179](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/179)
+* Implemented extended unique ID support for all device types. This allows you to prefix each device type's unique ID with the device ID, ensuring smooth deployment of identical code on multiple devices without encountering unique ID conflicts [#212](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/212)
 * Added support for the `configuration_url` property in the `HADevice` [#182](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/182)
 * Added `getCurrentOption` method to the `HASelect` device type [#163](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/163)
 * Added support for publishing the `None` state in the `HASelect` device type [#146](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/146)
