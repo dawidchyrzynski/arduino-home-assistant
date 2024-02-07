@@ -36,6 +36,20 @@ using namespace arduino;
 class HAMqtt
 {
 public:
+    enum ConnectionState {
+        StateNotInitialized = -5;
+        StateConnectionTimeout = -4;
+        StateConnectionLost = -3;
+        StateConnectionFailed = -2;
+        StateDisconnected = -1;
+        StateConnected = 0;
+        StateBadProtocol = 1;
+        StateBadClientId = 2;
+        StateUnavailable = 3;
+        StateBadCredentials = 4;
+        StateUnauthorized = 5;
+    };
+
     /**
      * Returns existing instance (singleton) of the HAMqtt class.
      * It may be a null pointer if the HAMqtt object was never constructed or it was destroyed.
@@ -224,6 +238,11 @@ public:
      * @param size Size of the buffer.
      */
     bool setBufferSize(uint16_t size);
+
+    /**
+     * Returns the current state of the MQTT connection.
+     */
+    ConnectionState getState() const;
 
     /**
      * Adds a new device's type to the MQTT.

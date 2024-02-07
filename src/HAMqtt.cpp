@@ -193,6 +193,15 @@ bool HAMqtt::setBufferSize(uint16_t size)
     return _mqtt->setBufferSize(size);
 }
 
+ConnectionState HAMqtt::state() const
+{
+    if (!_initialized) {
+        return StateNotInitialized;
+    }
+
+    return static_cast<ConnectionState>(_mqtt->state());
+}
+
 void HAMqtt::addDeviceType(HABaseDeviceType* deviceType)
 {
     if (_devicesTypesNb + 1 > _maxDevicesTypesNb) {
