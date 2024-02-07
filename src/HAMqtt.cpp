@@ -188,6 +188,11 @@ void HAMqtt::setKeepAlive(uint16_t keepAlive)
     _mqtt->setKeepAlive(keepAlive);
 }
 
+bool HAMqtt::setBufferSize(uint16_t size)
+{
+    return _mqtt->setBufferSize(size);
+}
+
 void HAMqtt::addDeviceType(HABaseDeviceType* deviceType)
 {
     if (_devicesTypesNb + 1 > _maxDevicesTypesNb) {

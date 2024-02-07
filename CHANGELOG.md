@@ -14,6 +14,7 @@
 * Added support for the `expire_after` property in the `HABinarySensor` [#159](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/159)
 * Added support for the JSON attributes in the `HASensor`
 * Added support for the `object_id` property in all device types
+* Added `setBufferSize` method to the `HAMqtt` class [#202](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/202)
 
 **Fixes:**
 * Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))

@@ -218,6 +218,14 @@ public:
     void setKeepAlive(uint16_t keepAlive);
 
     /**
+     * Sets the buffer size for the MQTT connection.
+     * By default it's 256 bytes.
+     *
+     * @param size Size of the buffer.
+     */
+    bool setBufferSize(uint16_t size);
+
+    /**
      * Adds a new device's type to the MQTT.
      * Each time the connection with MQTT broker is acquired, the HAMqtt class
      * calls "onMqttConnected" method in all devices' types instances.
