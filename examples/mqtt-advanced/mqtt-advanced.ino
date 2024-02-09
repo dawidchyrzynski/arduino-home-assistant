@@ -29,18 +29,32 @@ void onMqttConnected() {
     mqtt.subscribe("myCustomTopic");
 }
 
+void onMqttDisconnected() {
+    Serial.println("Disconnected from the broker!");
+}
+
+void onMqttStateChange(HAMqtt::ConnectionState state) {
+    Serial.print("MQTT state changed to: ");
+    Serial.println(static_cast<int8_t>(state));
+}
+
 void setup() {
     Serial.begin(9600);
     Ethernet.begin(mac);
 
     mqtt.onMessage(onMqttMessage);
     mqtt.onConnected(onMqttConnected);
+    mqtt.onDisconnected(onMqttDisconnected);
+    mqtt.onStateChange(onMqttStateChange);
 
     // If you use custom discovery prefix you can change it as following:
     // mqtt.setDiscoveryPrefix("customPrefix");
 
     // If you want to change prefix only for non-discovery prefix:
     // mqtt.setDataPrefix("data");
+
+    // Obtaining state of the MQTT connection:
+    // mqtt.getState();
 
     mqtt.begin(BROKER_ADDR);
 }

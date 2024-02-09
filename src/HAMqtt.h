@@ -7,6 +7,7 @@
 #include "ArduinoHADefines.h"
 
 #define HAMQTT_CALLBACK(name) void (*name)()
+#define HAMQTT_STATE_CALLBACK(name) void (*name)(ConnectionState state)
 #define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
 #define HAMQTT_DEFAULT_PORT 1883
 
@@ -37,7 +38,8 @@ class HAMqtt
 {
 public:
     enum ConnectionState {
-        StateNotInitialized = -5,
+        StateNotInitialized = -6,
+        StateConnecting = -5,
         StateConnectionTimeout = -4,
         StateConnectionLost = -3,
         StateConnectionFailed = -2,
@@ -144,6 +146,28 @@ public:
         { _connectedCallback = callback; }
 
     /**
+     * Registers a new callback method that will be called each time the connection to the MQTT broker is lost.
+     *
+     * @param callback Callback method.
+     */
+    inline void onDisconnected(HAMQTT_CALLBACK(callback))
+        { _disconnectedCallback = callback; }
+
+    /**
+     * Registers a new callback method that will be called each time the connection state changes.
+     *
+     * @param callback Callback method.
+     */
+    inline void onStateChanged(HAMQTT_STATE_CALLBACK(callback))
+        { _stateChangedCallback = callback; }
+
+    /**
+     * Returns the current state of the MQTT connection.
+     */
+    inline ConnectionState getState() const
+        { return _currentState; }
+
+    /**
      * Sets parameters of the MQTT connection using the IP address and port.
      * The library will try to connect to the broker in first loop cycle.
      * Please note that the library automatically reconnects to the broker if connection is lost.
@@ -238,11 +262,6 @@ public:
      * @param size Size of the buffer.
      */
     bool setBufferSize(uint16_t size);
-
-    /**
-     * Returns the current state of the MQTT connection.
-     */
-    ConnectionState getState() const;
 
     /**
      * Adds a new device's type to the MQTT.
@@ -393,6 +412,12 @@ private:
     /// The callback method that will be called when the MQTT connection is acquired.
     HAMQTT_CALLBACK(_connectedCallback);
 
+    /// The callback method that will be called when the MQTT connection is lost.
+    HAMQTT_CALLBACK(_disconnectedCallback);
+
+    /// The callback method that will be called when the MQTT connection state changes.
+    HAMQTT_STATE_CALLBACK(_stateChangedCallback);
+
     /// Specifies whether the HAMqtt::begin method was ever called.
     bool _initialized;
 
@@ -428,6 +453,9 @@ private:
 
     /// The last will retain set by HAMqtt::setLastWill
     bool _lastWillRetain;
+
+    /// The last known state of the MQTT connection.
+    ConnectionState _currentState;
 };
 
 #endif
