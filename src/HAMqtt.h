@@ -38,7 +38,6 @@ class HAMqtt
 {
 public:
     enum ConnectionState {
-        StateNotInitialized = -6,
         StateConnecting = -5,
         StateConnectionTimeout = -4,
         StateConnectionLost = -3,

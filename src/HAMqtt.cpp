@@ -26,7 +26,7 @@
     _lastWillTopic(nullptr), \
     _lastWillMessage(nullptr), \
     _lastWillRetain(false), \
-    _currentState(StateNotInitialized)
+    _currentState(StateDisconnected)
 
 static const char* DefaultDiscoveryPrefix = "homeassistant";
 static const char* DefaultDataPrefix = "aha";
@@ -343,7 +343,7 @@ void HAMqtt::setState(ConnectionState state)
     if (_currentState == StateConnected) {
         ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT connected"))
         onConnectedLogic();
-    } else if (previousState == StateConnected && _currentState != StateDisconnected) {
+    } else if (previousState == StateConnected && _currentState != StateConnected) {
         ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT disconnected"))
 
         if (_disconnectedCallback) {
