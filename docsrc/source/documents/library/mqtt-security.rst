@@ -1,15 +1,15 @@
 MQTT security
 =============
 
-The library allows you to use credentials for acquiring a TCP connection with the MQTT broker.
-By default you can use the same credentials you use for login in the Home Assistant panel but you can also configure custom credentials in the Mosquitto broker.
+The library enables you to utilize credentials to establish a TCP connection with the MQTT broker.
+By default, you can employ the same credentials utilized for logging into the Home Assistant panel.
+However, it's also possible to configure custom credentials within the Mosquitto broker.
 
 .. DANGER::
 
-    This solution is not 100% secure because communication between Arduino and Home Assistant is not encrypted.
-    Username and password can be easily discovered by analyzing your local network traffic.
-    However, that's fine as long as your local network is secured against unattended access.
-    On more powerful devices (like ESP), you should consider using TLS/SSL connection.
+    This solution may not provide comprehensive security as the communication between Arduino and Home Assistant lacks encryption.
+    Consequently, username and password could be vulnerable to discovery through analysis of local network traffic.
+    However, this may not pose a significant risk if your local network is properly secured against unauthorized access.
 
 ::
 
@@ -31,10 +31,3 @@ By default you can use the same credentials you use for login in the Home Assist
     void loop() {
         // ...
     }
-
-
-SSL connection
---------------
-
-On ESP32/ESP8266 you can use ``WiFiClientSecure`` client to establish encrypted connection between your device and Home Assistant.
-Please take a look at :example:`this example <mqtt-with-ssl/mqtt-with-ssl.ino>`.
