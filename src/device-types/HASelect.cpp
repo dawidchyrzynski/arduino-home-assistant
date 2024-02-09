@@ -174,7 +174,7 @@ bool HASelect::publishState(const int8_t state)
         return false;
     }
 
-    if (state == -1) {
+    if (state < 0) {
         return publishOnDataTopic(AHATOFSTR(HAStateTopic), AHATOFSTR(HAStateNone), true);
     }
 
