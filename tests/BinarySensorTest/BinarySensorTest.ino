@@ -203,7 +203,7 @@ AHA_TEST(BinarySensorTest, default_state_false) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
-    assertEqual(false, sensor.getCurrentState());
+    assertFalse(sensor.getCurrentState());
 }
 
 AHA_TEST(BinarySensorTest, default_state_true) {

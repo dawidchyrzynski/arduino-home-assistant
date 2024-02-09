@@ -8,7 +8,7 @@
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
-    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastStateCallbackCall.state); \
     assertEqual(callerPtr, lastStateCallbackCall.caller);
 
 #define assertStateCallbackNotCalled() \
