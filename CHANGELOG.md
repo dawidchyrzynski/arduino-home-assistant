@@ -18,6 +18,7 @@
 * Added `getState` method to the `HAMqtt` class
 * Added `onDisconnected` callback method to the `HAMqtt` class
 * Added `onStateChanged` callback method to the `HAMqtt` class
+* Added support for Arduino Due [#137](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/137)
 
 **Fixes:**
 * Fixed a bug with the maximum number of device types [#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty)
