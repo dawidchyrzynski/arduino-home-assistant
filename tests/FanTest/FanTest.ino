@@ -377,7 +377,7 @@ AHA_TEST(FanTest, current_state_setter) {
     fan.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, fan.getCurrentState());
+    assertTrue(fan.getCurrentState());
 }
 
 AHA_TEST(FanTest, current_speed_setter) {

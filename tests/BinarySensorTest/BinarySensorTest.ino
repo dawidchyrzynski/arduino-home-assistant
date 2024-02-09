@@ -211,7 +211,7 @@ AHA_TEST(BinarySensorTest, default_state_true) {
 
     HABinarySensor sensor(testUniqueId);
     sensor.setCurrentState(true);
-    assertEqual(true, sensor.getCurrentState());
+    assertTrue(sensor.getCurrentState());
 }
 
 AHA_TEST(BinarySensorTest, publish_state_on) {

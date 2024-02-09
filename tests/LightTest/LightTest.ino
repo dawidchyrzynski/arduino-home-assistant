@@ -603,7 +603,7 @@ AHA_TEST(LightTest, current_state_setter) {
     light.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, light.getCurrentState());
+    assertTrue(light.getCurrentState());
 }
 
 AHA_TEST(LightTest, current_brightness_setter) {
