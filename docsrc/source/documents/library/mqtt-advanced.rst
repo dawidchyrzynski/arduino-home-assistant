@@ -25,11 +25,23 @@ Please take a look at the example below.
         // this method will be called when connection to MQTT broker is established
     }
 
+    void onDisconnected() {
+        // this method will be called when connection to MQTT broker is lost
+    }
+
+    void onStateChanged(HAMqtt::ConnectionState state) {
+        // this method will be called each time the state of the MQTT connection changes
+    }
+
     void setup() {
         Ethernet.begin(mac);
 
         mqtt.onMessage(onMessage);
         mqtt.onConnected(onConnected);
+        mqtt.onDisconnected(onDisconnected);
+        mqtt.onStateChanged(onStateChanged);
+        mqtt.setBufferSize(512); // set the buffer size to 512 bytes, default is 256 bytes
+        mqtt.setKeepAlive(60); // set the keep alive interval to 60 seconds, default is 15 seconds
         mqtt.begin("192.168.1.50", "username", "password");
     }
 

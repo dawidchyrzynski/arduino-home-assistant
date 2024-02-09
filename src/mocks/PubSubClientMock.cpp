@@ -7,6 +7,8 @@ PubSubClientMock::PubSubClientMock() :
     _pendingMessage(nullptr),
     _flushedMessages(nullptr),
     _keepAlive(15),
+    _bufferSize(256),
+    _state(0),
     _flushedMessagesNb(0),
     _subscriptions(nullptr),
     _subscriptionsNb(0),

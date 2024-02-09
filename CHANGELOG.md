@@ -3,9 +3,9 @@
 ## 2.1.0
 
 **New features:**
-* Added support for setting MQTT's keep alive ([https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153](#153))
-* Added support for the `state_class` property in the `HASensor` ([#179](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/179) by [@https://github.com/Starzu])
-* Implemented extended unique ID support for all device types. This allows you to prefix each device type's unique ID with the device ID, ensuring smooth deployment of identical code on multiple devices without encountering unique ID conflicts [#212](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/212#issuecomment-1919832684)
+* Added support for setting MQTT's keep alive [#153](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/153) by [@allenb2800](https://github.com/allenb2800)
+* Added support for the `state_class` property in the `HASensor` [#179](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/179)
+* Implemented extended unique ID support for all device types. This allows you to prefix each device type's unique ID with the device ID, ensuring smooth deployment of identical code on multiple devices without encountering unique ID conflicts [#212](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/212)
 * Added support for the `configuration_url` property in the `HADevice` [#182](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/182)
 * Added `getCurrentOption` method to the `HASelect` device type [#163](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/163)
 * Added support for publishing the `None` state in the `HASelect` device type [#146](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/146)
@@ -14,10 +14,14 @@
 * Added support for the `expire_after` property in the `HABinarySensor` [#159](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/159)
 * Added support for the JSON attributes in the `HASensor`
 * Added support for the `object_id` property in all device types
+* Added `setBufferSize` method to the `HAMqtt` class [#202](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/202)
+* Added `getState` method to the `HAMqtt` class
+* Added `onDisconnected` callback method to the `HAMqtt` class
+* Added `onStateChanged` callback method to the `HAMqtt` class
 
 **Fixes:**
-* Fixed a bug with the maximum number of device types ([#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty))
-* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` ([#197](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/197) by [@shedokan](https://github.com/shedokan))
+* Fixed a bug with the maximum number of device types [#190](https://github.com/dawidchyrzynski/arduino-home-assistant/issues/190) by [@martaisty](https://github.com/martaisty)
+* Fixed compiler warning: `class 'HANumeric' is implicitly friends with itself` [#197](https://github.com/dawidchyrzynski/arduino-home-assistant/pull/197) by [@shedokan](https://github.com/shedokan)
 * The default limit for device types has been raised to 24 on processors other than ATMega328/ATMega168. The previous default limit of 6 led to confusion for many users.
 
 ## 2.0.0
