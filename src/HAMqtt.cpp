@@ -312,7 +312,9 @@ void HAMqtt::connectToServer()
         true
     );
 
-    if (!isConnected()) {
+    if (isConnected()) {
+        setState(StateConnected);
+    } else {
         ARDUINOHA_DEBUG_PRINTLN(F("AHA: failed to connect"))
     }
 }
