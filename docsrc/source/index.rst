@@ -25,3 +25,4 @@ Features
    documents/getting-started/index
    documents/library/index
    documents/api/index
+   Sponsor <https://github.com/sponsors/dawidchyrzynski>

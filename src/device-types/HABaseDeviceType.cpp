@@ -11,6 +11,7 @@ HABaseDeviceType::HABaseDeviceType(
     _componentName(componentName),
     _uniqueId(uniqueId),
     _name(nullptr),
+    _objectId(nullptr),
     _serializer(nullptr),
     _availability(AvailabilityDefault)
 {

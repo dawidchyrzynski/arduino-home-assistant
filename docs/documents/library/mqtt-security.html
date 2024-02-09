@@ -25,7 +25,7 @@
   <link rel="index" title="Index" href="../../genindex.html" />
   <link rel="search" title="Search" href="../../search.html" />
   <link rel="next" title="MQTT advanced features" href="mqtt-advanced.html" />
-  <link rel="prev" title="Device types" href="device-types.html" /> 
+  <link rel="prev" title="Device types (entities)" href="device-types.html" /> 
   </head>
 
   <body>
@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -134,7 +135,7 @@
   <ul class="page-nav">
   <li class="prev">
     <a href="device-types.html"
-       title="previous chapter">← Device types</a>
+       title="previous chapter">← Device types (entities)</a>
   </li>
   <li class="next">
     <a href="mqtt-advanced.html"
@@ -148,14 +149,14 @@
             
   <section id="mqtt-security">
 <h1>MQTT security<a class="headerlink" href="#mqtt-security" title="Permalink to this headline">¶</a></h1>
-<p>The library allows you to use credentials for acquiring a TCP connection with the MQTT broker.
-By default you can use the same credentials you use for login in the Home Assistant panel but you can also configure custom credentials in the Mosquitto broker.</p>
+<p>The library enables you to utilize credentials to establish a TCP connection with the MQTT broker.
+By default, you can employ the same credentials utilized for logging into the Home Assistant panel.
+However, it’s also possible to configure custom credentials within the Mosquitto broker.</p>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>This solution is not 100% secure because communication between Arduino and Home Assistant is not encrypted.
-Username and password can be easily discovered by analyzing your local network traffic.
-However, that’s fine as long as your local network is secured against unattended access.
-On more powerful devices (like ESP), you should consider using TLS/SSL connection.</p>
+<p>This solution may not provide comprehensive security as the communication between Arduino and Home Assistant lacks encryption.
+Consequently, username and password could be vulnerable to discovery through analysis of local network traffic.
+However, this may not pose a significant risk if your local network is properly secured against unauthorized access.</p>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
@@ -177,11 +178,6 @@ On more powerful devices (like ESP), you should consider using TLS/SSL connectio
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
-<section id="ssl-connection">
-<h2>SSL connection<a class="headerlink" href="#ssl-connection" title="Permalink to this headline">¶</a></h2>
-<p>On ESP32/ESP8266 you can use <code class="docutils literal notranslate"><span class="pre">WiFiClientSecure</span></code> client to establish encrypted connection between your device and Home Assistant.
-Please take a look at <a class="reference external" href="https://github.com/dawidchyrzynski/arduino-home-assistant/tree/main/examples/mqtt-with-ssl/mqtt-with-ssl.ino">this example</a>.</p>
-</section>
 </section>
 
 
@@ -190,7 +186,7 @@ Please take a look at <a class="reference external" href="https://github.com/daw
             <div class="inner"><ul class="page-nav">
   <li class="prev">
     <a href="device-types.html"
-       title="previous chapter">← Device types</a>
+       title="previous chapter">← Device types (entities)</a>
   </li>
   <li class="next">
     <a href="mqtt-advanced.html"

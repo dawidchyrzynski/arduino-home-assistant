@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -148,11 +149,11 @@
             
   <section id="device-configuration">
 <h1>Device configuration<a class="headerlink" href="#device-configuration" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> represents the physical device where the library is installed.
-Logically it’s a group of types like sensors, switches, lights and so on.
-In the Home Assistant, it’s listed with properties that may be configured using the library’s API.</p>
-<p>Each property except the unique ID is optional.
-Setting optional properties increases flash and RAM usage so it’s not recommended to set them on lower-spec MCUs.</p>
+<p><a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> represents the physical device on which the library is used.
+Essentially, it’s a group of types such as sensors, switches, lights, and more.
+Within Home Assistant, it appears with properties that can be configured using the library’s API.</p>
+<p>Every property, except for the unique ID, is optional.
+Enabling optional properties can lead to increased flash and RAM usage, therefore it is not advisable to set them on lower-spec MCUs.</p>
 <p>The supported properties are:</p>
 <ul class="simple">
 <li><p>unique ID*</p></li>
@@ -160,13 +161,15 @@ Setting optional properties increases flash and RAM usage so it’s not recommen
 <li><p>software version</p></li>
 <li><p>manufacturer</p></li>
 <li><p>model</p></li>
+<li><p>configuration url</p></li>
 </ul>
 <section id="unique-id">
 <h2>Unique ID<a class="headerlink" href="#unique-id" title="Permalink to this headline">¶</a></h2>
-<p>The ID of a device needs to be unique in a scope of a Home Assistant instance.
-The safest solution is to use the MAC address of an Ethernet or Wi-Fi chip but you can also implement your own solution.</p>
-<p>There are three different ways to set the ID of the device.
-You can pick one depending on your needs.</p>
+<p>The unique ID serves as an internal identifier for devices within Home Assistant.
+With this ID, Home Assistant can monitor the device’s parameters and the entities it exposes.
+The unique ID must be distinct within the scope of the Home Assistant instance.
+The recommended approach is to use the MAC address of an Ethernet or Wi-Fi chip.</p>
+<p>There are three distinct methods for setting the device ID, allowing you to choose the one that best suits your requirements.</p>
 <section id="providing-string-const-char-to-the-hadevice-constructor">
 <h3>1) Providing string (const char*) to the <a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> constructor<a class="headerlink" href="#providing-string-const-char-to-the-hadevice-constructor" title="Permalink to this headline">¶</a></h3>
 <p>Try to keep the ID simple (alphanumeric characters) and short.</p>
@@ -226,7 +229,7 @@ You can pick one depending on your needs.</p>
 <section id="device-properties">
 <h2>Device properties<a class="headerlink" href="#device-properties" title="Permalink to this headline">¶</a></h2>
 <p>Each property has its corresponding setter method in the <a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> class.
-Please note that all these methods accept const char pointer whose <strong>content is not copied</strong>.</p>
+Please note that all of these methods accept a const char pointer whose <strong>content is not copied</strong>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;ArduinoHA.h&gt;</span><span class="cp"></span>
 
 <span class="n">HADevice</span><span class="w"> </span><span class="nf">device</span><span class="p">(</span><span class="s">&quot;myUniqueId&quot;</span><span class="p">);</span><span class="w"></span>
@@ -236,6 +239,7 @@ Please note that all these methods accept const char pointer whose <strong>conte
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setSoftwareVersion</span><span class="p">(</span><span class="s">&quot;1.0.0&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setManufacturer</span><span class="p">(</span><span class="s">&quot;Developer Corp.&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setModel</span><span class="p">(</span><span class="s">&quot;ABC-123&quot;</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">device</span><span class="p">.</span><span class="n">setConfigurationUrl</span><span class="p">(</span><span class="s">&quot;http://192.168.1.55:1234&quot;</span><span class="p">);</span><span class="w"></span>
 
 <span class="w">    </span><span class="c1">// ...</span>
 <span class="p">}</span><span class="w"></span>

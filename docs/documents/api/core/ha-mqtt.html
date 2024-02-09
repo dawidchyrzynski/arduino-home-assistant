@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -155,10 +156,74 @@
 <span id="_CPPv36HAMqtt"></span><span id="_CPPv26HAMqtt"></span><span id="HAMqtt"></span><span class="target" id="class_h_a_mqtt"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><a class="headerlink" href="#_CPPv46HAMqtt" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>This class is a wrapper for the PubSub API. It’s a central point of the library where instances of all device types are stored. </p>
 <div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionStateE">
+<span id="_CPPv3N6HAMqtt15ConnectionStateE"></span><span id="_CPPv2N6HAMqtt15ConnectionStateE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ConnectionState</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState15StateConnectingE">
+<span id="_CPPv3N6HAMqtt15ConnectionState15StateConnectingE"></span><span id="_CPPv2N6HAMqtt15ConnectionState15StateConnectingE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a26e4b442b7686873d5d46a112fae55bd"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateConnecting</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState15StateConnectingE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState22StateConnectionTimeoutE">
+<span id="_CPPv3N6HAMqtt15ConnectionState22StateConnectionTimeoutE"></span><span id="_CPPv2N6HAMqtt15ConnectionState22StateConnectionTimeoutE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a0f7e0cd68753b9fd49aea3533bbd7a04"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateConnectionTimeout</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState22StateConnectionTimeoutE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState19StateConnectionLostE">
+<span id="_CPPv3N6HAMqtt15ConnectionState19StateConnectionLostE"></span><span id="_CPPv2N6HAMqtt15ConnectionState19StateConnectionLostE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a2a491377061c733fb54b1cd0adcc0a0c"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateConnectionLost</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState19StateConnectionLostE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState21StateConnectionFailedE">
+<span id="_CPPv3N6HAMqtt15ConnectionState21StateConnectionFailedE"></span><span id="_CPPv2N6HAMqtt15ConnectionState21StateConnectionFailedE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a84ec7511e2dca0785ca364b75c465019"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateConnectionFailed</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState21StateConnectionFailedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState17StateDisconnectedE">
+<span id="_CPPv3N6HAMqtt15ConnectionState17StateDisconnectedE"></span><span id="_CPPv2N6HAMqtt15ConnectionState17StateDisconnectedE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7ab8f4310771f23cc05ecb141666c85292"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateDisconnected</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState17StateDisconnectedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState14StateConnectedE">
+<span id="_CPPv3N6HAMqtt15ConnectionState14StateConnectedE"></span><span id="_CPPv2N6HAMqtt15ConnectionState14StateConnectedE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a0c33a2492617d852c461645e04d7b641"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateConnected</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState14StateConnectedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState16StateBadProtocolE">
+<span id="_CPPv3N6HAMqtt15ConnectionState16StateBadProtocolE"></span><span id="_CPPv2N6HAMqtt15ConnectionState16StateBadProtocolE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a9b88f4b93c76c0270863b2f94d4882d7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateBadProtocol</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState16StateBadProtocolE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState16StateBadClientIdE">
+<span id="_CPPv3N6HAMqtt15ConnectionState16StateBadClientIdE"></span><span id="_CPPv2N6HAMqtt15ConnectionState16StateBadClientIdE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7ab7da41970dcf4c6c946c54bd76905c33"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateBadClientId</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState16StateBadClientIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState16StateUnavailableE">
+<span id="_CPPv3N6HAMqtt15ConnectionState16StateUnavailableE"></span><span id="_CPPv2N6HAMqtt15ConnectionState16StateUnavailableE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7ac7f60402355ec36b51a8ca5d965b90b8"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateUnavailable</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState16StateUnavailableE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState19StateBadCredentialsE">
+<span id="_CPPv3N6HAMqtt15ConnectionState19StateBadCredentialsE"></span><span id="_CPPv2N6HAMqtt15ConnectionState19StateBadCredentialsE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a00437050c29a348c97743889f378e4f7"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateBadCredentials</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState19StateBadCredentialsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt15ConnectionState17StateUnauthorizedE">
+<span id="_CPPv3N6HAMqtt15ConnectionState17StateUnauthorizedE"></span><span id="_CPPv2N6HAMqtt15ConnectionState17StateUnauthorizedE"></span><span class="target" id="class_h_a_mqtt_1a46bf495384c36afc3d85edbaa3d495b7a39d4eda1c9ac8023f84e63c1023e0c54"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StateUnauthorized</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt15ConnectionState17StateUnauthorizedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t">
-<span id="_CPPv3N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="_CPPv2N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="HAMqtt::HAMqtt__ClientR.HADeviceR.uint8_tC"></span><span class="target" id="class_h_a_mqtt_1a336b9511591544e2642451aae3c174fd"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Client</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">netClient</span></span>, <a class="reference internal" href="ha-device.html#_CPPv48HADevice" title="HADevice"><span class="n"><span class="pre">HADevice</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">device</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">maxDevicesTypesNb</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">6</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="_CPPv2N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t"></span><span id="HAMqtt::HAMqtt__ClientR.HADeviceR.uint8_tC"></span><span class="target" id="class_h_a_mqtt_1a404d7041521e1f10bf250b439abc9048"></span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">HAMqtt</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">Client</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">netClient</span></span>, <a class="reference internal" href="ha-device.html#_CPPv48HADevice" title="HADevice"><span class="n"><span class="pre">HADevice</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">device</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint8_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">maxDevicesTypesNb</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">24</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Creates a new instance of the <a class="reference internal" href="#class_h_a_mqtt"><span class="std std-ref">HAMqtt</span></a> class. Please note that only one instance of the class can be initialized at the same time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -240,6 +305,34 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt14onDisconnectedEPFvvE">
+<span id="_CPPv3N6HAMqtt14onDisconnectedEPFvvE"></span><span id="_CPPv2N6HAMqtt14onDisconnectedEPFvvE"></span><span class="target" id="class_h_a_mqtt_1a42dc8114d38dde6e58ead88f9b5181e3"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onDisconnected</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt14onDisconnectedEPFvvE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers a new callback method that will be called each time the connection to the MQTT broker is lost.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – Callback method. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt14onStateChangedEPFv15ConnectionStateE">
+<span id="_CPPv3N6HAMqtt14onStateChangedEPFv15ConnectionStateE"></span><span id="_CPPv2N6HAMqtt14onStateChangedEPFv15ConnectionStateE"></span><span class="target" id="class_h_a_mqtt_1acbb91743a51c390e6d2a608f58c5cd3e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">onStateChanged</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">callback</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">)</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt14onStateChangedEPFv15ConnectionStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Registers a new callback method that will be called each time the connection state changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>callback</strong> – Callback method. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt8getStateEv">
+<span id="_CPPv3NK6HAMqtt8getStateEv"></span><span id="_CPPv2NK6HAMqtt8getStateEv"></span><span id="HAMqtt::getStateC"></span><span class="target" id="class_h_a_mqtt_1a356b1b1ee9ed9b46abca060616cca56e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">getState</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt8getStateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the current state of the MQTT connection. </p>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc">
 <span id="_CPPv3N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc"></span><span id="_CPPv2N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc"></span><span id="HAMqtt::begin__IPAddressC.uint16_tC.cCP.cCP"></span><span class="target" id="class_h_a_mqtt_1ae4e2ebb17afaeef26d98c69d6a9e5cbb"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">begin</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">IPAddress</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverIp</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">serverPort</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1883</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">username</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">password</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">nullptr</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets parameters of the MQTT connection using the IP address and port. The library will try to connect to the broker in first loop cycle. Please note that the library automatically reconnects to the broker if connection is lost.</p>
@@ -317,6 +410,28 @@
 <dt class="sig sig-object cpp" id="_CPPv4NK6HAMqtt11isConnectedEv">
 <span id="_CPPv3NK6HAMqtt11isConnectedEv"></span><span id="_CPPv2NK6HAMqtt11isConnectedEv"></span><span id="HAMqtt::isConnectedC"></span><span class="target" id="class_h_a_mqtt_1adef13bd12ec58ab542ca99a74456e65b"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">isConnected</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK6HAMqtt11isConnectedEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Returns true if connection to the MQTT broker is established. </p>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt12setKeepAliveE8uint16_t">
+<span id="_CPPv3N6HAMqtt12setKeepAliveE8uint16_t"></span><span id="_CPPv2N6HAMqtt12setKeepAliveE8uint16_t"></span><span id="HAMqtt::setKeepAlive__uint16_t"></span><span class="target" id="class_h_a_mqtt_1a014a655f288e0e02e441b5bb33d1094e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setKeepAlive</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">keepAlive</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt12setKeepAliveE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets keep alive for the MQTT connection. By default it’s 15 seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keepAlive</strong> – Number of seconds to keep connection alive. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13setBufferSizeE8uint16_t">
+<span id="_CPPv3N6HAMqtt13setBufferSizeE8uint16_t"></span><span id="_CPPv2N6HAMqtt13setBufferSizeE8uint16_t"></span><span id="HAMqtt::setBufferSize__uint16_t"></span><span class="target" id="class_h_a_mqtt_1a90c9d43346a86471ffcc6e5e98fbba6a"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setBufferSize</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">size</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt13setBufferSizeE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the buffer size for the MQTT connection. By default it’s 256 bytes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>size</strong> – Size of the buffer. </p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="cpp function">
@@ -479,6 +594,12 @@
 <dd><p>This method is called each time the connection with MQTT broker is acquired. </p>
 </dd></dl>
 
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt8setStateE15ConnectionState">
+<span id="_CPPv3N6HAMqtt8setStateE15ConnectionState"></span><span id="_CPPv2N6HAMqtt8setStateE15ConnectionState"></span><span id="HAMqtt::setState__ConnectionState"></span><span class="target" id="class_h_a_mqtt_1aa2b7c63842cf47c618dd7c36d4feec85"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setState</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">state</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6HAMqtt8setStateE15ConnectionState" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the state of the MQTT connection. </p>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
@@ -504,6 +625,18 @@
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt18_connectedCallbackE">
 <span id="_CPPv3N6HAMqtt18_connectedCallbackE"></span><span id="_CPPv2N6HAMqtt18_connectedCallbackE"></span><span class="target" id="class_h_a_mqtt_1a1d995685821259e8826a38c9dd613624"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_connectedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt18_connectedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The callback method that will be called when the MQTT connection is acquired. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt21_disconnectedCallbackE">
+<span id="_CPPv3N6HAMqtt21_disconnectedCallbackE"></span><span id="_CPPv2N6HAMqtt21_disconnectedCallbackE"></span><span class="target" id="class_h_a_mqtt_1ab81e921289d90e0d30f86fdc0bc73518"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_disconnectedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt21_disconnectedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback method that will be called when the MQTT connection is lost. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt21_stateChangedCallbackE">
+<span id="_CPPv3N6HAMqtt21_stateChangedCallbackE"></span><span id="_CPPv2N6HAMqtt21_stateChangedCallbackE"></span><span class="target" id="class_h_a_mqtt_1a7d3886e24ddba3f56012c27e5d8959d3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateChangedCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="n"><span class="pre">state</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt21_stateChangedCallbackE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The callback method that will be called when the MQTT connection state changes. </p>
 </dd></dl>
 
 <dl class="cpp var">
@@ -578,12 +711,18 @@
 <dd><p>The last will retain set by <a class="reference internal" href="#class_h_a_mqtt_1a87c9c08db323a22e065bfa6762a94732"><span class="std std-ref">HAMqtt::setLastWill</span></a>. </p>
 </dd></dl>
 
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt13_currentStateE">
+<span id="_CPPv3N6HAMqtt13_currentStateE"></span><span id="_CPPv2N6HAMqtt13_currentStateE"></span><span id="HAMqtt::_currentState__ConnectionState"></span><span class="target" id="class_h_a_mqtt_1a8899aa292155d8c51499142cd0ae950c"></span><a class="reference internal" href="#_CPPv4N6HAMqtt15ConnectionStateE" title="HAMqtt::ConnectionState"><span class="n"><span class="pre">ConnectionState</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_currentState</span></span></span><a class="headerlink" href="#_CPPv4N6HAMqtt13_currentStateE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The last known state of the MQTT connection. </p>
+</dd></dl>
+
 </div>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-static-attributes">Private Static Attributes</p>
 <dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N6HAMqtt17ReconnectIntervalE">
-<span id="_CPPv3N6HAMqtt17ReconnectIntervalE"></span><span id="_CPPv2N6HAMqtt17ReconnectIntervalE"></span><span id="HAMqtt::ReconnectInterval__uint16_tC"></span><span class="target" id="class_h_a_mqtt_1a68a6a0d104024dcee5cf2534b419a035"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReconnectInterval</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">5000</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt17ReconnectIntervalE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6HAMqtt17ReconnectIntervalE"></span><span id="_CPPv2N6HAMqtt17ReconnectIntervalE"></span><span id="HAMqtt::ReconnectInterval__uint16_tC"></span><span class="target" id="class_h_a_mqtt_1a68a6a0d104024dcee5cf2534b419a035"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ReconnectInterval</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">10000</span></span><a class="headerlink" href="#_CPPv4N6HAMqtt17ReconnectIntervalE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Interval between MQTT reconnects (milliseconds). </p>
 </dd></dl>
 

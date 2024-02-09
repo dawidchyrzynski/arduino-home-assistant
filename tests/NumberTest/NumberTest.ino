@@ -71,6 +71,26 @@ AHA_TEST(NumberTest, default_params) {
     assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
 }
 
+AHA_TEST(NumberTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HANumber number(testUniqueId);
+    assertEntityConfig(
+        mock,
+        number,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
 AHA_TEST(NumberTest, command_subscription) {
     prepareTest
 
@@ -306,6 +326,27 @@ AHA_TEST(NumberTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueNumber\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueNumber/cmd_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(NumberTest, object_id_setter) {
+    prepareTest
+
+    HANumber number(testUniqueId);
+    number.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        number,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueNumber\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueNumber/stat_t\","

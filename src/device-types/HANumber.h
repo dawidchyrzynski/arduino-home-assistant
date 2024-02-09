@@ -64,7 +64,7 @@ public:
     _SET_STATE_OVERLOAD(uint32_t)
     _SET_STATE_OVERLOAD(float)
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
     _SET_STATE_OVERLOAD(int)
 #endif
 
@@ -86,7 +86,7 @@ public:
     _SET_CURRENT_STATE_OVERLOAD(uint32_t)
     _SET_CURRENT_STATE_OVERLOAD(float)
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
     _SET_CURRENT_STATE_OVERLOAD(int)
 #endif
 

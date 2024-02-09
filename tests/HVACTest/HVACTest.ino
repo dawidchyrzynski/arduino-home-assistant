@@ -12,7 +12,7 @@
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
-    assertEqual(expectedState, lastAuxStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastAuxStateCallbackCall.state); \
     assertEqual(callerPtr, lastAuxStateCallbackCall.caller);
 
 #define assertAuxStateCallbackNotCalled() \
@@ -20,7 +20,7 @@
 
 #define assertPowerCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastPowerCallbackCall.called); \
-    assertEqual(expectedState, lastPowerCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastPowerCallbackCall.state); \
     assertEqual(callerPtr, lastPowerCallbackCall.caller);
 
 #define assertPowerCallbackNotCalled() \
@@ -218,6 +218,25 @@ AHA_TEST(HVACTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueHVAC\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // config
+}
+
+AHA_TEST(HVACTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAHVAC hvac(testUniqueId);
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueHVAC\","
             "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"
             "}"
@@ -521,6 +540,26 @@ AHA_TEST(HVACTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueHVAC\","
+            "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
+            "\"dev\":{\"ids\":\"testDevice\"}"
+            "}"
+        )
+    )
+}
+
+AHA_TEST(HVACTest, object_id_setter) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId);
+    hvac.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        hvac,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueHVAC\","
             "\"curr_temp_t\":\"testData/testDevice/uniqueHVAC/curr_temp_t\","
             "\"dev\":{\"ids\":\"testDevice\"}"

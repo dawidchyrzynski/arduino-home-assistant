@@ -29,11 +29,8 @@ This solution forces `lxml` to be built from the sources.
 ## Generating the documentation
 
 1. Open terminal in the `docsrc` directory
-2. Run the Doxygen command `doxygen`
-3. Open the Pipenv shell `pipenv shell`
-4. Run the build `make html`
-
-The generated documentation will be available in the `docsrc/build/html` directory.
+2. Open the Pipenv shell `pipenv shell`
+3. Run the build `make github`
 
 ## Github pages
 

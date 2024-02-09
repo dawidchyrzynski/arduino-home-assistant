@@ -37,11 +37,17 @@ public:
 
     /**
      * Adds a new element to the array.
-     * 
+     *
      * @param itemP Item to add (string).
      * @returns Returns `true` if item has been added to the array successfully.
      */
     bool add(ItemType item);
+
+    /**
+     * Returns a pointer to the item at the given index.
+     * If the element doesn't exist, null is returned.
+     */
+    const char* getItem(const uint8_t index) const;
 
     /**
      * Calculates the size of the serialized array (JSON representation).

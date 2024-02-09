@@ -10,7 +10,7 @@
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
-    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastStateCallbackCall.state); \
     assertEqual(callerPtr, lastStateCallbackCall.caller);
 
 #define assertStateCallbackNotCalled() \
@@ -156,6 +156,26 @@ AHA_TEST(LightTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueLight\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
+AHA_TEST(LightTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HALight light(testUniqueId);
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueLight\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
             "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
@@ -403,6 +423,27 @@ AHA_TEST(LightTest, name_setter) {
     )
 }
 
+AHA_TEST(LightTest, object_id_setter) {
+    prepareTest
+
+    HALight light(testUniqueId);
+    light.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        light,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueLight\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLight/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLight/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(LightTest, icon_setter) {
     prepareTest
 
@@ -562,7 +603,7 @@ AHA_TEST(LightTest, current_state_setter) {
     light.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, light.getCurrentState());
+    assertTrue(light.getCurrentState());
 }
 
 AHA_TEST(LightTest, current_brightness_setter) {

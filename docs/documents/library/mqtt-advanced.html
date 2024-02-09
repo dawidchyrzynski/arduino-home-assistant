@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -168,11 +169,23 @@ Please take a look at the example below.</p>
 <span class="w">    </span><span class="c1">// this method will be called when connection to MQTT broker is established</span>
 <span class="p">}</span><span class="w"></span>
 
+<span class="kt">void</span><span class="w"> </span><span class="nf">onDisconnected</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// this method will be called when connection to MQTT broker is lost</span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">onStateChanged</span><span class="p">(</span><span class="n">HAMqtt</span><span class="o">::</span><span class="n">ConnectionState</span><span class="w"> </span><span class="n">state</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// this method will be called each time the state of the MQTT connection changes</span>
+<span class="p">}</span><span class="w"></span>
+
 <span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">Ethernet</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="n">mac</span><span class="p">);</span><span class="w"></span>
 
 <span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">onMessage</span><span class="p">(</span><span class="n">onMessage</span><span class="p">);</span><span class="w"></span>
 <span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">onConnected</span><span class="p">(</span><span class="n">onConnected</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">onDisconnected</span><span class="p">(</span><span class="n">onDisconnected</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">onStateChanged</span><span class="p">(</span><span class="n">onStateChanged</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">setBufferSize</span><span class="p">(</span><span class="mi">512</span><span class="p">);</span><span class="w"> </span><span class="c1">// set the buffer size to 512 bytes, default is 256 bytes</span>
+<span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">setKeepAlive</span><span class="p">(</span><span class="mi">60</span><span class="p">);</span><span class="w"> </span><span class="c1">// set the keep alive interval to 60 seconds, default is 15 seconds</span>
 <span class="w">    </span><span class="n">mqtt</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="s">&quot;192.168.1.50&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;username&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;password&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 

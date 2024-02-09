@@ -3,6 +3,7 @@
 #define AHA_NUMERIC_H
 
 #include <stdint.h>
+#include "../ArduinoHADefines.h"
 
 /**
  * This class represents a numeric value that simplifies use of different types of numbers across the library.
@@ -92,7 +93,7 @@ public:
      */
     HANumeric(const uint32_t value, const uint8_t precision);
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
     /**
      * Converts the given int into number representation of the given precision.
      * If the precision is greater than zero the given value will be converted to float.
@@ -228,8 +229,6 @@ private:
     uint8_t _precision;
 
     explicit HANumeric(const int64_t value);
-
-    friend class HANumeric;
 };
 
 #endif

@@ -1,12 +1,12 @@
 Device configuration
 ====================
 
-:doc:`HADevice </documents/api/core/ha-device>` represents the physical device where the library is installed.
-Logically it's a group of types like sensors, switches, lights and so on. 
-In the Home Assistant, it's listed with properties that may be configured using the library's API.
+:doc:`HADevice </documents/api/core/ha-device>` represents the physical device on which the library is used.
+Essentially, it's a group of types such as sensors, switches, lights, and more.
+Within Home Assistant, it appears with properties that can be configured using the library's API.
 
-Each property except the unique ID is optional.
-Setting optional properties increases flash and RAM usage so it's not recommended to set them on lower-spec MCUs.
+Every property, except for the unique ID, is optional.
+Enabling optional properties can lead to increased flash and RAM usage, therefore it is not advisable to set them on lower-spec MCUs.
 
 The supported properties are:
 
@@ -15,15 +15,17 @@ The supported properties are:
 * software version
 * manufacturer
 * model
+* configuration url
 
 Unique ID
 ---------
 
-The ID of a device needs to be unique in a scope of a Home Assistant instance.
-The safest solution is to use the MAC address of an Ethernet or Wi-Fi chip but you can also implement your own solution.
+The unique ID serves as an internal identifier for devices within Home Assistant.
+With this ID, Home Assistant can monitor the device's parameters and the entities it exposes.
+The unique ID must be distinct within the scope of the Home Assistant instance.
+The recommended approach is to use the MAC address of an Ethernet or Wi-Fi chip.
 
-There are three different ways to set the ID of the device.
-You can pick one depending on your needs.
+There are three distinct methods for setting the device ID, allowing you to choose the one that best suits your requirements.
 
 1) Providing string (const char*) to the :doc:`HADevice </documents/api/core/ha-device>` constructor
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -88,7 +90,7 @@ Device properties
 -----------------
 
 Each property has its corresponding setter method in the :doc:`HADevice </documents/api/core/ha-device>` class.
-Please note that all these methods accept const char pointer whose **content is not copied**.
+Please note that all of these methods accept a const char pointer whose **content is not copied**.
 
 ::
 
@@ -101,6 +103,7 @@ Please note that all these methods accept const char pointer whose **content is 
         device.setSoftwareVersion("1.0.0");
         device.setManufacturer("Developer Corp.");
         device.setModel("ABC-123");
+        device.setConfigurationUrl("http://192.168.1.55:1234");
 
         // ...
     }

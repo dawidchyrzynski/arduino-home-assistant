@@ -7,7 +7,7 @@ static const char* testDeviceId = "testDevice";
 static const char* testUniqueId = "uniqueSensor";
 const char ConfigTopic[] PROGMEM = {"homeassistant/sensor/testDevice/uniqueSensor/config"};
 const char StateTopic[] PROGMEM = {"testData/testDevice/uniqueSensor/stat_t"};
-const char DummyTemplateStr[] PROGMEM = {"dummyTemplate"};
+const char JsonAttributesTopic[] PROGMEM = {"testData/testDevice/uniqueSensor/json_attr_t"};
 
 AHA_TEST(SensorTest, invalid_unique_id) {
     initMqttTest(testDeviceId)
@@ -29,6 +29,24 @@ AHA_TEST(SensorTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SensorTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HASensor sensor(testUniqueId);
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSensor\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
             "}"
@@ -72,6 +90,26 @@ AHA_TEST(SensorTest, name_setter) {
     )
 }
 
+AHA_TEST(SensorTest, object_id_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SensorTest, device_class_setter) {
     initMqttTest(testDeviceId)
 
@@ -85,6 +123,26 @@ AHA_TEST(SensorTest, device_class_setter) {
             "{"
             "\"uniq_id\":\"uniqueSensor\","
             "\"dev_cla\":\"testClass\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SensorTest, state_class_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setStateClass("measurement");
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"stat_cla\":\"measurement\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
             "}"
@@ -152,6 +210,64 @@ AHA_TEST(SensorTest, unit_of_measurement_setter) {
     )
 }
 
+AHA_TEST(SensorTest, expire_after_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setExpireAfter(60);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"exp_aft\":60,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SensorTest, expire_after_zero_setter) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId);
+    sensor.setExpireAfter(0);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SensorTest, json_attributes_topic) {
+    initMqttTest(testDeviceId)
+
+    HASensor sensor(testUniqueId, HASensor::JsonAttributesFeature);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"json_attr_t\":\"testData/testDevice/uniqueSensor/json_attr_t\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SensorTest, publish_value) {
     initMqttTest(testDeviceId)
 
@@ -160,6 +276,26 @@ AHA_TEST(SensorTest, publish_value) {
 
     assertTrue(sensor.setValue("test123"));
     assertSingleMqttMessage(AHATOFSTR(StateTopic), "test123", true)
+}
+
+AHA_TEST(SensorTest, publish_null_value) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensor sensor(testUniqueId);
+
+    assertTrue(sensor.setValue(nullptr));
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "None", true)
+}
+
+AHA_TEST(SensorTest, publish_json_attributes) {
+    initMqttTest(testDeviceId)
+
+    mock->connectDummy();
+    HASensor sensor(testUniqueId, HASensor::JsonAttributesFeature);
+
+    assertTrue(sensor.setJsonAttributes("{\"dummy\": 1}"));
+    assertSingleMqttMessage(AHATOFSTR(JsonAttributesTopic), "{\"dummy\": 1}", true)
 }
 
 test(SensorNumberTest, publish_value_on_connect) {

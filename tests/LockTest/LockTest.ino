@@ -71,6 +71,26 @@ AHA_TEST(LockTest, default_params) {
     assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
 }
 
+AHA_TEST(LockTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HALock lock(testUniqueId);
+    assertEntityConfig(
+        mock,
+        lock,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueLock\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(1, mock->getFlushedMessagesNb()); // only config should be pushed
+}
+
 AHA_TEST(LockTest, command_subscription) {
     prepareTest
 
@@ -131,6 +151,27 @@ AHA_TEST(LockTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueLock\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueLock/cmd_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(LockTest, object_id_setter) {
+    prepareTest
+
+    HALock lock(testUniqueId);
+    lock.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        lock,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueLock\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueLock/stat_t\","
@@ -220,7 +261,7 @@ AHA_TEST(LockTest, publish_state_locked) {
     HALock lock(testUniqueId);
 
     assertTrue(lock.setState(HALock::StateLocked));
-    assertSingleMqttMessage(AHATOFSTR(StateTopic), "LOCKED", true) 
+    assertSingleMqttMessage(AHATOFSTR(StateTopic), "LOCKED", true)
 }
 
 AHA_TEST(LockTest, publish_state_unlocked) {

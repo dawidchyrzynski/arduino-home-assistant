@@ -8,7 +8,7 @@
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
-    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastStateCallbackCall.state); \
     assertEqual(callerPtr, lastStateCallbackCall.caller);
 
 #define assertStateCallbackNotCalled() \
@@ -93,6 +93,26 @@ AHA_TEST(FanTest, default_params) {
         (
             "{"
             "\"uniq_id\":\"uniqueFan\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueFan/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueFan/cmd_t\""
+            "}"
+        )
+    )
+    assertEqual(2, mock->getFlushedMessagesNb()); // config + default state
+}
+
+AHA_TEST(FanTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAFan fan(testUniqueId);
+    assertEntityConfig(
+        mock,
+        fan,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueFan\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueFan/stat_t\","
             "\"cmd_t\":\"testData/testDevice/uniqueFan/cmd_t\""
@@ -220,6 +240,27 @@ AHA_TEST(FanTest, name_setter) {
     )
 }
 
+AHA_TEST(FanTest, object_id_setter) {
+    prepareTest
+
+    HAFan fan(testUniqueId);
+    fan.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        fan,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueFan\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueFan/stat_t\","
+            "\"cmd_t\":\"testData/testDevice/uniqueFan/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(FanTest, icon_setter) {
     prepareTest
 
@@ -336,7 +377,7 @@ AHA_TEST(FanTest, current_state_setter) {
     fan.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, fan.getCurrentState());
+    assertTrue(fan.getCurrentState());
 }
 
 AHA_TEST(FanTest, current_speed_setter) {

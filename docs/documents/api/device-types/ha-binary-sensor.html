@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -183,6 +184,17 @@
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>Returns <code class="docutils literal notranslate"><span class="pre">true</span></code> if the MQTT message has been published successfully. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor14setExpireAfterE8uint16_t">
+<span id="_CPPv3N14HABinarySensor14setExpireAfterE8uint16_t"></span><span id="_CPPv2N14HABinarySensor14setExpireAfterE8uint16_t"></span><span id="HABinarySensor::setExpireAfter__uint16_t"></span><span class="target" id="class_h_a_binary_sensor_1a684beba9239222e44e998f8baea41da4"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setExpireAfter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">expireAfter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HABinarySensor14setExpireAfterE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expireAfter</strong> – The number of seconds. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -269,6 +281,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor5_iconE">
 <span id="_CPPv3N14HABinarySensor5_iconE"></span><span id="_CPPv2N14HABinarySensor5_iconE"></span><span id="HABinarySensor::_icon__cCP"></span><span class="target" id="class_h_a_binary_sensor_1ab828fefdcca4e68c951fad0b49177398"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_icon</span></span></span><a class="headerlink" href="#_CPPv4N14HABinarySensor5_iconE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The icon of the sensor. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N14HABinarySensor12_expireAfterE">
+<span id="_CPPv3N14HABinarySensor12_expireAfterE"></span><span id="_CPPv2N14HABinarySensor12_expireAfterE"></span><span id="HABinarySensor::_expireAfter__HANumeric"></span><span class="target" id="class_h_a_binary_sensor_1a644e21f52a160a702c3124070722315a"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_expireAfter</span></span></span><a class="headerlink" href="#_CPPv4N14HABinarySensor12_expireAfterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires. </p>
 </dd></dl>
 
 <dl class="cpp var">

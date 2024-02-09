@@ -85,15 +85,21 @@ bool HASelect::setState(const int8_t state, const bool force)
     return false;
 }
 
+const char* HASelect::getCurrentOption() const
+{
+    return _options->getItem(getCurrentState());
+}
+
 void HASelect::buildSerializer()
 {
     if (_serializer || !uniqueId() || !_options) {
         return;
     }
 
-    _serializer = new HASerializer(this, 10); // 10 - max properties nb
+    _serializer = new HASerializer(this, 11); // 11 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
-    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
+    _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(
         AHATOFSTR(HAOptionsProperty),
@@ -164,8 +170,12 @@ void HASelect::onMqttMessage(
 
 bool HASelect::publishState(const int8_t state)
 {
-    if (state == -1 || !_options || state >= _options->getItemsNb()) {
+    if (!_options || state >= _options->getItemsNb()) {
         return false;
+    }
+
+    if (state < 0) {
+        return publishOnDataTopic(AHATOFSTR(HAStateTopic), AHATOFSTR(HAStateNone), true);
     }
 
     const char* item = _options->getItems()[state];

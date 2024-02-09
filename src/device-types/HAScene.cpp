@@ -19,9 +19,10 @@ void HAScene::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 7); // 7 - max properties nb
+    _serializer = new HASerializer(this, 8); // 8 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
-    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
+    _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
 
     // optional property

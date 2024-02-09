@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -164,13 +165,35 @@
 </div>
 <p>Subclassed by <a class="reference internal" href="ha-sensor-number.html#class_h_a_sensor_number"><span class="std std-ref">HASensorNumber</span></a></p>
 <div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp enum">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8FeaturesE">
+<span id="_CPPv3N8HASensor8FeaturesE"></span><span id="_CPPv2N8HASensor8FeaturesE"></span><span class="target" id="class_h_a_sensor_1a4ecda1d1c6f4aff1ed7e152e38cf3805"></span><span class="k"><span class="pre">enum</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Features</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor8FeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><em>Values:</em></p>
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8Features15DefaultFeaturesE">
+<span id="_CPPv3N8HASensor8Features15DefaultFeaturesE"></span><span id="_CPPv2N8HASensor8Features15DefaultFeaturesE"></span><span class="target" id="class_h_a_sensor_1a4ecda1d1c6f4aff1ed7e152e38cf3805acd369f5847d0304db292abba0235f58d"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">DefaultFeatures</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor8Features15DefaultFeaturesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="cpp enumerator">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8Features21JsonAttributesFeatureE">
+<span id="_CPPv3N8HASensor8Features21JsonAttributesFeatureE"></span><span id="_CPPv2N8HASensor8Features21JsonAttributesFeatureE"></span><span class="target" id="class_h_a_sensor_1a4ecda1d1c6f4aff1ed7e152e38cf3805a6581398db98868d5a764cce46b9b46ae"></span><span class="k"><span class="pre">enumerator</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">JsonAttributesFeature</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor8Features21JsonAttributesFeatureE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8HASensorEPKc">
-<span id="_CPPv3N8HASensor8HASensorEPKc"></span><span id="_CPPv2N8HASensor8HASensorEPKc"></span><span id="HASensor::HASensor__cCP"></span><span class="target" id="class_h_a_sensor_1ae03b7288c4b75fdd65d2714c3f57ab99"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8HASensorEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor8HASensorEPKcK8uint16_t">
+<span id="_CPPv3N8HASensor8HASensorEPKcK8uint16_t"></span><span id="_CPPv2N8HASensor8HASensorEPKcK8uint16_t"></span><span id="HASensor::HASensor__cCP.uint16_tC"></span><span class="target" id="class_h_a_sensor_1a96c8105258c10db536fdbd8e4c8004d4"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensor</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">features</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N8HASensor8Features15DefaultFeaturesE" title="HASensor::DefaultFeatures"><span class="n"><span class="pre">DefaultFeatures</span></span></a><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor8HASensorEPKcK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p></li>
+<li><p><strong>features</strong> – Features that should be enabled for the sensor. </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -190,12 +213,45 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor17setJsonAttributesEPKc">
+<span id="_CPPv3N8HASensor17setJsonAttributesEPKc"></span><span id="_CPPv2N8HASensor17setJsonAttributesEPKc"></span><span id="HASensor::setJsonAttributes__cCP"></span><span class="target" id="class_h_a_sensor_1a04e4a413bfae54813f42fb97b6473193"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setJsonAttributes</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">json</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor17setJsonAttributesEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Publishes the given JSON data on the JSON attributes topic. The <code class="docutils literal notranslate"><span class="pre">JsonAttributesFeature</span></code> has to be enabled prior to setting the value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>json</strong> – JSON attributes. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setExpireAfterE8uint16_t">
+<span id="_CPPv3N8HASensor14setExpireAfterE8uint16_t"></span><span id="_CPPv2N8HASensor14setExpireAfterE8uint16_t"></span><span id="HASensor::setExpireAfter__uint16_t"></span><span class="target" id="class_h_a_sensor_1a11af92c3452c511596c63dbc00baed6e"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setExpireAfter</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">expireAfter</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setExpireAfterE8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>expireAfter</strong> – The number of seconds. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor14setDeviceClassEPKc">
 <span id="_CPPv3N8HASensor14setDeviceClassEPKc"></span><span id="_CPPv2N8HASensor14setDeviceClassEPKc"></span><span id="HASensor::setDeviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a8e2ffcb1ae1bb7411464a34d27df8817"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setDeviceClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">deviceClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor14setDeviceClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets class of the device. You can find list of available values here: <a class="reference external" href="https://www.home-assistant.io/integrations/sensor/#device-class">https://www.home-assistant.io/integrations/sensor/#device-class</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>deviceClass</strong> – The class name. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor13setStateClassEPKc">
+<span id="_CPPv3N8HASensor13setStateClassEPKc"></span><span id="_CPPv2N8HASensor13setStateClassEPKc"></span><span id="HASensor::setStateClass__cCP"></span><span class="target" id="class_h_a_sensor_1a1e246b6728645eeb0b1d190b52221780"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setStateClass</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">stateClass</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N8HASensor13setStateClassEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets class of the state for the long term stats. See: <a class="reference external" href="https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics">https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>stateClass</strong> – The class name. </p>
 </dd>
 </dl>
 </dd></dl>
@@ -250,9 +306,21 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
 <dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor9_featuresE">
+<span id="_CPPv3N8HASensor9_featuresE"></span><span id="_CPPv2N8HASensor9_featuresE"></span><span id="HASensor::_features__uint16_tC"></span><span class="target" id="class_h_a_sensor_1ac3e98af19f840be7cd9aec9d5854c051"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_features</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor9_featuresE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Features enabled for the sensor. </p>
+</dd></dl>
+
+<dl class="cpp var">
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_deviceClassE">
 <span id="_CPPv3N8HASensor12_deviceClassE"></span><span id="_CPPv2N8HASensor12_deviceClassE"></span><span id="HASensor::_deviceClass__cCP"></span><span class="target" id="class_h_a_sensor_1a42ff8d2271f7728acf2fb349595862f0"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_deviceClass</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_deviceClassE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The device class. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor11_stateClassE">
+<span id="_CPPv3N8HASensor11_stateClassE"></span><span id="_CPPv2N8HASensor11_stateClassE"></span><span id="HASensor::_stateClass__cCP"></span><span class="target" id="class_h_a_sensor_1ac096f47f39b39e3d91cd94355a62fa35"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_stateClass</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor11_stateClassE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The state class for the long term stats. It can be nullptr. See: <a class="reference external" href="https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics">https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics</a>. </p>
 </dd></dl>
 
 <dl class="cpp var">
@@ -271,6 +339,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N8HASensor18_unitOfMeasurementE">
 <span id="_CPPv3N8HASensor18_unitOfMeasurementE"></span><span id="_CPPv2N8HASensor18_unitOfMeasurementE"></span><span id="HASensor::_unitOfMeasurement__cCP"></span><span class="target" id="class_h_a_sensor_1abedc7a1be1cb9b3855c1721b356c5635"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_unitOfMeasurement</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor18_unitOfMeasurementE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The unit of measurement for the sensor. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N8HASensor12_expireAfterE">
+<span id="_CPPv3N8HASensor12_expireAfterE"></span><span id="_CPPv2N8HASensor12_expireAfterE"></span><span id="HASensor::_expireAfter__HANumeric"></span><span class="target" id="class_h_a_sensor_1a695e13ee19b2ca57a2f61f8d1021612c"></span><a class="reference internal" href="../utils/ha-numeric.html#_CPPv49HANumeric" title="HANumeric"><span class="n"><span class="pre">HANumeric</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">_expireAfter</span></span></span><a class="headerlink" href="#_CPPv4N8HASensor12_expireAfterE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires. </p>
 </dd></dl>
 
 </div>

@@ -127,6 +127,24 @@ public:
     int endPublish();
     bool subscribe(const char* topic);
 
+    inline void setKeepAlive(uint16_t keepAlive)
+        { _keepAlive = keepAlive; }
+
+    inline uint16_t getKeepAlive() const
+        { return _keepAlive; }
+
+    inline bool setBufferSize(uint16_t bufferSize)
+        { _bufferSize = bufferSize; return true; }
+
+    inline uint16_t getBufferSize() const
+        { return _bufferSize; }
+
+    inline void setState(int16_t state)
+        { _state = state; }
+
+    inline int16_t state() const
+        { return _state; }
+
     inline uint8_t getFlushedMessagesNb() const
         { return _flushedMessagesNb; }
 
@@ -137,7 +155,7 @@ public:
         { return _subscriptionsNb; }
 
     inline MqttSubscription** getSubscriptions() const
-        { return _subscriptions; }      
+        { return _subscriptions; }
 
     inline const MqttConnection& getConnection() const
         { return _connection; }
@@ -154,6 +172,9 @@ public:
 private:
     MqttMessage* _pendingMessage;
     MqttMessage** _flushedMessages;
+    uint16_t _keepAlive;
+    uint16_t _bufferSize;
+    int16_t _state;
     uint8_t _flushedMessagesNb;
     MqttSubscription** _subscriptions;
     uint8_t _subscriptionsNb;

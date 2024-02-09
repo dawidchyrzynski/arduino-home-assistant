@@ -28,6 +28,15 @@ bool HASerializerArray::add(ItemType item)
     return true;
 }
 
+const char* HASerializerArray::getItem(const uint8_t index) const
+{
+    if (index >= _itemsNb) {
+        return nullptr;
+    }
+
+    return _items[index];
+}
+
 uint16_t HASerializerArray::calculateSize() const
 {
     uint16_t size =

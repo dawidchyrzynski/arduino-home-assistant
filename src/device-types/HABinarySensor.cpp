@@ -27,17 +27,36 @@ bool HABinarySensor::setState(const bool state, const bool force)
     return false;
 }
 
+void HABinarySensor::setExpireAfter(uint16_t expireAfter)
+{
+    if (expireAfter > 0) {
+        _expireAfter.setBaseValue(expireAfter);
+    } else {
+        _expireAfter.reset();
+    }
+}
+
 void HABinarySensor::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
         return;
     }
 
-    _serializer = new HASerializer(this, 7); // 7 - max properties nb
+    _serializer = new HASerializer(this, 9); // 9 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
-    _serializer->set(AHATOFSTR(HAUniqueIdProperty), _uniqueId);
+    _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
+    _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
+
+    if (_expireAfter.isSet()) {
+        _serializer->set(
+            AHATOFSTR(HAExpireAfterProperty),
+            &_expireAfter,
+            HASerializer::NumberPropertyType
+        );
+    }
+
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HAStateTopic));

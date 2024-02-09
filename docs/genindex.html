@@ -100,7 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="documents/library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documents/library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documents/library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="documents/library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documents/library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documents/library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documents/library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="documents/library/compiler-macros.html">Compiler macros</a></li>
@@ -112,6 +112,7 @@
 <li class="toctree-l2"><a class="reference internal" href="documents/api/utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -152,6 +153,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType5_nameE">HABaseDeviceType::_name (C++ member)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType9_objectIdE">HABaseDeviceType::_objectId (C++ member)</a>
+</li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType11_serializerE">HABaseDeviceType::_serializer (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType9_uniqueIdE">HABaseDeviceType::_uniqueId (C++ member)</a>
@@ -171,6 +174,8 @@
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType17destroySerializerEv">HABaseDeviceType::destroySerializer (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4NK16HABaseDeviceType7getNameEv">HABaseDeviceType::getName (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4NK16HABaseDeviceType11getObjectIdEv">HABaseDeviceType::getObjectId (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType16HABaseDeviceTypeEPK19__FlashStringHelperPKc">HABaseDeviceType::HABaseDeviceType (C++ function)</a>
 </li>
@@ -204,6 +209,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType7setNameEPKc">HABaseDeviceType::setName (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType11setObjectIdEPKc">HABaseDeviceType::setObjectId (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4N16HABaseDeviceType14subscribeTopicEPKcPK19__FlashStringHelper">HABaseDeviceType::subscribeTopic (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-base-device-type.html#_CPPv4NK16HABaseDeviceType8uniqueIdEv">HABaseDeviceType::uniqueId (C++ function)</a>
@@ -213,6 +220,8 @@
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor6_classE">HABinarySensor::_class (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor13_currentStateE">HABinarySensor::_currentState (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor12_expireAfterE">HABinarySensor::_expireAfter (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor5_iconE">HABinarySensor::_icon (C++ member)</a>
 </li>
@@ -229,6 +238,8 @@
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor15setCurrentStateEKb">HABinarySensor::setCurrentState (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor14setDeviceClassEPKc">HABinarySensor::setDeviceClass (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor14setExpireAfterE8uint16_t">HABinarySensor::setExpireAfter (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-binary-sensor.html#_CPPv4N14HABinarySensor7setIconEPKc">HABinarySensor::setIcon (C++ function)</a>
 </li>
@@ -376,6 +387,8 @@
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice10_availableE">HADevice::_available (C++ member)</a>
 </li>
+      <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice18_extendedUniqueIdsE">HADevice::_extendedUniqueIds (C++ member)</a>
+</li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice13_ownsUniqueIdE">HADevice::_ownsUniqueId (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice11_serializerE">HADevice::_serializer (C++ member)</a>
@@ -383,6 +396,8 @@
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice19_sharedAvailabilityE">HADevice::_sharedAvailability (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice9_uniqueIdE">HADevice::_uniqueId (C++ member)</a>
+</li>
+      <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice23enableExtendedUniqueIdsEv">HADevice::enableExtendedUniqueIds (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice14enableLastWillEv">HADevice::enableLastWill (C++ function)</a>
 </li>
@@ -398,11 +413,15 @@
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4NK8HADevice11isAvailableEv">HADevice::isAvailable (C++ function)</a>
 </li>
+      <li><a href="documents/api/core/ha-device.html#_CPPv4NK8HADevice26isExtendedUniqueIdsEnabledEv">HADevice::isExtendedUniqueIdsEnabled (C++ function)</a>
+</li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4NK8HADevice27isSharedAvailabilityEnabledEv">HADevice::isSharedAvailabilityEnabled (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4NK8HADevice19publishAvailabilityEv">HADevice::publishAvailability (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice15setAvailabilityEb">HADevice::setAvailability (C++ function)</a>
+</li>
+      <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice19setConfigurationUrlEPKc">HADevice::setConfigurationUrl (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-device.html#_CPPv4N8HADevice15setManufacturerEPKc">HADevice::setManufacturer (C++ function)</a>
 </li>
@@ -858,8 +877,6 @@
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC15TemperatureUnit11DefaultUnitE">HAHVAC::TemperatureUnit::DefaultUnit (C++ enumerator)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVAC15TemperatureUnit14FahrenheitUnitE">HAHVAC::TemperatureUnit::FahrenheitUnit (C++ enumerator)</a>
 </li>
       <li><a href="documents/api/device-types/ha-hvac.html#_CPPv4N6HAHVACD0Ev">HAHVAC::~HAHVAC (C++ function)</a>
@@ -884,6 +901,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight5_iconE">HALight::_icon (C++ member)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight10_maxMiredsE">HALight::_maxMireds (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-light.html#_CPPv4N7HALight10_minMiredsE">HALight::_minMireds (C++ member)</a>
@@ -1058,6 +1077,8 @@
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt18_connectedCallbackE">HAMqtt::_connectedCallback (C++ member)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt13_currentStateE">HAMqtt::_currentState (C++ member)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt11_dataPrefixE">HAMqtt::_dataPrefix (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt7_deviceE">HAMqtt::_device (C++ member)</a>
@@ -1065,6 +1086,8 @@
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt13_devicesTypesE">HAMqtt::_devicesTypes (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15_devicesTypesNbE">HAMqtt::_devicesTypesNb (C++ member)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt21_disconnectedCallbackE">HAMqtt::_disconnectedCallback (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt16_discoveryPrefixE">HAMqtt::_discoveryPrefix (C++ member)</a>
 </li>
@@ -1088,6 +1111,8 @@
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt9_passwordE">HAMqtt::_password (C++ member)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt21_stateChangedCallbackE">HAMqtt::_stateChangedCallback (C++ member)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt9_usernameE">HAMqtt::_username (C++ member)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt13addDeviceTypeEP16HABaseDeviceType">HAMqtt::addDeviceType (C++ function)</a>
@@ -1095,6 +1120,30 @@
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt5beginEK9IPAddressK8uint16_tPKcPKc">HAMqtt::begin (C++ function)</a>, <a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt5beginEK9IPAddressPKcPKc">[1]</a>, <a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt5beginEPKcK8uint16_tPKcPKc">[2]</a>, <a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt5beginEPKcPKcPKc">[3]</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt12beginPublishEPKc8uint16_tb">HAMqtt::beginPublish (C++ function)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionStateE">HAMqtt::ConnectionState (C++ enum)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState16StateBadClientIdE">HAMqtt::ConnectionState::StateBadClientId (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState19StateBadCredentialsE">HAMqtt::ConnectionState::StateBadCredentials (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState16StateBadProtocolE">HAMqtt::ConnectionState::StateBadProtocol (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState14StateConnectedE">HAMqtt::ConnectionState::StateConnected (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState15StateConnectingE">HAMqtt::ConnectionState::StateConnecting (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState21StateConnectionFailedE">HAMqtt::ConnectionState::StateConnectionFailed (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState19StateConnectionLostE">HAMqtt::ConnectionState::StateConnectionLost (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState22StateConnectionTimeoutE">HAMqtt::ConnectionState::StateConnectionTimeout (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState17StateDisconnectedE">HAMqtt::ConnectionState::StateDisconnected (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState17StateUnauthorizedE">HAMqtt::ConnectionState::StateUnauthorized (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15ConnectionState16StateUnavailableE">HAMqtt::ConnectionState::StateUnavailable (C++ enumerator)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt15connectToServerEv">HAMqtt::connectToServer (C++ function)</a>
 </li>
@@ -1108,6 +1157,8 @@
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4NK6HAMqtt18getDiscoveryPrefixEv">HAMqtt::getDiscoveryPrefix (C++ function)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4NK6HAMqtt8getStateEv">HAMqtt::getState (C++ function)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt6HAMqttER6ClientR8HADeviceK7uint8_t">HAMqtt::HAMqtt (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt8instanceEv">HAMqtt::instance (C++ function)</a>
@@ -1120,7 +1171,11 @@
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt16onConnectedLogicEv">HAMqtt::onConnectedLogic (C++ function)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt14onDisconnectedEPFvvE">HAMqtt::onDisconnected (C++ function)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt9onMessageEPFvPKcPK7uint8_t8uint16_tE">HAMqtt::onMessage (C++ function)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt14onStateChangedEPFv15ConnectionStateE">HAMqtt::onStateChanged (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt14processMessageEPKcPK7uint8_t8uint16_t">HAMqtt::processMessage (C++ function)</a>
 </li>
@@ -1128,11 +1183,17 @@
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt17ReconnectIntervalE">HAMqtt::ReconnectInterval (C++ member)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt13setBufferSizeE8uint16_t">HAMqtt::setBufferSize (C++ function)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt13setDataPrefixEPKc">HAMqtt::setDataPrefix (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt18setDiscoveryPrefixEPKc">HAMqtt::setDiscoveryPrefix (C++ function)</a>
 </li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt12setKeepAliveE8uint16_t">HAMqtt::setKeepAlive (C++ function)</a>
+</li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt11setLastWillEPKcPKcb">HAMqtt::setLastWill (C++ function)</a>
+</li>
+      <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt8setStateE15ConnectionState">HAMqtt::setState (C++ function)</a>
 </li>
       <li><a href="documents/api/core/ha-mqtt.html#_CPPv4N6HAMqtt9subscribeEPKc">HAMqtt::subscribe (C++ function)</a>
 </li>
@@ -1320,6 +1381,8 @@
 </li>
       <li><a href="documents/api/device-types/ha-select.html#_CPPv4NK8HASelect20countOptionsInStringEPKc">HASelect::countOptionsInString (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-select.html#_CPPv4NK8HASelect16getCurrentOptionEv">HASelect::getCurrentOption (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-select.html#_CPPv4NK8HASelect15getCurrentStateEv">HASelect::getCurrentState (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-select.html#_CPPv4N8HASelect8HASelectEPKc">HASelect::HASelect (C++ function)</a>
@@ -1350,23 +1413,41 @@
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_deviceClassE">HASensor::_deviceClass (C++ member)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_expireAfterE">HASensor::_expireAfter (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor9_featuresE">HASensor::_features (C++ member)</a>
+</li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor12_forceUpdateE">HASensor::_forceUpdate (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor5_iconE">HASensor::_icon (C++ member)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor11_stateClassE">HASensor::_stateClass (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor18_unitOfMeasurementE">HASensor::_unitOfMeasurement (C++ member)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor15buildSerializerEv">HASensor::buildSerializer (C++ function)</a>
 </li>
-      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8HASensorEPKc">HASensor::HASensor (C++ function)</a>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8FeaturesE">HASensor::Features (C++ enum)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8Features15DefaultFeaturesE">HASensor::Features::DefaultFeatures (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8Features21JsonAttributesFeatureE">HASensor::Features::JsonAttributesFeature (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor8HASensorEPKcK8uint16_t">HASensor::HASensor (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor15onMqttConnectedEv">HASensor::onMqttConnected (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setDeviceClassEPKc">HASensor::setDeviceClass (C++ function)</a>
 </li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setExpireAfterE8uint16_t">HASensor::setExpireAfter (C++ function)</a>
+</li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor14setForceUpdateEb">HASensor::setForceUpdate (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor7setIconEPKc">HASensor::setIcon (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor17setJsonAttributesEPKc">HASensor::setJsonAttributes (C++ function)</a>
+</li>
+      <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor13setStateClassEPKc">HASensor::setStateClass (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor.html#_CPPv4N8HASensor20setUnitOfMeasurementEPKc">HASensor::setUnitOfMeasurement (C++ function)</a>
 </li>
@@ -1380,7 +1461,7 @@
 </li>
       <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4NK14HASensorNumber15getCurrentValueEv">HASensorNumber::getCurrentValue (C++ function)</a>
 </li>
-      <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision">HASensorNumber::HASensorNumber (C++ function)</a>
+      <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t">HASensorNumber::HASensorNumber (C++ function)</a>
 </li>
       <li><a href="documents/api/device-types/ha-sensor-number.html#_CPPv4N14HASensorNumber15onMqttConnectedEv">HASensorNumber::onMqttConnected (C++ function)</a>
 </li>
@@ -1435,6 +1516,8 @@
       <li><a href="documents/api/utils/ha-serializer.html#_CPPv4N12HASerializer8FlagType16WithAvailabilityE">HASerializer::FlagType::WithAvailability (C++ enumerator)</a>
 </li>
       <li><a href="documents/api/utils/ha-serializer.html#_CPPv4N12HASerializer8FlagType10WithDeviceE">HASerializer::FlagType::WithDevice (C++ enumerator)</a>
+</li>
+      <li><a href="documents/api/utils/ha-serializer.html#_CPPv4N12HASerializer8FlagType12WithUniqueIdE">HASerializer::FlagType::WithUniqueId (C++ enumerator)</a>
 </li>
       <li><a href="documents/api/utils/ha-serializer.html#_CPPv4NK12HASerializer5flushEv">HASerializer::flush (C++ function)</a>
 </li>
@@ -1503,6 +1586,8 @@
       <li><a href="documents/api/utils/ha-serializer-array.html#_CPPv4NK17HASerializerArray13calculateSizeEv">HASerializerArray::calculateSize (C++ function)</a>
 </li>
       <li><a href="documents/api/utils/ha-serializer-array.html#_CPPv4N17HASerializerArray5clearEv">HASerializerArray::clear (C++ function)</a>
+</li>
+      <li><a href="documents/api/utils/ha-serializer-array.html#_CPPv4NK17HASerializerArray7getItemEK7uint8_t">HASerializerArray::getItem (C++ function)</a>
 </li>
       <li><a href="documents/api/utils/ha-serializer-array.html#_CPPv4NK17HASerializerArray8getItemsEv">HASerializerArray::getItems (C++ function)</a>
 </li>

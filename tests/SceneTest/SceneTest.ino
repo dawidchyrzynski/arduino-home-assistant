@@ -65,6 +65,24 @@ AHA_TEST(SceneTest, default_params) {
     )
 }
 
+AHA_TEST(SceneTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAScene scene(testUniqueId);
+    assertEntityConfig(
+        mock,
+        scene,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueScene\","
+            "\"pl_on\":\"ON\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(SceneTest, command_subscription) {
     prepareTest
 
@@ -103,6 +121,26 @@ AHA_TEST(SceneTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueScene\","
+            "\"pl_on\":\"ON\","
+            "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(SceneTest, object_id_setter) {
+    prepareTest
+
+    HAScene scene(testUniqueId);
+    scene.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        scene,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueScene\","
             "\"pl_on\":\"ON\","
             "\"cmd_t\":\"testData/testDevice/uniqueScene/cmd_t\""

@@ -65,6 +65,24 @@ AHA_TEST(ButtonTest, default_params) {
     )
 }
 
+AHA_TEST(ButtonTest, extended_unique_id) {
+    prepareTest
+
+    device.enableExtendedUniqueIds();
+    HAButton button(testUniqueId);
+    assertEntityConfig(
+        mock,
+        button,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueButton\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(ButtonTest, command_subscription) {
     prepareTest
 
@@ -103,6 +121,26 @@ AHA_TEST(ButtonTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueButton\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(ButtonTest, object_id_setter) {
+    prepareTest
+
+    HAButton button(testUniqueId);
+    button.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        button,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueButton\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"cmd_t\":\"testData/testDevice/uniqueButton/cmd_t\""

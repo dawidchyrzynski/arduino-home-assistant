@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -245,6 +246,23 @@
 </dd></dl>
 
 <dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType11setObjectIdEPKc">
+<span id="_CPPv3N16HABaseDeviceType11setObjectIdEPKc"></span><span id="_CPPv2N16HABaseDeviceType11setObjectIdEPKc"></span><span id="HABaseDeviceType::setObjectId__cCP"></span><span class="target" id="class_h_a_base_device_type_1a4c22e772ee15bf7108cba852ed2faa3b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setObjectId</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">objectId</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType11setObjectIdEPKc" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets object ID that will be used by HA to generate entity ID. Keep the ID short to save the resources.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>objectId</strong> – The object ID. </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK16HABaseDeviceType11getObjectIdEv">
+<span id="_CPPv3NK16HABaseDeviceType11getObjectIdEv"></span><span id="_CPPv2NK16HABaseDeviceType11getObjectIdEv"></span><span id="HABaseDeviceType::getObjectIdC"></span><span class="target" id="class_h_a_base_device_type_1aa7df8603a35f638fb9a7c80707347b28"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getObjectId</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK16HABaseDeviceType11getObjectIdEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the object ID that was set by setObjectId method. It can be nullptr if there is no ID assigned. </p>
+</dd></dl>
+
+<dl class="cpp function">
 <dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType15setAvailabilityEb">
 <span id="_CPPv3N16HABaseDeviceType15setAvailabilityEb"></span><span id="_CPPv2N16HABaseDeviceType15setAvailabilityEb"></span><span id="HABaseDeviceType::setAvailability__b"></span><span class="target" id="class_h_a_base_device_type_1a7552355c7806c24cb839b068a2b8694e"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">setAvailability</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">online</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType15setAvailabilityEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Sets availability of the device type. Setting the initial availability enables availability reporting for this device type. Please note that not all device types support this feature. Follow HA documentation of a specific device type to get more information.</p>
@@ -369,6 +387,12 @@
 <dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType5_nameE">
 <span id="_CPPv3N16HABaseDeviceType5_nameE"></span><span id="_CPPv2N16HABaseDeviceType5_nameE"></span><span id="HABaseDeviceType::_name__cCP"></span><span class="target" id="class_h_a_base_device_type_1adae2a1ba7a7b5ad55b383e62fee1476d"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_name</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType5_nameE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>The name that was set using setName method. It can be nullptr. </p>
+</dd></dl>
+
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N16HABaseDeviceType9_objectIdE">
+<span id="_CPPv3N16HABaseDeviceType9_objectIdE"></span><span id="_CPPv2N16HABaseDeviceType9_objectIdE"></span><span id="HABaseDeviceType::_objectId__cCP"></span><span class="target" id="class_h_a_base_device_type_1af81965b24794e2cba173006ed0a29b00"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">_objectId</span></span></span><a class="headerlink" href="#_CPPv4N16HABaseDeviceType9_objectIdE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The object ID that was set using setObjectId method. It can be nullptr. </p>
 </dd></dl>
 
 <dl class="cpp var">

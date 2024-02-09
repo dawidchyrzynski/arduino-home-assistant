@@ -260,6 +260,21 @@ AHA_TEST(DeviceTest, availability_publish_online) {
     assertSingleMqttMessage(AHATOFSTR(AvailabilityTopic), "online", true)
 }
 
+AHA_TEST(DeviceTest, extended_unique_ids_disabled) {
+    prepareMqttTest
+
+    assertFalse(device.isExtendedUniqueIdsEnabled());
+}
+
+AHA_TEST(DeviceTest, enable_extended_unique_ids) {
+    prepareMqttTest
+
+    device.enableExtendedUniqueIds();
+
+    assertTrue(device.isExtendedUniqueIdsEnabled());
+    assertNoMqttMessage()
+}
+
 AHA_TEST(DeviceTest, lwt_disabled) {
     prepareMqttTest
 
@@ -276,16 +291,17 @@ AHA_TEST(DeviceTest, lwt_enabled) {
 
     assertEqual(AHATOFSTR(AvailabilityTopic), mock->getLastWill().topic);
     assertEqual("offline", mock->getLastWill().message);
-    assertEqual(true, mock->getLastWill().retain);
+    assertTrue(mock->getLastWill().retain);
 }
 
 AHA_TEST(DeviceTest, full_serialization) {
     initMqttTest("myDeviceId");
-    
+
     device.setManufacturer("myManufacturer");
     device.setModel("myModel");
     device.setName("myName");
     device.setSoftwareVersion("myVersion");
+    device.setConfigurationUrl("http://1.1.1.1:1234");
 
     const HASerializer* serializer = device.getSerializer();
     flushSerializer(mock, serializer)
@@ -296,7 +312,8 @@ AHA_TEST(DeviceTest, full_serialization) {
             "\"mf\":\"myManufacturer\","
             "\"mdl\":\"myModel\","
             "\"name\":\"myName\","
-            "\"sw\":\"myVersion\""
+            "\"sw\":\"myVersion\","
+            "\"cu\":\"http://1.1.1.1:1234\""
             "}"
         )
     )

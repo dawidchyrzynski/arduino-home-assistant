@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -161,13 +162,14 @@
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
 <dl class="cpp function">
-<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision">
-<span id="_CPPv3N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision"></span><span id="_CPPv2N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision"></span><span id="HASensorNumber::HASensorNumber__cCP.NumberPrecisionC"></span><span class="target" id="class_h_a_sensor_number_1ad25fdeb579c1459fd3f57218825b13c1"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensorNumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">PrecisionP0</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecision" title="Permalink to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t">
+<span id="_CPPv3N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t"></span><span id="_CPPv2N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t"></span><span id="HASensorNumber::HASensorNumber__cCP.NumberPrecisionC.uint16_tC"></span><span class="target" id="class_h_a_sensor_number_1aee8b279589d82b660fb41c223a80053e"></span><span class="sig-name descname"><span class="n"><span class="pre">HASensorNumber</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">uniqueId</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">NumberPrecision</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">precision</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">PrecisionP0</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n"><span class="pre">uint16_t</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">features</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">DefaultFeatures</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N14HASensorNumber14HASensorNumberEPKcK15NumberPrecisionK8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>uniqueId</strong> – The unique ID of the sensor. It needs to be unique in a scope of your device. </p></li>
 <li><p><strong>precision</strong> – Precision of the floating point number that will be displayed in the HA panel. </p></li>
+<li><p><strong>features</strong> – Features that should be enabled for the sensor. </p></li>
 </ul>
 </dd>
 </dl>

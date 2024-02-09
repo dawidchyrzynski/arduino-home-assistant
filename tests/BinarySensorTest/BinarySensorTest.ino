@@ -36,6 +36,24 @@ AHA_TEST(BinarySensorTest, default_params) {
     )
 }
 
+AHA_TEST(BinarySensorTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HABinarySensor sensor(testUniqueId);
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(BinarySensorTest, availability) {
     initMqttTest(testDeviceId)
 
@@ -74,6 +92,26 @@ AHA_TEST(BinarySensorTest, name_setter) {
         (
             "{"
             "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(BinarySensorTest, object_id_setter) {
+    initMqttTest(testDeviceId)
+
+    HABinarySensor sensor(testUniqueId);
+    sensor.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
             "\"uniq_id\":\"uniqueSensor\","
             "\"dev\":{\"ids\":\"testDevice\"},"
             "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
@@ -122,11 +160,50 @@ AHA_TEST(BinarySensorTest, icon_setter) {
     )
 }
 
+AHA_TEST(BinarySensorTest, expire_after_setter) {
+    initMqttTest(testDeviceId)
+
+    HABinarySensor sensor(testUniqueId);
+    sensor.setExpireAfter(60);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"exp_aft\":60,"
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(BinarySensorTest, expire_after_zero_setter) {
+    initMqttTest(testDeviceId)
+
+    HABinarySensor sensor(testUniqueId);
+    sensor.setExpireAfter(0);
+
+    assertEntityConfig(
+        mock,
+        sensor,
+        (
+            "{"
+            "\"uniq_id\":\"uniqueSensor\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"stat_t\":\"testData/testDevice/uniqueSensor/stat_t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(BinarySensorTest, default_state_false) {
     initMqttTest(testDeviceId)
 
     HABinarySensor sensor(testUniqueId);
-    assertEqual(false, sensor.getCurrentState());
+    assertFalse(sensor.getCurrentState());
 }
 
 AHA_TEST(BinarySensorTest, default_state_true) {
@@ -134,7 +211,7 @@ AHA_TEST(BinarySensorTest, default_state_true) {
 
     HABinarySensor sensor(testUniqueId);
     sensor.setCurrentState(true);
-    assertEqual(true, sensor.getCurrentState());
+    assertTrue(sensor.getCurrentState());
 }
 
 AHA_TEST(BinarySensorTest, publish_state_on) {

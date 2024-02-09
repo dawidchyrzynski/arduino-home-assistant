@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../api/utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -148,18 +149,16 @@
             
   <section id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Before implementing the business logic of your application you will need to
-add a few necessary pieces of code to your project.
-Basically, everything comes up to a few basic rules:</p>
+<p>Prior to implementing the business logic of your application, you’ll need to incorporate several essential pieces of code into your project.
+Essentially, everything boils down to a few fundamental rules:</p>
 <ol class="arabic simple">
 <li><p><a class="reference internal" href="../api/core/ha-device.html"><span class="doc">HADevice</span></a> and <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> instances need to be initialized once globally or as a part of another global object.</p></li>
-<li><p><a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt::begin</span></a> needs to be called at the end of setup logic. It provides MQTT broker credentials that will be used for a connection.</p></li>
+<li><p><a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt::begin</span></a> needs to be called at the end of Arduino’s setup logic. It lets you provide the MQTT broker’s IP address and credentials.</p></li>
 <li><p><a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt::loop</span></a> method needs to be called periodically (it doesn’t need to be called on each tick).</p></li>
 <li><p>Device types need to be initialized after <a class="reference internal" href="../api/core/ha-mqtt.html"><span class="doc">HAMqtt</span></a> class (it will be described later in the documentation).</p></li>
 </ol>
-<p>Here are the minimal boilerplates that you can start with.
-Don’t worry if you have no idea what’s going on here.
-Everything will be covered in the following chapters.</p>
+<p>Here are the minimal boilerplate examples to get you started.
+Don’t worry if you have no idea what’s happening here; everything will be explained in detail in the following chapters.</p>
 <section id="arduino-boilerplate">
 <h2>Arduino Boilerplate<a class="headerlink" href="#arduino-boilerplate" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Ethernet.h&gt;</span><span class="cp"></span>

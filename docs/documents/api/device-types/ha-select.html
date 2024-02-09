@@ -102,7 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../library/availability-reporting.html">Availability reporting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/connection-params.html">Connection parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/discovery.html">Discovery</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../library/device-types.html">Device types (entities)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-security.html">MQTT security</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/mqtt-advanced.html">MQTT advanced features</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../library/compiler-macros.html">Compiler macros</a></li>
@@ -114,6 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../utils/index.html">Utils API</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/sponsors/dawidchyrzynski">Sponsor</a></li>
 </ul>
 
 </div>
@@ -197,7 +198,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>state</strong> – New state of the select. </p></li>
+<li><p><strong>state</strong> – New state of the select. You can set <code class="docutils literal notranslate"><span class="pre">-1</span></code> to reset the select. </p></li>
 <li><p><strong>force</strong> – Forces to update state without comparing it to previous known state. </p></li>
 </ul>
 </dd>
@@ -205,6 +206,12 @@
 <dd class="field-even"><p>Returns true if MQTT message has been published successfully. </p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK8HASelect16getCurrentOptionEv">
+<span id="_CPPv3NK8HASelect16getCurrentOptionEv"></span><span id="_CPPv2NK8HASelect16getCurrentOptionEv"></span><span id="HASelect::getCurrentOptionC"></span><span class="target" id="class_h_a_select_1adadff59b86c066136d88188618fbf485"></span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">getCurrentOption</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK8HASelect16getCurrentOptionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the selected option based on the most recent state of the select. You can utilize this method to get the string representation of the option (e.g. for printing). If no option is selected, null is returned. </p>
 </dd></dl>
 
 <dl class="cpp function">

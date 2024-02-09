@@ -36,6 +36,24 @@ AHA_TEST(CameraTest, default_params) {
     )
 }
 
+AHA_TEST(CameraTest, extended_unique_id) {
+    initMqttTest(testDeviceId)
+
+    device.enableExtendedUniqueIds();
+    HACamera camera(testUniqueId);
+    assertEntityConfig(
+        mock,
+        camera,
+        (
+            "{"
+            "\"uniq_id\":\"testDevice_uniqueCamera\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
+    )
+}
+
 AHA_TEST(CameraTest, availability) {
     initMqttTest(testDeviceId)
 
@@ -51,6 +69,47 @@ AHA_TEST(CameraTest, availability) {
         true
     )
 }
+
+AHA_TEST(CameraTest, name_setter) {
+    initMqttTest(testDeviceId)
+
+    HACamera camera(testUniqueId);
+    camera.setName("testName");
+
+    assertEntityConfig(
+        mock,
+        camera,
+        (
+            "{"
+            "\"name\":\"testName\","
+            "\"uniq_id\":\"uniqueCamera\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
+    )
+}
+
+AHA_TEST(CameraTest, object_id_setter) {
+    initMqttTest(testDeviceId)
+
+    HACamera camera(testUniqueId);
+    camera.setObjectId("testId");
+
+    assertEntityConfig(
+        mock,
+        camera,
+        (
+            "{"
+            "\"obj_id\":\"testId\","
+            "\"uniq_id\":\"uniqueCamera\","
+            "\"dev\":{\"ids\":\"testDevice\"},"
+            "\"t\":\"testData/testDevice/uniqueCamera/t\""
+            "}"
+        )
+    )
+}
+
 
 AHA_TEST(CameraTest, icon_setter) {
     initMqttTest(testDeviceId)
