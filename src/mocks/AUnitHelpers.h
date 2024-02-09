@@ -30,7 +30,7 @@
     assertEqual(eTopic, publishedMessage->topic); \
     assertEqual(messageP, publishedMessage->buffer); \
     assertEqual(messageLen, publishedMessage->bufferSize - 1); \
-    assertEqual(eRetained, publishedMessage->retained); \
+    assertEqual(static_cast<bool>(eRetained), publishedMessage->retained); \
 }
 
 #define assertSingleMqttMessage(eTopic, eMessage, eRetained) { \

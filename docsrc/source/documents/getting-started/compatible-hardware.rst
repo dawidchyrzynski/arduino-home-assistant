@@ -11,6 +11,7 @@ Here is the list of devices on which the library was tested:
 - Arduino Nano
 - Arduino Pro Mini
 - Arduino Nano 33 IoT
+- Arduino Due
 - NodeMCU
 - Controllino Mega (Pure)
 - Controllino Maxi (Pure)

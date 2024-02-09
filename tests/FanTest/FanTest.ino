@@ -8,7 +8,7 @@
 
 #define assertStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastStateCallbackCall.called); \
-    assertEqual(expectedState, lastStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastStateCallbackCall.state); \
     assertEqual(callerPtr, lastStateCallbackCall.caller);
 
 #define assertStateCallbackNotCalled() \
@@ -377,7 +377,7 @@ AHA_TEST(FanTest, current_state_setter) {
     fan.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, fan.getCurrentState());
+    assertTrue(fan.getCurrentState());
 }
 
 AHA_TEST(FanTest, current_speed_setter) {

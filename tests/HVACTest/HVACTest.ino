@@ -12,7 +12,7 @@
 
 #define assertAuxStateCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastAuxStateCallbackCall.called); \
-    assertEqual(expectedState, lastAuxStateCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastAuxStateCallbackCall.state); \
     assertEqual(callerPtr, lastAuxStateCallbackCall.caller);
 
 #define assertAuxStateCallbackNotCalled() \
@@ -20,7 +20,7 @@
 
 #define assertPowerCallbackCalled(expectedState, callerPtr) \
     assertTrue(lastPowerCallbackCall.called); \
-    assertEqual(expectedState, lastPowerCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedState), lastPowerCallbackCall.state); \
     assertEqual(callerPtr, lastPowerCallbackCall.caller);
 
 #define assertPowerCallbackNotCalled() \

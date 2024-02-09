@@ -52,7 +52,7 @@ public:
     _SET_VALUE_OVERLOAD(uint32_t)
     _SET_VALUE_OVERLOAD(float)
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
     _SET_VALUE_OVERLOAD(int)
 #endif
 
@@ -73,7 +73,7 @@ public:
     _SET_CURRENT_VALUE_OVERLOAD(uint32_t)
     _SET_CURRENT_VALUE_OVERLOAD(float)
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
     _SET_CURRENT_VALUE_OVERLOAD(int)
 #endif
 

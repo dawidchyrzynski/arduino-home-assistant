@@ -96,7 +96,7 @@ HANumeric::HANumeric(const uint32_t value, const uint8_t precision):
     _value = value * getPrecisionBase();
 }
 
-#ifdef __SAMD21G18A__
+#ifdef ARDUINOHA_INT_OVERLOAD
 HANumeric::HANumeric(const int value, const uint8_t precision):
     _isSet(true),
     _precision(precision)

@@ -291,7 +291,7 @@ AHA_TEST(DeviceTest, lwt_enabled) {
 
     assertEqual(AHATOFSTR(AvailabilityTopic), mock->getLastWill().topic);
     assertEqual("offline", mock->getLastWill().message);
-    assertEqual(true, mock->getLastWill().retain);
+    assertTrue(mock->getLastWill().retain);
 }
 
 AHA_TEST(DeviceTest, full_serialization) {

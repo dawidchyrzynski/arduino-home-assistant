@@ -7,7 +7,7 @@
 
 #define assertCommandCallbackCalled(expectedCommand, callerPtr) \
     assertTrue(lastCommandCallbackCall.called); \
-    assertEqual(expectedCommand, lastCommandCallbackCall.state); \
+    assertEqual(static_cast<bool>(expectedCommand), lastCommandCallbackCall.state); \
     assertEqual(callerPtr, lastCommandCallbackCall.caller);
 
 #define assertCommandCallbackNotCalled() \
@@ -272,7 +272,7 @@ AHA_TEST(SwitchTest, current_state_setter) {
     testSwitch.setCurrentState(true);
 
     assertEqual(0, mock->getFlushedMessagesNb());
-    assertEqual(true, testSwitch.getCurrentState());
+    assertTrue(testSwitch.getCurrentState());
 }
 
 AHA_TEST(SwitchTest, publish_state_on) {
