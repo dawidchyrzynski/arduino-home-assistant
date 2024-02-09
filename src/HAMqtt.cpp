@@ -176,36 +176,17 @@ bool HAMqtt::disconnect()
 
 void HAMqtt::loop()
 {
-    if (_initialized && !_mqtt->loop()) {
+    if (!_initialized) {
+        return;
+    }
+
+    bool result = _mqtt->loop();
+    if (_currentState != _mqtt->state()) {
+        setState(static_cast<ConnectionState>(_mqtt->state()));
+    }
+
+    if (!result) {
         connectToServer();
-
-        if (_currentState != _mqtt->state()) {
-            bool previousState = _currentState;
-            _currentState = static_cast<ConnectionState>(_mqtt->state());
-
-            ARDUINOHA_DEBUG_PRINT(F("AHA: MQTT state changed to "))
-            ARDUINOHA_DEBUG_PRINT(_currentState)
-            ARDUINOHA_DEBUG_PRINT(F(", previous state: "))
-            ARDUINOHA_DEBUG_PRINTLN(previousState)
-
-            if (_currentState == StateConnected) {
-                ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT connected"))
-                onConnectedLogic();
-            } else if (
-                previousState == StateConnected &&
-                (_currentState == StateDisconnected || _currentState == StateConnectionLost)
-            ) {
-                ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT disconnected"))
-
-                if (_disconnectedCallback) {
-                    _disconnectedCallback();
-                }
-            }
-
-            if (_stateChangedCallback) {
-                _stateChangedCallback(_currentState);
-            }
-        }
     }
 }
 
@@ -315,6 +296,7 @@ void HAMqtt::connectToServer()
     }
 
     _lastConnectionAttemptAt = millis();
+    setState(StateConnecting);
 
     ARDUINOHA_DEBUG_PRINT(F("AHA: MQTT connecting, client ID: "))
     ARDUINOHA_DEBUG_PRINTLN(_device.getUniqueId())
@@ -345,5 +327,31 @@ void HAMqtt::onConnectedLogic()
 
     for (uint8_t i = 0; i < _devicesTypesNb; i++) {
         _devicesTypes[i]->onMqttConnected();
+    }
+}
+
+void HAMqtt::setState(ConnectionState state)
+{
+    ConnectionState previousState = _currentState;
+    _currentState = state;
+
+    ARDUINOHA_DEBUG_PRINT(F("AHA: MQTT state changed to "))
+    ARDUINOHA_DEBUG_PRINT(_currentState)
+    ARDUINOHA_DEBUG_PRINT(F(", previous state: "))
+    ARDUINOHA_DEBUG_PRINTLN(previousState)
+
+    if (_currentState == StateConnected) {
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT connected"))
+        onConnectedLogic();
+    } else if (previousState == StateConnected && _currentState != StateDisconnected) {
+        ARDUINOHA_DEBUG_PRINTLN(F("AHA: MQTT disconnected"))
+
+        if (_disconnectedCallback) {
+            _disconnectedCallback();
+        }
+    }
+
+    if (_stateChangedCallback) {
+        _stateChangedCallback(_currentState);
     }
 }

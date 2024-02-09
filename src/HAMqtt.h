@@ -380,7 +380,7 @@ public:
 
 private:
     /// Interval between MQTT reconnects (milliseconds).
-    static const uint16_t ReconnectInterval = 5000;
+    static const uint16_t ReconnectInterval = 10000;
 
     /// Living instance of the HAMqtt class. It can be nullptr.
     static HAMqtt* _instance;
@@ -395,6 +395,11 @@ private:
      * This method is called each time the connection with MQTT broker is acquired.
      */
     void onConnectedLogic();
+
+    /**
+     * Sets the state of the MQTT connection.
+     */
+    void setState(ConnectionState state);
 
 #ifdef ARDUINOHA_TEST
     PubSubClientMock* _mqtt;

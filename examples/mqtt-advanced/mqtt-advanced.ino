@@ -33,7 +33,7 @@ void onMqttDisconnected() {
     Serial.println("Disconnected from the broker!");
 }
 
-void onMqttStateChange(HAMqtt::ConnectionState state) {
+void onMqttStateChanged(HAMqtt::ConnectionState state) {
     Serial.print("MQTT state changed to: ");
     Serial.println(static_cast<int8_t>(state));
 }
@@ -45,7 +45,7 @@ void setup() {
     mqtt.onMessage(onMqttMessage);
     mqtt.onConnected(onMqttConnected);
     mqtt.onDisconnected(onMqttDisconnected);
-    mqtt.onStateChange(onMqttStateChange);
+    mqtt.onStateChanged(onMqttStateChanged);
 
     // If you use custom discovery prefix you can change it as following:
     // mqtt.setDiscoveryPrefix("customPrefix");
