@@ -2,10 +2,12 @@
 #define AHA_HACOVER_H
 
 #include "HABaseDeviceType.h"
+#include "../utils/HANumeric.h"
 
 #ifndef EX_ARDUINOHA_COVER
 
 #define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
+#define HACOVER_SET_POS_CALLBACK(name) void (*name)(HANumeric number, HACover* sender)
 
 /**
  * HACover allows to control a cover (such as blinds, a roller shutter or a garage door).
@@ -147,6 +149,15 @@ public:
     inline void onCommand(HACOVER_CALLBACK(callback))
         { _commandCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the set position command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same cover.
+     *
+     * @param callback
+     */
+    inline void onSetPosition(HACOVER_SET_POS_CALLBACK(callback))
+        { _setPosCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -180,6 +191,14 @@ private:
      * @param length Length of the command.
      */
     void handleCommand(const uint8_t* cmd, const uint16_t length);
+    
+    /**
+     * Parses the given set position command and executes the cover's callback..
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleSetPosition(const uint8_t *cmd, const uint16_t length);
 
     /// Features enabled for the cover.
     const uint8_t _features;
@@ -204,6 +223,10 @@ private:
 
     /// The command callback that will be called when clicking the cover's button in the HA panel.
     HACOVER_CALLBACK(_commandCallback);
+
+    /// The command callback that will be called when sliding the cover's slider in the HA panel.
+    HACOVER_SET_POS_CALLBACK(_setPosCallback);
+
 };
 
 #endif
