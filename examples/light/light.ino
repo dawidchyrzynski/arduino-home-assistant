@@ -11,9 +11,21 @@ HAMqtt mqtt(client, device);
 
 // HALight::BrightnessFeature enables support for setting brightness of the light.
 // HALight::ColorTemperatureFeature enables support for setting color temperature of the light.
-// Both features are optional and you can remove them if they're not needed.
+// HALight::EffectsFeature enables support for setting effect of the light.
+// All features are optional, and you can remove them if they're not needed.
 // "prettyLight" is unique ID of the light. You should define your own ID.
-HALight light("prettyLight", HALight::BrightnessFeature | HALight::ColorTemperatureFeature | HALight::RGBFeature);
+HALight light("prettyLight", HALight::BrightnessFeature |
+                             HALight::ColorTemperatureFeature |
+                             HALight::RGBFeature |
+                             HALight::EffectsFeature);
+
+const char* const lightEffects[] = {
+    "Fire",
+    "Rainbow",
+    "Polar light",
+    "Rain",
+    "Smoke"
+};
 
 void onStateCommand(bool state, HALight* sender) {
     Serial.print("State: ");
@@ -47,6 +59,15 @@ void onRGBColorCommand(HALight::RGBColor color, HALight* sender) {
     sender->setRGBColor(color); // report color back to the Home Assistant
 }
 
+void onEffectCommand(uint8_t index, HALight* sender) {
+    Serial.print("Effect index: ");
+    Serial.println(index);
+    Serial.print("Effect name: ");
+    Serial.println(lightEffects[index]);
+
+    sender->setEffect(index);  // report effect back to the Home Assistant
+}
+
 void setup() {
     Serial.begin(9600);
 
@@ -74,11 +95,15 @@ void setup() {
     // light.setMinMireds(50);
     // light.setMaxMireds(200);
 
+    // Light effects (mandatory if HALight::EffectsFeature is set, optional otherwise)
+    light.setEffects(lightEffects, 5);
+
     // handle light states
     light.onStateCommand(onStateCommand);
     light.onBrightnessCommand(onBrightnessCommand); // optional
     light.onColorTemperatureCommand(onColorTemperatureCommand); // optional
     light.onRGBColorCommand(onRGBColorCommand); // optional
+    light.onEffectCommand(onEffectCommand); // optional
 
     mqtt.begin(BROKER_ADDR);
 }

@@ -65,6 +65,7 @@ extern const char HASpeedRangeMinProperty[];
 extern const char HABrightnessScaleProperty[];
 extern const char HAMinMiredsProperty[];
 extern const char HAMaxMiredsProperty[];
+extern const char HAEffectsProperty[];
 extern const char HATemperatureUnitProperty[];
 extern const char HAMinTempProperty[];
 extern const char HAMaxTempProperty[];
@@ -105,6 +106,8 @@ extern const char HATemperatureStateTopic[];
 extern const char HARGBCommandTopic[];
 extern const char HARGBStateTopic[];
 extern const char HAJsonAttributesTopic[];
+extern const char HAEffectCommandTopic[];
+extern const char HAEffectStateTopic[];
 
 // misc
 extern const char HAOnline[];

@@ -6,14 +6,17 @@
 
 #ifndef EX_ARDUINOHA_LIGHT
 
+class HASerializerArray;
+
 #define HALIGHT_STATE_CALLBACK(name) void (*name)(bool state, HALight* sender)
 #define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
 #define HALIGHT_COLOR_TEMP_CALLBACK(name) void (*name)(uint16_t temperature, HALight* sender)
 #define HALIGHT_RGB_COLOR_CALLBACK(name) void (*name)(HALight::RGBColor color, HALight* sender)
+#define HALIGHT_EFFECT_CALLBACK(name) void (*name)(uint8_t index, HALight* sender)
 
 /**
  * HALight allows adding a controllable light in the Home Assistant panel.
- * The library supports only the state, brightness, color temperature and RGB color.
+ * The library supports only the state, brightness, color temperature, RGB color and effects.
  * If you need more features please open a new GitHub issue.
  *
  * @note
@@ -29,7 +32,8 @@ public:
         DefaultFeatures = 0,
         BrightnessFeature = 1,
         ColorTemperatureFeature = 2,
-        RGBFeature = 4
+        RGBFeature = 4,
+        EffectsFeature = 8
     };
 
     struct RGBColor {
@@ -77,6 +81,7 @@ public:
      *                 `HALight::BrightnessFeature | HALight::ColorTemperatureFeature`
      */
     HALight(const char* uniqueId, const uint8_t features = DefaultFeatures);
+    ~HALight();
 
     /**
      * Changes state of the light and publishes MQTT message.
@@ -121,6 +126,33 @@ public:
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setRGBColor(const RGBColor& color, const bool force = false);
+
+    /**
+     * Sets the list of available effects that will be listed.
+     * For example:
+     * `
+     * const char* const lightEffects[] = {"Fire","Rainbow","Snowflales","Rain","Smoke"};
+     * light.setEffects(lightEffects, 5);
+     * `
+     *
+     *
+     * @param effects The list of effects i.e. array of strings.
+     * @param size The size of the effects list i.e. total number of effects.
+     * @note The effects list can be set only once.
+     */
+    void setEffects(const char* const effects[], const uint8_t size);
+
+    /**
+     * Changes the effect of the light and publishes MQTT message.
+     * Effect represents the index of the effect that was set using setEffects method.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param effect The new effect index of the light.
+     * @param force Forces to update the value without comparing it to a previous known value.
+     * @return Returns `true` if the effect is set successfully.
+     */
+    bool setEffect(const uint8_t effect, const bool force = false);
 
     /**
      * Alias for `setState(true)`.
@@ -201,6 +233,24 @@ public:
      */
     inline const RGBColor& getCurrentRGBColor() const
         { return _currentRGBColor; }
+
+    /**
+     * Sets the current effect of the light without pushing the value to Home Assistant.
+     * This method may be useful if you want to change the effect before the connection
+     * with the MQTT broker is acquired.
+     *
+     * @param effect The new effect.
+     */
+    inline void setCurrentEffect(const uint8_t effect)
+        { _currentEffect = effect; }
+
+    /**
+     * Returns the last known effect of the light.
+     * Effect represents the index of the effect that was set using setEffects method.
+     * By default the effect is set to `0`.
+     */
+    inline uint8_t getCurrentEffect() const
+        { return _currentEffect; }
 
     /**
      * Sets icon of the light.
@@ -297,6 +347,21 @@ public:
     inline void onRGBColorCommand(HALIGHT_RGB_COLOR_CALLBACK(callback))
         { _rgbColorCallback = callback; }
 
+    /**
+    * Registers callback that will be called each time the effect command from HA is received.
+    * Please note that it's not possible to register multiple callbacks for the same light.
+    *
+    * @param callback
+    * @note In non-optimistic mode, the effect must be reported back to HA using the HALight::setEffect method.
+    */
+    inline void onEffectCommand(HALIGHT_EFFECT_CALLBACK(callback))
+        { _effectCallback = callback; }
+
+#ifdef ARDUINOHA_TEST
+    inline HASerializerArray* getEffects() const
+        { return _effects; }
+#endif
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -340,6 +405,14 @@ private:
     bool publishRGBColor(const RGBColor& color);
 
     /**
+     * Publishes the MQTT message with the given effect.
+     *
+     * @param effect The effect to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishEffect(const uint8_t effect);
+
+    /**
      * Parses the given state command and executes the callback with proper value.
      *
      * @param cmd The data of the command.
@@ -370,6 +443,14 @@ private:
      * @param length Length of the command.
      */
     void handleRGBCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+    * Parses the given effect command and executes the callback with proper value.
+    *
+    * @param cmd The data of the command.
+    * @param length Length of the command.
+    */
+    void handleEffectCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the light.
     const uint8_t _features;
@@ -404,6 +485,12 @@ private:
     /// The current RBB color. By default the value is not set.
     RGBColor _currentRGBColor;
 
+    /// Array of effects for the serializer.
+    HASerializerArray* _effects;
+
+    /// The current effect (the current effect's index). By default it's `0`.
+    uint8_t _currentEffect;
+
     /// The callback that will be called when the state command is received from the HA.
     HALIGHT_STATE_CALLBACK(_stateCallback);
 
@@ -415,6 +502,9 @@ private:
 
     /// The callback that will be called when the RGB command is received from the HA.
     HALIGHT_RGB_COLOR_CALLBACK(_rgbColorCallback);
+
+    /// The callback that will be called when the effect is received from the HA.
+    HALIGHT_EFFECT_CALLBACK(_effectCallback);
 };
 
 #endif

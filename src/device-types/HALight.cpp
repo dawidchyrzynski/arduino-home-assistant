@@ -58,12 +58,29 @@ HALight::HALight(const char* uniqueId, const uint8_t features) :
     _maxMireds(),
     _currentColorTemperature(0),
     _currentRGBColor(),
+    _effects(nullptr),
+    _currentEffect(0),
     _stateCallback(nullptr),
     _brightnessCallback(nullptr),
     _colorTemperatureCallback(nullptr),
-    _rgbColorCallback(nullptr)
+    _rgbColorCallback(nullptr),
+    _effectCallback(nullptr)
 {
 
+}
+
+HALight::~HALight()
+{
+    if (_effects) {
+        const uint8_t effectsNb = _effects->getItemsNb();
+        const HASerializerArray::ItemType* effects = _effects->getItems();
+
+        for (uint8_t i = 0; i < effectsNb; i++) {
+            delete[] effects[i];
+        }
+
+        delete _effects;
+    }
 }
 
 bool HALight::setState(const bool state, const bool force)
@@ -122,13 +139,49 @@ bool HALight::setRGBColor(const RGBColor& color, const bool force)
     return false;
 }
 
-void HALight::buildSerializer()
+void HALight::setEffects(const char* const effects[], const uint8_t size)
 {
-    if (_serializer || !uniqueId()) {
+    if (!(_features & EffectsFeature) || !effects || size == 0 || _effects) { // effects can be set only once
         return;
     }
 
-    _serializer = new HASerializer(this, 19); // 19 - max properties nb
+    _effects = new HASerializerArray(size, false);
+
+    uint8_t effectLen = 0;
+    for (uint8_t i = 0; i < size; i++) {
+        effectLen = strlen(effects[i]);
+
+        char* const effect = new char[effectLen + 1]; // include null terminator
+        effect[effectLen] = '\0';
+        memcpy(effect, effects[i], effectLen);
+
+        _effects->add(effect);
+    }
+}
+
+bool HALight::setEffect(const uint8_t effect, const bool force)
+{
+    if (!force && effect == _currentEffect) {
+        return true;
+    }
+
+    if (publishEffect(effect)) {
+        _currentEffect = effect;
+        return true;
+    }
+
+    return false;
+}
+
+void HALight::buildSerializer()
+{
+    // EffectsFeature enabled and no _effects set => unlogical
+    const bool effectsEnabledButNotSet = (_features & EffectsFeature) && !_effects;
+    if (_serializer || !uniqueId() || effectsEnabledButNotSet) {
+        return;
+    }
+
+    _serializer = new HASerializer(this, 22); // 22 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
@@ -189,6 +242,17 @@ void HALight::buildSerializer()
         _serializer->topic(AHATOFSTR(HARGBStateTopic));
     }
 
+    if (_features & EffectsFeature) {
+        _serializer->topic(AHATOFSTR(HAEffectStateTopic));
+        _serializer->topic(AHATOFSTR(HAEffectCommandTopic));
+
+        _serializer->set(
+            AHATOFSTR(HAEffectsProperty),
+            _effects,
+            HASerializer::ArrayPropertyType
+        );
+    }
+
     _serializer->set(HASerializer::WithDevice);
     _serializer->set(HASerializer::WithAvailability);
     _serializer->topic(AHATOFSTR(HAStateTopic));
@@ -209,6 +273,7 @@ void HALight::onMqttConnected()
         publishBrightness(_currentBrightness);
         publishColorTemperature(_currentColorTemperature);
         publishRGBColor(_currentRGBColor);
+        publishEffect(_currentEffect);
     }
 
     subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
@@ -223,6 +288,10 @@ void HALight::onMqttConnected()
 
     if (_features & RGBFeature) {
         subscribeTopic(uniqueId(), AHATOFSTR(HARGBCommandTopic));
+    }
+
+    if (_features & EffectsFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HAEffectCommandTopic));
     }
 }
 
@@ -258,6 +327,14 @@ void HALight::onMqttMessage(
         )
     ) {
         handleRGBCommand(payload, length);
+    } else if (
+        HASerializer::compareDataTopics(
+            topic,
+            uniqueId(),
+            AHATOFSTR(HAEffectCommandTopic)
+        )
+    ) {
+        handleEffectCommand(payload, length);
     }
 }
 
@@ -317,6 +394,20 @@ bool HALight::publishRGBColor(const RGBColor& color)
     return publishOnDataTopic(AHATOFSTR(HARGBStateTopic), str, true);
 }
 
+bool HALight::publishEffect(const uint8_t effect)
+{
+    if (!(_features & EffectsFeature) || !_effects || effect >= _effects->getItemsNb()) {
+        return false;
+    }
+
+    const char* effectName = _effects->getItems()[effect];
+    if (!effectName) {
+        return false;
+    }
+
+    return publishOnDataTopic(AHATOFSTR(HAEffectStateTopic), effectName, true);
+}
+
 void HALight::handleStateCommand(const uint8_t* cmd, const uint16_t length)
 {
     (void)cmd;
@@ -367,6 +458,23 @@ void HALight::handleRGBCommand(const uint8_t* cmd, const uint16_t length)
 
     if (color.isSet) {
         _rgbColorCallback(color, this);
+    }
+}
+
+void HALight::handleEffectCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_effectCallback) {
+        return;
+    }
+
+    const uint8_t effectsNb = _effects->getItemsNb();
+    const HASerializerArray::ItemType* effects = _effects->getItems();
+
+    for (uint8_t i = 0; i < effectsNb; i++) {
+        if (strlen(effects[i]) == length && memcmp(cmd, effects[i], length) == 0) {
+            _effectCallback(i, this);
+            return;
+        }
     }
 }
 
