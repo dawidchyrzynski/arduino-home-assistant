@@ -37,6 +37,17 @@ public:
         const char* uniqueId
     );
 
+    ~HABaseDeviceType(){
+        if(_uniqueId){
+            free((void*)_uniqueId);
+            _uniqueId = NULL;
+        }
+        if(_name){
+            free((void*)_name);
+            _name = NULL;
+        }
+    }
+
     /**
      * Returns unique ID of the device type.
      */
@@ -69,7 +80,7 @@ public:
      * @param name The device type name.
      */
     inline void setName(const char* name)
-        { _name = name; }
+        { _name = strdup(name); }
 
     /**
      * Returns name of the deviced type that was assigned via setName method.
