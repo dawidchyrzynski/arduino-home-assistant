@@ -8,7 +8,8 @@ HABinarySensor::HABinarySensor(const char* uniqueId) :
     HABaseDeviceType(AHATOFSTR(HAComponentBinarySensor), uniqueId),
     _class(nullptr),
     _icon(nullptr),
-    _currentState(false)
+    _currentState(false),
+    _entityCategory(nullptr)
 {
 
 }
@@ -42,11 +43,12 @@ void HABinarySensor::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 9); // 9 - max properties nb
+    _serializer = new HASerializer(this, 10); // 10 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
+    _serializer->set(AHATOFSTR(HAStateEntityCategory), _entityCategory);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
 
     if (_expireAfter.isSet()) {
