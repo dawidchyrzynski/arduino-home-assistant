@@ -8,6 +8,7 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     HABaseDeviceType(AHATOFSTR(HAComponentNumber), uniqueId),
     _precision(precision),
     _class(nullptr),
+    _entityCategory(nullptr),
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
@@ -42,11 +43,12 @@ void HANumber::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 16); // 16 - max properties nb
+    _serializer = new HASerializer(this, 17); // 17 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
+    _serializer->set(AHATOFSTR(HAStateEntityCategory), _entityCategory);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
     _serializer->set(
