@@ -42,6 +42,7 @@ extern const char HAUniqueIdProperty[];
 extern const char HAObjectIdProperty[];
 extern const char HADeviceProperty[];
 extern const char HADeviceClassProperty[];
+extern const char HAStateEntityCategory[];
 extern const char HAStateClassProperty[];
 extern const char HAIconProperty[];
 extern const char HARetainProperty[];

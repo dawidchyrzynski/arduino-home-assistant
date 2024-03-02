@@ -65,6 +65,15 @@ public:
         { _deviceClass = deviceClass; }
 
     /**
+     * Sets the entity category for the sensor.
+     * See: https://www.home-assistant.io/integrations/sensor.mqtt/#entity_category
+     *
+     * @param entityCategory The category name.
+     */
+    inline void setEntityCategory(const char* entityCategory)
+        { _entityCategory = entityCategory; }
+
+    /**
      * Sets class of the state for the long term stats.
      * See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
      *
@@ -109,6 +118,9 @@ private:
 
     /// The device class. It can be nullptr.
     const char* _deviceClass;
+
+    /// The entity category for the sensor. It can be nullptr. See: https://www.home-assistant.io/integrations/sensor.mqtt/#entity_category
+    const char* _entityCategory;
 
     /// The state class for the long term stats. It can be nullptr. See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
     const char* _stateClass;
