@@ -6,16 +6,19 @@
 #include "../utils/HANumeric.h"
 #include "../utils/HASerializer.h"
 
-HACover::HACover(const char* uniqueId, const Features features) :
+HACover::HACover(const char* uniqueId, const uint8_t features) :
     HABaseDeviceType(AHATOFSTR(HAComponentCover), uniqueId),
     _features(features),
     _currentState(StateUnknown),
     _currentPosition(DefaultPosition),
+    _currentTilt(DefaultTilt),
     _class(nullptr),
     _icon(nullptr),
     _retain(false),
     _optimistic(false),
-    _commandCallback(nullptr)
+    _commandCallback(nullptr),
+    _setPositionCommandCallback(nullptr),
+    _tiltCommandCallback(nullptr)
 {
 
 }
@@ -42,6 +45,20 @@ bool HACover::setPosition(const int16_t position, const bool force)
 
     if (publishPosition(position)) {
         _currentPosition = position;
+        return true;
+    }
+
+    return false;
+}
+
+bool HACover::setTilt(const int16_t tilt, const bool force)
+{
+    if (!force && _currentTilt == tilt) {
+        return true;
+    }
+
+    if (publishTilt(tilt)) {
+        _currentTilt = tilt;
         return true;
     }
 
@@ -85,6 +102,13 @@ void HACover::buildSerializer()
     if (_features & PositionFeature) {
         _serializer->topic(AHATOFSTR(HAPositionTopic));
     }
+    if (_features & SetPositionFeature) {
+        _serializer->topic(AHATOFSTR(HASetPositionTopic));
+    }
+    if (_features & TiltFeature) {
+        _serializer->topic(AHATOFSTR(HATiltStatusTopic));
+        _serializer->topic(AHATOFSTR(HATiltCommandTopic));
+    }
 }
 
 void HACover::onMqttConnected()
@@ -99,9 +123,18 @@ void HACover::onMqttConnected()
     if (!_retain) {
         publishState(_currentState);
         publishPosition(_currentPosition);
+        publishTilt(_currentTilt);
     }
 
     subscribeTopic(uniqueId(), AHATOFSTR(HACommandTopic));
+
+    if (_features & SetPositionFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HASetPositionTopic));
+    }
+
+    if (_features & TiltFeature) {
+        subscribeTopic(uniqueId(), AHATOFSTR(HATiltCommandTopic));
+    }
 }
 
 void HACover::onMqttMessage(
@@ -116,6 +149,18 @@ void HACover::onMqttMessage(
         AHATOFSTR(HACommandTopic)
     )) {
         handleCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HASetPositionTopic)
+    )) {
+        handleSetPositionCommand(payload, length);
+    } else if (HASerializer::compareDataTopics(
+        topic,
+        uniqueId(),
+        AHATOFSTR(HATiltCommandTopic)
+    )) {
+        handleTiltCommand(payload, length);
     }
 }
 
@@ -166,6 +211,18 @@ bool HACover::publishPosition(int16_t position)
     return publishOnDataTopic(AHATOFSTR(HAPositionTopic), str, true);
 }
 
+bool HACover::publishTilt(int16_t tilt)
+{
+    if (tilt == DefaultTilt || !(_features & TiltFeature)) {
+        return false;
+    }
+
+    char str[6 + 1] = {0}; // int16_t digits with null terminator
+    HANumeric(tilt, 0).toStr(str);
+
+    return publishOnDataTopic(AHATOFSTR(HATiltStatusTopic), str, true);
+}
+
 void HACover::handleCommand(const uint8_t* cmd, const uint16_t length)
 {
     if (!_commandCallback) {
@@ -178,6 +235,30 @@ void HACover::handleCommand(const uint8_t* cmd, const uint16_t length)
         _commandCallback(CommandOpen, this);
     } else if (memcmp_P(cmd, HAStopCommand, length) == 0) {
         _commandCallback(CommandStop, this);
+    }
+}
+
+void HACover::handleSetPositionCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_setPositionCommandCallback) {
+        return;
+    }
+
+    const HANumeric& position = HANumeric::fromStr(cmd, length);
+    if (position.isUInt8()) {
+        _setPositionCommandCallback(position.toUInt8(), this);
+    }
+}
+
+void HACover::handleTiltCommand(const uint8_t* cmd, const uint16_t length)
+{
+    if (!_tiltCommandCallback) {
+        return;
+    }
+
+    const HANumeric& tilt = HANumeric::fromStr(cmd, length);
+    if (tilt.isUInt8()) {
+        _tiltCommandCallback(tilt.toUInt8(), this);
     }
 }
 
