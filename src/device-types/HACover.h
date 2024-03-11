@@ -6,6 +6,8 @@
 #ifndef EX_ARDUINOHA_COVER
 
 #define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
+#define HACOVER_SET_POSITION_CALLBACK(name) void (*name)(uint8_t position, HACover* sender)
+#define HACOVER_TILT_CALLBACK(name) void (*name)(uint8_t tilt, HACover* sender)
 
 /**
  * HACover allows to control a cover (such as blinds, a roller shutter or a garage door).
@@ -18,6 +20,7 @@ class HACover : public HABaseDeviceType
 {
 public:
     static const int16_t DefaultPosition = -32768;
+    static const int16_t DefaultTilt = -32768;
 
     enum CoverState {
         StateUnknown = 0,
@@ -36,14 +39,18 @@ public:
 
     enum Features {
         DefaultFeatures = 0,
-        PositionFeature = 1
+        PositionFeature = 1,
+        SetPositionFeature = 2,
+        TiltFeature = 4
     };
 
     /**
      * @param uniqueId The unique ID of the cover. It needs to be unique in a scope of your device.
-     * @param features Features that should be enabled for the fan.
+     * @param features Features that should be enabled for the cover.
+     *                 You can enable multiple features by using OR bitwise operator, for example:
+     *                 `HACover::PositionFeature | HACover::TiltFeature`
      */
-    HACover(const char* uniqueId, const Features features = DefaultFeatures);
+    HACover(const char* uniqueId, const uint8_t features = DefaultFeatures);
 
     /**
      * Changes state of the cover and publishes MQTT message.
@@ -66,6 +73,17 @@ public:
      * @returns Returns `true` if MQTT message has been published successfully.
      */
     bool setPosition(const int16_t position, const bool force = false);
+
+    /**
+     * Changes the tilt of the cover and publishes MQTT message.
+     * Please note that if a new value is the same as previous one,
+     * the MQTT message won't be published.
+     *
+     * @param tilt The new tilt value of the cover (0-100).
+     * @param force Forces to update the state without comparing it to a previous known state.
+     * @returns Returns `true` if MQTT message has been published successfully.
+     */
+    bool setTilt(const int16_t tilt, const bool force = false);
 
     /**
      * Sets the current state of the cover without publishing it to Home Assistant.
@@ -100,6 +118,23 @@ public:
      */
     inline int16_t getCurrentPosition() const
         { return _currentPosition; }
+
+    /**
+     * Sets the current tilt of the cover without pushing the value to Home Assistant.
+     * This method may be useful if you want to change the tilt before the connection
+     * with the MQTT broker is acquired.
+     *
+     * @param position The new tilt value of the cover (0-100).
+     */
+    inline void setCurrentTilt(const int16_t tilt)
+        { _currentTilt = tilt; }
+
+    /**
+     * Returns the last known tilt of the cover.
+     * By default tilt is set to HACover::DefaultTilt
+     */
+    inline int16_t getCurrentTilt() const
+        { return _currentTilt; }
 
     /**
      * Sets class of the device.
@@ -147,6 +182,24 @@ public:
     inline void onCommand(HACOVER_CALLBACK(callback))
         { _commandCallback = callback; }
 
+    /**
+     * Registers callback that will be called each time the set position command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same cover.
+     *
+     * @param callback
+     */
+    inline void onSetPositionCommand(HACOVER_SET_POSITION_CALLBACK(callback))
+        { _setPositionCommandCallback = callback; }
+
+    /**
+     * Registers callback that will be called each time the tilt command from HA is received.
+     * Please note that it's not possible to register multiple callbacks for the same cover.
+     *
+     * @param callback
+     */
+    inline void onTiltCommand(HACOVER_TILT_CALLBACK(callback))
+        { _tiltCommandCallback = callback; }
+
 protected:
     virtual void buildSerializer() override;
     virtual void onMqttConnected() override;
@@ -174,12 +227,36 @@ private:
     bool publishPosition(const int16_t position);
 
     /**
+     * Publishes the MQTT message with the given tilt.
+     *
+     * @param tilt The tilt to publish.
+     * @returns Returns `true` if the MQTT message has been published successfully.
+     */
+    bool publishTilt(const int16_t tilt);
+
+    /**
      * Parses the given command and executes the cover's callback with proper enum's property.
      *
      * @param cmd The data of the command.
      * @param length Length of the command.
      */
     void handleCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given set position command and executes the callback with the proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleSetPositionCommand(const uint8_t* cmd, const uint16_t length);
+
+    /**
+     * Parses the given tilt command and executes the callback with the proper value.
+     *
+     * @param cmd The data of the command.
+     * @param length Length of the command.
+     */
+    void handleTiltCommand(const uint8_t* cmd, const uint16_t length);
 
     /// Features enabled for the cover.
     const uint8_t _features;
@@ -189,6 +266,9 @@ private:
 
     /// The current position of the cover. By default it's `HACover::DefaultPosition`.
     int16_t _currentPosition;
+
+    /// The current tilt of the cover. By default it's `HACover::DefaultTilt`.
+    int16_t _currentTilt;
 
     /// The device class. It can be nullptr.
     const char* _class;
@@ -204,6 +284,12 @@ private:
 
     /// The command callback that will be called when clicking the cover's button in the HA panel.
     HACOVER_CALLBACK(_commandCallback);
+
+    /// The command callback that will be called when setting the cover's position.
+    HACOVER_SET_POSITION_CALLBACK(_setPositionCommandCallback);
+
+    /// The command callback that will be called when changing the cover's tilt level.
+    HACOVER_TILT_CALLBACK(_tiltCommandCallback);
 };
 
 #endif
