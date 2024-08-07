@@ -26,6 +26,11 @@ void HABaseDeviceType::setAvailability(bool online)
     publishAvailability();
 }
 
+void HABaseDeviceType::setConfig()
+{
+    publishConfig();
+}
+
 HAMqtt* HABaseDeviceType::mqtt()
 {
     return HAMqtt::instance();

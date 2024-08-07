@@ -104,6 +104,11 @@ public:
      */
     virtual void setAvailability(bool online);
 
+    /**
+     * Publishes configuration of this device type on the HA discovery topic.
+     */
+    virtual void setConfig();
+
 #ifdef ARDUINOHA_TEST
     inline HASerializer* getSerializer() const
         { return _serializer; }
