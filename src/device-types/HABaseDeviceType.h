@@ -68,14 +68,14 @@ public:
      *
      * @param name The device type name.
      */
-    inline void setName(const char* name)
+    inline void setName(const STRING_TYPE_T* name)
         { _name = name; }
 
     /**
      * Returns name of the deviced type that was assigned via setName method.
      * It can be nullptr if there is no name assigned.
      */
-    inline const char* getName() const
+    inline const STRING_TYPE_T* getName() const
         { return _name; }
 
     /**
@@ -84,14 +84,14 @@ public:
      *
      * @param objectId The object ID.
      */
-    inline void setObjectId(const char* objectId)
+    inline void setObjectId(const STRING_TYPE_T* objectId)
         { _objectId = objectId; }
 
     /**
      * Returns the object ID that was set by setObjectId method.
      * It can be nullptr if there is no ID assigned.
      */
-    inline const char* getObjectId() const
+    inline const STRING_TYPE_T* getObjectId() const
         { return _objectId; }
 
     /**
@@ -223,10 +223,10 @@ protected:
     const char* _uniqueId;
 
     /// The name that was set using setName method. It can be nullptr.
-    const char* _name;
+    const STRING_TYPE_T* _name;
 
     /// The object ID that was set using setObjectId method. It can be nullptr.
-    const char* _objectId;
+    const STRING_TYPE_T* _objectId;
 
     /// HASerializer that belongs to this device type. It can be nullptr.
     HASerializer* _serializer;

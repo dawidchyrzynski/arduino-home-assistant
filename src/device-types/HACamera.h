@@ -52,7 +52,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
 protected:
@@ -69,7 +69,7 @@ private:
     ImageEncoding _encoding;
 
     /// The icon of the camera. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
     
 };
 

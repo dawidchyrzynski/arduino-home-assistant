@@ -71,7 +71,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -101,7 +101,7 @@ private:
     const __FlashStringHelper* getSourceTypeProperty() const;
 
     /// The icon of the tracker. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The source type of the tracker. By default it's `HADeviceTracker::SourceTypeUnknown`.
     SourceType _sourceType;

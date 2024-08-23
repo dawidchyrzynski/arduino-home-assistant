@@ -61,7 +61,7 @@ public:
      *
      * @param deviceClass The class name.
      */
-    inline void setDeviceClass(const char* deviceClass)
+    inline void setDeviceClass(const STRING_TYPE_T* deviceClass)
         { _deviceClass = deviceClass; }
 
     /**
@@ -70,7 +70,7 @@ public:
      *
      * @param stateClass The class name.
      */
-    inline void setStateClass(const char* stateClass)
+    inline void setStateClass(const STRING_TYPE_T* stateClass)
         { _stateClass = stateClass; }
 
     /**
@@ -88,7 +88,7 @@ public:
      *
      * @param class The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -96,7 +96,7 @@ public:
      *
      * @param units For example: °C, %
      */
-    inline void setUnitOfMeasurement(const char* unitOfMeasurement)
+    inline void setUnitOfMeasurement(const STRING_TYPE_T* unitOfMeasurement)
         { _unitOfMeasurement = unitOfMeasurement; }
 
 protected:
@@ -108,19 +108,19 @@ private:
     const uint16_t _features;
 
     /// The device class. It can be nullptr.
-    const char* _deviceClass;
+    const STRING_TYPE_T* _deviceClass;
 
     /// The state class for the long term stats. It can be nullptr. See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
-    const char* _stateClass;
+    const STRING_TYPE_T* _stateClass;
 
     /// The force update flag for the HA panel.
     bool _forceUpdate;
 
     /// The icon of the sensor. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The unit of measurement for the sensor. It can be nullptr.
-    const char* _unitOfMeasurement;
+    const STRING_TYPE_T* _unitOfMeasurement;
 
     /// It defines the number of seconds after the sensor’s state expires, if it’s not updated. By default the sensors state never expires.
     HANumeric _expireAfter;

@@ -103,7 +103,7 @@ public:
      *
      * @param deviceClass The class name.
      */
-    inline void setDeviceClass(const char* deviceClass)
+    inline void setDeviceClass(const STRING_TYPE_T* deviceClass)
         { _class = deviceClass; }
 
     /**
@@ -112,7 +112,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -149,7 +149,7 @@ public:
      *
      * @param units For example: °C, %
      */
-    inline void setUnitOfMeasurement(const char* unitOfMeasurement)
+    inline void setUnitOfMeasurement(const STRING_TYPE_T* unitOfMeasurement)
         { _unitOfMeasurement = unitOfMeasurement; }
 
     /**
@@ -226,10 +226,10 @@ private:
     const NumberPrecision _precision;
 
     /// The device class. It can be nullptr.
-    const char* _class;
+    const STRING_TYPE_T* _class;
 
     /// The icon of the number. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The retain flag for the HA commands.
     bool _retain;
@@ -241,7 +241,7 @@ private:
     Mode _mode;
 
     /// The unit of measurement for the sensor. It can be nullptr.
-    const char* _unitOfMeasurement;
+    const STRING_TYPE_T* _unitOfMeasurement;
 
     /// The minimal value that can be set from the HA panel.
     HANumeric _minValue;

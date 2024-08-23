@@ -173,6 +173,17 @@ public:
     );
 
     /**
+     * Adds a new entry to the serialized with a predefined type of `ProgmemPropertyValue`.
+     *
+     * @param property Pointer to the name of the property (progmem string).
+     * @param value Pointer to the value that's being set (progmem string).
+     */
+    void set(
+        const __FlashStringHelper* property,
+        const __FlashStringHelper* value
+    );
+
+    /**
      * Adds a new entry to the serializer with a type of `FlagEntryType`.
      *
      * @param flag Flag to add.

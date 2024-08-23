@@ -71,7 +71,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -129,7 +129,7 @@ private:
     void handleCommand(const uint8_t* cmd, const uint16_t length);
 
     /// The icon of the lock. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The retain flag for the HA commands.
     bool _retain;

@@ -79,7 +79,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -146,7 +146,7 @@ private:
     int8_t _currentState;
 
     /// The icon of the select. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The retain flag for the HA commands.
     bool _retain;

@@ -29,7 +29,7 @@ public:
      *
      * @param deviceClass The class name.
      */
-    inline void setDeviceClass(const char* deviceClass)
+    inline void setDeviceClass(const STRING_TYPE_T* deviceClass)
         { _class = deviceClass; }
 
     /**
@@ -38,7 +38,7 @@ public:
      *
      * @param icon The icon name.
      */
-    inline void setIcon(const char* icon)
+    inline void setIcon(const STRING_TYPE_T* icon)
         { _icon = icon; }
 
     /**
@@ -70,10 +70,10 @@ protected:
 
 private:
     /// The device class. It can be nullptr.
-    const char* _class;
+    const STRING_TYPE_T* _class;
 
     /// The icon of the button. It can be nullptr.
-    const char* _icon;
+    const STRING_TYPE_T* _icon;
 
     /// The retain flag for the HA commands.
     bool _retain;

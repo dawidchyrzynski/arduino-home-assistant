@@ -187,6 +187,22 @@ void HASerializer::set(
     entry->value = value;
 }
 
+void HASerializer::set(
+    const __FlashStringHelper* property,
+    const __FlashStringHelper* value
+)
+{
+    if (!property || !value) {
+        return;
+    }
+
+    SerializerEntry* entry = addEntry();
+    entry->type = PropertyEntryType;
+    entry->subtype = static_cast<uint8_t>(ProgmemPropertyValue);
+    entry->property = property;
+    entry->value = value;
+}
+
 void HASerializer::set(const FlagType flag)
 {
     if (flag == WithDevice || flag == WithUniqueId) {

@@ -33,6 +33,14 @@
     #define ARDUINOHA_DEBUG_PRINT(x)
 #endif
 
+// Define macro at project-level to maximise usage of PROGMEM strings
+// Write your code accordingly
+#if defined(ARDUINOHA_MAXPROGMEM_STRINGS)
+    #define STRING_TYPE_T __FlashStringHelper
+#else
+    #define STRING_TYPE_T char
+#endif
+
 
 #if defined(__SAMD21G18A__) or defined(__SAM3X8E__)
     #define ARDUINOHA_INT_OVERLOAD
