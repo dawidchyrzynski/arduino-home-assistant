@@ -104,11 +104,25 @@ public:
     void setManufacturer(const char* manufacturer);
 
     /**
+     * Sets the "manufacturer" property that's going to be displayed in the Home Assistant.
+     *
+     * @param manufacturer Any string. Data must reside in flash. Use PROGMEM or 'F()' macro.
+     */
+    void setManufacturer(const __FlashStringHelper* manufacturer);
+
+    /**
      * Sets the "model" property that's going to be displayed in the Home Assistant.
      *
      * @param model Any string. Keep it short to save the memory.
      */
     void setModel(const char* model);
+
+    /**
+     * Sets the "model" property that's going to be displayed in the Home Assistant.
+     *
+     * @param model Any string. Data must reside in flash. Use PROGMEM or 'F()' macro.
+     */
+    void setModel(const __FlashStringHelper* model);
 
     /**
      * Sets the "name" property that's going to be displayed in the Home Assistant.
@@ -118,6 +132,13 @@ public:
     void setName(const char* name);
 
     /**
+     * Sets the "name" property that's going to be displayed in the Home Assistant.
+     *
+     * @param name Any string. Data must reside in flash. Use PROGMEM or 'F()' macro.
+     */
+    void setName(const __FlashStringHelper* name);
+
+    /**
      * Sets the "software version" property that's going to be displayed in the Home Assistant.
      *
      * @param softwareVersion Any string. Keep it short to save the memory.
@@ -125,11 +146,25 @@ public:
     void setSoftwareVersion(const char* softwareVersion);
 
     /**
+     * Sets the "software version" property that's going to be displayed in the Home Assistant.
+     *
+     * @param softwareVersion Any string. Data must reside in flash. Use PROGMEM or 'F()' macro.
+     */
+    void setSoftwareVersion(const __FlashStringHelper* softwareVersion);
+
+    /**
      * Sets the "configuration URL" property that's going to be used by the Home Assistant.
      *
      * @param url Configuration URL to publish.
      */
     void setConfigurationUrl(const char* url);
+
+    /**
+     * Sets the "configuration URL" property that's going to be used by the Home Assistant.
+     *
+     * @param url Configuration URL to publish. Data must reside in flash. Use PROGMEM or 'F()' macro.
+     */
+    void setConfigurationUrl(const __FlashStringHelper* url);
 
     /**
      * Sets device's availability and publishes MQTT message on the availability topic.

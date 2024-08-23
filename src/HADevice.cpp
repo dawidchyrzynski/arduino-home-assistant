@@ -64,14 +64,29 @@ void HADevice::setManufacturer(const char* manufacturer)
     _serializer->set(AHATOFSTR(HADeviceManufacturerProperty), manufacturer);
 }
 
+void HADevice::setManufacturer(const __FlashStringHelper* manufacturer)
+{
+    _serializer->set(AHATOFSTR(HADeviceManufacturerProperty), manufacturer, HASerializer::ProgmemPropertyValue);
+}
+
 void HADevice::setModel(const char* model)
 {
     _serializer->set(AHATOFSTR(HADeviceModelProperty), model);
 }
 
+void HADevice::setModel(const __FlashStringHelper* model)
+{
+    _serializer->set(AHATOFSTR(HADeviceModelProperty), model, HASerializer::ProgmemPropertyValue);
+}
+
 void HADevice::setName(const char* name)
 {
     _serializer->set(AHATOFSTR(HANameProperty), name);
+}
+
+void HADevice::setName(const __FlashStringHelper* name)
+{
+    _serializer->set(AHATOFSTR(HANameProperty), name, HASerializer::ProgmemPropertyValue);
 }
 
 void HADevice::setSoftwareVersion(const char* softwareVersion)
@@ -82,11 +97,29 @@ void HADevice::setSoftwareVersion(const char* softwareVersion)
     );
 }
 
+void HADevice::setSoftwareVersion(const __FlashStringHelper* softwareVersion)
+{
+    _serializer->set(
+        AHATOFSTR(HADeviceSoftwareVersionProperty),
+        softwareVersion,
+        HASerializer::ProgmemPropertyValue
+    );
+}
+
 void HADevice::setConfigurationUrl(const char* url)
 {
     _serializer->set(
         AHATOFSTR(HADeviceConfigurationUrlProperty),
         url
+    );
+}
+
+void HADevice::setConfigurationUrl(const __FlashStringHelper* url)
+{
+    _serializer->set(
+        AHATOFSTR(HADeviceConfigurationUrlProperty),
+        url,
+        HASerializer::ProgmemPropertyValue
     );
 }
 
