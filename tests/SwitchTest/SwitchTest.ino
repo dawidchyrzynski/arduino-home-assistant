@@ -42,6 +42,15 @@ void onCommandReceived(bool state, HASwitch* caller)
     lastCommandCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(bool state, HASwitch* caller) {
+            lastCommandCallbackCall.called = true;
+            lastCommandCallbackCall.state = state;
+            lastCommandCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(SwitchTest, invalid_unique_id) {
     prepareTest
 
@@ -328,6 +337,19 @@ AHA_TEST(SwitchTest, different_switch_command) {
 
     assertCommandCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(SwitchTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HASwitch testSwitch(testUniqueId);
+    testSwitch.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("ON"));
+
+    assertCommandCallbackCalled(true, &testSwitch)
+}
+#endif
 
 void setup()
 {

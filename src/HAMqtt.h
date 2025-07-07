@@ -6,28 +6,35 @@
 #include <IPAddress.h>
 #include "ArduinoHADefines.h"
 
-#define HAMQTT_CALLBACK(name) void (*name)()
-#define HAMQTT_STATE_CALLBACK(name) void (*name)(ConnectionState state)
-#define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HAMQTT_CALLBACK(name) std::function<void()> name
+    #define HAMQTT_STATE_CALLBACK(name) std::function<void(ConnectionState state)> name
+    #define HAMQTT_MESSAGE_CALLBACK(name) std::function<void(const char* topic, const uint8_t* payload, uint16_t length)> name
+#else
+    #define HAMQTT_CALLBACK(name) void (*name)()
+    #define HAMQTT_STATE_CALLBACK(name) void (*name)(ConnectionState state)
+    #define HAMQTT_MESSAGE_CALLBACK(name) void (*name)(const char* topic, const uint8_t* payload, uint16_t length)
+#endif
+
 #define HAMQTT_DEFAULT_PORT 1883
 
 #ifdef ARDUINOHA_TEST
-class PubSubClientMock;
+    class PubSubClientMock;
 #else
-class PubSubClient;
+    class PubSubClient;
 #endif
 
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
-#define HAMQTT_DEFAULT_DEVICES_LIMIT 6
+    #define HAMQTT_DEFAULT_DEVICES_LIMIT 6
 #else
-#define HAMQTT_DEFAULT_DEVICES_LIMIT 24
+    #define HAMQTT_DEFAULT_DEVICES_LIMIT 24
 #endif
 
 class HADevice;
 class HABaseDeviceType;
 
 #if defined(ARDUINO_API_VERSION)
-using namespace arduino;
+    using namespace arduino;
 #endif
 
 /**
@@ -129,7 +136,7 @@ public:
      * Please note that the callback is also fired by internal MQTT messages used by the library.
      * You should always verify the topic of the received message.
      *
-     * @param callback Callback method.
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onMessage(HAMQTT_MESSAGE_CALLBACK(callback))
         { _messageCallback = callback; }
@@ -139,7 +146,7 @@ public:
      * The callback is also fired after reconnecting to the broker.
      * You can use this method to register topics' subscriptions.
      *
-     * @param callback Callback method.
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onConnected(HAMQTT_CALLBACK(callback))
         { _connectedCallback = callback; }
@@ -147,7 +154,7 @@ public:
     /**
      * Registers a new callback method that will be called each time the connection to the MQTT broker is lost.
      *
-     * @param callback Callback method.
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onDisconnected(HAMQTT_CALLBACK(callback))
         { _disconnectedCallback = callback; }
@@ -155,7 +162,7 @@ public:
     /**
      * Registers a new callback method that will be called each time the connection state changes.
      *
-     * @param callback Callback method.
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onStateChanged(HAMQTT_STATE_CALLBACK(callback))
         { _stateChangedCallback = callback; }

@@ -42,6 +42,15 @@ void onCommandReceived(HALock::LockCommand command, HALock* caller)
     lastCommandCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(HALock::LockCommand command, HALock* caller) {
+            lastCommandCallbackCall.called = true;
+            lastCommandCallbackCall.command = command;
+            lastCommandCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(LockTest, invalid_unique_id) {
     prepareTest
 
@@ -326,6 +335,19 @@ AHA_TEST(LockTest, different_lock_command) {
 
     assertCommandCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(LockTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HALock lock(testUniqueId);
+    lock.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("LOCK"));
+
+    assertCommandCallbackCalled(HALock::CommandLock, &lock)
+}
+#endif
 
 void setup()
 {

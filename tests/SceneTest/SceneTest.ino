@@ -38,6 +38,14 @@ void onCommandReceived(HAScene* caller)
     lastActivateCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(HAScene* caller) {
+            lastActivateCallbackCall.called = true;
+            lastActivateCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(SceneTest, invalid_unique_id) {
     prepareTest
 
@@ -220,6 +228,20 @@ AHA_TEST(SceneTest, different_scene_command) {
 
     assertActivateCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+
+AHA_TEST(SceneTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAScene scene(testUniqueId);
+    scene.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
+
+    assertActivateCallbackCalled(&scene)
+}
+#endif
 
 void setup()
 {

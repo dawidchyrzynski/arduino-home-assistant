@@ -22,6 +22,7 @@ public:
     /**
      * Constructs HADevice with the given unique ID (string).
      * Keep the unique ID short to save the memory.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param uniqueId String with the null terminator.
      */
@@ -30,6 +31,7 @@ public:
     /**
      * Constructs HADevice using the given byte array as the unique ID.
      * It works in the same way as HADevice::setUniqueId method.
+     * The given string is copied internally and can be freed after the constructor returns.
      *
      * @param uniqueId Bytes array that's going to be converted into the string.
      * @param length Number of bytes in the array.
@@ -88,7 +90,8 @@ public:
 
     /**
      * Sets unique ID of the device based on the given byte array.
-     * Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.
+     * Each byte is converted to its hexadecimal string representation, so the final length of the unique ID will be twice the original number of bytes.
+     * The given string is copied internally and can be freed after the method returns.
      *
      * @param uniqueId Bytes array that's going to be converted into the string.
      * @param length Number of bytes in the array.
@@ -98,6 +101,7 @@ public:
 
     /**
      * Sets the "manufacturer" property that's going to be displayed in the Home Assistant.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param manufacturer Any string. Keep it short to save the memory.
      */
@@ -105,6 +109,7 @@ public:
 
     /**
      * Sets the "model" property that's going to be displayed in the Home Assistant.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param model Any string. Keep it short to save the memory.
      */
@@ -112,6 +117,7 @@ public:
 
     /**
      * Sets the "name" property that's going to be displayed in the Home Assistant.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param name Any string. Keep it short to save the memory.
      */
@@ -119,6 +125,7 @@ public:
 
     /**
      * Sets the "software version" property that's going to be displayed in the Home Assistant.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param softwareVersion Any string. Keep it short to save the memory.
      */
@@ -126,6 +133,7 @@ public:
 
     /**
      * Sets the "configuration URL" property that's going to be used by the Home Assistant.
+     * The given string must be static or const and cannot live on the stack.
      *
      * @param url Configuration URL to publish.
      */

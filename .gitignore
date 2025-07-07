@@ -1,3 +1,21 @@
+# General
 docsrc/xml
 docsrc/build
+
+# MacOS
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dll
+*.dylib
+*.out

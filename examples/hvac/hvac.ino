@@ -79,6 +79,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // assign callbacks (optional)
+    // alternatively you can use std::bind or lambda functions
     hvac.onTargetTemperatureCommand(onTargetTemperatureCommand);
     hvac.onPowerCommand(onPowerCommand);
     hvac.onModeCommand(onModeCommand);

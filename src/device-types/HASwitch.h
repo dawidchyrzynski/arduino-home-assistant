@@ -5,7 +5,11 @@
 
 #ifndef EX_ARDUINOHA_SWITCH
 
-#define HASWITCH_CALLBACK(name) void (*name)(bool state, HASwitch* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HASWITCH_CALLBACK(name) std::function<void(bool state, HASwitch* sender)> name
+#else
+    #define HASWITCH_CALLBACK(name) void (*name)(bool state, HASwitch* sender)
+#endif
 
 /**
  * HASwitch allows to display on/off switch in the HA panel and receive commands on your device.
@@ -103,7 +107,7 @@ public:
      * Registers callback that will be called each time the on/off command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same switch.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the state must be reported back to HA using the HASwitch::setState method.
      */
     inline void onCommand(HASWITCH_CALLBACK(callback))

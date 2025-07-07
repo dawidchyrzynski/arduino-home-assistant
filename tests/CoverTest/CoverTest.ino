@@ -43,6 +43,15 @@ void onCommandReceived(HACover::CoverCommand command, HACover* caller)
     lastCommandCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(HACover::CoverCommand command, HACover* caller) {
+            lastCommandCallbackCall.called = true;
+            lastCommandCallbackCall.command = command;
+            lastCommandCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(CoverTest, invalid_unique_id) {
     prepareTest
 
@@ -489,6 +498,19 @@ AHA_TEST(CoverTest, different_cover_command) {
 
     assertCommandCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(CoverTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HACover cover(testUniqueId);
+    cover.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("CLOSE"));
+
+    assertCommandCallbackCalled(HACover::CommandClose, &cover)
+}
+#endif
 
 void setup()
 {

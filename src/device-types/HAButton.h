@@ -5,7 +5,11 @@
 
 #ifndef EX_ARDUINOHA_BUTTON
 
-#define HABUTTON_CALLBACK(name) void (*name)(HAButton* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HABUTTON_CALLBACK(name) std::function<void(HAButton* sender)> name
+#else
+    #define HABUTTON_CALLBACK(name) void (*name)(HAButton* sender)
+#endif
 
 /**
  * HAButton represents a button that's displayed in the Home Assistant panel and
@@ -51,10 +55,10 @@ public:
         { _retain = retain; }
 
     /**
-     * Registers callback that will be called each time the press command from HA is received.
+     * Registers a callback that will be called each time the press command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same button.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onCommand(HABUTTON_CALLBACK(callback))
         { _commandCallback = callback; }

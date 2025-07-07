@@ -42,6 +42,15 @@ void onCommandReceived(HANumeric number, HANumber* caller)
     lastCommandCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(HANumeric number, HANumber* caller) {
+            lastCommandCallbackCall.called = true;
+            lastCommandCallbackCall.number = number;
+            lastCommandCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(NumberTest, invalid_unique_id) {
     prepareTest
 
@@ -857,6 +866,19 @@ AHA_TEST(NumberTest, different_number_command) {
 
     assertCommandCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(NumberTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HANumber number(testUniqueId, HANumber::PrecisionP1);
+    number.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("1234"));
+
+    assertCommandCallbackCalled(HANumeric(123.4f, 1), &number)
+}
+#endif
 
 void setup()
 {

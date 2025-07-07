@@ -34,7 +34,7 @@ void loop() {
     mqtt.loop();
 
     if ((millis() - lastUpdateAt) > 2000) { // update in 2s interval
-        unsigned long uptimeValue = millis() / 1000;
+        uint32_t uptimeValue = millis() / 1000;
         uptimeSensor.setValue(uptimeValue);
         lastUpdateAt = millis();
 

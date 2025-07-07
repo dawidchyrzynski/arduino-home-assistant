@@ -61,7 +61,17 @@ public:
      * @param deviceClass The class name.
      */
     inline void setDeviceClass(const char* deviceClass)
-        { _class = deviceClass; }
+        { _deviceClass = deviceClass; }
+
+    /**
+     * Sets class of the state for the long term stats.
+     * You can find list of available values here: https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes
+     * See: https://developers.home-assistant.io/docs/core/entity/sensor/#long-term-statistics
+     *
+     * @param stateClass The state class name.
+     */
+    inline void setStateClass(const char* stateClass)
+        { _stateClass = stateClass; }
 
     /**
      * Sets icon of the sensor.
@@ -86,7 +96,10 @@ private:
     bool publishState(bool state);
 
     /// The device class. It can be nullptr.
-    const char* _class;
+    const char* _deviceClass;
+
+    /// The state class. It can be nullptr.
+    const char* _stateClass;
 
     /// The icon of the sensor. It can be nullptr.
     const char* _icon;

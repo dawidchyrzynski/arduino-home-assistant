@@ -136,6 +136,33 @@ void onRGBColorCommand(HALight::RGBColor color, HALight* caller)
     lastRGBColorCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onStateCommand(bool state, HALight* caller) {
+            lastStateCallbackCall.called = true;
+            lastStateCallbackCall.state = state;
+            lastStateCallbackCall.caller = caller;
+        }
+
+        void onBrightnessCommand(uint8_t brightness, HALight* caller) {
+            lastBrightnessCallbackCall.called = true;
+            lastBrightnessCallbackCall.brightness = brightness;
+            lastBrightnessCallbackCall.caller = caller;
+        }
+
+        void onColorTemperatureCommand(uint16_t temperature, HALight* caller) {
+            lastColorTempCallbackCall.called = true;
+            lastColorTempCallbackCall.temperature = temperature;
+            lastColorTempCallbackCall.caller = caller;
+        }
+
+        void onRGBColorCommand(HALight::RGBColor color, HALight* caller) {
+            lastRGBColorCallbackCall.called = true;
+            lastRGBColorCallbackCall.color = color;
+            lastRGBColorCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(LightTest, invalid_unique_id) {
     prepareTest
 
@@ -821,6 +848,19 @@ AHA_TEST(LightTest, state_command_different_light) {
     assertStateCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(LightTest, state_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HALight light(testUniqueId);
+    light.onStateCommand(std::bind(&CallbacksProcessor::onStateCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("ON"));
+
+    assertStateCallbackCalled(true, &light)
+}
+#endif
+
 AHA_TEST(LightTest, brightness_command_min) {
     prepareTest
 
@@ -874,6 +914,19 @@ AHA_TEST(LightTest, brightness_command_different_light) {
     assertBrightnessCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(LightTest, brightness_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HALight light(testUniqueId);
+    light.onBrightnessCommand(std::bind(&CallbacksProcessor::onBrightnessCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(BrightnessCommandTopic), F("50"));
+
+    assertBrightnessCallbackCalled(50, &light)
+}
+#endif
+
 AHA_TEST(LightTest, color_temperature_command) {
     prepareTest
 
@@ -926,6 +979,19 @@ AHA_TEST(LightTest, color_temperature_command_different_light) {
 
     assertColorTempCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(LightTest, color_temperature_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HALight light(testUniqueId, HALight::ColorTemperatureFeature);
+    light.onColorTemperatureCommand(std::bind(&CallbacksProcessor::onColorTemperatureCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(ColorTemperatureCommandTopic), F("200"));
+
+    assertColorTempCallbackCalled(200, &light)
+}
+#endif
 
 AHA_TEST(LightTest, rgb_color_min_command) {
     prepareTest
@@ -1039,6 +1105,19 @@ AHA_TEST(LightTest, rgb_color_command_different_light) {
 
     assertRGBColorCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(LightTest, rgb_color_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HALight light(testUniqueId, HALight::RGBFeature);
+    light.onRGBColorCommand(std::bind(&CallbacksProcessor::onRGBColorCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(RGBCommandTopic), F("255,12,1"));
+
+    assertRGBColorCallbackCalled(HALight::RGBColor(255,12,1), &light)
+}
+#endif
 
 void setup()
 {

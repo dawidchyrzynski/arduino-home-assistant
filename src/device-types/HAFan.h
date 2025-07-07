@@ -6,8 +6,13 @@
 
 #ifndef EX_ARDUINOHA_FAN
 
-#define HAFAN_STATE_CALLBACK(name) void (*name)(bool state, HAFan* sender)
-#define HAFAN_SPEED_CALLBACK(name) void (*name)(uint16_t speed, HAFan* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HAFAN_STATE_CALLBACK(name) std::function<void(bool state, HAFan* sender)> name
+    #define HAFAN_SPEED_CALLBACK(name) std::function<void(uint16_t speed, HAFan* sender)> name
+#else
+    #define HAFAN_STATE_CALLBACK(name) void (*name)(bool state, HAFan* sender)
+    #define HAFAN_SPEED_CALLBACK(name) void (*name)(uint16_t speed, HAFan* sender)
+#endif
 
 /**
  * HAFan allows adding a controllable fan in the Home Assistant panel.
@@ -152,7 +157,7 @@ public:
      * Registers callback that will be called each time the state command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same fan.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the state must be reported back to HA using the HAFan::setState method.
      */
     inline void onStateCommand(HAFAN_STATE_CALLBACK(callback))
@@ -162,7 +167,7 @@ public:
      * Registers callback that will be called each time the speed command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same fan.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the speed must be reported back to HA using the HAFan::setSpeed method.
      */
     inline void onSpeedCommand(HAFAN_SPEED_CALLBACK(callback))

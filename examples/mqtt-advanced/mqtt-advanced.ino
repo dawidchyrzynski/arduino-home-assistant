@@ -42,6 +42,7 @@ void setup() {
     Serial.begin(9600);
     Ethernet.begin(mac);
 
+    // alternativelly you can use std::bind or lambda functions (only on platforms with std::function support)
     mqtt.onMessage(onMqttMessage);
     mqtt.onConnected(onMqttConnected);
     mqtt.onDisconnected(onMqttDisconnected);

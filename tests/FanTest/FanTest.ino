@@ -73,6 +73,21 @@ void onSpeedCommandReceived(uint16_t speed, HAFan* caller)
     lastSpeedCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onStateCommand(bool state, HAFan* caller) {
+            lastStateCallbackCall.called = true;
+            lastStateCallbackCall.state = state;
+            lastStateCallbackCall.caller = caller;
+        }
+
+        void onSpeedCommand(uint16_t speed, HAFan* caller) {
+            lastSpeedCallbackCall.called = true;
+            lastSpeedCallbackCall.speed = speed;
+            lastSpeedCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(FanTest, invalid_unique_id) {
     prepareTest
 
@@ -499,6 +514,19 @@ AHA_TEST(FanTest, state_command_different_fan) {
     assertStateCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(FanTest, state_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAFan fan(testUniqueId);
+    fan.onStateCommand(std::bind(&CallbacksProcessor::onStateCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(StateCommandTopic), F("ON"));
+
+    assertStateCallbackCalled(true, &fan)
+}
+#endif
+
 AHA_TEST(FanTest, speed_command_half) {
     prepareTest
 
@@ -553,6 +581,19 @@ AHA_TEST(FanTest, speed_command_different_fan) {
 
     assertSpeedCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(FanTest, speed_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAFan fan(testUniqueId);
+    fan.onSpeedCommand(std::bind(&CallbacksProcessor::onSpeedCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(SpeedPercentageCommandTopic), F("50"));
+
+    assertSpeedCallbackCalled(50, &fan)
+}
+#endif
 
 void setup()
 {

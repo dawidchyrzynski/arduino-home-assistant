@@ -38,6 +38,14 @@ void onCommandReceived(HAButton* caller)
     lastPressCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(HAButton* caller) {
+            lastPressCallbackCall.called = true;
+            lastPressCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(ButtonTest, invalid_unique_id) {
     prepareTest
 
@@ -240,6 +248,19 @@ AHA_TEST(ButtonTest, different_button_command) {
 
     assertPressCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(ButtonTest, command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAButton button(testUniqueId);
+    button.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), AHATOFSTR(CommandMessage));
+
+    assertPressCallbackCalled(&button)
+}
+#endif
 
 void setup()
 {

@@ -198,6 +198,45 @@ void onTargetTemperatureCommandReceived(HANumeric temperature, HAHVAC* caller)
     lastTargetTempCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onAuxStateCommand(bool state, HAHVAC* caller) {
+            lastAuxStateCallbackCall.called = true;
+            lastAuxStateCallbackCall.state = state;
+            lastAuxStateCallbackCall.caller = caller;
+        }
+
+        void onPowerCommand(bool state, HAHVAC* caller) {
+            lastPowerCallbackCall.called = true;
+            lastPowerCallbackCall.state = state;
+            lastPowerCallbackCall.caller = caller;
+        }
+
+        void onFanModeCommand(HAHVAC::FanMode mode, HAHVAC* caller) {
+            lastFanModeCallbackCall.called = true;
+            lastFanModeCallbackCall.mode = mode;
+            lastFanModeCallbackCall.caller = caller;
+        }
+
+        void onSwingModeCommand(HAHVAC::SwingMode mode, HAHVAC* caller) {
+            lastSwingModeCallbackCall.called = true;
+            lastSwingModeCallbackCall.mode = mode;
+            lastSwingModeCallbackCall.caller = caller;
+        }
+
+        void onModeCommand(HAHVAC::Mode mode, HAHVAC* caller) {
+            lastModeCallbackCall.called = true;
+            lastModeCallbackCall.mode = mode;
+            lastModeCallbackCall.caller = caller;
+        }
+
+        void onTargetTemperatureCommand(HANumeric temperature, HAHVAC* caller) {
+            lastTargetTempCallbackCall.called = true;
+            lastTargetTempCallbackCall.temperature = temperature;
+            lastTargetTempCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(HVACTest, invalid_unique_id) {
     prepareTest
 
@@ -1600,6 +1639,19 @@ AHA_TEST(HVACTest, aux_command_different_fan) {
     assertAuxStateCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, aux_state_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::AuxHeatingFeature);
+    hvac.onAuxStateCommand(std::bind(&CallbacksProcessor::onAuxStateCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(AuxCommandTopic), F("ON"));
+
+    assertAuxStateCallbackCalled(true, &hvac)
+}
+#endif
+
 AHA_TEST(HVACTest, power_command_on) {
     prepareTest
 
@@ -1632,6 +1684,19 @@ AHA_TEST(HVACTest, power_command_different) {
 
     assertPowerCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, power_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::PowerFeature);
+    hvac.onPowerCommand(std::bind(&CallbacksProcessor::onPowerCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(PowerCommandTopic), F("ON"));
+
+    assertPowerCallbackCalled(true, &hvac)
+}
+#endif
 
 AHA_TEST(HVACTest, fan_mode_command_auto) {
     prepareTest
@@ -1696,6 +1761,20 @@ AHA_TEST(HVACTest, fan_mode_command_different) {
     assertFanModeCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, fan_mode_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::FanFeature);
+    hvac.onFanModeCommand(std::bind(&CallbacksProcessor::onFanModeCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(FanModeCommandTopic), F("auto"));
+
+    assertFanModeCallbackCalled(HAHVAC::AutoFanMode, &hvac)
+}
+#endif
+
+
 AHA_TEST(HVACTest, swing_mode_command_on) {
     prepareTest
 
@@ -1738,6 +1817,19 @@ AHA_TEST(HVACTest, swing_mode_command_different) {
 
     assertSwingModeCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, swing_mode_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::SwingFeature);
+    hvac.onSwingModeCommand(std::bind(&CallbacksProcessor::onSwingModeCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(SwingModeCommandTopic), F("on"));
+
+    assertSwingModeCallbackCalled(HAHVAC::OnSwingMode, &hvac)
+}
+#endif
 
 AHA_TEST(HVACTest, mode_command_auto) {
     prepareTest
@@ -1799,6 +1891,32 @@ AHA_TEST(HVACTest, mode_command_fan_only) {
     assertModeCallbackCalled(HAHVAC::FanOnlyMode, &hvac)
 }
 
+AHA_TEST(HVACTest, mode_command_different) {
+    prepareTest
+
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(onModeCommandReceived);
+    mock->fakeMessage(
+        F("testData/testDevice/uniqueHVACDifferent/mode_cmd_t"),
+        F("auto")
+    );
+
+    assertModeCallbackNotCalled()
+}
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, mode_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::ModesFeature);
+    hvac.onModeCommand(std::bind(&CallbacksProcessor::onModeCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(ModeCommandTopic), F("auto"));
+
+    assertModeCallbackCalled(HAHVAC::AutoMode, &hvac)
+}
+#endif
+
 AHA_TEST(HVACTest, target_temperature_command_p1) {
     prepareTest
 
@@ -1859,6 +1977,19 @@ AHA_TEST(HVACTest, target_temperature_command_different) {
 
     assertTargetTempCallbackNotCalled()
 }
+
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(HVACTest, target_temperature_command_callback_std_function) {
+    prepareTest
+
+    CallbacksProcessor processor;
+    HAHVAC hvac(testUniqueId, HAHVAC::TargetTemperatureFeature);
+    hvac.onTargetTemperatureCommand(std::bind(&CallbacksProcessor::onTargetTemperatureCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(TemperatureCommandTopic), F("215"));
+
+    assertTargetTempCallbackCalled(HANumeric(21.5f, 1), &hvac)
+}
+#endif
 
 void setup()
 {

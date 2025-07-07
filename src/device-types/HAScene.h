@@ -5,7 +5,11 @@
 
 #ifndef EX_ARDUINOHA_SCENE
 
-#define HASCENE_CALLBACK(name) void (*name)(HAScene* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HASCENE_CALLBACK(name) std::function<void(HAScene* sender)> name
+#else
+    #define HASCENE_CALLBACK(name) void (*name)(HAScene* sender)
+#endif
 
 /**
  * HAScene adds a new scene to the Home Assistant that triggers your callback once activated.
@@ -44,7 +48,7 @@ public:
      * Registers callback that will be called when the scene is activated in the HA panel.
      * Please note that it's not possible to register multiple callbacks for the same scene.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onCommand(HASCENE_CALLBACK(callback))
         { _commandCallback = callback; }

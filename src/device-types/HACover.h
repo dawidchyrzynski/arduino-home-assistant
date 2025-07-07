@@ -5,7 +5,11 @@
 
 #ifndef EX_ARDUINOHA_COVER
 
-#define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HACOVER_CALLBACK(name) std::function<void(CoverCommand cmd, HACover* sender)> name
+#else
+    #define HACOVER_CALLBACK(name) void (*name)(CoverCommand cmd, HACover* sender)
+#endif
 
 /**
  * HACover allows to control a cover (such as blinds, a roller shutter or a garage door).
@@ -142,7 +146,7 @@ public:
      * Registers callback that will be called each time the command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same cover.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onCommand(HACOVER_CALLBACK(callback))
         { _commandCallback = callback; }

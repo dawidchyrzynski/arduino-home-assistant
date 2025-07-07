@@ -42,6 +42,15 @@ void onCommandReceived(int8_t index, HASelect* caller)
     lastCommandCallbackCall.caller = caller;
 }
 
+class CallbacksProcessor {
+    public:
+        void onCommand(int8_t index, HASelect* caller) {
+            lastCommandCallbackCall.called = true;
+            lastCommandCallbackCall.index = index;
+            lastCommandCallbackCall.caller = caller;
+        }
+};
+
 AHA_TEST(SelectTest, invalid_unique_id) {
     prepareTest
 
@@ -472,7 +481,19 @@ AHA_TEST(SelectTest, different_select_command) {
     assertCommandCallbackNotCalled()
 }
 
+#ifdef ARDUINOHA_USE_STD_FUNCTION
+AHA_TEST(SelectTest, command_callback_std_function) {
+    prepareTest
 
+    CallbacksProcessor processor;
+    HASelect select(testUniqueId);
+    select.setOptions("Option A;B;C");
+    select.onCommand(std::bind(&CallbacksProcessor::onCommand, &processor, std::placeholders::_1, std::placeholders::_2));
+    mock->fakeMessage(AHATOFSTR(CommandTopic), F("Option A"));
+
+    assertCommandCallbackCalled(0, &select)
+}
+#endif
 void setup()
 {
     delay(1000);

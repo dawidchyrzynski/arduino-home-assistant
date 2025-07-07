@@ -6,10 +6,17 @@
 
 #ifndef EX_ARDUINOHA_LIGHT
 
-#define HALIGHT_STATE_CALLBACK(name) void (*name)(bool state, HALight* sender)
-#define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
-#define HALIGHT_COLOR_TEMP_CALLBACK(name) void (*name)(uint16_t temperature, HALight* sender)
-#define HALIGHT_RGB_COLOR_CALLBACK(name) void (*name)(HALight::RGBColor color, HALight* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HALIGHT_STATE_CALLBACK(name) std::function<void(bool state, HALight* sender)> name
+    #define HALIGHT_BRIGHTNESS_CALLBACK(name) std::function<void(uint8_t brightness, HALight* sender)> name
+    #define HALIGHT_COLOR_TEMP_CALLBACK(name) std::function<void(uint16_t temperature, HALight* sender)> name
+    #define HALIGHT_RGB_COLOR_CALLBACK(name) std::function<void(HALight::RGBColor color, HALight* sender)> name
+#else
+    #define HALIGHT_STATE_CALLBACK(name) void (*name)(bool state, HALight* sender)
+    #define HALIGHT_BRIGHTNESS_CALLBACK(name) void (*name)(uint8_t brightness, HALight* sender)
+    #define HALIGHT_COLOR_TEMP_CALLBACK(name) void (*name)(uint16_t temperature, HALight* sender)
+    #define HALIGHT_RGB_COLOR_CALLBACK(name) void (*name)(HALight::RGBColor color, HALight* sender)
+#endif
 
 /**
  * HALight allows adding a controllable light in the Home Assistant panel.
@@ -261,7 +268,7 @@ public:
      * Registers callback that will be called each time the state command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the state must be reported back to HA using the HALight::setState method.
      */
     inline void onStateCommand(HALIGHT_STATE_CALLBACK(callback))
@@ -271,7 +278,7 @@ public:
      * Registers callback that will be called each time the brightness command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the brightness must be reported back to HA using the HALight::setBrightness method.
      */
     inline void onBrightnessCommand(HALIGHT_BRIGHTNESS_CALLBACK(callback))
@@ -281,7 +288,7 @@ public:
      * Registers callback that will be called each time the color temperature command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the color temperature must be reported back to HA using the HALight::setColorTemperature method.
      */
     inline void onColorTemperatureCommand(HALIGHT_COLOR_TEMP_CALLBACK(callback))
@@ -291,7 +298,7 @@ public:
      * Registers callback that will be called each time the RGB color command from HA is received.
      * Please note that it's not possible to register multiple callbacks for the same light.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the color must be reported back to HA using the HALight::setRGBColor method.
      */
     inline void onRGBColorCommand(HALIGHT_RGB_COLOR_CALLBACK(callback))

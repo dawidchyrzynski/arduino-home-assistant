@@ -5,7 +5,11 @@
 
 #ifndef EX_ARDUINOHA_LOCK
 
-#define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HALOCK_CALLBACK(name) std::function<void(LockCommand command, HALock* sender)> name
+#else
+    #define HALOCK_CALLBACK(name) void (*name)(LockCommand command, HALock* sender)
+#endif
 
 /**
  * HALock allows to implement a custom lock (for example: door lock)
@@ -97,7 +101,7 @@ public:
      * Registers callback that will be called each time the lock/unlock/open command from the HA is received.
      * Please note that it's not possible to register multiple callbacks for the same lock.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      */
     inline void onCommand(HALOCK_CALLBACK(callback))
         { _commandCallback = callback; }

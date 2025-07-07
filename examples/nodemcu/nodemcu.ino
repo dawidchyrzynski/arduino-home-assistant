@@ -45,7 +45,7 @@ void setup() {
     device.setSoftwareVersion("1.0.0");
 
     // handle switch state
-    led.onCommand(onSwitchCommand);
+    led.onCommand(onSwitchCommand); // alternatively you can use std::bind or lambda function
     led.setName("My LED"); // optional
 
     mqtt.begin(BROKER_ADDR);

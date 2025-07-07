@@ -7,7 +7,11 @@
 
 class HASerializerArray;
 
-#define HASELECT_CALLBACK(name) void (*name)(int8_t index, HASelect* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HASELECT_CALLBACK(name) std::function<void(int8_t index, HASelect* sender)> name
+#else
+    #define HASELECT_CALLBACK(name) void (*name)(int8_t index, HASelect* sender)
+#endif
 
 /**
  * HASelect adds a dropdown with options in the Home Assistant panel.
@@ -105,7 +109,7 @@ public:
      * Registers callback that will be called each time the option is changed from the HA panel.
      * Please note that it's not possible to register multiple callbacks for the same select.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the selected option must be reported back to HA using the HASelect::setState method.
      */
     inline void onCommand(HASELECT_CALLBACK(callback))

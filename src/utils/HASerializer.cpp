@@ -24,7 +24,8 @@ uint16_t HASerializer::calculateConfigTopicLength(
         !objectId ||
         !mqtt ||
         !mqtt->getDiscoveryPrefix() ||
-        !mqtt->getDevice()
+        !mqtt->getDevice() ||
+        !mqtt->getDevice()->getUniqueId()
     ) {
         return 0;
     }
@@ -50,7 +51,8 @@ bool HASerializer::generateConfigTopic(
         !objectId ||
         !mqtt ||
         !mqtt->getDiscoveryPrefix() ||
-        !mqtt->getDevice()
+        !mqtt->getDevice() ||
+        !mqtt->getDevice()->getUniqueId()
     ) {
         return false;
     }
@@ -81,7 +83,8 @@ uint16_t HASerializer::calculateDataTopicLength(
         !topic ||
         !mqtt ||
         !mqtt->getDataPrefix() ||
-        !mqtt->getDevice()
+        !mqtt->getDevice() ||
+        !mqtt->getDevice()->getUniqueId()
     ) {
         return 0;
     }
@@ -110,7 +113,8 @@ bool HASerializer::generateDataTopic(
         !topic ||
         !mqtt ||
         !mqtt->getDataPrefix() ||
-        !mqtt->getDevice()
+        !mqtt->getDevice() ||
+        !mqtt->getDevice()->getUniqueId()
     ) {
         return false;
     }

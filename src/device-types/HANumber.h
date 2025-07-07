@@ -16,7 +16,11 @@
     inline void setCurrentState(const type state) \
         { setCurrentState(HANumeric(state, _precision)); }
 
-#define HANUMBER_CALLBACK(name) void (*name)(HANumeric number, HANumber* sender)
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #define HANUMBER_CALLBACK(name) std::function<void(HANumeric number, HANumber* sender)> name
+#else
+    #define HANUMBER_CALLBACK(name) void (*name)(HANumeric number, HANumber* sender)
+#endif
 
 /**
  * HANumber adds a slider or a box in the Home Assistant panel
@@ -180,7 +184,7 @@ public:
      * Registers callback that will be called each time the number is changed in the HA panel.
      * Please note that it's not possible to register multiple callbacks for the same number.
      *
-     * @param callback
+     * @param callback Pointer to a function or std::bind or lambda function.
      * @note In non-optimistic mode, the number must be reported back to HA using the HANumber::setState method.
      */
     inline void onCommand(HANUMBER_CALLBACK(callback))

@@ -33,9 +33,16 @@
     #define ARDUINOHA_DEBUG_PRINT(x)
 #endif
 
-
 #if defined(__SAMD21G18A__) or defined(__SAM3X8E__)
     #define ARDUINOHA_INT_OVERLOAD
+#endif
+
+#if __cplusplus >= 201103L and !defined(__AVR__)
+    #define ARDUINOHA_USE_STD_FUNCTION
+#endif
+
+#if defined(ARDUINOHA_USE_STD_FUNCTION)
+    #include <functional>
 #endif
 
 #define AHATOFSTR(x) reinterpret_cast<const __FlashStringHelper*>(x)
