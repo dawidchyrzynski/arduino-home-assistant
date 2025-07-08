@@ -18,6 +18,7 @@ const char HAComponentScene[] PROGMEM = {"scene"};
 const char HAComponentFan[] PROGMEM = {"fan"};
 const char HAComponentLight[] PROGMEM = {"light"};
 const char HAComponentClimate[] PROGMEM = {"climate"};
+const char HAComponentValve[] PROGMEM = {"valve"};
 
 // decorators
 const char HASerializerSlash[] PROGMEM = {"/"};
@@ -75,6 +76,13 @@ const char HAModesProperty[] PROGMEM = {"modes"};
 const char HATemperatureCommandTemplateProperty[] PROGMEM = {"temp_cmd_tpl"};
 const char HAPayloadOnProperty[] PROGMEM = {"pl_on"};
 const char HAExpireAfterProperty[] PROGMEM = {"exp_aft"};
+const char HAPayloadOpenProperty[] PROGMEM = {"pl_open"};
+const char HAPayloadCloseProperty[] PROGMEM = {"pl_cls"};
+const char HAPayloadStopProperty[] PROGMEM = {"pl_stop"};
+const char HAStateProperty[] PROGMEM = {"state"};
+const char HAPositionProperty[] PROGMEM = {"position"};
+const char HAPositionOpenProperty[] PROGMEM = {"pos_open"};
+const char HAPositionClosedProperty[] PROGMEM = {"pos_clsd"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -128,6 +136,7 @@ const char HAClosingState[] PROGMEM = {"closing"};
 const char HAOpenState[] PROGMEM = {"open"};
 const char HAOpeningState[] PROGMEM = {"opening"};
 const char HAStoppedState[] PROGMEM = {"stopped"};
+const char HAReportsPosition[] PROGMEM = {"pos"};
 
 // commands
 const char HAOpenCommand[] PROGMEM = {"OPEN"};

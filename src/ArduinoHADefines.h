@@ -20,6 +20,7 @@
 // #define EX_ARDUINOHA_SENSOR
 // #define EX_ARDUINOHA_SWITCH
 // #define EX_ARDUINOHA_TAG_SCANNER
+// #define EX_ARDUINOHA_VALVE
 
 #if defined(ARDUINOHA_DEBUG)
     #include <Arduino.h>
