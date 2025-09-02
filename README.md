@@ -24,7 +24,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 | Home Assistant type | Supported |
 | ------------------- | :--------: |
-| Alarm control panel |     ❌     |
+| Alarm control panel |     ✅     |
 | Binary sensor       |     ✅     |
 | Button              |     ✅     |
 | Camera              |     ✅     |
@@ -56,6 +56,7 @@ but I successfully use it on ESP8266/ESP8255 boards in my projects.
 
 |Example|Description                  |
 |-------|-----------------------------|
+|[Alarm control panel](examples/alarm-control-panel/alarm-control-panel.ino)|Using the alarm control panel for basic arm away, arm home, and disarm support.|
 |[Binary sensor](examples/binary-sensor/binary-sensor.ino)|Using the binary sensor as a door contact sensor.|
 |[Button](examples/button/button.ino)|Adding simple buttons to the Home Assistant panel.|
 |[Camera](examples/esp32-cam/esp32-cam.ino)|Publishing the preview from the ESP32-CAM module.|

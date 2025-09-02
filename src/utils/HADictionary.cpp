@@ -18,6 +18,8 @@ const char HAComponentScene[] PROGMEM = {"scene"};
 const char HAComponentFan[] PROGMEM = {"fan"};
 const char HAComponentLight[] PROGMEM = {"light"};
 const char HAComponentClimate[] PROGMEM = {"climate"};
+const char HAComponentAlarmControlPanel[] PROGMEM = {"alarm_control_panel"};
+
 
 // decorators
 const char HASerializerSlash[] PROGMEM = {"/"};
@@ -75,6 +77,12 @@ const char HAModesProperty[] PROGMEM = {"modes"};
 const char HATemperatureCommandTemplateProperty[] PROGMEM = {"temp_cmd_tpl"};
 const char HAPayloadOnProperty[] PROGMEM = {"pl_on"};
 const char HAExpireAfterProperty[] PROGMEM = {"exp_aft"};
+const char HAEnabledByDefaultProperty[] PROGMEM = {"en"};
+const char HASupportedFeaturesProperty[] PROGMEM = {"sup_feat"};
+const char HACodeArmRequiredProperty[] PROGMEM = {"cod_arm_req"};
+const char HACodeDisarmRequiredProperty[] PROGMEM = {"cod_dis_req"};
+const char HACodeTriggerRequiredProperty[] PROGMEM = {"cod_trig_req"};
+const char HACodeProperty[] PROGMEM = {"code"};
 
 // topics
 const char HAConfigTopic[] PROGMEM = {"config"};
@@ -105,6 +113,13 @@ const char HATemperatureStateTopic[] PROGMEM = {"temp_stat_t"};
 const char HARGBCommandTopic[] PROGMEM = {"rgb_cmd_t"};
 const char HARGBStateTopic[] PROGMEM = {"rgb_stat_t"};
 const char HAJsonAttributesTopic[] PROGMEM = {"json_attr_t"};
+const char HAPayloadArmAwayTopic[] PROGMEM = {"pl_arm_away"};
+const char HAPayloadArmCustomBypassTopic[] PROGMEM = {"pl_arm_custom_b"};
+const char HAPayloadArmHomeTopic[] PROGMEM = {"pl_arm_home"};
+const char HAPayloadArmNightTopic[] PROGMEM = {"pl_arm_nite"};;
+const char HAPayloadArmVacationTopic[] PROGMEM = {"pl_arm_vacation"};;
+const char HAPayloadDisarmTopic[] PROGMEM = {"pl_disarm"};;
+const char HAPayloadTriggerTopic[] PROGMEM = {"pl_trig"};;
 
 // misc
 const char HAOnline[] PROGMEM = {"online"};
@@ -121,6 +136,22 @@ const char HANotHome[] PROGMEM = {"not_home"};
 const char HATrigger[] PROGMEM = {"trigger"};
 const char HAModeBox[] PROGMEM = {"box"};
 const char HAModeSlider[] PROGMEM = {"slider"};
+const char HAEntityCategory[] PROGMEM = {"ent_cat"};
+const char HAArmHome[] PROGMEM = {"arm_home"};
+const char HAArmAway[] PROGMEM = {"arm_away"};
+const char HAArmNight[] PROGMEM = {"arm_night"};
+const char HAArmVacation[] PROGMEM = {"arm_vacation"};
+const char HAArmCustomBypass[] PROGMEM = {"arm_custom_bypass"};
+const char HAStateArmedAway[] PROGMEM = {"armed_away"};
+const char HAStateArmedCustomBypass[] PROGMEM = {"armed_custom_bypass"};
+const char HAStateArmedHome[] PROGMEM = {"armed_home"};
+const char HAStateArmedNight[] PROGMEM = {"armed_night"};
+const char HAStateArmedVacation[] PROGMEM = {"armed_vacation"};
+const char HAStateArming[] PROGMEM = {"arming"};
+const char HAStateDisarmed[] PROGMEM = {"disarmed"};
+const char HAStateDisarming[] PROGMEM = {"disarming"};
+const char HAStatePending[] PROGMEM = {"pending"};
+const char HAStateTriggered[] PROGMEM = {"triggered"};
 
 // covers
 const char HAClosedState[] PROGMEM = {"closed"};

@@ -46,6 +46,26 @@ public:
         { _icon = icon; }
 
     /**
+     * Sets enable by default flag for the entity.
+     * If set to `false` the entity will be disabled when added to Home Assisant. The user will have
+     * to enable it to use the entity. Useful for control entities that are convenient to have for advanced
+     * users, but most people might not need.
+     *
+     * @param enableByDefault
+     */
+    inline void setEnableByDefault(const bool enableByDefault)
+        { _enableByDefault = enableByDefault; }
+
+    /**
+     * Sets the entity category for the sensor.
+     * See: https://www.home-assistant.io/integrations/sensor.mqtt/#entity_category
+     *
+     * @param entityCategory The category name.
+     */
+    inline void setEntityCategory(const char* entityCategory)
+        { _entityCategory = entityCategory; }
+
+    /**
      * Sets retain flag for the button's command.
      * If set to `true` the command produced by Home Assistant will be retained.
      *
@@ -81,6 +101,12 @@ private:
 
     /// The retain flag for the HA commands.
     bool _retain;
+
+    /// The enable by default property for the entity. If false, the entity will not be enabled or available to the user without first manually enabling.
+    bool _enableByDefault;
+
+    /// The entity category for the entity. It can be nullptr. See: https://www.home-assistant.io/integrations/sensor.mqtt/#entity_category
+    const char* _entityCategory;
 
     /// The command callback that will be called once clicking the button in HA panel.
     HABUTTON_CALLBACK(_commandCallback);

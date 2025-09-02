@@ -11,6 +11,8 @@ HASensor::HASensor(const char* uniqueId, const uint16_t features) :
     _stateClass(nullptr),
     _forceUpdate(false),
     _icon(nullptr),
+    _enableByDefault(true),
+    _entityCategory(nullptr),
     _unitOfMeasurement(nullptr),
     _expireAfter()
 {
@@ -46,7 +48,7 @@ void HASensor::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 13); // 13 - max properties nb
+    _serializer = new HASerializer(this, 15); // 15 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
@@ -54,7 +56,15 @@ void HASensor::buildSerializer()
     _serializer->set(AHATOFSTR(HAStateClassProperty), _stateClass);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
+    _serializer->set(AHATOFSTR(HAEntityCategory), _entityCategory);
 
+    if (!_enableByDefault) {
+        _serializer->set(
+            AHATOFSTR(HAEnabledByDefaultProperty),
+            &_enableByDefault,
+            HASerializer::BoolPropertyType
+        );
+    }
     if (_forceUpdate) {
         _serializer->set(
             AHATOFSTR(HAForceUpdateProperty),

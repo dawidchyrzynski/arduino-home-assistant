@@ -9,6 +9,8 @@ HASelect::HASelect(const char* uniqueId) :
     _options(nullptr),
     _currentState(-1),
     _icon(nullptr),
+    _enableByDefault(true),
+    _entityCategory(nullptr),
     _retain(false),
     _optimistic(false),
     _commandCallback(nullptr)
@@ -96,11 +98,21 @@ void HASelect::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 11); // 11 - max properties nb
+    _serializer = new HASerializer(this, 13); // 13 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
+    _serializer->set(AHATOFSTR(HAEntityCategory), _entityCategory);
+
+    if (!_enableByDefault) {
+        _serializer->set(
+            AHATOFSTR(HAEnabledByDefaultProperty),
+            &_enableByDefault,
+            HASerializer::BoolPropertyType
+        );
+    }
+
     _serializer->set(
         AHATOFSTR(HAOptionsProperty),
         _options,

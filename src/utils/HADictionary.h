@@ -18,6 +18,7 @@ extern const char HAComponentScene[];
 extern const char HAComponentFan[];
 extern const char HAComponentLight[];
 extern const char HAComponentClimate[];
+extern const char HAComponentAlarmControlPanel[];
 
 // decorators
 extern const char HASerializerSlash[];
@@ -75,6 +76,12 @@ extern const char HAModesProperty[];
 extern const char HATemperatureCommandTemplateProperty[];
 extern const char HAPayloadOnProperty[];
 extern const char HAExpireAfterProperty[];
+extern const char HAEnabledByDefaultProperty[];
+extern const char HASupportedFeaturesProperty[];
+extern const char HACodeArmRequiredProperty[];
+extern const char HACodeDisarmRequiredProperty[];
+extern const char HACodeTriggerRequiredProperty[];
+extern const char HACodeProperty[];
 
 // topics
 extern const char HAConfigTopic[];
@@ -105,6 +112,14 @@ extern const char HATemperatureStateTopic[];
 extern const char HARGBCommandTopic[];
 extern const char HARGBStateTopic[];
 extern const char HAJsonAttributesTopic[];
+extern const char HAPayloadArmAwayTopic[];
+extern const char HAPayloadArmCustomBypassTopic[];
+extern const char HAPayloadArmHomeTopic[];
+extern const char HAPayloadArmNightTopic[];
+extern const char HAPayloadArmVacationTopic[];
+extern const char HAPayloadDisarmTopic[];
+extern const char HAPayloadTriggerTopic[];
+
 
 // misc
 extern const char HAOnline[];
@@ -121,6 +136,22 @@ extern const char HANotHome[];
 extern const char HATrigger[];
 extern const char HAModeBox[];
 extern const char HAModeSlider[];
+extern const char HAEntityCategory[];
+extern const char HAArmHome[];
+extern const char HAArmAway[];
+extern const char HAArmNight[];
+extern const char HAArmVacation[];
+extern const char HAArmCustomBypass[];
+extern const char HAStateArmedAway[];
+extern const char HAStateArmedCustomBypass[];
+extern const char HAStateArmedHome[];
+extern const char HAStateArmedNight[];
+extern const char HAStateArmedVacation[];
+extern const char HAStateArming[];
+extern const char HAStateDisarmed[];
+extern const char HAStateDisarming[];
+extern const char HAStatePending[];
+extern const char HAStateTriggered[];
 
 // covers
 extern const char HAClosedState[];

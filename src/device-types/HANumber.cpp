@@ -9,6 +9,8 @@ HANumber::HANumber(const char* uniqueId, const NumberPrecision precision) :
     _precision(precision),
     _class(nullptr),
     _icon(nullptr),
+    _entityCategory(nullptr),
+    _enableByDefault(true),
     _retain(false),
     _optimistic(false),
     _mode(ModeAuto),
@@ -42,13 +44,14 @@ void HANumber::buildSerializer()
         return;
     }
 
-    _serializer = new HASerializer(this, 16); // 16 - max properties nb
+    _serializer = new HASerializer(this, 19); // 19 - max properties nb
     _serializer->set(AHATOFSTR(HANameProperty), _name);
     _serializer->set(AHATOFSTR(HAObjectIdProperty), _objectId);
     _serializer->set(HASerializer::WithUniqueId);
     _serializer->set(AHATOFSTR(HADeviceClassProperty), _class);
     _serializer->set(AHATOFSTR(HAIconProperty), _icon);
     _serializer->set(AHATOFSTR(HAUnitOfMeasurementProperty), _unitOfMeasurement);
+    _serializer->set(AHATOFSTR(HAEntityCategory), _entityCategory);
     _serializer->set(
         AHATOFSTR(HAModeProperty),
         getModeProperty(),
@@ -81,6 +84,14 @@ void HANumber::buildSerializer()
             AHATOFSTR(HAStepProperty),
             &_step,
             HASerializer::NumberPropertyType
+        );
+    }
+
+    if (!_enableByDefault) {
+        _serializer->set(
+            AHATOFSTR(HAEnabledByDefaultProperty),
+            &_enableByDefault,
+            HASerializer::BoolPropertyType
         );
     }
 
