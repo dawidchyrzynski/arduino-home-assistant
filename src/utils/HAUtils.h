@@ -36,17 +36,28 @@ public:
     );
 
     /**
-     * Converts the given byte array into hex string.
-     * This method allocates a new memory.
-     *
-     * @param src Bytes array to convert.
-     * @param length Length of the bytes array.
-     * @returns Newly allocated string containing the hex representation.
+     * Converts given byte array into the string of hex values.
+     * @param data Bytes to convert.
+     * @param length Number of bytes to convert.
+     * @return Dynamically allocated string with hex values. You're responsible for deleting it.
      */
     static char* byteArrayToStr(
-        const byte* src,
-        const uint16_t length
-    );
+		const byte* data, 
+		const uint16_t length
+	);
+
+    /**
+     * Converts given byte array into the string of hex values with optional uppercase formatting.
+     * @param data Bytes to convert.
+     * @param length Number of bytes to convert.
+     * @param uppercase If true, the output will be uppercase; otherwise, it will be lowercase.
+     * @return Dynamically allocated string with hex values. You're responsible for deleting it.
+     */
+    static char* byteArrayToStr(
+		const byte* data, 
+		const uint16_t length, 
+		bool uppercase
+	);
 };
 
 #endif

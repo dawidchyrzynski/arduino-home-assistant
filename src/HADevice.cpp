@@ -49,11 +49,18 @@ HADevice::~HADevice()
 
 bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length)
 {
+    // For backward compatibility, default to lowercase.
+    return setUniqueId(uniqueId, length, false);
+}
+
+bool HADevice::setUniqueId(const byte* uniqueId, const uint16_t length, bool uppercase)
+{
     if (_uniqueId) {
         return false; // unique ID cannot be changed at runtime once it's set
     }
 
-    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length);
+    // Call the new HAUtils function with the uppercase flag.
+    _uniqueId = HAUtils::byteArrayToStr(uniqueId, length, uppercase);
     _ownsUniqueId = true;
     _serializer->set(AHATOFSTR(HADeviceIdentifiersProperty), _uniqueId);
     return true;
