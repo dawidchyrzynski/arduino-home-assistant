@@ -37,12 +37,34 @@ void HAUtils::byteArrayToStr(
 }
 
 char* HAUtils::byteArrayToStr(
-    const byte* src,
-    const uint16_t length
+	const byte* data, 
+	const uint16_t length
 )
 {
-    char* dst = new char[(length * 2) + 1]; // include null terminator
-    byteArrayToStr(dst, src, length);
+    // For backward compatibility, default to lowercase.
+    return byteArrayToStr(data, length, false);
+}
 
-    return dst;
+char* HAUtils::byteArrayToStr(
+	const byte* data, 
+	const uint16_t length, 
+	bool uppercase
+)
+{
+    const uint16_t strLength = length * 2;
+    if (strLength == 0) {
+        return nullptr;
+    }
+
+    char* str = new char[strLength + 1];
+    str[strLength] = '\0';
+
+    // Choose the format specifier based on the 'uppercase' parameter.
+    const char* format = uppercase ? "%02X" : "%02x";
+
+    for (int i = 0; i < length; i++) {
+        sprintf(&str[i * 2], format, data[i]);
+    }
+
+    return str;
 }

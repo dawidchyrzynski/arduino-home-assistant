@@ -88,13 +88,24 @@ public:
 
     /**
      * Sets unique ID of the device based on the given byte array.
-     * Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.
+     * Each byte is converted into a hex string representation (lowercase by default), so the final length of the unique ID will be twice as given.
      *
      * @param uniqueId Bytes array that's going to be converted into the string.
      * @param length Number of bytes in the array.
      * @note The unique ID can be set only once (via constructor or using this method).
      */
     bool setUniqueId(const byte* uniqueId, const uint16_t length);
+	
+	/**
+     * Sets unique ID of the device based on the given byte array with case selection.
+	 * Each byte is converted into a hex string representation, so the final length of the unique ID will be twice as given.
+     *
+     * @param uniqueId Bytes array that's going to be converted into the string.
+     * @param length Number of bytes in the array.
+     * @param uppercase If true, the output will be uppercase; otherwise, it will be lowercase.
+     * @note The unique ID can be set only once (via constructor or using this method).
+     */
+    bool setUniqueId(const byte* uniqueId, const uint16_t length, bool uppercase);
 
     /**
      * Sets the "manufacturer" property that's going to be displayed in the Home Assistant.

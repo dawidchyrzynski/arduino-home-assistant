@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+**New features:**
+* Added an option to generate uppercase unique IDs from byte arrays.
+
 ## 2.1.0
 
 **New features:**
