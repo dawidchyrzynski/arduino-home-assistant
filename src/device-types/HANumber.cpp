@@ -36,6 +36,16 @@ bool HANumber::setState(const HANumeric& state, const bool force)
     return false;
 }
 
+void HANumber::updateMinMaxStep(const float min,const float max,const float step )
+{
+    _minValue = HANumeric(min, _precision);
+    _maxValue = HANumeric(max, _precision);
+    _step = HANumeric(step, _precision);
+    publishConfig();
+}
+
+
+
 void HANumber::buildSerializer()
 {
     if (_serializer || !uniqueId()) {
