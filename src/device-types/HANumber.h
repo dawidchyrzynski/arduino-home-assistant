@@ -91,6 +91,15 @@ public:
 #endif
 
     /**
+     * Update the minimum and maximum and step value that can be set from the Home Assistant panel.
+     *
+     * @param min The minimal value. By default the value is not set.
+     * @param max The maximal value. By default the value is not set.
+     * @param step The step value. By default the value is not set.
+     */
+    void updateMinMaxStep(const float min,const float max,const float step);
+
+    /**
      * Returns last known state of the number.
      * If setState method wasn't called the initial value will be returned.
      */
