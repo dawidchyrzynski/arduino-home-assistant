@@ -109,11 +109,11 @@ const char HAJsonAttributesTopic[] PROGMEM = {"json_attr_t"};
 // misc
 const char HAOnline[] PROGMEM = {"online"};
 const char HAOffline[] PROGMEM = {"offline"};
-const char HAStateOn[] PROGMEM = {"ON"};
-const char HAStateOff[] PROGMEM = {"OFF"};
-const char HAStateLocked[] PROGMEM = {"LOCKED"};
-const char HAStateUnlocked[] PROGMEM = {"UNLOCKED"};
-const char HAStateNone[] PROGMEM = {"None"};
+const char HAStateOn[] PROGMEM = {"on"};
+const char HAStateOff[] PROGMEM = {"off"};
+const char HAStateLocked[] PROGMEM = {"locked"};
+const char HAStateUnlocked[] PROGMEM = {"unlocked"};
+const char HAStateNone[] PROGMEM = {"unknown"};
 const char HATrue[] PROGMEM = {"true"};
 const char HAFalse[] PROGMEM = {"false"};
 const char HAHome[] PROGMEM = {"home"};
