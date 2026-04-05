@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+**New features:**
+* Added support for assigning sensors to entity categories
+
 ## 2.1.0
 
 **New features:**
