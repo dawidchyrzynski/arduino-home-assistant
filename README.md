@@ -109,3 +109,79 @@ Here is the list of devices on which the library was tested:
 
 Please note that it's not the complete list of supported devices.
 You may try to use the library on any device that uses Arduino core.
+
+## FAQ
+
+### ESP32 watchdog resets during WiFi drop / MQTT reconnect
+
+On Arduino-ESP32, `loopTask` is registered with the Task Watchdog Timer
+(TWDT) by default. If WiFi drops while your sketch is inside
+`HAMqtt::loop()`, the underlying PubSubClient may block for several
+seconds trying to reconnect. If that exceeds the TWDT timeout (5 s by
+default on recent cores) the board resets with:
+
+```
+E (12345) task_wdt: Task watchdog got triggered. The following tasks did not reset:
+E (12345) task_wdt:  - loopTask (CPU 0)
+```
+
+Pick one of the following mitigations based on your tolerance for
+watchdog coverage:
+
+**1. Gate `mqtt.loop()` on WiFi state (recommended).** Avoids entering
+the blocking reconnect path entirely while WiFi is down:
+
+```cpp
+void loop() {
+    if (WiFi.status() == WL_CONNECTED) {
+        mqtt.loop();
+    }
+    // your other work
+}
+```
+
+**2. Feed the watchdog around `mqtt.loop()`.** Keeps TWDT coverage for
+the rest of your code:
+
+```cpp
+#include <esp_task_wdt.h>
+
+void loop() {
+    esp_task_wdt_reset();
+    mqtt.loop();
+    // your other work
+}
+```
+
+**3. Raise the TWDT timeout.** On Arduino-ESP32 3.x:
+
+```cpp
+#include <esp_task_wdt.h>
+
+void setup() {
+    esp_task_wdt_config_t wdt_cfg = {
+        .timeout_ms = 30000,
+        .idle_core_mask = 0,
+        .trigger_panic = false,
+    };
+    esp_task_wdt_reconfigure(&wdt_cfg);
+    // ... your normal setup
+}
+```
+
+**4. Remove `loopTask` from the TWDT entirely (last resort — you lose
+watchdog coverage for genuine hangs):**
+
+```cpp
+#include <esp_task_wdt.h>
+
+void setup() {
+    esp_task_wdt_delete(NULL);
+    // ... your normal setup
+}
+```
+
+If you're writing a FreeRTOS task that calls `mqtt.loop()` directly
+(i.e. you're not piggy-backing on `loopTask`), register the task with
+TWDT via `esp_task_wdt_add(xTaskGetCurrentTaskHandle())` and call
+`esp_task_wdt_reset()` on each loop iteration.
