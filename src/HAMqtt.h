@@ -14,7 +14,7 @@
 #ifdef ARDUINOHA_TEST
 class PubSubClientMock;
 #else
-class PubSubClient;
+class IMqttClient;
 #endif
 
 #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__)
@@ -66,7 +66,7 @@ public:
     );
 #else
     /**
-     * Creates a new instance of the HAMqtt class.
+     * Creates a new instance of the HAMqtt class backed by PubSubClient.
      * Please note that only one instance of the class can be initialized at the same time.
      *
      * @param netClient The EthernetClient or WiFiClient that's going to be used for the network communication.
@@ -75,6 +75,25 @@ public:
      */
     explicit HAMqtt(
         Client& netClient,
+        HADevice& device,
+        const uint8_t maxDevicesTypesNb = HAMQTT_DEFAULT_DEVICES_LIMIT
+    );
+
+    /**
+     * Creates a new instance of the HAMqtt class backed by a custom MQTT client.
+     * Use this overload to plug in alternative transports (AsyncMqttClient,
+     * ESP-IDF native MQTT, etc.) by supplying your own IMqttClient adapter.
+     *
+     * @note HAMqtt takes ownership of the pointer and deletes it in its
+     *       destructor. Heap-allocate the adapter with `new`.
+     * @note Only one instance of HAMqtt can be initialized at the same time.
+     *
+     * @param client An IMqttClient adapter (see IMqttClient.h for the contract).
+     * @param device An instance of the HADevice class representing your device.
+     * @param maxDevicesTypesNb The maximum number of device types (sensors, switches, etc.) that you're going to implement.
+     */
+    explicit HAMqtt(
+        IMqttClient* client,
         HADevice& device,
         const uint8_t maxDevicesTypesNb = HAMQTT_DEFAULT_DEVICES_LIMIT
     );
@@ -403,8 +422,10 @@ private:
 #ifdef ARDUINOHA_TEST
     PubSubClientMock* _mqtt;
 #else
-    /// Instance of the PubSubClient class. It's initialized in the constructor.
-    PubSubClient* _mqtt;
+    /// MQTT transport — owned by HAMqtt. Initialized in the constructor,
+    /// either as a PubSubClientAdapter (Client& overload) or as the
+    /// user-supplied adapter (IMqttClient* overload).
+    IMqttClient* _mqtt;
 #endif
 
     /// Instance of the HADevice passed to the constructor.
