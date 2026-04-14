@@ -1,7 +1,8 @@
 #include "HAMqtt.h"
 
 #ifndef ARDUINOHA_TEST
-#include <PubSubClient.h>
+#include "IMqttClient.h"
+#include "PubSubClientAdapter.h"
 #endif
 
 #include "HADevice.h"
@@ -59,7 +60,18 @@ HAMqtt::HAMqtt(
     HADevice& device,
     uint8_t maxDevicesTypesNb
 ) :
-    _mqtt(new PubSubClient(netClient)),
+    _mqtt(new PubSubClientAdapter(netClient)),
+    HAMQTT_INIT
+{
+    _instance = this;
+}
+
+HAMqtt::HAMqtt(
+    IMqttClient* client,
+    HADevice& device,
+    uint8_t maxDevicesTypesNb
+) :
+    _mqtt(client),
     HAMQTT_INIT
 {
     _instance = this;
